@@ -88,4 +88,6 @@ Sign up [here](http://slack.networktocode.com/)
 
 ## Screenshots
 
-TODO
+![Screenshot of the start of synchronization](https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/media/screenshot1.png "Beginning synchronization")
+
+![Screenshot of the completed process](https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/media/screenshot2.png "Synchronization complete!")
