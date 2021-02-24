@@ -1,0 +1,6423 @@
+[
+    {
+        "model": "auth.permission",
+        "pk": 1,
+        "fields": {
+            "name": "Can add log entry",
+            "content_type": 14,
+            "codename": "add_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 2,
+        "fields": {
+            "name": "Can change log entry",
+            "content_type": 14,
+            "codename": "change_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 3,
+        "fields": {
+            "name": "Can delete log entry",
+            "content_type": 14,
+            "codename": "delete_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 4,
+        "fields": {
+            "name": "Can view log entry",
+            "content_type": 14,
+            "codename": "view_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 5,
+        "fields": {
+            "name": "Can add permission",
+            "content_type": 15,
+            "codename": "add_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 6,
+        "fields": {
+            "name": "Can change permission",
+            "content_type": 15,
+            "codename": "change_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 7,
+        "fields": {
+            "name": "Can delete permission",
+            "content_type": 15,
+            "codename": "delete_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 8,
+        "fields": {
+            "name": "Can view permission",
+            "content_type": 15,
+            "codename": "view_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 9,
+        "fields": {
+            "name": "Can add group",
+            "content_type": 16,
+            "codename": "add_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 10,
+        "fields": {
+            "name": "Can change group",
+            "content_type": 16,
+            "codename": "change_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 11,
+        "fields": {
+            "name": "Can delete group",
+            "content_type": 16,
+            "codename": "delete_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 12,
+        "fields": {
+            "name": "Can view group",
+            "content_type": 16,
+            "codename": "view_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 13,
+        "fields": {
+            "name": "Can add user",
+            "content_type": 17,
+            "codename": "add_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 14,
+        "fields": {
+            "name": "Can change user",
+            "content_type": 17,
+            "codename": "change_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 15,
+        "fields": {
+            "name": "Can delete user",
+            "content_type": 17,
+            "codename": "delete_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 16,
+        "fields": {
+            "name": "Can view user",
+            "content_type": 17,
+            "codename": "view_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 17,
+        "fields": {
+            "name": "Can add content type",
+            "content_type": 18,
+            "codename": "add_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 18,
+        "fields": {
+            "name": "Can change content type",
+            "content_type": 18,
+            "codename": "change_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 19,
+        "fields": {
+            "name": "Can delete content type",
+            "content_type": 18,
+            "codename": "delete_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 20,
+        "fields": {
+            "name": "Can view content type",
+            "content_type": 18,
+            "codename": "view_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 21,
+        "fields": {
+            "name": "Can add session",
+            "content_type": 19,
+            "codename": "add_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 22,
+        "fields": {
+            "name": "Can change session",
+            "content_type": 19,
+            "codename": "change_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 23,
+        "fields": {
+            "name": "Can delete session",
+            "content_type": 19,
+            "codename": "delete_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 24,
+        "fields": {
+            "name": "Can view session",
+            "content_type": 19,
+            "codename": "view_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 25,
+        "fields": {
+            "name": "Can add tag",
+            "content_type": 20,
+            "codename": "add_tag"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 26,
+        "fields": {
+            "name": "Can change tag",
+            "content_type": 20,
+            "codename": "change_tag"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 27,
+        "fields": {
+            "name": "Can delete tag",
+            "content_type": 20,
+            "codename": "delete_tag"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 28,
+        "fields": {
+            "name": "Can view tag",
+            "content_type": 20,
+            "codename": "view_tag"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 29,
+        "fields": {
+            "name": "Can add tagged item",
+            "content_type": 21,
+            "codename": "add_taggeditem"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 30,
+        "fields": {
+            "name": "Can change tagged item",
+            "content_type": 21,
+            "codename": "change_taggeditem"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 31,
+        "fields": {
+            "name": "Can delete tagged item",
+            "content_type": 21,
+            "codename": "delete_taggeditem"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 32,
+        "fields": {
+            "name": "Can view tagged item",
+            "content_type": 21,
+            "codename": "view_taggeditem"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 33,
+        "fields": {
+            "name": "Can add circuit",
+            "content_type": 22,
+            "codename": "add_circuit"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 34,
+        "fields": {
+            "name": "Can change circuit",
+            "content_type": 22,
+            "codename": "change_circuit"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 35,
+        "fields": {
+            "name": "Can delete circuit",
+            "content_type": 22,
+            "codename": "delete_circuit"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 36,
+        "fields": {
+            "name": "Can view circuit",
+            "content_type": 22,
+            "codename": "view_circuit"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 37,
+        "fields": {
+            "name": "Can add circuit type",
+            "content_type": 23,
+            "codename": "add_circuittype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 38,
+        "fields": {
+            "name": "Can change circuit type",
+            "content_type": 23,
+            "codename": "change_circuittype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 39,
+        "fields": {
+            "name": "Can delete circuit type",
+            "content_type": 23,
+            "codename": "delete_circuittype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 40,
+        "fields": {
+            "name": "Can view circuit type",
+            "content_type": 23,
+            "codename": "view_circuittype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 41,
+        "fields": {
+            "name": "Can add provider",
+            "content_type": 24,
+            "codename": "add_provider"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 42,
+        "fields": {
+            "name": "Can change provider",
+            "content_type": 24,
+            "codename": "change_provider"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 43,
+        "fields": {
+            "name": "Can delete provider",
+            "content_type": 24,
+            "codename": "delete_provider"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 44,
+        "fields": {
+            "name": "Can view provider",
+            "content_type": 24,
+            "codename": "view_provider"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 45,
+        "fields": {
+            "name": "Can add circuit termination",
+            "content_type": 7,
+            "codename": "add_circuittermination"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 46,
+        "fields": {
+            "name": "Can change circuit termination",
+            "content_type": 7,
+            "codename": "change_circuittermination"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 47,
+        "fields": {
+            "name": "Can delete circuit termination",
+            "content_type": 7,
+            "codename": "delete_circuittermination"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 48,
+        "fields": {
+            "name": "Can view circuit termination",
+            "content_type": 7,
+            "codename": "view_circuittermination"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 49,
+        "fields": {
+            "name": "Can add console port",
+            "content_type": 1,
+            "codename": "add_consoleport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 50,
+        "fields": {
+            "name": "Can change console port",
+            "content_type": 1,
+            "codename": "change_consoleport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 51,
+        "fields": {
+            "name": "Can delete console port",
+            "content_type": 1,
+            "codename": "delete_consoleport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 52,
+        "fields": {
+            "name": "Can view console port",
+            "content_type": 1,
+            "codename": "view_consoleport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 53,
+        "fields": {
+            "name": "Can add console port template",
+            "content_type": 25,
+            "codename": "add_consoleporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 54,
+        "fields": {
+            "name": "Can change console port template",
+            "content_type": 25,
+            "codename": "change_consoleporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 55,
+        "fields": {
+            "name": "Can delete console port template",
+            "content_type": 25,
+            "codename": "delete_consoleporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 56,
+        "fields": {
+            "name": "Can view console port template",
+            "content_type": 25,
+            "codename": "view_consoleporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 57,
+        "fields": {
+            "name": "Can add console server port",
+            "content_type": 2,
+            "codename": "add_consoleserverport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 58,
+        "fields": {
+            "name": "Can change console server port",
+            "content_type": 2,
+            "codename": "change_consoleserverport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 59,
+        "fields": {
+            "name": "Can delete console server port",
+            "content_type": 2,
+            "codename": "delete_consoleserverport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 60,
+        "fields": {
+            "name": "Can view console server port",
+            "content_type": 2,
+            "codename": "view_consoleserverport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 61,
+        "fields": {
+            "name": "Can add console server port template",
+            "content_type": 26,
+            "codename": "add_consoleserverporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 62,
+        "fields": {
+            "name": "Can change console server port template",
+            "content_type": 26,
+            "codename": "change_consoleserverporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 63,
+        "fields": {
+            "name": "Can delete console server port template",
+            "content_type": 26,
+            "codename": "delete_consoleserverporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 64,
+        "fields": {
+            "name": "Can view console server port template",
+            "content_type": 26,
+            "codename": "view_consoleserverporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 65,
+        "fields": {
+            "name": "Can add device",
+            "content_type": 13,
+            "codename": "add_device"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 66,
+        "fields": {
+            "name": "Can change device",
+            "content_type": 13,
+            "codename": "change_device"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 67,
+        "fields": {
+            "name": "Can delete device",
+            "content_type": 13,
+            "codename": "delete_device"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 68,
+        "fields": {
+            "name": "Can view device",
+            "content_type": 13,
+            "codename": "view_device"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 69,
+        "fields": {
+            "name": "Can add device role",
+            "content_type": 27,
+            "codename": "add_devicerole"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 70,
+        "fields": {
+            "name": "Can change device role",
+            "content_type": 27,
+            "codename": "change_devicerole"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 71,
+        "fields": {
+            "name": "Can delete device role",
+            "content_type": 27,
+            "codename": "delete_devicerole"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 72,
+        "fields": {
+            "name": "Can view device role",
+            "content_type": 27,
+            "codename": "view_devicerole"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 73,
+        "fields": {
+            "name": "Can add device type",
+            "content_type": 28,
+            "codename": "add_devicetype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 74,
+        "fields": {
+            "name": "Can change device type",
+            "content_type": 28,
+            "codename": "change_devicetype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 75,
+        "fields": {
+            "name": "Can delete device type",
+            "content_type": 28,
+            "codename": "delete_devicetype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 76,
+        "fields": {
+            "name": "Can view device type",
+            "content_type": 28,
+            "codename": "view_devicetype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 77,
+        "fields": {
+            "name": "Can add interface",
+            "content_type": 5,
+            "codename": "add_interface"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 78,
+        "fields": {
+            "name": "Can change interface",
+            "content_type": 5,
+            "codename": "change_interface"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 79,
+        "fields": {
+            "name": "Can delete interface",
+            "content_type": 5,
+            "codename": "delete_interface"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 80,
+        "fields": {
+            "name": "Can view interface",
+            "content_type": 5,
+            "codename": "view_interface"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 81,
+        "fields": {
+            "name": "Can add interface template",
+            "content_type": 29,
+            "codename": "add_interfacetemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 82,
+        "fields": {
+            "name": "Can change interface template",
+            "content_type": 29,
+            "codename": "change_interfacetemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 83,
+        "fields": {
+            "name": "Can delete interface template",
+            "content_type": 29,
+            "codename": "delete_interfacetemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 84,
+        "fields": {
+            "name": "Can view interface template",
+            "content_type": 29,
+            "codename": "view_interfacetemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 85,
+        "fields": {
+            "name": "Can add manufacturer",
+            "content_type": 30,
+            "codename": "add_manufacturer"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 86,
+        "fields": {
+            "name": "Can change manufacturer",
+            "content_type": 30,
+            "codename": "change_manufacturer"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 87,
+        "fields": {
+            "name": "Can delete manufacturer",
+            "content_type": 30,
+            "codename": "delete_manufacturer"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 88,
+        "fields": {
+            "name": "Can view manufacturer",
+            "content_type": 30,
+            "codename": "view_manufacturer"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 89,
+        "fields": {
+            "name": "Can add platform",
+            "content_type": 31,
+            "codename": "add_platform"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 90,
+        "fields": {
+            "name": "Can change platform",
+            "content_type": 31,
+            "codename": "change_platform"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 91,
+        "fields": {
+            "name": "Can delete platform",
+            "content_type": 31,
+            "codename": "delete_platform"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 92,
+        "fields": {
+            "name": "Can view platform",
+            "content_type": 31,
+            "codename": "view_platform"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 93,
+        "fields": {
+            "name": "Can add power outlet",
+            "content_type": 4,
+            "codename": "add_poweroutlet"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 94,
+        "fields": {
+            "name": "Can change power outlet",
+            "content_type": 4,
+            "codename": "change_poweroutlet"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 95,
+        "fields": {
+            "name": "Can delete power outlet",
+            "content_type": 4,
+            "codename": "delete_poweroutlet"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 96,
+        "fields": {
+            "name": "Can view power outlet",
+            "content_type": 4,
+            "codename": "view_poweroutlet"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 97,
+        "fields": {
+            "name": "Can add power outlet template",
+            "content_type": 32,
+            "codename": "add_poweroutlettemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 98,
+        "fields": {
+            "name": "Can change power outlet template",
+            "content_type": 32,
+            "codename": "change_poweroutlettemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 99,
+        "fields": {
+            "name": "Can delete power outlet template",
+            "content_type": 32,
+            "codename": "delete_poweroutlettemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 100,
+        "fields": {
+            "name": "Can view power outlet template",
+            "content_type": 32,
+            "codename": "view_poweroutlettemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 101,
+        "fields": {
+            "name": "Can add power port",
+            "content_type": 3,
+            "codename": "add_powerport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 102,
+        "fields": {
+            "name": "Can change power port",
+            "content_type": 3,
+            "codename": "change_powerport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 103,
+        "fields": {
+            "name": "Can delete power port",
+            "content_type": 3,
+            "codename": "delete_powerport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 104,
+        "fields": {
+            "name": "Can view power port",
+            "content_type": 3,
+            "codename": "view_powerport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 105,
+        "fields": {
+            "name": "Can add power port template",
+            "content_type": 33,
+            "codename": "add_powerporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 106,
+        "fields": {
+            "name": "Can change power port template",
+            "content_type": 33,
+            "codename": "change_powerporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 107,
+        "fields": {
+            "name": "Can delete power port template",
+            "content_type": 33,
+            "codename": "delete_powerporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 108,
+        "fields": {
+            "name": "Can view power port template",
+            "content_type": 33,
+            "codename": "view_powerporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 109,
+        "fields": {
+            "name": "Can add rack",
+            "content_type": 34,
+            "codename": "add_rack"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 110,
+        "fields": {
+            "name": "Can change rack",
+            "content_type": 34,
+            "codename": "change_rack"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 111,
+        "fields": {
+            "name": "Can delete rack",
+            "content_type": 34,
+            "codename": "delete_rack"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 112,
+        "fields": {
+            "name": "Can view rack",
+            "content_type": 34,
+            "codename": "view_rack"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 113,
+        "fields": {
+            "name": "Can add rack group",
+            "content_type": 35,
+            "codename": "add_rackgroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 114,
+        "fields": {
+            "name": "Can change rack group",
+            "content_type": 35,
+            "codename": "change_rackgroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 115,
+        "fields": {
+            "name": "Can delete rack group",
+            "content_type": 35,
+            "codename": "delete_rackgroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 116,
+        "fields": {
+            "name": "Can view rack group",
+            "content_type": 35,
+            "codename": "view_rackgroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 117,
+        "fields": {
+            "name": "Can add site",
+            "content_type": 36,
+            "codename": "add_site"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 118,
+        "fields": {
+            "name": "Can change site",
+            "content_type": 36,
+            "codename": "change_site"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 119,
+        "fields": {
+            "name": "Can delete site",
+            "content_type": 36,
+            "codename": "delete_site"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 120,
+        "fields": {
+            "name": "Can view site",
+            "content_type": 36,
+            "codename": "view_site"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 121,
+        "fields": {
+            "name": "Can add device bay",
+            "content_type": 37,
+            "codename": "add_devicebay"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 122,
+        "fields": {
+            "name": "Can change device bay",
+            "content_type": 37,
+            "codename": "change_devicebay"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 123,
+        "fields": {
+            "name": "Can delete device bay",
+            "content_type": 37,
+            "codename": "delete_devicebay"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 124,
+        "fields": {
+            "name": "Can view device bay",
+            "content_type": 37,
+            "codename": "view_devicebay"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 125,
+        "fields": {
+            "name": "Can add device bay template",
+            "content_type": 38,
+            "codename": "add_devicebaytemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 126,
+        "fields": {
+            "name": "Can change device bay template",
+            "content_type": 38,
+            "codename": "change_devicebaytemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 127,
+        "fields": {
+            "name": "Can delete device bay template",
+            "content_type": 38,
+            "codename": "delete_devicebaytemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 128,
+        "fields": {
+            "name": "Can view device bay template",
+            "content_type": 38,
+            "codename": "view_devicebaytemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 129,
+        "fields": {
+            "name": "Can add rack role",
+            "content_type": 39,
+            "codename": "add_rackrole"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 130,
+        "fields": {
+            "name": "Can change rack role",
+            "content_type": 39,
+            "codename": "change_rackrole"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 131,
+        "fields": {
+            "name": "Can delete rack role",
+            "content_type": 39,
+            "codename": "delete_rackrole"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 132,
+        "fields": {
+            "name": "Can view rack role",
+            "content_type": 39,
+            "codename": "view_rackrole"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 133,
+        "fields": {
+            "name": "Can add rack reservation",
+            "content_type": 40,
+            "codename": "add_rackreservation"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 134,
+        "fields": {
+            "name": "Can change rack reservation",
+            "content_type": 40,
+            "codename": "change_rackreservation"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 135,
+        "fields": {
+            "name": "Can delete rack reservation",
+            "content_type": 40,
+            "codename": "delete_rackreservation"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 136,
+        "fields": {
+            "name": "Can view rack reservation",
+            "content_type": 40,
+            "codename": "view_rackreservation"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 137,
+        "fields": {
+            "name": "Can add region",
+            "content_type": 41,
+            "codename": "add_region"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 138,
+        "fields": {
+            "name": "Can change region",
+            "content_type": 41,
+            "codename": "change_region"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 139,
+        "fields": {
+            "name": "Can delete region",
+            "content_type": 41,
+            "codename": "delete_region"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 140,
+        "fields": {
+            "name": "Can view region",
+            "content_type": 41,
+            "codename": "view_region"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 141,
+        "fields": {
+            "name": "Can add inventory item",
+            "content_type": 42,
+            "codename": "add_inventoryitem"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 142,
+        "fields": {
+            "name": "Can change inventory item",
+            "content_type": 42,
+            "codename": "change_inventoryitem"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 143,
+        "fields": {
+            "name": "Can delete inventory item",
+            "content_type": 42,
+            "codename": "delete_inventoryitem"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 144,
+        "fields": {
+            "name": "Can view inventory item",
+            "content_type": 42,
+            "codename": "view_inventoryitem"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 145,
+        "fields": {
+            "name": "Can add virtual chassis",
+            "content_type": 43,
+            "codename": "add_virtualchassis"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 146,
+        "fields": {
+            "name": "Can change virtual chassis",
+            "content_type": 43,
+            "codename": "change_virtualchassis"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 147,
+        "fields": {
+            "name": "Can delete virtual chassis",
+            "content_type": 43,
+            "codename": "delete_virtualchassis"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 148,
+        "fields": {
+            "name": "Can view virtual chassis",
+            "content_type": 43,
+            "codename": "view_virtualchassis"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 149,
+        "fields": {
+            "name": "Can add front port",
+            "content_type": 9,
+            "codename": "add_frontport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 150,
+        "fields": {
+            "name": "Can change front port",
+            "content_type": 9,
+            "codename": "change_frontport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 151,
+        "fields": {
+            "name": "Can delete front port",
+            "content_type": 9,
+            "codename": "delete_frontport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 152,
+        "fields": {
+            "name": "Can view front port",
+            "content_type": 9,
+            "codename": "view_frontport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 153,
+        "fields": {
+            "name": "Can add front port template",
+            "content_type": 44,
+            "codename": "add_frontporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 154,
+        "fields": {
+            "name": "Can change front port template",
+            "content_type": 44,
+            "codename": "change_frontporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 155,
+        "fields": {
+            "name": "Can delete front port template",
+            "content_type": 44,
+            "codename": "delete_frontporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 156,
+        "fields": {
+            "name": "Can view front port template",
+            "content_type": 44,
+            "codename": "view_frontporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 157,
+        "fields": {
+            "name": "Can add rear port",
+            "content_type": 10,
+            "codename": "add_rearport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 158,
+        "fields": {
+            "name": "Can change rear port",
+            "content_type": 10,
+            "codename": "change_rearport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 159,
+        "fields": {
+            "name": "Can delete rear port",
+            "content_type": 10,
+            "codename": "delete_rearport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 160,
+        "fields": {
+            "name": "Can view rear port",
+            "content_type": 10,
+            "codename": "view_rearport"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 161,
+        "fields": {
+            "name": "Can add rear port template",
+            "content_type": 45,
+            "codename": "add_rearporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 162,
+        "fields": {
+            "name": "Can change rear port template",
+            "content_type": 45,
+            "codename": "change_rearporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 163,
+        "fields": {
+            "name": "Can delete rear port template",
+            "content_type": 45,
+            "codename": "delete_rearporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 164,
+        "fields": {
+            "name": "Can view rear port template",
+            "content_type": 45,
+            "codename": "view_rearporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 165,
+        "fields": {
+            "name": "Can add cable",
+            "content_type": 46,
+            "codename": "add_cable"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 166,
+        "fields": {
+            "name": "Can change cable",
+            "content_type": 46,
+            "codename": "change_cable"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 167,
+        "fields": {
+            "name": "Can delete cable",
+            "content_type": 46,
+            "codename": "delete_cable"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 168,
+        "fields": {
+            "name": "Can view cable",
+            "content_type": 46,
+            "codename": "view_cable"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 169,
+        "fields": {
+            "name": "Can add power feed",
+            "content_type": 11,
+            "codename": "add_powerfeed"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 170,
+        "fields": {
+            "name": "Can change power feed",
+            "content_type": 11,
+            "codename": "change_powerfeed"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 171,
+        "fields": {
+            "name": "Can delete power feed",
+            "content_type": 11,
+            "codename": "delete_powerfeed"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 172,
+        "fields": {
+            "name": "Can view power feed",
+            "content_type": 11,
+            "codename": "view_powerfeed"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 173,
+        "fields": {
+            "name": "Can add power panel",
+            "content_type": 47,
+            "codename": "add_powerpanel"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 174,
+        "fields": {
+            "name": "Can change power panel",
+            "content_type": 47,
+            "codename": "change_powerpanel"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 175,
+        "fields": {
+            "name": "Can delete power panel",
+            "content_type": 47,
+            "codename": "delete_powerpanel"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 176,
+        "fields": {
+            "name": "Can view power panel",
+            "content_type": 47,
+            "codename": "view_powerpanel"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 177,
+        "fields": {
+            "name": "Can add cable path",
+            "content_type": 48,
+            "codename": "add_cablepath"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 178,
+        "fields": {
+            "name": "Can change cable path",
+            "content_type": 48,
+            "codename": "change_cablepath"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 179,
+        "fields": {
+            "name": "Can delete cable path",
+            "content_type": 48,
+            "codename": "delete_cablepath"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 180,
+        "fields": {
+            "name": "Can view cable path",
+            "content_type": 48,
+            "codename": "view_cablepath"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 181,
+        "fields": {
+            "name": "Can add aggregate",
+            "content_type": 49,
+            "codename": "add_aggregate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 182,
+        "fields": {
+            "name": "Can change aggregate",
+            "content_type": 49,
+            "codename": "change_aggregate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 183,
+        "fields": {
+            "name": "Can delete aggregate",
+            "content_type": 49,
+            "codename": "delete_aggregate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 184,
+        "fields": {
+            "name": "Can view aggregate",
+            "content_type": 49,
+            "codename": "view_aggregate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 185,
+        "fields": {
+            "name": "Can add IP address",
+            "content_type": 50,
+            "codename": "add_ipaddress"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 186,
+        "fields": {
+            "name": "Can change IP address",
+            "content_type": 50,
+            "codename": "change_ipaddress"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 187,
+        "fields": {
+            "name": "Can delete IP address",
+            "content_type": 50,
+            "codename": "delete_ipaddress"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 188,
+        "fields": {
+            "name": "Can view IP address",
+            "content_type": 50,
+            "codename": "view_ipaddress"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 189,
+        "fields": {
+            "name": "Can add prefix",
+            "content_type": 51,
+            "codename": "add_prefix"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 190,
+        "fields": {
+            "name": "Can change prefix",
+            "content_type": 51,
+            "codename": "change_prefix"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 191,
+        "fields": {
+            "name": "Can delete prefix",
+            "content_type": 51,
+            "codename": "delete_prefix"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 192,
+        "fields": {
+            "name": "Can view prefix",
+            "content_type": 51,
+            "codename": "view_prefix"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 193,
+        "fields": {
+            "name": "Can add RIR",
+            "content_type": 52,
+            "codename": "add_rir"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 194,
+        "fields": {
+            "name": "Can change RIR",
+            "content_type": 52,
+            "codename": "change_rir"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 195,
+        "fields": {
+            "name": "Can delete RIR",
+            "content_type": 52,
+            "codename": "delete_rir"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 196,
+        "fields": {
+            "name": "Can view RIR",
+            "content_type": 52,
+            "codename": "view_rir"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 197,
+        "fields": {
+            "name": "Can add role",
+            "content_type": 53,
+            "codename": "add_role"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 198,
+        "fields": {
+            "name": "Can change role",
+            "content_type": 53,
+            "codename": "change_role"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 199,
+        "fields": {
+            "name": "Can delete role",
+            "content_type": 53,
+            "codename": "delete_role"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 200,
+        "fields": {
+            "name": "Can view role",
+            "content_type": 53,
+            "codename": "view_role"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 201,
+        "fields": {
+            "name": "Can add VLAN",
+            "content_type": 54,
+            "codename": "add_vlan"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 202,
+        "fields": {
+            "name": "Can change VLAN",
+            "content_type": 54,
+            "codename": "change_vlan"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 203,
+        "fields": {
+            "name": "Can delete VLAN",
+            "content_type": 54,
+            "codename": "delete_vlan"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 204,
+        "fields": {
+            "name": "Can view VLAN",
+            "content_type": 54,
+            "codename": "view_vlan"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 205,
+        "fields": {
+            "name": "Can add VRF",
+            "content_type": 55,
+            "codename": "add_vrf"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 206,
+        "fields": {
+            "name": "Can change VRF",
+            "content_type": 55,
+            "codename": "change_vrf"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 207,
+        "fields": {
+            "name": "Can delete VRF",
+            "content_type": 55,
+            "codename": "delete_vrf"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 208,
+        "fields": {
+            "name": "Can view VRF",
+            "content_type": 55,
+            "codename": "view_vrf"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 209,
+        "fields": {
+            "name": "Can add VLAN group",
+            "content_type": 56,
+            "codename": "add_vlangroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 210,
+        "fields": {
+            "name": "Can change VLAN group",
+            "content_type": 56,
+            "codename": "change_vlangroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 211,
+        "fields": {
+            "name": "Can delete VLAN group",
+            "content_type": 56,
+            "codename": "delete_vlangroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 212,
+        "fields": {
+            "name": "Can view VLAN group",
+            "content_type": 56,
+            "codename": "view_vlangroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 213,
+        "fields": {
+            "name": "Can add service",
+            "content_type": 57,
+            "codename": "add_service"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 214,
+        "fields": {
+            "name": "Can change service",
+            "content_type": 57,
+            "codename": "change_service"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 215,
+        "fields": {
+            "name": "Can delete service",
+            "content_type": 57,
+            "codename": "delete_service"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 216,
+        "fields": {
+            "name": "Can view service",
+            "content_type": 57,
+            "codename": "view_service"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 217,
+        "fields": {
+            "name": "Can add route target",
+            "content_type": 58,
+            "codename": "add_routetarget"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 218,
+        "fields": {
+            "name": "Can change route target",
+            "content_type": 58,
+            "codename": "change_routetarget"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 219,
+        "fields": {
+            "name": "Can delete route target",
+            "content_type": 58,
+            "codename": "delete_routetarget"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 220,
+        "fields": {
+            "name": "Can view route target",
+            "content_type": 58,
+            "codename": "view_routetarget"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 221,
+        "fields": {
+            "name": "Can add export template",
+            "content_type": 59,
+            "codename": "add_exporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 222,
+        "fields": {
+            "name": "Can change export template",
+            "content_type": 59,
+            "codename": "change_exporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 223,
+        "fields": {
+            "name": "Can delete export template",
+            "content_type": 59,
+            "codename": "delete_exporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 224,
+        "fields": {
+            "name": "Can view export template",
+            "content_type": 59,
+            "codename": "view_exporttemplate"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 225,
+        "fields": {
+            "name": "Can add custom field",
+            "content_type": 60,
+            "codename": "add_customfield"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 226,
+        "fields": {
+            "name": "Can change custom field",
+            "content_type": 60,
+            "codename": "change_customfield"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 227,
+        "fields": {
+            "name": "Can delete custom field",
+            "content_type": 60,
+            "codename": "delete_customfield"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 228,
+        "fields": {
+            "name": "Can view custom field",
+            "content_type": 60,
+            "codename": "view_customfield"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 229,
+        "fields": {
+            "name": "Can add image attachment",
+            "content_type": 61,
+            "codename": "add_imageattachment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 230,
+        "fields": {
+            "name": "Can change image attachment",
+            "content_type": 61,
+            "codename": "change_imageattachment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 231,
+        "fields": {
+            "name": "Can delete image attachment",
+            "content_type": 61,
+            "codename": "delete_imageattachment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 232,
+        "fields": {
+            "name": "Can view image attachment",
+            "content_type": 61,
+            "codename": "view_imageattachment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 233,
+        "fields": {
+            "name": "Can add webhook",
+            "content_type": 62,
+            "codename": "add_webhook"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 234,
+        "fields": {
+            "name": "Can change webhook",
+            "content_type": 62,
+            "codename": "change_webhook"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 235,
+        "fields": {
+            "name": "Can delete webhook",
+            "content_type": 62,
+            "codename": "delete_webhook"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 236,
+        "fields": {
+            "name": "Can view webhook",
+            "content_type": 62,
+            "codename": "view_webhook"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 237,
+        "fields": {
+            "name": "Can add object change",
+            "content_type": 63,
+            "codename": "add_objectchange"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 238,
+        "fields": {
+            "name": "Can change object change",
+            "content_type": 63,
+            "codename": "change_objectchange"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 239,
+        "fields": {
+            "name": "Can delete object change",
+            "content_type": 63,
+            "codename": "delete_objectchange"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 240,
+        "fields": {
+            "name": "Can view object change",
+            "content_type": 63,
+            "codename": "view_objectchange"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 241,
+        "fields": {
+            "name": "Can add config context",
+            "content_type": 64,
+            "codename": "add_configcontext"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 242,
+        "fields": {
+            "name": "Can change config context",
+            "content_type": 64,
+            "codename": "change_configcontext"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 243,
+        "fields": {
+            "name": "Can delete config context",
+            "content_type": 64,
+            "codename": "delete_configcontext"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 244,
+        "fields": {
+            "name": "Can view config context",
+            "content_type": 64,
+            "codename": "view_configcontext"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 245,
+        "fields": {
+            "name": "Can add tag",
+            "content_type": 65,
+            "codename": "add_tag"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 246,
+        "fields": {
+            "name": "Can change tag",
+            "content_type": 65,
+            "codename": "change_tag"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 247,
+        "fields": {
+            "name": "Can delete tag",
+            "content_type": 65,
+            "codename": "delete_tag"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 248,
+        "fields": {
+            "name": "Can view tag",
+            "content_type": 65,
+            "codename": "view_tag"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 249,
+        "fields": {
+            "name": "Can add tagged item",
+            "content_type": 66,
+            "codename": "add_taggeditem"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 250,
+        "fields": {
+            "name": "Can change tagged item",
+            "content_type": 66,
+            "codename": "change_taggeditem"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 251,
+        "fields": {
+            "name": "Can delete tagged item",
+            "content_type": 66,
+            "codename": "delete_taggeditem"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 252,
+        "fields": {
+            "name": "Can view tagged item",
+            "content_type": 66,
+            "codename": "view_taggeditem"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 253,
+        "fields": {
+            "name": "Can add custom link",
+            "content_type": 67,
+            "codename": "add_customlink"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 254,
+        "fields": {
+            "name": "Can change custom link",
+            "content_type": 67,
+            "codename": "change_customlink"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 255,
+        "fields": {
+            "name": "Can delete custom link",
+            "content_type": 67,
+            "codename": "delete_customlink"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 256,
+        "fields": {
+            "name": "Can view custom link",
+            "content_type": 67,
+            "codename": "view_customlink"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 257,
+        "fields": {
+            "name": "Can add script",
+            "content_type": 68,
+            "codename": "add_script"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 258,
+        "fields": {
+            "name": "Can change script",
+            "content_type": 68,
+            "codename": "change_script"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 259,
+        "fields": {
+            "name": "Can delete script",
+            "content_type": 68,
+            "codename": "delete_script"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 260,
+        "fields": {
+            "name": "Can view script",
+            "content_type": 68,
+            "codename": "view_script"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 261,
+        "fields": {
+            "name": "Can add report",
+            "content_type": 12,
+            "codename": "add_report"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 262,
+        "fields": {
+            "name": "Can change report",
+            "content_type": 12,
+            "codename": "change_report"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 263,
+        "fields": {
+            "name": "Can delete report",
+            "content_type": 12,
+            "codename": "delete_report"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 264,
+        "fields": {
+            "name": "Can view report",
+            "content_type": 12,
+            "codename": "view_report"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 265,
+        "fields": {
+            "name": "Can add job result",
+            "content_type": 69,
+            "codename": "add_jobresult"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 266,
+        "fields": {
+            "name": "Can change job result",
+            "content_type": 69,
+            "codename": "change_jobresult"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 267,
+        "fields": {
+            "name": "Can delete job result",
+            "content_type": 69,
+            "codename": "delete_jobresult"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 268,
+        "fields": {
+            "name": "Can view job result",
+            "content_type": 69,
+            "codename": "view_jobresult"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 269,
+        "fields": {
+            "name": "Can add secret",
+            "content_type": 70,
+            "codename": "add_secret"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 270,
+        "fields": {
+            "name": "Can change secret",
+            "content_type": 70,
+            "codename": "change_secret"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 271,
+        "fields": {
+            "name": "Can delete secret",
+            "content_type": 70,
+            "codename": "delete_secret"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 272,
+        "fields": {
+            "name": "Can view secret",
+            "content_type": 70,
+            "codename": "view_secret"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 273,
+        "fields": {
+            "name": "Can add secret role",
+            "content_type": 71,
+            "codename": "add_secretrole"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 274,
+        "fields": {
+            "name": "Can change secret role",
+            "content_type": 71,
+            "codename": "change_secretrole"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 275,
+        "fields": {
+            "name": "Can delete secret role",
+            "content_type": 71,
+            "codename": "delete_secretrole"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 276,
+        "fields": {
+            "name": "Can view secret role",
+            "content_type": 71,
+            "codename": "view_secretrole"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 277,
+        "fields": {
+            "name": "Can add user key",
+            "content_type": 72,
+            "codename": "add_userkey"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 278,
+        "fields": {
+            "name": "Can change user key",
+            "content_type": 72,
+            "codename": "change_userkey"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 279,
+        "fields": {
+            "name": "Can delete user key",
+            "content_type": 72,
+            "codename": "delete_userkey"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 280,
+        "fields": {
+            "name": "Can view user key",
+            "content_type": 72,
+            "codename": "view_userkey"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 281,
+        "fields": {
+            "name": "Can add session key",
+            "content_type": 73,
+            "codename": "add_sessionkey"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 282,
+        "fields": {
+            "name": "Can change session key",
+            "content_type": 73,
+            "codename": "change_sessionkey"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 283,
+        "fields": {
+            "name": "Can delete session key",
+            "content_type": 73,
+            "codename": "delete_sessionkey"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 284,
+        "fields": {
+            "name": "Can view session key",
+            "content_type": 73,
+            "codename": "view_sessionkey"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 285,
+        "fields": {
+            "name": "Can add tenant",
+            "content_type": 74,
+            "codename": "add_tenant"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 286,
+        "fields": {
+            "name": "Can change tenant",
+            "content_type": 74,
+            "codename": "change_tenant"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 287,
+        "fields": {
+            "name": "Can delete tenant",
+            "content_type": 74,
+            "codename": "delete_tenant"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 288,
+        "fields": {
+            "name": "Can view tenant",
+            "content_type": 74,
+            "codename": "view_tenant"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 289,
+        "fields": {
+            "name": "Can add tenant group",
+            "content_type": 75,
+            "codename": "add_tenantgroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 290,
+        "fields": {
+            "name": "Can change tenant group",
+            "content_type": 75,
+            "codename": "change_tenantgroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 291,
+        "fields": {
+            "name": "Can delete tenant group",
+            "content_type": 75,
+            "codename": "delete_tenantgroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 292,
+        "fields": {
+            "name": "Can view tenant group",
+            "content_type": 75,
+            "codename": "view_tenantgroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 293,
+        "fields": {
+            "name": "Can add token",
+            "content_type": 76,
+            "codename": "add_token"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 294,
+        "fields": {
+            "name": "Can change token",
+            "content_type": 76,
+            "codename": "change_token"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 295,
+        "fields": {
+            "name": "Can delete token",
+            "content_type": 76,
+            "codename": "delete_token"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 296,
+        "fields": {
+            "name": "Can view token",
+            "content_type": 76,
+            "codename": "view_token"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 297,
+        "fields": {
+            "name": "Can add User Preferences",
+            "content_type": 77,
+            "codename": "add_userconfig"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 298,
+        "fields": {
+            "name": "Can change User Preferences",
+            "content_type": 77,
+            "codename": "change_userconfig"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 299,
+        "fields": {
+            "name": "Can delete User Preferences",
+            "content_type": 77,
+            "codename": "delete_userconfig"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 300,
+        "fields": {
+            "name": "Can view User Preferences",
+            "content_type": 77,
+            "codename": "view_userconfig"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 301,
+        "fields": {
+            "name": "Can add Group",
+            "content_type": 78,
+            "codename": "add_admingroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 302,
+        "fields": {
+            "name": "Can change Group",
+            "content_type": 78,
+            "codename": "change_admingroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 303,
+        "fields": {
+            "name": "Can delete Group",
+            "content_type": 78,
+            "codename": "delete_admingroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 304,
+        "fields": {
+            "name": "Can view Group",
+            "content_type": 78,
+            "codename": "view_admingroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 305,
+        "fields": {
+            "name": "Can add User",
+            "content_type": 79,
+            "codename": "add_adminuser"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 306,
+        "fields": {
+            "name": "Can change User",
+            "content_type": 79,
+            "codename": "change_adminuser"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 307,
+        "fields": {
+            "name": "Can delete User",
+            "content_type": 79,
+            "codename": "delete_adminuser"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 308,
+        "fields": {
+            "name": "Can view User",
+            "content_type": 79,
+            "codename": "view_adminuser"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 309,
+        "fields": {
+            "name": "Can add permission",
+            "content_type": 80,
+            "codename": "add_objectpermission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 310,
+        "fields": {
+            "name": "Can change permission",
+            "content_type": 80,
+            "codename": "change_objectpermission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 311,
+        "fields": {
+            "name": "Can delete permission",
+            "content_type": 80,
+            "codename": "delete_objectpermission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 312,
+        "fields": {
+            "name": "Can view permission",
+            "content_type": 80,
+            "codename": "view_objectpermission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 313,
+        "fields": {
+            "name": "Can add cluster",
+            "content_type": 81,
+            "codename": "add_cluster"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 314,
+        "fields": {
+            "name": "Can change cluster",
+            "content_type": 81,
+            "codename": "change_cluster"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 315,
+        "fields": {
+            "name": "Can delete cluster",
+            "content_type": 81,
+            "codename": "delete_cluster"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 316,
+        "fields": {
+            "name": "Can view cluster",
+            "content_type": 81,
+            "codename": "view_cluster"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 317,
+        "fields": {
+            "name": "Can add cluster group",
+            "content_type": 82,
+            "codename": "add_clustergroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 318,
+        "fields": {
+            "name": "Can change cluster group",
+            "content_type": 82,
+            "codename": "change_clustergroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 319,
+        "fields": {
+            "name": "Can delete cluster group",
+            "content_type": 82,
+            "codename": "delete_clustergroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 320,
+        "fields": {
+            "name": "Can view cluster group",
+            "content_type": 82,
+            "codename": "view_clustergroup"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 321,
+        "fields": {
+            "name": "Can add cluster type",
+            "content_type": 83,
+            "codename": "add_clustertype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 322,
+        "fields": {
+            "name": "Can change cluster type",
+            "content_type": 83,
+            "codename": "change_clustertype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 323,
+        "fields": {
+            "name": "Can delete cluster type",
+            "content_type": 83,
+            "codename": "delete_clustertype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 324,
+        "fields": {
+            "name": "Can view cluster type",
+            "content_type": 83,
+            "codename": "view_clustertype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 325,
+        "fields": {
+            "name": "Can add virtual machine",
+            "content_type": 84,
+            "codename": "add_virtualmachine"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 326,
+        "fields": {
+            "name": "Can change virtual machine",
+            "content_type": 84,
+            "codename": "change_virtualmachine"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 327,
+        "fields": {
+            "name": "Can delete virtual machine",
+            "content_type": 84,
+            "codename": "delete_virtualmachine"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 328,
+        "fields": {
+            "name": "Can view virtual machine",
+            "content_type": 84,
+            "codename": "view_virtualmachine"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 329,
+        "fields": {
+            "name": "Can add interface",
+            "content_type": 8,
+            "codename": "add_vminterface"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 330,
+        "fields": {
+            "name": "Can change interface",
+            "content_type": 8,
+            "codename": "change_vminterface"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 331,
+        "fields": {
+            "name": "Can delete interface",
+            "content_type": 8,
+            "codename": "delete_vminterface"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 332,
+        "fields": {
+            "name": "Can view interface",
+            "content_type": 8,
+            "codename": "view_vminterface"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$da6CZRwS7Ti6$GIUYlTXeEOyZIuEgQTEkohHnvmd3kDn0OCyuT1dM+H4=",
+            "last_login": "2021-02-21T23:25:39.132Z",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "Andy",
+            "last_name": "Ministrator",
+            "email": "admin@example.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2021-02-21T22:47:00.374Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 1,
+        "fields": {
+            "app_label": "dcim",
+            "model": "consoleport"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 2,
+        "fields": {
+            "app_label": "dcim",
+            "model": "consoleserverport"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 3,
+        "fields": {
+            "app_label": "dcim",
+            "model": "powerport"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 4,
+        "fields": {
+            "app_label": "dcim",
+            "model": "poweroutlet"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 5,
+        "fields": {
+            "app_label": "dcim",
+            "model": "interface"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 7,
+        "fields": {
+            "app_label": "circuits",
+            "model": "circuittermination"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 8,
+        "fields": {
+            "app_label": "virtualization",
+            "model": "vminterface"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 9,
+        "fields": {
+            "app_label": "dcim",
+            "model": "frontport"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 10,
+        "fields": {
+            "app_label": "dcim",
+            "model": "rearport"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 11,
+        "fields": {
+            "app_label": "dcim",
+            "model": "powerfeed"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 12,
+        "fields": {
+            "app_label": "extras",
+            "model": "report"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 13,
+        "fields": {
+            "app_label": "dcim",
+            "model": "device"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 14,
+        "fields": {
+            "app_label": "admin",
+            "model": "logentry"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 15,
+        "fields": {
+            "app_label": "auth",
+            "model": "permission"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 16,
+        "fields": {
+            "app_label": "auth",
+            "model": "group"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 17,
+        "fields": {
+            "app_label": "auth",
+            "model": "user"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 18,
+        "fields": {
+            "app_label": "contenttypes",
+            "model": "contenttype"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 19,
+        "fields": {
+            "app_label": "sessions",
+            "model": "session"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 20,
+        "fields": {
+            "app_label": "taggit",
+            "model": "tag"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 21,
+        "fields": {
+            "app_label": "taggit",
+            "model": "taggeditem"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 22,
+        "fields": {
+            "app_label": "circuits",
+            "model": "circuit"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 23,
+        "fields": {
+            "app_label": "circuits",
+            "model": "circuittype"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 24,
+        "fields": {
+            "app_label": "circuits",
+            "model": "provider"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 25,
+        "fields": {
+            "app_label": "dcim",
+            "model": "consoleporttemplate"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 26,
+        "fields": {
+            "app_label": "dcim",
+            "model": "consoleserverporttemplate"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 27,
+        "fields": {
+            "app_label": "dcim",
+            "model": "devicerole"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 28,
+        "fields": {
+            "app_label": "dcim",
+            "model": "devicetype"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 29,
+        "fields": {
+            "app_label": "dcim",
+            "model": "interfacetemplate"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 30,
+        "fields": {
+            "app_label": "dcim",
+            "model": "manufacturer"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 31,
+        "fields": {
+            "app_label": "dcim",
+            "model": "platform"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 32,
+        "fields": {
+            "app_label": "dcim",
+            "model": "poweroutlettemplate"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 33,
+        "fields": {
+            "app_label": "dcim",
+            "model": "powerporttemplate"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 34,
+        "fields": {
+            "app_label": "dcim",
+            "model": "rack"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 35,
+        "fields": {
+            "app_label": "dcim",
+            "model": "rackgroup"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 36,
+        "fields": {
+            "app_label": "dcim",
+            "model": "site"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 37,
+        "fields": {
+            "app_label": "dcim",
+            "model": "devicebay"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 38,
+        "fields": {
+            "app_label": "dcim",
+            "model": "devicebaytemplate"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 39,
+        "fields": {
+            "app_label": "dcim",
+            "model": "rackrole"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 40,
+        "fields": {
+            "app_label": "dcim",
+            "model": "rackreservation"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 41,
+        "fields": {
+            "app_label": "dcim",
+            "model": "region"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 42,
+        "fields": {
+            "app_label": "dcim",
+            "model": "inventoryitem"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 43,
+        "fields": {
+            "app_label": "dcim",
+            "model": "virtualchassis"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 44,
+        "fields": {
+            "app_label": "dcim",
+            "model": "frontporttemplate"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 45,
+        "fields": {
+            "app_label": "dcim",
+            "model": "rearporttemplate"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 46,
+        "fields": {
+            "app_label": "dcim",
+            "model": "cable"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 47,
+        "fields": {
+            "app_label": "dcim",
+            "model": "powerpanel"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 48,
+        "fields": {
+            "app_label": "dcim",
+            "model": "cablepath"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 49,
+        "fields": {
+            "app_label": "ipam",
+            "model": "aggregate"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 50,
+        "fields": {
+            "app_label": "ipam",
+            "model": "ipaddress"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 51,
+        "fields": {
+            "app_label": "ipam",
+            "model": "prefix"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 52,
+        "fields": {
+            "app_label": "ipam",
+            "model": "rir"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 53,
+        "fields": {
+            "app_label": "ipam",
+            "model": "role"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 54,
+        "fields": {
+            "app_label": "ipam",
+            "model": "vlan"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 55,
+        "fields": {
+            "app_label": "ipam",
+            "model": "vrf"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 56,
+        "fields": {
+            "app_label": "ipam",
+            "model": "vlangroup"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 57,
+        "fields": {
+            "app_label": "ipam",
+            "model": "service"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 58,
+        "fields": {
+            "app_label": "ipam",
+            "model": "routetarget"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 59,
+        "fields": {
+            "app_label": "extras",
+            "model": "exporttemplate"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 60,
+        "fields": {
+            "app_label": "extras",
+            "model": "customfield"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 61,
+        "fields": {
+            "app_label": "extras",
+            "model": "imageattachment"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 62,
+        "fields": {
+            "app_label": "extras",
+            "model": "webhook"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 63,
+        "fields": {
+            "app_label": "extras",
+            "model": "objectchange"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 64,
+        "fields": {
+            "app_label": "extras",
+            "model": "configcontext"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 65,
+        "fields": {
+            "app_label": "extras",
+            "model": "tag"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 66,
+        "fields": {
+            "app_label": "extras",
+            "model": "taggeditem"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 67,
+        "fields": {
+            "app_label": "extras",
+            "model": "customlink"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 68,
+        "fields": {
+            "app_label": "extras",
+            "model": "script"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 69,
+        "fields": {
+            "app_label": "extras",
+            "model": "jobresult"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 70,
+        "fields": {
+            "app_label": "secrets",
+            "model": "secret"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 71,
+        "fields": {
+            "app_label": "secrets",
+            "model": "secretrole"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 72,
+        "fields": {
+            "app_label": "secrets",
+            "model": "userkey"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 73,
+        "fields": {
+            "app_label": "secrets",
+            "model": "sessionkey"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 74,
+        "fields": {
+            "app_label": "tenancy",
+            "model": "tenant"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 75,
+        "fields": {
+            "app_label": "tenancy",
+            "model": "tenantgroup"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 76,
+        "fields": {
+            "app_label": "users",
+            "model": "token"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 77,
+        "fields": {
+            "app_label": "users",
+            "model": "userconfig"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 78,
+        "fields": {
+            "app_label": "users",
+            "model": "admingroup"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 79,
+        "fields": {
+            "app_label": "users",
+            "model": "adminuser"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 80,
+        "fields": {
+            "app_label": "users",
+            "model": "objectpermission"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 81,
+        "fields": {
+            "app_label": "virtualization",
+            "model": "cluster"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 82,
+        "fields": {
+            "app_label": "virtualization",
+            "model": "clustergroup"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 83,
+        "fields": {
+            "app_label": "virtualization",
+            "model": "clustertype"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 84,
+        "fields": {
+            "app_label": "virtualization",
+            "model": "virtualmachine"
+        }
+    },
+    {
+        "model": "circuits.provider",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:53:40.570Z",
+            "custom_field_data": {},
+            "name": "Provider A",
+            "slug": "provider-a",
+            "asn": 11111,
+            "account": "A",
+            "portal_url": "http://example.com",
+            "noc_contact": "A",
+            "admin_contact": "A",
+            "comments": ""
+        }
+    },
+    {
+        "model": "circuits.provider",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:54:00.156Z",
+            "custom_field_data": {},
+            "name": "Provider B",
+            "slug": "provider-b",
+            "asn": 2222,
+            "account": "",
+            "portal_url": "",
+            "noc_contact": "",
+            "admin_contact": "",
+            "comments": ""
+        }
+    },
+    {
+        "model": "circuits.circuittype",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:53:08.389Z",
+            "name": "Circuit Type A",
+            "slug": "circuit-type-a",
+            "description": "A"
+        }
+    },
+    {
+        "model": "circuits.circuittype",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:53:14.144Z",
+            "name": "Circuit Type B",
+            "slug": "circuit-type-b",
+            "description": ""
+        }
+    },
+    {
+        "model": "circuits.circuit",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:58:33.271Z",
+            "custom_field_data": {},
+            "cid": "Circuit A",
+            "provider": 1,
+            "type": 1,
+            "status": "active",
+            "tenant": 1,
+            "install_date": "2021-02-21",
+            "commit_rate": 1,
+            "description": "A",
+            "comments": "A"
+        }
+    },
+    {
+        "model": "circuits.circuit",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:56:05.012Z",
+            "custom_field_data": {},
+            "cid": "Circuit B",
+            "provider": 2,
+            "type": 2,
+            "status": "active",
+            "tenant": 2,
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "comments": ""
+        }
+    },
+    {
+        "model": "circuits.circuittermination",
+        "pk": 1,
+        "fields": {
+            "cable": 7,
+            "_cable_peer_type": 7,
+            "_cable_peer_id": 2,
+            "_path": 9,
+            "circuit": 2,
+            "term_side": "A",
+            "site": 2,
+            "port_speed": 1,
+            "upstream_speed": 1,
+            "xconnect_id": "B",
+            "pp_info": "B",
+            "description": "B"
+        }
+    },
+    {
+        "model": "circuits.circuittermination",
+        "pk": 2,
+        "fields": {
+            "cable": 7,
+            "_cable_peer_type": 7,
+            "_cable_peer_id": 1,
+            "_path": 10,
+            "circuit": 2,
+            "term_side": "Z",
+            "site": 2,
+            "port_speed": null,
+            "upstream_speed": null,
+            "xconnect_id": "",
+            "pp_info": "",
+            "description": ""
+        }
+    },
+    {
+        "model": "circuits.circuittermination",
+        "pk": 3,
+        "fields": {
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "circuit": 1,
+            "term_side": "A",
+            "site": 1,
+            "port_speed": null,
+            "upstream_speed": null,
+            "xconnect_id": "",
+            "pp_info": "",
+            "description": ""
+        }
+    },
+    {
+        "model": "dcim.consoleport",
+        "pk": 1,
+        "fields": {
+            "device": 1,
+            "name": "Device A Console",
+            "_name": "Device A Console",
+            "label": "",
+            "description": "",
+            "cable": 4,
+            "_cable_peer_type": 2,
+            "_cable_peer_id": 1,
+            "_path": 3,
+            "type": "usb-a"
+        }
+    },
+    {
+        "model": "dcim.consoleport",
+        "pk": 2,
+        "fields": {
+            "device": 3,
+            "name": "Device B Console",
+            "_name": "Device B Console",
+            "label": "beta",
+            "description": "B",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "db-25"
+        }
+    },
+    {
+        "model": "dcim.consoleserverport",
+        "pk": 1,
+        "fields": {
+            "device": 2,
+            "name": "Device A Console Server",
+            "_name": "Device A Console Server",
+            "label": "",
+            "description": "",
+            "cable": 4,
+            "_cable_peer_type": 1,
+            "_cable_peer_id": 1,
+            "_path": 4,
+            "type": "rj-45"
+        }
+    },
+    {
+        "model": "dcim.consoleserverport",
+        "pk": 2,
+        "fields": {
+            "device": 3,
+            "name": "Device B Console Server",
+            "_name": "Device B Console Server",
+            "label": "",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "rj-45"
+        }
+    },
+    {
+        "model": "dcim.powerport",
+        "pk": 1,
+        "fields": {
+            "device": 1,
+            "name": "Device A Power",
+            "_name": "Device A Power",
+            "label": "",
+            "description": "",
+            "cable": 5,
+            "_cable_peer_type": 4,
+            "_cable_peer_id": 2,
+            "_path": 5,
+            "type": "nema-6-20p",
+            "maximum_draw": 100,
+            "allocated_draw": 10
+        }
+    },
+    {
+        "model": "dcim.powerport",
+        "pk": 2,
+        "fields": {
+            "device": 3,
+            "name": "Device B Power Port",
+            "_name": "Device B Power Port",
+            "label": "",
+            "description": "",
+            "cable": 6,
+            "_cable_peer_type": 4,
+            "_cable_peer_id": 1,
+            "_path": 8,
+            "type": "iec-60320-c8",
+            "maximum_draw": null,
+            "allocated_draw": null
+        }
+    },
+    {
+        "model": "dcim.powerport",
+        "pk": 3,
+        "fields": {
+            "device": 2,
+            "name": "Device A Child Power Port",
+            "_name": "Device A Child Power Port",
+            "label": "",
+            "description": "",
+            "cable": 8,
+            "_cable_peer_type": 11,
+            "_cable_peer_id": 1,
+            "_path": 12,
+            "type": "",
+            "maximum_draw": null,
+            "allocated_draw": null
+        }
+    },
+    {
+        "model": "dcim.poweroutlet",
+        "pk": 1,
+        "fields": {
+            "device": 1,
+            "name": "Device A Power Outlet",
+            "_name": "Device A Power Outlet",
+            "label": "",
+            "description": "",
+            "cable": 6,
+            "_cable_peer_type": 3,
+            "_cable_peer_id": 2,
+            "_path": 7,
+            "type": "iec-60320-c5",
+            "power_port": 1,
+            "feed_leg": "A"
+        }
+    },
+    {
+        "model": "dcim.poweroutlet",
+        "pk": 2,
+        "fields": {
+            "device": 3,
+            "name": "Device B Power Outlet",
+            "_name": "Device B Power Outlet",
+            "label": "",
+            "description": "",
+            "cable": 5,
+            "_cable_peer_type": 3,
+            "_cable_peer_id": 1,
+            "_path": 6,
+            "type": "iec-60320-c13",
+            "power_port": null,
+            "feed_leg": "B"
+        }
+    },
+    {
+        "model": "dcim.interface",
+        "pk": 1,
+        "fields": {
+            "device": 1,
+            "name": "Device A LAG",
+            "label": "",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "enabled": true,
+            "mac_address": null,
+            "mtu": null,
+            "mode": "access",
+            "_name": "9999999999999999Device A LAG..................",
+            "lag": null,
+            "type": "lag",
+            "mgmt_only": false,
+            "untagged_vlan": 1,
+            "tagged_vlans": []
+        }
+    },
+    {
+        "model": "dcim.interface",
+        "pk": 2,
+        "fields": {
+            "device": 1,
+            "name": "Device A LAG Child",
+            "label": "",
+            "description": "",
+            "cable": 1,
+            "_cable_peer_type": 5,
+            "_cable_peer_id": 3,
+            "_path": 1,
+            "enabled": true,
+            "mac_address": null,
+            "mtu": null,
+            "mode": "access",
+            "_name": "9999999999999999Device A LAG Child..................",
+            "lag": 1,
+            "type": "1000base-t",
+            "mgmt_only": false,
+            "untagged_vlan": 1,
+            "tagged_vlans": []
+        }
+    },
+    {
+        "model": "dcim.interface",
+        "pk": 3,
+        "fields": {
+            "device": 3,
+            "name": "Device B Interface",
+            "label": "",
+            "description": "",
+            "cable": 1,
+            "_cable_peer_type": 5,
+            "_cable_peer_id": 2,
+            "_path": 2,
+            "enabled": true,
+            "mac_address": null,
+            "mtu": null,
+            "mode": "tagged",
+            "_name": "9999999999999999Device B Interface..................",
+            "lag": null,
+            "type": "1000base-t",
+            "mgmt_only": false,
+            "untagged_vlan": 2,
+            "tagged_vlans": [
+                2
+            ]
+        }
+    },
+    {
+        "model": "dcim.frontport",
+        "pk": 1,
+        "fields": {
+            "device": 1,
+            "name": "Device A Front Port",
+            "_name": "Device A Front Port",
+            "label": "",
+            "description": "",
+            "cable": 2,
+            "_cable_peer_type": 9,
+            "_cable_peer_id": 2,
+            "type": "8p8c",
+            "rear_port": 1,
+            "rear_port_position": 1
+        }
+    },
+    {
+        "model": "dcim.frontport",
+        "pk": 2,
+        "fields": {
+            "device": 3,
+            "name": "Device B Front Port",
+            "_name": "Device B Front Port",
+            "label": "",
+            "description": "",
+            "cable": 2,
+            "_cable_peer_type": 9,
+            "_cable_peer_id": 1,
+            "type": "8p8c",
+            "rear_port": 2,
+            "rear_port_position": 1
+        }
+    },
+    {
+        "model": "dcim.rearport",
+        "pk": 1,
+        "fields": {
+            "device": 1,
+            "name": "Device A Rear Port",
+            "_name": "Device A Rear Port",
+            "label": "",
+            "description": "",
+            "cable": 3,
+            "_cable_peer_type": 10,
+            "_cable_peer_id": 2,
+            "type": "8p8c",
+            "positions": 1
+        }
+    },
+    {
+        "model": "dcim.rearport",
+        "pk": 2,
+        "fields": {
+            "device": 3,
+            "name": "Device B Rear Port",
+            "_name": "Device B Rear Port",
+            "label": "B",
+            "description": "",
+            "cable": 3,
+            "_cable_peer_type": 10,
+            "_cable_peer_id": 1,
+            "type": "8p8c",
+            "positions": 1
+        }
+    },
+    {
+        "model": "dcim.devicebay",
+        "pk": 1,
+        "fields": {
+            "device": 1,
+            "name": "Device A Device Bay",
+            "_name": "Device A Device Bay",
+            "label": "A",
+            "description": "",
+            "installed_device": 2
+        }
+    },
+    {
+        "model": "dcim.devicebay",
+        "pk": 2,
+        "fields": {
+            "device": 3,
+            "name": "Device B Device Bay",
+            "_name": "Device B Device Bay",
+            "label": "B",
+            "description": "B",
+            "installed_device": null
+        }
+    },
+    {
+        "model": "dcim.inventoryitem",
+        "pk": 1,
+        "fields": {
+            "device": 1,
+            "name": "Device A Inventory Item Parent",
+            "_name": "Device A Inventory Item Parent",
+            "label": "",
+            "description": "A",
+            "parent": null,
+            "manufacturer": 1,
+            "part_id": "A",
+            "serial": "A",
+            "asset_tag": "A",
+            "discovered": false,
+            "lft": 1,
+            "rght": 4,
+            "tree_id": 1,
+            "level": 0
+        }
+    },
+    {
+        "model": "dcim.inventoryitem",
+        "pk": 2,
+        "fields": {
+            "device": 1,
+            "name": "Device A Inventory Item Child",
+            "_name": "Device A Inventory Item Child",
+            "label": "",
+            "description": "",
+            "parent": 1,
+            "manufacturer": 1,
+            "part_id": "",
+            "serial": "",
+            "asset_tag": null,
+            "discovered": false,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "dcim.inventoryitem",
+        "pk": 3,
+        "fields": {
+            "device": 3,
+            "name": "Device B Inventory Item",
+            "_name": "Device B Inventory Item",
+            "label": "",
+            "description": "",
+            "parent": null,
+            "manufacturer": 2,
+            "part_id": "",
+            "serial": "",
+            "asset_tag": null,
+            "discovered": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 2,
+            "level": 0
+        }
+    },
+    {
+        "model": "dcim.manufacturer",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:59:13.736Z",
+            "name": "Manufacturer A",
+            "slug": "manufacturer-a",
+            "description": ""
+        }
+    },
+    {
+        "model": "dcim.manufacturer",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:59:18.663Z",
+            "name": "Manufacturer B",
+            "slug": "manufacturer-b",
+            "description": ""
+        }
+    },
+    {
+        "model": "dcim.devicetype",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:01:13.295Z",
+            "custom_field_data": {},
+            "manufacturer": 1,
+            "model": "Model A",
+            "slug": "model-a",
+            "part_number": "AAAAAAAAA",
+            "u_height": 1,
+            "is_full_depth": true,
+            "subdevice_role": "parent",
+            "front_image": "",
+            "rear_image": "",
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.devicetype",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:01:32.437Z",
+            "custom_field_data": {},
+            "manufacturer": 1,
+            "model": "Model A Child",
+            "slug": "model-a-child",
+            "part_number": "",
+            "u_height": 0,
+            "is_full_depth": false,
+            "subdevice_role": "child",
+            "front_image": "",
+            "rear_image": "",
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.devicetype",
+        "pk": 3,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:02:09.865Z",
+            "custom_field_data": {},
+            "manufacturer": 2,
+            "model": "Model B",
+            "slug": "model-b",
+            "part_number": "",
+            "u_height": 2,
+            "is_full_depth": true,
+            "subdevice_role": "parent",
+            "front_image": "",
+            "rear_image": "",
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.devicerole",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:03:11.647Z",
+            "name": "Device Role A",
+            "slug": "device-role-a",
+            "color": "f44336",
+            "vm_role": true,
+            "description": ""
+        }
+    },
+    {
+        "model": "dcim.devicerole",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:03:23.383Z",
+            "name": "Device Role B",
+            "slug": "device-role-b",
+            "color": "4caf50",
+            "vm_role": true,
+            "description": "B"
+        }
+    },
+    {
+        "model": "dcim.platform",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:02:34.521Z",
+            "name": "Platform A",
+            "slug": "platform-a",
+            "manufacturer": 1,
+            "napalm_driver": "alpha",
+            "napalm_args": null,
+            "description": ""
+        }
+    },
+    {
+        "model": "dcim.platform",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:02:53.418Z",
+            "name": "Platform B",
+            "slug": "platform-b",
+            "manufacturer": 2,
+            "napalm_driver": "any",
+            "napalm_args": {
+                "type": null
+            },
+            "description": "b"
+        }
+    },
+    {
+        "model": "dcim.device",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:08:48.291Z",
+            "custom_field_data": {},
+            "local_context_data": {
+                "context": "a"
+            },
+            "device_type": 1,
+            "device_role": 1,
+            "tenant": 1,
+            "platform": 1,
+            "name": "Device A Parent",
+            "_name": "Device A Parent",
+            "serial": "",
+            "asset_tag": null,
+            "site": 1,
+            "rack": 1,
+            "position": null,
+            "face": "",
+            "status": "active",
+            "primary_ip4": null,
+            "primary_ip6": null,
+            "cluster": 1,
+            "virtual_chassis": null,
+            "vc_position": null,
+            "vc_priority": null,
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.device",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:09:31.644Z",
+            "custom_field_data": {},
+            "local_context_data": null,
+            "device_type": 2,
+            "device_role": 1,
+            "tenant": 1,
+            "platform": 1,
+            "name": "Device A Child",
+            "_name": "Device A Child",
+            "serial": "",
+            "asset_tag": null,
+            "site": 1,
+            "rack": 1,
+            "position": null,
+            "face": "",
+            "status": "active",
+            "primary_ip4": null,
+            "primary_ip6": null,
+            "cluster": 1,
+            "virtual_chassis": null,
+            "vc_position": null,
+            "vc_priority": null,
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.device",
+        "pk": 3,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:10:09.237Z",
+            "custom_field_data": {},
+            "local_context_data": null,
+            "device_type": 3,
+            "device_role": 2,
+            "tenant": 2,
+            "platform": 2,
+            "name": "Device B",
+            "_name": "Device B",
+            "serial": "",
+            "asset_tag": null,
+            "site": 2,
+            "rack": 2,
+            "position": null,
+            "face": "",
+            "status": "active",
+            "primary_ip4": null,
+            "primary_ip6": null,
+            "cluster": 2,
+            "virtual_chassis": null,
+            "vc_position": null,
+            "vc_priority": null,
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.virtualchassis",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:04:14.345Z",
+            "custom_field_data": {},
+            "master": null,
+            "name": "Virtual Chassis A",
+            "domain": ""
+        }
+    },
+    {
+        "model": "dcim.virtualchassis",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:04:36.565Z",
+            "custom_field_data": {},
+            "master": null,
+            "name": "Virtual Chassis B",
+            "domain": ""
+        }
+    },
+    {
+        "model": "dcim.cable",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:33:04.158Z",
+            "custom_field_data": {},
+            "termination_a_type": 5,
+            "termination_a_id": 2,
+            "termination_b_type": 5,
+            "termination_b_id": 3,
+            "type": "cat5e",
+            "status": "connected",
+            "label": "",
+            "color": "795548",
+            "length": 10,
+            "length_unit": "m",
+            "_abs_length": "10.0000",
+            "_termination_a_device": 1,
+            "_termination_b_device": 3
+        }
+    },
+    {
+        "model": "dcim.cable",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:33:40.315Z",
+            "custom_field_data": {},
+            "termination_a_type": 9,
+            "termination_a_id": 1,
+            "termination_b_type": 9,
+            "termination_b_id": 2,
+            "type": "",
+            "status": "connected",
+            "label": "",
+            "color": "",
+            "length": null,
+            "length_unit": "",
+            "_abs_length": null,
+            "_termination_a_device": 1,
+            "_termination_b_device": 3
+        }
+    },
+    {
+        "model": "dcim.cable",
+        "pk": 3,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:34:03.094Z",
+            "custom_field_data": {},
+            "termination_a_type": 10,
+            "termination_a_id": 1,
+            "termination_b_type": 10,
+            "termination_b_id": 2,
+            "type": "",
+            "status": "planned",
+            "label": "",
+            "color": "",
+            "length": null,
+            "length_unit": "",
+            "_abs_length": null,
+            "_termination_a_device": 1,
+            "_termination_b_device": 3
+        }
+    },
+    {
+        "model": "dcim.cable",
+        "pk": 4,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:34:16.657Z",
+            "custom_field_data": {},
+            "termination_a_type": 1,
+            "termination_a_id": 1,
+            "termination_b_type": 2,
+            "termination_b_id": 1,
+            "type": "",
+            "status": "connected",
+            "label": "",
+            "color": "",
+            "length": null,
+            "length_unit": "",
+            "_abs_length": null,
+            "_termination_a_device": 1,
+            "_termination_b_device": 2
+        }
+    },
+    {
+        "model": "dcim.cable",
+        "pk": 5,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:34:30.732Z",
+            "custom_field_data": {},
+            "termination_a_type": 3,
+            "termination_a_id": 1,
+            "termination_b_type": 4,
+            "termination_b_id": 2,
+            "type": "",
+            "status": "connected",
+            "label": "",
+            "color": "",
+            "length": null,
+            "length_unit": "",
+            "_abs_length": null,
+            "_termination_a_device": 1,
+            "_termination_b_device": 3
+        }
+    },
+    {
+        "model": "dcim.cable",
+        "pk": 6,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:35:06.726Z",
+            "custom_field_data": {},
+            "termination_a_type": 4,
+            "termination_a_id": 1,
+            "termination_b_type": 3,
+            "termination_b_id": 2,
+            "type": "",
+            "status": "decommissioning",
+            "label": "",
+            "color": "",
+            "length": null,
+            "length_unit": "",
+            "_abs_length": null,
+            "_termination_a_device": 1,
+            "_termination_b_device": 3
+        }
+    },
+    {
+        "model": "dcim.cable",
+        "pk": 7,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:56:04.937Z",
+            "custom_field_data": {},
+            "termination_a_type": 7,
+            "termination_a_id": 1,
+            "termination_b_type": 7,
+            "termination_b_id": 2,
+            "type": "cat3",
+            "status": "connected",
+            "label": "B",
+            "color": "4caf50",
+            "length": 1,
+            "length_unit": "cm",
+            "_abs_length": "0.0100",
+            "_termination_a_device": null,
+            "_termination_b_device": null
+        }
+    },
+    {
+        "model": "dcim.cable",
+        "pk": 8,
+        "fields": {
+            "created": "2021-02-22",
+            "last_updated": "2021-02-22T00:01:20.738Z",
+            "custom_field_data": {},
+            "termination_a_type": 11,
+            "termination_a_id": 1,
+            "termination_b_type": 3,
+            "termination_b_id": 3,
+            "type": "",
+            "status": "connected",
+            "label": "",
+            "color": "",
+            "length": null,
+            "length_unit": "",
+            "_abs_length": null,
+            "_termination_a_device": null,
+            "_termination_b_device": 2
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 1,
+        "fields": {
+            "origin_type": 5,
+            "origin_id": 2,
+            "destination_type": 5,
+            "destination_id": 3,
+            "path": "[\"46:1\"]",
+            "is_active": true,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 2,
+        "fields": {
+            "origin_type": 5,
+            "origin_id": 3,
+            "destination_type": 5,
+            "destination_id": 2,
+            "path": "[\"46:1\"]",
+            "is_active": true,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 3,
+        "fields": {
+            "origin_type": 1,
+            "origin_id": 1,
+            "destination_type": 2,
+            "destination_id": 1,
+            "path": "[\"46:4\"]",
+            "is_active": true,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 4,
+        "fields": {
+            "origin_type": 2,
+            "origin_id": 1,
+            "destination_type": 1,
+            "destination_id": 1,
+            "path": "[\"46:4\"]",
+            "is_active": true,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 5,
+        "fields": {
+            "origin_type": 3,
+            "origin_id": 1,
+            "destination_type": 4,
+            "destination_id": 2,
+            "path": "[\"46:5\"]",
+            "is_active": true,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 6,
+        "fields": {
+            "origin_type": 4,
+            "origin_id": 2,
+            "destination_type": 3,
+            "destination_id": 1,
+            "path": "[\"46:5\"]",
+            "is_active": true,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 7,
+        "fields": {
+            "origin_type": 4,
+            "origin_id": 1,
+            "destination_type": 3,
+            "destination_id": 2,
+            "path": "[\"46:6\"]",
+            "is_active": false,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 8,
+        "fields": {
+            "origin_type": 3,
+            "origin_id": 2,
+            "destination_type": 4,
+            "destination_id": 1,
+            "path": "[\"46:6\"]",
+            "is_active": false,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 9,
+        "fields": {
+            "origin_type": 7,
+            "origin_id": 1,
+            "destination_type": 7,
+            "destination_id": 2,
+            "path": "[\"46:7\"]",
+            "is_active": true,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 10,
+        "fields": {
+            "origin_type": 7,
+            "origin_id": 2,
+            "destination_type": 7,
+            "destination_id": 1,
+            "path": "[\"46:7\"]",
+            "is_active": true,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 11,
+        "fields": {
+            "origin_type": 11,
+            "origin_id": 1,
+            "destination_type": 3,
+            "destination_id": 3,
+            "path": "[\"46:8\"]",
+            "is_active": true,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 12,
+        "fields": {
+            "origin_type": 3,
+            "origin_id": 3,
+            "destination_type": 11,
+            "destination_id": 1,
+            "path": "[\"46:8\"]",
+            "is_active": true,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.powerpanel",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:58:53.897Z",
+            "custom_field_data": {},
+            "site": 1,
+            "rack_group": 2,
+            "name": "Power Panel A"
+        }
+    },
+    {
+        "model": "dcim.powerpanel",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:59:30.169Z",
+            "custom_field_data": {},
+            "site": 2,
+            "rack_group": null,
+            "name": "Power Panel B"
+        }
+    },
+    {
+        "model": "dcim.powerfeed",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-22T00:01:20.745Z",
+            "custom_field_data": {},
+            "cable": 8,
+            "_cable_peer_type": 3,
+            "_cable_peer_id": 3,
+            "_path": 11,
+            "power_panel": 1,
+            "rack": 1,
+            "name": "Power Feed A",
+            "status": "active",
+            "type": "primary",
+            "supply": "ac",
+            "phase": "single-phase",
+            "voltage": 120,
+            "amperage": 20,
+            "max_utilization": 80,
+            "available_power": 1920,
+            "comments": "A"
+        }
+    },
+    {
+        "model": "dcim.powerfeed",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-22",
+            "last_updated": "2021-02-22T00:00:12.682Z",
+            "custom_field_data": {},
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "power_panel": 2,
+            "rack": 2,
+            "name": "Power Feed B",
+            "status": "active",
+            "type": "primary",
+            "supply": "ac",
+            "phase": "single-phase",
+            "voltage": 120,
+            "amperage": 20,
+            "max_utilization": 80,
+            "available_power": 1920,
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.rackgroup",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:55:20.233Z",
+            "name": "Parent Rack Group",
+            "slug": "parent-rack-group",
+            "site": 1,
+            "parent": null,
+            "description": "",
+            "lft": 1,
+            "rght": 4,
+            "tree_id": 1,
+            "level": 0
+        }
+    },
+    {
+        "model": "dcim.rackgroup",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:55:35.586Z",
+            "name": "Child Rack Group A",
+            "slug": "child-rack-group-a",
+            "site": 1,
+            "parent": 1,
+            "description": "",
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "dcim.rackrole",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:56:05.269Z",
+            "name": "Rack Role A",
+            "slug": "rack-role-a",
+            "color": "f44336",
+            "description": ""
+        }
+    },
+    {
+        "model": "dcim.rackrole",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:56:15.198Z",
+            "name": "Rack Role B",
+            "slug": "rack-role-b",
+            "color": "4caf50",
+            "description": ""
+        }
+    },
+    {
+        "model": "dcim.rack",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:56:58.548Z",
+            "custom_field_data": {},
+            "name": "Rack A",
+            "_name": "Rack A",
+            "facility_id": null,
+            "site": 1,
+            "group": 2,
+            "tenant": 1,
+            "status": "active",
+            "role": 1,
+            "serial": "",
+            "asset_tag": null,
+            "type": "4-post-frame",
+            "width": 19,
+            "u_height": 42,
+            "desc_units": false,
+            "outer_width": 1000,
+            "outer_depth": 1000,
+            "outer_unit": "in",
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.rack",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:57:32.851Z",
+            "custom_field_data": {},
+            "name": "Rack B",
+            "_name": "Rack B",
+            "facility_id": null,
+            "site": 2,
+            "group": null,
+            "tenant": 2,
+            "status": "active",
+            "role": 2,
+            "serial": "",
+            "asset_tag": null,
+            "type": "",
+            "width": 19,
+            "u_height": 42,
+            "desc_units": true,
+            "outer_width": null,
+            "outer_depth": null,
+            "outer_unit": "",
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.rackreservation",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:58:34.392Z",
+            "custom_field_data": {},
+            "rack": 1,
+            "units": "[\"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"10\", \"11\", \"12\", \"13\", \"14\", \"15\", \"16\", \"17\", \"18\", \"19\", \"20\"]",
+            "tenant": 1,
+            "user": 1,
+            "description": "Admin rack reservation"
+        }
+    },
+    {
+        "model": "dcim.region",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:50:52.194Z",
+            "parent": null,
+            "name": "Parent Region",
+            "slug": "parent-region",
+            "description": "The parent region",
+            "lft": 1,
+            "rght": 4,
+            "tree_id": 1,
+            "level": 0
+        }
+    },
+    {
+        "model": "dcim.region",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:51:03.669Z",
+            "parent": 1,
+            "name": "Child Region",
+            "slug": "child-region",
+            "description": "The child region",
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "dcim.site",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:54:16.787Z",
+            "custom_field_data": {},
+            "name": "Site A",
+            "_name": "Site A",
+            "slug": "site-a",
+            "status": "active",
+            "region": 2,
+            "tenant": 1,
+            "facility": "",
+            "asn": null,
+            "time_zone": "America/New_York",
+            "description": "",
+            "physical_address": "",
+            "shipping_address": "",
+            "latitude": null,
+            "longitude": null,
+            "contact_name": "",
+            "contact_phone": "",
+            "contact_email": "",
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.site",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:54:41.539Z",
+            "custom_field_data": {},
+            "name": "Site B",
+            "_name": "Site B",
+            "slug": "site-b",
+            "status": "active",
+            "region": 2,
+            "tenant": 2,
+            "facility": "",
+            "asn": null,
+            "time_zone": "America/New_York",
+            "description": "",
+            "physical_address": "",
+            "shipping_address": "",
+            "latitude": null,
+            "longitude": null,
+            "contact_name": "",
+            "contact_phone": "",
+            "contact_email": "",
+            "comments": ""
+        }
+    },
+    {
+        "model": "ipam.vrf",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:39:33.798Z",
+            "custom_field_data": {},
+            "name": "VRF A",
+            "rd": "1:1",
+            "tenant": 1,
+            "enforce_unique": true,
+            "description": "",
+            "import_targets": [
+                1
+            ],
+            "export_targets": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "ipam.vrf",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:42:52.503Z",
+            "custom_field_data": {},
+            "name": "VRF B",
+            "rd": "2:2",
+            "tenant": 2,
+            "enforce_unique": true,
+            "description": "",
+            "import_targets": [
+                2
+            ],
+            "export_targets": [
+                2
+            ]
+        }
+    },
+    {
+        "model": "ipam.routetarget",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:36:18.737Z",
+            "custom_field_data": {},
+            "name": "Route Target A",
+            "description": "",
+            "tenant": 1
+        }
+    },
+    {
+        "model": "ipam.routetarget",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:36:32.471Z",
+            "custom_field_data": {},
+            "name": "Route Target B",
+            "description": "",
+            "tenant": 2
+        }
+    },
+    {
+        "model": "ipam.rir",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:43:02.655Z",
+            "name": "RIR A",
+            "slug": "rir-a",
+            "is_private": false,
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.rir",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:43:09.818Z",
+            "name": "RIR B",
+            "slug": "rir-b",
+            "is_private": false,
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.aggregate",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:43:35.922Z",
+            "custom_field_data": {},
+            "prefix": "10.0.0.0/8",
+            "rir": 1,
+            "tenant": 1,
+            "date_added": "2021-02-21",
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.aggregate",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:43:55.208Z",
+            "custom_field_data": {},
+            "prefix": "172.16.0.0/16",
+            "rir": 2,
+            "tenant": 2,
+            "date_added": null,
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.role",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:13:50.114Z",
+            "name": "Role A",
+            "slug": "role-a",
+            "weight": 1000,
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.role",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:13:53.731Z",
+            "name": "Role B",
+            "slug": "role-b",
+            "weight": 1000,
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.prefix",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:44:52.786Z",
+            "custom_field_data": {},
+            "prefix": "10.1.0.0/16",
+            "site": 1,
+            "vrf": 1,
+            "tenant": 1,
+            "vlan": 1,
+            "status": "container",
+            "role": 1,
+            "is_pool": false,
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.prefix",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:45:16.099Z",
+            "custom_field_data": {},
+            "prefix": "10.1.1.0/24",
+            "site": null,
+            "vrf": 1,
+            "tenant": null,
+            "vlan": null,
+            "status": "active",
+            "role": 1,
+            "is_pool": false,
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.prefix",
+        "pk": 3,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:45:43.885Z",
+            "custom_field_data": {},
+            "prefix": "172.16.1.0/24",
+            "site": 2,
+            "vrf": 2,
+            "tenant": 2,
+            "vlan": 2,
+            "status": "active",
+            "role": 2,
+            "is_pool": false,
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.ipaddress",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:46:50.039Z",
+            "custom_field_data": {},
+            "address": "10.1.1.1/32",
+            "vrf": 1,
+            "tenant": 1,
+            "status": "active",
+            "role": "loopback",
+            "assigned_object_type": 5,
+            "assigned_object_id": 2,
+            "nat_inside": null,
+            "dns_name": "a",
+            "description": "A"
+        }
+    },
+    {
+        "model": "ipam.ipaddress",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:47:08.014Z",
+            "custom_field_data": {},
+            "address": "10.1.1.2/32",
+            "vrf": 1,
+            "tenant": 1,
+            "status": "active",
+            "role": "loopback",
+            "assigned_object_type": 5,
+            "assigned_object_id": 1,
+            "nat_inside": 1,
+            "dns_name": "",
+            "description": "A"
+        }
+    },
+    {
+        "model": "ipam.vlangroup",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:13:11.906Z",
+            "name": "VLAN Group A",
+            "slug": "vlan-group-a",
+            "site": 1,
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.vlangroup",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:13:20.784Z",
+            "name": "VLAN Group B",
+            "slug": "vlan-group-b",
+            "site": 2,
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.vlan",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:14:15.969Z",
+            "custom_field_data": {},
+            "site": 1,
+            "group": 1,
+            "vid": 1,
+            "name": "VLAN A",
+            "tenant": 1,
+            "status": "active",
+            "role": 1,
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.vlan",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:14:34.172Z",
+            "custom_field_data": {},
+            "site": 2,
+            "group": 2,
+            "vid": 2,
+            "name": "VLAN B",
+            "tenant": 2,
+            "status": "active",
+            "role": 2,
+            "description": ""
+        }
+    },
+    {
+        "model": "extras.customfield",
+        "pk": 1,
+        "fields": {
+            "type": "text",
+            "name": "Custom Text Field A",
+            "label": "",
+            "description": "",
+            "required": false,
+            "filter_logic": "loose",
+            "default": null,
+            "weight": 100,
+            "validation_minimum": null,
+            "validation_maximum": null,
+            "validation_regex": "",
+            "choices": "[]",
+            "content_types": [
+                13
+            ]
+        }
+    },
+    {
+        "model": "extras.customfield",
+        "pk": 2,
+        "fields": {
+            "type": "integer",
+            "name": "Custom Integer Field B",
+            "label": "B",
+            "description": "B",
+            "required": false,
+            "filter_logic": "loose",
+            "default": 1,
+            "weight": 100,
+            "validation_minimum": 0,
+            "validation_maximum": 1000,
+            "validation_regex": "",
+            "choices": "[]",
+            "content_types": [
+                13
+            ]
+        }
+    },
+    {
+        "model": "extras.tag",
+        "pk": 1,
+        "fields": {
+            "name": "Tag A",
+            "slug": "tag-a",
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:53:12.491Z",
+            "color": "f44336",
+            "description": ""
+        }
+    },
+    {
+        "model": "extras.tag",
+        "pk": 2,
+        "fields": {
+            "name": "Tag B",
+            "slug": "tag-b",
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:53:21.432Z",
+            "color": "4caf50",
+            "description": ""
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 1,
+        "fields": {
+            "content_type": 74,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 2,
+        "fields": {
+            "content_type": 74,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 3,
+        "fields": {
+            "content_type": 36,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 4,
+        "fields": {
+            "content_type": 36,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 5,
+        "fields": {
+            "content_type": 34,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 6,
+        "fields": {
+            "content_type": 34,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 7,
+        "fields": {
+            "content_type": 40,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 8,
+        "fields": {
+            "content_type": 28,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 9,
+        "fields": {
+            "content_type": 28,
+            "object_id": 2,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 10,
+        "fields": {
+            "content_type": 28,
+            "object_id": 3,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 11,
+        "fields": {
+            "content_type": 43,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 12,
+        "fields": {
+            "content_type": 43,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 13,
+        "fields": {
+            "content_type": 13,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 14,
+        "fields": {
+            "content_type": 81,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 15,
+        "fields": {
+            "content_type": 81,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 16,
+        "fields": {
+            "content_type": 13,
+            "object_id": 2,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 17,
+        "fields": {
+            "content_type": 13,
+            "object_id": 3,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 18,
+        "fields": {
+            "content_type": 1,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 19,
+        "fields": {
+            "content_type": 2,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 20,
+        "fields": {
+            "content_type": 3,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 21,
+        "fields": {
+            "content_type": 4,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 22,
+        "fields": {
+            "content_type": 54,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 23,
+        "fields": {
+            "content_type": 54,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 24,
+        "fields": {
+            "content_type": 5,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 25,
+        "fields": {
+            "content_type": 5,
+            "object_id": 2,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 26,
+        "fields": {
+            "content_type": 5,
+            "object_id": 3,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 27,
+        "fields": {
+            "content_type": 1,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 28,
+        "fields": {
+            "content_type": 2,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 29,
+        "fields": {
+            "content_type": 3,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 30,
+        "fields": {
+            "content_type": 4,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 31,
+        "fields": {
+            "content_type": 10,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 32,
+        "fields": {
+            "content_type": 9,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 33,
+        "fields": {
+            "content_type": 37,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 34,
+        "fields": {
+            "content_type": 42,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 35,
+        "fields": {
+            "content_type": 42,
+            "object_id": 2,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 36,
+        "fields": {
+            "content_type": 10,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 37,
+        "fields": {
+            "content_type": 9,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 38,
+        "fields": {
+            "content_type": 37,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 39,
+        "fields": {
+            "content_type": 42,
+            "object_id": 3,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 40,
+        "fields": {
+            "content_type": 46,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 41,
+        "fields": {
+            "content_type": 46,
+            "object_id": 1,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 42,
+        "fields": {
+            "content_type": 58,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 43,
+        "fields": {
+            "content_type": 58,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 44,
+        "fields": {
+            "content_type": 55,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 45,
+        "fields": {
+            "content_type": 55,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 46,
+        "fields": {
+            "content_type": 49,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 47,
+        "fields": {
+            "content_type": 49,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 48,
+        "fields": {
+            "content_type": 51,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 49,
+        "fields": {
+            "content_type": 51,
+            "object_id": 2,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 50,
+        "fields": {
+            "content_type": 51,
+            "object_id": 3,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 51,
+        "fields": {
+            "content_type": 50,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 52,
+        "fields": {
+            "content_type": 50,
+            "object_id": 2,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 53,
+        "fields": {
+            "content_type": 84,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 54,
+        "fields": {
+            "content_type": 8,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 55,
+        "fields": {
+            "content_type": 84,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 56,
+        "fields": {
+            "content_type": 8,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 57,
+        "fields": {
+            "content_type": 24,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 58,
+        "fields": {
+            "content_type": 24,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 59,
+        "fields": {
+            "content_type": 22,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 60,
+        "fields": {
+            "content_type": 22,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 61,
+        "fields": {
+            "content_type": 46,
+            "object_id": 7,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 62,
+        "fields": {
+            "content_type": 47,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 63,
+        "fields": {
+            "content_type": 47,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 64,
+        "fields": {
+            "content_type": 11,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 65,
+        "fields": {
+            "content_type": 11,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.webhook",
+        "pk": 1,
+        "fields": {
+            "name": "Webhook A",
+            "type_create": true,
+            "type_update": true,
+            "type_delete": true,
+            "payload_url": "http://localhost",
+            "enabled": true,
+            "http_method": "POST",
+            "http_content_type": "application/json",
+            "additional_headers": "A: A",
+            "body_template": "{{ event }}",
+            "secret": "A",
+            "ssl_verification": true,
+            "ca_file_path": null,
+            "content_types": [
+                13
+            ]
+        }
+    },
+    {
+        "model": "extras.webhook",
+        "pk": 2,
+        "fields": {
+            "name": "Webhook B",
+            "type_create": true,
+            "type_update": false,
+            "type_delete": false,
+            "payload_url": "http://localhost:8000",
+            "enabled": false,
+            "http_method": "GET",
+            "http_content_type": "application/json",
+            "additional_headers": "",
+            "body_template": "",
+            "secret": "",
+            "ssl_verification": false,
+            "ca_file_path": null,
+            "content_types": [
+                13
+            ]
+        }
+    },
+    {
+        "model": "extras.customlink",
+        "pk": 1,
+        "fields": {
+            "content_type": 13,
+            "name": "Custom Link A",
+            "text": "Hello",
+            "url": "http://{{ obj }}",
+            "weight": 100,
+            "group_name": "",
+            "button_class": "default",
+            "new_window": false
+        }
+    },
+    {
+        "model": "extras.customlink",
+        "pk": 2,
+        "fields": {
+            "content_type": 13,
+            "name": "Custom Link B",
+            "text": "B",
+            "url": "http://example.com",
+            "weight": 100,
+            "group_name": "B",
+            "button_class": "info",
+            "new_window": false
+        }
+    },
+    {
+        "model": "extras.exporttemplate",
+        "pk": 1,
+        "fields": {
+            "content_type": 13,
+            "name": "Export Template A",
+            "description": "A",
+            "template_code": "A",
+            "mime_type": "A",
+            "file_extension": "A"
+        }
+    },
+    {
+        "model": "extras.exporttemplate",
+        "pk": 2,
+        "fields": {
+            "content_type": 13,
+            "name": "Export Template B",
+            "description": "",
+            "template_code": "{{ queryset }}",
+            "mime_type": "",
+            "file_extension": ""
+        }
+    },
+    {
+        "model": "extras.configcontext",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-22",
+            "last_updated": "2021-02-22T00:02:08.264Z",
+            "name": "Config Context A",
+            "weight": 1000,
+            "description": "A",
+            "is_active": true,
+            "data": {
+                "config_context": "a"
+            },
+            "regions": [
+                1
+            ],
+            "sites": [
+                1
+            ],
+            "roles": [
+                1
+            ],
+            "platforms": [
+                1
+            ],
+            "cluster_groups": [
+                1
+            ],
+            "clusters": [
+                1
+            ],
+            "tenant_groups": [
+                1
+            ],
+            "tenants": [
+                1
+            ],
+            "tags": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "extras.configcontext",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-22",
+            "last_updated": "2021-02-22T00:02:43.369Z",
+            "name": "Config Context B",
+            "weight": 1000,
+            "description": "",
+            "is_active": false,
+            "data": {
+                "config_context": null
+            },
+            "regions": [
+                2
+            ],
+            "sites": [
+                2
+            ],
+            "roles": [
+                2
+            ],
+            "platforms": [
+                2
+            ],
+            "cluster_groups": [
+                2
+            ],
+            "clusters": [
+                2
+            ],
+            "tenant_groups": [
+                2
+            ],
+            "tenants": [
+                2
+            ],
+            "tags": [
+                2
+            ]
+        }
+    },
+    {
+        "model": "tenancy.tenantgroup",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:52:27.570Z",
+            "name": "Parent Tenant Group",
+            "slug": "parent-tenant-group",
+            "parent": null,
+            "description": "The parent tenant group",
+            "lft": 1,
+            "rght": 4,
+            "tree_id": 1,
+            "level": 0
+        }
+    },
+    {
+        "model": "tenancy.tenantgroup",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:52:39.546Z",
+            "name": "Child Tenant Group",
+            "slug": "child-tenant-group",
+            "parent": 1,
+            "description": "The child tenant group",
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1,
+            "level": 1
+        }
+    },
+    {
+        "model": "tenancy.tenant",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:53:33.014Z",
+            "custom_field_data": {},
+            "name": "Tenant A",
+            "slug": "tenant-a",
+            "group": 2,
+            "description": "",
+            "comments": ""
+        }
+    },
+    {
+        "model": "tenancy.tenant",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:53:43.981Z",
+            "custom_field_data": {},
+            "name": "Tenant B",
+            "slug": "tenant-b",
+            "group": 2,
+            "description": "",
+            "comments": ""
+        }
+    },
+    {
+        "model": "users.userconfig",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "data": {}
+        }
+    },
+    {
+        "model": "users.token",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "created": "2021-02-21T22:47:00.583Z",
+            "expires": null,
+            "key": "0123456789abcdef0123456789abcdef01234567",
+            "write_enabled": true,
+            "description": ""
+        }
+    },
+    {
+        "model": "virtualization.clustertype",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:06:05.231Z",
+            "name": "Cluster Type A",
+            "slug": "cluster-type-a",
+            "description": ""
+        }
+    },
+    {
+        "model": "virtualization.clustertype",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:07:18.975Z",
+            "name": "Cluster Type B",
+            "slug": "cluster-type-b",
+            "description": ""
+        }
+    },
+    {
+        "model": "virtualization.clustergroup",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:05:52.124Z",
+            "name": "Cluster Group A",
+            "slug": "cluster-group-a",
+            "description": ""
+        }
+    },
+    {
+        "model": "virtualization.clustergroup",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:05:56.883Z",
+            "name": "Cluster Group B",
+            "slug": "cluster-group-b",
+            "description": ""
+        }
+    },
+    {
+        "model": "virtualization.cluster",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:07:40.995Z",
+            "custom_field_data": {},
+            "name": "Cluster A",
+            "type": 1,
+            "group": 1,
+            "tenant": 1,
+            "site": 1,
+            "comments": ""
+        }
+    },
+    {
+        "model": "virtualization.cluster",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:08:17.466Z",
+            "custom_field_data": {},
+            "name": "Cluster B",
+            "type": 2,
+            "group": 2,
+            "tenant": 2,
+            "site": 2,
+            "comments": ""
+        }
+    },
+    {
+        "model": "virtualization.virtualmachine",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:51:41.414Z",
+            "custom_field_data": {},
+            "local_context_data": {
+                "context": "a"
+            },
+            "cluster": 1,
+            "tenant": 1,
+            "platform": 1,
+            "name": "VM A",
+            "status": "active",
+            "role": 1,
+            "primary_ip4": null,
+            "primary_ip6": null,
+            "vcpus": 1,
+            "memory": 1,
+            "disk": 1,
+            "comments": "A"
+        }
+    },
+    {
+        "model": "virtualization.virtualmachine",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:52:35.437Z",
+            "custom_field_data": {},
+            "local_context_data": null,
+            "cluster": 2,
+            "tenant": 2,
+            "platform": 2,
+            "name": "VM B",
+            "status": "active",
+            "role": 2,
+            "primary_ip4": null,
+            "primary_ip6": null,
+            "vcpus": null,
+            "memory": null,
+            "disk": null,
+            "comments": ""
+        }
+    },
+    {
+        "model": "virtualization.vminterface",
+        "pk": 1,
+        "fields": {
+            "enabled": true,
+            "mac_address": "11:11:11:11:11:11",
+            "mtu": 1,
+            "mode": "access",
+            "virtual_machine": 1,
+            "name": "VM A Interface A",
+            "_name": "9999999999999999VM A Interface A..................",
+            "description": "",
+            "untagged_vlan": 1,
+            "tagged_vlans": []
+        }
+    },
+    {
+        "model": "virtualization.vminterface",
+        "pk": 2,
+        "fields": {
+            "enabled": true,
+            "mac_address": null,
+            "mtu": null,
+            "mode": "tagged",
+            "virtual_machine": 2,
+            "name": "VM B Interface B",
+            "_name": "9999999999999999VM B Interface B..................",
+            "description": "",
+            "untagged_vlan": 2,
+            "tagged_vlans": [
+                2
+            ]
+        }
+    }
+]

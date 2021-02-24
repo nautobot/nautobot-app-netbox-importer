@@ -1,0 +1,5050 @@
+- model: auth.permission
+  ids:
+    codename: add_permission
+  fields:
+    content_type:
+      ids:
+        app_label: auth
+        model: permission
+    name: Can add permission
+- model: auth.permission
+  ids:
+    codename: change_permission
+  fields:
+    content_type:
+      ids:
+        app_label: auth
+        model: permission
+    name: Can change permission
+- model: auth.permission
+  ids:
+    codename: delete_permission
+  fields:
+    content_type:
+      ids:
+        app_label: auth
+        model: permission
+    name: Can delete permission
+- model: auth.permission
+  ids:
+    codename: view_permission
+  fields:
+    content_type:
+      ids:
+        app_label: auth
+        model: permission
+    name: Can view permission
+- model: auth.permission
+  ids:
+    codename: add_group
+  fields:
+    content_type:
+      ids:
+        app_label: auth
+        model: group
+    name: Can add group
+- model: auth.permission
+  ids:
+    codename: change_group
+  fields:
+    content_type:
+      ids:
+        app_label: auth
+        model: group
+    name: Can change group
+- model: auth.permission
+  ids:
+    codename: delete_group
+  fields:
+    content_type:
+      ids:
+        app_label: auth
+        model: group
+    name: Can delete group
+- model: auth.permission
+  ids:
+    codename: view_group
+  fields:
+    content_type:
+      ids:
+        app_label: auth
+        model: group
+    name: Can view group
+- model: auth.permission
+  ids:
+    codename: add_user
+  fields:
+    content_type:
+      ids:
+        app_label: auth
+        model: user
+    name: Can add user
+- model: auth.permission
+  ids:
+    codename: change_user
+  fields:
+    content_type:
+      ids:
+        app_label: auth
+        model: user
+    name: Can change user
+- model: auth.permission
+  ids:
+    codename: delete_user
+  fields:
+    content_type:
+      ids:
+        app_label: auth
+        model: user
+    name: Can delete user
+- model: auth.permission
+  ids:
+    codename: view_user
+  fields:
+    content_type:
+      ids:
+        app_label: auth
+        model: user
+    name: Can view user
+- model: auth.permission
+  ids:
+    codename: add_contenttype
+  fields:
+    content_type:
+      ids:
+        app_label: contenttypes
+        model: contenttype
+    name: Can add content type
+- model: auth.permission
+  ids:
+    codename: change_contenttype
+  fields:
+    content_type:
+      ids:
+        app_label: contenttypes
+        model: contenttype
+    name: Can change content type
+- model: auth.permission
+  ids:
+    codename: delete_contenttype
+  fields:
+    content_type:
+      ids:
+        app_label: contenttypes
+        model: contenttype
+    name: Can delete content type
+- model: auth.permission
+  ids:
+    codename: view_contenttype
+  fields:
+    content_type:
+      ids:
+        app_label: contenttypes
+        model: contenttype
+    name: Can view content type
+- model: auth.permission
+  ids:
+    codename: add_circuit
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: circuit
+    name: Can add circuit
+- model: auth.permission
+  ids:
+    codename: change_circuit
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: circuit
+    name: Can change circuit
+- model: auth.permission
+  ids:
+    codename: delete_circuit
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: circuit
+    name: Can delete circuit
+- model: auth.permission
+  ids:
+    codename: view_circuit
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: circuit
+    name: Can view circuit
+- model: auth.permission
+  ids:
+    codename: add_circuittype
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: circuittype
+    name: Can add circuit type
+- model: auth.permission
+  ids:
+    codename: change_circuittype
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: circuittype
+    name: Can change circuit type
+- model: auth.permission
+  ids:
+    codename: delete_circuittype
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: circuittype
+    name: Can delete circuit type
+- model: auth.permission
+  ids:
+    codename: view_circuittype
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: circuittype
+    name: Can view circuit type
+- model: auth.permission
+  ids:
+    codename: add_provider
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: provider
+    name: Can add provider
+- model: auth.permission
+  ids:
+    codename: change_provider
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: provider
+    name: Can change provider
+- model: auth.permission
+  ids:
+    codename: delete_provider
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: provider
+    name: Can delete provider
+- model: auth.permission
+  ids:
+    codename: view_provider
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: provider
+    name: Can view provider
+- model: auth.permission
+  ids:
+    codename: add_circuittermination
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: circuittermination
+    name: Can add circuit termination
+- model: auth.permission
+  ids:
+    codename: change_circuittermination
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: circuittermination
+    name: Can change circuit termination
+- model: auth.permission
+  ids:
+    codename: delete_circuittermination
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: circuittermination
+    name: Can delete circuit termination
+- model: auth.permission
+  ids:
+    codename: view_circuittermination
+  fields:
+    content_type:
+      ids:
+        app_label: circuits
+        model: circuittermination
+    name: Can view circuit termination
+- model: auth.permission
+  ids:
+    codename: add_consoleport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleport
+    name: Can add console port
+- model: auth.permission
+  ids:
+    codename: change_consoleport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleport
+    name: Can change console port
+- model: auth.permission
+  ids:
+    codename: delete_consoleport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleport
+    name: Can delete console port
+- model: auth.permission
+  ids:
+    codename: view_consoleport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleport
+    name: Can view console port
+- model: auth.permission
+  ids:
+    codename: add_consoleporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleporttemplate
+    name: Can add console port template
+- model: auth.permission
+  ids:
+    codename: change_consoleporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleporttemplate
+    name: Can change console port template
+- model: auth.permission
+  ids:
+    codename: delete_consoleporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleporttemplate
+    name: Can delete console port template
+- model: auth.permission
+  ids:
+    codename: view_consoleporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleporttemplate
+    name: Can view console port template
+- model: auth.permission
+  ids:
+    codename: add_consoleserverport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleserverport
+    name: Can add console server port
+- model: auth.permission
+  ids:
+    codename: change_consoleserverport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleserverport
+    name: Can change console server port
+- model: auth.permission
+  ids:
+    codename: delete_consoleserverport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleserverport
+    name: Can delete console server port
+- model: auth.permission
+  ids:
+    codename: view_consoleserverport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleserverport
+    name: Can view console server port
+- model: auth.permission
+  ids:
+    codename: add_consoleserverporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleserverporttemplate
+    name: Can add console server port template
+- model: auth.permission
+  ids:
+    codename: change_consoleserverporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleserverporttemplate
+    name: Can change console server port template
+- model: auth.permission
+  ids:
+    codename: delete_consoleserverporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleserverporttemplate
+    name: Can delete console server port template
+- model: auth.permission
+  ids:
+    codename: view_consoleserverporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: consoleserverporttemplate
+    name: Can view console server port template
+- model: auth.permission
+  ids:
+    codename: add_device
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: device
+    name: Can add device
+- model: auth.permission
+  ids:
+    codename: change_device
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: device
+    name: Can change device
+- model: auth.permission
+  ids:
+    codename: delete_device
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: device
+    name: Can delete device
+- model: auth.permission
+  ids:
+    codename: view_device
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: device
+    name: Can view device
+- model: auth.permission
+  ids:
+    codename: add_devicerole
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicerole
+    name: Can add device role
+- model: auth.permission
+  ids:
+    codename: change_devicerole
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicerole
+    name: Can change device role
+- model: auth.permission
+  ids:
+    codename: delete_devicerole
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicerole
+    name: Can delete device role
+- model: auth.permission
+  ids:
+    codename: view_devicerole
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicerole
+    name: Can view device role
+- model: auth.permission
+  ids:
+    codename: add_devicetype
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicetype
+    name: Can add device type
+- model: auth.permission
+  ids:
+    codename: change_devicetype
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicetype
+    name: Can change device type
+- model: auth.permission
+  ids:
+    codename: delete_devicetype
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicetype
+    name: Can delete device type
+- model: auth.permission
+  ids:
+    codename: view_devicetype
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicetype
+    name: Can view device type
+- model: auth.permission
+  ids:
+    codename: add_interface
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: interface
+    name: Can add interface
+- model: auth.permission
+  ids:
+    codename: change_interface
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: interface
+    name: Can change interface
+- model: auth.permission
+  ids:
+    codename: delete_interface
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: interface
+    name: Can delete interface
+- model: auth.permission
+  ids:
+    codename: view_interface
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: interface
+    name: Can view interface
+- model: auth.permission
+  ids:
+    codename: add_interfacetemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: interfacetemplate
+    name: Can add interface template
+- model: auth.permission
+  ids:
+    codename: change_interfacetemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: interfacetemplate
+    name: Can change interface template
+- model: auth.permission
+  ids:
+    codename: delete_interfacetemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: interfacetemplate
+    name: Can delete interface template
+- model: auth.permission
+  ids:
+    codename: view_interfacetemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: interfacetemplate
+    name: Can view interface template
+- model: auth.permission
+  ids:
+    codename: add_manufacturer
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: manufacturer
+    name: Can add manufacturer
+- model: auth.permission
+  ids:
+    codename: change_manufacturer
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: manufacturer
+    name: Can change manufacturer
+- model: auth.permission
+  ids:
+    codename: delete_manufacturer
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: manufacturer
+    name: Can delete manufacturer
+- model: auth.permission
+  ids:
+    codename: view_manufacturer
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: manufacturer
+    name: Can view manufacturer
+- model: auth.permission
+  ids:
+    codename: add_platform
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: platform
+    name: Can add platform
+- model: auth.permission
+  ids:
+    codename: change_platform
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: platform
+    name: Can change platform
+- model: auth.permission
+  ids:
+    codename: delete_platform
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: platform
+    name: Can delete platform
+- model: auth.permission
+  ids:
+    codename: view_platform
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: platform
+    name: Can view platform
+- model: auth.permission
+  ids:
+    codename: add_poweroutlet
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: poweroutlet
+    name: Can add power outlet
+- model: auth.permission
+  ids:
+    codename: change_poweroutlet
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: poweroutlet
+    name: Can change power outlet
+- model: auth.permission
+  ids:
+    codename: delete_poweroutlet
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: poweroutlet
+    name: Can delete power outlet
+- model: auth.permission
+  ids:
+    codename: view_poweroutlet
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: poweroutlet
+    name: Can view power outlet
+- model: auth.permission
+  ids:
+    codename: add_poweroutlettemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: poweroutlettemplate
+    name: Can add power outlet template
+- model: auth.permission
+  ids:
+    codename: change_poweroutlettemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: poweroutlettemplate
+    name: Can change power outlet template
+- model: auth.permission
+  ids:
+    codename: delete_poweroutlettemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: poweroutlettemplate
+    name: Can delete power outlet template
+- model: auth.permission
+  ids:
+    codename: view_poweroutlettemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: poweroutlettemplate
+    name: Can view power outlet template
+- model: auth.permission
+  ids:
+    codename: add_powerport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerport
+    name: Can add power port
+- model: auth.permission
+  ids:
+    codename: change_powerport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerport
+    name: Can change power port
+- model: auth.permission
+  ids:
+    codename: delete_powerport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerport
+    name: Can delete power port
+- model: auth.permission
+  ids:
+    codename: view_powerport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerport
+    name: Can view power port
+- model: auth.permission
+  ids:
+    codename: add_powerporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerporttemplate
+    name: Can add power port template
+- model: auth.permission
+  ids:
+    codename: change_powerporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerporttemplate
+    name: Can change power port template
+- model: auth.permission
+  ids:
+    codename: delete_powerporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerporttemplate
+    name: Can delete power port template
+- model: auth.permission
+  ids:
+    codename: view_powerporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerporttemplate
+    name: Can view power port template
+- model: auth.permission
+  ids:
+    codename: add_rack
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rack
+    name: Can add rack
+- model: auth.permission
+  ids:
+    codename: change_rack
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rack
+    name: Can change rack
+- model: auth.permission
+  ids:
+    codename: delete_rack
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rack
+    name: Can delete rack
+- model: auth.permission
+  ids:
+    codename: view_rack
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rack
+    name: Can view rack
+- model: auth.permission
+  ids:
+    codename: add_rackgroup
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rackgroup
+    name: Can add rack group
+- model: auth.permission
+  ids:
+    codename: change_rackgroup
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rackgroup
+    name: Can change rack group
+- model: auth.permission
+  ids:
+    codename: delete_rackgroup
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rackgroup
+    name: Can delete rack group
+- model: auth.permission
+  ids:
+    codename: view_rackgroup
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rackgroup
+    name: Can view rack group
+- model: auth.permission
+  ids:
+    codename: add_site
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: site
+    name: Can add site
+- model: auth.permission
+  ids:
+    codename: change_site
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: site
+    name: Can change site
+- model: auth.permission
+  ids:
+    codename: delete_site
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: site
+    name: Can delete site
+- model: auth.permission
+  ids:
+    codename: view_site
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: site
+    name: Can view site
+- model: auth.permission
+  ids:
+    codename: add_devicebay
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicebay
+    name: Can add device bay
+- model: auth.permission
+  ids:
+    codename: change_devicebay
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicebay
+    name: Can change device bay
+- model: auth.permission
+  ids:
+    codename: delete_devicebay
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicebay
+    name: Can delete device bay
+- model: auth.permission
+  ids:
+    codename: view_devicebay
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicebay
+    name: Can view device bay
+- model: auth.permission
+  ids:
+    codename: add_devicebaytemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicebaytemplate
+    name: Can add device bay template
+- model: auth.permission
+  ids:
+    codename: change_devicebaytemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicebaytemplate
+    name: Can change device bay template
+- model: auth.permission
+  ids:
+    codename: delete_devicebaytemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicebaytemplate
+    name: Can delete device bay template
+- model: auth.permission
+  ids:
+    codename: view_devicebaytemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: devicebaytemplate
+    name: Can view device bay template
+- model: auth.permission
+  ids:
+    codename: add_rackrole
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rackrole
+    name: Can add rack role
+- model: auth.permission
+  ids:
+    codename: change_rackrole
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rackrole
+    name: Can change rack role
+- model: auth.permission
+  ids:
+    codename: delete_rackrole
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rackrole
+    name: Can delete rack role
+- model: auth.permission
+  ids:
+    codename: view_rackrole
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rackrole
+    name: Can view rack role
+- model: auth.permission
+  ids:
+    codename: add_rackreservation
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rackreservation
+    name: Can add rack reservation
+- model: auth.permission
+  ids:
+    codename: change_rackreservation
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rackreservation
+    name: Can change rack reservation
+- model: auth.permission
+  ids:
+    codename: delete_rackreservation
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rackreservation
+    name: Can delete rack reservation
+- model: auth.permission
+  ids:
+    codename: view_rackreservation
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rackreservation
+    name: Can view rack reservation
+- model: auth.permission
+  ids:
+    codename: add_region
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: region
+    name: Can add region
+- model: auth.permission
+  ids:
+    codename: change_region
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: region
+    name: Can change region
+- model: auth.permission
+  ids:
+    codename: delete_region
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: region
+    name: Can delete region
+- model: auth.permission
+  ids:
+    codename: view_region
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: region
+    name: Can view region
+- model: auth.permission
+  ids:
+    codename: add_inventoryitem
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: inventoryitem
+    name: Can add inventory item
+- model: auth.permission
+  ids:
+    codename: change_inventoryitem
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: inventoryitem
+    name: Can change inventory item
+- model: auth.permission
+  ids:
+    codename: delete_inventoryitem
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: inventoryitem
+    name: Can delete inventory item
+- model: auth.permission
+  ids:
+    codename: view_inventoryitem
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: inventoryitem
+    name: Can view inventory item
+- model: auth.permission
+  ids:
+    codename: add_virtualchassis
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: virtualchassis
+    name: Can add virtual chassis
+- model: auth.permission
+  ids:
+    codename: change_virtualchassis
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: virtualchassis
+    name: Can change virtual chassis
+- model: auth.permission
+  ids:
+    codename: delete_virtualchassis
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: virtualchassis
+    name: Can delete virtual chassis
+- model: auth.permission
+  ids:
+    codename: view_virtualchassis
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: virtualchassis
+    name: Can view virtual chassis
+- model: auth.permission
+  ids:
+    codename: add_frontport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: frontport
+    name: Can add front port
+- model: auth.permission
+  ids:
+    codename: change_frontport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: frontport
+    name: Can change front port
+- model: auth.permission
+  ids:
+    codename: delete_frontport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: frontport
+    name: Can delete front port
+- model: auth.permission
+  ids:
+    codename: view_frontport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: frontport
+    name: Can view front port
+- model: auth.permission
+  ids:
+    codename: add_frontporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: frontporttemplate
+    name: Can add front port template
+- model: auth.permission
+  ids:
+    codename: change_frontporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: frontporttemplate
+    name: Can change front port template
+- model: auth.permission
+  ids:
+    codename: delete_frontporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: frontporttemplate
+    name: Can delete front port template
+- model: auth.permission
+  ids:
+    codename: view_frontporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: frontporttemplate
+    name: Can view front port template
+- model: auth.permission
+  ids:
+    codename: add_rearport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rearport
+    name: Can add rear port
+- model: auth.permission
+  ids:
+    codename: change_rearport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rearport
+    name: Can change rear port
+- model: auth.permission
+  ids:
+    codename: delete_rearport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rearport
+    name: Can delete rear port
+- model: auth.permission
+  ids:
+    codename: view_rearport
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rearport
+    name: Can view rear port
+- model: auth.permission
+  ids:
+    codename: add_rearporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rearporttemplate
+    name: Can add rear port template
+- model: auth.permission
+  ids:
+    codename: change_rearporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rearporttemplate
+    name: Can change rear port template
+- model: auth.permission
+  ids:
+    codename: delete_rearporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rearporttemplate
+    name: Can delete rear port template
+- model: auth.permission
+  ids:
+    codename: view_rearporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: rearporttemplate
+    name: Can view rear port template
+- model: auth.permission
+  ids:
+    codename: add_cable
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: cable
+    name: Can add cable
+- model: auth.permission
+  ids:
+    codename: change_cable
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: cable
+    name: Can change cable
+- model: auth.permission
+  ids:
+    codename: delete_cable
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: cable
+    name: Can delete cable
+- model: auth.permission
+  ids:
+    codename: view_cable
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: cable
+    name: Can view cable
+- model: auth.permission
+  ids:
+    codename: add_powerfeed
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerfeed
+    name: Can add power feed
+- model: auth.permission
+  ids:
+    codename: change_powerfeed
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerfeed
+    name: Can change power feed
+- model: auth.permission
+  ids:
+    codename: delete_powerfeed
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerfeed
+    name: Can delete power feed
+- model: auth.permission
+  ids:
+    codename: view_powerfeed
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerfeed
+    name: Can view power feed
+- model: auth.permission
+  ids:
+    codename: add_powerpanel
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerpanel
+    name: Can add power panel
+- model: auth.permission
+  ids:
+    codename: change_powerpanel
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerpanel
+    name: Can change power panel
+- model: auth.permission
+  ids:
+    codename: delete_powerpanel
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerpanel
+    name: Can delete power panel
+- model: auth.permission
+  ids:
+    codename: view_powerpanel
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: powerpanel
+    name: Can view power panel
+- model: auth.permission
+  ids:
+    codename: add_cablepath
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: cablepath
+    name: Can add cable path
+- model: auth.permission
+  ids:
+    codename: change_cablepath
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: cablepath
+    name: Can change cable path
+- model: auth.permission
+  ids:
+    codename: delete_cablepath
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: cablepath
+    name: Can delete cable path
+- model: auth.permission
+  ids:
+    codename: view_cablepath
+  fields:
+    content_type:
+      ids:
+        app_label: dcim
+        model: cablepath
+    name: Can view cable path
+- model: auth.permission
+  ids:
+    codename: add_aggregate
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: aggregate
+    name: Can add aggregate
+- model: auth.permission
+  ids:
+    codename: change_aggregate
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: aggregate
+    name: Can change aggregate
+- model: auth.permission
+  ids:
+    codename: delete_aggregate
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: aggregate
+    name: Can delete aggregate
+- model: auth.permission
+  ids:
+    codename: view_aggregate
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: aggregate
+    name: Can view aggregate
+- model: auth.permission
+  ids:
+    codename: add_ipaddress
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: ipaddress
+    name: Can add IP address
+- model: auth.permission
+  ids:
+    codename: change_ipaddress
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: ipaddress
+    name: Can change IP address
+- model: auth.permission
+  ids:
+    codename: delete_ipaddress
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: ipaddress
+    name: Can delete IP address
+- model: auth.permission
+  ids:
+    codename: view_ipaddress
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: ipaddress
+    name: Can view IP address
+- model: auth.permission
+  ids:
+    codename: add_prefix
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: prefix
+    name: Can add prefix
+- model: auth.permission
+  ids:
+    codename: change_prefix
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: prefix
+    name: Can change prefix
+- model: auth.permission
+  ids:
+    codename: delete_prefix
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: prefix
+    name: Can delete prefix
+- model: auth.permission
+  ids:
+    codename: view_prefix
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: prefix
+    name: Can view prefix
+- model: auth.permission
+  ids:
+    codename: add_rir
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: rir
+    name: Can add RIR
+- model: auth.permission
+  ids:
+    codename: change_rir
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: rir
+    name: Can change RIR
+- model: auth.permission
+  ids:
+    codename: delete_rir
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: rir
+    name: Can delete RIR
+- model: auth.permission
+  ids:
+    codename: view_rir
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: rir
+    name: Can view RIR
+- model: auth.permission
+  ids:
+    codename: add_role
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: role
+    name: Can add role
+- model: auth.permission
+  ids:
+    codename: change_role
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: role
+    name: Can change role
+- model: auth.permission
+  ids:
+    codename: delete_role
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: role
+    name: Can delete role
+- model: auth.permission
+  ids:
+    codename: view_role
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: role
+    name: Can view role
+- model: auth.permission
+  ids:
+    codename: add_vlan
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: vlan
+    name: Can add VLAN
+- model: auth.permission
+  ids:
+    codename: change_vlan
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: vlan
+    name: Can change VLAN
+- model: auth.permission
+  ids:
+    codename: delete_vlan
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: vlan
+    name: Can delete VLAN
+- model: auth.permission
+  ids:
+    codename: view_vlan
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: vlan
+    name: Can view VLAN
+- model: auth.permission
+  ids:
+    codename: add_vrf
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: vrf
+    name: Can add VRF
+- model: auth.permission
+  ids:
+    codename: change_vrf
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: vrf
+    name: Can change VRF
+- model: auth.permission
+  ids:
+    codename: delete_vrf
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: vrf
+    name: Can delete VRF
+- model: auth.permission
+  ids:
+    codename: view_vrf
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: vrf
+    name: Can view VRF
+- model: auth.permission
+  ids:
+    codename: add_vlangroup
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: vlangroup
+    name: Can add VLAN group
+- model: auth.permission
+  ids:
+    codename: change_vlangroup
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: vlangroup
+    name: Can change VLAN group
+- model: auth.permission
+  ids:
+    codename: delete_vlangroup
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: vlangroup
+    name: Can delete VLAN group
+- model: auth.permission
+  ids:
+    codename: view_vlangroup
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: vlangroup
+    name: Can view VLAN group
+- model: auth.permission
+  ids:
+    codename: add_service
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: service
+    name: Can add service
+- model: auth.permission
+  ids:
+    codename: change_service
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: service
+    name: Can change service
+- model: auth.permission
+  ids:
+    codename: delete_service
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: service
+    name: Can delete service
+- model: auth.permission
+  ids:
+    codename: view_service
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: service
+    name: Can view service
+- model: auth.permission
+  ids:
+    codename: add_routetarget
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: routetarget
+    name: Can add route target
+- model: auth.permission
+  ids:
+    codename: change_routetarget
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: routetarget
+    name: Can change route target
+- model: auth.permission
+  ids:
+    codename: delete_routetarget
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: routetarget
+    name: Can delete route target
+- model: auth.permission
+  ids:
+    codename: view_routetarget
+  fields:
+    content_type:
+      ids:
+        app_label: ipam
+        model: routetarget
+    name: Can view route target
+- model: auth.permission
+  ids:
+    codename: add_exporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: exporttemplate
+    name: Can add export template
+- model: auth.permission
+  ids:
+    codename: change_exporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: exporttemplate
+    name: Can change export template
+- model: auth.permission
+  ids:
+    codename: delete_exporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: exporttemplate
+    name: Can delete export template
+- model: auth.permission
+  ids:
+    codename: view_exporttemplate
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: exporttemplate
+    name: Can view export template
+- model: auth.permission
+  ids:
+    codename: add_customfield
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: customfield
+    name: Can add custom field
+- model: auth.permission
+  ids:
+    codename: change_customfield
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: customfield
+    name: Can change custom field
+- model: auth.permission
+  ids:
+    codename: delete_customfield
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: customfield
+    name: Can delete custom field
+- model: auth.permission
+  ids:
+    codename: view_customfield
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: customfield
+    name: Can view custom field
+- model: auth.permission
+  ids:
+    codename: add_imageattachment
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: imageattachment
+    name: Can add image attachment
+- model: auth.permission
+  ids:
+    codename: change_imageattachment
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: imageattachment
+    name: Can change image attachment
+- model: auth.permission
+  ids:
+    codename: delete_imageattachment
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: imageattachment
+    name: Can delete image attachment
+- model: auth.permission
+  ids:
+    codename: view_imageattachment
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: imageattachment
+    name: Can view image attachment
+- model: auth.permission
+  ids:
+    codename: add_webhook
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: webhook
+    name: Can add webhook
+- model: auth.permission
+  ids:
+    codename: change_webhook
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: webhook
+    name: Can change webhook
+- model: auth.permission
+  ids:
+    codename: delete_webhook
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: webhook
+    name: Can delete webhook
+- model: auth.permission
+  ids:
+    codename: view_webhook
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: webhook
+    name: Can view webhook
+- model: auth.permission
+  ids:
+    codename: add_configcontext
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: configcontext
+    name: Can add config context
+- model: auth.permission
+  ids:
+    codename: change_configcontext
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: configcontext
+    name: Can change config context
+- model: auth.permission
+  ids:
+    codename: delete_configcontext
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: configcontext
+    name: Can delete config context
+- model: auth.permission
+  ids:
+    codename: view_configcontext
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: configcontext
+    name: Can view config context
+- model: auth.permission
+  ids:
+    codename: add_tag  # Exists both for extras.tag and taggit.tag
+    content_type:
+      ids:
+        app_label: extras
+        model: tag
+  fields:
+    name: Can add tag
+- model: auth.permission
+  ids:
+    codename: change_tag  # Exists both for extras.tag and taggit.tag
+    content_type:
+      ids:
+        app_label: extras
+        model: tag
+  fields:
+    name: Can change tag
+- model: auth.permission
+  ids:
+    codename: delete_tag  # Exists both for extras.tag and taggit.tag
+    content_type:
+      ids:
+        app_label: extras
+        model: tag
+  fields:
+    name: Can delete tag
+- model: auth.permission
+  ids:
+    codename: view_tag  # Exists both for extras.tag and taggit.tag
+    content_type:
+      ids:
+        app_label: extras
+        model: tag
+  fields:
+    name: Can view tag
+- model: auth.permission
+  ids:
+    codename: add_taggeditem  # Exists for both extras.taggeditem and taggit.taggeditem
+    content_type:
+      ids:
+        app_label: extras
+        model: taggeditem
+  fields:
+    name: Can add tagged item
+- model: auth.permission
+  ids:
+    codename: change_taggeditem  # Exists for both extras.taggeditem and taggit.taggeditem
+    content_type:
+      ids:
+        app_label: extras
+        model: taggeditem
+  fields:
+    name: Can change tagged item
+- model: auth.permission
+  ids:
+    codename: delete_taggeditem  # Exists for both extras.taggeditem and taggit.taggeditem
+    content_type:
+      ids:
+        app_label: extras
+        model: taggeditem
+  fields:
+    name: Can delete tagged item
+- model: auth.permission
+  ids:
+    codename: view_taggeditem  # Exists for both extras.taggeditem and taggit.taggeditem
+    content_type:
+      ids:
+        app_label: extras
+        model: taggeditem
+  fields:
+    name: Can view tagged item
+- model: auth.permission
+  ids:
+    codename: add_customlink
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: customlink
+    name: Can add custom link
+- model: auth.permission
+  ids:
+    codename: change_customlink
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: customlink
+    name: Can change custom link
+- model: auth.permission
+  ids:
+    codename: delete_customlink
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: customlink
+    name: Can delete custom link
+- model: auth.permission
+  ids:
+    codename: view_customlink
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: customlink
+    name: Can view custom link
+- model: auth.permission
+  ids:
+    codename: add_jobresult
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: jobresult
+    name: Can add job result
+- model: auth.permission
+  ids:
+    codename: change_jobresult
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: jobresult
+    name: Can change job result
+- model: auth.permission
+  ids:
+    codename: delete_jobresult
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: jobresult
+    name: Can delete job result
+- model: auth.permission
+  ids:
+    codename: view_jobresult
+  fields:
+    content_type:
+      ids:
+        app_label: extras
+        model: jobresult
+    name: Can view job result
+- model: auth.permission
+  ids:
+    codename: add_tenant
+  fields:
+    content_type:
+      ids:
+        app_label: tenancy
+        model: tenant
+    name: Can add tenant
+- model: auth.permission
+  ids:
+    codename: change_tenant
+  fields:
+    content_type:
+      ids:
+        app_label: tenancy
+        model: tenant
+    name: Can change tenant
+- model: auth.permission
+  ids:
+    codename: delete_tenant
+  fields:
+    content_type:
+      ids:
+        app_label: tenancy
+        model: tenant
+    name: Can delete tenant
+- model: auth.permission
+  ids:
+    codename: view_tenant
+  fields:
+    content_type:
+      ids:
+        app_label: tenancy
+        model: tenant
+    name: Can view tenant
+- model: auth.permission
+  ids:
+    codename: add_tenantgroup
+  fields:
+    content_type:
+      ids:
+        app_label: tenancy
+        model: tenantgroup
+    name: Can add tenant group
+- model: auth.permission
+  ids:
+    codename: change_tenantgroup
+  fields:
+    content_type:
+      ids:
+        app_label: tenancy
+        model: tenantgroup
+    name: Can change tenant group
+- model: auth.permission
+  ids:
+    codename: delete_tenantgroup
+  fields:
+    content_type:
+      ids:
+        app_label: tenancy
+        model: tenantgroup
+    name: Can delete tenant group
+- model: auth.permission
+  ids:
+    codename: view_tenantgroup
+  fields:
+    content_type:
+      ids:
+        app_label: tenancy
+        model: tenantgroup
+    name: Can view tenant group
+- model: auth.permission
+  ids:
+    codename: add_token
+  fields:
+    content_type:
+      ids:
+        app_label: users
+        model: token
+    name: Can add token
+- model: auth.permission
+  ids:
+    codename: change_token
+  fields:
+    content_type:
+      ids:
+        app_label: users
+        model: token
+    name: Can change token
+- model: auth.permission
+  ids:
+    codename: delete_token
+  fields:
+    content_type:
+      ids:
+        app_label: users
+        model: token
+    name: Can delete token
+- model: auth.permission
+  ids:
+    codename: view_token
+  fields:
+    content_type:
+      ids:
+        app_label: users
+        model: token
+    name: Can view token
+- model: auth.permission
+  ids:
+    codename: add_userconfig
+  fields:
+    content_type:
+      ids:
+        app_label: users
+        model: userconfig
+    name: Can add User Preferences
+- model: auth.permission
+  ids:
+    codename: change_userconfig
+  fields:
+    content_type:
+      ids:
+        app_label: users
+        model: userconfig
+    name: Can change User Preferences
+- model: auth.permission
+  ids:
+    codename: delete_userconfig
+  fields:
+    content_type:
+      ids:
+        app_label: users
+        model: userconfig
+    name: Can delete User Preferences
+- model: auth.permission
+  ids:
+    codename: view_userconfig
+  fields:
+    content_type:
+      ids:
+        app_label: users
+        model: userconfig
+    name: Can view User Preferences
+- model: auth.permission
+  ids:
+    codename: add_objectpermission
+  fields:
+    content_type:
+      ids:
+        app_label: users
+        model: objectpermission
+    name: Can add permission
+- model: auth.permission
+  ids:
+    codename: change_objectpermission
+  fields:
+    content_type:
+      ids:
+        app_label: users
+        model: objectpermission
+    name: Can change permission
+- model: auth.permission
+  ids:
+    codename: delete_objectpermission
+  fields:
+    content_type:
+      ids:
+        app_label: users
+        model: objectpermission
+    name: Can delete permission
+- model: auth.permission
+  ids:
+    codename: view_objectpermission
+  fields:
+    content_type:
+      ids:
+        app_label: users
+        model: objectpermission
+    name: Can view permission
+- model: auth.permission
+  ids:
+    codename: add_cluster
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: cluster
+    name: Can add cluster
+- model: auth.permission
+  ids:
+    codename: change_cluster
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: cluster
+    name: Can change cluster
+- model: auth.permission
+  ids:
+    codename: delete_cluster
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: cluster
+    name: Can delete cluster
+- model: auth.permission
+  ids:
+    codename: view_cluster
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: cluster
+    name: Can view cluster
+- model: auth.permission
+  ids:
+    codename: add_clustergroup
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: clustergroup
+    name: Can add cluster group
+- model: auth.permission
+  ids:
+    codename: change_clustergroup
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: clustergroup
+    name: Can change cluster group
+- model: auth.permission
+  ids:
+    codename: delete_clustergroup
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: clustergroup
+    name: Can delete cluster group
+- model: auth.permission
+  ids:
+    codename: view_clustergroup
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: clustergroup
+    name: Can view cluster group
+- model: auth.permission
+  ids:
+    codename: add_clustertype
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: clustertype
+    name: Can add cluster type
+- model: auth.permission
+  ids:
+    codename: change_clustertype
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: clustertype
+    name: Can change cluster type
+- model: auth.permission
+  ids:
+    codename: delete_clustertype
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: clustertype
+    name: Can delete cluster type
+- model: auth.permission
+  ids:
+    codename: view_clustertype
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: clustertype
+    name: Can view cluster type
+- model: auth.permission
+  ids:
+    codename: add_virtualmachine
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: virtualmachine
+    name: Can add virtual machine
+- model: auth.permission
+  ids:
+    codename: change_virtualmachine
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: virtualmachine
+    name: Can change virtual machine
+- model: auth.permission
+  ids:
+    codename: delete_virtualmachine
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: virtualmachine
+    name: Can delete virtual machine
+- model: auth.permission
+  ids:
+    codename: view_virtualmachine
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: virtualmachine
+    name: Can view virtual machine
+- model: auth.permission
+  ids:
+    codename: add_vminterface
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: vminterface
+    name: Can add interface
+- model: auth.permission
+  ids:
+    codename: change_vminterface
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: vminterface
+    name: Can change interface
+- model: auth.permission
+  ids:
+    codename: delete_vminterface
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: vminterface
+    name: Can delete interface
+- model: auth.permission
+  ids:
+    codename: view_vminterface
+  fields:
+    content_type:
+      ids:
+        app_label: virtualization
+        model: vminterface
+    name: Can view interface
+- model: auth.user
+  ids:
+    username: admin
+  fields:
+    # date_joined: '2021-02-21T22:47:00.374Z'
+    email: admin@example.com
+    first_name: Andy
+    groups: []
+    is_active: true
+    is_staff: true
+    is_superuser: true
+    # last_login: '2021-02-21T23:25:39.132Z'
+    last_name: Ministrator
+    password: pbkdf2_sha256$216000$da6CZRwS7Ti6$GIUYlTXeEOyZIuEgQTEkohHnvmd3kDn0OCyuT1dM+H4=
+    user_permissions: []
+- model: circuits.provider
+  ids:
+    name: Provider A
+  fields:
+    account: A
+    admin_contact: A
+    asn: 11111
+    comments: ''
+    custom_field_data: {}
+    noc_contact: A
+    portal_url: http://example.com
+    slug: provider-a
+- model: circuits.provider
+  ids:
+    name: Provider B
+  fields:
+    account: ''
+    admin_contact: ''
+    asn: 2222
+    comments: ''
+    custom_field_data: {}
+    noc_contact: ''
+    portal_url: ''
+    slug: provider-b
+- model: circuits.circuittype
+  ids:
+    name: Circuit Type A
+  fields:
+    description: A
+    slug: circuit-type-a
+- model: circuits.circuittype
+  ids:
+    name: Circuit Type B
+  fields:
+    description: ''
+    slug: circuit-type-b
+- model: circuits.circuit
+  ids:
+    provider:
+      ids:
+        name: Provider A
+    cid: Circuit A
+  fields:
+    comments: A
+    commit_rate: 1
+    custom_field_data: {}
+    description: A
+    install_date: !!timestamp '2021-02-21'
+    status:
+      ids:
+        slug: "active"
+    tenant:
+      ids:
+        name: "Tenant A"
+    type:
+      ids:
+        name: "Circuit Type A"
+- model: circuits.circuit
+  ids:
+    provider:
+      ids:
+        name: Provider B
+    cid: Circuit B
+  fields:
+    comments: ''
+    commit_rate: null
+    custom_field_data: {}
+    description: ''
+    install_date: null
+    status:
+      ids:
+        slug: "active"
+    tenant:
+      ids:
+        name: "Tenant B"
+    type:
+      ids:
+        name: "Circuit Type B"
+- model: circuits.circuittermination
+  ids:
+    circuit:
+      ids:
+        cid: "Circuit A"
+    term_side: A
+  fields:
+    cable: null
+    description: ''
+    port_speed: null
+    pp_info: ''
+    site:
+      ids:
+        name: "Site A"
+    upstream_speed: null
+    xconnect_id: ''
+- model: circuits.circuittermination
+  ids:
+    circuit:
+      ids:
+        cid: "Circuit B"
+    term_side: A
+  fields:
+    # TODO cable: 7
+    description: B
+    port_speed: 1
+    pp_info: B
+    site:
+      ids:
+        name: "Site B"
+    upstream_speed: 1
+    xconnect_id: B
+- model: circuits.circuittermination
+  ids:
+    circuit:
+      ids:
+        cid: "Circuit B"
+    term_side: Z
+  fields:
+    # TODO cable: 7
+    description: ''
+    port_speed: null
+    pp_info: ''
+    site:
+      ids:
+        name: "Site B"
+    upstream_speed: null
+    xconnect_id: ''
+- model: dcim.consoleport
+  ids:
+    device:
+      ids:
+        name: "Device A Parent"
+  fields:
+    # TODO cable: 4
+    description: ''
+    label: ''
+    name: Device A Console
+    type: usb-a
+- model: dcim.consoleport
+  ids:
+    device:
+      ids:
+        name: "Device B"
+  fields:
+    cable: null
+    description: B
+    label: beta
+    name: Device B Console
+    type: db-25
+- model: dcim.consoleserverport
+  ids:
+    device:
+      ids:
+        name: "Device A Child"
+  fields:
+    # TODO cable: 4
+    description: ''
+    label: ''
+    name: Device A Console Server
+    type: rj-45
+- model: dcim.consoleserverport
+  ids:
+    device:
+      ids:
+        name: "Device B"
+  fields:
+    cable: null
+    description: ''
+    label: ''
+    name: Device B Console Server
+    type: rj-45
+
+- model: dcim.powerport
+  ids:
+    device:
+      ids:
+        name: "Device A Parent"
+  fields:
+    allocated_draw: 10
+    # TODO cable: 5
+    description: ''
+    label: ''
+    maximum_draw: 100
+    name: Device A Power
+    type: nema-6-20p
+- model: dcim.powerport
+  ids:
+    device:
+      ids:
+        name: "Device B"
+  fields:
+    allocated_draw: null
+    # TODO cable: 6
+    description: ''
+    label: ''
+    maximum_draw: null
+    name: Device B Power Port
+    type: iec-60320-c8
+- model: dcim.powerport
+  ids:
+    device:
+      ids:
+        name: "Device A Child"
+  fields:
+    allocated_draw: null
+    # TODO cable: 8
+    description: ''
+    label: ''
+    maximum_draw: null
+    name: Device A Child Power Port
+    type: ''
+- model: dcim.poweroutlet
+  ids:
+    device:
+      ids:
+        name: "Device A Parent"
+  fields:
+    # TODO cable: 6
+    description: ''
+    feed_leg: A
+    label: ''
+    name: Device A Power Outlet
+    power_port:
+      ids:
+        device:
+          ids:
+            name: "Device A Parent"
+        name: "Device A Power"
+    type: iec-60320-c5
+- model: dcim.poweroutlet
+  ids:
+    device:
+      ids:
+        name: "Device B"
+  fields:
+    # TODO cable: 5
+    description: ''
+    feed_leg: B
+    label: ''
+    name: Device B Power Outlet
+    power_port: null
+    type: iec-60320-c13
+- model: dcim.interface
+  ids:
+    device:
+      ids:
+        name: "Device A Parent"
+    name: Device A LAG
+  fields:
+    cable: null
+    description: ''
+    enabled: true
+    label: ''
+    lag: null
+    mac_address: null
+    mgmt_only: false
+    mode: access
+    mtu: null
+    tagged_vlans: []
+    type: lag
+    untagged_vlan:
+      ids:
+        name: "VLAN A"
+- model: dcim.interface
+  ids:
+    device:
+      ids:
+        name: "Device A Parent"
+    name: Device A LAG Child
+  fields:
+    # TODO cable: 1
+    description: ''
+    enabled: true
+    label: ''
+    lag:
+      ids:
+        name: "Device A LAG"
+    mac_address: null
+    mgmt_only: false
+    mode: access
+    mtu: null
+    tagged_vlans: []
+    type: 1000base-t
+    untagged_vlan:
+      ids:
+        name: "VLAN A"
+- model: dcim.interface
+  ids:
+    device:
+      ids:
+        name: "Device B"
+    name: Device B Interface
+  fields:
+    # TODO cable: 1
+    description: ''
+    enabled: true
+    label: ''
+    lag: null
+    mac_address: null
+    mgmt_only: false
+    mode: tagged
+    mtu: null
+    tagged_vlans:
+    - ids:
+        name: "VLAN B"
+    type: 1000base-t
+    untagged_vlan:
+      ids:
+        name: "VLAN B"
+- model: dcim.frontport
+  ids:
+    name: Device A Front Port
+  fields:
+    # TODO cable: 2
+    description: ''
+    device:
+      ids:
+        name: "Device A Parent"
+    label: ''
+    rear_port:
+      ids:
+        name: "Device A Rear Port"
+    rear_port_position: 1
+    type: 8p8c
+- model: dcim.frontport
+  ids:
+    name: Device B Front Port
+  fields:
+    # TODO cable: 2
+    description: ''
+    device:
+      ids:
+        name: "Device B"
+    label: ''
+    rear_port:
+      ids:
+        name: "Device B Rear Port"
+    rear_port_position: 1
+    type: 8p8c
+- model: dcim.rearport
+  ids:
+    name: "Device A Rear Port"
+  fields:
+    # TODO cable: 3
+    description: ''
+    device:
+      ids:
+        name: "Device A Parent"
+    label: ''
+    positions: 1
+    type: 8p8c
+- model: dcim.rearport
+  ids:
+    name: "Device B Rear Port"
+  fields:
+    # TODO cable: 3
+    description: ''
+    device:
+      ids:
+        name: "Device B"
+    label: B
+    positions: 1
+    type: 8p8c
+- model: dcim.devicebay
+  ids:
+    name: Device A Device Bay
+  fields:
+    description: ''
+    device:
+      ids:
+        name: "Device A Parent"
+    installed_device:
+      ids:
+        name: "Device A Child"
+    label: A
+- model: dcim.devicebay
+  ids:
+    name: Device B Device Bay
+  fields:
+    description: B
+    device:
+      ids:
+        name: "Device B"
+    installed_device: null
+    label: B
+- model: dcim.inventoryitem
+  ids:
+    name: Device A Inventory Item Parent
+  fields:
+    asset_tag: A
+    description: A
+    device:
+      ids:
+        name: "Device A Parent"
+    discovered: false
+    label: ''
+    manufacturer:
+      ids:
+        name: "Manufacturer A"
+    parent: null
+    part_id: A
+    serial: A
+- model: dcim.inventoryitem
+  ids:
+    name: Device A Inventory Item Child
+  fields:
+    asset_tag: null
+    description: ''
+    device:
+      ids:
+        name: "Device A Parent"
+    discovered: false
+    label: ''
+    manufacturer:
+      ids:
+        name: "Manufacturer A"
+    parent:
+      ids:
+        name: "Device A Inventory Item Parent"
+    part_id: ''
+    serial: ''
+- model: dcim.inventoryitem
+  ids:
+    name: Device B Inventory Item
+  fields:
+    asset_tag: null
+    description: ''
+    device:
+      ids:
+        name: "Device B"
+    discovered: false
+    label: ''
+    manufacturer:
+      ids:
+        name: "Manufacturer B"
+    parent: null
+    part_id: ''
+    serial: ''
+- model: dcim.manufacturer
+  ids:
+    name: Manufacturer A
+  fields:
+    description: ''
+    slug: manufacturer-a
+- model: dcim.manufacturer
+  ids:
+    name: Manufacturer B
+  fields:
+    description: ''
+    slug: manufacturer-b
+- model: dcim.devicetype
+  ids:
+    model: Model A
+  fields:
+    comments: ''
+    custom_field_data: {}
+    front_image: ''
+    is_full_depth: true
+    manufacturer:
+      ids:
+        name: "Manufacturer A"
+    part_number: AAAAAAAAA
+    rear_image: ''
+    slug: model-a
+    subdevice_role: parent
+    u_height: 1
+- model: dcim.devicetype
+  ids:
+    model: Model A Child
+  fields:
+    comments: ''
+    custom_field_data: {}
+    front_image: ''
+    is_full_depth: false
+    manufacturer:
+      ids:
+        name: "Manufacturer A"
+    part_number: ''
+    rear_image: ''
+    slug: model-a-child
+    subdevice_role: child
+    u_height: 0
+- model: dcim.devicetype
+  ids:
+    model: Model B
+  fields:
+    comments: ''
+    custom_field_data: {}
+    front_image: ''
+    is_full_depth: true
+    manufacturer:
+      ids:
+        name: "Manufacturer B"
+    part_number: ''
+    rear_image: ''
+    slug: model-b
+    subdevice_role: parent
+    u_height: 2
+- model: dcim.devicerole
+  ids:
+    name: Device Role A
+  fields:
+    color: f44336
+    description: ''
+    slug: device-role-a
+    vm_role: true
+- model: dcim.devicerole
+  ids:
+    name: Device Role B
+  fields:
+    color: 4caf50
+    description: B
+    slug: device-role-b
+    vm_role: true
+- model: dcim.platform
+  ids:
+    name: Platform A
+  fields:
+    description: ''
+    manufacturer:
+      ids:
+        name: "Manufacturer A"
+    napalm_args: null
+    napalm_driver: alpha
+    slug: platform-a
+- model: dcim.platform
+  ids:
+    name: Platform B
+  fields:
+    description: b
+    manufacturer:
+      ids:
+        name: "Manufacturer B"
+    napalm_args:
+      type: null
+    napalm_driver: any
+    slug: platform-b
+- model: dcim.device
+  ids:
+    name: "Device A Parent"
+  fields:
+    asset_tag: null
+    cluster:
+      ids:
+        name: "Cluster A"
+    comments: ''
+    custom_field_data: {}
+    device_role:
+      ids:
+        name: "Device Role A"
+    device_type:
+      ids:
+        model: "Model A"
+    face: ''
+    local_context_data:
+      context: a
+    platform:
+      ids:
+        name: "Platform A"
+    position: null
+    primary_ip4: null
+    primary_ip6: null
+    rack:
+      ids:
+        name: "Rack A"
+    serial: ''
+    site:
+      ids:
+        name: "Site A"
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant A"
+    vc_position: null
+    vc_priority: null
+    virtual_chassis: null
+- model: dcim.device
+  ids:
+    name: "Device A Child"
+  fields:
+    asset_tag: null
+    cluster:
+      ids:
+        name: "Cluster A"
+    comments: ''
+    custom_field_data: {}
+    device_role:
+      ids:
+        name: "Device Role A"
+    device_type:
+      ids:
+        model: "Model A Child"
+    face: ''
+    local_context_data: null
+    platform:
+      ids:
+        name: "Platform A"
+    position: null
+    primary_ip4: null
+    primary_ip6: null
+    rack:
+      ids:
+        name: "Rack A"
+    serial: ''
+    site:
+      ids:
+        name: "Site A"
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant A"
+    vc_position: null
+    vc_priority: null
+    virtual_chassis: null
+- model: dcim.device
+  ids:
+    name: "Device B"
+  fields:
+    asset_tag: null
+    cluster:
+      ids:
+        name: "Cluster B"
+    comments: ''
+    custom_field_data: {}
+    device_role:
+      ids:
+        name: "Device Role B"
+    device_type:
+      ids:
+        model: "Model B"
+    face: ''
+    local_context_data: null
+    platform:
+      ids:
+        name: "Platform B"
+    position: null
+    primary_ip4: null
+    primary_ip6: null
+    rack:
+      ids:
+        name: "Rack B"
+    serial: ''
+    site:
+      ids:
+        name: "Site B"
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant B"
+    vc_position: null
+    vc_priority: null
+    virtual_chassis: null
+- model: dcim.virtualchassis
+  ids:
+    name: Virtual Chassis A
+  fields:
+    custom_field_data: {}
+    domain: ''
+    master: null
+- model: dcim.virtualchassis
+  ids:
+    name: Virtual Chassis B
+  fields:
+    custom_field_data: {}
+    domain: ''
+    master: null
+# TODO
+# - model: dcim.cable
+#   ids: null
+#   fields:
+#     color: '795548'
+#     custom_field_data: {}
+#     label: ''
+#     length: 10
+#     length_unit: m
+#     status: connected
+#     termination_a_id: 2
+#     termination_a_type: 5
+#     termination_b_id: 3
+#     termination_b_type: 5
+#     type: cat5e
+
+# - fields:
+#     color: ''
+#     custom_field_data: {}
+#     label: ''
+#     length: null
+#     length_unit: ''
+#     status: connected
+#     termination_a_id: 1
+#     termination_a_type: 9
+#     termination_b_id: 2
+#     termination_b_type: 9
+#     type: ''
+#   model: dcim.cable
+
+# - fields:
+#     color: ''
+#     custom_field_data: {}
+#     label: ''
+#     length: null
+#     length_unit: ''
+#     status: planned
+#     termination_a_id: 1
+#     termination_a_type: 10
+#     termination_b_id: 2
+#     termination_b_type: 10
+#     type: ''
+#   model: dcim.cable
+
+# - fields:
+#     color: ''
+#     custom_field_data: {}
+#     label: ''
+#     length: null
+#     length_unit: ''
+#     status: connected
+#     termination_a_id: 1
+#     termination_a_type: 1
+#     termination_b_id: 1
+#     termination_b_type: 2
+#     type: ''
+#   model: dcim.cable
+
+# - fields:
+#     color: ''
+#     custom_field_data: {}
+#     label: ''
+#     length: null
+#     length_unit: ''
+#     status: connected
+#     termination_a_id: 1
+#     termination_a_type: 3
+#     termination_b_id: 2
+#     termination_b_type: 4
+#     type: ''
+#   model: dcim.cable
+
+# - fields:
+#     color: ''
+#     custom_field_data: {}
+#     label: ''
+#     length: null
+#     length_unit: ''
+#     status: decommissioning
+#     termination_a_id: 1
+#     termination_a_type: 4
+#     termination_b_id: 2
+#     termination_b_type: 3
+#     type: ''
+#   model: dcim.cable
+
+# - fields:
+#     color: 4caf50
+#     custom_field_data: {}
+#     label: B
+#     length: 1
+#     length_unit: cm
+#     status: connected
+#     termination_a_id: 1
+#     termination_a_type: 7
+#     termination_b_id: 2
+#     termination_b_type: 7
+#     type: cat3
+#   model: dcim.cable
+
+# - fields:
+#     color: ''
+#     custom_field_data: {}
+#     label: ''
+#     length: null
+#     length_unit: ''
+#     status: connected
+#     termination_a_id: 1
+#     termination_a_type: 11
+#     termination_b_id: 3
+#     termination_b_type: 3
+#     type: ''
+#   model: dcim.cable
+
+# - fields:
+#     destination_id: 3
+#     destination_type: 5
+#     is_active: true
+#     is_split: false
+#     origin_id: 2
+#     origin_type: 5
+#     path: '["46:1"]'
+#   model: dcim.cablepath
+
+# - fields:
+#     destination_id: 2
+#     destination_type: 5
+#     is_active: true
+#     is_split: false
+#     origin_id: 3
+#     origin_type: 5
+#     path: '["46:1"]'
+#   model: dcim.cablepath
+
+# - fields:
+#     destination_id: 1
+#     destination_type: 2
+#     is_active: true
+#     is_split: false
+#     origin_id: 1
+#     origin_type: 1
+#     path: '["46:4"]'
+#   model: dcim.cablepath
+
+# - fields:
+#     destination_id: 1
+#     destination_type: 1
+#     is_active: true
+#     is_split: false
+#     origin_id: 1
+#     origin_type: 2
+#     path: '["46:4"]'
+#   model: dcim.cablepath
+
+# - fields:
+#     destination_id: 2
+#     destination_type: 4
+#     is_active: true
+#     is_split: false
+#     origin_id: 1
+#     origin_type: 3
+#     path: '["46:5"]'
+#   model: dcim.cablepath
+
+# - fields:
+#     destination_id: 1
+#     destination_type: 3
+#     is_active: true
+#     is_split: false
+#     origin_id: 2
+#     origin_type: 4
+#     path: '["46:5"]'
+#   model: dcim.cablepath
+
+# - fields:
+#     destination_id: 2
+#     destination_type: 3
+#     is_active: false
+#     is_split: false
+#     origin_id: 1
+#     origin_type: 4
+#     path: '["46:6"]'
+#   model: dcim.cablepath
+
+# - fields:
+#     destination_id: 1
+#     destination_type: 4
+#     is_active: false
+#     is_split: false
+#     origin_id: 2
+#     origin_type: 3
+#     path: '["46:6"]'
+#   model: dcim.cablepath
+
+# - fields:
+#     destination_id: 2
+#     destination_type: 7
+#     is_active: true
+#     is_split: false
+#     origin_id: 1
+#     origin_type: 7
+#     path: '["46:7"]'
+#   model: dcim.cablepath
+
+# - fields:
+#     destination_id: 1
+#     destination_type: 7
+#     is_active: true
+#     is_split: false
+#     origin_id: 2
+#     origin_type: 7
+#     path: '["46:7"]'
+#   model: dcim.cablepath
+
+# - fields:
+#     destination_id: 3
+#     destination_type: 3
+#     is_active: true
+#     is_split: false
+#     origin_id: 1
+#     origin_type: 11
+#     path: '["46:8"]'
+#   model: dcim.cablepath
+
+# - fields:
+#     destination_id: 1
+#     destination_type: 11
+#     is_active: true
+#     is_split: false
+#     origin_id: 3
+#     origin_type: 3
+#     path: '["46:8"]'
+#   model: dcim.cablepath
+- model: dcim.powerpanel
+  ids:
+    name: Power Panel A
+  fields:
+    custom_field_data: {}
+    rack_group:
+      ids:
+        name: "Child Rack Group A"
+    site:
+      ids:
+        name: "Site A"
+- model: dcim.powerpanel
+  ids:
+    name: Power Panel B
+  fields:
+    custom_field_data: {}
+    rack_group: null
+    site:
+      ids:
+        name: "Site B"
+- model: dcim.powerfeed
+  ids:
+    name: Power Feed A
+  fields:
+    amperage: 20
+    available_power: 1920
+    # TODO cable: 8
+    comments: A
+    custom_field_data: {}
+    max_utilization: 80
+    phase: single-phase
+    power_panel:
+      ids:
+        name: "Power Panel A"
+    rack:
+      ids:
+        name: "Rack A"
+    status:
+      ids:
+        slug: active
+    supply: ac
+    type: primary
+    voltage: 120
+- model: dcim.powerfeed
+  ids:
+    name: Power Feed B
+  fields:
+    amperage: 20
+    available_power: 1920
+    # TODO cable: null
+    comments: ''
+    custom_field_data: {}
+    max_utilization: 80
+    phase: single-phase
+    power_panel:
+      ids:
+        name: "Power Panel B"
+    rack:
+      ids:
+        name: "Rack B"
+    status:
+      ids:
+        slug: active
+    supply: ac
+    type: primary
+    voltage: 120
+- model: dcim.rackgroup
+  ids:
+    name: Parent Rack Group
+  fields:
+    description: ''
+    parent: null
+    site:
+      ids:
+        name: "Site A"
+    slug: parent-rack-group
+- model: dcim.rackgroup
+  ids:
+    name: Child Rack Group A
+  fields:
+    description: ''
+    parent:
+      ids:
+        name: "Parent Rack Group"
+    site:
+      ids:
+        name: "Site A"
+    slug: child-rack-group-a
+- model: dcim.rackrole
+  ids:
+    name: Rack Role A
+  fields:
+    color: f44336
+    description: ''
+    slug: rack-role-a
+- model: dcim.rackrole
+  ids:
+    name: Rack Role B
+  fields:
+    color: 4caf50
+    description: ''
+    slug: rack-role-b
+- model: dcim.rack
+  ids:
+    name: Rack A
+  fields:
+    asset_tag: null
+    comments: ''
+    custom_field_data: {}
+    desc_units: false
+    facility_id: null
+    group:
+      ids:
+        name: "Child Rack Group A"
+    outer_depth: 1000
+    outer_unit: in
+    outer_width: 1000
+    role:
+      ids:
+        name: "Rack Role A"
+    serial: ''
+    site:
+      ids:
+        name: "Site A"
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant A"
+    type: 4-post-frame
+    u_height: 42
+    width: 19
+- model: dcim.rack
+  ids:
+    name: Rack B
+  fields:
+    asset_tag: null
+    comments: ''
+    custom_field_data: {}
+    desc_units: true
+    facility_id: null
+    group: null
+    outer_depth: null
+    outer_unit: ''
+    outer_width: null
+    role:
+      ids:
+        name: "Rack Role B"
+    serial: ''
+    site:
+      ids:
+        name: "Site B"
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant B"
+    type: ''
+    u_height: 42
+    width: 19
+- model: dcim.rackreservation
+  ids:
+    description: Admin rack reservation
+  fields:
+    custom_field_data: {}
+    rack:
+      ids:
+        name: "Rack A"
+    tenant:
+      ids:
+        name: "Tenant A"
+    units: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    user:
+      ids:
+        username: "admin"
+- model: dcim.region
+  ids:
+    name: Parent Region
+  fields:
+    description: The parent region
+    parent: null
+    slug: parent-region
+- model: dcim.region
+  ids:
+    name: Child Region
+  fields:
+    description: The child region
+    parent:
+      ids:
+        name: "Parent Region"
+    slug: child-region
+- model: dcim.site
+  ids:
+    name: Site A
+  fields:
+    asn: null
+    comments: ''
+    contact_email: ''
+    contact_name: ''
+    contact_phone: ''
+    custom_field_data: {}
+    description: ''
+    facility: ''
+    latitude: null
+    longitude: null
+    physical_address: ''
+    region:
+      ids:
+        name: "Child Region"
+    shipping_address: ''
+    slug: site-a
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant A"
+    time_zone: America/New_York
+- model: dcim.site
+  ids:
+    name: Site B
+  fields:
+    asn: null
+    comments: ''
+    contact_email: ''
+    contact_name: ''
+    contact_phone: ''
+    custom_field_data: {}
+    description: ''
+    facility: ''
+    latitude: null
+    longitude: null
+    physical_address: ''
+    region:
+      ids:
+        name: "Child Region"
+    shipping_address: ''
+    slug: site-b
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant B"
+    time_zone: America/New_York
+- model: ipam.vrf
+  ids:
+    name: VRF A
+  fields:
+    custom_field_data: {}
+    description: ''
+    enforce_unique: true
+    export_targets:
+    - ids:
+        name: "Route Target A"
+    import_targets:
+    - ids:
+        name: "Route Target A"
+    rd: '1:1'
+    tenant:
+      ids:
+        name: "Tenant A"
+- model: ipam.vrf
+  ids:
+    name: VRF B
+  fields:
+    custom_field_data: {}
+    description: ''
+    enforce_unique: true
+    export_targets:
+    - ids:
+        name: "Route Target B"
+    import_targets:
+    - ids:
+        name: "Route Target B"
+    rd: '2:2'
+    tenant:
+      ids:
+        name: "Tenant B"
+- model: ipam.routetarget
+  ids:
+    name: Route Target A
+  fields:
+    custom_field_data: {}
+    description: ''
+    tenant:
+      ids:
+        name: "Tenant A"
+- model: ipam.routetarget
+  ids:
+    name: Route Target B
+  fields:
+    custom_field_data: {}
+    description: ''
+    tenant:
+      ids:
+        name: "Tenant B"
+- model: ipam.rir
+  ids:
+    name: RIR A
+  fields:
+    description: ''
+    is_private: false
+    slug: rir-a
+- model: ipam.rir
+  ids:
+    name: RIR B
+  fields:
+    description: ''
+    is_private: false
+    slug: rir-b
+- model: ipam.aggregate
+  ids:
+    prefix: 10.0.0.0/8
+  fields:
+    custom_field_data: {}
+    date_added: '2021-02-21'
+    description: ''
+    rir:
+      ids:
+        name: "RIR A"
+    tenant:
+      ids:
+        name: "Tenant A"
+- model: ipam.aggregate
+  ids:
+    prefix: 172.16.0.0/16
+  fields:
+    custom_field_data: {}
+    date_added: null
+    description: ''
+    rir:
+      ids:
+        name: "RIR B"
+    tenant:
+      ids:
+        name: "Tenant B"
+- model: ipam.role
+  ids:
+    name: Role A
+  fields:
+    description: ''
+    slug: role-a
+    weight: 1000
+- model: ipam.role
+  ids:
+    name: Role B
+  fields:
+    description: ''
+    slug: role-b
+    weight: 1000
+- model: ipam.prefix
+  ids:
+    prefix: 10.1.0.0/16
+  fields:
+    custom_field_data: {}
+    description: ''
+    is_pool: false
+    role:
+      ids:
+        name: "Role A"
+    site:
+      ids:
+        name: "Site A"
+    status:
+      ids:
+        slug: container
+    tenant:
+      ids:
+        name: "Tenant A"
+    vlan:
+      ids:
+        name: "VLAN A"
+    vrf:
+      ids:
+        name: "VRF A"
+- model: ipam.prefix
+  ids:
+    prefix: 10.1.1.0/24
+  fields:
+    custom_field_data: {}
+    description: ''
+    is_pool: false
+    role:
+      ids:
+        name: "Role A"
+    site: null
+    status:
+      ids:
+        slug: active
+    tenant: null
+    vlan: null
+    vrf:
+      ids:
+        name: "VRF A"
+- model: ipam.prefix
+  ids:
+    prefix: 172.16.1.0/24
+  fields:
+    custom_field_data: {}
+    description: ''
+    is_pool: false
+    role:
+      ids:
+        name: "Role B"
+    site:
+      ids:
+        name: "Site B"
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant B"
+    vlan:
+      ids:
+        name: "VLAN B"
+    vrf:
+      ids:
+        name: "VRF B"
+- model: ipam.ipaddress
+  ids:
+    address: 10.1.1.1/32
+  fields:
+    # TODO assigned_object_id: 2
+    assigned_object_type:
+      ids:
+        app_label: "dcim"
+        model: "interface"
+    custom_field_data: {}
+    description: A
+    dns_name: a
+    nat_inside: null
+    role: loopback
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant A"
+    vrf:
+      ids:
+        name: "VRF A"
+- model: ipam.ipaddress
+  ids:
+    address: 10.1.1.2/32
+  fields:
+    # TODO assigned_object_id: 1
+    assigned_object_type:
+      ids:
+        app_label: "dcim"
+        model: "interface"
+    custom_field_data: {}
+    description: A
+    dns_name: ''
+    nat_inside:
+      ids:
+        address: 10.1.1.1/32
+    role: loopback
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant A"
+    vrf:
+      ids:
+        name: "VRF A"
+- model: ipam.vlangroup
+  ids:
+    name: VLAN Group A
+  fields:
+    description: ''
+    site:
+      ids:
+        name: "Site A"
+    slug: vlan-group-a
+- model: ipam.vlangroup
+  ids:
+    name: VLAN Group B
+  fields:
+    description: ''
+    site:
+      ids:
+        name: "Site B"
+    slug: vlan-group-b
+- model: ipam.vlan
+  ids:
+    name: VLAN A
+  fields:
+    custom_field_data: {}
+    description: ''
+    group:
+      ids:
+        name: "VLAN Group A"
+    role:
+      ids:
+        name: "Role A"
+    site:
+      ids:
+        name: "Site A"
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant A"
+    vid: 1
+- model: ipam.vlan
+  ids:
+    name: VLAN B
+  fields:
+    custom_field_data: {}
+    description: ''
+    group:
+      ids:
+        name: "VLAN Group B"
+    role:
+      ids:
+        name: "Role B"
+    site:
+      ids:
+        name: "Site B"
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant B"
+    vid: 2
+- model: extras.customfield
+  ids:
+    name: Custom Text Field A
+  fields:
+    choices: '[]'
+    content_types:
+    - ids:
+        app_label: "dcim"
+        model: "device"
+    default: null
+    description: ''
+    filter_logic: loose
+    label: ''
+    required: false
+    type: text
+    validation_maximum: null
+    validation_minimum: null
+    validation_regex: ''
+    weight: 100
+- model: extras.customfield
+  ids:
+    name: Custom Integer Field B
+  fields:
+    choices: '[]'
+    content_types:
+    - ids:
+        app_label: "dcim"
+        model: "device"
+    default: 1
+    description: B
+    filter_logic: loose
+    label: B
+    required: false
+    type: integer
+    validation_maximum: 1000
+    validation_minimum: 0
+    validation_regex: ''
+    weight: 100
+- model: extras.tag
+  ids:
+    name: Tag A
+  fields:
+    color: f44336
+    description: ''
+    slug: tag-a
+- model: extras.tag
+  ids:
+    name: Tag B
+  fields:
+    color: 4caf50
+    description: ''
+    slug: tag-b
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "tenancy"
+        model: "tenant"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "tenancy"
+        model: "tenant"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "site"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "site"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "rack"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "rack"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "rackreservation"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+# TODO: need object_id to distinguish between two devicetype with Tag A
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "dcim"
+#         model: "devicetype"
+# # TODO    object_id: 1
+#     tag:
+#       ids:
+#         name: "Tag A"
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "dcim"
+#         model: "devicetype"
+# # TODO    object_id: 2
+#     tag:
+#       ids:
+#         name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "devicetype"
+# TODO    object_id: 3
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "virtualchassis"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "virtualchassis"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+# TODO: need object_id to distinguish between two device with Tag A
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "dcim"
+#         model: "device"
+# # TODO    object_id: 1
+#     tag:
+#       ids:
+#         name: "Tag A"
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "dcim"
+#         model: "device"
+# # TODO    object_id: 2
+#     tag:
+#       ids:
+#         name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "virtualization"
+        model: "cluster"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "virtualization"
+        model: "cluster"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "device"
+# TODO    object_id: 3
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "consoleport"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "consoleserverport"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "powerport"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "poweroutlet"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "ipam"
+        model: "vlan"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "ipam"
+        model: "vlan"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+# TODO: need object_id to distinguish between two interface tagged with Tag A
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "dcim"
+#         model: "interface"
+# # TODO    object_id: 1
+#     tag:
+#       ids:
+#         name: "Tag A"
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "dcim"
+#         model: "interface"
+# # TODO    object_id: 2
+#     tag:
+#       ids:
+#         name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "interface"
+# TODO    object_id: 3
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "consoleport"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "consoleserverport"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "powerport"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "poweroutlet"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "rearport"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "frontport"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "devicebay"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+# TODO: need object_id to distinguish between two inventoryitem tagged with Tag A
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "dcim"
+#         model: "inventoryitem"
+# # TODO    object_id: 1
+#     tag:
+#       ids:
+#         name: "Tag A"
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "dcim"
+#         model: "inventoryitem"
+# # TODO    object_id: 2
+#     tag:
+#       ids:
+#         name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "rearport"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "frontport"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "devicebay"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "inventoryitem"
+# TODO    object_id: 3
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "cable"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+# TODO: need object_id to distinguish between two cable with Tag B
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "dcim"
+#         model: "cable"
+# # TODO    object_id: 1
+#     tag:
+#       ids:
+#         name: "Tag B"
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "dcim"
+#         model: "cable"
+# # TODO    object_id: 7
+#     tag:
+#       ids:
+#         name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "ipam"
+        model: "routetarget"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "ipam"
+        model: "routetarget"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "ipam"
+        model: "vrf"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "ipam"
+        model: "vrf"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "ipam"
+        model: "aggregate"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "ipam"
+        model: "aggregate"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+# TODO: need object_id to distinguish between two prefix tagged with Tag A
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "ipam"
+#         model: "prefix"
+# # TODO    object_id: 1
+#     tag:
+#       ids:
+#         name: "Tag A"
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "ipam"
+#         model: "prefix"
+# # TODO    object_id: 2
+#     tag:
+#       ids:
+#         name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "ipam"
+        model: "prefix"
+# TODO    object_id: 3
+    tag:
+      ids:
+        name: "Tag B"
+# TODO: need object_id to distinguish between two ipaddress tagged with Tag A
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "ipam"
+#         model: "ipaddress"
+# # TODO    object_id: 1
+#     tag:
+#       ids:
+#         name: "Tag A"
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "ipam"
+#         model: "ipaddress"
+# # TODO    object_id: 2
+#     tag:
+#       ids:
+#         name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "virtualization"
+        model: "virtualmachine"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "virtualization"
+        model: "vminterface"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "virtualization"
+        model: "virtualmachine"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "virtualization"
+        model: "vminterface"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "circuits"
+        model: "provider"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "circuits"
+        model: "provider"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "circuits"
+        model: "circuit"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "circuits"
+        model: "circuit"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "powerpanel"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "powerpanel"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "powerfeed"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "powerfeed"
+# TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.webhook
+  ids:
+    name: Webhook A
+  fields:
+    additional_headers: 'A: A'
+    body_template: '{{ event }}'
+    ca_file_path: null
+    content_types:
+    - ids:
+        app_label: "dcim"
+        model: "device"
+    enabled: true
+    http_content_type: application/json
+    http_method: POST
+    payload_url: http://localhost
+    secret: A
+    ssl_verification: true
+    type_create: true
+    type_delete: true
+    type_update: true
+- model: extras.webhook
+  ids:
+    name: Webhook B
+  fields:
+    additional_headers: ''
+    body_template: ''
+    ca_file_path: null
+    content_types:
+    - ids:
+        app_label: "dcim"
+        model: "device"
+    enabled: false
+    http_content_type: application/json
+    http_method: GET
+    payload_url: http://localhost:8000
+    secret: ''
+    ssl_verification: false
+    type_create: true
+    type_delete: false
+    type_update: false
+- model: extras.customlink
+  ids:
+    name: Custom Link A
+  fields:
+    button_class: default
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "device"
+    group_name: ''
+    new_window: false
+    text: Hello
+    target_url: http://{{ obj }}
+    weight: 100
+- model: extras.customlink
+  ids:
+    name: Custom Link B
+  fields:
+    button_class: info
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "device"
+    group_name: B
+    new_window: false
+    text: B
+    target_url: http://example.com
+    weight: 100
+- model: extras.exporttemplate
+  ids:
+    name: Export Template A
+  fields:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "device"
+    description: A
+    file_extension: A
+    mime_type: A
+    template_code: A
+- model: extras.exporttemplate
+  ids:
+    name: Export Template B
+  fields:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "device"
+    description: ''
+    file_extension: ''
+    mime_type: ''
+    template_code: '{{ queryset }}'
+- model: extras.configcontext
+  ids:
+    name: Config Context A
+  fields:
+    cluster_groups:
+    - ids:
+        name: "Cluster Group A"
+    clusters:
+    - ids:
+        name: "Cluster A"
+    data:
+      config_context: a
+    description: A
+    is_active: true
+    platforms:
+    - ids:
+        name: "Platform A"
+    regions:
+    - ids:
+        name: "Parent Region"
+    roles:
+    - ids:
+        name: "Device Role A"
+    sites:
+    - ids:
+        name: "Site A"
+    tags:
+    - ids:
+        name: "Tag A"
+    tenant_groups:
+    - ids:
+        name: "Parent Tenant Group"
+    tenants:
+    - ids:
+        name: "Tenant A"
+    weight: 1000
+- model: extras.configcontext
+  ids:
+    name: Config Context B
+  fields:
+    cluster_groups:
+    - ids:
+        name: "Cluster Group B"
+    clusters:
+    - ids:
+        name: "Cluster B"
+    data:
+      config_context: null
+    description: ''
+    is_active: false
+    platforms:
+    - ids:
+        name: "Platform B"
+    regions:
+    - ids:
+        name: "Child Region"
+    roles:
+    - ids:
+        name: "Device Role B"
+    sites:
+    - ids:
+        name: "Site B"
+    tags:
+    - ids:
+        name: "Tag B"
+    tenant_groups:
+    - ids:
+        name: "Child Tenant Group"
+    tenants:
+    - ids:
+        name: "Tenant B"
+    weight: 1000
+- model: tenancy.tenantgroup
+  ids:
+    name: Parent Tenant Group
+  fields:
+    description: The parent tenant group
+    parent: null
+    slug: parent-tenant-group
+- model: tenancy.tenantgroup
+  ids:
+    name: Child Tenant Group
+  fields:
+    description: The child tenant group
+    parent:
+      ids:
+        name: "Parent Tenant Group"
+    slug: child-tenant-group
+- model: tenancy.tenant
+  ids:
+    name: Tenant A
+  fields:
+    comments: ''
+    custom_field_data: {}
+    description: ''
+    group:
+      ids:
+        name: "Child Tenant Group"
+    slug: tenant-a
+- model: tenancy.tenant
+  ids:
+    name: Tenant B
+  fields:
+    comments: ''
+    custom_field_data: {}
+    description: ''
+    group:
+      ids:
+        name: "Child Tenant Group"
+    slug: tenant-b
+- model: users.userconfig
+  ids:
+    user:
+      ids:
+        username: "admin"
+  fields:
+    data: {}
+- model: users.token
+  ids:
+    user:
+      ids:
+        username: "admin"
+  fields:
+    description: ''
+    expires: null
+    key: 0123456789abcdef0123456789abcdef01234567
+    write_enabled: true
+- model: virtualization.clustertype
+  ids:
+    name: Cluster Type A
+  fields:
+    description: ''
+    slug: cluster-type-a
+- model: virtualization.clustertype
+  ids:
+    name: Cluster Type B
+  fields:
+    description: ''
+    slug: cluster-type-b
+- model: virtualization.clustergroup
+  ids:
+    name: Cluster Group A
+  fields:
+    description: ''
+    slug: cluster-group-a
+- model: virtualization.clustergroup
+  ids:
+    name: Cluster Group B
+  fields:
+    description: ''
+    slug: cluster-group-b
+- model: virtualization.cluster
+  ids:
+    name: Cluster A
+  fields:
+    comments: ''
+    custom_field_data: {}
+    group:
+      ids:
+        name: "Cluster Group A"
+    site:
+      ids:
+        name: "Site A"
+    tenant:
+      ids:
+        name: "Tenant A"
+    type:
+      ids:
+        name: "Cluster Type A"
+- model: virtualization.cluster
+  ids:
+    name: Cluster B
+  fields:
+    comments: ''
+    custom_field_data: {}
+    group:
+      ids:
+        name: "Cluster Group B"
+    site:
+      ids:
+        name: "Site B"
+    tenant:
+      ids:
+        name: "Tenant B"
+    type:
+      ids:
+        name: "Cluster Type B"
+- model: virtualization.virtualmachine
+  ids:
+    name: VM A
+  fields:
+    cluster:
+      ids:
+        name: "Cluster A"
+    comments: A
+    custom_field_data: {}
+    disk: 1
+    local_context_data:
+      context: a
+    memory: 1
+    platform:
+      ids:
+        name: "Platform A"
+    primary_ip4: null
+    primary_ip6: null
+    role:
+      ids:
+        name: "Device Role A"
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant A"
+    vcpus: 1
+- model: virtualization.virtualmachine
+  ids:
+    name: VM B
+  fields:
+    cluster:
+      ids:
+        name: "Cluster B"
+    comments: ''
+    custom_field_data: {}
+    disk: null
+    local_context_data: null
+    memory: null
+    platform:
+      ids:
+        name: "Platform B"
+    primary_ip4: null
+    primary_ip6: null
+    role:
+      ids:
+        name: "Device Role B"
+    status:
+      ids:
+        slug: active
+    tenant:
+      ids:
+        name: "Tenant B"
+    vcpus: null
+- model: virtualization.vminterface
+  ids:
+    name: VM A Interface A
+  fields:
+    description: ''
+    enabled: true
+    mac_address: '11:11:11:11:11:11'
+    mode: access
+    mtu: 1
+    tagged_vlans: []
+    untagged_vlan:
+      ids:
+        name: "VLAN A"
+    virtual_machine:
+      ids:
+        name: "VM A"
+- model: virtualization.vminterface
+  ids:
+    name: VM B Interface B
+  fields:
+    description: ''
+    enabled: true
+    mac_address: null
+    mode: tagged
+    mtu: null
+    tagged_vlans:
+    - ids:
+        name: "VLAN B"
+    untagged_vlan:
+      ids:
+        name: "VLAN B"
+    virtual_machine:
+      ids:
+        name: "VM B"
+
