@@ -13,11 +13,15 @@ import nautobot_netbox_importer.diffsync.models as n2nmodels
 
 
 class N2NDiffSync(DiffSync):
-    """Generic DiffSync adapter for working with NetBox/Nautobot data models."""
+    """Generic DiffSync adapter base class for working with NetBox/Nautobot data models."""
 
     _data_by_pk: MutableMapping[str, MutableMapping[Union[UUID, int], DiffSyncModel]]
 
     logger = structlog.get_logger()
+
+    #
+    # Add references to all baseline shared models between NetBox and Nautobot
+    #
 
     contenttype = n2nmodels.ContentType
 
@@ -103,6 +107,21 @@ class N2NDiffSync(DiffSync):
     virtualmachine = n2nmodels.VirtualMachine
     vminterface = n2nmodels.VMInterface
 
+    #
+    # DiffSync allows implementors to describe data hierarchically, in which case "top_level" would only
+    # contain the models that exist at the root of this data hierarchy.
+    # However, NetBox/Nautobot data models do not generally fit cleanly into such a hierarchy;
+    # for example, not all Tenants belong to a parent TenantGroup, not all Sites belong to a parent Region.
+    # Therefore, all of these models need to be treated by DiffSync as "top-level" models.
+    #
+    # There are a small number of models that *do* fit into this paradigm (such as Manufacturer -> DeviceType)
+    # but they are so few in number that it was simpler to just remain consistent with all other models,
+    # rather than adding hierarchy in just these few special cases.
+    #
+    # The specific order of models below is constructed empirically, but basically attempts to place all models
+    # in sequence so that if model A has a hard dependency on a reference to model B, model B gets processed first.
+    #
+
     top_level = (
         # "contenttype", Not synced, as these are hard-coded in NetBox/Nautobot
         "customfield",
@@ -153,6 +172,7 @@ class N2NDiffSync(DiffSync):
         "prefix",
         # Lots of pre-requisites for constructing a Device!
         "device",
+        # All device components require a parent Device
         "devicebay",
         "inventoryitem",
         "virtualchassis",
@@ -165,14 +185,18 @@ class N2NDiffSync(DiffSync):
         "frontport",
         "interface",
         "vminterface",
-        # Reference loop: Device -> IPAddress (primaryip), IPAddress -> Interface (assigned_object), Interface -> Device
+        # Reference loop:
+        #   Device -> IPAddress (primary_ip)
+        #   IPAddress -> Interface (assigned_object)
+        #   Interface -> Device (device)
         # Interface comes after Device because it MUST have a Device to be created;
         # IPAddress comes after Interface because we use the assigned_object as part of the IP's unique ID.
-        # We will fixup the Device->primaryip reference in fixup_data_relations()
+        # We will fixup the Device->primary_ip reference in fixup_data_relations()
         "ipaddress",
         "cable",
         "service",
-        # The below have no particular upward dependencies, they're just logically kind of the last to do.
+        # The below have no particular upward dependencies and could be processed much earlier,
+        # but from a logistical standpoint they "feel" like they make sense to handle last.
         "tag",
         "configcontext",
         "customlink",

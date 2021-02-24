@@ -42,11 +42,14 @@ class NautobotBaseModel(DiffSyncModel):
     _fk_associations: dict = {}
     """Mapping defining translations between FK fields and DiffSync models.
 
+    Automatically populated at subclass declaration time, see __init_subclass__().
+
     Examples:
         {"site": "site", "parent": "rackgroup"}
     """
 
-    # pk is not an attribute to sync, but all models have it, and it's useful for lookups on the NetBox import side
+    # pk is not an attribute to sync, but all models have it, and we need to be able to refer to it
+    # in order to resolve foreign key references in the source data.
     pk: Optional[Union[UUID, int]]
 
     @classmethod
@@ -74,6 +77,10 @@ class NautobotBaseModel(DiffSyncModel):
     ) -> Tuple[dict, dict]:
         """Clean up the DiffSync "ids" or "attrs" dict to provide the keys needed to write to Nautobot.
 
+        Specifically, for any and all foreign-key fields, which have been translated into DiffSync as
+        references to natural keys (DiffSyncModel identifiers), we now need to translate them back
+        into actual references to Nautobot database objects.
+
         Returns:
             Tuple[dict, dict]: The first is the DiffSync ids/attrs dict
                 (perhaps minus a few keys if they were unresolvable references),
@@ -82,6 +89,7 @@ class NautobotBaseModel(DiffSyncModel):
         diffsync_data = ids_or_attrs.copy()
         nautobot_data = ids_or_attrs.copy()
         foreign_key_associations = cls.fk_associations()
+
         for field in list(ids_or_attrs.keys()):
             # Only foreign key references need to be fixed up
             if field not in foreign_key_associations:
@@ -93,6 +101,10 @@ class NautobotBaseModel(DiffSyncModel):
 
             # What DiffSync class is this foreign key referring to?
             target_diffsync_class_name = foreign_key_associations[field]
+
+            # GenericForeignKey references need to be dereferenced specially, because:
+            # 1. The foreign key type needs to be looked up from a different field on the record
+            # 2. The value for the foreign key id field needs to be a raw PK value, *not* an object reference.
             if target_diffsync_class_name.startswith("*"):
                 # This field is a GenericForeignKey, whose type is based on the value of the referenced field
                 target_content_type_field = target_diffsync_class_name[1:]
@@ -112,6 +124,8 @@ class NautobotBaseModel(DiffSyncModel):
                 nautobot_value = []
                 for unique_id in list(diffsync_value):
                     try:
+                        # Find the DiffSync model identified by the given natural key (identifiers),
+                        # then find the Nautobot record whose PK matches the DiffSync model.
                         target_record = diffsync.get(target_class, unique_id)
                         target_nautobot_record = target_class.nautobot_model().objects.get(pk=target_record.pk)
                         nautobot_value.append(target_nautobot_record)
@@ -130,6 +144,8 @@ class NautobotBaseModel(DiffSyncModel):
                 # This is a one-to-one or standard foreign key field
                 nautobot_value = None
                 try:
+                    # Find the DiffSync model identified by the given natural key (identifiers),
+                    # then find the Nautobot record whose PK matches the DiffSync model.
                     target_record = diffsync.get(target_class, diffsync_value)
                     target_nautobot_record = target_class.nautobot_model().objects.get(pk=target_record.pk)
                     nautobot_value = target_nautobot_record
@@ -215,6 +231,8 @@ class NautobotBaseModel(DiffSyncModel):
             logger.warning("No diffs remaining after cleaning up unresolved references")
             return self
 
+        # Multi-value fields (i.e. OneToMany or ManyToMany fields) need
+        # to be set individually by the set() method, so separate them out from more general attrs.
         multivalue_attrs = {}
         for attr, value in list(nautobot_attrs.items()):
             if isinstance(value, list) and attr in self.fk_associations():

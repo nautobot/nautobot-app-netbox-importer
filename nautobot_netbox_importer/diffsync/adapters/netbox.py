@@ -1,5 +1,7 @@
 """DiffSync adapters for NetBox data dumps."""
 
+from uuid import UUID
+
 import structlog
 
 from .abstract import N2NDiffSync
@@ -23,15 +25,20 @@ class NetBox210DiffSync(N2NDiffSync):
         # their FK ids with the DiffSync model unique-id fields.
         for key, target_name in diffsync_model.fk_associations().items():
             if key not in data or not data[key]:
+                # Null reference, no processing required.
                 continue
 
             if target_name == "status":
                 # Special case as Status is a hard-coded field in NetBox, not a model reference
+                # Construct an appropriately-formatted mock natural key and use that instead
+                # TODO: we could also do this with a custom validator on the StatusRef model; might be better?
                 data[key] = {"slug": data[key]}
                 continue
 
+            # In the case of generic foreign keys, we have to actually check a different field
+            # on the DiffSync model to determine the model type that this foreign key is referring to.
+            # By convention, we label such fields with a '*', as if this were a C pointer.
             if target_name.startswith("*"):
-                # Generic foreign key, based on the target name
                 target_content_type_field = target_name[1:]
                 target_content_type_pk = record["fields"][target_content_type_field]
                 if not isinstance(target_content_type_pk, int) and not isinstance(target_content_type_pk, str):
@@ -45,19 +52,22 @@ class NetBox210DiffSync(N2NDiffSync):
             try:
                 target_class = getattr(self, target_name)
             except AttributeError:
-                self.logger.warning(f"Don't yet know about class {target_name}")
+                self.logger.warning("Unknown/unrecognized class name!", name=target_name)
                 data[key] = None
                 continue
 
             if isinstance(data[key], list):
-                # One-to-many or many-to-many field!
+                # This field is a one-to-many or many-to-many field, a list of foreign key references.
+                # For each foreign key, find the corresponding DiffSync record, and use its
+                # natural keys (identifiers) in the data in place of the foreign key value.
                 data[key] = [self.get_fk_identifiers(diffsync_model, target_class, pk) for pk in data[key]]
-            elif isinstance(data[key], (int, str)):
+            elif isinstance(data[key], (UUID, int)):
+                # Look up the DiffSync record corresponding to this foreign key,
+                # and store its natural keys (identifiers) in the data in place of the foreign key value.
                 data[key] = self.get_fk_identifiers(diffsync_model, target_class, data[key])
             else:
                 self.logger.error(f"Invalid PK value {data[key]}")
                 data[key] = None
-                continue
 
         data["pk"] = record["pk"]
         return self.make_model(diffsync_model, data)

@@ -34,9 +34,12 @@ python netbox/manage.py dumpdata \
 
 ### Importing the data into Nautobot
 
-From the Nautobot root directory, run `nautobot-server import_netbox_json <path_to_json_file> <originating_netbox_version>`, for example `nautobot-server import_netbox_json /tmp/netbox_data.json 2.10.3`.
+From the Nautobot root directory, run `nautobot-server import_netbox_json <json_file> <netbox_version>`, for example `nautobot-server import_netbox_json /tmp/netbox_data.json 2.10.3`.
 
 ## Contributing
+
+Most of the internal logic of this plugin is based on the [DiffSync](https://github.com/networktocode/diffsync) library, which in turn is built atop [Pydantic](https://github.com/samuelcolvin/pydantic/).
+A basic understanding of these two libraries will be helpful to those wishing to contribute to this project.
 
 Pull requests are welcomed and automatically built and tested against multiple version of Python and multiple versions of Nautobot through TravisCI.
 
@@ -45,6 +48,7 @@ The project is packaged with a light development environment based on `docker-co
 The project is following Network to Code software development guideline and is leveraging:
 - Black, Pylint, Bandit and pydocstyle for Python linting and formatting.
 - Django unit test to ensure the plugin is working properly.
+- Poetry for packaging and dependency management.
 
 ### CLI Helper Commands
 
