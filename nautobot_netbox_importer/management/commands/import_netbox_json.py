@@ -27,10 +27,8 @@ class Command(BaseCommand):
         """Set up structlog (as used by DiffSync) to log messages for this command."""
         structlog.configure(
             processors=[
-                structlog.stdlib.add_logger_name,
-                structlog.stdlib.add_log_level,
                 structlog.stdlib.PositionalArgumentsFormatter(),
-                structlog.processors.TimeStamper(fmt="%Y-%m-%d %H:%M.%S"),
+                structlog.processors.TimeStamper(fmt="%H:%M:%S"),
                 structlog.processors.StackInfoRenderer(),
                 structlog.processors.format_exc_info,
                 structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
