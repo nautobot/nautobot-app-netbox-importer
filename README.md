@@ -18,6 +18,8 @@ Once installed, the plugin needs to be enabled in your `nautobot_config.py`:
 PLUGINS = ["nautobot_netbox_importer"]
 ```
 
+**Note**: For those of you coming from Netbox, this does not work as a normal Netbox plugin. This is a CLI Plugin only, in fact your Nautobot installation won't work while this is set in the plugins. So add it to plugins, run the migration as detailed below, and then remove it from the plugins key in your config again when you're done.
+
 ## Usage
 
 ### Getting a data export from NetBox
