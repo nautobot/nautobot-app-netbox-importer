@@ -285,12 +285,24 @@ class N2NDiffSync(DiffSync):
         try:
             instance = diffsync_model(**data, diffsync=self)
         except ValidationError as exc:
-            self.logger.error(str(exc))
+            self.logger.error(
+                "Invalid data according to internal data model. "
+                "This may be an issue with your source data or may reflect a bug in this plugin.",
+                action="load",
+                exception=str(exc),
+                model=diffsync_model,
+                model_data=data,
+            )
             return None
         try:
             self.add(instance)
         except ObjectAlreadyExists:
-            self.logger.warning("Apparent duplicate object encountered", model=instance)
+            self.logger.warning(
+                "Apparent duplicate object encountered. "
+                "This may be an issue with your source data or may reflect a bug in this plugin.",
+                model=instance,
+                model_id=instance.get_unique_id(),
+            )
         return instance
 
     def sync_from(self, source: DiffSync, diff_class: Diff = Diff, flags: DiffSyncFlags = DiffSyncFlags.NONE):

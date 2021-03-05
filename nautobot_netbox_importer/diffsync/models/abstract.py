@@ -198,7 +198,7 @@ class NautobotBaseModel(DiffSyncModel):
                 action="create",
                 exception=str(exc),
                 model=nautobot_model,
-                model_data=dict(**ids, **attrs, **multivalue_attrs)
+                model_data=dict(**ids, **attrs, **multivalue_attrs),
             )
         except DjangoValidationError as exc:
             logger.error(
