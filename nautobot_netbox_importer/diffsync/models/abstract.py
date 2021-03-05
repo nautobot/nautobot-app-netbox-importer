@@ -113,10 +113,18 @@ class NautobotBaseModel(DiffSyncModel):
                 target_content_type = diffsync_data[target_content_type_field]
                 target_diffsync_class_name = target_content_type["model"]
                 target_class = getattr(diffsync, target_diffsync_class_name)
-                target_record = diffsync.get(target_class, diffsync_value)
-                target_nautobot_record = target_class.nautobot_model().objects.get(pk=target_record.pk)
-                # For GenericForeignKey fields (only) we must provide a PK rather than an object reference
-                nautobot_data[field] = target_nautobot_record.pk
+                try:
+                    target_record = diffsync.get(target_class, diffsync_value)
+                    target_nautobot_record = target_class.nautobot_model().objects.get(pk=target_record.pk)
+                    # For GenericForeignKey fields (only) we must provide a PK rather than an object reference
+                    nautobot_data[field] = target_nautobot_record.pk
+                except ObjectNotFound:
+                    logger.debug(
+                        "GenericForeignKey not found, will require later fixup",
+                        target=target_diffsync_class_name,
+                        unique_id=diffsync_value,
+                    )
+                    nautobot_data[field] = None
                 continue
 
             target_class = getattr(diffsync, target_diffsync_class_name)
