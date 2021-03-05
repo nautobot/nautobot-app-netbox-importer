@@ -222,11 +222,9 @@ class VRF(PrimaryModel):
     """A virtual routing and forwarding (VRF) table."""
 
     _modelname = "vrf"
-    _identifiers = ("rd",)
+    _identifiers = ("name", "rd", "tenant")
     _attributes = (
         *PrimaryModel._attributes,
-        "name",
-        "tenant",
         "enforce_unique",
         "description",
         "import_targets",
@@ -234,9 +232,10 @@ class VRF(PrimaryModel):
     )
     _nautobot_model = ipam.VRF
 
-    rd: str
     name: str
+    rd: Optional[str]
     tenant: Optional[TenantRef]
+
     enforce_unique: bool
     description: str
     import_targets: List[RouteTargetRef] = []
