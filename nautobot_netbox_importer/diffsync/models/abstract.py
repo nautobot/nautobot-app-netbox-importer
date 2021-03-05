@@ -17,6 +17,7 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db import models
 from django.db.utils import IntegrityError
 from pydantic import BaseModel, validator
+from pydantic.error_wrappers import ValidationError as PydanticValidationError
 import structlog
 
 from .references import (
@@ -218,7 +219,17 @@ class NautobotBaseModel(DiffSyncModel):
         record = cls.create_nautobot_record(cls.nautobot_model(), nautobot_ids, nautobot_attrs, multivalue_attrs)
         if record:
             diffsync_attrs["pk"] = record.pk
-            return super().create(diffsync, diffsync_ids, diffsync_attrs)
+            try:
+                return super().create(diffsync, diffsync_ids, diffsync_attrs)
+            except PydanticValidationError as exc:
+                logger.error(
+                    "Invalid data according to internal data model. "
+                    "This may be an issue with your source data or may reflect a bug in this plugin.",
+                    action="create",
+                    exception=str(exc),
+                    model=cls.get_type(),
+                    model_data=dict(**diffsync_ids, **diffsync_attrs),
+                )
         return None
 
     @staticmethod
@@ -253,7 +264,7 @@ class NautobotBaseModel(DiffSyncModel):
 
     def update(self, attrs: Mapping) -> Optional["NautobotBaseModel"]:
         """Update this model instance, both in Nautobot and in DiffSync."""
-        _, nautobot_ids = self.clean_ids(self.diffsync, self.get_identifiers())
+        diffsync_ids, nautobot_ids = self.clean_ids(self.diffsync, self.get_identifiers())
         diffsync_attrs, nautobot_attrs = self.clean_attrs(self.diffsync, attrs)
 
         if not diffsync_attrs and not nautobot_attrs:
@@ -268,8 +279,21 @@ class NautobotBaseModel(DiffSyncModel):
                 multivalue_attrs[attr] = value
                 del nautobot_attrs[attr]
 
-        self.update_nautobot_record(self.nautobot_model(), nautobot_ids, nautobot_attrs, multivalue_attrs)
-        return super().update(diffsync_attrs)
+        record = self.update_nautobot_record(self.nautobot_model(), nautobot_ids, nautobot_attrs, multivalue_attrs)
+        if record:
+            try:
+                return super().update(diffsync_attrs)
+            except PydanticValidationError as exc:
+                logger.error(
+                    "Invalid data according to internal data model. "
+                    "This may be an issue with your source data or may reflect a bug in this plugin.",
+                    action="update",
+                    exception=str(exc),
+                    model=self.get_type(),
+                    model_data=dict(**diffsync_ids, **diffsync_attrs),
+                )
+
+        return None
 
     # TODO delete() is not yet implemented
 
