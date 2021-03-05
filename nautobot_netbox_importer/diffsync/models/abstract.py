@@ -13,6 +13,7 @@ from typing import Mapping, Optional, Tuple, Union
 
 from diffsync import DiffSync, DiffSyncModel
 from diffsync.exceptions import ObjectNotFound
+from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db import models
 from django.db.utils import IntegrityError
 from pydantic import BaseModel, validator
@@ -183,8 +184,22 @@ class NautobotBaseModel(DiffSyncModel):
                 getattr(record, attr).set(value)
             return record
         except IntegrityError as exc:
-            logger.error(f"Error in creating {nautobot_model}: {exc}")
-            return None
+            logger.error(
+                "Nautobot reported a database integrity error",
+                action="create",
+                exception=str(exc),
+                model=nautobot_model,
+                model_data=dict(**ids, **attrs, **multivalue_attrs)
+            )
+        except DjangoValidationError as exc:
+            logger.error(
+                "Nautobot reported a data validation error - check your source data",
+                action="create",
+                exception=str(exc),
+                model=nautobot_model,
+                model_data=dict(**ids, **attrs, **multivalue_attrs),
+            )
+        return None
 
     @classmethod
     def create(cls, diffsync: DiffSync, ids: Mapping, attrs: Mapping) -> Optional["NautobotBaseModel"]:
@@ -219,8 +234,22 @@ class NautobotBaseModel(DiffSyncModel):
                 getattr(record, attr).set(value)
             return record
         except IntegrityError as exc:
-            logger.error(f"Error in updating {nautobot_model}: {exc}")
-            return None
+            logger.error(
+                "Nautobot reported a database integrity error",
+                action="update",
+                exception=str(exc),
+                model=nautobot_model,
+                model_data=dict(**ids, **attrs, **multivalue_attrs),
+            )
+        except DjangoValidationError as exc:
+            logger.error(
+                "Nautobot reported a data validation error - check your source data",
+                action="update",
+                exception=str(exc),
+                model=nautobot_model,
+                model_data=dict(**ids, **attrs, **multivalue_attrs),
+            )
+        return None
 
     def update(self, attrs: Mapping) -> Optional["NautobotBaseModel"]:
         """Update this model instance, both in Nautobot and in DiffSync."""
