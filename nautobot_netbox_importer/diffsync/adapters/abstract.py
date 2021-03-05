@@ -139,14 +139,6 @@ class N2NDiffSync(DiffSync):
         "site",  # Not all Sites belong to a Region
         "manufacturer",
         "devicetype",
-        "consoleporttemplate",
-        "consoleserverporttemplate",
-        "powerporttemplate",
-        "poweroutlettemplate",
-        "rearporttemplate",
-        "frontporttemplate",
-        "interfacetemplate",
-        "devicebaytemplate",
         "devicerole",
         "platform",
         "clustertype",
@@ -172,6 +164,17 @@ class N2NDiffSync(DiffSync):
         "prefix",
         # Lots of pre-requisites for constructing a Device!
         "device",
+        # Create device component templates **after** creating Devices,
+        # as otherwise the created Devices will all use the fully-populated templates,
+        # and we want to ensure that the Devices have only the components we have identified!
+        "consoleporttemplate",
+        "consoleserverporttemplate",
+        "powerporttemplate",
+        "poweroutlettemplate",
+        "rearporttemplate",
+        "frontporttemplate",
+        "interfacetemplate",
+        "devicebaytemplate",
         # All device components require a parent Device
         "devicebay",
         "inventoryitem",

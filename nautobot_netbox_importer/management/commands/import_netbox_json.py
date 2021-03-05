@@ -83,6 +83,7 @@ class Command(BaseCommand):
         target = NautobotDiffSync()
         target.load()
 
+        logger.info("Beginning data synchronization...")
         # Due to the fact that model inter-references do not form an acyclic graph,
         # there is no ordering of models that we can follow that allows for the creation
         # of all possible references in a single linear pass.
