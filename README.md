@@ -10,7 +10,7 @@ The plugin is available as a Python package in PyPI and can be installed with pi
 pip install nautobot-netbox-importer
 ```
 
-> The plugin is compatible with Nautobot 1.0 and can handle JSON data exported from NetBox 2.10.3 and 2.10.4 at present.
+> The plugin is compatible with Nautobot 1.0 and can handle JSON data exported from NetBox 2.10.3 through 2.10.5 at present.
 
 Once installed, the plugin needs to be enabled in your `nautobot_config.py`:
 
