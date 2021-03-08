@@ -13,9 +13,11 @@ from typing import Mapping, Optional, Tuple, Union
 
 from diffsync import DiffSync, DiffSyncModel
 from diffsync.exceptions import ObjectNotFound
+from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db import models
 from django.db.utils import IntegrityError
 from pydantic import BaseModel, validator
+from pydantic.error_wrappers import ValidationError as PydanticValidationError
 import structlog
 
 from .references import (
@@ -111,10 +113,18 @@ class NautobotBaseModel(DiffSyncModel):
                 target_content_type = diffsync_data[target_content_type_field]
                 target_diffsync_class_name = target_content_type["model"]
                 target_class = getattr(diffsync, target_diffsync_class_name)
-                target_record = diffsync.get(target_class, diffsync_value)
-                target_nautobot_record = target_class.nautobot_model().objects.get(pk=target_record.pk)
-                # For GenericForeignKey fields (only) we must provide a PK rather than an object reference
-                nautobot_data[field] = target_nautobot_record.pk
+                try:
+                    target_record = diffsync.get(target_class, diffsync_value)
+                    target_nautobot_record = target_class.nautobot_model().objects.get(pk=target_record.pk)
+                    # For GenericForeignKey fields (only) we must provide a PK rather than an object reference
+                    nautobot_data[field] = target_nautobot_record.pk
+                except ObjectNotFound:
+                    logger.debug(
+                        "GenericForeignKey not found, will require later fixup",
+                        target=target_diffsync_class_name,
+                        unique_id=diffsync_value,
+                    )
+                    nautobot_data[field] = None
                 continue
 
             target_class = getattr(diffsync, target_diffsync_class_name)
@@ -183,8 +193,22 @@ class NautobotBaseModel(DiffSyncModel):
                 getattr(record, attr).set(value)
             return record
         except IntegrityError as exc:
-            logger.error(f"Error in creating {nautobot_model}: {exc}")
-            return None
+            logger.error(
+                "Nautobot reported a database integrity error",
+                action="create",
+                exception=str(exc),
+                model=nautobot_model,
+                model_data=dict(**ids, **attrs, **multivalue_attrs),
+            )
+        except DjangoValidationError as exc:
+            logger.error(
+                "Nautobot reported a data validation error - check your source data",
+                action="create",
+                exception=str(exc),
+                model=nautobot_model,
+                model_data=dict(**ids, **attrs, **multivalue_attrs),
+            )
+        return None
 
     @classmethod
     def create(cls, diffsync: DiffSync, ids: Mapping, attrs: Mapping) -> Optional["NautobotBaseModel"]:
@@ -203,7 +227,17 @@ class NautobotBaseModel(DiffSyncModel):
         record = cls.create_nautobot_record(cls.nautobot_model(), nautobot_ids, nautobot_attrs, multivalue_attrs)
         if record:
             diffsync_attrs["pk"] = record.pk
-            return super().create(diffsync, diffsync_ids, diffsync_attrs)
+            try:
+                return super().create(diffsync, diffsync_ids, diffsync_attrs)
+            except PydanticValidationError as exc:
+                logger.error(
+                    "Invalid data according to internal data model. "
+                    "This may be an issue with your source data or may reflect a bug in this plugin.",
+                    action="create",
+                    exception=str(exc),
+                    model=cls.get_type(),
+                    model_data=dict(**diffsync_ids, **diffsync_attrs),
+                )
         return None
 
     @staticmethod
@@ -219,12 +253,26 @@ class NautobotBaseModel(DiffSyncModel):
                 getattr(record, attr).set(value)
             return record
         except IntegrityError as exc:
-            logger.error(f"Error in updating {nautobot_model}: {exc}")
-            return None
+            logger.error(
+                "Nautobot reported a database integrity error",
+                action="update",
+                exception=str(exc),
+                model=nautobot_model,
+                model_data=dict(**ids, **attrs, **multivalue_attrs),
+            )
+        except DjangoValidationError as exc:
+            logger.error(
+                "Nautobot reported a data validation error - check your source data",
+                action="update",
+                exception=str(exc),
+                model=nautobot_model,
+                model_data=dict(**ids, **attrs, **multivalue_attrs),
+            )
+        return None
 
     def update(self, attrs: Mapping) -> Optional["NautobotBaseModel"]:
         """Update this model instance, both in Nautobot and in DiffSync."""
-        _, nautobot_ids = self.clean_ids(self.diffsync, self.get_identifiers())
+        diffsync_ids, nautobot_ids = self.clean_ids(self.diffsync, self.get_identifiers())
         diffsync_attrs, nautobot_attrs = self.clean_attrs(self.diffsync, attrs)
 
         if not diffsync_attrs and not nautobot_attrs:
@@ -239,8 +287,21 @@ class NautobotBaseModel(DiffSyncModel):
                 multivalue_attrs[attr] = value
                 del nautobot_attrs[attr]
 
-        self.update_nautobot_record(self.nautobot_model(), nautobot_ids, nautobot_attrs, multivalue_attrs)
-        return super().update(diffsync_attrs)
+        record = self.update_nautobot_record(self.nautobot_model(), nautobot_ids, nautobot_attrs, multivalue_attrs)
+        if record:
+            try:
+                return super().update(diffsync_attrs)
+            except PydanticValidationError as exc:
+                logger.error(
+                    "Invalid data according to internal data model. "
+                    "This may be an issue with your source data or may reflect a bug in this plugin.",
+                    action="update",
+                    exception=str(exc),
+                    model=self.get_type(),
+                    model_data=dict(**diffsync_ids, **diffsync_attrs),
+                )
+
+        return None
 
     # TODO delete() is not yet implemented
 
@@ -376,4 +437,9 @@ class ArrayField(DiffSyncCustomValidationField, list):
             value = [int(item) for item in value]
         except ValueError:
             pass
+        # Additionally, NetBox may store a list of ints in arbitrary (unsorted) order.
+        # For consistent behavior, sort them:
+        # TODO: this *should* be okay in all cases as I don't know of any ArrayFields
+        #       in NetBox or Nautobot where maintaining order is relevant.
+        value = sorted(value)
         return cls(value)

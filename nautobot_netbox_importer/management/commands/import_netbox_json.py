@@ -64,8 +64,8 @@ class Command(BaseCommand):
         """Handle execution of the import_netbox_json management command."""
         if options["netbox_version"] < version.Version("2.10.3"):
             raise CommandError("Minimum NetBox version supported is 2.10.3")
-        if options["netbox_version"] > version.Version("2.10.4"):
-            raise CommandError("Maximum NetBox version supported is 2.10.4")
+        if options["netbox_version"] > version.Version("2.10.5"):
+            raise CommandError("Maximum NetBox version supported is 2.10.5")
 
         self.enable_logging(verbosity=options["verbosity"])
         logger = structlog.get_logger()
@@ -83,6 +83,7 @@ class Command(BaseCommand):
         target = NautobotDiffSync()
         target.load()
 
+        logger.info("Beginning data synchronization...")
         # Due to the fact that model inter-references do not form an acyclic graph,
         # there is no ordering of models that we can follow that allows for the creation
         # of all possible references in a single linear pass.

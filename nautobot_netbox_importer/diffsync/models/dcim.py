@@ -125,47 +125,65 @@ class Device(ConfigContextModelMixin, StatusModelMixin, PrimaryModel):
     """A Device represents a piece of physical hardware mounted within a Rack."""
 
     _modelname = "device"
-    _identifiers = ("site", "tenant", "name")
-    _attributes = (
-        *PrimaryModel._attributes,
-        *ConfigContextModelMixin._attributes,
-        *StatusModelMixin._attributes,
+    # Although dcim.Device defines (site, tenant, name) as a unique_together constraint,
+    # multiple devices in the same site/tenant may coexist with a NULL name because NULL != NULL.
+    # Similarly (rack, position, face) is unique_together but multiple un-racked devices may coexist.
+    # Similarly (virtual_chassis, vc_position) is unique_together but multiple non-vc devices may coexist.
+    # In short, to avoid treating distinct Device records incorrectly as duplicates, we
+    # need to consider **most attributes** as "identifiers" of a unique Device.
+    _identifiers = (
+        "site",
+        "tenant",
+        "name",
+        "rack",
+        "position",
+        "face",
+        "vc_position",
+        "vc_priority",
         "device_type",
         "device_role",
         "platform",
         "serial",
         "asset_tag",
-        "rack",
-        "position",
-        "face",
+        "cluster",
+    )
+    _attributes = (
+        *PrimaryModel._attributes,
+        *ConfigContextModelMixin._attributes,
+        *StatusModelMixin._attributes,
+        # Due to model loading order, VirtualChassis references will initially be None and
+        # will only later be set; since a model's identifiers may not change after instantiation,
+        # we cannot treat this as an identifier.
+        "virtual_chassis",
+        # Due to model loading order, IPAddress references will initially be None and will
+        # only later be set; since a model's identifiers may not change after instantiation,
+        # we cannot treat these as identifiers.
         "primary_ip4",
         "primary_ip6",
-        "cluster",
-        "virtual_chassis",
-        "vc_position",
-        "vc_priority",
+        # Highly unlikely that two Devices will be identical in all respects save their comments;
+        # plus comments are the field most likely to change between subsequent data imports.
         "comments",
     )
     _nautobot_model = dcim.Device
 
     site: Optional[SiteRef]
     tenant: Optional[TenantRef]
-    name: str
-
+    name: Optional[str]
+    rack: Optional[RackRef]
+    position: Optional[int]
+    face: str  # may not be None but may be empty
+    vc_position: Optional[int]
+    vc_priority: Optional[int]
     device_type: DeviceTypeRef
     device_role: DeviceRoleRef
     platform: Optional[PlatformRef]
-    serial: str
+    serial: str  # may not be None but may be empty
     asset_tag: Optional[str]
-    rack: Optional[RackRef]
-    position: Optional[int]
-    face: str
+    cluster: Optional[ClusterRef]
+
+    virtual_chassis: Optional[VirtualChassisRef]
     primary_ip4: Optional[IPAddressRef]
     primary_ip6: Optional[IPAddressRef]
-    cluster: Optional[ClusterRef]
-    virtual_chassis: Optional[VirtualChassisRef]
-    vc_position: Optional[int]
-    vc_priority: Optional[int]
     comments: str
 
 
@@ -400,7 +418,7 @@ class PowerOutletTemplate(ComponentTemplateModel):
     _attributes = (*ComponentTemplateModel._attributes, "type", "power_port", "feed_leg")
     _nautobot_model = dcim.PowerOutletTemplate
 
-    type: staticmethod
+    type: str
     power_port: Optional[PowerPortTemplateRef]
     feed_leg: str
 

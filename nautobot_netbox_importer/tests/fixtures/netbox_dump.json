@@ -2992,7 +2992,7 @@
         "pk": 1,
         "fields": {
             "password": "pbkdf2_sha256$216000$da6CZRwS7Ti6$GIUYlTXeEOyZIuEgQTEkohHnvmd3kDn0OCyuT1dM+H4=",
-            "last_login": "2021-02-21T23:25:39.132Z",
+            "last_login": "2021-03-08T14:35:56.453Z",
             "is_superuser": true,
             "username": "admin",
             "first_name": "Andy",
@@ -4780,6 +4780,122 @@
         }
     },
     {
+        "model": "dcim.consoleporttemplate",
+        "pk": 1,
+        "fields": {
+            "device_type": 1,
+            "name": "Console Port 1",
+            "_name": "Console Port 00000001",
+            "label": "Model A Console Port 1",
+            "description": "Console Port template for Model A",
+            "type": "rj-45"
+        }
+    },
+    {
+        "model": "dcim.consoleserverporttemplate",
+        "pk": 1,
+        "fields": {
+            "device_type": 1,
+            "name": "Console Server Port 1",
+            "_name": "Console Server Port 00000001",
+            "label": "Model A Console Server Port 1",
+            "description": "Console Server Port template for Model A",
+            "type": "rj-45"
+        }
+    },
+    {
+        "model": "dcim.powerporttemplate",
+        "pk": 1,
+        "fields": {
+            "device_type": 1,
+            "name": "Power Port 1",
+            "_name": "Power Port 00000001",
+            "label": "Model A Power Port 1",
+            "description": "Power Port template for Model A",
+            "type": "nema-5-15p",
+            "maximum_draw": 100,
+            "allocated_draw": 10
+        }
+    },
+    {
+        "model": "dcim.poweroutlettemplate",
+        "pk": 1,
+        "fields": {
+            "device_type": 1,
+            "name": "Power Outlet 1",
+            "_name": "Power Outlet 00000001",
+            "label": "Model A Power Outlet 1",
+            "description": "Power Outlet template for Model A",
+            "type": "nema-5-30r",
+            "power_port": 1,
+            "feed_leg": "A"
+        }
+    },
+    {
+        "model": "dcim.interfacetemplate",
+        "pk": 1,
+        "fields": {
+            "device_type": 1,
+            "name": "mgmt0",
+            "label": "Management 0",
+            "description": "Management interface template for Model A",
+            "_name": "9999999999999999mgmt000000............",
+            "type": "1000base-t",
+            "mgmt_only": true
+        }
+    },
+    {
+        "model": "dcim.interfacetemplate",
+        "pk": 2,
+        "fields": {
+            "device_type": 1,
+            "name": "eth0",
+            "label": "Ethernet 0",
+            "description": "Ethernet interface template for Model A",
+            "_name": "9999999999999999eth000000............",
+            "type": "100base-tx",
+            "mgmt_only": false
+        }
+    },
+    {
+        "model": "dcim.frontporttemplate",
+        "pk": 1,
+        "fields": {
+            "device_type": 1,
+            "name": "Front Port 1",
+            "_name": "Front Port 00000001",
+            "label": "Model A Front Port 1",
+            "description": "Front Port template for Model A",
+            "type": "8p8c",
+            "rear_port": 1,
+            "rear_port_position": 1
+        }
+    },
+    {
+        "model": "dcim.rearporttemplate",
+        "pk": 1,
+        "fields": {
+            "device_type": 1,
+            "name": "Rear Port 1",
+            "_name": "Rear Port 00000001",
+            "label": "Model A Rear Port 1",
+            "description": "Rear Port template for Model A",
+            "type": "8p8c",
+            "positions": 2
+        }
+    },
+    {
+        "model": "dcim.devicebaytemplate",
+        "pk": 1,
+        "fields": {
+            "device_type": 1,
+            "name": "Device Bay 1",
+            "_name": "Device Bay 00000001",
+            "label": "Model A Device Bay 1",
+            "description": "Device bay template for Model A"
+        }
+    },
+    {
         "model": "dcim.powerpanel",
         "pk": 1,
         "fields": {
@@ -5182,6 +5298,34 @@
         }
     },
     {
+        "model": "ipam.aggregate",
+        "pk": 3,
+        "fields": {
+            "created": "2021-03-08",
+            "last_updated": "2021-03-08T14:52:50.511Z",
+            "custom_field_data": {},
+            "prefix": "fe80::/10",
+            "rir": 1,
+            "tenant": null,
+            "date_added": "2021-03-08",
+            "description": "Link-local addresses"
+        }
+    },
+    {
+        "model": "ipam.aggregate",
+        "pk": 4,
+        "fields": {
+            "created": "2021-03-08",
+            "last_updated": "2021-03-08T14:57:24.148Z",
+            "custom_field_data": {},
+            "prefix": "2001:db8::/32",
+            "rir": 2,
+            "tenant": null,
+            "date_added": "2021-03-08",
+            "description": ""
+        }
+    },
+    {
         "model": "ipam.role",
         "pk": 1,
         "fields": {
@@ -5260,6 +5404,42 @@
         }
     },
     {
+        "model": "ipam.prefix",
+        "pk": 4,
+        "fields": {
+            "created": "2021-03-08",
+            "last_updated": "2021-03-08T14:53:46.782Z",
+            "custom_field_data": {},
+            "prefix": "fe80::/64",
+            "site": null,
+            "vrf": null,
+            "tenant": null,
+            "vlan": null,
+            "status": "active",
+            "role": null,
+            "is_pool": false,
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.prefix",
+        "pk": 5,
+        "fields": {
+            "created": "2021-03-08",
+            "last_updated": "2021-03-08T14:57:58.548Z",
+            "custom_field_data": {},
+            "prefix": "2001:db8:0:1::/64",
+            "site": 2,
+            "vrf": 2,
+            "tenant": 2,
+            "vlan": 2,
+            "status": "active",
+            "role": 2,
+            "is_pool": false,
+            "description": ""
+        }
+    },
+    {
         "model": "ipam.ipaddress",
         "pk": 1,
         "fields": {
@@ -5295,6 +5475,82 @@
             "nat_inside": 1,
             "dns_name": "",
             "description": "A"
+        }
+    },
+    {
+        "model": "ipam.ipaddress",
+        "pk": 3,
+        "fields": {
+            "created": "2021-03-08",
+            "last_updated": "2021-03-08T14:49:34.798Z",
+            "custom_field_data": {},
+            "address": "10.1.1.3/24",
+            "vrf": null,
+            "tenant": null,
+            "status": "active",
+            "role": "",
+            "assigned_object_type": 8,
+            "assigned_object_id": 1,
+            "nat_inside": null,
+            "dns_name": "",
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.ipaddress",
+        "pk": 4,
+        "fields": {
+            "created": "2021-03-08",
+            "last_updated": "2021-03-08T14:55:18.841Z",
+            "custom_field_data": {},
+            "address": "fe80::1c46:231c:ce55:25dd/128",
+            "vrf": 2,
+            "tenant": 2,
+            "status": "active",
+            "role": "",
+            "assigned_object_type": 8,
+            "assigned_object_id": 2,
+            "nat_inside": null,
+            "dns_name": "centos",
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.ipaddress",
+        "pk": 5,
+        "fields": {
+            "created": "2021-03-08",
+            "last_updated": "2021-03-08T15:01:17.823Z",
+            "custom_field_data": {},
+            "address": "2001:db8:0:1:1::1/80",
+            "vrf": 2,
+            "tenant": 2,
+            "status": "active",
+            "role": "",
+            "assigned_object_type": 8,
+            "assigned_object_id": 2,
+            "nat_inside": null,
+            "dns_name": "",
+            "description": ""
+        }
+    },
+    {
+        "model": "ipam.ipaddress",
+        "pk": 6,
+        "fields": {
+            "created": "2021-03-08",
+            "last_updated": "2021-03-08T15:00:15.881Z",
+            "custom_field_data": {},
+            "address": "2001:db8:0:1::1/64",
+            "vrf": 2,
+            "tenant": 2,
+            "status": "active",
+            "role": "",
+            "assigned_object_type": null,
+            "assigned_object_id": null,
+            "nat_inside": null,
+            "dns_name": "",
+            "description": ""
         }
     },
     {
@@ -5353,6 +5609,40 @@
             "status": "active",
             "role": 2,
             "description": ""
+        }
+    },
+    {
+        "model": "ipam.service",
+        "pk": 1,
+        "fields": {
+            "created": "2021-03-08",
+            "last_updated": "2021-03-08T14:50:08.435Z",
+            "custom_field_data": {},
+            "device": null,
+            "virtual_machine": 1,
+            "name": "Service A",
+            "protocol": "tcp",
+            "ports": "[\"10007\", \"80\", \"10001\", \"10002\", \"10003\", \"8080\", \"10004\", \"10005\", \"10006\", \"10008\", \"10009\", \"10010\"]",
+            "description": "Service A on VM A",
+            "ipaddresses": [
+                3
+            ]
+        }
+    },
+    {
+        "model": "ipam.service",
+        "pk": 2,
+        "fields": {
+            "created": "2021-03-08",
+            "last_updated": "2021-03-08T14:50:41.786Z",
+            "custom_field_data": {},
+            "device": null,
+            "virtual_machine": 2,
+            "name": "Service B",
+            "protocol": "udp",
+            "ports": "[\"12345\"]",
+            "description": "",
+            "ipaddresses": []
         }
     },
     {
@@ -6007,6 +6297,60 @@
         }
     },
     {
+        "model": "extras.taggeditem",
+        "pk": 66,
+        "fields": {
+            "content_type": 57,
+            "object_id": 1,
+            "tag": 1
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 67,
+        "fields": {
+            "content_type": 57,
+            "object_id": 2,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 68,
+        "fields": {
+            "content_type": 50,
+            "object_id": 4,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 69,
+        "fields": {
+            "content_type": 49,
+            "object_id": 4,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 70,
+        "fields": {
+            "content_type": 51,
+            "object_id": 5,
+            "tag": 2
+        }
+    },
+    {
+        "model": "extras.taggeditem",
+        "pk": 71,
+        "fields": {
+            "content_type": 50,
+            "object_id": 5,
+            "tag": 2
+        }
+    },
+    {
         "model": "extras.webhook",
         "pk": 1,
         "fields": {
@@ -6345,7 +6689,7 @@
         "pk": 1,
         "fields": {
             "created": "2021-02-21",
-            "last_updated": "2021-02-21T23:51:41.414Z",
+            "last_updated": "2021-03-08T14:49:34.835Z",
             "custom_field_data": {},
             "local_context_data": {
                 "context": "a"
@@ -6356,7 +6700,7 @@
             "name": "VM A",
             "status": "active",
             "role": 1,
-            "primary_ip4": null,
+            "primary_ip4": 3,
             "primary_ip6": null,
             "vcpus": 1,
             "memory": 1,
@@ -6369,7 +6713,7 @@
         "pk": 2,
         "fields": {
             "created": "2021-02-21",
-            "last_updated": "2021-02-21T23:52:35.437Z",
+            "last_updated": "2021-03-08T15:01:17.847Z",
             "custom_field_data": {},
             "local_context_data": null,
             "cluster": 2,
@@ -6379,7 +6723,7 @@
             "status": "active",
             "role": 2,
             "primary_ip4": null,
-            "primary_ip6": null,
+            "primary_ip6": 5,
             "vcpus": null,
             "memory": null,
             "disk": null,
