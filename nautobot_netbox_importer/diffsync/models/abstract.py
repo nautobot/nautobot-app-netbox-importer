@@ -437,4 +437,9 @@ class ArrayField(DiffSyncCustomValidationField, list):
             value = [int(item) for item in value]
         except ValueError:
             pass
+        # Additionally, NetBox may store a list of ints in arbitrary (unsorted) order.
+        # For consistent behavior, sort them:
+        # TODO: this *should* be okay in all cases as I don't know of any ArrayFields
+        #       in NetBox or Nautobot where maintaining order is relevant.
+        value = sorted(value)
         return cls(value)

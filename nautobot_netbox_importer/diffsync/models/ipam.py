@@ -12,6 +12,7 @@ import netaddr
 import nautobot.ipam.models as ipam
 
 from .abstract import (
+    ArrayField,
     OrganizationalModel,
     PrimaryModel,
     StatusModelMixin,
@@ -173,7 +174,7 @@ class Service(PrimaryModel):
     device: Optional[DeviceRef]
     virtual_machine: Optional[VirtualMachineRef]
     protocol: str
-    ports: List[int]
+    ports: ArrayField
 
     name: str
     ipaddresses: List[IPAddressRef]

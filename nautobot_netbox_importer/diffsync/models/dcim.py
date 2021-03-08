@@ -418,7 +418,7 @@ class PowerOutletTemplate(ComponentTemplateModel):
     _attributes = (*ComponentTemplateModel._attributes, "type", "power_port", "feed_leg")
     _nautobot_model = dcim.PowerOutletTemplate
 
-    type: staticmethod
+    type: str
     power_port: Optional[PowerPortTemplateRef]
     feed_leg: str
 

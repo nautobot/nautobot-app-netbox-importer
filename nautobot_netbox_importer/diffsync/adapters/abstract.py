@@ -189,9 +189,9 @@ class N2NDiffSync(DiffSync):
         "interface",
         "vminterface",
         # Reference loop:
-        #   Device -> IPAddress (primary_ip)
-        #   IPAddress -> Interface (assigned_object)
-        #   Interface -> Device (device)
+        #   Device/VirtualMachine -> IPAddress (primary_ip4/primary_ip6)
+        #   IPAddress -> Interface/VMInterface (assigned_object)
+        #   Interface/VMInterface -> Device/VirtualMachine (device)
         # Interface comes after Device because it MUST have a Device to be created;
         # IPAddress comes after Interface because we use the assigned_object as part of the IP's unique ID.
         # We will fixup the Device->primary_ip reference in fixup_data_relations()

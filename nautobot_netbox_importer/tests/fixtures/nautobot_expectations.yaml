@@ -3437,6 +3437,108 @@
 #     origin_type: 3
 #     path: '["46:8"]'
 #   model: dcim.cablepath
+- model: dcim.consoleporttemplate
+  ids:
+    name: "Console Port 1"
+  fields:
+    device_type:
+      ids:
+        model: "Model A"
+    label: "Model A Console Port 1"
+    description: "Console Port template for Model A"
+    type: "rj-45"
+- model: dcim.consoleserverporttemplate
+  ids:
+    name: "Console Server Port 1"
+  fields:
+    device_type:
+      ids:
+        model: "Model A"
+    label: "Model A Console Server Port 1"
+    description: "Console Server Port template for Model A"
+    type: "rj-45"
+- model: dcim.powerporttemplate
+  ids:
+    name: "Power Port 1"
+  fields:
+    device_type:
+      ids:
+        model: "Model A"
+    label: "Model A Power Port 1"
+    description: "Power Port template for Model A"
+    type: "nema-5-15p"
+    maximum_draw: 100
+    allocated_draw: 10
+- model: dcim.poweroutlettemplate
+  ids:
+    name: "Power Outlet 1"
+  fields:
+    device_type:
+      ids:
+        model: "Model A"
+    label: "Model A Power Outlet 1"
+    description: "Power Outlet template for Model A"
+    type: "nema-5-30r"
+    power_port:
+      ids:
+        name: "Power Port 1"
+    feed_leg: "A"
+- model: dcim.interfacetemplate
+  ids:
+    name: "mgmt0"
+  fields:
+    device_type:
+      ids:
+        model: "Model A"
+    label: "Management 0"
+    description: "Management interface template for Model A"
+    type: "1000base-t"
+    mgmt_only: true
+- model: dcim.interfacetemplate
+  ids:
+    name: "eth0"
+  fields:
+    device_type:
+      ids:
+        model: "Model A"
+    label: "Ethernet 0"
+    description: "Ethernet interface template for Model A"
+    type: "100base-tx"
+    mgmt_only: false
+- model: dcim.frontporttemplate
+  ids:
+    name: "Front Port 1"
+  fields:
+    device_type:
+      ids:
+        model: "Model A"
+    label: "Model A Front Port 1"
+    description: "Front Port template for Model A"
+    type: "8p8c"
+    rear_port:
+      ids:
+        name: "Rear Port 1"
+    rear_port_position: 1
+- model: dcim.rearporttemplate
+  ids:
+    name: "Rear Port 1"
+  fields:
+    device_type:
+      ids:
+        model: "Model A"
+    label: "Model A Rear Port 1"
+    description: "Rear Port template for Model A"
+    type: "8p8c"
+    positions: 2
+- model: dcim.devicebaytemplate
+  ids:
+    name: "Device Bay 1"
+  fields:
+    device_type:
+      ids:
+        model: "Model A"
+    label: "Model A Device Bay 1"
+    description: "Device bay template for Model A"
 - model: dcim.powerpanel
   ids:
     name: Power Panel A
@@ -3776,6 +3878,28 @@
     tenant:
       ids:
         name: "Tenant B"
+- model: ipam.aggregate
+  ids:
+    prefix: "fe80::/10"
+  fields:
+    custom_field_data: {}
+    date_added: "2021-03-08"
+    description: "Link-local addresses"
+    rir:
+      ids:
+        name: "RIR A"
+    tenant: null
+- model: ipam.aggregate
+  ids:
+    prefix: "2001:db8::/32"
+  fields:
+    custom_field_data: {}
+    date_added: "2021-03-08"
+    description: ""
+    rir:
+      ids:
+        name: "RIR B"
+    tenant: null
 - model: ipam.role
   ids:
     name: Role A
@@ -3859,6 +3983,46 @@
     vrf:
       ids:
         name: "VRF B"
+- model: ipam.prefix
+  ids:
+    prefix: "fe80::/64"
+  fields:
+    custom_field_data: {}
+    description: ""
+    is_pool: false
+    role: null
+    site: null
+    status:
+      ids:
+        slug: "active"
+    tenant: null
+    vlan: null
+    vrf: null
+- model: ipam.prefix
+  ids:
+    prefix: "2001:db8:0:1::/64"
+  fields:
+    custom_field_data: {}
+    description: ""
+    is_pool: false
+    role:
+      ids:
+        name: "Role B"
+    site:
+      ids:
+        name: "Site B"
+    status:
+      ids:
+        slug: "active"
+    tenant:
+      ids:
+        name: "Tenant B"
+    vlan:
+      ids:
+        name: "VLAN B"
+    vrf:
+      ids:
+        name: "VRF B"
 - model: ipam.ipaddress
   ids:
     address: 10.1.1.1/32
@@ -3907,6 +4071,91 @@
     vrf:
       ids:
         name: "VRF A"
+- model: ipam.ipaddress
+  ids:
+    address: 10.1.1.3/24
+  fields:
+    # TODO assigned_object_id
+    assigned_object_type:
+      ids:
+        app_label: "virtualization"
+        model: "vminterface"
+    custom_field_data: {}
+    description: ""
+    dns_name: ""
+    nat_inside: null
+    role: ""
+    status:
+      ids:
+        slug: "active"
+    tenant: null
+    vrf: null
+- model: ipam.ipaddress
+  ids:
+    address: "fe80::1c46:231c:ce55:25dd/128"
+  fields:
+    # TODO assigned_object_id
+    assigned_object_type:
+      ids:
+        app_label: "virtualization"
+        model: "vminterface"
+    custom_field_data: {}
+    description: ""
+    dns_name: "centos"
+    nat_inside: null
+    role: ""
+    status:
+      ids:
+        slug: "active"
+    tenant:
+      ids:
+        name: "Tenant B"
+    vrf:
+      ids:
+        name: "VRF B"
+- model: ipam.ipaddress
+  ids:
+    address: "2001:db8:0:1:1::1/80"
+  fields:
+    # TODO assigned_object_id
+    assigned_object_type:
+      ids:
+        app_label: "virtualization"
+        model: "vminterface"
+    custom_field_data: {}
+    description: ""
+    dns_name: ""
+    nat_inside: null
+    role: ""
+    status:
+      ids:
+        slug: "active"
+    tenant:
+      ids:
+        name: "Tenant B"
+    vrf:
+      ids:
+        name: "VRF B"
+- model: ipam.ipaddress
+  ids:
+    address: "2001:db8:0:1::1/64"
+  fields:
+    assigned_object_id: null
+    assigned_object_type: null
+    custom_field_data: {}
+    description: ""
+    dns_name: ""
+    nat_inside: null
+    role: ""
+    status:
+      ids:
+        slug: "active"
+    tenant:
+      ids:
+        name: "Tenant B"
+    vrf:
+      ids:
+        name: "VRF B"
 - model: ipam.vlangroup
   ids:
     name: VLAN Group A
@@ -3969,6 +4218,34 @@
       ids:
         name: "Tenant B"
     vid: 2
+- model: ipam.service
+  ids:
+    name: "Service A"
+  fields:
+    custom_field_data: {}
+    description: "Service A on VM A"
+    device: null
+    ipaddresses:
+      - ids:
+          address: "10.1.1.3/24"
+    ports: [80, 8080, 10001, 10002, 10003, 10004, 10005, 10006, 10007, 10008, 10009, 10010]
+    protocol: "tcp"
+    virtual_machine:
+      ids:
+        name: "VM A"
+- model: ipam.service
+  ids:
+    name: "Service B"
+  fields:
+    custom_field_data: {}
+    description: ""
+    device: null
+    ipaddresses: []
+    ports: [12345]
+    protocol: "udp"
+    virtual_machine:
+      ids:
+        name: "VM B"
 - model: extras.customfield
   ids:
     name: Custom Text Field A
@@ -4496,16 +4773,17 @@
     tag:
       ids:
         name: "Tag A"
-- model: extras.taggeditem
-  ids:
-    content_type:
-      ids:
-        app_label: "ipam"
-        model: "aggregate"
+# TODO: need object_id to distinguish between two aggregates tagged with Tag B
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "ipam"
+#         model: "aggregate"
 # TODO    object_id: 2
-    tag:
-      ids:
-        name: "Tag B"
+#     tag:
+#       ids:
+#         name: "Tag B"
 # TODO: need object_id to distinguish between two prefix tagged with Tag A
 # - model: extras.taggeditem
 #   ids:
@@ -4527,16 +4805,17 @@
 #     tag:
 #       ids:
 #         name: "Tag A"
-- model: extras.taggeditem
-  ids:
-    content_type:
-      ids:
-        app_label: "ipam"
-        model: "prefix"
+# TODO: need object_id to distinguish between two prefix tagged with Tag B
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "ipam"
+#         model: "prefix"
 # TODO    object_id: 3
-    tag:
-      ids:
-        name: "Tag B"
+#     tag:
+#       ids:
+#         name: "Tag B"
 # TODO: need object_id to distinguish between two ipaddress tagged with Tag A
 # - model: extras.taggeditem
 #   ids:
@@ -4558,6 +4837,17 @@
 #     tag:
 #       ids:
 #         name: "Tag A"
+# TODO: need object_id to distinguish between two ipaddress tagged with Tag B
+# - model: extras.taggeditem
+#   ids:
+#     content_type:
+#       ids:
+#         app_label: "ipam"
+#         model: "ipaddress"
+# TODO: object_id
+#     tag:
+#       ids:
+#         name: "Tag B"
 - model: extras.taggeditem
   ids:
     content_type:
@@ -4676,6 +4966,26 @@
         app_label: "dcim"
         model: "powerfeed"
 # TODO    object_id: 2
+    tag:
+      ids:
+        name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "ipam"
+        model: "service"
+# TODO object_id: 1
+    tag:
+      ids:
+        name: "Tag A"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "ipam"
+        model: "service"
+# TODO object_id: 2
     tag:
       ids:
         name: "Tag B"
@@ -4974,7 +5284,9 @@
     platform:
       ids:
         name: "Platform A"
-    primary_ip4: null
+    primary_ip4:
+      ids:
+        address: "10.1.1.3/24"
     primary_ip6: null
     role:
       ids:
@@ -5002,7 +5314,9 @@
       ids:
         name: "Platform B"
     primary_ip4: null
-    primary_ip6: null
+    primary_ip6:
+      ids:
+        address: "2001:db8:0:1:1::1/80"
     role:
       ids:
         name: "Device Role B"
