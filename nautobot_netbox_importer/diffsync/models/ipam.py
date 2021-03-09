@@ -12,6 +12,7 @@ import netaddr
 import nautobot.ipam.models as ipam
 
 from .abstract import (
+    ArrayField,
     OrganizationalModel,
     PrimaryModel,
     StatusModelMixin,
@@ -173,7 +174,7 @@ class Service(PrimaryModel):
     device: Optional[DeviceRef]
     virtual_machine: Optional[VirtualMachineRef]
     protocol: str
-    ports: List[int]
+    ports: ArrayField
 
     name: str
     ipaddresses: List[IPAddressRef]
@@ -222,11 +223,9 @@ class VRF(PrimaryModel):
     """A virtual routing and forwarding (VRF) table."""
 
     _modelname = "vrf"
-    _identifiers = ("rd",)
+    _identifiers = ("name", "rd", "tenant")
     _attributes = (
         *PrimaryModel._attributes,
-        "name",
-        "tenant",
         "enforce_unique",
         "description",
         "import_targets",
@@ -234,9 +233,10 @@ class VRF(PrimaryModel):
     )
     _nautobot_model = ipam.VRF
 
-    rd: str
     name: str
+    rd: Optional[str]
     tenant: Optional[TenantRef]
+
     enforce_unique: bool
     description: str
     import_targets: List[RouteTargetRef] = []

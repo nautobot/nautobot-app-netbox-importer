@@ -139,14 +139,6 @@ class N2NDiffSync(DiffSync):
         "site",  # Not all Sites belong to a Region
         "manufacturer",
         "devicetype",
-        "consoleporttemplate",
-        "consoleserverporttemplate",
-        "powerporttemplate",
-        "poweroutlettemplate",
-        "rearporttemplate",
-        "frontporttemplate",
-        "interfacetemplate",
-        "devicebaytemplate",
         "devicerole",
         "platform",
         "clustertype",
@@ -172,6 +164,17 @@ class N2NDiffSync(DiffSync):
         "prefix",
         # Lots of pre-requisites for constructing a Device!
         "device",
+        # Create device component templates **after** creating Devices,
+        # as otherwise the created Devices will all use the fully-populated templates,
+        # and we want to ensure that the Devices have only the components we have identified!
+        "consoleporttemplate",
+        "consoleserverporttemplate",
+        "powerporttemplate",
+        "poweroutlettemplate",
+        "rearporttemplate",
+        "frontporttemplate",
+        "interfacetemplate",
+        "devicebaytemplate",
         # All device components require a parent Device
         "devicebay",
         "inventoryitem",
@@ -186,9 +189,9 @@ class N2NDiffSync(DiffSync):
         "interface",
         "vminterface",
         # Reference loop:
-        #   Device -> IPAddress (primary_ip)
-        #   IPAddress -> Interface (assigned_object)
-        #   Interface -> Device (device)
+        #   Device/VirtualMachine -> IPAddress (primary_ip4/primary_ip6)
+        #   IPAddress -> Interface/VMInterface (assigned_object)
+        #   Interface/VMInterface -> Device/VirtualMachine (device)
         # Interface comes after Device because it MUST have a Device to be created;
         # IPAddress comes after Interface because we use the assigned_object as part of the IP's unique ID.
         # We will fixup the Device->primary_ip reference in fixup_data_relations()
@@ -285,12 +288,24 @@ class N2NDiffSync(DiffSync):
         try:
             instance = diffsync_model(**data, diffsync=self)
         except ValidationError as exc:
-            self.logger.error(str(exc))
+            self.logger.error(
+                "Invalid data according to internal data model. "
+                "This may be an issue with your source data or may reflect a bug in this plugin.",
+                action="load",
+                exception=str(exc),
+                model=diffsync_model,
+                model_data=data,
+            )
             return None
         try:
             self.add(instance)
         except ObjectAlreadyExists:
-            self.logger.warning("Apparent duplicate object encountered", model=instance)
+            self.logger.warning(
+                "Apparent duplicate object encountered. "
+                "This may be an issue with your source data or may reflect a bug in this plugin.",
+                model=instance,
+                model_id=instance.get_unique_id(),
+            )
         return instance
 
     def sync_from(self, source: DiffSync, diff_class: Diff = Diff, flags: DiffSyncFlags = DiffSyncFlags.NONE):
