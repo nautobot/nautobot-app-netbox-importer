@@ -13,7 +13,7 @@ from typing import Mapping, Optional, Tuple, Union
 
 from diffsync import DiffSync, DiffSyncModel
 from diffsync.exceptions import ObjectNotFound
-from django.core.exceptions import ValidationError as DjangoValidationError
+from django.core.exceptions import ObjectDoesNotExist, ValidationError as DjangoValidationError
 from django.db import models
 from django.db.utils import IntegrityError
 from pydantic import BaseModel, validator
@@ -208,6 +208,15 @@ class NautobotBaseModel(DiffSyncModel):
                 model=nautobot_model,
                 model_data=dict(**ids, **attrs, **multivalue_attrs),
             )
+        except ObjectDoesNotExist as exc:  # Including RelatedObjectDoesNotExist
+            logger.error(
+                "Nautobot reported an error about a missing required object",
+                action="create",
+                exception=str(exc),
+                model=nautobot_model,
+                model_data=dict(**ids, **attrs, **multivalue_attrs),
+            )
+
         return None
 
     @classmethod
@@ -268,6 +277,15 @@ class NautobotBaseModel(DiffSyncModel):
                 model=nautobot_model,
                 model_data=dict(**ids, **attrs, **multivalue_attrs),
             )
+        except ObjectDoesNotExist as exc:  # Including RelatedObjectDoesNotExist
+            logger.error(
+                "Nautobot reported an error about a missing required object",
+                action="update",
+                exception=str(exc),
+                model=nautobot_model,
+                model_data=dict(**ids, **attrs, **multivalue_attrs),
+            )
+
         return None
 
     def update(self, attrs: Mapping) -> Optional["NautobotBaseModel"]:
