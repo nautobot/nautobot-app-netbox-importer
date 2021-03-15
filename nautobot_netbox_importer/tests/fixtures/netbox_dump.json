@@ -2992,7 +2992,7 @@
         "pk": 1,
         "fields": {
             "password": "pbkdf2_sha256$216000$da6CZRwS7Ti6$GIUYlTXeEOyZIuEgQTEkohHnvmd3kDn0OCyuT1dM+H4=",
-            "last_login": "2021-03-08T14:35:56.453Z",
+            "last_login": "2021-03-15T20:37:37.915Z",
             "is_superuser": true,
             "username": "admin",
             "first_name": "Andy",
@@ -4368,8 +4368,11 @@
         "pk": 2,
         "fields": {
             "created": "2021-02-21",
-            "last_updated": "2021-02-21T23:09:31.644Z",
-            "custom_field_data": {},
+            "last_updated": "2021-03-15T20:39:23.694Z",
+            "custom_field_data": {
+                "Custom Text Field A": "alpha",
+                "Custom Integer Field B": 22
+            },
             "local_context_data": null,
             "device_type": 2,
             "device_role": 1,
@@ -5674,7 +5677,7 @@
             "name": "Custom Integer Field B",
             "label": "B",
             "description": "B",
-            "required": false,
+            "required": true,
             "filter_logic": "loose",
             "default": 1,
             "weight": 100,

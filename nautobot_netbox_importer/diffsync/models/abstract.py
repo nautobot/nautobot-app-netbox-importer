@@ -173,12 +173,12 @@ class NautobotBaseModel(DiffSyncModel):
         return (diffsync_data, nautobot_data)
 
     @classmethod
-    def clean_ids(cls, diffsync: DiffSync, ids):
+    def clean_ids(cls, diffsync: DiffSync, ids: dict) -> Tuple[dict, dict]:
         """Translate any DiffSync "ids" fields to the corresponding Nautobot data model identifiers."""
         return cls.clean_ids_or_attrs(diffsync, ids)
 
     @classmethod
-    def clean_attrs(cls, diffsync: DiffSync, attrs):
+    def clean_attrs(cls, diffsync: DiffSync, attrs: dict) -> Tuple[dict, dict]:
         """Translate any DiffSync "attrs" fields to the corresponding Nautobot data model fields."""
         return cls.clean_ids_or_attrs(diffsync, attrs)
 

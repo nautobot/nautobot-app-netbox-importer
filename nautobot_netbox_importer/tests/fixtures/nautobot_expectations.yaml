@@ -3119,7 +3119,9 @@
       ids:
         name: "Cluster A"
     comments: ''
-    custom_field_data: {}
+    custom_field_data:
+        "Custom Text Field A": "alpha"
+        "Custom Integer Field B": 22
     device_role:
       ids:
         name: "Device Role A"
@@ -4278,7 +4280,7 @@
     description: B
     filter_logic: loose
     label: B
-    required: false
+    required: true
     type: integer
     validation_maximum: 1000
     validation_minimum: 0

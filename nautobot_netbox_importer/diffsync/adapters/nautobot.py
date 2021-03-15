@@ -6,6 +6,11 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRel
 from django.db import models
 import structlog
 
+from diffsync import DiffSync, Diff
+from diffsync.enum import DiffSyncFlags
+
+import nautobot.extras.models as extras
+
 from .abstract import N2NDiffSync
 
 
@@ -99,3 +104,18 @@ class NautobotDiffSync(N2NDiffSync):
         self.fixup_data_relations()
 
         self.logger.info("Data loading from Nautobot complete.")
+
+    def sync_from(self, source: DiffSync, diff_class: Diff = Diff, flags: DiffSyncFlags = DiffSyncFlags.NONE):
+        """Synchronize data from the given source DiffSync object into Nautobot."""
+        super().sync_from(source, diff_class=diff_class, flags=flags)
+
+        # See comment on models.extras.CustomField.clean_attrs() method for more specifics,
+        # but in brief, when we initially sync data into Nautobot, we create all CustomField records
+        # with "required=False". Only after syncing all other data (above) can we safely go back
+        # and update any "required=True" CustomFields to their actual correct behavior.
+        for custom_field in self.get_all("customfield"):
+            if custom_field.required:
+                nautobot_custom_field = extras.CustomField.objects.get(name=custom_field.name)
+                nautobot_custom_field.required = True
+                nautobot_custom_field.clean()
+                nautobot_custom_field.save()
