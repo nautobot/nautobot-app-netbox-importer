@@ -293,18 +293,21 @@ class N2NDiffSync(DiffSync):
                 "This may be an issue with your source data or may reflect a bug in this plugin.",
                 action="load",
                 exception=str(exc),
-                model=diffsync_model,
+                model=diffsync_model.get_type(),
                 model_data=data,
             )
             return None
         try:
             self.add(instance)
         except ObjectAlreadyExists:
+            existing_instance = self.get(diffsync_model, instance.get_unique_id())
             self.logger.warning(
-                "Apparent duplicate object encountered. "
+                "Apparent duplicate object encountered? "
                 "This may be an issue with your source data or may reflect a bug in this plugin.",
-                model=instance,
-                model_id=instance.get_unique_id(),
+                duplicate_id=instance.get_identifiers(),
+                model=diffsync_model.get_type(),
+                pk_1=existing_instance.pk,
+                pk_2=instance.pk,
             )
         return instance
 
