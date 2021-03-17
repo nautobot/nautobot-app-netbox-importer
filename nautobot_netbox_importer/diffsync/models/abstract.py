@@ -186,11 +186,23 @@ class NautobotBaseModel(DiffSyncModel):
     def create_nautobot_record(nautobot_model, ids: Mapping, attrs: Mapping, multivalue_attrs: Mapping):
         """Helper method to create() - actually populate Nautobot data."""
         try:
+            # Custom fields are a special case - because in NetBox the values defined on a particular record are
+            # only loosely coupled to the CustomField definition itself, it's quite possible that these two may be
+            # out of sync for various reasons. If this happens, Nautobot *will* reject the record when we call clean().
+            # Rather than add a lot of complex logic here to try to "fix" out-of-sync NetBox data, we cheat and
+            # only set the custom field data *after* the record has been validated and approved by Nautobot.
+            custom_field_data = None
+            if "custom_field_data" in attrs:
+                custom_field_data = attrs["custom_field_data"]
+                del attrs["custom_field_data"]
             record = nautobot_model(**ids, **attrs)
             record.clean()
             record.save()
             for attr, value in multivalue_attrs.items():
                 getattr(record, attr).set(value)
+            if custom_field_data is not None:
+                record.custom_field_data = custom_field_data
+                record.save()
             return record
         except IntegrityError as exc:
             logger.error(

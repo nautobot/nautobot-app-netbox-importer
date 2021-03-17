@@ -4337,7 +4337,10 @@
         "fields": {
             "created": "2021-02-21",
             "last_updated": "2021-02-21T23:08:48.291Z",
-            "custom_field_data": {},
+            "custom_field_data": {
+                "nonexistent_field": 1,
+                "Custom Text Field A": -1
+            },
             "local_context_data": {
                 "context": "a"
             },

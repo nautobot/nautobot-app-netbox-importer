@@ -3078,7 +3078,9 @@
       ids:
         name: "Cluster A"
     comments: ''
-    custom_field_data: {}
+    custom_field_data:
+      nonexistent_field: 1
+      "Custom Text Field A": -1
     device_role:
       ids:
         name: "Device Role A"

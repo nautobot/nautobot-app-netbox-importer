@@ -6,11 +6,10 @@ are for populating data into Nautobot only, never the reverse.
 """
 # pylint: disable=too-many-ancestors, too-few-public-methods
 from datetime import datetime
-from typing import Any, List, Optional, Tuple
+from typing import Any, List, Optional
 from uuid import UUID
 
 from pydantic import Field
-from diffsync import DiffSync
 
 import nautobot.extras.models as extras
 
@@ -111,27 +110,6 @@ class CustomField(NautobotBaseModel):
     validation_maximum: Optional[int]
     validation_regex: str
     choices: Optional[ArrayField]
-
-    @classmethod
-    def clean_attrs(cls, diffsync: DiffSync, attrs) -> Tuple[dict, dict]:
-        """Override generic clean_attrs method to provide special handling of the "required" attribute."""
-        diffsync_attrs, nautobot_attrs = super().clean_attrs(diffsync, attrs)
-
-        # In NetBox, creation of custom fields is *not* automatically applied retroactively to existing data.
-        #
-        # In other words, if a user creates Device "A" (with no custom fields), then creates a custom field "X"
-        # that is required on all Device records, Device "A" will not have a value for field "X" until such time
-        # as the user performs some other update to Device "A" (at which point they will not be permitted to save
-        # their changes without also setting a value for field "X").
-        #
-        # What this means for us is that, in order to be able to successfully import the NetBox data,
-        # we *cannot* specify any CustomField as "required=True" because then Nautobot will not allow us to create
-        # any such records that predate the definition of that CustomField.
-        #
-        # As a workaround, we force the creation and updating of all CustomField records to use "required=False",
-        # and only at the very end of the import process will we go back and set the "real" value of this field.
-        nautobot_attrs["required"] = False
-        return (diffsync_attrs, nautobot_attrs)
 
 
 class CustomLink(ChangeLoggedModelMixin, NautobotBaseModel):
