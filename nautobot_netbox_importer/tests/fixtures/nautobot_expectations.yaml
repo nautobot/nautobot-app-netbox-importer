@@ -76,7 +76,7 @@
   fields:
     content_type:
       ids:
-        app_label: auth
+        app_label: users
         model: user
     name: Can add user
 - model: auth.permission
@@ -85,7 +85,7 @@
   fields:
     content_type:
       ids:
-        app_label: auth
+        app_label: users
         model: user
     name: Can change user
 - model: auth.permission
@@ -94,7 +94,7 @@
   fields:
     content_type:
       ids:
-        app_label: auth
+        app_label: users
         model: user
     name: Can delete user
 - model: auth.permission
@@ -103,7 +103,7 @@
   fields:
     content_type:
       ids:
-        app_label: auth
+        app_label: users
         model: user
     name: Can view user
 - model: auth.permission
@@ -2268,42 +2268,6 @@
     name: Can view token
 - model: auth.permission
   ids:
-    codename: add_userconfig
-  fields:
-    content_type:
-      ids:
-        app_label: users
-        model: userconfig
-    name: Can add User Preferences
-- model: auth.permission
-  ids:
-    codename: change_userconfig
-  fields:
-    content_type:
-      ids:
-        app_label: users
-        model: userconfig
-    name: Can change User Preferences
-- model: auth.permission
-  ids:
-    codename: delete_userconfig
-  fields:
-    content_type:
-      ids:
-        app_label: users
-        model: userconfig
-    name: Can delete User Preferences
-- model: auth.permission
-  ids:
-    codename: view_userconfig
-  fields:
-    content_type:
-      ids:
-        app_label: users
-        model: userconfig
-    name: Can view User Preferences
-- model: auth.permission
-  ids:
     codename: add_objectpermission
   fields:
     content_type:
@@ -2518,10 +2482,24 @@
         app_label: virtualization
         model: vminterface
     name: Can view interface
-- model: auth.user
+- model: users.user
   ids:
     username: admin
   fields:
+    config_data:
+      tables:
+        CircuitTable:
+          columns:
+            - "cid"
+            - "provider"
+            - "type"
+            - "status"
+            - "tenant"
+            - "a_side"
+            - "z_side"
+            - "commit_rate"
+            - "description"
+            - "tags"
     # date_joined: '2021-02-21T22:47:00.374Z'
     email: admin@example.com
     first_name: Andy
@@ -2618,7 +2596,9 @@
         cid: "Circuit A"
     term_side: A
   fields:
-    cable: null
+    cable:
+      ids:
+        label: "Circuit A to Circuit B"
     description: ''
     port_speed: null
     pp_info: ''
@@ -2634,7 +2614,9 @@
         cid: "Circuit B"
     term_side: A
   fields:
-    # TODO cable: 7
+    cable:
+      ids:
+        label: "Circuit A to Circuit B"
     description: B
     port_speed: 1
     pp_info: B
@@ -2650,7 +2632,7 @@
         cid: "Circuit B"
     term_side: Z
   fields:
-    # TODO cable: 7
+    cable: null
     description: ''
     port_speed: null
     pp_info: ''
@@ -4702,27 +4684,16 @@
     tag:
       ids:
         name: "Tag A"
-# TODO: need object_id to distinguish between two cable with Tag B
-# - model: extras.taggeditem
-#   ids:
-#     content_type:
-#       ids:
-#         app_label: "dcim"
-#         model: "cable"
-# # TODO    object_id: 1
-#     tag:
-#       ids:
-#         name: "Tag B"
-# - model: extras.taggeditem
-#   ids:
-#     content_type:
-#       ids:
-#         app_label: "dcim"
-#         model: "cable"
-# # TODO    object_id: 7
-#     tag:
-#       ids:
-#         name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "cable"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag B"
 - model: extras.taggeditem
   ids:
     content_type:
@@ -5191,13 +5162,6 @@
       ids:
         name: "Child Tenant Group"
     slug: tenant-b
-- model: users.userconfig
-  ids:
-    user:
-      ids:
-        username: "admin"
-  fields:
-    data: {}
 - model: users.token
   ids:
     user:

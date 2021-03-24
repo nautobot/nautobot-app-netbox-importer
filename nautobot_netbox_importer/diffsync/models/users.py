@@ -1,12 +1,12 @@
 """User-related DiffSync models for nautobot-netbox-importer."""
 
 from datetime import datetime
-from typing import List, Mapping, Optional
+from typing import List, Optional
 
 import nautobot.users.models as users
 
 from .abstract import ArrayField, NautobotBaseModel
-from .references import ContentTypeRef, GroupRef, UserRef
+from .references import ContentTypeRef, GroupRef, PermissionRef, UserRef
 
 
 class ObjectPermission(NautobotBaseModel):
@@ -45,22 +45,41 @@ class Token(NautobotBaseModel):
     description: str
 
 
-class UserConfig(NautobotBaseModel):
-    """Storage of user preferences in JSON."""
+class User(NautobotBaseModel):
+    """A user account, for authentication and authorization purposes.
 
-    _modelname = "userconfig"
-    _identifiers = ("user",)
-    _attributes = ("data",)
-    _nautobot_model = users.UserConfig
+    Note that in NetBox this is actually two separate models - Django's built-in User class, and
+    a custom UserConfig class - while in Nautobot it is a single custom User class model.
+    """
 
-    user: UserRef
-    data: dict
+    _modelname = "user"
+    _identifiers = ("username",)
+    _attributes = (
+        "first_name",
+        "last_name",
+        "email",
+        "password",
+        "is_staff",
+        "is_active",
+        "is_superuser",
+        "date_joined",
+        "groups",
+        "user_permissions",
+        "config_data",
+    )
+    _nautobot_model = users.User
 
-    @staticmethod
-    def create_nautobot_record(nautobot_model, ids: Mapping, attrs: Mapping, multivalue_attrs: Mapping):
-        """Create or update an existing UserConfig Nautobot record as required.
+    username: str
+    first_name: str
+    last_name: str
+    email: str
+    password: str
+    groups: List[GroupRef] = []
+    user_permissions: List[PermissionRef] = []
+    is_staff: bool
+    is_active: bool
+    is_superuser: bool
+    date_joined: datetime
+    config_data: dict
 
-        When a User object is created in Nautobot, an associated UserConfig is automatically created as well.
-        Therefore, when we go to "create" a UserConfig after first creating a User, it actually will already exist.
-        """
-        return NautobotBaseModel.update_nautobot_record(nautobot_model, ids, attrs, multivalue_attrs)
+    last_login: Optional[datetime]

@@ -5,7 +5,7 @@ Because this plugin is meant *only* for NetBox-to-Nautobot migration, the create
 are for populating data into Nautobot only, never the reverse.
 """
 
-from .auth import Group, Permission, User
+from .auth import Group, Permission
 from .contenttypes import ContentType
 from .circuits import Provider, Circuit, CircuitTermination, CircuitType
 from .dcim import (
@@ -67,7 +67,7 @@ from .ipam import (
     VRF,
 )
 from .tenancy import Tenant, TenantGroup
-from .users import ObjectPermission, Token, UserConfig
+from .users import ObjectPermission, Token, User
 from .virtualization import Cluster, ClusterGroup, ClusterType, VirtualMachine, VMInterface
 
 __all__ = (
@@ -132,7 +132,6 @@ __all__ = (
     "TenantGroup",
     "Token",
     "User",
-    "UserConfig",
     "VirtualChassis",
     "VirtualMachine",
     "VLAN",

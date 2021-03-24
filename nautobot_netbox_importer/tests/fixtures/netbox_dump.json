@@ -2992,7 +2992,7 @@
         "pk": 1,
         "fields": {
             "password": "pbkdf2_sha256$216000$da6CZRwS7Ti6$GIUYlTXeEOyZIuEgQTEkohHnvmd3kDn0OCyuT1dM+H4=",
-            "last_login": "2021-03-08T14:35:56.453Z",
+            "last_login": "2021-03-24T14:57:14.179Z",
             "is_superuser": true,
             "username": "admin",
             "first_name": "Andy",
@@ -3730,7 +3730,7 @@
         "pk": 1,
         "fields": {
             "created": "2021-02-21",
-            "last_updated": "2021-02-21T23:58:33.271Z",
+            "last_updated": "2021-03-23T18:54:41.532Z",
             "custom_field_data": {},
             "cid": "Circuit A",
             "provider": 1,
@@ -3748,7 +3748,7 @@
         "pk": 2,
         "fields": {
             "created": "2021-02-21",
-            "last_updated": "2021-02-21T23:56:05.012Z",
+            "last_updated": "2021-03-23T18:54:41.502Z",
             "custom_field_data": {},
             "cid": "Circuit B",
             "provider": 2,
@@ -3765,10 +3765,10 @@
         "model": "circuits.circuittermination",
         "pk": 1,
         "fields": {
-            "cable": 7,
+            "cable": 9,
             "_cable_peer_type": 7,
-            "_cable_peer_id": 2,
-            "_path": 9,
+            "_cable_peer_id": 3,
+            "_path": 13,
             "circuit": 2,
             "term_side": "A",
             "site": 2,
@@ -3783,10 +3783,10 @@
         "model": "circuits.circuittermination",
         "pk": 2,
         "fields": {
-            "cable": 7,
-            "_cable_peer_type": 7,
-            "_cable_peer_id": 1,
-            "_path": 10,
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
             "circuit": 2,
             "term_side": "Z",
             "site": 2,
@@ -3801,10 +3801,10 @@
         "model": "circuits.circuittermination",
         "pk": 3,
         "fields": {
-            "cable": null,
-            "_cable_peer_type": null,
-            "_cable_peer_id": null,
-            "_path": null,
+            "cable": 9,
+            "_cable_peer_type": 7,
+            "_cable_peer_id": 1,
+            "_path": 14,
             "circuit": 1,
             "term_side": "A",
             "site": 1,
@@ -4581,28 +4581,6 @@
     },
     {
         "model": "dcim.cable",
-        "pk": 7,
-        "fields": {
-            "created": "2021-02-21",
-            "last_updated": "2021-02-21T23:56:04.937Z",
-            "custom_field_data": {},
-            "termination_a_type": 7,
-            "termination_a_id": 1,
-            "termination_b_type": 7,
-            "termination_b_id": 2,
-            "type": "cat3",
-            "status": "connected",
-            "label": "B",
-            "color": "4caf50",
-            "length": 1,
-            "length_unit": "cm",
-            "_abs_length": "0.0100",
-            "_termination_a_device": null,
-            "_termination_b_device": null
-        }
-    },
-    {
-        "model": "dcim.cable",
         "pk": 8,
         "fields": {
             "created": "2021-02-22",
@@ -4621,6 +4599,28 @@
             "_abs_length": null,
             "_termination_a_device": null,
             "_termination_b_device": 2
+        }
+    },
+    {
+        "model": "dcim.cable",
+        "pk": 9,
+        "fields": {
+            "created": "2021-03-23",
+            "last_updated": "2021-03-23T18:54:41.483Z",
+            "custom_field_data": {},
+            "termination_a_type": 7,
+            "termination_a_id": 1,
+            "termination_b_type": 7,
+            "termination_b_id": 3,
+            "type": "",
+            "status": "connected",
+            "label": "Circuit A to Circuit B",
+            "color": "",
+            "length": null,
+            "length_unit": "",
+            "_abs_length": null,
+            "_termination_a_device": null,
+            "_termination_b_device": null
         }
     },
     {
@@ -4729,32 +4729,6 @@
     },
     {
         "model": "dcim.cablepath",
-        "pk": 9,
-        "fields": {
-            "origin_type": 7,
-            "origin_id": 1,
-            "destination_type": 7,
-            "destination_id": 2,
-            "path": "[\"46:7\"]",
-            "is_active": true,
-            "is_split": false
-        }
-    },
-    {
-        "model": "dcim.cablepath",
-        "pk": 10,
-        "fields": {
-            "origin_type": 7,
-            "origin_id": 2,
-            "destination_type": 7,
-            "destination_id": 1,
-            "path": "[\"46:7\"]",
-            "is_active": true,
-            "is_split": false
-        }
-    },
-    {
-        "model": "dcim.cablepath",
         "pk": 11,
         "fields": {
             "origin_type": 11,
@@ -4775,6 +4749,32 @@
             "destination_type": 11,
             "destination_id": 1,
             "path": "[\"46:8\"]",
+            "is_active": true,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 13,
+        "fields": {
+            "origin_type": 7,
+            "origin_id": 1,
+            "destination_type": 7,
+            "destination_id": 3,
+            "path": "[\"46:9\"]",
+            "is_active": true,
+            "is_split": false
+        }
+    },
+    {
+        "model": "dcim.cablepath",
+        "pk": 14,
+        "fields": {
+            "origin_type": 7,
+            "origin_id": 3,
+            "destination_type": 7,
+            "destination_id": 1,
+            "path": "[\"46:9\"]",
             "is_active": true,
             "is_split": false
         }
@@ -6253,15 +6253,6 @@
     },
     {
         "model": "extras.taggeditem",
-        "pk": 61,
-        "fields": {
-            "content_type": 46,
-            "object_id": 7,
-            "tag": 2
-        }
-    },
-    {
-        "model": "extras.taggeditem",
         "pk": 62,
         "fields": {
             "content_type": 47,
@@ -6595,7 +6586,24 @@
         "pk": 1,
         "fields": {
             "user": 1,
-            "data": {}
+            "data": {
+                "tables": {
+                    "CircuitTable": {
+                        "columns": [
+                            "cid",
+                            "provider",
+                            "type",
+                            "status",
+                            "tenant",
+                            "a_side",
+                            "z_side",
+                            "commit_rate",
+                            "description",
+                            "tags"
+                        ]
+                    }
+                }
+            }
         }
     },
     {

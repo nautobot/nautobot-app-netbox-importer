@@ -31,7 +31,6 @@ class N2NDiffSync(DiffSync):
     permission = n2nmodels.Permission
     token = n2nmodels.Token
     user = n2nmodels.User
-    userconfig = n2nmodels.UserConfig
 
     # Circuits
     circuit = n2nmodels.Circuit
@@ -130,7 +129,6 @@ class N2NDiffSync(DiffSync):
         "user",
         "objectpermission",
         "token",
-        "userconfig",
         # "status", Not synced, as these are hard-coded in NetBox/Nautobot
         # Need Tenant and TenantGroup before we can populate Sites
         "tenantgroup",

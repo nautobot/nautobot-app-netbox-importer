@@ -17,7 +17,7 @@ class NetBox210DiffSync(N2NDiffSync):
         self.source_data = source_data
         super().__init__(*args, **kwargs)
 
-    def load_record(self, diffsync_model, record):
+    def load_record(self, diffsync_model, record):  # pylint: disable=too-many-branches
         """Instantiate the given model class from the given record."""
         data = record["fields"].copy()
 
@@ -69,6 +69,18 @@ class NetBox210DiffSync(N2NDiffSync):
                 self.logger.error(f"Invalid PK value {data[key]}")
                 data[key] = None
 
+        if diffsync_model == self.user:
+            # NetBox has separate User and UserConfig models, but in Nautobot they're combined.
+            # Load the corresponding UserConfig into the User record for completeness.
+            self.logger.debug("Looking for UserConfig corresponding to User", username=data["username"])
+            for other_record in self.source_data:
+                if other_record["model"] == "users.userconfig" and other_record["fields"]["user"] == record["pk"]:
+                    data["config_data"] = other_record["fields"]["data"]
+                    break
+            else:
+                self.logger.warning("No UserConfig found for User", username=data["username"], pk=record["pk"])
+                data["config_data"] = {}
+
         data["pk"] = record["pk"]
         return self.make_model(diffsync_model, data)
 
@@ -79,6 +91,10 @@ class NetBox210DiffSync(N2NDiffSync):
             diffsync_model = getattr(self, modelname)
             self.logger.info(f"Loading all {modelname} records...")
             content_type_label = diffsync_model.nautobot_model()._meta.label_lower
+            # Handle a NetBox vs Nautobot discrepancy - the Nautobot target model is 'users.user',
+            # but the NetBox data export will have user records under the label 'auth.user'.
+            if content_type_label == "users.user":
+                content_type_label = "auth.user"
             for record in self.source_data:
                 if record["model"] == content_type_label:
                     self.load_record(diffsync_model, record)

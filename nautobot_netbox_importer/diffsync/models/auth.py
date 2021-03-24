@@ -1,18 +1,13 @@
 """Authentication-related models for nautobot-netbox-importer."""
 
-from datetime import datetime
-from typing import List, Optional
+from typing import List
 
 from diffsync.enum import DiffSyncModelFlags
-from django.contrib.auth import get_user_model
 import django.contrib.auth.models as auth
 import structlog
 
 from .abstract import NautobotBaseModel
-from .references import ContentTypeRef, GroupRef, PermissionRef
-
-
-_User = get_user_model()
+from .references import ContentTypeRef, PermissionRef
 
 
 class Group(NautobotBaseModel):
@@ -67,37 +62,3 @@ class Permission(NautobotBaseModel):
                 model=self.content_type["model"],
             )
             self.model_flags |= DiffSyncModelFlags.IGNORE
-
-
-class User(NautobotBaseModel):
-    """A user account, for authentication and authorization purposes."""
-
-    _modelname = "user"
-    _identifiers = ("username",)
-    _attributes = (
-        "first_name",
-        "last_name",
-        "email",
-        "password",
-        "is_staff",
-        "is_active",
-        "is_superuser",
-        "date_joined",
-        "groups",
-        "user_permissions",
-    )
-    _nautobot_model = _User
-
-    username: str
-    first_name: str
-    last_name: str
-    email: str
-    password: str
-    groups: List[GroupRef] = []
-    user_permissions: List[PermissionRef] = []
-    is_staff: bool
-    is_active: bool
-    is_superuser: bool
-    date_joined: datetime
-
-    last_login: Optional[datetime]
