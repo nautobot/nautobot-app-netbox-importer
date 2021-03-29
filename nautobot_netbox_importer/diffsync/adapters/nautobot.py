@@ -5,6 +5,7 @@ from uuid import UUID
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRel
 from django.db import models
 import structlog
+from tqdm import tqdm
 
 from .abstract import N2NDiffSync
 from ..models.abstract import NautobotBaseModel
@@ -101,8 +102,10 @@ class NautobotDiffSync(N2NDiffSync):
         self.logger.info("Loading data from Nautobot into DiffSync...")
         for modelname in ("contenttype", "permission", "status", *self.top_level):
             diffsync_model = getattr(self, modelname)
-            self.logger.info(f"Loading all {modelname} records...")
-            for instance in diffsync_model.nautobot_model().objects.all():
+            self.logger.info("Loading Nautobot records...", model=modelname)
+            for instance in tqdm(
+                diffsync_model.nautobot_model().objects.all(), total=diffsync_model.nautobot_model().objects.count()
+            ):
                 self.load_model(diffsync_model, instance)
 
         self.logger.info("Data loading from Nautobot complete.")
