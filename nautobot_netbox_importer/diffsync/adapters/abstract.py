@@ -8,6 +8,7 @@ from diffsync import Diff, DiffSync, DiffSyncFlags, DiffSyncModel
 from diffsync.exceptions import ObjectAlreadyExists
 from pydantic.error_wrappers import ValidationError
 import structlog
+from tqdm import tqdm
 
 import nautobot_netbox_importer.diffsync.models as n2nmodels
 
@@ -236,10 +237,11 @@ class N2NDiffSync(DiffSync):
         for name in self.top_level:
             instances = self.get_all(name)
             if not instances:
-                self.logger.info("No instances to review", model=name)
+                self.logger.info("No records to review", model=name)
+                continue
             else:
-                self.logger.info(f"Reviewing all {len(instances)} instances", model=name)
-            for diffsync_instance in instances:
+                self.logger.info(f"Reviewing loaded records", count=len(instances), model=name)
+            for diffsync_instance in tqdm(instances):
                 for fk_field, target_name in diffsync_instance.fk_associations().items():
                     value = getattr(diffsync_instance, fk_field)
                     if not value:

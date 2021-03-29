@@ -3,6 +3,7 @@
 from uuid import UUID
 
 import structlog
+from tqdm import tqdm
 
 from .abstract import N2NDiffSync
 
@@ -77,11 +78,11 @@ class NetBox210DiffSync(N2NDiffSync):
         self.logger.info("Loading imported NetBox source data into DiffSync...")
         for modelname in ("contenttype", *self.top_level):
             diffsync_model = getattr(self, modelname)
-            self.logger.info(f"Loading all {modelname} records...")
+            self.logger.info("Loading NetBox records...", model=modelname)
             content_type_label = diffsync_model.nautobot_model()._meta.label_lower
-            for record in self.source_data:
-                if record["model"] == content_type_label:
-                    self.load_record(diffsync_model, record)
+            records = [record for record in self.source_data if record["model"] == content_type_label]
+            for record in tqdm(records):
+                self.load_record(diffsync_model, record)
 
         self.logger.info("Fixing up any previously unresolved object relations...")
         self.fixup_data_relations()
