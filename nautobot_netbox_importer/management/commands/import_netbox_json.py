@@ -1,8 +1,11 @@
 """Definition of "manage.py import_netbox_json" Django command for use with Nautobot."""
 import argparse
+from io import StringIO
 import json
-import logging
+import pprint
+import textwrap
 
+import colorama
 from diffsync import DiffSyncFlags
 from packaging import version
 import structlog
@@ -10,6 +13,57 @@ import structlog
 from django.core.management.base import BaseCommand, CommandError
 
 from nautobot_netbox_importer.diffsync.adapters import netbox_adapters, NautobotDiffSync
+
+
+class LogRenderer:
+    """Class for rendering structured logs to the console in a human-readable format.
+
+    Example:
+        19:48:19 Apparent duplicate object encountered?
+          duplicate_id:
+            {'group': None,
+            'name': 'CR02.CHI_ORDMGMT',
+            'site': {'name': 'CHI01'},
+            'vid': 1000}
+          model: vlan
+          pk_1: 3baf142d-dd90-4379-a048-3bbbcc9c799c
+          pk_2: cba19791-4d59-4ddd-a5c9-d969ec3ed2ba
+    """
+
+    def __call__(
+        self,
+        logger: structlog.types.WrappedLogger,
+        name: str,
+        event_dict: structlog.types.EventDict,
+    ) -> str:
+        """Render the given event_dict to a string."""
+        sio = StringIO()
+
+        ts = event_dict.pop("timestamp", None)
+        if ts is not None:
+            sio.write(f"{colorama.Style.DIM}{ts}{colorama.Style.RESET_ALL} ")
+
+        level = event_dict.pop("level", None)
+        if level is not None:
+            if level in ("warning", "error", "critical"):
+                sio.write(f"{colorama.Fore.RED}{level:<9}{colorama.Style.RESET_ALL}")
+            else:
+                sio.write(f"{level:<9}")
+
+        event = event_dict.pop("event", None)
+        sio.write(f"{colorama.Style.BRIGHT}{event}{colorama.Style.RESET_ALL}")
+
+        for key, value in event_dict.items():
+            if isinstance(value, dict):
+                # We could use json.dumps() here instead of pprint.pformat,
+                # but I find pprint to be a bit more compact while still readable.
+                value = "\n" + textwrap.indent(pprint.pformat(value), "    ")
+            sio.write(
+                f"\n  {colorama.Fore.CYAN}{key}{colorama.Style.RESET_ALL}: "
+                f"{colorama.Fore.MAGENTA}{value}{colorama.Style.RESET_ALL}"
+            )
+
+        return sio.getvalue()
 
 
 class Command(BaseCommand):
@@ -25,40 +79,22 @@ class Command(BaseCommand):
     @staticmethod
     def enable_logging(verbosity=0):
         """Set up structlog (as used by DiffSync) to log messages for this command."""
+        colorama.init()
         structlog.configure(
             processors=[
-                structlog.stdlib.PositionalArgumentsFormatter(),
+                structlog.stdlib.add_log_level,
                 structlog.processors.TimeStamper(fmt="%H:%M:%S"),
-                structlog.processors.StackInfoRenderer(),
-                structlog.processors.format_exc_info,
-                structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
+                LogRenderer(),
             ],
             context_class=dict,
-            logger_factory=structlog.stdlib.LoggerFactory(),
-            wrapper_class=structlog.stdlib.BoundLogger,
+            # Logging levels aren't very granular, so we adjust the log level based on *half* the verbosity level:
+            # Verbosity     Logging level
+            # 0             30 (WARNING)
+            # 1-2           20 (INFO)
+            # 3+            10 (DEBUG)
+            wrapper_class=structlog.make_filtering_bound_logger(10 * (3 - ((verbosity + 1) // 2))),
             cache_logger_on_first_use=True,
         )
-        formatter = structlog.stdlib.ProcessorFormatter(processor=structlog.dev.ConsoleRenderer())
-        handler = logging.StreamHandler()
-        handler.setFormatter(formatter)
-        root_logger = logging.getLogger()
-        diffsync_logger = logging.getLogger("diffsync")
-        root_logger.addHandler(handler)
-        if verbosity == 0:
-            root_logger.setLevel(logging.WARNING)
-            diffsync_logger.setLevel(logging.WARNING)
-        elif verbosity == 1:  # usual default value
-            root_logger.setLevel(logging.INFO)
-            diffsync_logger.setLevel(logging.WARNING)
-        elif verbosity == 2:
-            root_logger.setLevel(logging.INFO)
-            diffsync_logger.setLevel(logging.INFO)
-        elif verbosity == 3:
-            root_logger.setLevel(logging.DEBUG)
-            diffsync_logger.setLevel(logging.INFO)
-        else:
-            root_logger.setLevel(logging.DEBUG)
-            diffsync_logger.setLevel(logging.DEBUG)
 
     def handle(self, *args, **options):
         """Handle execution of the import_netbox_json management command."""
@@ -87,6 +123,11 @@ class Command(BaseCommand):
 
         target = NautobotDiffSync()
         target.load()
+
+        # Lower the verbosity of newly created structlog loggers by one (half-) step
+        # This is so that DiffSync's internal logging defaults to slightly less verbose than
+        # our own (plugin) logging.
+        self.enable_logging(verbosity=(options["verbosity"] - 1))
 
         logger.info("Beginning data synchronization...")
         # Due to the fact that model inter-references do not form an acyclic graph,
