@@ -74,7 +74,7 @@ class NetBox210DiffSync(N2NDiffSync):
 
     def load(self):
         """Load records from the provided source_data into DiffSync."""
-        self.logger.info("Loading imported source data into DiffSync...")
+        self.logger.info("Loading imported NetBox source data into DiffSync...")
         for modelname in ("contenttype", *self.top_level):
             diffsync_model = getattr(self, modelname)
             self.logger.info(f"Loading all {modelname} records...")
@@ -86,6 +86,6 @@ class NetBox210DiffSync(N2NDiffSync):
         self.logger.info("Fixing up any previously unresolved object relations...")
         self.fixup_data_relations()
 
-        self.logger.info("Data loading from source data complete.")
+        self.logger.info("Data loading from NetBox source data complete.")
         # Discard the source data to free up memory
         self.source_data = None
