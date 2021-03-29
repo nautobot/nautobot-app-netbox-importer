@@ -214,9 +214,10 @@ class N2NDiffSync(DiffSync):
         "customfieldchoice",
     )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, verbosity: int = 0, **kwargs):
         """Initialize this container, including its PK-indexed alternate data store."""
         super().__init__(*args, **kwargs)
+        self.verbosity = verbosity
         self._data_by_pk = defaultdict(dict)
         self._sync_summary = None
 

@@ -131,7 +131,7 @@ class NetBox210DiffSync(N2NDiffSync):
             if content_type_label == "users.user":
                 content_type_label = "auth.user"
             records = [record for record in self.source_data if record["model"] == content_type_label]
-            for record in tqdm(records):
+            for record in tqdm(records, disable=(self.verbosity < 1)):
                 self.load_record(diffsync_model, record)
 
         self.logger.info("Data loading from NetBox source data complete.")

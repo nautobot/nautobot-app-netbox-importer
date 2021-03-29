@@ -104,7 +104,9 @@ class NautobotDiffSync(N2NDiffSync):
             diffsync_model = getattr(self, modelname)
             self.logger.info("Loading Nautobot records...", model=modelname)
             for instance in tqdm(
-                diffsync_model.nautobot_model().objects.all(), total=diffsync_model.nautobot_model().objects.count()
+                diffsync_model.nautobot_model().objects.all(),
+                total=diffsync_model.nautobot_model().objects.count(),
+                disable=(self.verbosity < 1),
             ):
                 self.load_model(diffsync_model, instance)
 
