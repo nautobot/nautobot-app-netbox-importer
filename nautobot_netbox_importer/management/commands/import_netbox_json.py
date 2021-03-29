@@ -15,7 +15,7 @@ from django.core.management.base import BaseCommand, CommandError
 from nautobot_netbox_importer.diffsync.adapters import netbox_adapters, NautobotDiffSync
 
 
-class LogRenderer:
+class LogRenderer:  # pylint: disable=too-few-public-methods
     """Class for rendering structured logs to the console in a human-readable format.
 
     Example:
@@ -39,9 +39,9 @@ class LogRenderer:
         """Render the given event_dict to a string."""
         sio = StringIO()
 
-        ts = event_dict.pop("timestamp", None)
-        if ts is not None:
-            sio.write(f"{colorama.Style.DIM}{ts}{colorama.Style.RESET_ALL} ")
+        timestamp = event_dict.pop("timestamp", None)
+        if timestamp is not None:
+            sio.write(f"{colorama.Style.DIM}{timestamp}{colorama.Style.RESET_ALL} ")
 
         level = event_dict.pop("level", None)
         if level is not None:
@@ -113,10 +113,10 @@ class Command(BaseCommand):
             raise CommandError(f"Data should be a list of records, but instead is {type(data)}!")
         logger.info("JSON data loaded into memory successfully.")
 
-        source = netbox_adapters[options["netbox_version"]](source_data=data)
+        source = netbox_adapters[options["netbox_version"]](source_data=data, verbosity=options["verbosity"])
         source.load()
 
-        target = NautobotDiffSync()
+        target = NautobotDiffSync(verbosity=options["verbosity"])
         target.load()
 
         # Lower the verbosity of newly created structlog loggers by one (half-) step

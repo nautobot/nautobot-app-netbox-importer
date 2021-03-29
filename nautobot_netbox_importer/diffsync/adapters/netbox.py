@@ -81,7 +81,7 @@ class NetBox210DiffSync(N2NDiffSync):
             self.logger.info("Loading NetBox records...", model=modelname)
             content_type_label = diffsync_model.nautobot_model()._meta.label_lower
             records = [record for record in self.source_data if record["model"] == content_type_label]
-            for record in tqdm(records):
+            for record in tqdm(records, disable=(self.verbosity < 1)):
                 self.load_record(diffsync_model, record)
 
         self.logger.info("Fixing up any previously unresolved object relations...")

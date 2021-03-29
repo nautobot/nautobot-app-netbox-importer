@@ -212,9 +212,10 @@ class N2NDiffSync(DiffSync):
         "customfield",
     )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, verbosity: int = 0, **kwargs):
         """Initialize this container, including its PK-indexed alternate data store."""
         super().__init__(*args, **kwargs)
+        self.verbosity = verbosity
         self._data_by_pk = defaultdict(dict)
         self._sync_summary = None
 
@@ -239,9 +240,9 @@ class N2NDiffSync(DiffSync):
             if not instances:
                 self.logger.info("No records to review", model=name)
                 continue
-            else:
-                self.logger.info(f"Reviewing loaded records", count=len(instances), model=name)
-            for diffsync_instance in tqdm(instances):
+
+            self.logger.info("Reviewing loaded records", model=name)
+            for diffsync_instance in tqdm(instances, disable=(self.verbosity < 1)):
                 for fk_field, target_name in diffsync_instance.fk_associations().items():
                     value = getattr(diffsync_instance, fk_field)
                     if not value:
