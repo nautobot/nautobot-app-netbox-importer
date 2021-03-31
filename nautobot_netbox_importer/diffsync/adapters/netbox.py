@@ -1,6 +1,7 @@
 """DiffSync adapters for NetBox data dumps."""
 
-from uuid import UUID
+import json
+from uuid import UUID, uuid4
 
 import structlog
 
@@ -80,6 +81,17 @@ class NetBox210DiffSync(N2NDiffSync):
             else:
                 self.logger.warning("No UserConfig found for User", username=data["username"], pk=record["pk"])
                 data["config_data"] = {}
+        elif diffsync_model == self.customfield and data["type"] == "select":
+            # NetBox stores the choices for a "select" CustomField (NetBox has no "multiselect" CustomFields)
+            # locally within the CustomField model, whereas Nautobot has a separate CustomFieldChoices model.
+            # So we need to split the choices out into separate DiffSync instances.
+            # Since "choices" is an ArrayField, we have to parse it from the JSON string
+            # see also models.abstract.ArrayField
+            for choice in json.loads(data["choices"]):
+                self.make_model(
+                    self.customfieldchoice, {"pk": uuid4(), "field": {"name": data["name"]}, "value": choice}
+                )
+            del data["choices"]
 
         data["pk"] = record["pk"]
         return self.make_model(diffsync_model, data)

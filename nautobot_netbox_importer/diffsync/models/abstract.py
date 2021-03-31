@@ -220,10 +220,17 @@ class NautobotBaseModel(DiffSyncModel):
         return None
 
     @classmethod
+    def special_clean(cls, diffsync, ids, attrs):  # pylint: disable=unused-argument
+        """Subclassable method called after `clean_ids` and `clean_attrs` to do any special cleaning needed."""
+
+    @classmethod
     def create(cls, diffsync: DiffSync, ids: Mapping, attrs: Mapping) -> Optional["NautobotBaseModel"]:
         """Create an instance of this model, both in Nautobot and in DiffSync."""
         diffsync_ids, nautobot_ids = cls.clean_ids(diffsync, ids)
         diffsync_attrs, nautobot_attrs = cls.clean_attrs(diffsync, attrs)
+
+        cls.special_clean(diffsync, diffsync_ids, diffsync_attrs)
+        cls.special_clean(diffsync, nautobot_ids, nautobot_attrs)
 
         # Multi-value fields (i.e. OneToMany or ManyToMany fields) need
         # to be set separately after the record is created in Nautobot

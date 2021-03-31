@@ -46,6 +46,7 @@ from .dcim import (
 from .extras import (
     ConfigContext,
     CustomField,
+    CustomFieldChoice,
     CustomLink,
     ExportTemplate,
     JobResult,
@@ -86,6 +87,7 @@ __all__ = (
     "ConsoleServerPortTemplate",
     "ContentType",
     "CustomField",
+    "CustomFieldChoice",
     "CustomLink",
     "Device",
     "DeviceBay",

@@ -75,6 +75,7 @@ class N2NDiffSync(DiffSync):
     # Extras
     configcontext = n2nmodels.ConfigContext
     customfield = n2nmodels.CustomField
+    customfieldchoice = n2nmodels.CustomFieldChoice
     customlink = n2nmodels.CustomLink
     exporttemplate = n2nmodels.ExportTemplate
     jobresult = n2nmodels.JobResult
@@ -124,9 +125,10 @@ class N2NDiffSync(DiffSync):
     top_level = (
         # "contenttype", Not synced, as these are hard-coded in NetBox/Nautobot
         "customfield",
+        "customfieldchoice",
         "permission",
         "group",
-        "user",
+        "user",  # Includes NetBox "userconfig" model as well
         "objectpermission",
         "token",
         # "status", Not synced, as these are hard-coded in NetBox/Nautobot

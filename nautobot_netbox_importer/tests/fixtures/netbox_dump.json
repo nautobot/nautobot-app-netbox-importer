@@ -5132,8 +5132,10 @@
         "pk": 1,
         "fields": {
             "created": "2021-02-21",
-            "last_updated": "2021-02-21T22:54:16.787Z",
-            "custom_field_data": {},
+            "last_updated": "2021-03-31T13:33:54.260Z",
+            "custom_field_data": {
+                "Custom Choices Field": "alpha"
+            },
             "name": "Site A",
             "_name": "Site A",
             "slug": "site-a",
@@ -5159,8 +5161,10 @@
         "pk": 2,
         "fields": {
             "created": "2021-02-21",
-            "last_updated": "2021-02-21T22:54:41.539Z",
-            "custom_field_data": {},
+            "last_updated": "2021-03-31T13:34:07.169Z",
+            "custom_field_data": {
+                "Custom Choices Field": "beta"
+            },
             "name": "Site B",
             "_name": "Site B",
             "slug": "site-b",
@@ -5684,6 +5688,27 @@
             "choices": "[]",
             "content_types": [
                 13
+            ]
+        }
+    },
+    {
+        "model": "extras.customfield",
+        "pk": 4,
+        "fields": {
+            "type": "select",
+            "name": "Custom Choices Field",
+            "label": "Choices",
+            "description": "",
+            "required": false,
+            "filter_logic": "loose",
+            "default": "alpha",
+            "weight": 100,
+            "validation_minimum": null,
+            "validation_maximum": null,
+            "validation_regex": "",
+            "choices": "[\"alpha\", \"beta\", \"gamma\", \"delta\"]",
+            "content_types": [
+                36
             ]
         }
     },

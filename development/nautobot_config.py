@@ -78,6 +78,14 @@ RQ_QUEUES = {
         "SSL": False,
         "DEFAULT_TIMEOUT": 300,
     },
+    "custom_fields": {
+        "HOST": os.environ.get("REDIS_HOST", "localhost"),
+        "PORT": os.environ.get("REDIS_PORT", 6379),
+        "DB": 0,
+        "PASSWORD": os.environ.get("REDIS_PASSWORD", ""),
+        "SSL": False,
+        "DEFAULT_TIMEOUT": 300,
+    },
 }
 
 # This key is used for secure generation of random numbers and strings. It must never be exposed outside of this file.

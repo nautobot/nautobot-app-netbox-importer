@@ -3723,7 +3723,8 @@
     contact_email: ''
     contact_name: ''
     contact_phone: ''
-    custom_field_data: {}
+    custom_field_data:
+      "Custom Choices Field": "alpha"
     description: ''
     facility: ''
     latitude: null
@@ -3750,7 +3751,8 @@
     contact_email: ''
     contact_name: ''
     contact_phone: ''
-    custom_field_data: {}
+    custom_field_data:
+      "Custom Choices Field": "beta"
     description: ''
     facility: ''
     latitude: null
@@ -4232,7 +4234,6 @@
   ids:
     name: Custom Text Field A
   fields:
-    choices: '[]'
     content_types:
     - ids:
         app_label: "dcim"
@@ -4251,7 +4252,6 @@
   ids:
     name: Custom Integer Field B
   fields:
-    choices: '[]'
     content_types:
     - ids:
         app_label: "dcim"
@@ -4265,6 +4265,56 @@
     validation_maximum: 1000
     validation_minimum: 0
     validation_regex: ''
+    weight: 100
+- model: extras.customfield
+  ids:
+    name: "Custom Choices Field"
+  fields:
+    content_types:
+    - ids:
+        app_label: "dcim"
+        model: "site"
+    default: "alpha"
+    description: ""
+    filter_logic: "loose"
+    label: "Choices"
+    required: false
+    type: "select"
+    validation_maximum: null
+    validation_minimum: null
+    validation_regex: ""
+    weight: 100
+- model: extras.customfieldchoice
+  ids:
+    field:
+      ids:
+        name: "Custom Choices Field"
+    value: "alpha"
+  fields:
+    weight: 100
+- model: extras.customfieldchoice
+  ids:
+    field:
+      ids:
+        name: "Custom Choices Field"
+    value: "beta"
+  fields:
+    weight: 100
+- model: extras.customfieldchoice
+  ids:
+    field:
+      ids:
+        name: "Custom Choices Field"
+    value: "gamma"
+  fields:
+    weight: 100
+- model: extras.customfieldchoice
+  ids:
+    field:
+      ids:
+        name: "Custom Choices Field"
+    value: "delta"
+  fields:
     weight: 100
 - model: extras.tag
   ids:

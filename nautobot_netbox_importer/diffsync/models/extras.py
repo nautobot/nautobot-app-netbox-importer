@@ -10,11 +10,12 @@ from typing import Any, List, Optional
 from uuid import UUID
 
 from pydantic import Field
+from diffsync.exceptions import ObjectNotFound
+import structlog
 
 import nautobot.extras.models as extras
 
 from .abstract import (
-    ArrayField,
     ChangeLoggedModelMixin,
     CustomFieldModelMixin,
     NautobotBaseModel,
@@ -24,6 +25,7 @@ from .references import (
     ClusterGroupRef,
     ClusterRef,
     ContentTypeRef,
+    CustomFieldRef,
     DeviceRoleRef,
     PlatformRef,
     RegionRef,
@@ -34,6 +36,9 @@ from .references import (
     UserRef,
 )
 from .validation import DiffSyncCustomValidationField
+
+
+logger = structlog.get_logger()
 
 
 class ConfigContext(ChangeLoggedModelMixin, NautobotBaseModel):
@@ -92,7 +97,6 @@ class CustomField(NautobotBaseModel):
         "validation_minimum",
         "validation_maximum",
         "validation_regex",
-        "choices",
     )
     _nautobot_model = extras.CustomField
 
@@ -109,7 +113,38 @@ class CustomField(NautobotBaseModel):
     validation_minimum: Optional[int]
     validation_maximum: Optional[int]
     validation_regex: str
-    choices: Optional[ArrayField]
+
+    @classmethod
+    def special_clean(cls, diffsync, ids, attrs):
+        """Special-case handling for the "default" attribute."""
+        if attrs.get("default") and attrs["type"] in ("select", "multiselect"):
+            # There's a bit of a chicken-and-egg problem here in that we have to create a CustomField
+            # before we can create any CustomFieldChoice records that reference it, but the "default"
+            # attribute on the CustomField is only valid if it references an existing CustomFieldChoice.
+            # So what we have to do is skip over the "default" field if it references a nonexistent CustomFieldChoice.
+            default = attrs.get("default")
+            try:
+                diffsync.get("customfieldchoice", {"field": {"name": ids["name"]}, "value": default})
+            except ObjectNotFound:
+                logger.debug(
+                    "CustomFieldChoice not yet present to set as 'default' for CustomField, will fixup later",
+                    field=ids["name"],
+                    default=default,
+                )
+                del attrs["default"]
+
+
+class CustomFieldChoice(NautobotBaseModel):
+    """One of the valid options for a CustomField of type "select" or "multiselect"."""
+
+    _modelname = "customfieldchoice"
+    _identifiers = ("field", "value")
+    _attributes = ("weight",)
+    _nautobot_model = extras.CustomFieldChoice
+
+    field: CustomFieldRef
+    value: str
+    weight: int = 100
 
 
 class CustomLink(ChangeLoggedModelMixin, NautobotBaseModel):

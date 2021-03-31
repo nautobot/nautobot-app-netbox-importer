@@ -80,6 +80,4 @@ class TestImport(TestCase):
                     if isinstance(expected_value, list) and not isinstance(actual_value, list):
                         actual_value = list(actual_value.get_queryset())
 
-                    self.assertEqual(
-                        expected_value, actual_value, f"key {key} on {model} {record} ({actual_value}) is incorrect"
-                    )
+                    self.assertEqual(expected_value, actual_value, f"key '{key}'' on {model} '{record}' is incorrect")
