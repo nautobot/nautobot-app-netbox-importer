@@ -124,8 +124,6 @@ class N2NDiffSync(DiffSync):
 
     top_level = (
         # "contenttype", Not synced, as these are hard-coded in NetBox/Nautobot
-        "customfield",
-        "customfieldchoice",
         "permission",
         "group",
         "user",  # Includes NetBox "userconfig" model as well
@@ -207,6 +205,10 @@ class N2NDiffSync(DiffSync):
         "webhook",
         "taggeditem",
         "jobresult",
+        # Imported last so that any "required=True" CustomFields do not cause Nautobot to reject
+        # NetBox records that predate the creation of those CustomFields
+        "customfield",
+        "customfieldchoice",
     )
 
     def __init__(self, *args, **kwargs):

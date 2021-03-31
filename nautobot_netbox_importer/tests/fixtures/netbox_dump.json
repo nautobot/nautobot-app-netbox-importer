@@ -4337,7 +4337,10 @@
         "fields": {
             "created": "2021-02-21",
             "last_updated": "2021-02-21T23:08:48.291Z",
-            "custom_field_data": {},
+            "custom_field_data": {
+                "nonexistent_field": 1,
+                "Custom Text Field A": -1
+            },
             "local_context_data": {
                 "context": "a"
             },
@@ -4368,8 +4371,11 @@
         "pk": 2,
         "fields": {
             "created": "2021-02-21",
-            "last_updated": "2021-02-21T23:09:31.644Z",
-            "custom_field_data": {},
+            "last_updated": "2021-03-15T20:39:23.694Z",
+            "custom_field_data": {
+                "Custom Text Field A": "alpha",
+                "Custom Integer Field B": 22
+            },
             "local_context_data": null,
             "device_type": 2,
             "device_role": 1,
@@ -5678,7 +5684,7 @@
             "name": "Custom Integer Field B",
             "label": "B",
             "description": "B",
-            "required": false,
+            "required": true,
             "filter_logic": "loose",
             "default": 1,
             "weight": 100,
