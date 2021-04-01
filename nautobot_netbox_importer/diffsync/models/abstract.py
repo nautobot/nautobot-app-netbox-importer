@@ -198,7 +198,7 @@ class NautobotBaseModel(DiffSyncModel):
             for attr, value in multivalue_attrs.items():
                 getattr(record, attr).set(value)
             if custom_field_data is not None:
-                record.custom_field_data = custom_field_data
+                record._custom_field_data = custom_field_data  # pylint: disable=protected-access
                 record.save()
             return record
         except IntegrityError as exc:
