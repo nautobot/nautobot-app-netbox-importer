@@ -34,13 +34,16 @@ from .references import (
 )
 
 
+def network_from_components(network_bytes, prefix_length):
+    ip = netaddr.IPAddress(int.from_bytes(network_bytes, "big"))
+    return netaddr.IPNetwork(f"{ip}/{prefix_length}")
+
+
 class Aggregate(PrimaryModel):
     """An aggregate exists at the root level of the IP address space hierarchy."""
 
     _modelname = "aggregate"
-    # Technically Aggregate has no unique key except its PK. But this should be close:
-    _identifiers = ("prefix", "rir")
-    _attributes = (*PrimaryModel._attributes, "tenant", "date_added", "description")
+    _attributes = (*PrimaryModel._attributes, "prefix", "rir", "tenant", "date_added", "description")
     _nautobot_model = ipam.Aggregate
 
     prefix: netaddr.IPNetwork
@@ -51,8 +54,17 @@ class Aggregate(PrimaryModel):
 
     def __init__(self, *args, **kwargs):
         """Clean up prefix to an IPNetwork before initializing as normal."""
-        if isinstance(kwargs["prefix"], str):
-            kwargs["prefix"] = netaddr.IPNetwork(kwargs["prefix"])
+        if "prefix" in kwargs:
+            # NetBox import
+            if isinstance(kwargs["prefix"], str):
+                kwargs["prefix"] = netaddr.IPNetwork(kwargs["prefix"])
+        else:
+            # Nautobot import
+            kwargs["prefix"] = network_from_components(kwargs["network"], kwargs["prefix_length"])
+            del kwargs["network"]
+            del kwargs["broadcast"]
+            del kwargs["prefix_length"]
+
         super().__init__(*args, **kwargs)
 
 
@@ -60,11 +72,14 @@ class IPAddress(StatusModelMixin, PrimaryModel):
     """An individual IPv4 or IPv6 address."""
 
     _modelname = "ipaddress"
-    # TODO IPAddress has no unique key except its PK. Hopefully this is close enough.
-    _identifiers = ("address", "vrf", "tenant", "assigned_object_type", "assigned_object_id")
     _attributes = (
         *PrimaryModel._attributes,
         *StatusModelMixin._attributes,
+        "address",
+        "vrf",
+        "tenant",
+        "assigned_object_type",
+        "assigned_object_id",
         "role",
         "nat_inside",
         "dns_name",
@@ -85,8 +100,16 @@ class IPAddress(StatusModelMixin, PrimaryModel):
 
     def __init__(self, *args, **kwargs):
         """Clean up address to an IPNetwork before initializing as normal."""
-        if isinstance(kwargs["address"], str):
-            kwargs["address"] = netaddr.IPNetwork(kwargs["address"])
+        if "address" in kwargs:
+            # Import from NetBox
+            if isinstance(kwargs["address"], str):
+                kwargs["address"] = netaddr.IPNetwork(kwargs["address"])
+        else:
+            # Import from Nautobot
+            kwargs["address"] = network_from_components(kwargs["host"], kwargs["prefix_length"])
+            del kwargs["host"]
+            del kwargs["broadcast"]
+            del kwargs["prefix_length"]
         super().__init__(*args, **kwargs)
 
 
@@ -94,11 +117,13 @@ class Prefix(StatusModelMixin, PrimaryModel):
     """An IPv4 or IPv4 network, including mask."""
 
     _modelname = "prefix"
-    # TODO: Prefix has no unique key except its PK. Hopefully this is close enough.
-    _identifiers = ("prefix", "vrf", "site", "tenant")
     _attributes = (
         *PrimaryModel._attributes,
         *StatusModelMixin._attributes,
+        "prefix",
+        "vrf",
+        "site",
+        "tenant",
         "vlan",
         "role",
         "is_pool",
@@ -117,8 +142,16 @@ class Prefix(StatusModelMixin, PrimaryModel):
 
     def __init__(self, *args, **kwargs):
         """Clean up prefix to an IPNetwork before initializing as normal."""
-        if isinstance(kwargs["prefix"], str):
-            kwargs["prefix"] = netaddr.IPNetwork(kwargs["prefix"])
+        if "prefix" in kwargs:
+            # NetBox import
+            if isinstance(kwargs["prefix"], str):
+                kwargs["prefix"] = netaddr.IPNetwork(kwargs["prefix"])
+        else:
+            # Nautobot import
+            kwargs["prefix"] = network_from_components(kwargs["network"], kwargs["prefix_length"])
+            del kwargs["network"]
+            del kwargs["broadcast"]
+            del kwargs["prefix_length"]
         super().__init__(*args, **kwargs)
 
 
@@ -126,8 +159,7 @@ class RIR(OrganizationalModel):
     """A Regional Internet Registry (RIR)."""
 
     _modelname = "rir"
-    _identifiers = ("name",)
-    _attributes = (*OrganizationalModel._attributes, "slug", "is_private", "description")
+    _attributes = (*OrganizationalModel._attributes, "name", "slug", "is_private", "description")
     _nautobot_model = ipam.RIR
 
     name: str
@@ -140,8 +172,7 @@ class Role(OrganizationalModel):
     """The functional role of a Prefix or VLAN."""
 
     _modelname = "role"  # ambiguous much?
-    _identifiers = ("name",)
-    _attributes = (*OrganizationalModel._attributes, "slug", "weight", "description")
+    _attributes = (*OrganizationalModel._attributes, "name", "slug", "weight", "description")
     _nautobot_model = ipam.Role
 
     name: str
@@ -154,8 +185,7 @@ class RouteTarget(PrimaryModel):
     """A BGP extended community."""
 
     _modelname = "routetarget"
-    _identifiers = ("name",)
-    _attributes = (*PrimaryModel._attributes, "description", "tenant")
+    _attributes = (*PrimaryModel._attributes, "name", "description", "tenant")
     _nautobot_model = ipam.RouteTarget
 
     name: str
@@ -167,8 +197,16 @@ class Service(PrimaryModel):
     """A layer-four service such as HTTP or SSH."""
 
     _modelname = "service"
-    _identifiers = ("device", "virtual_machine", "protocol", "ports")
-    _attributes = (*PrimaryModel._attributes, "name", "ipaddresses", "description")
+    _attributes = (
+        *PrimaryModel._attributes,
+        "device",
+        "virtual_machine",
+        "protocol",
+        "ports",
+        "name",
+        "ipaddresses",
+        "description",
+    )
     _nautobot_model = ipam.Service
 
     device: Optional[DeviceRef]
@@ -185,10 +223,13 @@ class VLAN(StatusModelMixin, PrimaryModel):
     """A distinct layer two forwarding domain."""
 
     _modelname = "vlan"
-    _identifiers = ("group", "vid", "name", "site")
     _attributes = (
         *PrimaryModel._attributes,
         *StatusModelMixin._attributes,
+        "group",
+        "vid",
+        "name",
+        "site",
         "tenant",
         "status",
         "role",
@@ -209,8 +250,7 @@ class VLANGroup(OrganizationalModel):
     """An arbitrary collection of VLANs."""
 
     _modelname = "vlangroup"
-    _identifiers = ("site", "name")
-    _attributes = (*OrganizationalModel._attributes, "slug", "description")
+    _attributes = (*OrganizationalModel._attributes, "site", "name", "slug", "description")
     _nautobot_model = ipam.VLANGroup
 
     name: str
@@ -223,9 +263,11 @@ class VRF(PrimaryModel):
     """A virtual routing and forwarding (VRF) table."""
 
     _modelname = "vrf"
-    _identifiers = ("name", "rd", "tenant")
     _attributes = (
         *PrimaryModel._attributes,
+        "name",
+        "rd",
+        "tenant",
         "enforce_unique",
         "description",
         "import_targets",

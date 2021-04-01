@@ -1,11 +1,12 @@
 """Abstract base DiffSync adapter class for code shared by NetBox and Nautobot adapters."""
 
 from collections import defaultdict
+from nautobot_netbox_importer.diffsync.models.validation import netbox_pk_to_nautobot_pk
 from typing import MutableMapping, Union
 from uuid import UUID
 
 from diffsync import Diff, DiffSync, DiffSyncFlags, DiffSyncModel
-from diffsync.exceptions import ObjectAlreadyExists
+from diffsync.exceptions import ObjectAlreadyExists, ObjectNotFound
 from pydantic.error_wrappers import ValidationError
 import structlog
 
@@ -249,7 +250,7 @@ class N2NDiffSync(DiffSync):
                         target_content_type = getattr(diffsync_instance, target_content_type_field)
                         target_name = target_content_type["model"]
                     target_class = getattr(self, target_name)
-                    if "pk" in value:
+                    if isinstance(value, dict) and "pk" in value:
                         new_value = self.get_fk_identifiers(diffsync_instance, target_class, value["pk"])
                         if isinstance(new_value, (UUID, int)):
                             self.logger.error(
@@ -266,6 +267,8 @@ class N2NDiffSync(DiffSync):
 
     def get_fk_identifiers(self, source_object, target_class, pk):
         """Helper to load_record: given a class and a PK, get the identifiers of the given instance."""
+        if isinstance(pk, int):
+            pk = netbox_pk_to_nautobot_pk(target_class._modelname, pk)
         target_record = self.get_by_pk(target_class, pk)
         if not target_record:
             self.logger.debug(
@@ -283,6 +286,8 @@ class N2NDiffSync(DiffSync):
             modelname = obj
         else:
             modelname = obj.get_type()
+        if pk not in self._data_by_pk[modelname]:
+            raise ObjectNotFound()
         return self._data_by_pk[modelname].get(pk)
 
     def make_model(self, diffsync_model, data):

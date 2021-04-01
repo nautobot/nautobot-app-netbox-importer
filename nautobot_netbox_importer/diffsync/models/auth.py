@@ -6,11 +6,11 @@ from diffsync.enum import DiffSyncModelFlags
 import django.contrib.auth.models as auth
 import structlog
 
-from .abstract import NautobotBaseModel
+from .abstract import DjangoBaseModel
 from .references import ContentTypeRef, PermissionRef
 
 
-class Group(NautobotBaseModel):
+class Group(DjangoBaseModel):
     """Definition of a user group."""
 
     _modelname = "group"
@@ -22,7 +22,7 @@ class Group(NautobotBaseModel):
     permissions: List[PermissionRef] = []
 
 
-class Permission(NautobotBaseModel):
+class Permission(DjangoBaseModel):
     """Definition of a permissions rule."""
 
     _modelname = "permission"

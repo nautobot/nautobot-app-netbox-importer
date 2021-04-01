@@ -1,11 +1,13 @@
 """DiffSync adapters for NetBox data dumps."""
 
 import json
+from nautobot_netbox_importer.diffsync.models.abstract import NautobotBaseModel
 from uuid import UUID, uuid4
 
 import structlog
 
 from .abstract import N2NDiffSync
+from ..models.validation import netbox_pk_to_nautobot_pk
 
 
 class NetBox210DiffSync(N2NDiffSync):
@@ -21,6 +23,7 @@ class NetBox210DiffSync(N2NDiffSync):
     def load_record(self, diffsync_model, record):  # pylint: disable=too-many-branches
         """Instantiate the given model class from the given record."""
         data = record["fields"].copy()
+        data["pk"] = record["pk"]
 
         # Fixup fields that are actually foreign-key (FK) associations by replacing
         # their FK ids with the DiffSync model unique-id fields.
@@ -42,7 +45,7 @@ class NetBox210DiffSync(N2NDiffSync):
             if target_name.startswith("*"):
                 target_content_type_field = target_name[1:]
                 target_content_type_pk = record["fields"][target_content_type_field]
-                if not isinstance(target_content_type_pk, int) and not isinstance(target_content_type_pk, str):
+                if not isinstance(target_content_type_pk, int):
                     self.logger.error(f"Invalid content-type PK value {target_content_type_pk}")
                     data[key] = None
                     continue
@@ -57,15 +60,27 @@ class NetBox210DiffSync(N2NDiffSync):
                 data[key] = None
                 continue
 
+            if not issubclass(target_class, NautobotBaseModel):
+                # A base Django model such as ContentType or Group.
+                # Since we can't easily control its PK in Nautobot, use its actual natural key instead
+                if isinstance(data[key], list):
+                    data[key] = [self.get_by_pk(target_name, pk).get_identifiers() for pk in data[key]]
+                else:
+                    data[key] = self.get_by_pk(target_name, data[key]).get_identifiers()
+                continue
+
             if isinstance(data[key], list):
                 # This field is a one-to-many or many-to-many field, a list of foreign key references.
                 # For each foreign key, find the corresponding DiffSync record, and use its
                 # natural keys (identifiers) in the data in place of the foreign key value.
                 data[key] = [self.get_fk_identifiers(diffsync_model, target_class, pk) for pk in data[key]]
             elif isinstance(data[key], (UUID, int)):
-                # Look up the DiffSync record corresponding to this foreign key,
-                # and store its natural keys (identifiers) in the data in place of the foreign key value.
-                data[key] = self.get_fk_identifiers(diffsync_model, target_class, data[key])
+                if not issubclass(target_class, NautobotBaseModel):
+                    # Look up the DiffSync record corresponding to this foreign key,
+                    # and store its natural keys (identifiers) in the data in place of the foreign key value.
+                    data[key] = self.get_fk_identifiers(diffsync_model, target_class, data[key])
+                if isinstance(data[key], int):
+                    data[key] = netbox_pk_to_nautobot_pk(target_name, data[key])
             else:
                 self.logger.error(f"Invalid PK value {data[key]}")
                 data[key] = None
@@ -89,11 +104,10 @@ class NetBox210DiffSync(N2NDiffSync):
             # see also models.abstract.ArrayField
             for choice in json.loads(data["choices"]):
                 self.make_model(
-                    self.customfieldchoice, {"pk": uuid4(), "field": {"name": data["name"]}, "value": choice}
+                    self.customfieldchoice, {"pk": uuid4(), "field": netbox_pk_to_nautobot_pk("customfield", record["pk"]), "value": choice}
                 )
             del data["choices"]
 
-        data["pk"] = record["pk"]
         return self.make_model(diffsync_model, data)
 
     def load(self):
@@ -111,8 +125,8 @@ class NetBox210DiffSync(N2NDiffSync):
                 if record["model"] == content_type_label:
                     self.load_record(diffsync_model, record)
 
-        self.logger.info("Fixing up any previously unresolved object relations...")
-        self.fixup_data_relations()
+        # TODO self.logger.info("Fixing up any previously unresolved object relations...")
+        # TODO self.fixup_data_relations()
 
         self.logger.info("Data loading from NetBox source data complete.")
         # Discard the source data to free up memory

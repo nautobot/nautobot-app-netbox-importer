@@ -1,5 +1,6 @@
 """DiffSync adapter for Nautobot database."""
 
+from nautobot_netbox_importer.diffsync.models.abstract import NautobotBaseModel
 from uuid import UUID
 
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRel
@@ -46,7 +47,8 @@ class NautobotDiffSync(N2NDiffSync):
 
             # If we got here, the field is some sort of foreign-key reference(s).
             if not value:
-                # It's a null reference though, so we don't need to do anything special with it.
+                # It's a null or empty list reference though, so we don't need to do anything special with it.
+                data[field.name] = value
                 continue
 
             # What's the name of the model that this is a reference to?
@@ -68,17 +70,25 @@ class NautobotDiffSync(N2NDiffSync):
                 data[field.name] = None
                 continue
 
+            if not issubclass(target_class, NautobotBaseModel):
+                # TODO something isn't quite right, we shouldn't need all three of these branches!
+                if isinstance(value, list):
+                    data[field.name] = [self.get_by_pk(target_name, obj.pk).get_identifiers() for obj in value]
+                elif isinstance(value, int):
+                    data[field.name] = self.get_by_pk(target_name, value).get_identifiers()
+                else:
+                    data[field.name] = self.get_by_pk(target_name, value.pk).get_identifiers()
+                continue
+
             if isinstance(value, list):
                 # This field is a one-to-many or many-to-many field, a list of foreign key references.
                 # For each foreign key, find the corresponding DiffSync record, and use its
                 # natural keys (identifiers) in the data in place of the foreign key value.
-                data[field.name] = [
-                    self.get_fk_identifiers(diffsync_model, target_class, foreign_record.pk) for foreign_record in value
-                ]
-            elif isinstance(value, (UUID, int)):
+                data[field.name] = [foreign_record.pk for foreign_record in value]
+            elif isinstance(value, UUID):
                 # Look up the DiffSync record corresponding to this foreign key,
                 # and store its natural keys (identifiers) in the data in place of the foreign key value.
-                data[field.name] = self.get_fk_identifiers(diffsync_model, target_class, value)
+                data[field.name] = value
             else:
                 self.logger.error(f"Invalid PK value {value}")
                 data[field.name] = None

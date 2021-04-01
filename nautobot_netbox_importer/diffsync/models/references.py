@@ -6,17 +6,22 @@ to an object of the given type.
 
 from uuid import UUID
 
-from .validation import DiffSyncCustomValidationField
+from .validation import DiffSyncCustomValidationField, netbox_pk_to_nautobot_pk
 
 
-class ForeignKeyField(DiffSyncCustomValidationField, dict):
-    """Convenience class for representing foreign keys (as natural keys) in DiffSync."""
+class ForeignKeyField(DiffSyncCustomValidationField, UUID):
+    """Convenience class for translating NetBox foreign keys to Nautobot UUID keys."""
 
     @classmethod
     def validate(cls, value):
-        """Allow a reference to a locally significant PK as a temporary placeholder value."""
-        if isinstance(value, (int, UUID)):
-            value = {"pk": value}
+        if isinstance(value, int):
+            value = netbox_pk_to_nautobot_pk(cls.to_name, value)
+
+        if isinstance(value, UUID):
+            value = str(value)
+        elif isinstance(value, dict):
+            return value
+
         return cls(value)
 
 
@@ -30,18 +35,41 @@ def foreign_key_field(to_name: str):
     return TaggedForeignKeyField
 
 
+class ContentTypeRef(DiffSyncCustomValidationField, dict):
+
+    to_name = "contenttype"
+
+    @classmethod
+    def validate(cls, value):
+        if isinstance(value, (int, UUID)):
+            value = {"pk": value}
+        elif isinstance(value, dict):
+            if "model" in value and value["model"] in ("script", "report"):
+                value["model"] = "job"
+        return cls(value)
+
+
+class GroupRef(DiffSyncCustomValidationField, dict):
+
+    to_name = "group"
+
+    @classmethod
+    def validate(cls, value):
+        if isinstance(value, (int, UUID)):
+            value = {"pk": value}
+        return cls(value)
+
+
 CableRef = foreign_key_field("cable")
 CircuitRef = foreign_key_field("circuit")
 CircuitTypeRef = foreign_key_field("circuittype")
 ClusterRef = foreign_key_field("cluster")
 ClusterGroupRef = foreign_key_field("clustergroup")
 ClusterTypeRef = foreign_key_field("clustertype")
-ContentTypeRef = foreign_key_field("contenttype")
 CustomFieldRef = foreign_key_field("customfield")
 DeviceRef = foreign_key_field("device")
 DeviceRoleRef = foreign_key_field("devicerole")
 DeviceTypeRef = foreign_key_field("devicetype")
-GroupRef = foreign_key_field("group")
 InterfaceRef = foreign_key_field("interface")
 InventoryItemRef = foreign_key_field("inventoryitem")
 IPAddressRef = foreign_key_field("ipaddress")

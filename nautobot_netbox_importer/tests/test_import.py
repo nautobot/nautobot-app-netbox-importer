@@ -81,3 +81,10 @@ class TestImport(TestCase):
                         actual_value = list(actual_value.get_queryset())
 
                     self.assertEqual(expected_value, actual_value, f"key '{key}'' on {model} '{record}' is incorrect")
+
+    def test_resync_without_changes_correctness(self):
+        """Resync (with no changes to the source data) and verify that data is still correct."""
+        with open(NETBOX_DATA_FILE, "r") as handle:
+            Command().handle(json_file=handle, netbox_version=version.Version("2.10.4"), verbosity=0)
+        # TODO check logs for errors and such
+        self.test_imported_data_correctness()

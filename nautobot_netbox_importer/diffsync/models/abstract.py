@@ -6,7 +6,7 @@ are for populating data into Nautobot only, never the reverse.
 """
 # pylint: disable=too-few-public-methods
 import json
-from uuid import UUID
+import uuid
 
 from datetime import date, datetime
 from typing import Mapping, Optional, Tuple, Union
@@ -16,6 +16,7 @@ from diffsync.exceptions import ObjectNotFound
 from django.core.exceptions import ObjectDoesNotExist, ValidationError as DjangoValidationError
 from django.db import models
 from django.db.utils import IntegrityError
+import netaddr
 from pydantic import BaseModel, validator
 from pydantic.error_wrappers import ValidationError as PydanticValidationError
 import structlog
@@ -27,22 +28,23 @@ from .references import (
     DeviceRef,
     DeviceTypeRef,
     ForeignKeyField,
+    GroupRef,
     StatusRef,
 )
-from .validation import DiffSyncCustomValidationField
+from .validation import DiffSyncCustomValidationField, netbox_pk_to_nautobot_pk
 
 
 logger = structlog.get_logger()
 
 
-class NautobotBaseModel(DiffSyncModel):
-    """Base class for NetBox / Nautobot models."""
+class DjangoBaseModel(DiffSyncModel):
+    """Base class for generic Django models."""
 
     _nautobot_model: models.Model
-    """Nautobot model class that this model maps to."""
+    """Django or Nautobot model class that this model maps to."""
 
     _fk_associations: dict = {}
-    """Mapping defining translations between FK fields and DiffSync models.
+    """Mapping defining translations between foreign key (FK) fields and DiffSync models.
 
     Automatically populated at subclass declaration time, see __init_subclass__().
 
@@ -50,9 +52,7 @@ class NautobotBaseModel(DiffSyncModel):
         {"site": "site", "parent": "rackgroup"}
     """
 
-    # pk is not an attribute to sync, but all models have it, and we need to be able to refer to it
-    # in order to resolve foreign key references in the source data.
-    pk: Optional[Union[UUID, int]]
+    pk: Union[uuid.UUID, int]
 
     @classmethod
     def __init_subclass__(cls):
@@ -60,7 +60,7 @@ class NautobotBaseModel(DiffSyncModel):
         super().__init_subclass__()
         cls._fk_associations = {}
         for field in cls.__fields__.values():
-            if isinstance(field.type_, type) and issubclass(field.type_, ForeignKeyField):
+            if isinstance(field.type_, type) and issubclass(field.type_, ForeignKeyField) or field.type_ is ContentTypeRef or field.type_ is GroupRef:
                 cls._fk_associations[field.name] = field.type_.to_name
 
     @classmethod
@@ -114,13 +114,23 @@ class NautobotBaseModel(DiffSyncModel):
                 target_diffsync_class_name = target_content_type["model"]
                 target_class = getattr(diffsync, target_diffsync_class_name)
                 try:
-                    target_record = diffsync.get(target_class, diffsync_value)
-                    target_nautobot_record = target_class.nautobot_model().objects.get(pk=target_record.pk)
+                    if isinstance(diffsync_value, dict):
+                        target_record = diffsync.get(target_class, diffsync_value)
+                        target_nautobot_record = target_class.nautobot_model().objects.get(pk=target_record.pk)
+                    else:
+                        target_nautobot_record = target_class.nautobot_model().objects.get(pk=diffsync_value)
                     # For GenericForeignKey fields (only) we must provide a PK rather than an object reference
                     nautobot_data[field] = target_nautobot_record.pk
                 except ObjectNotFound:
                     logger.debug(
                         "GenericForeignKey not found, will require later fixup",
+                        target=target_diffsync_class_name,
+                        unique_id=diffsync_value,
+                    )
+                    nautobot_data[field] = None
+                except ObjectDoesNotExist:
+                    logger.error(
+                        "Expected but did not find an existing Nautobot record",
                         target=target_diffsync_class_name,
                         unique_id=diffsync_value,
                     )
@@ -134,14 +144,25 @@ class NautobotBaseModel(DiffSyncModel):
                 nautobot_value = []
                 for unique_id in list(diffsync_value):
                     try:
-                        # Find the DiffSync model identified by the given natural key (identifiers),
-                        # then find the Nautobot record whose PK matches the DiffSync model.
-                        target_record = diffsync.get(target_class, unique_id)
-                        target_nautobot_record = target_class.nautobot_model().objects.get(pk=target_record.pk)
+                        if isinstance(unique_id, dict):
+                            # ContentType or similar model that we identify by attributes rather than by PK
+                            # Find the DiffSync model identified by the given natural key (identifiers),
+                            # then find the Nautobot record whose PK matches the DiffSync model.
+                            target_record = diffsync.get(target_class, unique_id)
+                            target_nautobot_record = target_class.nautobot_model().objects.get(pk=target_record.pk)
+                        else:
+                            target_nautobot_record = target_class.nautobot_model().objects.get(pk=unique_id)
                         nautobot_value.append(target_nautobot_record)
                     except ObjectNotFound:
                         logger.debug(
                             "Not found, will require later fixup",
+                            target=target_diffsync_class_name,
+                            unique_id=unique_id,
+                        )
+                        diffsync_value.remove(unique_id)
+                    except ObjectDoesNotExist:
+                        logger.error(
+                            "Expected but did not find an existing Nautobot record",
                             target=target_diffsync_class_name,
                             unique_id=unique_id,
                         )
@@ -156,8 +177,11 @@ class NautobotBaseModel(DiffSyncModel):
                 try:
                     # Find the DiffSync model identified by the given natural key (identifiers),
                     # then find the Nautobot record whose PK matches the DiffSync model.
-                    target_record = diffsync.get(target_class, diffsync_value)
-                    target_nautobot_record = target_class.nautobot_model().objects.get(pk=target_record.pk)
+                    if isinstance(diffsync_value, dict):
+                        target_nautobot_record = target_class.nautobot_model().objects.get(**diffsync_value)
+                    else:
+                        target_record = diffsync.get_by_pk(target_class, diffsync_value)
+                        target_nautobot_record = target_class.nautobot_model().objects.get(pk=target_record.pk)
                     nautobot_value = target_nautobot_record
                 except ObjectNotFound:
                     logger.debug(
@@ -251,7 +275,10 @@ class NautobotBaseModel(DiffSyncModel):
 
         record = cls.create_nautobot_record(cls.nautobot_model(), nautobot_ids, nautobot_attrs, multivalue_attrs)
         if record:
-            diffsync_attrs["pk"] = record.pk
+            if "pk" in cls._identifiers:
+                diffsync_ids["pk"] = record.pk
+            else:
+                diffsync_attrs["pk"] = record.pk
             try:
                 return super().create(diffsync, diffsync_ids, diffsync_attrs)
             except PydanticValidationError as exc:
@@ -270,12 +297,19 @@ class NautobotBaseModel(DiffSyncModel):
         """Helper method to update() - actually update Nautobot data."""
         try:
             record = nautobot_model.objects.get(**ids)
+            custom_field_data = attrs.pop("custom_field_data", None)
             for attr, value in attrs.items():
-                setattr(record, attr, value)
+                try:
+                    setattr(record, attr, value)
+                except:
+                    import pdb; pdb.set_trace()
             record.clean()
             record.save()
             for attr, value in multivalue_attrs.items():
                 getattr(record, attr).set(value)
+            if custom_field_data is not None:
+                record._custom_field_data = custom_field_data  # pylint: disable-protected-access
+                record.save()
             return record
         except IntegrityError as exc:
             logger.error(
@@ -340,6 +374,35 @@ class NautobotBaseModel(DiffSyncModel):
     # TODO delete() is not yet implemented
 
 
+class NautobotBaseModel(DjangoBaseModel):
+    """Base class for NetBox / Nautobot models."""
+
+    # For these models, we use the database primary key as the unique identifier.
+    # This is in contrast with usual DiffSync best practices, which recommend the use of "natural" keys,
+    # but unfortunately there are a number of NetBox data models that are defined and used in such a way
+    # that any possible natural keys are either potentially or even intentionally non-unique.
+    # Since the intended use case of this implementation is for one-way synchronization only, and
+    # we are assuming that the standard use case is to populate an initially empty Nautobot database with
+    # fresh data from NetBox, we can get away with using Nautobot primary keys
+    # (derived from NetBox primary keys as needed, see validation.netbox_pk_to_nautobot_pk)
+    # as the DiffSync unique IDs for these models.
+    _identifiers = ("pk",)
+
+    pk: uuid.UUID
+
+    @validator("pk", pre=True)
+    def map_netbox_pk_to_nautobot_pk(cls, value):
+        """Deterministically map a NetBox integer primary key to a Nautobot UUID primary key.
+
+        One of the reasons Nautobot moved from sequential integers to UUIDs was to protect the application
+        against key-enumeration attacks, so we don't use a hard-coded mapping from integer to UUID as that
+        would defeat the purpose.
+        """
+        if not isinstance(value, uuid.UUID):
+            return netbox_pk_to_nautobot_pk(cls._modelname, value)
+        return value
+
+
 class BaseInterfaceMixin(BaseModel):
     """An abstract model shared by dcim.Interface and virtualization.VMInterface."""
 
@@ -349,6 +412,12 @@ class BaseInterfaceMixin(BaseModel):
     mac_address: Optional[str]
     mtu: Optional[int]
     mode: str
+
+    @validator("mac_address", pre=True)
+    def eui_to_str(cls, value):  # pylint: disable=no-self-argument,no-self-use
+        if isinstance(value, netaddr.EUI):
+            value = str(value)
+        return value
 
 
 class CableTerminationMixin(BaseModel):
@@ -418,8 +487,7 @@ class StatusModelMixin(BaseModel):
 class ComponentModel(CustomFieldModelMixin, NautobotBaseModel):
     """Base class for Device components."""
 
-    _identifiers = ("device", "name")
-    _attributes = ("label", "description")
+    _attributes = ("device", "name", "label", "description")
 
     device: DeviceRef
     name: str
@@ -430,8 +498,7 @@ class ComponentModel(CustomFieldModelMixin, NautobotBaseModel):
 class ComponentTemplateModel(CustomFieldModelMixin, NautobotBaseModel):
     """Base class for Device component templates."""
 
-    _identifiers = ("device_type", "name")
-    _attributes = ("label", "description")
+    _attributes = ("device_type", "name", "label", "description")
 
     device_type: DeviceTypeRef
     name: str
