@@ -256,7 +256,7 @@ class N2NDiffSync(DiffSync):
         else:
             modelname = obj.get_type()
         if pk not in self._data_by_pk[modelname]:
-            raise ObjectNotFound()
+            raise ObjectNotFound(f"PK {pk} not found in stored {modelname} instances")
         return self._data_by_pk[modelname].get(pk)
 
     def make_model(self, diffsync_model, data):

@@ -70,25 +70,25 @@ class NautobotDiffSync(N2NDiffSync):
                 data[field.name] = None
                 continue
 
-            if not issubclass(target_class, NautobotBaseModel):
-                # TODO something isn't quite right, we shouldn't need all three of these branches!
-                if isinstance(value, list):
-                    data[field.name] = [self.get_by_pk(target_name, obj.pk).get_identifiers() for obj in value]
-                elif isinstance(value, int):
-                    data[field.name] = self.get_by_pk(target_name, value).get_identifiers()
-                else:
-                    data[field.name] = self.get_by_pk(target_name, value.pk).get_identifiers()
-                continue
-
             if isinstance(value, list):
-                # This field is a one-to-many or many-to-many field, a list of foreign key references.
-                # For each foreign key, find the corresponding DiffSync record, and use its
-                # natural keys (identifiers) in the data in place of the foreign key value.
-                data[field.name] = [foreign_record.pk for foreign_record in value]
+                # This field is a one-to-many or many-to-many field, a list of object references.
+                if issubclass(target_class, NautobotBaseModel):
+                    # Replace each object reference with its appropriate primary key value
+                    data[field.name] = [foreign_record.pk for foreign_record in value]
+                else:
+                    # Since the PKs of these built-in Django models may differ between NetBox and Nautobot,
+                    # e.g., ContentTypes, replace each reference with the natural key (not PK) of the referenced model.
+                    data[field.name] = [
+                        self.get_by_pk(target_name, foreign_record.pk).get_identifiers() for foreign_record in value
+                    ]
             elif isinstance(value, UUID):
-                # Look up the DiffSync record corresponding to this foreign key,
-                # and store its natural keys (identifiers) in the data in place of the foreign key value.
+                # Standard Nautobot UUID foreign-key reference, no transformation needed.
                 data[field.name] = value
+            elif isinstance(value, int):
+                # Reference to a built-in model by its integer primary key.
+                # Since this may not be the same value between NetBox and Nautobot (e.g., ContentType references)
+                # replace the PK with the natural keys of the referenced model.
+                data[field.name] = self.get_by_pk(target_name, value).get_identifiers()
             else:
                 self.logger.error(f"Invalid PK value {value}")
                 data[field.name] = None

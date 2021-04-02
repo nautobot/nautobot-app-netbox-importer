@@ -1,7 +1,7 @@
 """DiffSync adapters for NetBox data dumps."""
 
 import json
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 import structlog
 
@@ -60,27 +60,24 @@ class NetBox210DiffSync(N2NDiffSync):
                 data[key] = None
                 continue
 
-            if not issubclass(target_class, NautobotBaseModel):
-                # A base Django model such as ContentType or Group.
-                # Since we can't easily control its PK in Nautobot, use its actual natural key instead
-                if isinstance(data[key], list):
-                    data[key] = [self.get_by_pk(target_name, pk).get_identifiers() for pk in data[key]]
-                else:
-                    data[key] = self.get_by_pk(target_name, data[key]).get_identifiers()
-                continue
-
             if isinstance(data[key], list):
                 # This field is a one-to-many or many-to-many field, a list of foreign key references.
-                # For each foreign key, find the corresponding DiffSync record, and use its
-                # natural keys (identifiers) in the data in place of the foreign key value.
-                data[key] = [self.get_fk_identifiers(diffsync_model, target_class, pk) for pk in data[key]]
-            elif isinstance(data[key], (UUID, int)):
-                if not issubclass(target_class, NautobotBaseModel):
-                    # Look up the DiffSync record corresponding to this foreign key,
-                    # and store its natural keys (identifiers) in the data in place of the foreign key value.
-                    data[key] = self.get_fk_identifiers(diffsync_model, target_class, data[key])
-                if isinstance(data[key], int):
+                if issubclass(target_class, NautobotBaseModel):
+                    # Replace each NetBox integer FK with the corresponding deterministic Nautobot UUID FK.
+                    data[key] = [netbox_pk_to_nautobot_pk(target_name, pk) for pk in data[key]]
+                else:
+                    # It's a base Django model such as ContentType or Group.
+                    # Since we can't easily control its PK in Nautobot, use its natural key instead
+                    data[key] = [self.get_by_pk(target_name, pk).get_identifiers() for pk in data[key]]
+            elif isinstance(data[key], int):
+                # Standard NetBox integer foreign-key reference
+                if issubclass(target_class, NautobotBaseModel):
+                    # Replace the NetBox integer FK with the corresponding deterministic Nautobot UUID FK.
                     data[key] = netbox_pk_to_nautobot_pk(target_name, data[key])
+                else:
+                    # It's a base Django model such as ContentType or Group.
+                    # Since we can't easily control its PK in Nautobot, use its natural key instead
+                    data[key] = self.get_by_pk(target_name, data[key]).get_identifiers()
             else:
                 self.logger.error(f"Invalid PK value {data[key]}")
                 data[key] = None
