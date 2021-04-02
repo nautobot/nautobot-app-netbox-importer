@@ -126,9 +126,6 @@ class NetBox210DiffSync(N2NDiffSync):
                 if record["model"] == content_type_label:
                     self.load_record(diffsync_model, record)
 
-        # TODO self.logger.info("Fixing up any previously unresolved object relations...")
-        # TODO self.fixup_data_relations()
-
         self.logger.info("Data loading from NetBox source data complete.")
         # Discard the source data to free up memory
         self.source_data = None

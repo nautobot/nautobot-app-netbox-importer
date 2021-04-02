@@ -105,7 +105,4 @@ class NautobotDiffSync(N2NDiffSync):
             for instance in diffsync_model.nautobot_model().objects.all():
                 self.load_model(diffsync_model, instance)
 
-        self.logger.info("Fixing up any previously unresolved object relations...")
-        self.fixup_data_relations()
-
         self.logger.info("Data loading from Nautobot complete.")
