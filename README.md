@@ -10,7 +10,7 @@ The plugin is available as a Python package in PyPI and can be installed with pi
 pip install nautobot-netbox-importer
 ```
 
-> The plugin is compatible with Nautobot 1.0 and can handle JSON data exported from NetBox 2.10.3 through 2.10.5 at present.
+> The plugin is compatible with Nautobot 1.0.0b3 and later and can handle JSON data exported from NetBox 2.10.x at present.
 
 Once installed, the plugin needs to be enabled in your `nautobot_config.py`:
 
@@ -22,7 +22,7 @@ PLUGINS = ["nautobot_netbox_importer"]
 
 ### Getting a data export from NetBox
 
-From the NetBox root directory, run the following command:
+From the NetBox root directory, run the following command to produce a JSON file (here, `/tmp/netbox_data.json`) describing the contents of your NetBox database:
 
 ```shell
 python netbox/manage.py dumpdata \
@@ -34,7 +34,7 @@ python netbox/manage.py dumpdata \
 
 ### Importing the data into Nautobot
 
-From the Nautobot root directory, run `nautobot-server import_netbox_json <json_file> <netbox_version>`, for example `nautobot-server import_netbox_json /tmp/netbox_data.json 2.10.3`.
+As the `nautobot` user account, run `nautobot-server import_netbox_json <json_file> <netbox_version>`, for example `nautobot-server import_netbox_json /tmp/netbox_data.json 2.10.3`.
 
 ## Contributing
 
