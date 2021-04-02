@@ -60,7 +60,12 @@ class DjangoBaseModel(DiffSyncModel):
         super().__init_subclass__()
         cls._fk_associations = {}
         for field in cls.__fields__.values():
-            if isinstance(field.type_, type) and issubclass(field.type_, ForeignKeyField) or field.type_ is ContentTypeRef or field.type_ is GroupRef:
+            if (
+                isinstance(field.type_, type)
+                and issubclass(field.type_, ForeignKeyField)
+                or field.type_ is ContentTypeRef
+                or field.type_ is GroupRef
+            ):
                 cls._fk_associations[field.name] = field.type_.to_name
 
     @classmethod
@@ -74,7 +79,7 @@ class DjangoBaseModel(DiffSyncModel):
         return cls._fk_associations
 
     @classmethod
-    def clean_ids_or_attrs(  # pylint: disable=too-many-locals
+    def clean_ids_or_attrs(  # pylint: disable=too-many-locals,too-many-branches,too-many-statements
         cls, diffsync: DiffSync, ids_or_attrs: dict
     ) -> Tuple[dict, dict]:
         """Clean up the DiffSync "ids" or "attrs" dict to provide the keys needed to write to Nautobot.
@@ -299,16 +304,13 @@ class DjangoBaseModel(DiffSyncModel):
             record = nautobot_model.objects.get(**ids)
             custom_field_data = attrs.pop("custom_field_data", None)
             for attr, value in attrs.items():
-                try:
-                    setattr(record, attr, value)
-                except:
-                    import pdb; pdb.set_trace()
+                setattr(record, attr, value)
             record.clean()
             record.save()
             for attr, value in multivalue_attrs.items():
                 getattr(record, attr).set(value)
             if custom_field_data is not None:
-                record._custom_field_data = custom_field_data  # pylint: disable-protected-access
+                record._custom_field_data = custom_field_data  # pylint: disable=protected-access
                 record.save()
             return record
         except IntegrityError as exc:
@@ -391,7 +393,7 @@ class NautobotBaseModel(DjangoBaseModel):
     pk: uuid.UUID
 
     @validator("pk", pre=True)
-    def map_netbox_pk_to_nautobot_pk(cls, value):
+    def map_netbox_pk_to_nautobot_pk(cls, value):  # pylint: disable=no-self-argument
         """Deterministically map a NetBox integer primary key to a Nautobot UUID primary key.
 
         One of the reasons Nautobot moved from sequential integers to UUIDs was to protect the application
@@ -415,6 +417,7 @@ class BaseInterfaceMixin(BaseModel):
 
     @validator("mac_address", pre=True)
     def eui_to_str(cls, value):  # pylint: disable=no-self-argument,no-self-use
+        """Nautobot reports MAC addresses as netaddr.EUI objects; coerce them to strings."""
         if isinstance(value, netaddr.EUI):
             value = str(value)
         return value
@@ -506,7 +509,9 @@ class ComponentTemplateModel(CustomFieldModelMixin, NautobotBaseModel):
     description: str
 
 
-class OrganizationalModel(ChangeLoggedModelMixin, CustomFieldModelMixin, NautobotBaseModel):
+class OrganizationalModel(  # pylint: disable=too-many-ancestors
+    ChangeLoggedModelMixin, CustomFieldModelMixin, NautobotBaseModel
+):
     """Base class for organizational models in NetBox/Nautobot.
 
     Organizational models represent groupings, metadata, etc. rather than concrete network resources.
@@ -515,7 +520,9 @@ class OrganizationalModel(ChangeLoggedModelMixin, CustomFieldModelMixin, Nautobo
     _attributes = (*CustomFieldModelMixin._attributes,)
 
 
-class PrimaryModel(ChangeLoggedModelMixin, CustomFieldModelMixin, NautobotBaseModel):
+class PrimaryModel(  # pylint: disable=too-many-ancestors
+    ChangeLoggedModelMixin, CustomFieldModelMixin, NautobotBaseModel
+):
     """Base class for primary models in NetBox/Nautobot.
 
     Primary models typically represent concrete network resources such as Device or Rack.

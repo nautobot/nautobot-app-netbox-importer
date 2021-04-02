@@ -12,14 +12,20 @@ from .validation import DiffSyncCustomValidationField, netbox_pk_to_nautobot_pk
 class ForeignKeyField(DiffSyncCustomValidationField, UUID):
     """Convenience class for translating NetBox foreign keys to Nautobot UUID keys."""
 
+    to_name: str
+
     @classmethod
     def validate(cls, value):
+        """Map NetBox integer PKs to Nautobot UUID PKs, but leave dicts and UUIDs alone."""
         if isinstance(value, int):
             value = netbox_pk_to_nautobot_pk(cls.to_name, value)
 
         if isinstance(value, UUID):
+            # cls(UUID) is an error, but cls(str(UUID)) reconstructs the original UUID
             value = str(value)
         elif isinstance(value, dict):
+            # Model such as Status for which we might not know the PK, and instead are
+            # referencing it as a dict of fields - leave it as a dict.
             return value
 
         return cls(value)
@@ -36,12 +42,18 @@ def foreign_key_field(to_name: str):
 
 
 class ContentTypeRef(DiffSyncCustomValidationField, dict):
+    """Foreign-key reference to a ContentType.
+
+    Since ContentType is an automatically generated model, we can't control its PK.
+    """
 
     to_name = "contenttype"
 
     @classmethod
     def validate(cls, value):
+        """Coerce references to a Script or Report NetBox ContentType into a Job Nautobot ContentType ref."""
         if isinstance(value, (int, UUID)):
+            # TODO is this still needed?
             value = {"pk": value}
         elif isinstance(value, dict):
             if "model" in value and value["model"] in ("script", "report"):
@@ -50,11 +62,14 @@ class ContentTypeRef(DiffSyncCustomValidationField, dict):
 
 
 class GroupRef(DiffSyncCustomValidationField, dict):
+    """Foreign-key reference to a user Group."""
 
     to_name = "group"
 
     @classmethod
     def validate(cls, value):
+        """This is another TODO."""
+        # TODO double-check this, seems unnecessary/wrong?
         if isinstance(value, (int, UUID)):
             value = {"pk": value}
         return cls(value)

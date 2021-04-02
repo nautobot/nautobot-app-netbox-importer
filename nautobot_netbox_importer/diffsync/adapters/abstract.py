@@ -1,7 +1,6 @@
 """Abstract base DiffSync adapter class for code shared by NetBox and Nautobot adapters."""
 
 from collections import defaultdict
-from nautobot_netbox_importer.diffsync.models.validation import netbox_pk_to_nautobot_pk
 from typing import MutableMapping, Union
 from uuid import UUID
 
@@ -11,6 +10,7 @@ from pydantic.error_wrappers import ValidationError
 import structlog
 
 import nautobot_netbox_importer.diffsync.models as n2nmodels
+from nautobot_netbox_importer.diffsync.models.validation import netbox_pk_to_nautobot_pk
 
 
 class N2NDiffSync(DiffSync):
@@ -268,7 +268,7 @@ class N2NDiffSync(DiffSync):
     def get_fk_identifiers(self, source_object, target_class, pk):
         """Helper to load_record: given a class and a PK, get the identifiers of the given instance."""
         if isinstance(pk, int):
-            pk = netbox_pk_to_nautobot_pk(target_class._modelname, pk)
+            pk = netbox_pk_to_nautobot_pk(target_class.get_type(), pk)
         target_record = self.get_by_pk(target_class, pk)
         if not target_record:
             self.logger.debug(

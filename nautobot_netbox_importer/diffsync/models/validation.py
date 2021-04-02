@@ -30,9 +30,10 @@ def netbox_pk_to_nautobot_pk(modelname, pk):
     against key-enumeration attacks, so we don't use a hard-coded mapping from integer to UUID as that
     would defeat the purpose.
     """
-    assert isinstance(pk, int)
+    if not isinstance(pk, int):
+        raise TypeError(f"pk must be an int, not {pk}")
     namespace = uuid.uuid5(
         uuid.NAMESPACE_DNS,  # not really but nothing actually enforces this
-        settings.SECRET_KEY
+        settings.SECRET_KEY,
     )
     return uuid.uuid5(namespace, f"{modelname}:{pk}")

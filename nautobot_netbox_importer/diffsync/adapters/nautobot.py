@@ -1,6 +1,5 @@
 """DiffSync adapter for Nautobot database."""
 
-from nautobot_netbox_importer.diffsync.models.abstract import NautobotBaseModel
 from uuid import UUID
 
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRel
@@ -8,6 +7,7 @@ from django.db import models
 import structlog
 
 from .abstract import N2NDiffSync
+from ..models.abstract import NautobotBaseModel
 
 
 IGNORED_FIELD_CLASSES = (GenericRel, GenericForeignKey, models.ManyToManyRel, models.ManyToOneRel)
@@ -24,7 +24,7 @@ class NautobotDiffSync(N2NDiffSync):
 
     logger = structlog.get_logger()
 
-    def load_model(self, diffsync_model, record):
+    def load_model(self, diffsync_model, record):  # pylint: disable=too-many-branches
         """Instantiate the given DiffSync model class from the given Django record."""
         data = {}
 

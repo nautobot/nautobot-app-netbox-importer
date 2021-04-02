@@ -1,12 +1,12 @@
 """DiffSync adapters for NetBox data dumps."""
 
 import json
-from nautobot_netbox_importer.diffsync.models.abstract import NautobotBaseModel
 from uuid import UUID, uuid4
 
 import structlog
 
 from .abstract import N2NDiffSync
+from ..models.abstract import NautobotBaseModel
 from ..models.validation import netbox_pk_to_nautobot_pk
 
 
@@ -104,7 +104,8 @@ class NetBox210DiffSync(N2NDiffSync):
             # see also models.abstract.ArrayField
             for choice in json.loads(data["choices"]):
                 self.make_model(
-                    self.customfieldchoice, {"pk": uuid4(), "field": netbox_pk_to_nautobot_pk("customfield", record["pk"]), "value": choice}
+                    self.customfieldchoice,
+                    {"pk": uuid4(), "field": netbox_pk_to_nautobot_pk("customfield", record["pk"]), "value": choice},
                 )
             del data["choices"]
 

@@ -35,8 +35,9 @@ from .references import (
 
 
 def network_from_components(network_bytes, prefix_length):
-    ip = netaddr.IPAddress(int.from_bytes(network_bytes, "big"))
-    return netaddr.IPNetwork(f"{ip}/{prefix_length}")
+    """Given a network address as a byte string, and a prefix length, construct an IPNetwork object."""
+    ipaddress = netaddr.IPAddress(int.from_bytes(network_bytes, "big"))
+    return netaddr.IPNetwork(f"{ipaddress}/{prefix_length}")
 
 
 class Aggregate(PrimaryModel):

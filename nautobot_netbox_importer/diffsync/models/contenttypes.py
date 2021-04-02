@@ -10,7 +10,10 @@ class ContentType(DjangoBaseModel):
     """A reference to a model type, in the form (<app_label>, <modelname>)."""
 
     _modelname = "contenttype"
-    _identifiers = ("app_label", "model",)
+    _identifiers = (
+        "app_label",
+        "model",
+    )
     _attributes = ("pk",)
     _nautobot_model = models.ContentType
 
