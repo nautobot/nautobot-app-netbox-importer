@@ -743,9 +743,9 @@ svgwrite = "~1.4.1"
 
 [package.source]
 type = "git"
-url = "https://github.com/lampwins/nautobot.git"
-reference = "135-cf-selection-changes"
-resolved_reference = "8c8f3b074d84b0ec553d36dac24fff38d957c189"
+url = "https://github.com/nautobot/nautobot.git"
+reference = "develop"
+resolved_reference = "d220908f86ea61f5899e5a9b8e1351a327389135"
 
 [[package]]
 name = "netaddr"
@@ -1315,7 +1315,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "b7337d1a725bb7ca5bb1ab340a1465cc726a5ffdd429180a854d8cf5032114f5"
+content-hash = "4ae6095ee073f7cebb06865e91651cc6183df27490dffe8afe58812d9f87c63c"
 
 [metadata.files]
 aniso8601 = [
