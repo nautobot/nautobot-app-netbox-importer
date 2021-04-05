@@ -1,7 +1,7 @@
 """Abstract base DiffSync adapter class for code shared by NetBox and Nautobot adapters."""
 
 from collections import defaultdict
-from typing import MutableMapping, Union
+from typing import Callable, MutableMapping, Union
 from uuid import UUID
 
 from diffsync import Diff, DiffSync, DiffSyncFlags, DiffSyncModel
@@ -288,10 +288,16 @@ class N2NDiffSync(DiffSync):
             )
         return instance
 
-    def sync_from(self, source: DiffSync, diff_class: Diff = Diff, flags: DiffSyncFlags = DiffSyncFlags.NONE):
+    def sync_from(
+        self,
+        source: DiffSync,
+        diff_class: Diff = Diff,
+        flags: DiffSyncFlags = DiffSyncFlags.NONE,
+        callback: Callable[[str, int, int], None] = None,
+    ):
         """Synchronize data from the given source DiffSync object into the current DiffSync object."""
         self._sync_summary = None
-        return super().sync_from(source, diff_class=diff_class, flags=flags)
+        return super().sync_from(source, diff_class=diff_class, flags=flags, callback=callback)
 
     def sync_complete(
         self,
