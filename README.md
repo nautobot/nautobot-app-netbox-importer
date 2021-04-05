@@ -34,7 +34,7 @@ python netbox/manage.py dumpdata \
 
 ### Importing the data into Nautobot
 
-As the `nautobot` user account, run `nautobot-server import_netbox_json <json_file> <netbox_version>`, for example `nautobot-server import_netbox_json /tmp/netbox_data.json 2.10.3`.
+From within the Nautobot application environment, run `nautobot-server import_netbox_json <json_file> <netbox_version>`, for example `nautobot-server import_netbox_json /tmp/netbox_data.json 2.10.3`.
 
 ## Contributing
 
