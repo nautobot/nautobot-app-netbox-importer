@@ -5,10 +5,10 @@ from uuid import UUID
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRel
 from django.db import models
 import structlog
-from tqdm import tqdm
 
+from nautobot_netbox_importer.diffsync.models.abstract import NautobotBaseModel
+from nautobot_netbox_importer.utils import ProgressBar
 from .abstract import N2NDiffSync
-from ..models.abstract import NautobotBaseModel
 
 
 IGNORED_FIELD_CLASSES = (GenericRel, GenericForeignKey, models.ManyToManyRel, models.ManyToOneRel)
@@ -102,12 +102,13 @@ class NautobotDiffSync(N2NDiffSync):
         self.logger.info("Loading data from Nautobot into DiffSync...")
         for modelname in ("contenttype", "permission", "status", *self.top_level):
             diffsync_model = getattr(self, modelname)
-            self.logger.info("Loading Nautobot records...", model=modelname)
-            for instance in tqdm(
-                diffsync_model.nautobot_model().objects.all(),
-                total=diffsync_model.nautobot_model().objects.count(),
-                disable=(self.verbosity < 1),
-            ):
-                self.load_model(diffsync_model, instance)
+            if diffsync_model.nautobot_model().objects.exists():
+                for instance in ProgressBar(
+                    diffsync_model.nautobot_model().objects.all(),
+                    total=diffsync_model.nautobot_model().objects.count(),
+                    desc=f"{modelname:<25}",  # len("consoleserverporttemplate")
+                    verbosity=self.verbosity,
+                ):
+                    self.load_model(diffsync_model, instance)
 
         self.logger.info("Data loading from Nautobot complete.")

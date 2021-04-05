@@ -9,11 +9,11 @@ import colorama
 from diffsync import DiffSyncFlags
 from packaging import version
 import structlog
-from tqdm import tqdm
 
 from django.core.management.base import BaseCommand, CommandError
 
 from nautobot_netbox_importer.diffsync.adapters import netbox_adapters, NautobotDiffSync
+from nautobot_netbox_importer.utils import ProgressBar
 
 
 class LogRenderer:  # pylint: disable=too-few-public-methods
@@ -65,19 +65,6 @@ class LogRenderer:  # pylint: disable=too-few-public-methods
             )
 
         return sio.getvalue()
-
-
-class TqdmDiffSync(tqdm):
-    """Progress bar class (tqdm) that takes a callback from DiffSync as an update trigger."""
-
-    def diffsync_callback(self, stage, current, total):
-        """Callback for diffsync progress."""
-        if self.disable:
-            return None
-        if stage not in self.desc:
-            self.set_description(stage)
-            self.reset(total=total)
-        return self.update(current - self.n)
 
 
 class Command(BaseCommand):
@@ -149,11 +136,11 @@ class Command(BaseCommand):
         # of all possible references in a single linear pass.
         # The first pass should always suffice to create all required models;
         # a second pass ensures that (now that we have all models) we set all model references.
-        with TqdmDiffSync(disable=(options["verbosity"] < 1)) as tds:
-            target.sync_from(source, flags=DiffSyncFlags.SKIP_UNMATCHED_DST, callback=tds.diffsync_callback)
+        with ProgressBar(verbosity=options["verbosity"]) as p_bar:
+            target.sync_from(source, flags=DiffSyncFlags.SKIP_UNMATCHED_DST, callback=p_bar.diffsync_callback)
         summary_1 = target.sync_summary()
         logger.info("First-pass synchronization complete, beginning second pass")
-        with TqdmDiffSync(disable=(options["verbosity"] < 1)) as tds:
-            target.sync_from(source, flags=DiffSyncFlags.SKIP_UNMATCHED_DST, callback=tds.diffsync_callback)
+        with ProgressBar(verbosity=options["verbosity"]) as p_bar:
+            target.sync_from(source, flags=DiffSyncFlags.SKIP_UNMATCHED_DST, callback=p_bar.diffsync_callback)
         summary_2 = target.sync_summary()
         logger.info("Synchronization complete!", first_pass=summary_1, second_pass=summary_2)

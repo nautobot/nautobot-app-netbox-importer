@@ -5,11 +5,11 @@ from uuid import uuid4
 
 from diffsync.enum import DiffSyncModelFlags
 import structlog
-from tqdm import tqdm
 
+from nautobot_netbox_importer.diffsync.models.abstract import NautobotBaseModel
+from nautobot_netbox_importer.diffsync.models.validation import netbox_pk_to_nautobot_pk
+from nautobot_netbox_importer.utils import ProgressBar
 from .abstract import N2NDiffSync
-from ..models.abstract import NautobotBaseModel
-from ..models.validation import netbox_pk_to_nautobot_pk
 
 
 class NetBox210DiffSync(N2NDiffSync):
@@ -124,15 +124,19 @@ class NetBox210DiffSync(N2NDiffSync):
         self.logger.info("Loading imported NetBox source data into DiffSync...")
         for modelname in ("contenttype", "permission", *self.top_level):
             diffsync_model = getattr(self, modelname)
-            self.logger.info("Loading NetBox records...", model=modelname)
             content_type_label = diffsync_model.nautobot_model()._meta.label_lower
             # Handle a NetBox vs Nautobot discrepancy - the Nautobot target model is 'users.user',
             # but the NetBox data export will have user records under the label 'auth.user'.
             if content_type_label == "users.user":
                 content_type_label = "auth.user"
             records = [record for record in self.source_data if record["model"] == content_type_label]
-            for record in tqdm(records, disable=(self.verbosity < 1)):
-                self.load_record(diffsync_model, record)
+            if records:
+                for record in ProgressBar(
+                    records,
+                    desc=f"{modelname:<25}",  # len("consoleserverporttemplate")
+                    verbosity=self.verbosity,
+                ):
+                    self.load_record(diffsync_model, record)
 
         self.logger.info("Data loading from NetBox source data complete.")
         # Discard the source data to free up memory
