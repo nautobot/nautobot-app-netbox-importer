@@ -7,6 +7,7 @@ from django.db import models
 import structlog
 
 from .abstract import N2NDiffSync
+from ..models.abstract import NautobotBaseModel
 
 
 IGNORED_FIELD_CLASSES = (GenericRel, GenericForeignKey, models.ManyToManyRel, models.ManyToOneRel)
@@ -23,7 +24,7 @@ class NautobotDiffSync(N2NDiffSync):
 
     logger = structlog.get_logger()
 
-    def load_model(self, diffsync_model, record):
+    def load_model(self, diffsync_model, record):  # pylint: disable=too-many-branches
         """Instantiate the given DiffSync model class from the given Django record."""
         data = {}
 
@@ -46,7 +47,8 @@ class NautobotDiffSync(N2NDiffSync):
 
             # If we got here, the field is some sort of foreign-key reference(s).
             if not value:
-                # It's a null reference though, so we don't need to do anything special with it.
+                # It's a null or empty list reference though, so we don't need to do anything special with it.
+                data[field.name] = value
                 continue
 
             # What's the name of the model that this is a reference to?
@@ -69,16 +71,24 @@ class NautobotDiffSync(N2NDiffSync):
                 continue
 
             if isinstance(value, list):
-                # This field is a one-to-many or many-to-many field, a list of foreign key references.
-                # For each foreign key, find the corresponding DiffSync record, and use its
-                # natural keys (identifiers) in the data in place of the foreign key value.
-                data[field.name] = [
-                    self.get_fk_identifiers(diffsync_model, target_class, foreign_record.pk) for foreign_record in value
-                ]
-            elif isinstance(value, (UUID, int)):
-                # Look up the DiffSync record corresponding to this foreign key,
-                # and store its natural keys (identifiers) in the data in place of the foreign key value.
-                data[field.name] = self.get_fk_identifiers(diffsync_model, target_class, value)
+                # This field is a one-to-many or many-to-many field, a list of object references.
+                if issubclass(target_class, NautobotBaseModel):
+                    # Replace each object reference with its appropriate primary key value
+                    data[field.name] = [foreign_record.pk for foreign_record in value]
+                else:
+                    # Since the PKs of these built-in Django models may differ between NetBox and Nautobot,
+                    # e.g., ContentTypes, replace each reference with the natural key (not PK) of the referenced model.
+                    data[field.name] = [
+                        self.get_by_pk(target_name, foreign_record.pk).get_identifiers() for foreign_record in value
+                    ]
+            elif isinstance(value, UUID):
+                # Standard Nautobot UUID foreign-key reference, no transformation needed.
+                data[field.name] = value
+            elif isinstance(value, int):
+                # Reference to a built-in model by its integer primary key.
+                # Since this may not be the same value between NetBox and Nautobot (e.g., ContentType references)
+                # replace the PK with the natural keys of the referenced model.
+                data[field.name] = self.get_by_pk(target_name, value).get_identifiers()
             else:
                 self.logger.error(f"Invalid PK value {value}")
                 data[field.name] = None
@@ -94,8 +104,5 @@ class NautobotDiffSync(N2NDiffSync):
             self.logger.info(f"Loading all {modelname} records...")
             for instance in diffsync_model.nautobot_model().objects.all():
                 self.load_model(diffsync_model, instance)
-
-        self.logger.info("Fixing up any previously unresolved object relations...")
-        self.fixup_data_relations()
 
         self.logger.info("Data loading from Nautobot complete.")

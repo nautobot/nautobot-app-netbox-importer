@@ -13,9 +13,7 @@ class ObjectPermission(NautobotBaseModel):
     """A mapping of view, add, change, and/or delete permissions for users and/or groups."""
 
     _modelname = "objectpermission"
-    # This model doesn't have any defined uniqueness constraints, but name *ought* to be it
-    _identifiers = ("name",)
-    _attributes = ("object_types", "groups", "users", "actions", "constraints", "description", "enabled")
+    _attributes = ("name", "object_types", "groups", "users", "actions", "constraints", "description", "enabled")
     _nautobot_model = users.ObjectPermission
 
     name: str
@@ -33,8 +31,7 @@ class Token(NautobotBaseModel):
     """An API token used for user authentication."""
 
     _modelname = "token"
-    _identifiers = ("key",)
-    _attributes = ("user", "expires", "write_enabled", "description")
+    _attributes = ("key", "user", "expires", "write_enabled", "description")
     _nautobot_model = users.Token
 
     key: str
@@ -53,8 +50,8 @@ class User(NautobotBaseModel):
     """
 
     _modelname = "user"
-    _identifiers = ("username",)
     _attributes = (
+        "username",
         "first_name",
         "last_name",
         "email",

@@ -17,8 +17,7 @@ class TenantGroup(MPTTModelMixin, OrganizationalModel):
     """An arbitrary collection of Tenants."""
 
     _modelname = "tenantgroup"
-    _identifiers = ("name",)
-    _attributes = (*OrganizationalModel._attributes, "slug", "parent", "description")
+    _attributes = (*OrganizationalModel._attributes, "name", "slug", "parent", "description")
     # Not all Tenants belong to a TenantGroup, so we don't treat them as children
     _nautobot_model = tenancy.TenantGroup
 
@@ -32,8 +31,7 @@ class Tenant(PrimaryModel):
     """A Tenant represents an organization served by the application owner."""
 
     _modelname = "tenant"
-    _identifiers = ("name",)
-    _attributes = (*PrimaryModel._attributes, "slug", "group", "description", "comments")
+    _attributes = (*PrimaryModel._attributes, "name", "slug", "group", "description", "comments")
     _nautobot_model = tenancy.Tenant
 
     name: str

@@ -2482,6 +2482,11 @@
         app_label: virtualization
         model: vminterface
     name: Can view interface
+- model: auth.group
+  ids:
+    name: "Users"
+  fields:
+    permissions: []
 - model: users.user
   ids:
     username: admin
@@ -2510,6 +2515,20 @@
     # last_login: '2021-02-21T23:25:39.132Z'
     last_name: Ministrator
     password: pbkdf2_sha256$216000$da6CZRwS7Ti6$GIUYlTXeEOyZIuEgQTEkohHnvmd3kDn0OCyuT1dM+H4=
+    user_permissions: []
+- model: users.user
+  ids:
+    username: "user"
+  fields:
+    config_data: {}
+    email: ""
+    first_name: ""
+    groups: []
+    is_active: true
+    is_staff: false
+    is_superuser: false
+    last_name: ""
+    password: "pbkdf2_sha256$216000$VwH6xfY9bhMt$SZeGYRQJvvbp/IOTxHUP64juVEo78FNTgqSWCkdz3fM="
     user_permissions: []
 - model: circuits.provider
   ids:
@@ -5226,6 +5245,49 @@
     expires: null
     key: 0123456789abcdef0123456789abcdef01234567
     write_enabled: true
+- model: users.objectpermission
+  ids:
+    name: "Run scripts and reports"
+  fields:
+    actions:
+      - add
+      - change
+      - run
+      - view
+    constraints: null
+    description: ""
+    enabled: true
+    groups:
+      - ids:
+          name: "Users"
+    object_types:
+      - ids:
+          app_label: "extras"
+          model: "job"
+    users: []
+- model: users.objectpermission
+  ids:
+    name: "Parent region control"
+  fields:
+    actions:
+      - add
+      - change
+      - delete
+      - view
+    constraints:
+      parent__isnull: true
+    description: "Full control of parent regions"
+    enabled: true
+    groups:
+      - ids:
+          name: "Users"
+    object_types:
+      - ids:
+          app_label: "dcim"
+          model: "region"
+    users:
+      - ids:
+          username: "admin"
 - model: virtualization.clustertype
   ids:
     name: Cluster Type A
