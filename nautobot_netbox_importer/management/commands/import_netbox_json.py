@@ -62,10 +62,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """Handle execution of the import_netbox_json management command."""
-        if options["netbox_version"] < version.Version("2.10.3"):
-            raise CommandError("Minimum NetBox version supported is 2.10.3")
-        if options["netbox_version"] > version.Version("2.10.5"):
-            raise CommandError("Maximum NetBox version supported is 2.10.5")
+        if options["netbox_version"] not in netbox_adapters:
+            supported_versions = sorted(netbox_adapters.keys())
+            min_version = supported_versions[0]
+            max_version = supported_versions[-1]
+            if options["netbox_version"] < min_version:
+                raise CommandError(f"Minimum NetBox version supported is {min_version}")
+            if options["netbox_version"] > max_version:
+                raise CommandError(f"Maximum NetBox version supported is {max_version}")
+            raise CommandError(f"Unrecognized NetBox version; supported versions are {', '.join(supported_versions)}")
 
         self.enable_logging(verbosity=options["verbosity"])
         logger = structlog.get_logger()

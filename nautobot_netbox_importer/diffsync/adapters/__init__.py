@@ -9,6 +9,9 @@ netbox_adapters = {
     version.parse("2.10.3"): NetBox210DiffSync,
     version.parse("2.10.4"): NetBox210DiffSync,
     version.parse("2.10.5"): NetBox210DiffSync,
+    version.parse("2.10.6"): NetBox210DiffSync,
+    version.parse("2.10.7"): NetBox210DiffSync,
+    version.parse("2.10.8"): NetBox210DiffSync,
 }
 
 __all__ = (

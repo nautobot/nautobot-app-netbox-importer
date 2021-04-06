@@ -10,11 +10,12 @@ from typing import Any, List, Optional
 from uuid import UUID
 
 from pydantic import Field
+from diffsync.exceptions import ObjectNotFound
+import structlog
 
 import nautobot.extras.models as extras
 
 from .abstract import (
-    ArrayField,
     ChangeLoggedModelMixin,
     CustomFieldModelMixin,
     NautobotBaseModel,
@@ -24,6 +25,7 @@ from .references import (
     ClusterGroupRef,
     ClusterRef,
     ContentTypeRef,
+    CustomFieldRef,
     DeviceRoleRef,
     PlatformRef,
     RegionRef,
@@ -36,12 +38,15 @@ from .references import (
 from .validation import DiffSyncCustomValidationField
 
 
+logger = structlog.get_logger()
+
+
 class ConfigContext(ChangeLoggedModelMixin, NautobotBaseModel):
     """A set of arbitrary data available to Devices and VirtualMachines."""
 
     _modelname = "configcontext"
-    _identifiers = ("name",)
     _attributes = (
+        "name",
         "weight",
         "description",
         "is_active",
@@ -79,8 +84,8 @@ class CustomField(NautobotBaseModel):
     """Custom field defined on a model(s)."""
 
     _modelname = "customfield"
-    _identifiers = ("name",)
     _attributes = (
+        "name",
         "content_types",
         "type",
         "label",
@@ -92,7 +97,6 @@ class CustomField(NautobotBaseModel):
         "validation_minimum",
         "validation_maximum",
         "validation_regex",
-        "choices",
     )
     _nautobot_model = extras.CustomField
 
@@ -109,15 +113,46 @@ class CustomField(NautobotBaseModel):
     validation_minimum: Optional[int]
     validation_maximum: Optional[int]
     validation_regex: str
-    choices: Optional[ArrayField]
+
+    @classmethod
+    def special_clean(cls, diffsync, ids, attrs):
+        """Special-case handling for the "default" attribute."""
+        if attrs.get("default") and attrs["type"] in ("select", "multiselect"):
+            # There's a bit of a chicken-and-egg problem here in that we have to create a CustomField
+            # before we can create any CustomFieldChoice records that reference it, but the "default"
+            # attribute on the CustomField is only valid if it references an existing CustomFieldChoice.
+            # So what we have to do is skip over the "default" field if it references a nonexistent CustomFieldChoice.
+            default = attrs.get("default")
+            try:
+                diffsync.get("customfieldchoice", {"field": {"name": attrs["name"]}, "value": default})
+            except ObjectNotFound:
+                logger.debug(
+                    "CustomFieldChoice not yet present to set as 'default' for CustomField, will fixup later",
+                    field=attrs["name"],
+                    default=default,
+                )
+                del attrs["default"]
+
+
+class CustomFieldChoice(NautobotBaseModel):
+    """One of the valid options for a CustomField of type "select" or "multiselect"."""
+
+    _modelname = "customfieldchoice"
+    # Since these only exist in Nautobot and not in NetBox, we can't match them between the two systems by PK.
+    _identifiers = ("field", "value")
+    _attributes = ("weight",)
+    _nautobot_model = extras.CustomFieldChoice
+
+    field: CustomFieldRef
+    value: str
+    weight: int = 100
 
 
 class CustomLink(ChangeLoggedModelMixin, NautobotBaseModel):
     """A custom link to an external representation of a Nautobot object."""
 
     _modelname = "customlink"
-    _identifiers = ("name",)
-    _attributes = ("content_type", "text", "target_url", "weight", "group_name", "button_class", "new_window")
+    _attributes = ("name", "content_type", "text", "target_url", "weight", "group_name", "button_class", "new_window")
     _nautobot_model = extras.CustomLink
 
     name: str
@@ -142,8 +177,7 @@ class ExportTemplate(ChangeLoggedModelMixin, NautobotBaseModel):
     """A Jinja2 template for exporting records as text."""
 
     _modelname = "exporttemplate"
-    _identifiers = ("name",)
-    _attributes = ("content_type", "description", "template_code", "mime_type", "file_extension")
+    _attributes = ("name", "content_type", "description", "template_code", "mime_type", "file_extension")
     _nautobot_model = extras.ExportTemplate
 
     name: str
@@ -153,18 +187,6 @@ class ExportTemplate(ChangeLoggedModelMixin, NautobotBaseModel):
     template_code: str
     mime_type: str
     file_extension: str
-
-
-class JobResultContentTypeRef(ContentTypeRef):
-    """Map NetBox Script and Report contenttypes to Nautobot Job contenttype."""
-
-    @classmethod
-    def validate(cls, value):
-        """Map Script and Report models to Job."""
-        value = super().validate(value)
-        if "model" in value and value["model"] in ("script", "report"):
-            value["model"] = "job"
-        return cls(value)
 
 
 class JobResultData(DiffSyncCustomValidationField, dict):
@@ -212,14 +234,13 @@ class JobResult(NautobotBaseModel):
     """Results of running a Job / Script / Report."""
 
     _modelname = "jobresult"
-    _identifiers = ("job_id",)
-    _attributes = ("name", "obj_type", "completed", "user", "status", "data")
+    _attributes = ("job_id", "name", "obj_type", "completed", "user", "status", "data")
     _nautobot_model = extras.JobResult
 
     job_id: UUID
 
     name: str
-    obj_type: JobResultContentTypeRef
+    obj_type: ContentTypeRef
     completed: Optional[datetime]
     user: Optional[UserRef]
     status: str  # not a StatusRef!
@@ -232,8 +253,7 @@ class Status(ChangeLoggedModelMixin, NautobotBaseModel):
     """Representation of a status value."""
 
     _modelname = "status"
-    _identifiers = ("slug",)
-    _attributes = ("name", "color", "description")  # TODO content_types?
+    _attributes = ("slug", "name", "color", "description")  # TODO content_types?
     _nautobot_model = extras.Status
 
     slug: str
@@ -248,8 +268,7 @@ class Tag(ChangeLoggedModelMixin, CustomFieldModelMixin, NautobotBaseModel):
     """A tag that can be associated with various objects."""
 
     _modelname = "tag"
-    _identifiers = ("name",)
-    _attributes = (*CustomFieldModelMixin._attributes, "slug", "color", "description")
+    _attributes = (*CustomFieldModelMixin._attributes, "name", "slug", "color", "description")
     _nautobot_model = extras.Tag
 
     name: str
@@ -263,7 +282,7 @@ class TaggedItem(NautobotBaseModel):
     """Mapping between a record and a Tag."""
 
     _modelname = "taggeditem"
-    _identifiers = ("content_type", "object_id", "tag")
+    _attributes = ("content_type", "object_id", "tag")
     _nautobot_model = extras.TaggedItem
 
     content_type: ContentTypeRef
@@ -276,8 +295,8 @@ class Webhook(ChangeLoggedModelMixin, NautobotBaseModel):
     """A Webhook defines a request that will be sent to a remote application."""
 
     _modelname = "webhook"
-    _identifiers = ("name",)
     _attributes = (
+        "name",
         "content_types",
         "type_create",
         "type_update",
