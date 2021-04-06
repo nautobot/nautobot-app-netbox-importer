@@ -99,7 +99,7 @@ class NautobotDiffSync(N2NDiffSync):
     def load(self):
         """Load all available and relevant data from Nautobot in the appropriate sequence."""
         self.logger.info("Loading data from Nautobot into DiffSync...")
-        for modelname in ("contenttype", "status", *self.top_level):
+        for modelname in ("contenttype", "permission", "status", *self.top_level):
             diffsync_model = getattr(self, modelname)
             self.logger.info(f"Loading all {modelname} records...")
             for instance in diffsync_model.nautobot_model().objects.all():

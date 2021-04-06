@@ -128,7 +128,7 @@ class N2NDiffSync(DiffSync):
 
     top_level = (
         # "contenttype", Not synced, as these are hard-coded in NetBox/Nautobot
-        "permission",
+        # "permission", Not synced, as these are superseded by "objectpermission"
         "group",
         "user",  # Includes NetBox "userconfig" model as well
         "objectpermission",

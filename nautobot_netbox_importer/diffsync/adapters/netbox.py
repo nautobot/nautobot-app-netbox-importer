@@ -3,6 +3,7 @@
 import json
 from uuid import uuid4
 
+from diffsync.enum import DiffSyncModelFlags
 import structlog
 
 from .abstract import N2NDiffSync
@@ -20,7 +21,7 @@ class NetBox210DiffSync(N2NDiffSync):
         self.source_data = source_data
         super().__init__(*args, **kwargs)
 
-    def load_record(self, diffsync_model, record):  # pylint: disable=too-many-branches
+    def load_record(self, diffsync_model, record):  # pylint: disable=too-many-branches,too-many-statements
         """Instantiate the given model class from the given record."""
         data = record["fields"].copy()
         data["pk"] = record["pk"]
@@ -67,8 +68,13 @@ class NetBox210DiffSync(N2NDiffSync):
                     data[key] = [netbox_pk_to_nautobot_pk(target_name, pk) for pk in data[key]]
                 else:
                     # It's a base Django model such as ContentType or Group.
-                    # Since we can't easily control its PK in Nautobot, use its natural key instead
-                    data[key] = [self.get_by_pk(target_name, pk).get_identifiers() for pk in data[key]]
+                    # Since we can't easily control its PK in Nautobot, use its natural key instead.
+                    #
+                    # Special case: there are ContentTypes in NetBox that don't exist in Nautobot,
+                    # skip over references to them.
+                    references = [self.get_by_pk(target_name, pk) for pk in data[key]]
+                    references = filter(lambda entry: not entry.model_flags & DiffSyncModelFlags.IGNORE, references)
+                    data[key] = [entry.get_identifiers() for entry in references]
             elif isinstance(data[key], int):
                 # Standard NetBox integer foreign-key reference
                 if issubclass(target_class, NautobotBaseModel):
@@ -77,7 +83,11 @@ class NetBox210DiffSync(N2NDiffSync):
                 else:
                     # It's a base Django model such as ContentType or Group.
                     # Since we can't easily control its PK in Nautobot, use its natural key instead
-                    data[key] = self.get_by_pk(target_name, data[key]).get_identifiers()
+                    reference = self.get_by_pk(target_name, data[key])
+                    if reference.model_flags & DiffSyncModelFlags.IGNORE:
+                        data[key] = None
+                    else:
+                        data[key] = reference.get_identifiers()
             else:
                 self.logger.error(f"Invalid PK value {data[key]}")
                 data[key] = None
@@ -111,7 +121,7 @@ class NetBox210DiffSync(N2NDiffSync):
     def load(self):
         """Load records from the provided source_data into DiffSync."""
         self.logger.info("Loading imported NetBox source data into DiffSync...")
-        for modelname in ("contenttype", *self.top_level):
+        for modelname in ("contenttype", "permission", *self.top_level):
             diffsync_model = getattr(self, modelname)
             self.logger.info(f"Loading all {modelname} records...")
             content_type_label = diffsync_model.nautobot_model()._meta.label_lower

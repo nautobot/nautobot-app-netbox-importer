@@ -82,6 +82,10 @@ class DjangoBaseModel(DiffSyncModel):
         """Given a diffsync model and identifier (natural key or primary key) look up the Nautobot record."""
         try:
             if isinstance(diffsync_value, dict):
+                # Handle nested natural key references (e.g. Group -> Permission -> ContentType)
+                for key, value in diffsync_value.items():
+                    if isinstance(value, dict):
+                        diffsync_value[key] = getattr(diffsync_model.nautobot_model(), key).get_queryset().get(**value)
                 return diffsync_model.nautobot_model().objects.get(**diffsync_value)
             # Else, assume it's a primary key value
             return diffsync_model.nautobot_model().objects.get(pk=diffsync_value)
@@ -142,7 +146,10 @@ class DjangoBaseModel(DiffSyncModel):
                 # This is a one-to-many or many-to-many field
                 nautobot_value = []
                 for unique_id in list(diffsync_value):
-                    target_nautobot_record = cls._get_nautobot_record(target_class, unique_id)
+                    # References to nonexistent content-types are "normal" and so shouldn't be logged as loud failures
+                    target_nautobot_record = cls._get_nautobot_record(
+                        target_class, unique_id, fail_quiet=(target_diffsync_class_name == "contenttype")
+                    )
                     if target_nautobot_record:
                         nautobot_value.append(target_nautobot_record)
                     else:
