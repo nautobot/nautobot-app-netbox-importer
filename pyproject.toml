@@ -20,7 +20,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.6"
-diffsync = "^1.2.0"
+diffsync = {git = "https://github.com/networktocode/diffsync.git", rev = "master"}
 nautobot = ">=1.0.0b3,<2.0"
 tqdm = "^4.59.0"
 colorama = "^0.4.4"
