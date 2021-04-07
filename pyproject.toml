@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautobot-netbox-importer"
-version = "1.0.1"
+version = "1.1.0"
 description = "Data importer from NetBox 2.10.x to Nautobot"
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 
