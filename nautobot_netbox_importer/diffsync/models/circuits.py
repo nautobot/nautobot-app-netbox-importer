@@ -26,9 +26,9 @@ class Provider(PrimaryModel):
     """Each Circuit belongs to a Provider."""
 
     _modelname = "provider"
-    _identifiers = ("name",)
     _attributes = (
         *PrimaryModel._attributes,
+        "name",
         "slug",
         "asn",
         "account",
@@ -53,8 +53,7 @@ class CircuitType(OrganizationalModel):
     """Circuits can be organized by their functional role."""
 
     _modelname = "circuittype"
-    _identifiers = ("name",)
-    _attributes = (*OrganizationalModel._attributes, "slug", "description")
+    _attributes = (*OrganizationalModel._attributes, "name", "slug", "description")
     _nautobot_model = circuits.CircuitType
 
     name: str
@@ -66,10 +65,11 @@ class Circuit(StatusModelMixin, PrimaryModel):
     """A communications circuit connects two points."""
 
     _modelname = "circuit"
-    _identifiers = ("provider", "cid")
     _attributes = (
         *PrimaryModel._attributes,
         *StatusModelMixin._attributes,
+        "provider",
+        "cid",
         "status",
         "type",
         "tenant",
@@ -101,9 +101,10 @@ class CircuitTermination(CableTerminationMixin, NautobotBaseModel):
     """An endpoint of a Circuit."""
 
     _modelname = "circuittermination"
-    _identifiers = ("circuit", "term_side")
     _attributes = (
         *CableTerminationMixin._attributes,
+        "circuit",
+        "term_side",
         "site",
         "port_speed",
         "upstream_speed",

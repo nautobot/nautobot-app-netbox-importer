@@ -6,28 +6,67 @@ to an object of the given type.
 
 from uuid import UUID
 
-from .validation import DiffSyncCustomValidationField
+from .validation import DiffSyncCustomValidationField, netbox_pk_to_nautobot_pk
 
 
-class ForeignKeyField(DiffSyncCustomValidationField, dict):
-    """Convenience class for representing foreign keys (as natural keys) in DiffSync."""
+class ForeignKeyField(DiffSyncCustomValidationField, UUID):
+    """Convenience class for translating NetBox foreign keys to Nautobot UUID keys."""
+
+    to_name: str
 
     @classmethod
     def validate(cls, value):
-        """Allow a reference to a locally significant PK as a temporary placeholder value."""
-        if isinstance(value, (int, UUID)):
-            value = {"pk": value}
+        """Map NetBox integer PKs to Nautobot UUID PKs, but leave dicts and UUIDs alone."""
+        if isinstance(value, int):
+            value = netbox_pk_to_nautobot_pk(cls.to_name, value)
+
+        if isinstance(value, UUID):
+            # cls(UUID) is an error, but cls(str(UUID)) reconstructs the original UUID
+            value = str(value)
+        elif isinstance(value, dict):
+            # Model such as Status for which we might not know the PK, and instead are
+            # referencing it as a dict of fields - leave it as a dict.
+            return value
+
         return cls(value)
 
 
 def foreign_key_field(to_name: str):
-    """Helper method to create a type for a foreign key to a specific model."""
+    """Helper method to create a type for a foreign key to a specific Nautobot model."""
 
-    class TaggedForeignKeyField(ForeignKeyField):
-        """Convenience class for representing foreign keys (as natural keys) in DiffSync."""
+    class TaggedForeignKeyField(ForeignKeyField):  # pylint: disable=missing-class-docstring
+        pass
 
+    TaggedForeignKeyField.__doc__ = f"""Field that translates NetBox {to_name} foreign keys to Nautobot UUID keys."""
     TaggedForeignKeyField.to_name = to_name
     return TaggedForeignKeyField
+
+
+class ContentTypeRef(DiffSyncCustomValidationField, dict):
+    """Foreign-key reference to a ContentType.
+
+    Since ContentType is an automatically generated model, we can't control its PK.
+    """
+
+    to_name = "contenttype"
+
+    @classmethod
+    def validate(cls, value):
+        """Coerce references to a Script or Report (NetBox) ContentType into a Job (Nautobot) ContentType ref."""
+        if isinstance(value, dict):
+            if "model" in value and value["model"] in ("script", "report"):
+                value["model"] = "job"
+        return cls(value)
+
+
+class GroupRef(dict):
+    """Foreign-key reference to a user Group.
+
+    Since Group is a built-in Django model, it doesn't have a UUID primary key,
+    so we refer to it by natural keys instead.
+    """
+
+    to_name = "group"
 
 
 CableRef = foreign_key_field("cable")
@@ -36,11 +75,10 @@ CircuitTypeRef = foreign_key_field("circuittype")
 ClusterRef = foreign_key_field("cluster")
 ClusterGroupRef = foreign_key_field("clustergroup")
 ClusterTypeRef = foreign_key_field("clustertype")
-ContentTypeRef = foreign_key_field("contenttype")
+CustomFieldRef = foreign_key_field("customfield")
 DeviceRef = foreign_key_field("device")
 DeviceRoleRef = foreign_key_field("devicerole")
 DeviceTypeRef = foreign_key_field("devicetype")
-GroupRef = foreign_key_field("group")
 InterfaceRef = foreign_key_field("interface")
 InventoryItemRef = foreign_key_field("inventoryitem")
 IPAddressRef = foreign_key_field("ipaddress")

@@ -54,10 +54,11 @@ class Cable(StatusModelMixin, PrimaryModel):
     """A physical connection between two endpoints."""
 
     _modelname = "cable"
-    _identifiers = ("termination_a_type", "termination_a_id")
     _attributes = (
         *PrimaryModel._attributes,
         *StatusModelMixin._attributes,
+        "termination_a_type",
+        "termination_a_id",
         "termination_b_type",
         "termination_b_id",
         "type",
@@ -125,13 +126,10 @@ class Device(ConfigContextModelMixin, StatusModelMixin, PrimaryModel):
     """A Device represents a piece of physical hardware mounted within a Rack."""
 
     _modelname = "device"
-    # Although dcim.Device defines (site, tenant, name) as a unique_together constraint,
-    # multiple devices in the same site/tenant may coexist with a NULL name because NULL != NULL.
-    # Similarly (rack, position, face) is unique_together but multiple un-racked devices may coexist.
-    # Similarly (virtual_chassis, vc_position) is unique_together but multiple non-vc devices may coexist.
-    # In short, to avoid treating distinct Device records incorrectly as duplicates, we
-    # need to consider **most attributes** as "identifiers" of a unique Device.
-    _identifiers = (
+    _attributes = (
+        *PrimaryModel._attributes,
+        *ConfigContextModelMixin._attributes,
+        *StatusModelMixin._attributes,
         "site",
         "tenant",
         "name",
@@ -146,22 +144,9 @@ class Device(ConfigContextModelMixin, StatusModelMixin, PrimaryModel):
         "serial",
         "asset_tag",
         "cluster",
-    )
-    _attributes = (
-        *PrimaryModel._attributes,
-        *ConfigContextModelMixin._attributes,
-        *StatusModelMixin._attributes,
-        # Due to model loading order, VirtualChassis references will initially be None and
-        # will only later be set; since a model's identifiers may not change after instantiation,
-        # we cannot treat this as an identifier.
         "virtual_chassis",
-        # Due to model loading order, IPAddress references will initially be None and will
-        # only later be set; since a model's identifiers may not change after instantiation,
-        # we cannot treat these as identifiers.
         "primary_ip4",
         "primary_ip6",
-        # Highly unlikely that two Devices will be identical in all respects save their comments;
-        # plus comments are the field most likely to change between subsequent data imports.
         "comments",
     )
     _nautobot_model = dcim.Device
@@ -208,8 +193,7 @@ class DeviceRole(OrganizationalModel):
     """Devices are organized by functional role."""
 
     _modelname = "devicerole"
-    _identifiers = ("name",)
-    _attributes = (*OrganizationalModel._attributes, "slug", "color", "vm_role", "description")
+    _attributes = (*OrganizationalModel._attributes, "name", "slug", "color", "vm_role", "description")
     _nautobot_model = dcim.DeviceRole
 
     name: str
@@ -223,9 +207,10 @@ class DeviceType(PrimaryModel):
     """A DeviceType represents a particular make and model of device."""
 
     _modelname = "devicetype"
-    _identifiers = ("manufacturer", "model")
     _attributes = (
         *PrimaryModel._attributes,
+        "manufacturer",
+        "model",
         "slug",
         "part_number",
         "u_height",
@@ -316,8 +301,17 @@ class InventoryItem(MPTTModelMixin, ComponentModel):
     """A serialized piece of hardware within a Device."""
 
     _modelname = "inventoryitem"
-    _identifiers = ("device", "parent", "name")
-    _attributes = (*ComponentModel._attributes, "manufacturer", "part_id", "serial", "asset_tag", "discovered")
+    _attributes = (
+        *ComponentModel._attributes,
+        "device",
+        "parent",
+        "name",
+        "manufacturer",
+        "part_id",
+        "serial",
+        "asset_tag",
+        "discovered",
+    )
     _nautobot_model = dcim.InventoryItem
 
     parent: Optional[InventoryItemRef]
@@ -332,8 +326,7 @@ class Manufacturer(OrganizationalModel):
     """A Manufacturer represents a company which produces hardware devices."""
 
     _modelname = "manufacturer"
-    _identifiers = ("name",)
-    _attributes = (*OrganizationalModel._attributes, "slug", "description")
+    _attributes = (*OrganizationalModel._attributes, "name", "slug", "description")
     _nautobot_model = dcim.Manufacturer
 
     name: str
@@ -345,9 +338,9 @@ class Platform(OrganizationalModel):
     """Platform refers to the software or firmware running on a device."""
 
     _modelname = "platform"
-    _identifiers = ("name",)
     _attributes = (
         *OrganizationalModel._attributes,
+        "name",
         "slug",
         "manufacturer",
         "napalm_driver",
@@ -368,11 +361,12 @@ class PowerFeed(CableTerminationMixin, StatusModelMixin, PrimaryModel):
     """An electrical circuit delivered from a PowerPanel."""
 
     _modelname = "powerfeed"
-    _identifiers = ("power_panel", "name")
     _attributes = (
         *PrimaryModel._attributes,
         *CableTerminationMixin._attributes,
         *StatusModelMixin._attributes,
+        "power_panel",
+        "name",
         "rack",
         "type",
         "supply",
@@ -427,11 +421,7 @@ class PowerPanel(PrimaryModel):
     """A distribution point for electrical power."""
 
     _modelname = "powerpanel"
-    _identifiers = (
-        "site",
-        "name",
-    )
-    _attributes = (*PrimaryModel._attributes, "rack_group")
+    _attributes = (*PrimaryModel._attributes, "site", "name", "rack_group")
     _nautobot_model = dcim.PowerPanel
 
     site: SiteRef
@@ -473,10 +463,11 @@ class Rack(StatusModelMixin, PrimaryModel):
     """Devices are housed within Racks."""
 
     _modelname = "rack"
-    _identifiers = ("group", "name")
     _attributes = (
         *PrimaryModel._attributes,
         *StatusModelMixin._attributes,
+        "group",
+        "name",
         "facility_id",
         "site",
         "tenant",
@@ -517,8 +508,7 @@ class RackGroup(MPTTModelMixin, OrganizationalModel):
     """Racks can be grouped as subsets within a Site."""
 
     _modelname = "rackgroup"
-    _identifiers = ("site", "name")
-    _attributes = (*OrganizationalModel._attributes, "slug", "parent", "description")
+    _attributes = (*OrganizationalModel._attributes, "site", "name", "slug", "parent", "description")
     # Not all Racks belong to a RackGroup, so we don't treat Racks as a child.
     _nautobot_model = dcim.RackGroup
 
@@ -533,9 +523,7 @@ class RackReservation(PrimaryModel):
     """One or more reserved units within a Rack."""
 
     _modelname = "rackreservation"
-    # RackReservation doesn't have a set of unique keys, but no two RackReservations for the same Rack should overlap
-    _identifiers = ("rack", "units")
-    _attributes = (*PrimaryModel._attributes, "tenant", "user", "description")
+    _attributes = (*PrimaryModel._attributes, "rack", "units", "tenant", "user", "description")
     _nautobot_model = dcim.RackReservation
 
     rack: RackRef
@@ -549,8 +537,7 @@ class RackRole(OrganizationalModel):
     """Racks can be organized by functional role."""
 
     _modelname = "rackrole"
-    _identifiers = ("name",)
-    _attributes = (*OrganizationalModel._attributes, "slug", "color", "description")
+    _attributes = (*OrganizationalModel._attributes, "name", "slug", "color", "description")
     _nautobot_model = dcim.RackRole
 
     name: str
@@ -590,8 +577,7 @@ class Region(MPTTModelMixin, OrganizationalModel):
     """Sites can be grouped within geographic Regions."""
 
     _modelname = "region"
-    _identifiers = ("name",)
-    _attributes = (*OrganizationalModel._attributes, "parent", "slug", "description")
+    _attributes = (*OrganizationalModel._attributes, "name", "parent", "slug", "description")
     # Not all Sites belong to a Region, so we don't treat Sites as a child.
     _nautobot_model = dcim.Region
 
@@ -605,10 +591,10 @@ class Site(StatusModelMixin, PrimaryModel):
     """A Site represents a geographic location within a network."""
 
     _modelname = "site"
-    _identifiers = ("name",)
     _attributes = (
         *PrimaryModel._attributes,
         *StatusModelMixin._attributes,
+        "name",
         "slug",
         "region",
         "tenant",
@@ -658,9 +644,7 @@ class VirtualChassis(PrimaryModel):
     """A collection of Devices which operate with a shared control plane."""
 
     _modelname = "virtualchassis"
-    # As implemented in NetBox and Nautobot, none of these are required to be unique. Probably a bug!
-    _identifiers = ("master", "name", "domain")
-    _attributes = (*PrimaryModel._attributes,)
+    _attributes = (*PrimaryModel._attributes, "master", "name", "domain")
     _nautobot_model = dcim.VirtualChassis
 
     master: Optional[DeviceRef]

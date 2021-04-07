@@ -76,7 +76,7 @@
   fields:
     content_type:
       ids:
-        app_label: auth
+        app_label: users
         model: user
     name: Can add user
 - model: auth.permission
@@ -85,7 +85,7 @@
   fields:
     content_type:
       ids:
-        app_label: auth
+        app_label: users
         model: user
     name: Can change user
 - model: auth.permission
@@ -94,7 +94,7 @@
   fields:
     content_type:
       ids:
-        app_label: auth
+        app_label: users
         model: user
     name: Can delete user
 - model: auth.permission
@@ -103,7 +103,7 @@
   fields:
     content_type:
       ids:
-        app_label: auth
+        app_label: users
         model: user
     name: Can view user
 - model: auth.permission
@@ -2268,42 +2268,6 @@
     name: Can view token
 - model: auth.permission
   ids:
-    codename: add_userconfig
-  fields:
-    content_type:
-      ids:
-        app_label: users
-        model: userconfig
-    name: Can add User Preferences
-- model: auth.permission
-  ids:
-    codename: change_userconfig
-  fields:
-    content_type:
-      ids:
-        app_label: users
-        model: userconfig
-    name: Can change User Preferences
-- model: auth.permission
-  ids:
-    codename: delete_userconfig
-  fields:
-    content_type:
-      ids:
-        app_label: users
-        model: userconfig
-    name: Can delete User Preferences
-- model: auth.permission
-  ids:
-    codename: view_userconfig
-  fields:
-    content_type:
-      ids:
-        app_label: users
-        model: userconfig
-    name: Can view User Preferences
-- model: auth.permission
-  ids:
     codename: add_objectpermission
   fields:
     content_type:
@@ -2518,10 +2482,29 @@
         app_label: virtualization
         model: vminterface
     name: Can view interface
-- model: auth.user
+- model: auth.group
+  ids:
+    name: "Users"
+  fields:
+    permissions: []
+- model: users.user
   ids:
     username: admin
   fields:
+    config_data:
+      tables:
+        CircuitTable:
+          columns:
+            - "cid"
+            - "provider"
+            - "type"
+            - "status"
+            - "tenant"
+            - "a_side"
+            - "z_side"
+            - "commit_rate"
+            - "description"
+            - "tags"
     # date_joined: '2021-02-21T22:47:00.374Z'
     email: admin@example.com
     first_name: Andy
@@ -2532,6 +2515,20 @@
     # last_login: '2021-02-21T23:25:39.132Z'
     last_name: Ministrator
     password: pbkdf2_sha256$216000$da6CZRwS7Ti6$GIUYlTXeEOyZIuEgQTEkohHnvmd3kDn0OCyuT1dM+H4=
+    user_permissions: []
+- model: users.user
+  ids:
+    username: "user"
+  fields:
+    config_data: {}
+    email: ""
+    first_name: ""
+    groups: []
+    is_active: true
+    is_staff: false
+    is_superuser: false
+    last_name: ""
+    password: "pbkdf2_sha256$216000$VwH6xfY9bhMt$SZeGYRQJvvbp/IOTxHUP64juVEo78FNTgqSWCkdz3fM="
     user_permissions: []
 - model: circuits.provider
   ids:
@@ -2618,7 +2615,9 @@
         cid: "Circuit A"
     term_side: A
   fields:
-    cable: null
+    cable:
+      ids:
+        label: "Circuit A to Circuit B"
     description: ''
     port_speed: null
     pp_info: ''
@@ -2634,7 +2633,9 @@
         cid: "Circuit B"
     term_side: A
   fields:
-    # TODO cable: 7
+    cable:
+      ids:
+        label: "Circuit A to Circuit B"
     description: B
     port_speed: 1
     pp_info: B
@@ -2650,7 +2651,7 @@
         cid: "Circuit B"
     term_side: Z
   fields:
-    # TODO cable: 7
+    cable: null
     description: ''
     port_speed: null
     pp_info: ''
@@ -3078,7 +3079,9 @@
       ids:
         name: "Cluster A"
     comments: ''
-    custom_field_data: {}
+    custom_field_data:
+      nonexistent_field: 1
+      "Custom Text Field A": -1
     device_role:
       ids:
         name: "Device Role A"
@@ -3119,7 +3122,9 @@
       ids:
         name: "Cluster A"
     comments: ''
-    custom_field_data: {}
+    custom_field_data:
+        "Custom Text Field A": "alpha"
+        "Custom Integer Field B": 22
     device_role:
       ids:
         name: "Device Role A"
@@ -3741,7 +3746,8 @@
     contact_email: ''
     contact_name: ''
     contact_phone: ''
-    custom_field_data: {}
+    custom_field_data:
+      "Custom Choices Field": "alpha"
     description: ''
     facility: ''
     latitude: null
@@ -3768,7 +3774,8 @@
     contact_email: ''
     contact_name: ''
     contact_phone: ''
-    custom_field_data: {}
+    custom_field_data:
+      "Custom Choices Field": "beta"
     description: ''
     facility: ''
     latitude: null
@@ -4250,7 +4257,6 @@
   ids:
     name: Custom Text Field A
   fields:
-    choices: '[]'
     content_types:
     - ids:
         app_label: "dcim"
@@ -4269,7 +4275,6 @@
   ids:
     name: Custom Integer Field B
   fields:
-    choices: '[]'
     content_types:
     - ids:
         app_label: "dcim"
@@ -4278,11 +4283,61 @@
     description: B
     filter_logic: loose
     label: B
-    required: false
+    required: true
     type: integer
     validation_maximum: 1000
     validation_minimum: 0
     validation_regex: ''
+    weight: 100
+- model: extras.customfield
+  ids:
+    name: "Custom Choices Field"
+  fields:
+    content_types:
+    - ids:
+        app_label: "dcim"
+        model: "site"
+    default: "alpha"
+    description: ""
+    filter_logic: "loose"
+    label: "Choices"
+    required: false
+    type: "select"
+    validation_maximum: null
+    validation_minimum: null
+    validation_regex: ""
+    weight: 100
+- model: extras.customfieldchoice
+  ids:
+    field:
+      ids:
+        name: "Custom Choices Field"
+    value: "alpha"
+  fields:
+    weight: 100
+- model: extras.customfieldchoice
+  ids:
+    field:
+      ids:
+        name: "Custom Choices Field"
+    value: "beta"
+  fields:
+    weight: 100
+- model: extras.customfieldchoice
+  ids:
+    field:
+      ids:
+        name: "Custom Choices Field"
+    value: "gamma"
+  fields:
+    weight: 100
+- model: extras.customfieldchoice
+  ids:
+    field:
+      ids:
+        name: "Custom Choices Field"
+    value: "delta"
+  fields:
     weight: 100
 - model: extras.tag
   ids:
@@ -4702,27 +4757,16 @@
     tag:
       ids:
         name: "Tag A"
-# TODO: need object_id to distinguish between two cable with Tag B
-# - model: extras.taggeditem
-#   ids:
-#     content_type:
-#       ids:
-#         app_label: "dcim"
-#         model: "cable"
-# # TODO    object_id: 1
-#     tag:
-#       ids:
-#         name: "Tag B"
-# - model: extras.taggeditem
-#   ids:
-#     content_type:
-#       ids:
-#         app_label: "dcim"
-#         model: "cable"
-# # TODO    object_id: 7
-#     tag:
-#       ids:
-#         name: "Tag B"
+- model: extras.taggeditem
+  ids:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "cable"
+# TODO    object_id: 1
+    tag:
+      ids:
+        name: "Tag B"
 - model: extras.taggeditem
   ids:
     content_type:
@@ -5191,13 +5235,6 @@
       ids:
         name: "Child Tenant Group"
     slug: tenant-b
-- model: users.userconfig
-  ids:
-    user:
-      ids:
-        username: "admin"
-  fields:
-    data: {}
 - model: users.token
   ids:
     user:
@@ -5208,6 +5245,49 @@
     expires: null
     key: 0123456789abcdef0123456789abcdef01234567
     write_enabled: true
+- model: users.objectpermission
+  ids:
+    name: "Run scripts and reports"
+  fields:
+    actions:
+      - add
+      - change
+      - run
+      - view
+    constraints: null
+    description: ""
+    enabled: true
+    groups:
+      - ids:
+          name: "Users"
+    object_types:
+      - ids:
+          app_label: "extras"
+          model: "job"
+    users: []
+- model: users.objectpermission
+  ids:
+    name: "Parent region control"
+  fields:
+    actions:
+      - add
+      - change
+      - delete
+      - view
+    constraints:
+      parent__isnull: true
+    description: "Full control of parent regions"
+    enabled: true
+    groups:
+      - ids:
+          name: "Users"
+    object_types:
+      - ids:
+          app_label: "dcim"
+          model: "region"
+    users:
+      - ids:
+          username: "admin"
 - model: virtualization.clustertype
   ids:
     name: Cluster Type A

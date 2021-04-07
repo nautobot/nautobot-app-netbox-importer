@@ -19,9 +19,8 @@ class TestImport(TestCase):
     """Test the importing functionality of nautobot-netbox-importer."""
 
     @classmethod
-    def setUpClass(cls) -> None:
+    def setUpTestData(cls) -> None:
         """One-time setup function called before running the test functions in this class."""
-        super().setUpClass()
         with open(NETBOX_DATA_FILE, "r") as handle:
             Command().handle(json_file=handle, netbox_version=version.Version("2.10.4"), verbosity=0)
         with open(NAUTOBOT_DATA_FILE, "r") as handle:
@@ -80,6 +79,11 @@ class TestImport(TestCase):
                     if isinstance(expected_value, list) and not isinstance(actual_value, list):
                         actual_value = list(actual_value.get_queryset())
 
-                    self.assertEqual(
-                        expected_value, actual_value, f"key {key} on {model} {record} ({actual_value}) is incorrect"
-                    )
+                    self.assertEqual(expected_value, actual_value, f"key '{key}'' on {model} '{record}' is incorrect")
+
+    def test_resync_without_changes_correctness(self):
+        """Resync (with no changes to the source data) and verify that data is still correct."""
+        with open(NETBOX_DATA_FILE, "r") as handle:
+            Command().handle(json_file=handle, netbox_version=version.Version("2.10.4"), verbosity=0)
+        # TODO check logs for errors and such
+        self.test_imported_data_correctness()

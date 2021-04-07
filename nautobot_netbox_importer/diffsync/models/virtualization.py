@@ -36,8 +36,7 @@ class ClusterType(OrganizationalModel):
     """A type of Cluster."""
 
     _modelname = "clustertype"
-    _identifiers = ("name",)
-    _attributes = (*OrganizationalModel._attributes, "slug", "description")
+    _attributes = (*OrganizationalModel._attributes, "name", "slug", "description")
     _nautobot_model = virtualization.ClusterType
 
     name: str
@@ -49,8 +48,7 @@ class ClusterGroup(OrganizationalModel):
     """An organizational group of Clusters."""
 
     _modelname = "clustergroup"
-    _identifiers = ("name",)
-    _attributes = (*OrganizationalModel._attributes, "slug", "description")
+    _attributes = (*OrganizationalModel._attributes, "name", "slug", "description")
     _nautobot_model = virtualization.ClusterGroup
 
     name: str
@@ -62,8 +60,7 @@ class Cluster(PrimaryModel):
     """A cluster of VirtualMachines, optionally associated with one or more Devices."""
 
     _modelname = "cluster"
-    _identifiers = ("name",)
-    _attributes = (*PrimaryModel._attributes, "type", "group", "tenant", "site", "comments")
+    _attributes = (*PrimaryModel._attributes, "name", "type", "group", "tenant", "site", "comments")
     _nautobot_model = virtualization.Cluster
 
     name: str
@@ -78,11 +75,13 @@ class VirtualMachine(ConfigContextModelMixin, StatusModelMixin, PrimaryModel):
     """A virtual machine which runs inside a Cluster."""
 
     _modelname = "virtualmachine"
-    _identifiers = ("cluster", "tenant", "name")
     _attributes = (
         *ConfigContextModelMixin._attributes,
         *StatusModelMixin._attributes,
         *PrimaryModel._attributes,
+        "cluster",
+        "tenant",
+        "name",
         "platform",
         "role",
         "primary_ip4",
@@ -111,10 +110,11 @@ class VMInterface(CustomFieldModelMixin, BaseInterfaceMixin, NautobotBaseModel):
     """An interface on a VirtualMachine."""
 
     _modelname = "vminterface"
-    _identifiers = ("virtual_machine", "name")
     _attributes = (
         *CustomFieldModelMixin._attributes,
         *BaseInterfaceMixin._attributes,
+        "virtual_machine",
+        "name",
         "description",
         "untagged_vlan",
         "tagged_vlans",
@@ -123,7 +123,6 @@ class VMInterface(CustomFieldModelMixin, BaseInterfaceMixin, NautobotBaseModel):
 
     virtual_machine: VirtualMachineRef
     name: str
-
     description: str
     untagged_vlan: Optional[VLANRef]
     tagged_vlans: List[VLANRef] = []

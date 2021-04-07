@@ -22,6 +22,7 @@ class NautobotNetboxImporterConfig(PluginConfig):
     description = "Data importer from NetBox 2.10.x to Nautobot."
     base_url = "netbox-importer"
     required_settings = []
+    min_version = "1.0.0b3"
     max_version = "1.9999"
     default_settings = {}
     caching_config = {}
