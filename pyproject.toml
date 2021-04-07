@@ -21,7 +21,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.6"
 diffsync = "^1.2.0"
-nautobot = {git = "https://github.com/nautobot/nautobot.git", rev = "develop"}
+nautobot = ">=1.0.0b3,<2.0"
 
 [tool.poetry.dev-dependencies]
 invoke = "*"
