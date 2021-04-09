@@ -216,7 +216,7 @@ LOGGING = {
     },
     "loggers": {
         "django": {"handlers": ["normal_console"], "level": "INFO"},
-        "nautobot": {"handlers": ["verbose_console" if DEBUG else "normal_console"], "level": LOG_LEVEL},
+        "nautobot": {"handlers": ["verbose_console" if DEBUG else "normal_console"], "level": "INFO"},
         "rq.worker": {"handlers": ["verbose_console" if DEBUG else "normal_console"], "level": LOG_LEVEL},
     },
 }

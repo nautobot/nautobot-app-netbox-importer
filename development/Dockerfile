@@ -1,7 +1,7 @@
 ARG python_ver=3.7
 FROM python:${python_ver}
 
-ARG nautobot_ver=1.0.0a1
+ARG nautobot_ver=1.0.0b3
 ENV PYTHONUNBUFFERED=1 \
     PATH="/root/.poetry/bin:$PATH" \
     NAUTOBOT_CONFIG="/source/development/nautobot_config.py"

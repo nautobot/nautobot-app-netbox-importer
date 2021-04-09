@@ -1,7 +1,7 @@
 """Abstract base DiffSync adapter class for code shared by NetBox and Nautobot adapters."""
 
 from collections import defaultdict
-from typing import MutableMapping, Union
+from typing import Callable, MutableMapping, Union
 from uuid import UUID
 
 from diffsync import Diff, DiffSync, DiffSyncFlags, DiffSyncModel
@@ -214,9 +214,10 @@ class N2NDiffSync(DiffSync):
         "customfieldchoice",
     )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, verbosity: int = 0, **kwargs):
         """Initialize this container, including its PK-indexed alternate data store."""
         super().__init__(*args, **kwargs)
+        self.verbosity = verbosity
         self._data_by_pk = defaultdict(dict)
         self._sync_summary = None
 
@@ -265,8 +266,8 @@ class N2NDiffSync(DiffSync):
             instance = diffsync_model(**data, diffsync=self)
         except ValidationError as exc:
             self.logger.error(
-                "Invalid data according to internal data model. "
-                "This may be an issue with your source data or may reflect a bug in this plugin.",
+                "Invalid data according to internal data model",
+                comment="This may be an issue with your source data or may reflect a bug in this plugin.",
                 action="load",
                 exception=str(exc),
                 model=diffsync_model.get_type(),
@@ -278,8 +279,8 @@ class N2NDiffSync(DiffSync):
         except ObjectAlreadyExists:
             existing_instance = self.get(diffsync_model, instance.get_unique_id())
             self.logger.warning(
-                "Apparent duplicate object encountered? "
-                "This may be an issue with your source data or may reflect a bug in this plugin.",
+                "Apparent duplicate object encountered?",
+                comment="This may be an issue with your source data or may reflect a bug in this plugin.",
                 duplicate_id=instance.get_identifiers(),
                 model=diffsync_model.get_type(),
                 pk_1=existing_instance.pk,
@@ -287,10 +288,16 @@ class N2NDiffSync(DiffSync):
             )
         return instance
 
-    def sync_from(self, source: DiffSync, diff_class: Diff = Diff, flags: DiffSyncFlags = DiffSyncFlags.NONE):
+    def sync_from(
+        self,
+        source: DiffSync,
+        diff_class: Diff = Diff,
+        flags: DiffSyncFlags = DiffSyncFlags.NONE,
+        callback: Callable[[str, int, int], None] = None,
+    ):
         """Synchronize data from the given source DiffSync object into the current DiffSync object."""
         self._sync_summary = None
-        return super().sync_from(source, diff_class=diff_class, flags=flags)
+        return super().sync_from(source, diff_class=diff_class, flags=flags, callback=callback)
 
     def sync_complete(
         self,
