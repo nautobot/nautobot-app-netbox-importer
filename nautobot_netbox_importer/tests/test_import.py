@@ -4,11 +4,9 @@ import os
 
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.management import call_command
 from django.test import TestCase
-from packaging import version
 import yaml
-
-from nautobot_netbox_importer.management.commands.import_netbox_json import Command
 
 
 NETBOX_DATA_FILE = os.path.join(os.path.dirname(__file__), "fixtures", "netbox_dump.json")
@@ -21,8 +19,8 @@ class TestImport(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         """One-time setup function called before running the test functions in this class."""
-        with open(NETBOX_DATA_FILE, "r") as handle:
-            Command().handle(json_file=handle, netbox_version=version.Version("2.10.4"), verbosity=0)
+        call_command("import_netbox_json", NETBOX_DATA_FILE, "2.10.4", verbosity=0)
+        # TODO check stdout/stderr for errors and such
         with open(NAUTOBOT_DATA_FILE, "r") as handle:
             cls.nautobot_data = yaml.safe_load(handle)
 
@@ -83,7 +81,6 @@ class TestImport(TestCase):
 
     def test_resync_without_changes_correctness(self):
         """Resync (with no changes to the source data) and verify that data is still correct."""
-        with open(NETBOX_DATA_FILE, "r") as handle:
-            Command().handle(json_file=handle, netbox_version=version.Version("2.10.4"), verbosity=0)
-        # TODO check logs for errors and such
+        call_command("import_netbox_json", NETBOX_DATA_FILE, "2.10.4", verbosity=0)
+        # TODO check stdout/stderr for errors and such
         self.test_imported_data_correctness()
