@@ -6,9 +6,10 @@ from uuid import uuid4
 from diffsync.enum import DiffSyncModelFlags
 import structlog
 
+from nautobot_netbox_importer.diffsync.models.abstract import NautobotBaseModel
+from nautobot_netbox_importer.diffsync.models.validation import netbox_pk_to_nautobot_pk
+from nautobot_netbox_importer.utils import ProgressBar
 from .abstract import N2NDiffSync
-from ..models.abstract import NautobotBaseModel
-from ..models.validation import netbox_pk_to_nautobot_pk
 
 
 class NetBox210DiffSync(N2NDiffSync):
@@ -103,18 +104,29 @@ class NetBox210DiffSync(N2NDiffSync):
             else:
                 self.logger.warning("No UserConfig found for User", username=data["username"], pk=record["pk"])
                 data["config_data"] = {}
-        elif diffsync_model == self.customfield and data["type"] == "select":
-            # NetBox stores the choices for a "select" CustomField (NetBox has no "multiselect" CustomFields)
-            # locally within the CustomField model, whereas Nautobot has a separate CustomFieldChoices model.
-            # So we need to split the choices out into separate DiffSync instances.
-            # Since "choices" is an ArrayField, we have to parse it from the JSON string
-            # see also models.abstract.ArrayField
-            for choice in json.loads(data["choices"]):
-                self.make_model(
-                    self.customfieldchoice,
-                    {"pk": uuid4(), "field": netbox_pk_to_nautobot_pk("customfield", record["pk"]), "value": choice},
-                )
-            del data["choices"]
+        elif diffsync_model == self.customfield:
+            # Because marking a custom field as "required" doesn't automatically assign a value to pre-existing records,
+            # we never want to enforce 'required=True' at import time as there may be otherwise valid records that predate
+            # the creation of this field. Store it on a private field instead and we'll fix it up at the end.
+            data["actual_required"] = data["required"]
+            data["required"] = False
+
+            if data["type"] == "select":
+                # NetBox stores the choices for a "select" CustomField (NetBox has no "multiselect" CustomFields)
+                # locally within the CustomField model, whereas Nautobot has a separate CustomFieldChoices model.
+                # So we need to split the choices out into separate DiffSync instances.
+                # Since "choices" is an ArrayField, we have to parse it from the JSON string
+                # see also models.abstract.ArrayField
+                for choice in json.loads(data["choices"]):
+                    self.make_model(
+                        self.customfieldchoice,
+                        {
+                            "pk": uuid4(),
+                            "field": netbox_pk_to_nautobot_pk("customfield", record["pk"]),
+                            "value": choice,
+                        },
+                    )
+                del data["choices"]
 
         return self.make_model(diffsync_model, data)
 
@@ -123,14 +135,18 @@ class NetBox210DiffSync(N2NDiffSync):
         self.logger.info("Loading imported NetBox source data into DiffSync...")
         for modelname in ("contenttype", "permission", *self.top_level):
             diffsync_model = getattr(self, modelname)
-            self.logger.info(f"Loading all {modelname} records...")
             content_type_label = diffsync_model.nautobot_model()._meta.label_lower
             # Handle a NetBox vs Nautobot discrepancy - the Nautobot target model is 'users.user',
             # but the NetBox data export will have user records under the label 'auth.user'.
             if content_type_label == "users.user":
                 content_type_label = "auth.user"
-            for record in self.source_data:
-                if record["model"] == content_type_label:
+            records = [record for record in self.source_data if record["model"] == content_type_label]
+            if records:
+                for record in ProgressBar(
+                    records,
+                    desc=f"{modelname:<25}",  # len("consoleserverporttemplate")
+                    verbosity=self.verbosity,
+                ):
                     self.load_record(diffsync_model, record)
 
         self.logger.info("Data loading from NetBox source data complete.")
