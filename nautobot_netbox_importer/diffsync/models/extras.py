@@ -114,6 +114,11 @@ class CustomField(NautobotBaseModel):
     validation_maximum: Optional[int]
     validation_regex: str
 
+    # Because marking a custom field as "required" doesn't automatically assign a value to pre-existing records,
+    # we never want, when adding custom fields from NetBox, to flag fields as required=True.
+    # Instead we store it in "actual_required" and fix it up only afterwards.
+    actual_required: Optional[bool]
+
     @classmethod
     def special_clean(cls, diffsync, ids, attrs):
         """Special-case handling for the "default" attribute."""

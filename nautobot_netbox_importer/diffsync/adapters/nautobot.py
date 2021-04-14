@@ -2,6 +2,7 @@
 
 from uuid import UUID
 
+from diffsync import DiffSync
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRel
 from django.db import models
 import structlog
@@ -116,3 +117,26 @@ class NautobotDiffSync(N2NDiffSync):
                     self.load_model(diffsync_model, instance)
 
         self.logger.info("Data loading from Nautobot complete.")
+
+    def restore_required_custom_fields(self, source: DiffSync):
+        """Post-synchronization cleanup function to restore any 'required=True' custom field records."""
+        self.logger.debug("Restoring the 'required=True' flag on any such custom fields")
+        for customfield in source.get_all(source.customfield):
+            if customfield.actual_required:
+                # We don't want to change the DiffSync record's `required` flag, only the Nautobot record
+                customfield.update_nautobot_record(
+                    customfield.nautobot_model(),
+                    ids=customfield.get_identifiers(),
+                    attrs={"required": True},
+                    multivalue_attrs={},
+                )
+
+    def sync_complete(self, source: DiffSync, *args, **kwargs):
+        """Callback invoked after completing a sync operation in which changes occurred."""
+        # During the sync, we intentionally marked all custom fields as "required=False"
+        # so that we could sync records that predated the creation of said custom fields.
+        # Now that we've updated all records that might contain custom field data,
+        # only now can we re-mark any "required" custom fields as such.
+        self.restore_required_custom_fields(source)
+
+        return super().sync_complete(source, *args, **kwargs)

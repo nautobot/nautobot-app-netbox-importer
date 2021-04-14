@@ -187,6 +187,7 @@ class DjangoBaseModel(DiffSyncModel):
     @staticmethod
     def create_nautobot_record(nautobot_model, ids: Mapping, attrs: Mapping, multivalue_attrs: Mapping):
         """Helper method to create() - actually populate Nautobot data."""
+        model_data = dict(**ids, **attrs, **multivalue_attrs)
         try:
             # Custom fields are a special case - because in NetBox the values defined on a particular record are
             # only loosely coupled to the CustomField definition itself, it's quite possible that these two may be
@@ -209,7 +210,7 @@ class DjangoBaseModel(DiffSyncModel):
                 action="create",
                 exception=str(exc),
                 model=nautobot_model,
-                model_data=dict(**ids, **attrs, **multivalue_attrs),
+                model_data=model_data,
             )
         except DjangoValidationError as exc:
             logger.error(
@@ -217,7 +218,7 @@ class DjangoBaseModel(DiffSyncModel):
                 action="create",
                 exception=str(exc),
                 model=nautobot_model,
-                model_data=dict(**ids, **attrs, **multivalue_attrs),
+                model_data=model_data,
             )
         except ObjectDoesNotExist as exc:  # Including RelatedObjectDoesNotExist
             logger.error(
@@ -225,7 +226,7 @@ class DjangoBaseModel(DiffSyncModel):
                 action="create",
                 exception=str(exc),
                 model=nautobot_model,
-                model_data=dict(**ids, **attrs, **multivalue_attrs),
+                model_data=model_data,
             )
 
         return None
@@ -273,9 +274,17 @@ class DjangoBaseModel(DiffSyncModel):
     @staticmethod
     def update_nautobot_record(nautobot_model, ids: Mapping, attrs: Mapping, multivalue_attrs: Mapping):
         """Helper method to update() - actually update Nautobot data."""
+        model_data = dict(**ids, **attrs, **multivalue_attrs)
         try:
             record = nautobot_model.objects.get(**ids)
             custom_field_data = attrs.pop("custom_field_data", None)
+            # Temporarily clear any existing custom field data as part of the model update,
+            # so that in case the model contains "stale" data referring to no-longer-existent fields,
+            # Nautobot won't reject it out of hand.
+            if not custom_field_data and hasattr(record, "custom_field_data"):
+                custom_field_data = record.custom_field_data
+            if custom_field_data:
+                record._custom_field_data = {}  # pylint: disable=protected-access
             for attr, value in attrs.items():
                 setattr(record, attr, value)
             record.clean()
@@ -292,7 +301,7 @@ class DjangoBaseModel(DiffSyncModel):
                 action="update",
                 exception=str(exc),
                 model=nautobot_model,
-                model_data=dict(**ids, **attrs, **multivalue_attrs),
+                model_data=model_data,
             )
         except DjangoValidationError as exc:
             logger.error(
@@ -300,7 +309,7 @@ class DjangoBaseModel(DiffSyncModel):
                 action="update",
                 exception=str(exc),
                 model=nautobot_model,
-                model_data=dict(**ids, **attrs, **multivalue_attrs),
+                model_data=model_data,
             )
         except ObjectDoesNotExist as exc:  # Including RelatedObjectDoesNotExist
             logger.error(
@@ -308,7 +317,7 @@ class DjangoBaseModel(DiffSyncModel):
                 action="update",
                 exception=str(exc),
                 model=nautobot_model,
-                model_data=dict(**ids, **attrs, **multivalue_attrs),
+                model_data=model_data,
             )
 
         return None

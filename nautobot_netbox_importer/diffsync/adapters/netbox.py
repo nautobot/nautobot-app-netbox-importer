@@ -104,18 +104,29 @@ class NetBox210DiffSync(N2NDiffSync):
             else:
                 self.logger.warning("No UserConfig found for User", username=data["username"], pk=record["pk"])
                 data["config_data"] = {}
-        elif diffsync_model == self.customfield and data["type"] == "select":
-            # NetBox stores the choices for a "select" CustomField (NetBox has no "multiselect" CustomFields)
-            # locally within the CustomField model, whereas Nautobot has a separate CustomFieldChoices model.
-            # So we need to split the choices out into separate DiffSync instances.
-            # Since "choices" is an ArrayField, we have to parse it from the JSON string
-            # see also models.abstract.ArrayField
-            for choice in json.loads(data["choices"]):
-                self.make_model(
-                    self.customfieldchoice,
-                    {"pk": uuid4(), "field": netbox_pk_to_nautobot_pk("customfield", record["pk"]), "value": choice},
-                )
-            del data["choices"]
+        elif diffsync_model == self.customfield:
+            # Because marking a custom field as "required" doesn't automatically assign a value to pre-existing records,
+            # we never want to enforce 'required=True' at import time as there may be otherwise valid records that predate
+            # the creation of this field. Store it on a private field instead and we'll fix it up at the end.
+            data["actual_required"] = data["required"]
+            data["required"] = False
+
+            if data["type"] == "select":
+                # NetBox stores the choices for a "select" CustomField (NetBox has no "multiselect" CustomFields)
+                # locally within the CustomField model, whereas Nautobot has a separate CustomFieldChoices model.
+                # So we need to split the choices out into separate DiffSync instances.
+                # Since "choices" is an ArrayField, we have to parse it from the JSON string
+                # see also models.abstract.ArrayField
+                for choice in json.loads(data["choices"]):
+                    self.make_model(
+                        self.customfieldchoice,
+                        {
+                            "pk": uuid4(),
+                            "field": netbox_pk_to_nautobot_pk("customfield", record["pk"]),
+                            "value": choice,
+                        },
+                    )
+                del data["choices"]
 
         return self.make_model(diffsync_model, data)
 
