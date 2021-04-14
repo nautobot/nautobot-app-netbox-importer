@@ -58,7 +58,10 @@ class LogRenderer:  # pylint: disable=too-few-public-methods
             if isinstance(value, dict):
                 # We could use json.dumps() here instead of pprint.pformat,
                 # but I find pprint to be a bit more compact while still readable.
-                value = "\n" + textwrap.indent(pprint.pformat(value), "    ")
+                rendered_dict = pprint.pformat(value)
+                if len(rendered_dict.splitlines()) > 50:
+                    rendered_dict = "\n".join(rendered_dict.splitlines()[:50]) + "\n...}"
+                value = "\n" + textwrap.indent(rendered_dict, "    ")
             sio.write(
                 f"\n  {colorama.Fore.CYAN}{key}{colorama.Style.RESET_ALL}: "
                 f"{colorama.Fore.MAGENTA}{value}{colorama.Style.RESET_ALL}"
