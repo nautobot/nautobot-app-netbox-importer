@@ -55,6 +55,10 @@ class NautobotDiffSync(N2NDiffSync):
             # What's the name of the model that this is a reference to?
             target_name = diffsync_model.fk_associations()[field.name]
 
+            if target_name == "status":
+                data[field.name] = {"slug": self.status.nautobot_model().objects.get(pk=value).slug}
+                continue
+
             # Special case: for generic foreign keys, the target_name is actually the name of
             # another field on this record that describes the content-type of this foreign key id.
             # We flag this by starting the target_name string with a '*', as if this were C or something.

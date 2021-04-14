@@ -75,9 +75,9 @@ class DjangoBaseModel(DiffSyncModel):
         """Get the mapping between foreign key (FK) fields and the corresponding DiffSync models they reference."""
         return cls._fk_associations
 
-    @staticmethod
+    @classmethod
     def _get_nautobot_record(
-        diffsync_model: DiffSyncModel, diffsync_value: Any, fail_quiet: bool = False
+        cls, diffsync_model: DiffSyncModel, diffsync_value: Any, fail_quiet: bool = False
     ) -> Optional[models.Model]:
         """Given a diffsync model and identifier (natural key or primary key) look up the Nautobot record."""
         try:
@@ -93,6 +93,7 @@ class DjangoBaseModel(DiffSyncModel):
             log = logger.debug if fail_quiet else logger.error
             log(
                 "Expected but did not find an existing Nautobot record",
+                source=cls.get_type(),
                 target=diffsync_model.get_type(),
                 unique_id=diffsync_value,
             )
