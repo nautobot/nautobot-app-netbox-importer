@@ -78,9 +78,15 @@ class Command(BaseCommand):
         parser.add_argument("netbox_version", type=version.parse)
 
     @staticmethod
-    def enable_logging(verbosity=0):
+    def enable_logging(verbosity=0, color=None):
         """Set up structlog (as used by DiffSync) to log messages for this command."""
-        colorama.init()
+        if color is None:
+            # Let colorama decide whether or not to strip out color codes
+            colorama.init()
+        else:
+            # Force colors or non-colors, as specified
+            colorama.init(strip=(not color))
+
         structlog.configure(
             processors=[
                 structlog.stdlib.add_log_level,
@@ -109,7 +115,14 @@ class Command(BaseCommand):
                 raise CommandError(f"Maximum NetBox version supported is {max_version}")
             raise CommandError(f"Unrecognized NetBox version; supported versions are {', '.join(supported_versions)}")
 
-        self.enable_logging(verbosity=options["verbosity"])
+        # Default of None means to use colorama's autodetection to determine whether or not to use color
+        color = None
+        if options.get("force_color"):
+            color = True
+        if options.get("no_color"):
+            color = False
+
+        self.enable_logging(verbosity=options["verbosity"], color=color)
         logger = structlog.get_logger()
 
         logger.info("Loading NetBox JSON data into memory...", filename={options["json_file"].name})
@@ -128,7 +141,7 @@ class Command(BaseCommand):
         # Lower the verbosity of newly created structlog loggers by one (half-) step
         # This is so that DiffSync's internal logging defaults to slightly less verbose than
         # our own (plugin) logging.
-        self.enable_logging(verbosity=(options["verbosity"] - 1))
+        self.enable_logging(verbosity=(options["verbosity"] - 1), color=color)
 
         logger.info("Beginning data synchronization...")
         # Due to the fact that model inter-references do not form an acyclic graph,
