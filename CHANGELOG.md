@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.2.1 (2021-04-20)
+
+### Fixed
+
+- #37 - Custom fields are now handled correctly on the second pass of the importer as well
+
 ## v1.2.0 (2021-04-14)
 
 ### Added

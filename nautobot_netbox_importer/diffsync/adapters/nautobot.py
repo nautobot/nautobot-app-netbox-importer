@@ -121,15 +121,11 @@ class NautobotDiffSync(N2NDiffSync):
     def restore_required_custom_fields(self, source: DiffSync):
         """Post-synchronization cleanup function to restore any 'required=True' custom field records."""
         self.logger.debug("Restoring the 'required=True' flag on any such custom fields")
-        for customfield in source.get_all(source.customfield):
-            if customfield.actual_required:
-                # We don't want to change the DiffSync record's `required` flag, only the Nautobot record
-                customfield.update_nautobot_record(
-                    customfield.nautobot_model(),
-                    ids=customfield.get_identifiers(),
-                    attrs={"required": True},
-                    multivalue_attrs={},
-                )
+        for source_customfield in source.get_all(source.customfield):
+            if source_customfield.actual_required:
+                # Update both the local DiffSync record (so that on the second-pass resync we again reset required=False)
+                # and the Nautobot record (so that the end state is correct)
+                self.get(self.customfield, source_customfield.get_unique_id()).update({"required": True})
 
     def sync_complete(self, source: DiffSync, *args, **kwargs):
         """Callback invoked after completing a sync operation in which changes occurred."""
