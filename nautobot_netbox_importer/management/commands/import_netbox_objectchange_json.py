@@ -46,7 +46,7 @@ class Command(BaseCommand):
             help=("DB dumb in JSON wiht ONLY ObjectChange objects. "),
         )
         parser.add_argument("netbox_version", type=version.parse)
-        parser.add_argument("--dryrun", type=bool, default=False)
+        parser.add_argument("--dry-run", action="store_true", default=False)
 
     def process_objectchange(self, entry, options):
         """Processes one ObjectChange entry (dict) to migrate from Netbox to Nautobot."""
@@ -82,7 +82,7 @@ class Command(BaseCommand):
             self.logger.error(f'Username {entry["fields"]["user_name"]} not present in DB.')
             return
 
-        if not options["dryrun"]:
+        if not options["dry_run"]:
             obj = ObjectChange.objects.create(**entry["fields"])
             obj.time = entry["fields"]["time"]
             obj.full_clean()
@@ -115,7 +115,9 @@ class Command(BaseCommand):
         for entry in ContentType.objects.all():
             self.nautobot_contenttype_mapping[(entry.app_label, entry.model)] = entry.id
 
-        self.logger.info("Loading ObjectChange NetBox JSON data into memory...", filename={options["json_file"].name})
+        self.logger.info(
+            "Loading ObjectChange NetBox JSON data into memory...", filename={options["objectchange_json_file"].name}
+        )
         objectchange_data = json.load(options["objectchange_json_file"])
         for entry in ProgressBar(objectchange_data):
             self.process_objectchange(entry, options)
