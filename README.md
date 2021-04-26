@@ -36,6 +36,24 @@ python netbox/manage.py dumpdata \
 
 From within the Nautobot application environment, run `nautobot-server import_netbox_json <json_file> <netbox_version>`, for example `nautobot-server import_netbox_json /tmp/netbox_data.json 2.10.3`.
 
+### Import ChangeLog/ObjectChange records
+
+Because the ChangeLog can be a massive amount of data and sometimes the historic would be omitted, the import of the `ObjectChange` is omitted in the default import command. To import it, **after** the previous Netbox import process has succeeded.
+
+#### Getting a data export from NetBox with ONLY ObjectChange items
+
+```shell
+python netbox/manage.py dumpdata extras.ObjectChange\
+    --traceback --format=json \
+    > /tmp/netbox_only_objectchange.json
+```
+
+### Importing the ObjectChanges into Nautobot
+
+From within the Nautobot application environment, run `nautobot-server import_netbox_json <json_file_without_objectchanges> <json_file_only_objectchanges> <netbox_version>`, for example `nautobot-server import_netbox_objectchange_json imp/script/import_netbox_json.json imp/script/netbox_only_objectchange.json 2.10.3`.
+
+> You can also add `--dry-run` at the end of the command to not do any change in the DB and only understand if the script can parse all the entries.
+
 ## Contributing
 
 Most of the internal logic of this plugin is based on the [DiffSync](https://github.com/networktocode/diffsync) library, which in turn is built atop [Pydantic](https://github.com/samuelcolvin/pydantic/).
@@ -46,6 +64,7 @@ Pull requests are welcomed and automatically built and tested against multiple v
 The project is packaged with a light development environment based on `docker-compose` to help with the local development of the project and to run the tests within TravisCI.
 
 The project is following Network to Code software development guideline and is leveraging:
+
 - Black, Pylint, Bandit and pydocstyle for Python linting and formatting.
 - Django unit test to ensure the plugin is working properly.
 - Poetry for packaging and dependency management.
@@ -57,6 +76,7 @@ The project includes a CLI helper based on [invoke](http://www.pyinvoke.org/) to
 Each command can be executed with `invoke <command>`. All commands support the argument `--python-ver` if you want to manually define the version of Python to use. Each command also has its own help `invoke <command> --help`
 
 #### Local dev environment
+
 ```
   build            Build all docker images.
   debug            Start Nautobot and its dependencies in debug mode.
@@ -67,12 +87,14 @@ Each command can be executed with `invoke <command>`. All commands support the a
 ```
 
 #### Utility
+
 ```
   cli              Launch a bash shell inside the running Nautobot container.
   create-user      Create a new user in django (default: admin), will prompt for password.
   makemigrations   Run Make Migration in Django.
   nbshell          Launch a nbshell session.
 ```
+
 #### Testing
 
 ```
