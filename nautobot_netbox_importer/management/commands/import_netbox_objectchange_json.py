@@ -34,7 +34,7 @@ class Command(BaseCommand):
         """Handle execution of the import_netbox_json management command."""
 
         def process_objectchange(entry):
-            """Processes on objectchange entry to migrate from Netbox to Nautobot."""
+            """Processes one ObjectChange entry (dict) to migrate from Netbox to Nautobot."""
             try:
                 entry["fields"]["changed_object_type"] = ContentType.objects.filter(
                     id=nautobot_contenttype_mapping[netbox_contenttype_mapping[entry["fields"]["changed_object_type"]]]
