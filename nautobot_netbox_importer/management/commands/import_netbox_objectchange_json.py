@@ -50,20 +50,22 @@ class Command(BaseCommand):
 
     def process_objectchange(self, entry, options):
         """Processes one ObjectChange entry (dict) to migrate from Netbox to Nautobot."""
+        app_label, modelname = self.netbox_contenttype_mapping[entry["fields"]["changed_object_type"]]
         try:
-            app_label, modelname = self.netbox_contenttype_mapping[entry["fields"]["changed_object_type"]]
             contenttype_id = self.nautobot_contenttype_mapping[(app_label, modelname)]
             entry["fields"]["changed_object_type"] = ContentType.objects.get(id=contenttype_id)
         except KeyError:
-            self.logger.warning(
-                f'{self.netbox_contenttype_mapping[entry["fields"]["changed_object_type"]]} key is not mapped'
-            )
+            self.logger.warning(f"{(app_label, modelname)} key is not present in Nautobot")
             return
 
         if entry["fields"]["related_object_type"]:
             app_label, modelname = self.netbox_contenttype_mapping[entry["fields"]["related_object_type"]]
-            contenttype_id = self.nautobot_contenttype_mapping[(app_label, modelname)]
-            entry["fields"]["related_object_type"] = ContentType.objects.get(id=contenttype_id)
+            try:
+                contenttype_id = self.nautobot_contenttype_mapping[(app_label, modelname)]
+                entry["fields"]["related_object_type"] = ContentType.objects.get(id=contenttype_id)
+            except KeyError:
+                self.logger.warning(f"{(app_label, modelname)} key is not present in Nautobot")
+                return
         else:
             del entry["fields"]["related_object_type"]
 
