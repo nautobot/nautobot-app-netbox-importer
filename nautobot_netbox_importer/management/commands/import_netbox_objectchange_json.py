@@ -23,83 +23,99 @@ class Command(BaseCommand):
 
     help = "Import ObjectChange objects from NetBox YAML data dump into Nautobot's database"
 
+    def __init__(self):
+        """Init method."""
+        super().__init__()
+        self.logger = None
+        self.netbox_contenttype_mapping = {}
+        self.nautobot_contenttype_mapping = {}
+
     def add_arguments(self, parser):
         """Add parser arguments to the import_netbox_objectchange_json management command."""
-        parser.add_argument("json_file", type=argparse.FileType("r"))
-        parser.add_argument("objectchange_json_file", type=argparse.FileType("r"))
+        parser.add_argument(
+            "json_file",
+            type=argparse.FileType("r"),
+            help=(
+                "DB dumb in JSON without ObjectChange objects. "
+                "Indeed, the same used in the 'import_netbox_json' command."
+            ),
+        )
+        parser.add_argument(
+            "objectchange_json_file",
+            type=argparse.FileType("r"),
+            help=("DB dumb in JSON wiht ONLY ObjectChange objects. "),
+        )
         parser.add_argument("netbox_version", type=version.parse)
         parser.add_argument("--dryrun", type=bool, default=False)
 
+    def process_objectchange(self, entry, options):
+        """Processes one ObjectChange entry (dict) to migrate from Netbox to Nautobot."""
+        try:
+            app_label, modelname = self.netbox_contenttype_mapping[entry["fields"]["changed_object_type"]]
+            contenttype_id = self.nautobot_contenttype_mapping[(app_label, modelname)]
+            entry["fields"]["changed_object_type"] = ContentType.objects.get(id=contenttype_id)
+        except KeyError:
+            self.logger.warning(
+                f'{self.netbox_contenttype_mapping[entry["fields"]["changed_object_type"]]} key is not mapped'
+            )
+            return
+
+        if entry["fields"]["related_object_type"]:
+            app_label, modelname = self.netbox_contenttype_mapping[entry["fields"]["related_object_type"]]
+            contenttype_id = self.nautobot_contenttype_mapping[(app_label, modelname)]
+            entry["fields"]["related_object_type"] = ContentType.objects.get(id=contenttype_id)
+        else:
+            del entry["fields"]["related_object_type"]
+
+        modelname = entry["fields"]["changed_object_type"].model
+        entry["fields"]["changed_object_id"] = netbox_pk_to_nautobot_pk(modelname, entry["fields"]["changed_object_id"])
+        if entry["fields"]["related_object_id"]:
+            modelname = entry["fields"]["related_object_type"].model
+            entry["fields"]["related_object_id"] = netbox_pk_to_nautobot_pk(
+                modelname, entry["fields"]["related_object_id"]
+            )
+
+        entry["fields"]["user"] = User.objects.filter(username=entry["fields"]["user_name"]).first()
+        if not entry["fields"]["user"]:
+            self.logger.error(f'Username {entry["fields"]["user_name"]} not present in DB.')
+            return
+
+        if not options["dryrun"]:
+            obj = ObjectChange.objects.create(**entry["fields"])
+            obj.time = entry["fields"]["time"]
+            obj.full_clean()
+            obj.save()
+
     def handle(self, *args, **options):
         """Handle execution of the import_netbox_json management command."""
-
-        def process_objectchange(entry):
-            """Processes one ObjectChange entry (dict) to migrate from Netbox to Nautobot."""
-            try:
-                app_label, modelname = netbox_contenttype_mapping[entry["fields"]["changed_object_type"]]
-                contenttype_id = nautobot_contenttype_mapping[(app_label, modelname)]
-                entry["fields"]["changed_object_type"] = ContentType.objects.get(id=contenttype_id)
-            except KeyError:
-                logger.warning(
-                    f'{netbox_contenttype_mapping[entry["fields"]["changed_object_type"]]} key is not mapped'
-                )
-                return
-
-            if entry["fields"]["related_object_type"]:
-                app_label, modelname = netbox_contenttype_mapping[entry["fields"]["related_object_type"]]
-                contenttype_id = nautobot_contenttype_mapping[(app_label, modelname)]
-                entry["fields"]["related_object_type"] = ContentType.objects.get(id=contenttype_id)
-            else:
-                del entry["fields"]["related_object_type"]
-
-            modelname = entry["fields"]["changed_object_type"].model
-            entry["fields"]["changed_object_id"] = netbox_pk_to_nautobot_pk(
-                modelname, entry["fields"]["changed_object_id"]
-            )
-            if entry["fields"]["related_object_id"]:
-                modelname = entry["fields"]["related_object_type"].model
-                entry["fields"]["related_object_id"] = netbox_pk_to_nautobot_pk(
-                    modelname, entry["fields"]["related_object_id"]
-                )
-
-            entry["fields"]["user"] = User.objects.filter(username=entry["fields"]["user_name"]).first()
-            if not entry["fields"]["user"]:
-                logger.error(f'Username {entry["fields"]["user_name"]} not present in DB.')
-                return
-
-            if not options["dryrun"]:
-                obj = ObjectChange.objects.create(**entry["fields"])
-                obj.time = entry["fields"]["time"]
-                obj.save()
-
         validate_netbox_version(options["netbox_version"])
 
-        logger, _ = initialize_logger(options)
+        self.logger, _ = initialize_logger(options)
 
-        logger.info("Loading NetBox JSON data into memory...", filename={options["json_file"].name})
+        self.logger.info("Loading NetBox JSON data into memory...", filename={options["json_file"].name})
         no_objectchange_data = json.load(options["json_file"])
 
         if not isinstance(no_objectchange_data, list):
             raise CommandError(f"Data should be a list of records, but instead is {type(no_objectchange_data)}!")
-        logger.info("JSON data loaded into memory successfully.")
+        self.logger.info("JSON data loaded into memory successfully.")
 
-        logger.info("Creating NetBox ContentType mapping...")
-        netbox_contenttype_mapping = {}
+        self.logger.info("Creating NetBox ContentType mapping...")
         for entry in no_objectchange_data:
             if entry["model"] == "contenttypes.contenttype":
-                netbox_contenttype_mapping[entry["pk"]] = (
+                self.netbox_contenttype_mapping[entry["pk"]] = (
                     entry["fields"]["app_label"],
                     entry["fields"]["model"],
                 )
+        # Freeing some memory one the object is processed
+        no_objectchange_data = None
 
-        logger.info("Creating Nautobot ContentType mapping...")
-        nautobot_contenttype_mapping = {}
+        self.logger.info("Creating Nautobot ContentType mapping...")
         for entry in ContentType.objects.all():
-            nautobot_contenttype_mapping[(entry.app_label, entry.model)] = entry.id
+            self.nautobot_contenttype_mapping[(entry.app_label, entry.model)] = entry.id
 
-        logger.info("Loading ObjectChange NetBox JSON data into memory...", filename={options["json_file"].name})
+        self.logger.info("Loading ObjectChange NetBox JSON data into memory...", filename={options["json_file"].name})
         objectchange_data = json.load(options["objectchange_json_file"])
         for entry in ProgressBar(objectchange_data):
-            process_objectchange(entry)
+            self.process_objectchange(entry, options)
 
-        logger.info("Processed %s in this run.", len(objectchange_data))
+        self.logger.info("Processed %s in this run.", len(objectchange_data))
