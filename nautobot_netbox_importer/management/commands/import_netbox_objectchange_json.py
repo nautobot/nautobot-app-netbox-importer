@@ -36,20 +36,20 @@ class Command(BaseCommand):
             "json_file",
             type=argparse.FileType("r"),
             help=(
-                "DB dumb in JSON without ObjectChange objects. "
+                "DB dump in JSON without ObjectChange objects. "
                 "Indeed, the same used in the 'import_netbox_json' command."
             ),
         )
         parser.add_argument(
             "objectchange_json_file",
             type=argparse.FileType("r"),
-            help=("DB dumb in JSON wiht ONLY ObjectChange objects. "),
+            help=("DB dump in JSON with ONLY ObjectChange objects. "),
         )
         parser.add_argument("netbox_version", type=version.parse)
         parser.add_argument("--dry-run", action="store_true", default=False)
 
     def map_object_type(self, key, entry, used_error_messages):
-        """Map a ContentType object from Netbox to Nautobot. Returns False is not possible."""
+        """Map a ContentType object from Netbox to Nautobot. Returns False if not possible."""
         app_label, modelname = self.netbox_contenttype_mapping[entry["fields"][key]]
         try:
             contenttype_id = self.nautobot_contenttype_mapping[(app_label, modelname)]

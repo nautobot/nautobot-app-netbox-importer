@@ -36,9 +36,9 @@ python netbox/manage.py dumpdata \
 
 From within the Nautobot application environment, run `nautobot-server import_netbox_json <json_file> <netbox_version>`, for example `nautobot-server import_netbox_json /tmp/netbox_data.json 2.10.3`.
 
-### Import ChangeLog/ObjectChange records
+### Importing change logging (ObjectChange) records
 
-Because the ChangeLog can be a massive amount of data and sometimes the historic would be omitted, the import of the `ObjectChange` is omitted in the default import command. To import it, **after** the previous Netbox import process has succeeded.
+Because the database change log can be a massive amount of data, and often this historical information does not need to be imported, `ObjectChange` records are not included in the database export command above and are not handled by the `import_netbox_json` command. To import `ObjectChange` records specifically, **after** the previous Netbox import process has succeeded, you can do the following.
 
 #### Getting a data export from NetBox with ONLY ObjectChange items
 
@@ -48,7 +48,7 @@ python netbox/manage.py dumpdata extras.ObjectChange\
     > /tmp/netbox_only_objectchange.json
 ```
 
-### Importing the ObjectChanges into Nautobot
+#### Importing the ObjectChanges into Nautobot
 
 From within the Nautobot application environment, run `nautobot-server import_netbox_json <json_file_without_objectchanges> <json_file_only_objectchanges> <netbox_version>`, for example `nautobot-server import_netbox_objectchange_json imp/script/import_netbox_json.json imp/script/netbox_only_objectchange.json 2.10.3`.
 
