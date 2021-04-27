@@ -48,29 +48,27 @@ class Command(BaseCommand):
         parser.add_argument("netbox_version", type=version.parse)
         parser.add_argument("--dry-run", action="store_true", default=False)
 
-    def process_objectchange(self, entry, options, used_error_messages):
-        """Processes one ObjectChange entry (dict) to migrate from Netbox to Nautobot."""
-        app_label, modelname = self.netbox_contenttype_mapping[entry["fields"]["changed_object_type"]]
+    def map_object_type(self, key, entry, used_error_messages):
+        """Map a ContentType object from Netbox to Nautobot. Returns False is not possible."""
+        app_label, modelname = self.netbox_contenttype_mapping[entry["fields"][key]]
         try:
             contenttype_id = self.nautobot_contenttype_mapping[(app_label, modelname)]
-            entry["fields"]["changed_object_type"] = ContentType.objects.get(id=contenttype_id)
+            entry["fields"][key] = ContentType.objects.get(id=contenttype_id)
         except KeyError:
             error_message = f"{(app_label, modelname)} key is not present in Nautobot"
             if error_message not in used_error_messages:
                 used_error_messages.append(error_message)
                 self.logger.warning(error_message)
+            return False
+        return True
+
+    def process_objectchange(self, entry, options, used_error_messages):
+        """Processes one ObjectChange entry (dict) to migrate from Netbox to Nautobot."""
+        if not self.map_object_type("changed_object_type", entry, used_error_messages):
             return
 
         if entry["fields"]["related_object_type"]:
-            app_label, modelname = self.netbox_contenttype_mapping[entry["fields"]["related_object_type"]]
-            try:
-                contenttype_id = self.nautobot_contenttype_mapping[(app_label, modelname)]
-                entry["fields"]["related_object_type"] = ContentType.objects.get(id=contenttype_id)
-            except KeyError:
-                error_message = f"{(app_label, modelname)} key is not present in Nautobot"
-                if error_message not in used_error_messages:
-                    used_error_messages.append(error_message)
-                    self.logger.warning(error_message)
+            if not self.map_object_type("related_object_type", entry, used_error_messages):
                 return
         else:
             del entry["fields"]["related_object_type"]
