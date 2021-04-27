@@ -48,14 +48,17 @@ class Command(BaseCommand):
         parser.add_argument("netbox_version", type=version.parse)
         parser.add_argument("--dry-run", action="store_true", default=False)
 
-    def process_objectchange(self, entry, options):
+    def process_objectchange(self, entry, options, used_error_messages):
         """Processes one ObjectChange entry (dict) to migrate from Netbox to Nautobot."""
         app_label, modelname = self.netbox_contenttype_mapping[entry["fields"]["changed_object_type"]]
         try:
             contenttype_id = self.nautobot_contenttype_mapping[(app_label, modelname)]
             entry["fields"]["changed_object_type"] = ContentType.objects.get(id=contenttype_id)
         except KeyError:
-            self.logger.warning(f"{(app_label, modelname)} key is not present in Nautobot")
+            error_message = f"{(app_label, modelname)} key is not present in Nautobot"
+            if error_message not in used_error_messages:
+                used_error_messages.append(error_message)
+                self.logger.warning(error_message)
             return
 
         if entry["fields"]["related_object_type"]:
@@ -64,7 +67,10 @@ class Command(BaseCommand):
                 contenttype_id = self.nautobot_contenttype_mapping[(app_label, modelname)]
                 entry["fields"]["related_object_type"] = ContentType.objects.get(id=contenttype_id)
             except KeyError:
-                self.logger.warning(f"{(app_label, modelname)} key is not present in Nautobot")
+                error_message = f"{(app_label, modelname)} key is not present in Nautobot"
+                if error_message not in used_error_messages:
+                    used_error_messages.append(error_message)
+                    self.logger.warning(error_message)
                 return
         else:
             del entry["fields"]["related_object_type"]
@@ -79,7 +85,10 @@ class Command(BaseCommand):
 
         entry["fields"]["user"] = User.objects.filter(username=entry["fields"]["user_name"]).first()
         if not entry["fields"]["user"]:
-            self.logger.error(f'Username {entry["fields"]["user_name"]} not present in DB.')
+            error_message = f'Username {entry["fields"]["user_name"]} not present in DB.'
+            if error_message not in used_error_messages:
+                used_error_messages.append(error_message)
+                self.logger.error(error_message)
             return
 
         if not options["dry_run"]:
@@ -119,7 +128,9 @@ class Command(BaseCommand):
             "Loading ObjectChange NetBox JSON data into memory...", filename={options["objectchange_json_file"].name}
         )
         objectchange_data = json.load(options["objectchange_json_file"])
+        # used_error_messages is used to avoid repeating the same error message for each entry
+        used_error_messages = []
         for entry in ProgressBar(objectchange_data):
-            self.process_objectchange(entry, options)
+            self.process_objectchange(entry, options, used_error_messages)
 
         self.logger.info("Processed %s in this run.", len(objectchange_data))
