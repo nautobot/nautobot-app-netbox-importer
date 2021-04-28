@@ -89,7 +89,14 @@ class Command(BaseCommand):
                 self.logger.error(error_message)
             return
 
-        if not options["dry_run"]:
+        if (
+            not options["dry_run"]
+            and ObjectChange.objects.filter(
+                request_id=entry["fields"]["request_id"], time=entry["fields"]["time"]
+            ).count()
+            == 0
+        ):
+
             obj = ObjectChange.objects.create(**entry["fields"])
             obj.time = entry["fields"]["time"]
             obj.full_clean()
