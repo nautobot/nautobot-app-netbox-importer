@@ -131,4 +131,4 @@ class Command(BaseCommand):
         for entry in ProgressBar(objectchange_data):
             self.process_objectchange(entry, options, used_error_messages)
 
-        self.logger.info("Processed %s in this run.", len(objectchange_data))
+        self.logger.info(f"Processed {len(objectchange_data)} in this run.")
