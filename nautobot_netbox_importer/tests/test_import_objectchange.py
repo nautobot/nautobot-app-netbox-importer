@@ -17,7 +17,10 @@ from .test_import import TestImport
 
 NETBOX_DATA_FILE = os.path.join(os.path.dirname(__file__), "fixtures", "netbox_dump.json")
 NETBOX_OBJECTCHANGE_DATA_FILE = os.path.join(os.path.dirname(__file__), "fixtures", "netbox_objectchange_dump.json")
-NAUTOBOT_DATA_FILE = os.path.join(os.path.dirname(__file__), "fixtures", "nautobot_objectchange_expectations.yaml")
+NAUTOBOT_DATA_FILE = os.path.join(os.path.dirname(__file__), "fixtures", "nautobot_expectations.yaml")
+NAUTOBOT_OBJECTCHANGE_DATA_FILE = os.path.join(
+    os.path.dirname(__file__), "fixtures", "nautobot_objectchange_expectations.yaml"
+)
 
 
 class TestImportObjectChange(TestImport):
@@ -38,6 +41,8 @@ class TestImportObjectChange(TestImport):
         # TODO check stdout/stderr for errors and such
         with open(NAUTOBOT_DATA_FILE, "r") as handle:
             cls.nautobot_data = yaml.safe_load(handle)
+        with open(NAUTOBOT_OBJECTCHANGE_DATA_FILE, "r") as handle:
+            cls.nautobot_data += yaml.safe_load(handle)
 
 
 class TestImportObjectChangeMethods(TestCase):
