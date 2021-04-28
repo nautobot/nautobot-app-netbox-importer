@@ -1,6 +1,7 @@
 """Test the importing functionality of nautobot-netbox-importer."""
 
 import os
+from packaging import version
 import json
 import copy
 from unittest.mock import Mock
@@ -32,17 +33,21 @@ class TestImportObjectChange(TestImport):
     @classmethod
     def setUpTestData(cls) -> None:
         """One-time setup function called before running the test functions in this class."""
-        # First we import the data without ObjectChanges
-        call_command("import_netbox_json", NETBOX_DATA_FILE, "2.10.4", verbosity=0)
-        call_command(
-            "import_netbox_objectchange_json", NETBOX_DATA_FILE, NETBOX_OBJECTCHANGE_DATA_FILE, "2.10.4", verbosity=0
-        )
+        super().setUpTestData()
 
-        # TODO check stdout/stderr for errors and such
-        with open(NAUTOBOT_DATA_FILE, "r") as handle:
-            cls.nautobot_data = yaml.safe_load(handle)
+        with open(NETBOX_DATA_FILE, "r") as file_handle_1:
+            with open(NETBOX_OBJECTCHANGE_DATA_FILE, "r") as file_handle_2:
+                Command().handle(
+                    json_file=file_handle_1,
+                    objectchange_json_file=file_handle_2,
+                    netbox_version=version.parse("2.10.4"),
+                    verbosity=0,
+                )
+
         with open(NAUTOBOT_OBJECTCHANGE_DATA_FILE, "r") as handle:
             cls.nautobot_data += yaml.safe_load(handle)
+            with open(NAUTOBOT_OBJECTCHANGE_DATA_FILE, "r") as handle:
+                cls.nautobot_data += yaml.safe_load(handle)
 
 
 class TestImportObjectChangeMethods(TestCase):
@@ -102,20 +107,13 @@ class TestImportObjectChangeMethods(TestCase):
 
         ref_entry = self.objectchange_data[0]
 
-        options = {"dry_run": False}
         entry = copy.deepcopy(ref_entry)
-        cmd.process_objectchange(entry, options, set())
+        cmd.process_objectchange(entry, set())
         obj = ObjectChange.objects.get(request_id=entry["fields"]["request_id"], time=entry["fields"]["time"])
         assert str(obj.request_id) == entry["fields"]["request_id"]
 
         # Second processing is to assess that the function is idempotent
         entry = copy.deepcopy(ref_entry)
-        cmd.process_objectchange(entry, options, set())
+        cmd.process_objectchange(entry, set())
         obj = ObjectChange.objects.get(request_id=entry["fields"]["request_id"], time=entry["fields"]["time"])
         assert str(obj.request_id) == entry["fields"]["request_id"]
-
-        options["dry_run"] = True
-        entry = self.objectchange_data[1]
-        cmd.process_objectchange(entry, options, set())
-        with self.assertRaises(models.change_logging.ObjectChange.DoesNotExist):
-            ObjectChange.objects.get(request_id=entry["fields"]["request_id"], time=entry["fields"]["time"])

@@ -46,7 +46,6 @@ class Command(BaseCommand):
             help=("DB dump in JSON with ONLY ObjectChange objects. "),
         )
         parser.add_argument("netbox_version", type=version.parse)
-        parser.add_argument("--dry-run", action="store_true", default=False)
 
     def map_object_type(self, key, entry, used_error_messages):
         """Map a ContentType object from Netbox to Nautobot. Returns False if not possible."""
@@ -62,7 +61,7 @@ class Command(BaseCommand):
             return False
         return True
 
-    def process_objectchange(self, entry, options, used_error_messages):
+    def process_objectchange(self, entry, used_error_messages):
         """Processes one ObjectChange entry (dict) to migrate from Netbox to Nautobot."""
         if not self.map_object_type("changed_object_type", entry, used_error_messages):
             return
@@ -89,12 +88,9 @@ class Command(BaseCommand):
                 self.logger.error(error_message)
             return
 
-        if (
-            not options["dry_run"]
-            and not ObjectChange.objects.filter(
-                request_id=entry["fields"]["request_id"], time=entry["fields"]["time"]
-            ).exists()
-        ):
+        if not ObjectChange.objects.filter(
+            request_id=entry["fields"]["request_id"], time=entry["fields"]["time"]
+        ).exists():
 
             obj = ObjectChange.objects.create(**entry["fields"])
             obj.time = entry["fields"]["time"]
@@ -146,6 +142,6 @@ class Command(BaseCommand):
         used_error_messages = set()
         for entry in ProgressBar(objectchange_data, verbosity=options["verbosity"]):
             if "model" in entry and entry["model"] == "extras.objectchange":
-                self.process_objectchange(entry, options, used_error_messages)
+                self.process_objectchange(entry, used_error_messages)
 
         self.logger.info(f"Processed {len(objectchange_data)} in this run.")

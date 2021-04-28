@@ -52,8 +52,6 @@ python netbox/manage.py dumpdata extras.ObjectChange\
 
 From within the Nautobot application environment, run `nautobot-server import_netbox_json <json_file_without_objectchanges> <json_file_only_objectchanges> <netbox_version>`, for example `nautobot-server import_netbox_objectchange_json imp/script/import_netbox_json.json imp/script/netbox_only_objectchange.json 2.10.3`.
 
-> You can also add `--dry-run` at the end of the command to not do any change in the DB and only understand if the script can parse all the entries.
-
 ## Contributing
 
 Most of the internal logic of this plugin is based on the [DiffSync](https://github.com/networktocode/diffsync) library, which in turn is built atop [Pydantic](https://github.com/samuelcolvin/pydantic/).
