@@ -93,8 +93,7 @@ class Command(BaseCommand):
             not options["dry_run"]
             and ObjectChange.objects.filter(
                 request_id=entry["fields"]["request_id"], time=entry["fields"]["time"]
-            ).count()
-            == 0
+            ).exists()
         ):
 
             obj = ObjectChange.objects.create(**entry["fields"])
@@ -145,7 +144,7 @@ class Command(BaseCommand):
 
         # used_error_messages is used to avoid repeating the same error message for each entry
         used_error_messages = set()
-        for entry in ProgressBar(objectchange_data):
+        for entry in ProgressBar(objectchange_data, verbosity=options["verbosity"]):
             if "model" in entry and entry["model"] == "extras.objectchange":
                 self.process_objectchange(entry, options, used_error_messages)
 
