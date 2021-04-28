@@ -105,7 +105,7 @@ class Command(BaseCommand):
         try:
             no_objectchange_data = json.load(options["json_file"])
         except ValueError as json_error:
-            self.logger.error(f"{options["json_file"]} is not a valid JSON file: {json_error}")
+            self.logger.error(f"{options['json_file']} is not a valid JSON file: {json_error}")
             return
 
         if not isinstance(no_objectchange_data, list):
@@ -119,7 +119,7 @@ class Command(BaseCommand):
                     entry["fields"]["app_label"],
                     entry["fields"]["model"],
                 )
-        # Freeing some memory one the object is processed
+        # Freeing some memory once the object is processed
         no_objectchange_data = None
 
         self.logger.info("Creating Nautobot ContentType mapping...")
@@ -132,7 +132,7 @@ class Command(BaseCommand):
         try:
             objectchange_data = json.load(options["objectchange_json_file"])
         except ValueError as json_error:
-            self.logger.error(f"{options["objectchange_json_file"]} is not a valid JSON file: {json_error}")
+            self.logger.error(f"{options['objectchange_json_file']} is not a valid JSON file: {json_error}")
             return
 
         # used_error_messages is used to avoid repeating the same error message for each entry
