@@ -2,11 +2,15 @@
 
 import os
 import json
-import yaml
 import copy
 from unittest.mock import Mock
+
+import yaml
 from django.core.management import call_command
 from django.contrib.contenttypes.models import ContentType
+from django.test import TestCase
+from nautobot.extras.models import ObjectChange
+from nautobot.extras import models
 from nautobot_netbox_importer.management.commands.import_netbox_objectchange_json import Command
 from .test_import import TestImport
 
@@ -35,6 +39,15 @@ class TestImportObjectChange(TestImport):
         with open(NAUTOBOT_DATA_FILE, "r") as handle:
             cls.nautobot_data = yaml.safe_load(handle)
 
+
+class TestImportObjectChangeMethods(TestCase):
+    """Test to import Command methods for import_netbox_objectchange_json."""
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        """One-time setup function called before running the test functions in this class."""
+        call_command("import_netbox_json", NETBOX_DATA_FILE, "2.10.4", verbosity=0)
+
         # Create ContentType Mappings
         with open(NETBOX_DATA_FILE, "r") as handle:
             cls.netbox_contenttype_mapping = {}
@@ -52,8 +65,7 @@ class TestImportObjectChange(TestImport):
             cls.objectchange_data = yaml.safe_load(handle)
 
     def test_map_object_type(self):
-        """validate map_object_type method."""
-
+        """Validate map_object_type method."""
         cmd = Command()
         cmd.netbox_contenttype_mapping = self.netbox_contenttype_mapping
         cmd.nautobot_contenttype_mapping = self.nautobot_contenttype_mapping
@@ -68,10 +80,30 @@ class TestImportObjectChange(TestImport):
 
         # Validate function when an unexistatnt model in Nautobot is trying to be mapped from Netbox
         entry = copy.deepcopy(ref_entry)
-        UNEXISTANT_CONTENT_TYPE = {"id": 1000, "tuple": ("unexistant", "model")}
-        entry["fields"]["changed_object_type"] = UNEXISTANT_CONTENT_TYPE["id"]
-        cmd.netbox_contenttype_mapping[UNEXISTANT_CONTENT_TYPE["id"]] = UNEXISTANT_CONTENT_TYPE["tuple"]
+        unexistant_contenttype = {"id": 1000, "tuple": ("unexistant", "model")}
+        entry["fields"]["changed_object_type"] = unexistant_contenttype["id"]
+        cmd.netbox_contenttype_mapping[unexistant_contenttype["id"]] = unexistant_contenttype["tuple"]
         cmd.logger = Mock()
         cmd.logger.warning = Mock()
         assert cmd.map_object_type("changed_object_type", entry, set()) is False
-        cmd.logger.warning.assert_called_once_with(f"{UNEXISTANT_CONTENT_TYPE['tuple']} key is not present in Nautobot")
+        cmd.logger.warning.assert_called_once_with(f"{unexistant_contenttype['tuple']} key is not present in Nautobot")
+
+    def test_process_objectchange(self):
+        """Validate process_objectchange method."""
+        cmd = Command()
+        cmd.netbox_contenttype_mapping = self.netbox_contenttype_mapping
+        cmd.nautobot_contenttype_mapping = self.nautobot_contenttype_mapping
+        cmd.logger = Mock()
+
+        options = {"dry_run": False}
+        entry = self.objectchange_data[0]
+        cmd.process_objectchange(entry, options, set())
+        assert (
+            ObjectChange.objects.get(request_id=entry["fields"]["request_id"], time=entry["fields"]["time"]) is not None
+        )
+
+        options["dry_run"] = True
+        entry = self.objectchange_data[1]
+        cmd.process_objectchange(entry, options, set())
+        with self.assertRaises(models.change_logging.ObjectChange.DoesNotExist):
+            ObjectChange.objects.get(request_id=entry["fields"]["request_id"], time=entry["fields"]["time"])
