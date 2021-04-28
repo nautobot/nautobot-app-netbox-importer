@@ -2,10 +2,7 @@
 
 import os
 
-from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.management import call_command
-from django.test import TestCase
 import yaml
 from .test_import import TestImport
 
