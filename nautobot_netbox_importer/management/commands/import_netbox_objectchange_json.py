@@ -57,7 +57,7 @@ class Command(BaseCommand):
         except KeyError:
             error_message = f"{(app_label, modelname)} key is not present in Nautobot"
             if error_message not in used_error_messages:
-                used_error_messages.append(error_message)
+                used_error_messages.add(error_message)
                 self.logger.warning(error_message)
             return False
         return True
@@ -85,7 +85,7 @@ class Command(BaseCommand):
         if not entry["fields"]["user"]:
             error_message = f'Username {entry["fields"]["user_name"]} not present in DB.'
             if error_message not in used_error_messages:
-                used_error_messages.append(error_message)
+                used_error_messages.add(error_message)
                 self.logger.error(error_message)
             return
 
@@ -102,7 +102,11 @@ class Command(BaseCommand):
         self.logger, _ = initialize_logger(options)
 
         self.logger.info("Loading NetBox JSON data into memory...", filename={options["json_file"].name})
-        no_objectchange_data = json.load(options["json_file"])
+        try:
+            no_objectchange_data = json.load(options["json_file"])
+        except ValueError as json_error:
+            self.logger.error(f"{options["json_file"]} is not a valid JSON file: {json_error}")
+            return
 
         if not isinstance(no_objectchange_data, list):
             raise CommandError(f"Data should be a list of records, but instead is {type(no_objectchange_data)}!")
@@ -125,10 +129,16 @@ class Command(BaseCommand):
         self.logger.info(
             "Loading ObjectChange NetBox JSON data into memory...", filename={options["objectchange_json_file"].name}
         )
-        objectchange_data = json.load(options["objectchange_json_file"])
+        try:
+            objectchange_data = json.load(options["objectchange_json_file"])
+        except ValueError as json_error:
+            self.logger.error(f"{options["objectchange_json_file"]} is not a valid JSON file: {json_error}")
+            return
+
         # used_error_messages is used to avoid repeating the same error message for each entry
-        used_error_messages = []
+        used_error_messages = set()
         for entry in ProgressBar(objectchange_data):
-            self.process_objectchange(entry, options, used_error_messages)
+            if "model" in entry and entry["model"] == "extras.objectchange":
+                self.process_objectchange(entry, options, used_error_messages)
 
         self.logger.info(f"Processed {len(objectchange_data)} in this run.")
