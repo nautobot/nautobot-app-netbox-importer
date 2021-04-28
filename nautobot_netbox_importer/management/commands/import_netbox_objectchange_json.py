@@ -91,7 +91,7 @@ class Command(BaseCommand):
 
         if (
             not options["dry_run"]
-            and ObjectChange.objects.filter(
+            and not ObjectChange.objects.filter(
                 request_id=entry["fields"]["request_id"], time=entry["fields"]["time"]
             ).exists()
         ):
