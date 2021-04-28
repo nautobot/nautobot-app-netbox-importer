@@ -7,6 +7,8 @@ are for populating data into Nautobot only, never the reverse.
 # pylint: disable=too-many-ancestors
 from typing import Any, List, Optional
 
+from pydantic import validator
+
 import nautobot.dcim.models as dcim
 
 from .abstract import (
@@ -216,7 +218,8 @@ class DeviceType(PrimaryModel):
         "u_height",
         "is_full_depth",
         "subdevice_role",
-        # TODO "front_image", "rear_image",
+        "front_image",
+        "rear_image",
         "comments",
     )
     _nautobot_model = dcim.DeviceType
@@ -228,9 +231,23 @@ class DeviceType(PrimaryModel):
     u_height: int
     is_full_depth: bool
     subdevice_role: str
-    # front_image
-    # rear_image
+    front_image: str
+    rear_image: str
     comments: str
+
+    @validator("front_image", pre=True)
+    def front_imagefieldfile_to_str(cls, value):  # pylint: disable=no-self-argument,no-self-use
+        """Convert ImageFieldFile objects to strings."""
+        if hasattr(value, "name"):
+            value = value.name
+        return value
+
+    @validator("rear_image", pre=True)
+    def rear_imagefieldfile_to_str(cls, value):  # pylint: disable=no-self-argument,no-self-use
+        """Convert ImageFieldFile objects to strings."""
+        if hasattr(value, "name"):
+            value = value.name
+        return value
 
 
 class FrontPort(CableTerminationMixin, ComponentModel):

@@ -4249,7 +4249,7 @@
         "pk": 1,
         "fields": {
             "created": "2021-02-21",
-            "last_updated": "2021-02-21T23:01:13.295Z",
+            "last_updated": "2021-04-28T20:46:17.028Z",
             "custom_field_data": {},
             "manufacturer": 1,
             "model": "Model A",
@@ -4258,8 +4258,8 @@
             "u_height": 1,
             "is_full_depth": true,
             "subdevice_role": "parent",
-            "front_image": "",
-            "rear_image": "",
+            "front_image": "devicetype-images/nautobot_logo.png",
+            "rear_image": "devicetype-images/nautobot_icon_32x32.png",
             "comments": ""
         }
     },
@@ -6492,6 +6492,19 @@
             "template_code": "{{ queryset }}",
             "mime_type": "",
             "file_extension": ""
+        }
+    },
+    {
+        "model": "extras.imageattachment",
+        "pk": 1,
+        "fields": {
+            "content_type": 36,
+            "object_id": 1,
+            "image": "image-attachments/site_1_Site_1_Image.gif",
+            "image_height": 31,
+            "image_width": 31,
+            "name": "Site 1 Image",
+            "created": "2021-04-28T20:53:27.577Z"
         }
     },
     {

@@ -79,6 +79,7 @@ class N2NDiffSync(DiffSync):
     customfieldchoice = n2nmodels.CustomFieldChoice
     customlink = n2nmodels.CustomLink
     exporttemplate = n2nmodels.ExportTemplate
+    imageattachment = n2nmodels.ImageAttachment
     jobresult = n2nmodels.JobResult
     status = n2nmodels.Status
     tag = n2nmodels.Tag
@@ -209,6 +210,7 @@ class N2NDiffSync(DiffSync):
         "exporttemplate",
         "webhook",
         "taggeditem",
+        "imageattachment",
         "jobresult",
     )
 

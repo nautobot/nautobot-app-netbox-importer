@@ -2989,13 +2989,13 @@
   fields:
     comments: ''
     custom_field_data: {}
-    front_image: ''
+    front_image: "devicetype-images/nautobot_logo.png"
     is_full_depth: true
     manufacturer:
       ids:
         name: "Manufacturer A"
     part_number: AAAAAAAAA
-    rear_image: ''
+    rear_image: "devicetype-images/nautobot_icon_32x32.png"
     slug: model-a
     subdevice_role: parent
     u_height: 1
@@ -5125,6 +5125,19 @@
     file_extension: ''
     mime_type: ''
     template_code: '{{ queryset }}'
+- model: extras.imageattachment
+  ids:
+    name: "Site 1 Image"
+  fields:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "site"
+    # TODO object_id: 1
+    image: "image-attachments/site_1_Site_1_Image.gif"
+    image_height: 31
+    image_width: 31
+    # created: "2021-04-28T20:53:27.577Z"
 - model: extras.configcontext
   ids:
     name: Config Context A
