@@ -78,7 +78,7 @@ class TestImportObjectChangeMethods(TestCase):
             if entry["fields"][key]:
                 assert cmd.map_object_type(key, entry, set()) is True
 
-        # Validate function when an unexistatnt model in Nautobot is trying to be mapped from Netbox
+        # Validate function when a nonexistent model in Nautobot is trying to be mapped from Netbox
         entry = copy.deepcopy(ref_entry)
         unexistant_contenttype = {"id": 1000, "tuple": ("unexistant", "model")}
         entry["fields"]["changed_object_type"] = unexistant_contenttype["id"]
