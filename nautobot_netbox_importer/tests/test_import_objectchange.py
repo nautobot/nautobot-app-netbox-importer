@@ -44,8 +44,6 @@ class TestImportObjectChange(TestImport):
 
         with open(NAUTOBOT_OBJECTCHANGE_DATA_FILE, "r") as handle:
             cls.nautobot_data += yaml.safe_load(handle)
-            with open(NAUTOBOT_OBJECTCHANGE_DATA_FILE, "r") as handle:
-                cls.nautobot_data += yaml.safe_load(handle)
 
 
 class TestImportObjectChangeMethods(TestCase):
