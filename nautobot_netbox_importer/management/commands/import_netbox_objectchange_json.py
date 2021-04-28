@@ -105,7 +105,9 @@ class Command(BaseCommand):
         try:
             no_objectchange_data = json.load(options["json_file"])
         except ValueError as json_error:
-            raise CommandError(f"{options['json_file']} is not a valid JSON file: {json_error}")
+            raise CommandError(
+                f"{options['json_file']} is not a valid JSON file: {json_error}"
+            )  # pylint: disable=raise-missing-from
 
         if not isinstance(no_objectchange_data, list):
             raise CommandError(f"Data should be a list of records, but instead is {type(no_objectchange_data)}!")
@@ -131,7 +133,9 @@ class Command(BaseCommand):
         try:
             objectchange_data = json.load(options["objectchange_json_file"])
         except ValueError as json_error:
-            raise CommandError(f"{options['objectchange_json_file']} is not a valid JSON file: {json_error}")
+            raise CommandError(
+                f"{options['objectchange_json_file']} is not a valid JSON file: {json_error}"
+            )  # pylint: disable=raise-missing-from
 
         # used_error_messages is used to avoid repeating the same error message for each entry
         used_error_messages = set()

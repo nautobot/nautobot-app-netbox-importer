@@ -100,12 +100,19 @@ class TestImportObjectChangeMethods(TestCase):
         cmd.nautobot_contenttype_mapping = self.nautobot_contenttype_mapping
         cmd.logger = Mock()
 
+        ref_entry = self.objectchange_data[0]
+
         options = {"dry_run": False}
-        entry = self.objectchange_data[0]
+        entry = copy.deepcopy(ref_entry)
         cmd.process_objectchange(entry, options, set())
-        assert (
-            ObjectChange.objects.get(request_id=entry["fields"]["request_id"], time=entry["fields"]["time"]) is not None
-        )
+        obj = ObjectChange.objects.get(request_id=entry["fields"]["request_id"], time=entry["fields"]["time"])
+        assert str(obj.request_id) == entry["fields"]["request_id"]
+
+        # Second processing is to assess that the function is idempotent
+        entry = copy.deepcopy(ref_entry)
+        cmd.process_objectchange(entry, options, set())
+        obj = ObjectChange.objects.get(request_id=entry["fields"]["request_id"], time=entry["fields"]["time"])
+        assert str(obj.request_id) == entry["fields"]["request_id"]
 
         options["dry_run"] = True
         entry = self.objectchange_data[1]
