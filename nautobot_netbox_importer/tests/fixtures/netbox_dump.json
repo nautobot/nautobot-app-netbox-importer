@@ -3874,6 +3874,54 @@
         }
     },
     {
+        "model": "dcim.consoleport",
+        "pk": 3,
+        "fields": {
+            "device": 4,
+            "name": "Console Port 1",
+            "_name": "Console Port 00000001",
+            "label": "Model A Console Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "rj-45"
+        }
+    },
+    {
+        "model": "dcim.consoleport",
+        "pk": 4,
+        "fields": {
+            "device": 5,
+            "name": "Console Port 1",
+            "_name": "Console Port 00000001",
+            "label": "Model A Console Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "rj-45"
+        }
+    },
+    {
+        "model": "dcim.consoleport",
+        "pk": 5,
+        "fields": {
+            "device": 6,
+            "name": "Console Port 1",
+            "_name": "Console Port 00000001",
+            "label": "Model A Console Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "rj-45"
+        }
+    },
+    {
         "model": "dcim.consoleserverport",
         "pk": 1,
         "fields": {
@@ -3897,6 +3945,54 @@
             "name": "Device B Console Server",
             "_name": "Device B Console Server",
             "label": "",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "rj-45"
+        }
+    },
+    {
+        "model": "dcim.consoleserverport",
+        "pk": 3,
+        "fields": {
+            "device": 4,
+            "name": "Console Server Port 1",
+            "_name": "Console Server Port 00000001",
+            "label": "Model A Console Server Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "rj-45"
+        }
+    },
+    {
+        "model": "dcim.consoleserverport",
+        "pk": 4,
+        "fields": {
+            "device": 5,
+            "name": "Console Server Port 1",
+            "_name": "Console Server Port 00000001",
+            "label": "Model A Console Server Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "rj-45"
+        }
+    },
+    {
+        "model": "dcim.consoleserverport",
+        "pk": 5,
+        "fields": {
+            "device": 6,
+            "name": "Console Server Port 1",
+            "_name": "Console Server Port 00000001",
+            "label": "Model A Console Server Port 1",
             "description": "",
             "cable": null,
             "_cable_peer_type": null,
@@ -3960,6 +4056,60 @@
         }
     },
     {
+        "model": "dcim.powerport",
+        "pk": 4,
+        "fields": {
+            "device": 4,
+            "name": "Power Port 1",
+            "_name": "Power Port 00000001",
+            "label": "Model A Power Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "nema-5-15p",
+            "maximum_draw": 100,
+            "allocated_draw": 10
+        }
+    },
+    {
+        "model": "dcim.powerport",
+        "pk": 5,
+        "fields": {
+            "device": 5,
+            "name": "Power Port 1",
+            "_name": "Power Port 00000001",
+            "label": "Model A Power Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "nema-5-15p",
+            "maximum_draw": 100,
+            "allocated_draw": 10
+        }
+    },
+    {
+        "model": "dcim.powerport",
+        "pk": 6,
+        "fields": {
+            "device": 6,
+            "name": "Power Port 1",
+            "_name": "Power Port 00000001",
+            "label": "Model A Power Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "nema-5-15p",
+            "maximum_draw": 100,
+            "allocated_draw": 10
+        }
+    },
+    {
         "model": "dcim.poweroutlet",
         "pk": 1,
         "fields": {
@@ -3993,6 +4143,60 @@
             "type": "iec-60320-c13",
             "power_port": null,
             "feed_leg": "B"
+        }
+    },
+    {
+        "model": "dcim.poweroutlet",
+        "pk": 3,
+        "fields": {
+            "device": 4,
+            "name": "Power Outlet 1",
+            "_name": "Power Outlet 00000001",
+            "label": "Model A Power Outlet 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "nema-5-30r",
+            "power_port": 4,
+            "feed_leg": "A"
+        }
+    },
+    {
+        "model": "dcim.poweroutlet",
+        "pk": 4,
+        "fields": {
+            "device": 5,
+            "name": "Power Outlet 1",
+            "_name": "Power Outlet 00000001",
+            "label": "Model A Power Outlet 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "nema-5-30r",
+            "power_port": 5,
+            "feed_leg": "A"
+        }
+    },
+    {
+        "model": "dcim.poweroutlet",
+        "pk": 5,
+        "fields": {
+            "device": 6,
+            "name": "Power Outlet 1",
+            "_name": "Power Outlet 00000001",
+            "label": "Model A Power Outlet 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "type": "nema-5-30r",
+            "power_port": 6,
+            "feed_leg": "A"
         }
     },
     {
@@ -4070,6 +4274,150 @@
         }
     },
     {
+        "model": "dcim.interface",
+        "pk": 4,
+        "fields": {
+            "device": 4,
+            "name": "eth0",
+            "label": "Ethernet 0",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "enabled": true,
+            "mac_address": null,
+            "mtu": null,
+            "mode": "",
+            "_name": "9999999999999999eth000000............",
+            "lag": null,
+            "type": "100base-tx",
+            "mgmt_only": false,
+            "untagged_vlan": null,
+            "tagged_vlans": []
+        }
+    },
+    {
+        "model": "dcim.interface",
+        "pk": 5,
+        "fields": {
+            "device": 4,
+            "name": "mgmt0",
+            "label": "Management 0",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "enabled": true,
+            "mac_address": null,
+            "mtu": null,
+            "mode": "",
+            "_name": "9999999999999999mgmt000000............",
+            "lag": null,
+            "type": "1000base-t",
+            "mgmt_only": true,
+            "untagged_vlan": null,
+            "tagged_vlans": []
+        }
+    },
+    {
+        "model": "dcim.interface",
+        "pk": 6,
+        "fields": {
+            "device": 5,
+            "name": "eth0",
+            "label": "Ethernet 0",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "enabled": true,
+            "mac_address": null,
+            "mtu": null,
+            "mode": "",
+            "_name": "9999999999999999eth000000............",
+            "lag": null,
+            "type": "100base-tx",
+            "mgmt_only": false,
+            "untagged_vlan": null,
+            "tagged_vlans": []
+        }
+    },
+    {
+        "model": "dcim.interface",
+        "pk": 7,
+        "fields": {
+            "device": 5,
+            "name": "mgmt0",
+            "label": "Management 0",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "enabled": true,
+            "mac_address": null,
+            "mtu": null,
+            "mode": "",
+            "_name": "9999999999999999mgmt000000............",
+            "lag": null,
+            "type": "1000base-t",
+            "mgmt_only": true,
+            "untagged_vlan": null,
+            "tagged_vlans": []
+        }
+    },
+    {
+        "model": "dcim.interface",
+        "pk": 8,
+        "fields": {
+            "device": 6,
+            "name": "eth0",
+            "label": "Ethernet 0",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "enabled": true,
+            "mac_address": null,
+            "mtu": null,
+            "mode": "",
+            "_name": "9999999999999999eth000000............",
+            "lag": null,
+            "type": "100base-tx",
+            "mgmt_only": false,
+            "untagged_vlan": null,
+            "tagged_vlans": []
+        }
+    },
+    {
+        "model": "dcim.interface",
+        "pk": 9,
+        "fields": {
+            "device": 6,
+            "name": "mgmt0",
+            "label": "Management 0",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "enabled": true,
+            "mac_address": null,
+            "mtu": null,
+            "mode": "",
+            "_name": "9999999999999999mgmt000000............",
+            "lag": null,
+            "type": "1000base-t",
+            "mgmt_only": true,
+            "untagged_vlan": null,
+            "tagged_vlans": []
+        }
+    },
+    {
         "model": "dcim.frontport",
         "pk": 1,
         "fields": {
@@ -4100,6 +4448,57 @@
             "_cable_peer_id": 1,
             "type": "8p8c",
             "rear_port": 2,
+            "rear_port_position": 1
+        }
+    },
+    {
+        "model": "dcim.frontport",
+        "pk": 3,
+        "fields": {
+            "device": 4,
+            "name": "Front Port 1",
+            "_name": "Front Port 00000001",
+            "label": "Model A Front Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "type": "8p8c",
+            "rear_port": 3,
+            "rear_port_position": 1
+        }
+    },
+    {
+        "model": "dcim.frontport",
+        "pk": 4,
+        "fields": {
+            "device": 5,
+            "name": "Front Port 1",
+            "_name": "Front Port 00000001",
+            "label": "Model A Front Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "type": "8p8c",
+            "rear_port": 4,
+            "rear_port_position": 1
+        }
+    },
+    {
+        "model": "dcim.frontport",
+        "pk": 5,
+        "fields": {
+            "device": 6,
+            "name": "Front Port 1",
+            "_name": "Front Port 00000001",
+            "label": "Model A Front Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "type": "8p8c",
+            "rear_port": 5,
             "rear_port_position": 1
         }
     },
@@ -4136,6 +4535,54 @@
         }
     },
     {
+        "model": "dcim.rearport",
+        "pk": 3,
+        "fields": {
+            "device": 4,
+            "name": "Rear Port 1",
+            "_name": "Rear Port 00000001",
+            "label": "Model A Rear Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "type": "8p8c",
+            "positions": 2
+        }
+    },
+    {
+        "model": "dcim.rearport",
+        "pk": 4,
+        "fields": {
+            "device": 5,
+            "name": "Rear Port 1",
+            "_name": "Rear Port 00000001",
+            "label": "Model A Rear Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "type": "8p8c",
+            "positions": 2
+        }
+    },
+    {
+        "model": "dcim.rearport",
+        "pk": 5,
+        "fields": {
+            "device": 6,
+            "name": "Rear Port 1",
+            "_name": "Rear Port 00000001",
+            "label": "Model A Rear Port 1",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "type": "8p8c",
+            "positions": 2
+        }
+    },
+    {
         "model": "dcim.devicebay",
         "pk": 1,
         "fields": {
@@ -4156,6 +4603,42 @@
             "_name": "Device B Device Bay",
             "label": "B",
             "description": "B",
+            "installed_device": null
+        }
+    },
+    {
+        "model": "dcim.devicebay",
+        "pk": 3,
+        "fields": {
+            "device": 4,
+            "name": "Device Bay 1",
+            "_name": "Device Bay 00000001",
+            "label": "Model A Device Bay 1",
+            "description": "",
+            "installed_device": null
+        }
+    },
+    {
+        "model": "dcim.devicebay",
+        "pk": 4,
+        "fields": {
+            "device": 5,
+            "name": "Device Bay 1",
+            "_name": "Device Bay 00000001",
+            "label": "Model A Device Bay 1",
+            "description": "",
+            "installed_device": null
+        }
+    },
+    {
+        "model": "dcim.devicebay",
+        "pk": 5,
+        "fields": {
+            "device": 6,
+            "name": "Device Bay 1",
+            "_name": "Device Bay 00000001",
+            "label": "Model A Device Bay 1",
+            "description": "",
             "installed_device": null
         }
     },
@@ -4456,13 +4939,112 @@
         }
     },
     {
+        "model": "dcim.device",
+        "pk": 4,
+        "fields": {
+            "created": "2021-04-29",
+            "last_updated": "2021-04-29T12:30:55.980Z",
+            "custom_field_data": {
+                "Custom Text Field A": "",
+                "Custom Integer Field B": 1
+            },
+            "local_context_data": null,
+            "device_type": 1,
+            "device_role": 1,
+            "tenant": null,
+            "platform": null,
+            "name": "VC A Master",
+            "_name": "VC A Master",
+            "serial": "",
+            "asset_tag": null,
+            "site": 1,
+            "rack": null,
+            "position": null,
+            "face": "",
+            "status": "active",
+            "primary_ip4": null,
+            "primary_ip6": null,
+            "cluster": null,
+            "virtual_chassis": 1,
+            "vc_position": 0,
+            "vc_priority": null,
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.device",
+        "pk": 5,
+        "fields": {
+            "created": "2021-04-29",
+            "last_updated": "2021-04-29T12:32:08.456Z",
+            "custom_field_data": {
+                "Custom Text Field A": "",
+                "Custom Integer Field B": 1
+            },
+            "local_context_data": null,
+            "device_type": 1,
+            "device_role": 1,
+            "tenant": null,
+            "platform": null,
+            "name": "VC A Member 1",
+            "_name": "VC A Member 00000001",
+            "serial": "",
+            "asset_tag": null,
+            "site": 1,
+            "rack": null,
+            "position": null,
+            "face": "",
+            "status": "active",
+            "primary_ip4": null,
+            "primary_ip6": null,
+            "cluster": null,
+            "virtual_chassis": 1,
+            "vc_position": 1,
+            "vc_priority": 1,
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.device",
+        "pk": 6,
+        "fields": {
+            "created": "2021-04-29",
+            "last_updated": "2021-04-29T12:32:08.503Z",
+            "custom_field_data": {
+                "Custom Text Field A": "",
+                "Custom Integer Field B": 1
+            },
+            "local_context_data": null,
+            "device_type": 1,
+            "device_role": 1,
+            "tenant": null,
+            "platform": null,
+            "name": "VC A Member 2",
+            "_name": "VC A Member 00000002",
+            "serial": "",
+            "asset_tag": null,
+            "site": 1,
+            "rack": null,
+            "position": null,
+            "face": "",
+            "status": "active",
+            "primary_ip4": null,
+            "primary_ip6": null,
+            "cluster": null,
+            "virtual_chassis": 1,
+            "vc_position": 2,
+            "vc_priority": 2,
+            "comments": ""
+        }
+    },
+    {
         "model": "dcim.virtualchassis",
         "pk": 1,
         "fields": {
             "created": "2021-02-21",
-            "last_updated": "2021-02-21T23:04:14.345Z",
+            "last_updated": "2021-04-29T12:32:08.337Z",
             "custom_field_data": {},
-            "master": null,
+            "master": 4,
             "name": "Virtual Chassis A",
             "domain": ""
         }
