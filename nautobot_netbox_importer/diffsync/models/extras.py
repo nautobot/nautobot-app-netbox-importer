@@ -9,7 +9,7 @@ from datetime import datetime
 from typing import Any, List, Optional
 from uuid import UUID
 
-from pydantic import Field
+from pydantic import Field, validator
 from diffsync.exceptions import ObjectNotFound
 import structlog
 
@@ -192,6 +192,30 @@ class ExportTemplate(ChangeLoggedModelMixin, NautobotBaseModel):
     template_code: str
     mime_type: str
     file_extension: str
+
+
+class ImageAttachment(NautobotBaseModel):
+    """An uploaded image which is associated with an object."""
+
+    _modelname = "imageattachment"
+    _attributes = ("content_type", "object_id", "image", "image_height", "image_width", "name", "created")
+    _nautobot_model = extras.ImageAttachment
+
+    content_type: ContentTypeRef
+    _object_id = foreign_key_field("*content_type")
+    object_id: _object_id
+    image: str
+    image_height: int
+    image_width: int
+    name: str
+    created: datetime
+
+    @validator("image", pre=True)
+    def imagefieldfile_to_str(cls, value):  # pylint: disable=no-self-argument,no-self-use
+        """Convert ImageFieldFile objects to strings."""
+        if hasattr(value, "name"):
+            value = value.name
+        return value
 
 
 class JobResultData(DiffSyncCustomValidationField, dict):

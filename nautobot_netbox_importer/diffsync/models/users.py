@@ -3,6 +3,8 @@
 from datetime import datetime
 from typing import List, Optional
 
+from django.contrib.auth import get_user_model
+
 import nautobot.users.models as users
 
 from .abstract import ArrayField, NautobotBaseModel
@@ -64,7 +66,7 @@ class User(NautobotBaseModel):
         "user_permissions",
         "config_data",
     )
-    _nautobot_model = users.User
+    _nautobot_model = get_user_model()
 
     username: str
     first_name: str

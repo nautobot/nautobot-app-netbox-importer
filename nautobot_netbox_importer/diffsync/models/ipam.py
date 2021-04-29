@@ -34,10 +34,14 @@ from .references import (
 )
 
 
-def network_from_components(network_bytes, prefix_length):
-    """Given a network address as a byte string, and a prefix length, construct an IPNetwork object."""
-    ipaddress = netaddr.IPAddress(int.from_bytes(network_bytes, "big"))
-    return netaddr.IPNetwork(f"{ipaddress}/{prefix_length}")
+def network_from_components(network, prefix_length):
+    """Given a network address and a prefix length, construct an IPNetwork object."""
+    if isinstance(network, bytes):
+        # Nautobot 1.0.0b3
+        address = netaddr.IPAddress(int.from_bytes(network, "big"))
+        return netaddr.IPNetwork(f"{address}/{prefix_length}")
+    # Nautobot 1.0.0b4 and later
+    return netaddr.IPNetwork(f"{network}/{prefix_length}")
 
 
 class Aggregate(PrimaryModel):
