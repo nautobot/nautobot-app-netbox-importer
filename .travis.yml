@@ -1,14 +1,5 @@
 ---
 language: "python"
-python:
-  - "3.6"
-  - "3.7"
-  - "3.8"
-
-env:
-  - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0b3"
-  - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0"
-  - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=develop-latest"
 
 jobs:
   include:
