@@ -7,8 +7,8 @@ python:
 
 env:
   matrix:
-    - "INVOKE_NAUTOBOT-NETBOX-IMPORTER_NAUTOBOT_VER=1.0.0b3"
-    - "INVOKE_NAUTOBOT-NETBOX-IMPORTER_NAUTOBOT_VER=develop-latest"
+    - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0b3"
+    - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0"
 
 services:
   - "docker"
@@ -22,9 +22,7 @@ before_script:
   - "cp development/creds.example.env development/creds.env"
 
 script:
-  # If you want to test different versions, it may require updating the poetry definition for Nautobot
-  # as that is where the version is controlled
-  - "poetry add nautobot=$NAUTOBOT_VER"
+  - "poetry add nautobot=$INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER"
   - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER=$TRAVIS_PYTHON_VERSION invoke build --no-cache"
   - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER=$TRAVIS_PYTHON_VERSION invoke tests"
 
@@ -37,5 +35,5 @@ deploy:
   on:
     tags: true
     branch: master
-    condition: $NAUTOBOT_VER = 1.0.0
+    condition: $INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER = 1.0.0
     python: 3.7
