@@ -1,66 +1,42 @@
 ---
-stages:
-  - name: "lint"
-  - name: "test"
-  - name: "deploy-github"
-    if: "tag IS present"
-  - name: "deploy-pypi"
-    if: "tag IS present"
-
 language: "python"
 python:
-- "3.6"
-- "3.7"
-- "3.8"
+  - "3.6"
+  - "3.7"
+  - "3.8"
 
-# env:
-#   matrix:
-#     - NAUTOBOT_VER=v1.0.0a1
+env:
+  matrix:
+    - "INVOKE_NAUTOBOT-NETBOX-IMPORTER_NAUTOBOT_VER=1.0.0b3"
+    - "INVOKE_NAUTOBOT-NETBOX-IMPORTER_NAUTOBOT_VER=1.0.0"
+    - "INVOKE_NAUTOBOT-NETBOX-IMPORTER_NAUTOBOT_VER=develop-latest"
 
 services:
-- "docker"
+  - "docker"
 
 # --------------------------------------------------------------------------
 # Tests
 # --------------------------------------------------------------------------
 before_script:
-- "pip install invoke toml docker-compose poetry"
+  - "pip install invoke toml docker-compose poetry"
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin || travis_terminate 1  # yamllint disable-line rule:quoted-strings
+  - "cp development/creds.env.example development/creds.env"
 
 script:
-- "invoke build --nocache --python-ver $TRAVIS_PYTHON_VERSION"
-- "invoke unittest --python-ver $TRAVIS_PYTHON_VERSION"
+  # If you want to test different versions, it may require updating the poetry definition for Nautobot
+  # as that is where the version is controlled
+  - "poetry add nautobot=$NAUTOBOT_VER"
+  - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER=$TRAVIS_PYTHON_VERSION invoke build --no-cache"
+  - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER=$TRAVIS_PYTHON_VERSION invoke tests"
 
-jobs:
-  include:
-    - stage: "lint"
-      before_script:
-        - "pip install invoke toml docker-compose"
-        - "invoke build --nocache --python-ver $TRAVIS_PYTHON_VERSION"
-      script:
-        - "invoke black --python-ver $TRAVIS_PYTHON_VERSION"
-        - "invoke flake8 --python-ver $TRAVIS_PYTHON_VERSION"
-        - "invoke bandit --python-ver $TRAVIS_PYTHON_VERSION"
-        - "invoke pydocstyle --python-ver $TRAVIS_PYTHON_VERSION"
-        - "invoke pylint --python-ver $TRAVIS_PYTHON_VERSION"
-
-    - stage: "deploy-github"
-      before_script:
-        - "pip install poetry"
-      script:
-        - "poetry version $TRAVIS_TAG"
-        - "poetry build"
-      deploy:
-        provider: "releases"
-        api_key: "$GITHUB_AUTH_TOKEN"
-        file_glob: true
-        file: "dist/*"
-        skip_cleanup: true
-        on:
-          all_branches: true
-    - stage: "deploy-pypi"
-      before_script:
-        - "pip install poetry"
-      script:
-        - "poetry version $TRAVIS_TAG"
-        - "poetry config pypi-token.pypi $PYPI_TOKEN"
-        - "poetry publish --build"
+deploy:
+  provider: script
+  script:
+    - poetry config pypi-token.pypi $PYPI_TOKEN
+    - poetry publish --build
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master
+    condition: $NAUTOBOT_VER = 1.0.0
+    python: 3.7

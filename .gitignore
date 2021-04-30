@@ -295,3 +295,9 @@ fabric.properties
 ### vscode ###
 .vscode/*
 *.code-workspace
+
+# Rando
+creds.env
+
+# Invoke overrides
+invoke.yml
