@@ -3,8 +3,9 @@ language: "python"
 
 jobs:
   include:
-    - python: "3.6"
-      env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0b3"
+    # There's no Docker image for 1.0.0b3 unfortunately
+    # - python: "3.6"
+    #   env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0b3"
     - python: "3.6"
       env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0"
     - python: "3.7"
@@ -22,11 +23,12 @@ services:
 # --------------------------------------------------------------------------
 before_script:
   - "pip install invoke toml docker-compose poetry"
+  # Ensure that we use the version of Nautobot provided by the Docker environment, not the version in poetry.lock!
+  - "poetry remove nautobot"
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin || travis_terminate 1  # yamllint disable-line rule:quoted-strings
   - "cp development/creds.example.env development/creds.env"
 
 script:
-  - "poetry add nautobot=$INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER"
   - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER=$TRAVIS_PYTHON_VERSION invoke build --no-cache"
   - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER=$TRAVIS_PYTHON_VERSION invoke tests"
 
