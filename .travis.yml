@@ -23,8 +23,6 @@ services:
 # --------------------------------------------------------------------------
 before_script:
   - "pip install invoke toml docker-compose poetry"
-  # Ensure that we use the version of Nautobot provided by the Docker environment, not the version in poetry.lock!
-  - "poetry remove nautobot"
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin || travis_terminate 1  # yamllint disable-line rule:quoted-strings
   - "cp development/creds.example.env development/creds.env"
 
