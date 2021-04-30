@@ -8,7 +8,6 @@ python:
 env:
   matrix:
     - "INVOKE_NAUTOBOT-NETBOX-IMPORTER_NAUTOBOT_VER=1.0.0b3"
-    - "INVOKE_NAUTOBOT-NETBOX-IMPORTER_NAUTOBOT_VER=1.0.0"
     - "INVOKE_NAUTOBOT-NETBOX-IMPORTER_NAUTOBOT_VER=develop-latest"
 
 services:
@@ -20,7 +19,7 @@ services:
 before_script:
   - "pip install invoke toml docker-compose poetry"
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin || travis_terminate 1  # yamllint disable-line rule:quoted-strings
-  - "cp development/creds.env.example development/creds.env"
+  - "cp development/creds.example.env development/creds.env"
 
 script:
   # If you want to test different versions, it may require updating the poetry definition for Nautobot
