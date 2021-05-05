@@ -50,7 +50,7 @@ python netbox/manage.py dumpdata extras.ObjectChange\
 
 #### Importing the ObjectChanges into Nautobot
 
-From within the Nautobot application environment, run `nautobot-server import_netbox_json <json_file_without_objectchanges> <json_file_only_objectchanges> <netbox_version>`, for example `nautobot-server import_netbox_objectchange_json imp/script/import_netbox_json.json imp/script/netbox_only_objectchange.json 2.10.3`.
+From within the Nautobot application environment, run `nautobot-server import_netbox_objectchange_json <json_file_without_objectchanges> <json_file_only_objectchanges> <netbox_version>`, for example `nautobot-server import_netbox_objectchange_json imp/script/import_netbox_json.json imp/script/netbox_only_objectchange.json 2.10.3`.
 
 ## Contributing
 
