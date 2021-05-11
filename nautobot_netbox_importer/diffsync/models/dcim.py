@@ -5,7 +5,11 @@ Because this plugin is meant *only* for NetBox-to-Nautobot migration, the create
 are for populating data into Nautobot only, never the reverse.
 """
 # pylint: disable=too-many-ancestors
-from typing import Any, List, Optional
+from typing import Any, List, Mapping, Optional
+
+from diffsync import DiffSync
+from pydantic import validator
+import structlog
 
 import nautobot.dcim.models as dcim
 
@@ -17,6 +21,7 @@ from .abstract import (
     ComponentTemplateModel,
     ConfigContextModelMixin,
     MPTTModelMixin,
+    NautobotBaseModel,
     OrganizationalModel,
     PrimaryModel,
     StatusModelMixin,
@@ -48,6 +53,9 @@ from .references import (
     VLANRef,
     VirtualChassisRef,
 )
+
+
+logger = structlog.get_logger()
 
 
 class Cable(StatusModelMixin, PrimaryModel):
@@ -216,7 +224,8 @@ class DeviceType(PrimaryModel):
         "u_height",
         "is_full_depth",
         "subdevice_role",
-        # TODO "front_image", "rear_image",
+        "front_image",
+        "rear_image",
         "comments",
     )
     _nautobot_model = dcim.DeviceType
@@ -228,9 +237,23 @@ class DeviceType(PrimaryModel):
     u_height: int
     is_full_depth: bool
     subdevice_role: str
-    # front_image
-    # rear_image
+    front_image: str
+    rear_image: str
     comments: str
+
+    @validator("front_image", pre=True)
+    def front_imagefieldfile_to_str(cls, value):  # pylint: disable=no-self-argument,no-self-use
+        """Convert ImageFieldFile objects to strings."""
+        if hasattr(value, "name"):
+            value = value.name
+        return value
+
+    @validator("rear_image", pre=True)
+    def rear_imagefieldfile_to_str(cls, value):  # pylint: disable=no-self-argument,no-self-use
+        """Convert ImageFieldFile objects to strings."""
+        if hasattr(value, "name"):
+            value = value.name
+        return value
 
 
 class FrontPort(CableTerminationMixin, ComponentModel):
@@ -650,3 +673,31 @@ class VirtualChassis(PrimaryModel):
     master: Optional[DeviceRef]
     name: str
     domain: str
+
+    @classmethod
+    def create(cls, diffsync: DiffSync, ids: Mapping, attrs: Mapping) -> Optional[NautobotBaseModel]:
+        """Create an instance of this model, both in Nautobot and in DiffSync.
+
+        There is an odd behavior (bug?) in Nautobot 1.0.0 wherein when creating a VirtualChassis with
+        a predefined "master" Device, it changes the master device's position to 1 regardless of what
+        it was previously configured to. This will cause us problems later when we attempt to associate
+        member devices with the VirtualChassis if there's a member that's supposed to be using position 1.
+        So, we take it upon ourselves to overrule Nautobot and put the master back into the position it's
+        supposed to be in.
+        """
+        diffsync_record = super().create(diffsync, ids, attrs)
+        if diffsync_record is not None and diffsync_record.master is not None:
+            nautobot_record = cls.nautobot_model().objects.get(**ids)
+            nautobot_master = nautobot_record.master
+            diffsync_master = diffsync.get("device", str(nautobot_master.pk))
+            if nautobot_master.vc_position != diffsync_master.vc_position:
+                logger.debug(
+                    "Fixing up master device vc_position",
+                    virtual_chassis=diffsync_record,
+                    incorrect_position=nautobot_master.vc_position,
+                    correct_position=diffsync_master.vc_position,
+                )
+                nautobot_master.vc_position = diffsync_master.vc_position
+                nautobot_master.save()
+
+        return diffsync_record

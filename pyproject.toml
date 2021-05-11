@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautobot-netbox-importer"
-version = "1.2.1"
+version = "1.3.0"
 description = "Data importer from NetBox 2.10.x to Nautobot"
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 
@@ -21,7 +21,6 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.6"
 diffsync = "^1.3.0"
-nautobot = ">=1.0.0b3,<2.0"
 tqdm = "^4.59.0"
 colorama = "^0.4.4"
 

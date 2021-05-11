@@ -2682,6 +2682,39 @@
     label: beta
     name: Device B Console
     type: db-25
+- model: dcim.consoleport
+  ids:
+    device:
+      ids:
+        name: "VC A Master"
+  fields:
+    cable: null
+    description: ""
+    label: "Model A Console Port 1"
+    name: "Console Port 1"
+    type: rj-45
+- model: dcim.consoleport
+  ids:
+    device:
+      ids:
+        name: "VC A Member 1"
+  fields:
+    cable: null
+    description: ""
+    label: "Model A Console Port 1"
+    name: "Console Port 1"
+    type: rj-45
+- model: dcim.consoleport
+  ids:
+    device:
+      ids:
+        name: "VC A Member 2"
+  fields:
+    cable: null
+    description: ""
+    label: "Model A Console Port 1"
+    name: "Console Port 1"
+    type: rj-45
 - model: dcim.consoleserverport
   ids:
     device:
@@ -2704,7 +2737,39 @@
     label: ''
     name: Device B Console Server
     type: rj-45
-
+- model: dcim.consoleserverport
+  ids:
+    device:
+      ids:
+        name: "VC A Master"
+  fields:
+    cable: null
+    description: ''
+    label: 'Model A Console Server Port 1'
+    name: Console Server Port 1
+    type: rj-45
+- model: dcim.consoleserverport
+  ids:
+    device:
+      ids:
+        name: "VC A Member 1"
+  fields:
+    cable: null
+    description: ''
+    label: 'Model A Console Server Port 1'
+    name: Console Server Port 1
+    type: rj-45
+- model: dcim.consoleserverport
+  ids:
+    device:
+      ids:
+        name: "VC A Member 2"
+  fields:
+    cable: null
+    description: ''
+    label: 'Model A Console Server Port 1'
+    name: Console Server Port 1
+    type: rj-45
 - model: dcim.powerport
   ids:
     device:
@@ -2744,6 +2809,45 @@
     maximum_draw: null
     name: Device A Child Power Port
     type: ''
+- model: dcim.powerport
+  ids:
+    device:
+      ids:
+        name: "VC A Master"
+  fields:
+    allocated_draw: 10
+    cable: null
+    description: ''
+    label: 'Model A Power Port 1'
+    maximum_draw: 100
+    name: Power Port 1
+    type: "nema-5-15p"
+- model: dcim.powerport
+  ids:
+    device:
+      ids:
+        name: "VC A Member 1"
+  fields:
+    allocated_draw: 10
+    cable: null
+    description: ''
+    label: 'Model A Power Port 1'
+    maximum_draw: 100
+    name: Power Port 1
+    type: "nema-5-15p"
+- model: dcim.powerport
+  ids:
+    device:
+      ids:
+        name: "VC A Member 2"
+  fields:
+    allocated_draw: 10
+    cable: null
+    description: ''
+    label: 'Model A Power Port 1'
+    maximum_draw: 100
+    name: Power Port 1
+    type: "nema-5-15p"
 - model: dcim.poweroutlet
   ids:
     device:
@@ -2775,6 +2879,60 @@
     name: Device B Power Outlet
     power_port: null
     type: iec-60320-c13
+- model: dcim.poweroutlet
+  ids:
+    device:
+      ids:
+        name: "VC A Master"
+  fields:
+    cable: null
+    description: ''
+    feed_leg: A
+    label: "Model A Power Outlet 1"
+    name: Power Outlet 1
+    power_port:
+      ids:
+        device:
+          ids:
+            name: "VC A Master"
+        name: "Power Port 1"
+    type: "nema-5-30r"
+- model: dcim.poweroutlet
+  ids:
+    device:
+      ids:
+        name: "VC A Member 1"
+  fields:
+    cable: null
+    description: ''
+    feed_leg: A
+    label: "Model A Power Outlet 1"
+    name: Power Outlet 1
+    power_port:
+      ids:
+        device:
+          ids:
+            name: "VC A Member 1"
+        name: "Power Port 1"
+    type: "nema-5-30r"
+- model: dcim.poweroutlet
+  ids:
+    device:
+      ids:
+        name: "VC A Member 2"
+  fields:
+    cable: null
+    description: ''
+    feed_leg: A
+    label: "Model A Power Outlet 1"
+    name: Power Outlet 1
+    power_port:
+      ids:
+        device:
+          ids:
+            name: "VC A Member 2"
+        name: "Power Port 1"
+    type: "nema-5-30r"
 - model: dcim.interface
   ids:
     device:
@@ -2842,6 +3000,120 @@
     untagged_vlan:
       ids:
         name: "VLAN B"
+- model: dcim.interface
+  ids:
+    device:
+      ids:
+        name: "VC A Master"
+    name: eth0
+  fields:
+    cable: null
+    description: ''
+    enabled: true
+    label: 'Ethernet 0'
+    lag: null
+    mac_address: null
+    mgmt_only: false
+    mode: ""
+    mtu: null
+    tagged_vlans: []
+    type: 100base-tx
+    untagged_vlan: null
+- model: dcim.interface
+  ids:
+    device:
+      ids:
+        name: "VC A Master"
+    name: mgmt0
+  fields:
+    cable: null
+    description: ''
+    enabled: true
+    label: 'Management 0'
+    lag: null
+    mac_address: null
+    mgmt_only: true
+    mode: ""
+    mtu: null
+    tagged_vlans: []
+    type: 1000base-t
+    untagged_vlan: null
+- model: dcim.interface
+  ids:
+    device:
+      ids:
+        name: "VC A Member 1"
+    name: eth0
+  fields:
+    cable: null
+    description: ''
+    enabled: true
+    label: 'Ethernet 0'
+    lag: null
+    mac_address: null
+    mgmt_only: false
+    mode: ""
+    mtu: null
+    tagged_vlans: []
+    type: 100base-tx
+    untagged_vlan: null
+- model: dcim.interface
+  ids:
+    device:
+      ids:
+        name: "VC A Member 1"
+    name: mgmt0
+  fields:
+    cable: null
+    description: ''
+    enabled: true
+    label: 'Management 0'
+    lag: null
+    mac_address: null
+    mgmt_only: true
+    mode: ""
+    mtu: null
+    tagged_vlans: []
+    type: 1000base-t
+    untagged_vlan: null
+- model: dcim.interface
+  ids:
+    device:
+      ids:
+        name: "VC A Member 2"
+    name: eth0
+  fields:
+    cable: null
+    description: ''
+    enabled: true
+    label: 'Ethernet 0'
+    lag: null
+    mac_address: null
+    mgmt_only: false
+    mode: ""
+    mtu: null
+    tagged_vlans: []
+    type: 100base-tx
+    untagged_vlan: null
+- model: dcim.interface
+  ids:
+    device:
+      ids:
+        name: "VC A Member 2"
+    name: mgmt0
+  fields:
+    cable: null
+    description: ''
+    enabled: true
+    label: 'Management 0'
+    lag: null
+    mac_address: null
+    mgmt_only: true
+    mode: ""
+    mtu: null
+    tagged_vlans: []
+    type: 1000base-t
+    untagged_vlan: null
 - model: dcim.frontport
   ids:
     name: Device A Front Port
@@ -2872,6 +3144,60 @@
         name: "Device B Rear Port"
     rear_port_position: 1
     type: 8p8c
+- model: dcim.frontport
+  ids:
+    name: "Front Port 1"
+    device:
+      ids:
+        name: "VC A Master"
+  fields:
+    cable: null
+    description: ''
+    label: "Model A Front Port 1"
+    rear_port:
+      ids:
+        name: "Rear Port 1"
+        device:
+          ids:
+            name: "VC A Master"
+    rear_port_position: 1
+    type: 8p8c
+- model: dcim.frontport
+  ids:
+    name: "Front Port 1"
+    device:
+      ids:
+        name: "VC A Member 1"
+  fields:
+    cable: null
+    description: ''
+    label: "Model A Front Port 1"
+    rear_port:
+      ids:
+        name: "Rear Port 1"
+        device:
+          ids:
+            name: "VC A Member 1"
+    rear_port_position: 1
+    type: 8p8c
+- model: dcim.frontport
+  ids:
+    name: "Front Port 1"
+    device:
+      ids:
+        name: "VC A Member 2"
+  fields:
+    cable: null
+    description: ''
+    label: "Model A Front Port 1"
+    rear_port:
+      ids:
+        name: "Rear Port 1"
+        device:
+          ids:
+            name: "VC A Member 2"
+    rear_port_position: 1
+    type: 8p8c
 - model: dcim.rearport
   ids:
     name: "Device A Rear Port"
@@ -2896,6 +3222,42 @@
     label: B
     positions: 1
     type: 8p8c
+- model: dcim.rearport
+  ids:
+    name: "Rear Port 1"
+    device:
+      ids:
+        name: "VC A Master"
+  fields:
+    cable: null
+    description: ''
+    label: "Model A Rear Port 1"
+    positions: 2
+    type: 8p8c
+- model: dcim.rearport
+  ids:
+    name: "Rear Port 1"
+    device:
+      ids:
+        name: "VC A Member 1"
+  fields:
+    cable: null
+    description: ''
+    label: "Model A Rear Port 1"
+    positions: 2
+    type: 8p8c
+- model: dcim.rearport
+  ids:
+    name: "Rear Port 1"
+    device:
+      ids:
+        name: "VC A Member 2"
+  fields:
+    cable: null
+    description: ''
+    label: "Model A Rear Port 1"
+    positions: 2
+    type: 8p8c
 - model: dcim.devicebay
   ids:
     name: Device A Device Bay
@@ -2918,6 +3280,36 @@
         name: "Device B"
     installed_device: null
     label: B
+- model: dcim.devicebay
+  ids:
+    name: Device Bay 1
+    device:
+      ids:
+        name: "VC A Master"
+  fields:
+    description: ""
+    installed_device: null
+    label: "Model A Device Bay 1"
+- model: dcim.devicebay
+  ids:
+    name: Device Bay 1
+    device:
+      ids:
+        name: "VC A Member 1"
+  fields:
+    description: ""
+    installed_device: null
+    label: "Model A Device Bay 1"
+- model: dcim.devicebay
+  ids:
+    name: Device Bay 1
+    device:
+      ids:
+        name: "VC A Member 2"
+  fields:
+    description: ""
+    installed_device: null
+    label: "Model A Device Bay 1"
 - model: dcim.inventoryitem
   ids:
     name: Device A Inventory Item Parent
@@ -2989,13 +3381,13 @@
   fields:
     comments: ''
     custom_field_data: {}
-    front_image: ''
+    front_image: "devicetype-images/nautobot_logo.png"
     is_full_depth: true
     manufacturer:
       ids:
         name: "Manufacturer A"
     part_number: AAAAAAAAA
-    rear_image: ''
+    rear_image: "devicetype-images/nautobot_icon_32x32.png"
     slug: model-a
     subdevice_role: parent
     u_height: 1
@@ -3195,13 +3587,123 @@
     vc_position: null
     vc_priority: null
     virtual_chassis: null
+- model: dcim.device
+  ids:
+    name: "VC A Master"
+  fields:
+    asset_tag: null
+    cluster: null
+    comments: ""
+    custom_field_data:
+      "Custom Text Field A": ""
+      "Custom Integer Field B": 1
+    device_role:
+      ids:
+        name: "Device Role A"
+    device_type:
+      ids:
+        model: "Model A"
+    face: ""
+    local_context_data: null
+    platform: null
+    position: null
+    primary_ip4: null
+    primary_ip6: null
+    rack: null
+    serial: ""
+    site:
+      ids:
+        name: "Site A"
+    status:
+      ids:
+        slug: active
+    tenant: null
+    vc_position: 0
+    vc_priority: null
+    virtual_chassis:
+      ids:
+        name: "Virtual Chassis A"
+- model: dcim.device
+  ids:
+    name: "VC A Member 1"
+  fields:
+    asset_tag: null
+    cluster: null
+    comments: ""
+    custom_field_data:
+      "Custom Text Field A": ""
+      "Custom Integer Field B": 1
+    device_role:
+      ids:
+        name: "Device Role A"
+    device_type:
+      ids:
+        model: "Model A"
+    face: ""
+    local_context_data: null
+    platform: null
+    position: null
+    primary_ip4: null
+    primary_ip6: null
+    rack: null
+    serial: ""
+    site:
+      ids:
+        name: "Site A"
+    status:
+      ids:
+        slug: active
+    tenant: null
+    vc_position: 1
+    vc_priority: 1
+    virtual_chassis:
+      ids:
+        name: "Virtual Chassis A"
+- model: dcim.device
+  ids:
+    name: "VC A Member 2"
+  fields:
+    asset_tag: null
+    cluster: null
+    comments: ""
+    custom_field_data:
+      "Custom Text Field A": ""
+      "Custom Integer Field B": 1
+    device_role:
+      ids:
+        name: "Device Role A"
+    device_type:
+      ids:
+        model: "Model A"
+    face: ""
+    local_context_data: null
+    platform: null
+    position: null
+    primary_ip4: null
+    primary_ip6: null
+    rack: null
+    serial: ""
+    site:
+      ids:
+        name: "Site A"
+    status:
+      ids:
+        slug: active
+    tenant: null
+    vc_position: 2
+    vc_priority: 2
+    virtual_chassis:
+      ids:
+        name: "Virtual Chassis A"
 - model: dcim.virtualchassis
   ids:
     name: Virtual Chassis A
   fields:
     custom_field_data: {}
     domain: ''
-    master: null
+    master:
+      ids:
+        name: "VC A Master"
 - model: dcim.virtualchassis
   ids:
     name: Virtual Chassis B
@@ -5125,6 +5627,19 @@
     file_extension: ''
     mime_type: ''
     template_code: '{{ queryset }}'
+- model: extras.imageattachment
+  ids:
+    name: "Site 1 Image"
+  fields:
+    content_type:
+      ids:
+        app_label: "dcim"
+        model: "site"
+    # TODO object_id: 1
+    image: "image-attachments/site_1_Site_1_Image.gif"
+    image_height: 31
+    image_width: 31
+    # created: "2021-04-28T20:53:27.577Z"
 - model: extras.configcontext
   ids:
     name: Config Context A
