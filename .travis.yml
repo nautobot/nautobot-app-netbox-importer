@@ -7,14 +7,13 @@ jobs:
     # - python: "3.6"
     #   env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0b3"
     - python: "3.6"
-      env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0"
+      env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
     - python: "3.7"
-      env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0"
+      env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
     - python: "3.8"
-      env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0"
-    # TODO: Failing at the moment, will troubleshoot later
-    # - python: "3.8"
-    #   env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=develop-latest"
+      env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
+    - python: "3.8"
+      env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=develop"
 
 services:
   - "docker"
@@ -40,5 +39,5 @@ deploy:
   on:
     tags: true
     branch: master
-    condition: $INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER = 1.0.0
+    condition: $INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER = 1.0.1
     python: 3.7

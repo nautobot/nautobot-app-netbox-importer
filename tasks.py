@@ -38,7 +38,7 @@ namespace = Collection("nautobot_netbox_importer")
 namespace.configure(
     {
         "nautobot_netbox_importer": {
-            "nautobot_ver": "1.0.0",
+            "nautobot_ver": "1.0.1",
             "project_name": "nautobot-netbox-importer",
             "python_ver": "3.6",
             "local": False,
