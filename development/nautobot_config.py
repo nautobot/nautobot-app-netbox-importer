@@ -1,106 +1,108 @@
-"""Nautobot configuration for nautobot-netbox-importer development environment."""
-import os
-
+"""Nautobot configuration for nautobot-netbox-importer development/test environment."""
 #########################
 #                       #
 #   Required settings   #
 #                       #
 #########################
 
-from nautobot.core.settings import *  # noqa: F401,F403
+import os
+import sys
+
+from distutils.util import strtobool
+from django.core.exceptions import ImproperlyConfigured
+from nautobot.core import settings
+
+# Enforce required configuration parameters
+for key in [
+    "ALLOWED_HOSTS",
+    "POSTGRES_DB",
+    "POSTGRES_USER",
+    "POSTGRES_HOST",
+    "POSTGRES_PASSWORD",
+    "REDIS_HOST",
+    "REDIS_PASSWORD",
+    "SECRET_KEY",
+]:
+    if not os.environ.get(key):
+        raise ImproperlyConfigured(f"Required environment variable {key} is missing.")
+
+
+def is_truthy(arg):
+    """Convert "truthy" strings into Booleans.
+
+    Examples:
+        >>> is_truthy('yes')
+        True
+    Args:
+        arg (str): Truthy string (True values are y, yes, t, true, on and 1; false values are n, no,
+        f, false, off and 0. Raises ValueError if val is anything else.
+    """
+    if isinstance(arg, bool):
+        return arg
+    return bool(strtobool(arg))
+
+
+TESTING = len(sys.argv) > 1 and sys.argv[1] == "test"
 
 # This is a list of valid fully-qualified domain names (FQDNs) for the Nautobot server. Nautobot will not permit write
 # access to the server via any other hostnames. The first FQDN in the list will be treated as the preferred name.
 #
 # Example: ALLOWED_HOSTS = ['nautobot.example.com', 'nautobot.internal.local']
-ALLOWED_HOSTS = []
-
-CACHEOPS_REDIS = {
-    "host": os.environ.get("REDIS_HOST", "localhost"),
-    "db": 1,
-    "password": os.environ.get("REDIS_PASSWORD", ""),
-}
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(" ")
 
 # PostgreSQL database configuration. See the Django documentation for a complete list of available parameters:
 #   https://docs.djangoproject.com/en/stable/ref/settings/#databases
 DATABASES = {
     "default": {
-        "NAME": os.environ.get("POSTGRES_DB", ""),  # Database name
-        "USER": os.environ.get("POSTGRES_USER", ""),  # PostgreSQL username
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", ""),  # PostgreSQL password
-        "HOST": os.environ.get("POSTGRES_HOST", "localhost"),  # Database server
-        "PORT": "",  # Database port (leave blank for default)
-        "CONN_MAX_AGE": 300,  # Max database connection age
-        "ENGINE": "django.db.backends.postgresql",  # Database driver
+        "NAME": os.getenv("POSTGRES_DB", "nautobot"),  # Database name
+        "USER": os.getenv("POSTGRES_USER", ""),  # Database username
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD", ""),  # Datbase password
+        "HOST": os.getenv("POSTGRES_HOST", "localhost"),  # Database server
+        "PORT": os.getenv("POSTGRES_PORT", ""),  # Database port (leave blank for default)
+        "CONN_MAX_AGE": os.getenv("POSTGRES_TIMEOUT", 300),  # Database timeout
+        "ENGINE": "django.db.backends.postgresql",  # Database driver (Postgres only supported!)
     }
 }
 
-# Redis database settings. Redis is used for caching and for queuing background tasks such as webhook events. A separate
-# configuration exists for each. Full connection details are required in both sections, and it is strongly recommended
-# to use two separate database IDs.
-REDIS = {
-    "tasks": {
-        "HOST": os.environ.get("REDIS_HOST", "localhost"),
-        "PORT": os.environ.get("REDIS_PORT", 6379),
-        # Comment out `HOST` and `PORT` lines and uncomment the following if using Redis Sentinel
-        # 'SENTINELS': [('mysentinel.redis.example.com', os.environ.get("REDIS_PORT", 6379))],
-        # 'SENTINEL_SERVICE': 'nautobot',
-        "PASSWORD": os.environ.get("REDIS_PASSWORD", ""),
-        "DATABASE": 0,
-        "SSL": False,
-    },
-    "caching": {
-        "HOST": os.environ.get("REDIS_HOST", "localhost"),
-        "PORT": os.environ.get("REDIS_PORT", 6379),
-        # Comment out `HOST` and `PORT` lines and uncomment the following if using Redis Sentinel
-        # 'SENTINELS': [('mysentinel.redis.example.com', os.environ.get("REDIS_PORT", 6379))],
-        # 'SENTINEL_SERVICE': 'nautobot',
-        "PASSWORD": os.environ.get("REDIS_PASSWORD", ""),
-        "DATABASE": 1,
-        "SSL": False,
-    },
+# Redis variables
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+REDIS_PORT = os.getenv("REDIS_PORT", 6379)
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", "")
+
+# Check for Redis SSL
+REDIS_SCHEME = "redis"
+REDIS_SSL = is_truthy(os.environ.get("REDIS_SSL", False))
+if REDIS_SSL:
+    REDIS_SCHEME = "rediss"
+
+# The django-redis cache is used to establish concurrent locks using Redis. The
+# django-rq settings will use the same instance/database by default.
+#
+# This "default" server is now used by RQ_QUEUES.
+# >> See: nautobot.core.settings.RQ_QUEUES
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"{REDIS_SCHEME}://{REDIS_HOST}:{REDIS_PORT}/0",
+        "TIMEOUT": 300,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": REDIS_PASSWORD,
+        },
+    }
 }
 
-RQ_QUEUES = {
-    "default": {
-        "HOST": os.environ.get("REDIS_HOST", "localhost"),
-        "PORT": os.environ.get("REDIS_PORT", 6379),
-        "DB": 0,
-        "PASSWORD": os.environ.get("REDIS_PASSWORD", ""),
-        "SSL": False,
-        "DEFAULT_TIMEOUT": 300,
-    },
-    "check_releases": {
-        "HOST": os.environ.get("REDIS_HOST", "localhost"),
-        "PORT": os.environ.get("REDIS_PORT", 6379),
-        "DB": 0,
-        "PASSWORD": os.environ.get("REDIS_PASSWORD", ""),
-        "SSL": False,
-        "DEFAULT_TIMEOUT": 300,
-    },
-    "custom_fields": {
-        "HOST": os.environ.get("REDIS_HOST", "localhost"),
-        "PORT": os.environ.get("REDIS_PORT", 6379),
-        "DB": 0,
-        "PASSWORD": os.environ.get("REDIS_PASSWORD", ""),
-        "SSL": False,
-        "DEFAULT_TIMEOUT": 300,
-    },
-    "webhooks": {
-        "HOST": os.environ.get("REDIS_HOST", "localhost"),
-        "PORT": os.environ.get("REDIS_PORT", 6379),
-        "DB": 0,
-        "PASSWORD": os.environ.get("REDIS_PASSWORD", ""),
-        "SSL": False,
-        "DEFAULT_TIMEOUT": 300,
-    },
-}
+# RQ_QUEUES is not set here because it just uses the default that gets imported
+# up top via `from nautobot.core.settings import *`.
+
+# REDIS CACHEOPS
+CACHEOPS_REDIS = f"{REDIS_SCHEME}://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/1"
 
 # This key is used for secure generation of random numbers and strings. It must never be exposed outside of this file.
 # For optimal security, SECRET_KEY should be at least 50 characters in length and contain a mix of letters, numbers, and
 # symbols. Nautobot will not run without this defined. For more information, see
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-SECRET_KEY
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 
 #########################
@@ -135,30 +137,35 @@ ALLOWED_URL_SCHEMES = (
 
 # Optionally display a persistent banner at the top and/or bottom of every page. HTML is allowed. To display the same
 # content in both banners, define BANNER_TOP and set BANNER_BOTTOM = BANNER_TOP.
-BANNER_TOP = ""
-BANNER_BOTTOM = ""
+BANNER_TOP = os.environ.get("BANNER_TOP", "")
+BANNER_BOTTOM = os.environ.get("BANNER_BOTTOM", "")
 
 # Text to include on the login page above the login form. HTML is allowed.
-BANNER_LOGIN = ""
+BANNER_LOGIN = os.environ.get("BANNER_LOGIN", "")
 
-# Base URL path if accessing Nautobot within a directory. For example, if installed at https://example.com/nautobot/, set:
-# BASE_PATH = 'nautobot/'
-BASE_PATH = ""
+# Cache timeout in seconds. Cannot be 0. Defaults to 900 (15 minutes). To disable caching, set CACHEOPS_ENABLED to False
+CACHEOPS_DEFAULTS = {"timeout": 900}
 
-# Cache timeout in seconds. Set to 0 to dissable caching. Defaults to 900 (15 minutes)
-CACHE_TIMEOUT = 900
+# Set to False to disable caching with cacheops. (Default: True)
+CACHEOPS_ENABLED = True
 
 # Maximum number of days to retain logged changes. Set to 0 to retain changes indefinitely. (Default: 90)
-CHANGELOG_RETENTION = 90
+CHANGELOG_RETENTION = int(os.environ.get("CHANGELOG_RETENTION", 90))
 
-# API Cross-Origin Resource Sharing (CORS) settings. If CORS_ORIGIN_ALLOW_ALL is set to True, all origins will be
-# allowed. Otherwise, define a list of allowed origins using either CORS_ORIGIN_WHITELIST or
-# CORS_ORIGIN_REGEX_WHITELIST. For more information, see https://github.com/ottoyiu/django-cors-headers
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = [
+# If True, all origins will be allowed. Other settings restricting allowed origins will be ignored.
+# Defaults to False. Setting this to True can be dangerous, as it allows any website to make
+# cross-origin requests to yours. Generally you'll want to restrict the list of allowed origins with
+# CORS_ALLOWED_ORIGINS or CORS_ALLOWED_ORIGIN_REGEXES.
+CORS_ORIGIN_ALLOW_ALL = is_truthy(os.environ.get("CORS_ORIGIN_ALLOW_ALL", False))
+
+# A list of origins that are authorized to make cross-site HTTP requests. Defaults to [].
+CORS_ALLOWED_ORIGINS = [
     # 'https://hostname.example.com',
 ]
-CORS_ORIGIN_REGEX_WHITELIST = [
+
+# A list of strings representing regexes that match Origins that are authorized to make cross-site
+# HTTP requests. Defaults to [].
+CORS_ALLOWED_ORIGIN_REGEXES = [
     # r'^(https?://)?(\w+\.)?example\.com$',
 ]
 
@@ -169,11 +176,12 @@ CORS_ORIGIN_REGEX_WHITELIST = [
 # Set to True to enable server debugging. WARNING: Debugging introduces a substantial performance penalty and may reveal
 # sensitive information about your installation. Only enable debugging while performing testing. Never enable debugging
 # on a production system.
-DEBUG = True
+DEBUG = is_truthy(os.environ.get("DEBUG", False))
 
-# Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table
-# (all prefixes and IP addresses not assigned to a VRF), set ENFORCE_GLOBAL_UNIQUE to True.
-ENFORCE_GLOBAL_UNIQUE = False
+# Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space
+# within the global table (all prefixes and IP addresses not assigned to a VRF), set
+# ENFORCE_GLOBAL_UNIQUE to True.
+ENFORCE_GLOBAL_UNIQUE = is_truthy(os.environ.get("ENFORCE_GLOBAL_UNIQUE", False))
 
 # Exempt certain models from the enforcement of view permissions. Models listed here will be viewable by all users and
 # by anonymous users. List models in the form `<app>.<model>`. Add '*' to this list to exempt all models.
@@ -195,35 +203,7 @@ INTERNAL_IPS = ("127.0.0.1", "::1")
 
 # Enable custom logging. Please see the Django documentation for detailed guidance on configuring custom logs:
 #   https://docs.djangoproject.com/en/stable/topics/logging/
-LOG_LEVEL = "DEBUG" if DEBUG else "INFO"
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "normal": {
-            "format": "%(asctime)s.%(msecs)03d %(levelname)-7s %(name)s :\n  %(message)s",
-            "datefmt": "%H:%M:%S",
-        },
-        "verbose": {
-            "format": "%(asctime)s.%(msecs)03d %(levelname)-7s %(name)-20s %(filename)-15s %(funcName)30s() :\n  %(message)s",
-            "datefmt": "%H:%M:%S",
-        },
-    },
-    "handlers": {
-        "normal_console": {"level": "INFO", "class": "rq.utils.ColorizingStreamHandler", "formatter": "normal"},
-        "verbose_console": {"level": "DEBUG", "class": "rq.utils.ColorizingStreamHandler", "formatter": "verbose"},
-    },
-    "loggers": {
-        "django": {"handlers": ["normal_console"], "level": "INFO"},
-        "nautobot": {"handlers": ["verbose_console" if DEBUG else "normal_console"], "level": "INFO"},
-        "rq.worker": {"handlers": ["verbose_console" if DEBUG else "normal_console"], "level": LOG_LEVEL},
-    },
-}
-
-# The length of time (in seconds) for which a user will remain logged into the web UI before being prompted to
-# re-authenticate. (Default: 1209600 [14 days])
-LOGIN_TIMEOUT = None
+LOGGING = {}
 
 # Setting this to True will display a "maintenance mode" banner at the top of every page.
 MAINTENANCE_MODE = False
@@ -231,7 +211,7 @@ MAINTENANCE_MODE = False
 # An API consumer can request an arbitrary number of objects =by appending the "limit" parameter to the URL (e.g.
 # "?limit=1000"). This setting defines the maximum limit. Setting it to 0 or None will allow an API consumer to request
 # all objects by specifying "?limit=0".
-MAX_PAGE_SIZE = 1000
+MAX_PAGE_SIZE = int(os.environ.get("MAX_PAGE_SIZE", 1000))
 
 # The file path where uploaded media such as image attachments are stored. A trailing slash is not needed. Note that
 # the default value of this setting is within the invoking user's home directory
@@ -250,8 +230,19 @@ MAX_PAGE_SIZE = 1000
 # Expose Prometheus monitoring metrics at the HTTP endpoint '/metrics'
 METRICS_ENABLED = False
 
+# Credentials that Nautobot will uses to authenticate to devices when connecting via NAPALM.
+NAPALM_USERNAME = os.environ.get("NAPALM_USERNAME", "")
+NAPALM_PASSWORD = os.environ.get("NAPALM_PASSWORD", "")
+
+# NAPALM timeout (in seconds). (Default: 30)
+NAPALM_TIMEOUT = int(os.environ.get("NAPALM_TIMEOUT", 30))
+
+# NAPALM optional arguments (see https://napalm.readthedocs.io/en/latest/support/#optional-arguments). Arguments must
+# be provided as a dictionary.
+NAPALM_ARGS = {}
+
 # Determine how many objects to display per page within a list. (Default: 50)
-PAGINATE_COUNT = 50
+PAGINATE_COUNT = int(os.environ.get("PAGINATE_COUNT", 50))
 
 # Enable installed plugins. Add the name of each plugin to the list.
 PLUGINS = ["nautobot_netbox_importer"]
@@ -267,7 +258,7 @@ PLUGINS = ["nautobot_netbox_importer"]
 
 # When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to
 # prefer IPv4 instead.
-PREFER_IPV4 = False
+PREFER_IPV4 = is_truthy(os.environ.get("PREFER_IPV4", False))
 
 # Rack elevation size defaults, in pixels. For best results, the ratio of width to height should be roughly 10:1.
 RACK_ELEVATION_DEFAULT_UNIT_HEIGHT = 22
@@ -292,6 +283,11 @@ RELEASE_CHECK_URL = None
 # Maximum execution time for background tasks, in seconds.
 RQ_DEFAULT_TIMEOUT = 300
 
+# The length of time (in seconds) for which a user will remain logged into the web UI before being prompted to
+# re-authenticate. (Default: 1209600 [14 days])
+SESSION_COOKIE_AGE = 1209600  # 2 weeks, in seconds
+
+
 # By default, Nautobot will store session data in the database. Alternatively, a file path can be specified here to use
 # local file storage instead. (This can be useful for enabling authentication on a standby instance with read-only
 # database access.) Note that the user as which Nautobot runs must have read and write permissions to this path.
@@ -301,13 +297,25 @@ SESSION_FILE_PATH = None
 SOCIAL_AUTH_ENABLED = False
 
 # Time zone (default: UTC)
-TIME_ZONE = "UTC"
+TIME_ZONE = os.environ.get("TIME_ZONE", "UTC")
 
 # Date/time formatting. See the following link for supported formats:
 # https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
-DATE_FORMAT = "N j, Y"
-SHORT_DATE_FORMAT = "Y-m-d"
-TIME_FORMAT = "g:i a"
-SHORT_TIME_FORMAT = "H:i:s"
-DATETIME_FORMAT = "N j, Y g:i a"
-SHORT_DATETIME_FORMAT = "Y-m-d H:i"
+DATE_FORMAT = os.environ.get("DATE_FORMAT", "N j, Y")
+SHORT_DATE_FORMAT = os.environ.get("SHORT_DATE_FORMAT", "Y-m-d")
+TIME_FORMAT = os.environ.get("TIME_FORMAT", "g:i a")
+SHORT_TIME_FORMAT = os.environ.get("SHORT_TIME_FORMAT", "H:i:s")
+DATETIME_FORMAT = os.environ.get("DATETIME_FORMAT", "N j, Y g:i a")
+SHORT_DATETIME_FORMAT = os.environ.get("SHORT_DATETIME_FORMAT", "Y-m-d H:i")
+
+# A list of strings designating all applications that are enabled in this Django installation. Each string should be a dotted Python path to an application configuration class (preferred), or a package containing an application.
+# https://nautobot.readthedocs.io/en/latest/configuration/optional-settings/#extra-applications
+EXTRA_INSTALLED_APPS = os.environ["EXTRA_INSTALLED_APPS"].split(",") if os.environ.get("EXTRA_INSTALLED_APPS") else []
+
+# Django Debug Toolbar
+DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _request: DEBUG and not TESTING}
+
+if "debug_toolbar" not in EXTRA_INSTALLED_APPS:
+    EXTRA_INSTALLED_APPS.append("debug_toolbar")
+if "debug_toolbar.middleware.DebugToolbarMiddleware" not in settings.MIDDLEWARE:
+    settings.MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")

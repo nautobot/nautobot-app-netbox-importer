@@ -67,42 +67,115 @@ The project is following Network to Code software development guideline and is l
 - Django unit test to ensure the plugin is working properly.
 - Poetry for packaging and dependency management.
 
+### Development Environment
+
+The development environment can be used in 2 ways. First, with a local poetry environment if you wish to develop outside of Docker. Second, inside of a docker container.
+
+#### Invoke tasks
+
+The [PyInvoke](http://www.pyinvoke.org/) library is used to provide some helper commands based on the environment.  There are a few configuration parameters which can be passed to PyInvoke to override the default configuration:
+
+* `nautobot_ver`: the version of Nautobot to use as a base for any built docker containers (default: develop-latest)
+* `project_name`: the default docker compose project name (default: nautobot-netbox-importer)
+* `python_ver`: the version of Python to use as a base for any built docker containers (default: 3.6)
+* `local`: a boolean flag indicating if invoke tasks should be run on the host or inside the docker containers (default: False, commands will be run in docker containers)
+* `compose_dir`: the full path to a directory containing the project compose files
+* `compose_files`: a list of compose files applied in order (see [Multiple Compose files](https://docs.docker.com/compose/extends/#multiple-compose-files) for more information)
+
+Using PyInvoke these configuration options can be overridden using [several methods](http://docs.pyinvoke.org/en/stable/concepts/configuration.html).  Perhaps the simplest is simply setting an environment variable `INVOKE_NAUTOBOT-NETBOX-IMPORTER_VARIABLE_NAME` where `VARIABLE_NAME` is the variable you are trying to override.  The only exception is `compose_files`, because it is a list it must be overridden in a yaml file.  There is an example `invoke.yml` in this directory which can be used as a starting point.
+
+#### Local Poetry Development Environment
+
+1.  Copy `development/creds.example.env` to `development/creds.env` (This file will be ignored by git and docker)
+2.  Uncomment the `POSTGRES_HOST`, `REDIS_HOST`, and `NAUTOBOT_ROOT` variables in `development/creds.env`
+3.  Create an invoke.yml with the following contents at the root of the repo:
+
+```shell
+---
+nautobot_netbox_importer:
+  local: true
+  compose_files:
+    - "docker-compose.requirements.yml"
+```
+
+3.  Run the following commands:
+
+```shell
+poetry shell
+poetry install
+pip install nautobot
+export $(cat development/dev.env | xargs)
+export $(cat development/creds.env | xargs)
+```
+
+4.  You can now run nautobot-server commands as you would from the [Nautobot documentation](https://nautobot.readthedocs.io/en/latest/) for example to start the development server:
+
+```shell
+nautobot-server runserver 0.0.0.0:8080 --insecure
+```
+
+Nautobot server can now be accessed at [http://localhost:8080](http://localhost:8080).
+
+#### Docker Development Environment
+
+This project is managed by [Python Poetry](https://python-poetry.org/) and has a few requirements to setup your development environment:
+
+1.  Install Poetry, see the [Poetry Documentation](https://python-poetry.org/docs/#installation) for your operating system.
+2.  Install Docker, see the [Docker documentation](https://docs.docker.com/get-docker/) for your operating system.
+
+Once you have Poetry and Docker installed you can run the following commands to install all other development dependencies in an isolated python virtual environment:
+
+```shell
+poetry shell
+poetry install
+invoke start
+```
+
+Nautobot server can now be accessed at [http://localhost:8080](http://localhost:8080).
+
 ### CLI Helper Commands
 
 The project includes a CLI helper based on [invoke](http://www.pyinvoke.org/) to help setup the development environment. The commands are listed below in 3 categories `dev environment`, `utility` and `testing`.
 
-Each command can be executed with `invoke <command>`. All commands support the argument `--python-ver` if you want to manually define the version of Python to use. Each command also has its own help `invoke <command> --help`
+Each command can be executed with `invoke <command>`. Environment variables `INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER` and `INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER` may be specified to override the default versions. Each command also has its own help `invoke <command> --help`
 
-#### Local dev environment
+#### Docker dev environment
 
-```
-  build            Build all docker images.
-  debug            Start Nautobot and its dependencies in debug mode.
-  destroy          Destroy all containers and volumes.
-  restart          Restart Nautobot and its dependencies.
-  start            Start Nautobot and its dependencies in detached mode.
-  stop             Stop Nautobot and its dependencies.
+```no-highlight
+  build               Build Nautobot docker image.
+  debug               Start Nautobot and its dependencies in debug mode.
+  destroy             Destroy all containers and volumes.
+  restart             Gracefully restart all containers.
+  start               Start Nautobot and its dependencies in detached mode.
+  stop                Stop Nautobot and its dependencies.
 ```
 
 #### Utility
 
-```
-  cli              Launch a bash shell inside the running Nautobot container.
-  create-user      Create a new user in django (default: admin), will prompt for password.
-  makemigrations   Run Make Migration in Django.
-  nbshell          Launch a nbshell session.
+```no-highlight
+  check-migrations    Check for missing migrations.
+  cli                 Launch a bash shell inside the running Nautobot container.
+  createsuperuser     Create a new Nautobot superuser account (default: "admin"), will prompt for password.
+  generate-packages   Generate all Python packages inside docker and copy the file locally under dist/.
+  makemigrations      Perform makemigrations operation in Django.
+  migrate             Perform migrate operation in Django.
+  nbshell             Launch an interactive nbshell session.
+  post-upgrade        Performs Nautobot common post-upgrade operations using a single entrypoint.
+  vscode              Launch Visual Studio Code with the appropriate Environment variables to run in a container.
 ```
 
 #### Testing
 
-```
-  bandit           Run bandit to validate basic static code security analysis.
-  black            Run black to check that Python files adhere to its style standards.
-  flake8           This will run flake8 for the specified name and Python version.
-  pydocstyle       Run pydocstyle to validate docstring formatting adheres to standards.
-  pylint           Run pylint code analysis.
-  tests            Run all tests for this plugin.
-  unittest         Run Django unit tests for the plugin.
+```no-highlight
+  bandit              Run bandit to validate basic static code security analysis.
+  black               Check Python code style with Black.
+  flake8              Check for PEP8 compliance and other style issues.
+  hadolint            Check Dockerfile for hadolint compliance and other style issues.
+  pydocstyle          Run pydocstyle to validate docstring formatting adheres to standards.
+  pylint              Run pylint code analysis.
+  tests               Run all tests for this plugin.
+  unittest            Run Django unit tests for the plugin.
+  unittest-coverage   Report on code test coverage as measured by 'invoke unittest'.
 ```
 
 ## Questions
