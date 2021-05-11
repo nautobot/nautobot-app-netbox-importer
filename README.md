@@ -103,6 +103,7 @@ nautobot_netbox_importer:
 ```shell
 poetry shell
 poetry install
+pip install nautobot
 export $(cat development/dev.env | xargs)
 export $(cat development/creds.env | xargs)
 ```
