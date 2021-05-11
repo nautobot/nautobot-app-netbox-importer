@@ -17,6 +17,10 @@
 - #43 - Development and CI testing now defaults to Nautobot 1.0.0 instead of 1.0.0b3
 - #43 - Fix test approach to ensure that tests execute against the test database rather than the development database.
 
+### Changed
+
+- #44 - Revised Docker development environment to use `nautobot-dev` image as base, removed Python packaging dependency on `nautobot` core package.
+
 ## v1.2.1 (2021-04-20)
 
 ### Fixed
