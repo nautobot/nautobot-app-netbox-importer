@@ -2,11 +2,14 @@
 
 import os
 from packaging import version
+from datetime import datetime
 
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 import yaml
+
+from nautobot.extras.models import ObjectChange, ChangeLoggedModel
 
 from nautobot_netbox_importer.management.commands.import_netbox_json import Command
 
@@ -72,6 +75,18 @@ class TestImport(TestCase):
                     record = model_class.objects.get(**self.fixup_refs(model_class, data["ids"]))
                 except ObjectDoesNotExist:
                     self.fail(f"Record {model_class} {data['ids']} missing in Nautobot")
+
+                # Validate that the ChangeLogged objects have an updated `created` and a related ObjectChange
+                if issubclass(type(record), ChangeLoggedModel):
+                    if record.created == datetime.today().date():
+                        self.fail(f"Record {model_class} {data['ids']} has not the original 'created' date")
+
+                    if (
+                        ObjectChange.objects.filter(change_object_type=model_class, change_object_id=record.pk).count()
+                        != 1
+                    ):
+                        self.fail(f"Record {model_class} {data['ids']} has not a related ObjectChange")
+
                 for key, expected_value in self.fixup_refs(model_class, data.get("fields", {})).items():
                     actual_value = getattr(record, key)
                     if isinstance(expected_value, str):
