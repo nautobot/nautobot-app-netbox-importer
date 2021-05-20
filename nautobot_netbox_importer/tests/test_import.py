@@ -78,10 +78,9 @@ class TestImport(TestCase):
                 # Validate that the ChangeLogged objects have a related ObjectChange
                 if (
                     issubclass(type(record), ChangeLoggedModel)
-                    and ObjectChange.objects.filter(
+                    and not ObjectChange.objects.filter(
                         changed_object_type=content_type, changed_object_id=record.pk
-                    ).count()
-                    == 0
+                    ).exists()
                 ):
                     self.fail(f"Record {model_class} {data['ids']} has not a related ObjectChange")
 
