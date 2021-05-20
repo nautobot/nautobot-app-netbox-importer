@@ -46,6 +46,7 @@ class ConfigContext(ChangeLoggedModelMixin, NautobotBaseModel):
 
     _modelname = "configcontext"
     _attributes = (
+        *ChangeLoggedModelMixin._attributes,
         "name",
         "weight",
         "description",
@@ -157,7 +158,17 @@ class CustomLink(ChangeLoggedModelMixin, NautobotBaseModel):
     """A custom link to an external representation of a Nautobot object."""
 
     _modelname = "customlink"
-    _attributes = ("name", "content_type", "text", "target_url", "weight", "group_name", "button_class", "new_window")
+    _attributes = (
+        "name",
+        "content_type",
+        "text",
+        "target_url",
+        "weight",
+        "group_name",
+        "button_class",
+        "new_window",
+        *ChangeLoggedModelMixin._attributes,
+    )
     _nautobot_model = extras.CustomLink
 
     name: str
@@ -182,7 +193,15 @@ class ExportTemplate(ChangeLoggedModelMixin, NautobotBaseModel):
     """A Jinja2 template for exporting records as text."""
 
     _modelname = "exporttemplate"
-    _attributes = ("name", "content_type", "description", "template_code", "mime_type", "file_extension")
+    _attributes = (
+        "name",
+        "content_type",
+        "description",
+        "template_code",
+        "mime_type",
+        "file_extension",
+        *ChangeLoggedModelMixin._attributes,
+    )
     _nautobot_model = extras.ExportTemplate
 
     name: str
@@ -282,7 +301,7 @@ class Status(ChangeLoggedModelMixin, NautobotBaseModel):
     """Representation of a status value."""
 
     _modelname = "status"
-    _attributes = ("slug", "name", "color", "description")  # TODO content_types?
+    _attributes = ("slug", "name", "color", "description", *ChangeLoggedModelMixin._attributes)  # TODO content_types?
     _nautobot_model = extras.Status
 
     slug: str
@@ -297,7 +316,14 @@ class Tag(ChangeLoggedModelMixin, CustomFieldModelMixin, NautobotBaseModel):
     """A tag that can be associated with various objects."""
 
     _modelname = "tag"
-    _attributes = (*CustomFieldModelMixin._attributes, "name", "slug", "color", "description")
+    _attributes = (
+        *CustomFieldModelMixin._attributes,
+        "name",
+        "slug",
+        "color",
+        "description",
+        *ChangeLoggedModelMixin._attributes,
+    )
     _nautobot_model = extras.Tag
 
     name: str
@@ -339,6 +365,7 @@ class Webhook(ChangeLoggedModelMixin, NautobotBaseModel):
         "secret",
         "ssl_verification",
         "ca_file_path",
+        *ChangeLoggedModelMixin._attributes,
     )
     _nautobot_model = extras.Webhook
 

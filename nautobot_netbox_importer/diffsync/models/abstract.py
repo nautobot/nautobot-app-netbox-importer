@@ -20,6 +20,9 @@ from pydantic import BaseModel, validator
 from pydantic.error_wrappers import ValidationError as PydanticValidationError
 import structlog
 
+from nautobot.extras.models import ObjectChange, ChangeLoggedModel
+from nautobot.utilities.utils import serialize_object
+
 from .references import (
     foreign_key_field,
     CableRef,
@@ -198,6 +201,22 @@ class DjangoBaseModel(DiffSyncModel):
             record = nautobot_model(**ids, **attrs)
             record.clean()
             record.save()
+
+            # To keep track of original created date of a ChangeLoggedModel that is updated
+            # when `record.save()` and to create a ChangeObject with the import change
+            if issubclass(type(record), ChangeLoggedModel):
+                record.created = model_data["created"]
+                record.save()
+
+                ObjectChange.objects.create(
+                    changed_object=record,
+                    object_repr=str(record),
+                    action="update",
+                    object_data=serialize_object(record),
+                    # # Random request_id as it's mandatory
+                    request_id=uuid.uuid4(),
+                )
+
             for attr, value in multivalue_attrs.items():
                 getattr(record, attr).set(value)
             if custom_field_data is not None:
@@ -420,6 +439,7 @@ class ChangeLoggedModelMixin(BaseModel):
 
     # created is set automatically on model creation, so don't try to sync it between systems
     # last_updated is updated automatically on model create/update, so don't try to sync it between systems
+    _attributes = ("created",)
 
     created: Optional[date]
     last_updated: Optional[datetime]
@@ -501,7 +521,7 @@ class OrganizationalModel(  # pylint: disable=too-many-ancestors
     Organizational models represent groupings, metadata, etc. rather than concrete network resources.
     """
 
-    _attributes = (*CustomFieldModelMixin._attributes,)
+    _attributes = (*CustomFieldModelMixin._attributes, *ChangeLoggedModelMixin._attributes)
 
 
 class PrimaryModel(  # pylint: disable=too-many-ancestors
@@ -512,7 +532,7 @@ class PrimaryModel(  # pylint: disable=too-many-ancestors
     Primary models typically represent concrete network resources such as Device or Rack.
     """
 
-    _attributes = (*CustomFieldModelMixin._attributes,)
+    _attributes = (*CustomFieldModelMixin._attributes, *ChangeLoggedModelMixin._attributes)
 
 
 class ArrayField(DiffSyncCustomValidationField, list):
