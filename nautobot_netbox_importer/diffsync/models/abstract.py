@@ -439,7 +439,6 @@ class CableTerminationMixin(BaseModel):
 class ChangeLoggedModelMixin(BaseModel):
     """An abstract model which adds fields to store the creation and last-updated times for an object."""
 
-    # created is set automatically on model creation, so don't try to sync it between systems
     # last_updated is updated automatically on model create/update, so don't try to sync it between systems
     _attributes = ("created",)
 
