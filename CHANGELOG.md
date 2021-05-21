@@ -4,7 +4,7 @@
 
 ### Fixed
 
-- #47 - `ChangeLogged` objects honour `created` date when they are imported and also a related "udpated" `ChangeObject` is created as result of the migration.
+- #47 - `ChangeLogged` objects honour `created` date when they are imported and also a related "updated" `ObjectChange` is created as result of the migration.
 
 ## v1.3.0 (2021-05-11)
 
