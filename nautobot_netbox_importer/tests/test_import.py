@@ -8,6 +8,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 import yaml
 
+from nautobot.extras.models import ObjectChange, ChangeLoggedModel
+
 from nautobot_netbox_importer.management.commands.import_netbox_json import Command
 
 
@@ -72,6 +74,16 @@ class TestImport(TestCase):
                     record = model_class.objects.get(**self.fixup_refs(model_class, data["ids"]))
                 except ObjectDoesNotExist:
                     self.fail(f"Record {model_class} {data['ids']} missing in Nautobot")
+
+                # Validate that the ChangeLogged objects have a related ObjectChange
+                if (
+                    issubclass(type(record), ChangeLoggedModel)
+                    and not ObjectChange.objects.filter(
+                        changed_object_type=content_type, changed_object_id=record.pk
+                    ).exists()
+                ):
+                    self.fail(f"Record {model_class} {data['ids']} has not a related ObjectChange")
+
                 for key, expected_value in self.fixup_refs(model_class, data.get("fields", {})).items():
                     actual_value = getattr(record, key)
                     if isinstance(expected_value, str):

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0 (2021-05-xx)
+
+### Fixed
+
+- #47 - `ChangeLogged` objects honour `created` date when they are imported and also a related "updated" `ObjectChange` is created as result of the migration.
+
 ## v1.3.0 (2021-05-11)
 
 ### Added
@@ -42,7 +48,6 @@
 - #31 - Records containing outdated custom field data should now be updated successfully
 - #32 - Status objects should not show as changed when resyncing data
 
-
 ## v1.1.0 (2021-04-07)
 
 ### Added
@@ -67,7 +72,6 @@
 
 - No longer compatible with Nautobot 1.0.0b2 and earlier
 
-
 ## v1.0.1 (2021-03-09)
 
 ### Added
@@ -85,10 +89,9 @@
 - #4 - Django `ValidationError` is now caught when creating/updating Nautobot data
 - #5 - Pydantic `ValidationError` is now caught when constructing internal data models
 - `Device`s with no specified `name` can now be imported successfully.
-- Device component templates are now imported *after* `Device`s so as to avoid encountering errors when components are unexpectedly created from the templates.
+- Device component templates are now imported _after_ `Device`s so as to avoid encountering errors when components are unexpectedly created from the templates.
 - `VRF`s with no specified `rd` can now be imported successfully.
 - #8 - Fixed errors in `Service` and `PowerOutletTemplate` model definitions that prevented them from being imported.
-
 
 ## v1.0.0 (2021-02-24)
 
