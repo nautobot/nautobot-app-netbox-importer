@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0 (2021-05-xx)
+
+### Fixed
+
+- #47 - `ChangeLogged` objects honour `created` date when they are imported and also a related "udpated" `ChangeObject` is created as result of the migration.
+
 ## v1.3.0 (2021-05-11)
 
 ### Added
@@ -16,7 +22,6 @@
   the `master` `Device` occupies a `vc_position` other than `1`.
 - #43 - Development and CI testing now defaults to Nautobot 1.0.0 instead of 1.0.0b3
 - #43 - Fix test approach to ensure that tests execute against the test database rather than the development database.
-- #47 - ChangeLogged objects honour `created` date and also ChangeObject to represent the migration is created
 
 ### Changed
 
