@@ -57,6 +57,9 @@ class DjangoBaseModel(DiffSyncModel):
         {"site": "site", "parent": "rackgroup"}
     """
 
+    _importer_request_id: uuid.UUID = uuid.uuid4()
+    """Consistent Request_id used across the whole import when creating ObjectChanges for ChangeLoggedModel objects."""
+
     pk: Union[uuid.UUID, int]
 
     @classmethod
@@ -187,8 +190,8 @@ class DjangoBaseModel(DiffSyncModel):
         """Translate any DiffSync "attrs" fields to the corresponding Nautobot data model fields."""
         return cls.clean_ids_or_attrs(diffsync, attrs)
 
-    @staticmethod
-    def create_nautobot_record(nautobot_model, ids: Mapping, attrs: Mapping, multivalue_attrs: Mapping):
+    @classmethod
+    def create_nautobot_record(cls, nautobot_model, ids: Mapping, attrs: Mapping, multivalue_attrs: Mapping):
         """Helper method to create() - actually populate Nautobot data."""
         model_data = dict(**ids, **attrs, **multivalue_attrs)
         try:
@@ -213,8 +216,7 @@ class DjangoBaseModel(DiffSyncModel):
                     object_repr=str(record),
                     action="update",
                     object_data=serialize_object(record),
-                    # # Random request_id as it's mandatory
-                    request_id=uuid.uuid4(),
+                    request_id=cls._importer_request_id,
                 )
 
             for attr, value in multivalue_attrs.items():
