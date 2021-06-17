@@ -1,10 +1,11 @@
 # Changelog
 
-## 1.4.0 (2021-05-xx)
+## 1.4.0 (2021-xx-xx)
 
 ### Fixed
 
 - #47 - `ChangeLogged` objects honour `created` date when they are imported and also a related "updated" `ObjectChange` is created as result of the migration.
+- #51 - Potential `KeyError` when importing certain `JobResult` records.
 
 ## v1.3.0 (2021-05-11)
 
