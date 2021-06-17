@@ -5770,6 +5770,64 @@
     - ids:
         name: "Tenant B"
     weight: 1000
+- model: extras.jobresult
+  ids:
+    job_id: "0de2b9a3-a54f-493e-8cba-50f1ab66f425"
+  fields:
+    name: "netbb.NetBB"
+    obj_type:
+      ids:
+        app_label: "extras"
+        model: "job"
+    completed: "2020-08-11 08:38:40.096000+00:00"
+    user: null
+    status: "completed"
+    data:
+      test_devices:
+        log:
+          - ["2020-08-11T08:38:39.814811+00:00", "warning", "node001-bm092", "/dcim/devices/100/", "Asset Tag missing"]
+          - ["2020-08-11T08:38:39.833042+00:00", "warning", "node002-bm092", "/dcim/devices/200/", "Asset Tag missing"]
+        info: 0
+        failure: 0
+        success: 0
+        warning: 2
+      total:
+        info: 0
+        failure: 0
+        success: 0
+        warning: 2
+      output: ""
+- model: extras.jobresult
+  ids:
+    job_id: "00cd96ba-b4c2-4323-919e-ceb021c28537"
+  fields:
+    name: "blueprint-tools.RackExcelExporter"
+    obj_type:
+      ids:
+        app_label: "extras"
+        model: "job"
+    completed: "2021-05-10 03:30:19.244000+00:00"
+    user:
+      ids:
+        username: "admin"
+    status: "completed"
+    data:
+      run:
+        log:
+          - [null, "default", null, null, "default log message"]
+          - [null, "info", null, null, "info log message"]
+          - [null, "success", null, null, "Exporting racks\nNetbox export finished \n\n"]
+          - [null, "success", null, null, "Completed!"]
+        success: 2
+        info: 1
+        warning: 0
+        failure: 0
+      total:
+        success: 2
+        info: 1
+        warning: 0
+        failure: 0
+      output: "Debug Output:\nExporting racks\nNetbox export finished \n\n\n/opt/netbox/venv/bin/python3 /opt/netbox-blueprinter/netbox-cabling.py \nCompletedProcess(args=['/opt/netbox/venv/bin/python3', '/opt/netbox-blueprinter/netbox-cabling.py'], returncode=0, stdout=b'Exporting racks\\nNetbox export finished \\n\\n', stderr=b'')"
 - model: tenancy.tenantgroup
   ids:
     name: Parent Tenant Group

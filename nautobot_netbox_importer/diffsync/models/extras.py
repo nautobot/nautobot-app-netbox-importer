@@ -255,8 +255,10 @@ class JobResultData(DiffSyncCustomValidationField, dict):
                 }
                 for log_entry in value.get("log", []):
                     new_value["run"]["log"].append((None, log_entry["status"], None, None, log_entry["message"]))
-                    new_value["run"][log_entry["status"]] += 1
-                    new_value["total"][log_entry["status"]] += 1
+                    if log_entry["status"] in new_value["run"]:
+                        new_value["run"][log_entry["status"]] += 1
+                    if log_entry["status"] in new_value["total"]:
+                        new_value["total"][log_entry["status"]] += 1
                 value = new_value
             else:
                 # Either a Nautobot record (in which case no reformatting needed) or a NetBox Report result
