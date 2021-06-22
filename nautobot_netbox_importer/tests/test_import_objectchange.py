@@ -56,7 +56,12 @@ class TestImportObjectChangeMethods(TestCase):
         cls.cmd.logger = Mock()
         cls.cmd.logger.warning = Mock()
         with open(NETBOX_DATA_FILE, "r") as handle:
-            Command().handle(json_file=handle, netbox_version=version.parse("2.10.4"), verbosity=0)
+            Command().handle(
+                json_file=handle,
+                netbox_version=version.parse("2.10.4"),
+                verbosity=0,
+                bypass_data_validation=False,
+            )
 
             # Create ContentType Mappings
             cls.cmd.netbox_contenttype_mapping = {}

@@ -2,6 +2,10 @@
 
 ## 1.4.0 (2021-xx-xx)
 
+### Added
+
+- #52 - Added `--bypass-data-validation` optional flag on import for users who absolutely need to be able to import data from NetBox that will fail Nautobot's data validation checks.
+
 ### Fixed
 
 - #47 - `ChangeLogged` objects honour `created` date when they are imported and also a related "updated" `ObjectChange` is created as result of the migration.
