@@ -7174,6 +7174,77 @@
         }
     },
     {
+        "model": "extras.jobresult",
+        "pk": 252,
+        "fields": {
+            "name": "netbb.NetBB",
+            "obj_type": 12,
+            "created": "2020-10-08T07:18:22.151Z",
+            "completed": "2020-08-11T08:38:40.096Z",
+            "user": null,
+            "status": "completed",
+            "data": {
+                "test_devices": {
+                    "log": [
+                        [
+                            "2020-08-11T08:38:39.814811+00:00",
+                            "warning",
+                            "node001-bm092",
+                            "/dcim/devices/100/",
+                            "Asset Tag missing"
+                        ],
+                        [
+                            "2020-08-11T08:38:39.833042+00:00",
+                            "warning",
+                            "node002-bm092",
+                            "/dcim/devices/200/",
+                            "Asset Tag missing"
+                        ]
+                    ],
+                    "info": 0,
+                    "failure": 0,
+                    "success": 0,
+                    "warning": 2
+                }
+            },
+            "job_id": "0de2b9a3-a54f-493e-8cba-50f1ab66f425"
+        }
+    },
+    {
+        "model": "extras.jobresult",
+        "pk": 782,
+        "fields": {
+            "name": "blueprint-tools.RackExcelExporter",
+            "obj_type": 68,
+            "created": "2021-05-10T03:30:17.737Z",
+            "completed": "2021-05-10T03:30:19.244Z",
+            "user": 1,
+            "status": "completed",
+            "data": {
+                "log": [
+                    {
+                        "status": "default",
+                        "message": "default log message"
+                    },
+                    {
+                        "status": "info",
+                        "message": "info log message"
+                    },
+                    {
+                        "status": "success",
+                        "message": "Exporting racks\nNetbox export finished \n\n"
+                    },
+                    {
+                        "status": "success",
+                        "message": "Completed!"
+                    }
+                ],
+                "output": "Debug Output:\nExporting racks\nNetbox export finished \n\n\n/opt/netbox/venv/bin/python3 /opt/netbox-blueprinter/netbox-cabling.py \nCompletedProcess(args=['/opt/netbox/venv/bin/python3', '/opt/netbox-blueprinter/netbox-cabling.py'], returncode=0, stdout=b'Exporting racks\\nNetbox export finished \\n\\n', stderr=b'')"
+            },
+            "job_id": "00cd96ba-b4c2-4323-919e-ceb021c28537"
+        }
+    },
+    {
         "model": "tenancy.tenantgroup",
         "pk": 1,
         "fields": {

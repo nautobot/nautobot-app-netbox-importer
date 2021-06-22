@@ -20,6 +20,8 @@ NAUTOBOT_DATA_FILE = os.path.join(os.path.dirname(__file__), "fixtures", "nautob
 class TestImport(TestCase):
     """Test the importing functionality of nautobot-netbox-importer."""
 
+    maxDiff = None
+
     @classmethod
     def setUpTestData(cls) -> None:
         """One-time setup function called before running the test functions in this class."""
