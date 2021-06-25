@@ -191,7 +191,9 @@ class DjangoBaseModel(DiffSyncModel):
         return cls.clean_ids_or_attrs(diffsync, attrs)
 
     @classmethod
-    def create_nautobot_record(cls, nautobot_model, ids: Mapping, attrs: Mapping, multivalue_attrs: Mapping):
+    def create_nautobot_record(  # pylint: disable=too-many-arguments
+        cls, diffsync: DiffSync, nautobot_model, ids: Mapping, attrs: Mapping, multivalue_attrs: Mapping
+    ):
         """Helper method to create() - actually populate Nautobot data."""
         model_data = dict(**ids, **attrs, **multivalue_attrs)
         try:
@@ -202,7 +204,24 @@ class DjangoBaseModel(DiffSyncModel):
             # only set the custom field data *after* the record has been validated and approved by Nautobot.
             custom_field_data = attrs.pop("custom_field_data", None)
             record = nautobot_model(**ids, **attrs)
-            record.clean()
+
+            # Run model cleaning regardless of `bypass_data_validation` setting,
+            # but if that flag is set, only log a warning and save the data anyway, intead of rejecting the data.
+            try:
+                record.clean()
+            except DjangoValidationError as exc:
+                if diffsync.bypass_data_validation:
+                    logger.warning(
+                        "Nautobot reported a data validation error - check your source data. "
+                        "Since bypass_data_validation is set, will populate this into Nautobot regardless",
+                        action="create",
+                        exception=str(exc),
+                        model=nautobot_model,
+                        model_data=model_data,
+                    )
+                else:
+                    raise
+
             record.save()
 
             # To keep track of original created date of a ChangeLoggedModel that is updated
@@ -273,7 +292,9 @@ class DjangoBaseModel(DiffSyncModel):
                 multivalue_attrs[attr] = value
                 del nautobot_attrs[attr]
 
-        record = cls.create_nautobot_record(cls.nautobot_model(), nautobot_ids, nautobot_attrs, multivalue_attrs)
+        record = cls.create_nautobot_record(
+            diffsync, cls.nautobot_model(), nautobot_ids, nautobot_attrs, multivalue_attrs
+        )
         if record:
             if "pk" in cls._identifiers:
                 diffsync_ids["pk"] = record.pk
@@ -293,7 +314,9 @@ class DjangoBaseModel(DiffSyncModel):
         return None
 
     @staticmethod
-    def update_nautobot_record(nautobot_model, ids: Mapping, attrs: Mapping, multivalue_attrs: Mapping):
+    def update_nautobot_record(
+        diffsync: DiffSync, nautobot_model, ids: Mapping, attrs: Mapping, multivalue_attrs: Mapping
+    ):
         """Helper method to update() - actually update Nautobot data."""
         model_data = dict(**ids, **attrs, **multivalue_attrs)
         try:
@@ -308,7 +331,24 @@ class DjangoBaseModel(DiffSyncModel):
                 record._custom_field_data = {}  # pylint: disable=protected-access
             for attr, value in attrs.items():
                 setattr(record, attr, value)
-            record.clean()
+
+            # Run model cleaning regardless of `bypass_data_validation` setting,
+            # but if that flag is set, only log a warning and save the data anyway, instead of rejecting the data.
+            try:
+                record.clean()
+            except DjangoValidationError as exc:
+                if diffsync.bypass_data_validation:
+                    logger.warning(
+                        "Nautobot reported a data validation error - check your source data. "
+                        "Since bypass_data_validation is set, will populate this into Nautobot regardless",
+                        action="update",
+                        exception=str(exc),
+                        model=nautobot_model,
+                        model_data=model_data,
+                    )
+                else:
+                    raise
+
             record.save()
             for attr, value in multivalue_attrs.items():
                 getattr(record, attr).set(value)
@@ -360,7 +400,9 @@ class DjangoBaseModel(DiffSyncModel):
                 multivalue_attrs[attr] = value
                 del nautobot_attrs[attr]
 
-        record = self.update_nautobot_record(self.nautobot_model(), nautobot_ids, nautobot_attrs, multivalue_attrs)
+        record = self.update_nautobot_record(
+            self.diffsync, self.nautobot_model(), nautobot_ids, nautobot_attrs, multivalue_attrs
+        )
         if record:
             try:
                 return super().update(diffsync_attrs)
