@@ -26,6 +26,11 @@ class NautobotDiffSync(N2NDiffSync):
 
     logger = structlog.get_logger()
 
+    def __init__(self, *args, bypass_data_validation=False, **kwargs):
+        """Initialization of a NautobotDiffSync adapater instance."""
+        super().__init__(*args, **kwargs)
+        self.bypass_data_validation = bypass_data_validation
+
     def load_model(self, diffsync_model, record):  # pylint: disable=too-many-branches
         """Instantiate the given DiffSync model class from the given Django record."""
         data = {}

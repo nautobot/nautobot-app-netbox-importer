@@ -1,0 +1,108 @@
+[
+    {
+        "model": "dcim.region",
+        "pk": 8,
+        "fields": {
+            "created": "2018-08-06",
+            "last_updated": "2018-08-06T19:33:13.299Z",
+            "parent": null,
+            "name": "Region 1",
+            "slug": "region-1",
+            "description": ""
+        }
+    },
+    {
+        "model": "dcim.site",
+        "pk": 7,
+        "fields": {
+            "created": "2016-09-05",
+            "last_updated": "2020-06-19T11:10:22.796Z",
+            "custom_field_data": {},
+            "name": "Rack Group Site",
+            "_name": "Rack Group Site",
+            "slug": "rack-group-site",
+            "status": "active",
+            "region": 8,
+            "tenant": null,
+            "facility": "Toronto 1",
+            "asn": 4294967295,
+            "time_zone": "America/Toronto",
+            "description": "",
+            "physical_address": "",
+            "shipping_address": "",
+            "latitude": null,
+            "longitude": null,
+            "contact_name": "",
+            "contact_phone": "",
+            "contact_email": "",
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.site",
+        "pk": 8,
+        "fields": {
+            "created": "2016-09-05",
+            "last_updated": "2020-06-19T11:11:16.501Z",
+            "custom_field_data": {},
+            "name": "Rack Site",
+            "_name": "Rack Site",
+            "slug": "rack-site",
+            "status": "active",
+            "region": 8,
+            "tenant": null,
+            "facility": "Toronto 2",
+            "asn": 4294967295,
+            "time_zone": "America/Toronto",
+            "description": "",
+            "physical_address": "",
+            "shipping_address": "",
+            "latitude": null,
+            "longitude": null,
+            "contact_name": "",
+            "contact_phone": "",
+            "contact_email": "",
+            "comments": ""
+        }
+    },
+    {
+        "model": "dcim.rackgroup",
+        "pk": 14,
+        "fields": {
+            "created": "2018-08-06",
+            "last_updated": "2020-04-14T09:56:08.908Z",
+            "name": "Cage2",
+            "slug": "cage-2",
+            "site": 7,
+            "parent": null,
+            "description": ""
+        }
+    },
+    {
+        "model": "dcim.rack",
+        "pk": 86,
+        "fields": {
+            "created": "2017-07-04",
+            "last_updated": "2017-07-04T12:40:05.759Z",
+            "custom_field_data": {},
+            "name": "invalid-site-group-site-mismatch",
+            "_name": "invalid-site-group-site-mismatch",
+            "facility_id": "foo",
+            "site": 8,
+            "group": 14,
+            "tenant": null,
+            "status": "active",
+            "role": null,
+            "serial": "",
+            "asset_tag": null,
+            "type": "4-post-cabinet",
+            "width": 19,
+            "u_height": 42,
+            "desc_units": false,
+            "outer_width": null,
+            "outer_depth": null,
+            "outer_unit": "",
+            "comments": ""
+        }
+    }
+]
