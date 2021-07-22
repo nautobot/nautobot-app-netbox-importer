@@ -16,21 +16,6 @@ env:
   matrix:
     - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
 
-# jobs:
-#   include:
-#     # There's no Docker image for 1.0.0b3 unfortunately
-#     # - python: "3.6"
-#     #   env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0b3"
-#     - python: "3.6"
-#       env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
-#     - python: "3.7"
-#       env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
-#     - python: "3.8"
-#       env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
-#     # TODO develop images are not yet available
-#     # - python: "3.8"
-#     #   env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=develop"
-
 services:
   - "docker"
 
@@ -45,19 +30,6 @@ before_script:
 script:
   - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER=$TRAVIS_PYTHON_VERSION invoke build --no-cache"
   - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER=$TRAVIS_PYTHON_VERSION invoke tests"
-
-# deploy:
-#   provider: script
-#   script:
-#     - poetry config pypi-token.pypi $PYPI_TOKEN
-#     - poetry publish --build
-#   skip_cleanup: true
-#   on:
-#     tags: true
-#     branch: master
-#     condition: $INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER = 1.0.1
-#     python: 3.7
-
 
 jobs:
   include:
