@@ -1,20 +1,35 @@
 ---
-language: "python"
+stages:
+  - name: "test"
+  - name: "deploy-github"
+    if: "tag IS present"
+  - name: "deploy-pypi"
+    if: "tag IS present"
 
-jobs:
-  include:
-    # There's no Docker image for 1.0.0b3 unfortunately
-    # - python: "3.6"
-    #   env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0b3"
-    - python: "3.6"
-      env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
-    - python: "3.7"
-      env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
-    - python: "3.8"
-      env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
-    # TODO develop images are not yet available
-    # - python: "3.8"
-    #   env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=develop"
+language: "python"
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+
+env:
+  matrix:
+    - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
+
+# jobs:
+#   include:
+#     # There's no Docker image for 1.0.0b3 unfortunately
+#     # - python: "3.6"
+#     #   env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.0b3"
+#     - python: "3.6"
+#       env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
+#     - python: "3.7"
+#       env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
+#     - python: "3.8"
+#       env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=1.0.1"
+#     # TODO develop images are not yet available
+#     # - python: "3.8"
+#     #   env: "INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER=develop"
 
 services:
   - "docker"
@@ -31,14 +46,47 @@ script:
   - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER=$TRAVIS_PYTHON_VERSION invoke build --no-cache"
   - "INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER=$TRAVIS_PYTHON_VERSION invoke tests"
 
-deploy:
-  provider: script
-  script:
-    - poetry config pypi-token.pypi $PYPI_TOKEN
-    - poetry publish --build
-  skip_cleanup: true
-  on:
-    tags: true
-    branch: master
-    condition: $INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER = 1.0.1
-    python: 3.7
+# deploy:
+#   provider: script
+#   script:
+#     - poetry config pypi-token.pypi $PYPI_TOKEN
+#     - poetry publish --build
+#   skip_cleanup: true
+#   on:
+#     tags: true
+#     branch: master
+#     condition: $INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER = 1.0.1
+#     python: 3.7
+
+
+jobs:
+  include:
+    - stage: "deploy-github"
+      before_script:
+        - "pip install --upgrade pip"
+        - "pip install poetry"
+      script:
+        - "poetry version $TRAVIS_TAG"
+        - "poetry build"
+      deploy:
+        provider: "releases"
+        api_key: "$GITHUB_AUTH_TOKEN"
+        file_glob: true
+        file: "dist/*"
+        skip_cleanup: true
+        "on":
+          all_branches: true
+
+    - stage: "deploy-pypi"
+      before_script:
+        - "pip install --upgrade pip"
+        - "pip install poetry"
+      script:
+        - "echo Deploying the release to PyPI"
+        - "poetry version $TRAVIS_TAG"
+      deploy:
+        provider: "script"
+        skip_cleanup: true
+        script: "poetry publish --build -u __token__ -p $PYPI_TOKEN"
+        "on":
+          all_branches: true
