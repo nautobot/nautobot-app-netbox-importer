@@ -5923,6 +5923,27 @@
     users:
       - ids:
           username: "admin"
+- model: users.objectpermission
+  ids:
+    name: "foobarperm"
+  fields:
+    actions:
+      - view
+    constraints:
+      - name: "foo"
+      - name: "bar"
+    description: ""
+    enabled: true
+    groups:
+      - ids:
+          name: "Users"
+    object_types:
+      - ids:
+          app_label: "tenancy"
+          model: "tenantgroup"
+    users:
+      - ids:
+          username: "admin"
 - model: virtualization.clustertype
   ids:
     name: Cluster Type A
