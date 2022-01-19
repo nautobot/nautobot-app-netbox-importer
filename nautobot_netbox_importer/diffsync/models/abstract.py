@@ -227,8 +227,10 @@ class DjangoBaseModel(DiffSyncModel):
             # To keep track of original created date of a ChangeLoggedModel that is updated
             # when `record.save()` and to create a ChangeObject with the import change
             if issubclass(type(record), ChangeLoggedModel):
-                record.created = model_data["created"]
-                record.save()
+                # Not all models that are change-logged in Nautobot are also change-logged in NetBox, though!
+                if "created" in model_data:
+                    record.created = model_data["created"]
+                    record.save()
 
                 ObjectChange.objects.create(
                     changed_object=record,
