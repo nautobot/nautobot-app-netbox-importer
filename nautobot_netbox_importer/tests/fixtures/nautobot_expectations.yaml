@@ -2454,7 +2454,6 @@
       ids:
         app_label: virtualization
         model: vminterface
-    name: Can add interface
 - model: auth.permission
   ids:
     codename: change_vminterface
@@ -2463,7 +2462,6 @@
       ids:
         app_label: virtualization
         model: vminterface
-    name: Can change interface
 - model: auth.permission
   ids:
     codename: delete_vminterface
@@ -2472,7 +2470,6 @@
       ids:
         app_label: virtualization
         model: vminterface
-    name: Can delete interface
 - model: auth.permission
   ids:
     codename: view_vminterface
@@ -2481,7 +2478,6 @@
       ids:
         app_label: virtualization
         model: vminterface
-    name: Can view interface
 - model: auth.group
   ids:
     name: "Users"
