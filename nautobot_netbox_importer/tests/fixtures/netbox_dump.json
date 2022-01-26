@@ -7391,6 +7391,33 @@
         }
     },
     {
+        "model": "users.objectpermission",
+        "pk": 3,
+        "fields": {
+            "name": "foobarperm",
+            "description": "",
+            "enabled": true,
+            "actions": "[\"view\"]",
+            "constraints": [
+                {
+                    "name": "foo"
+                },
+                {
+                    "name": "bar"
+                }
+            ],
+            "object_types": [
+                75
+            ],
+            "groups": [
+                1
+            ],
+            "users": [
+                1
+            ]
+        }
+    },
+    {
         "model": "virtualization.clustertype",
         "pk": 1,
         "fields": {

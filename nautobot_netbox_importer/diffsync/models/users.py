@@ -1,7 +1,7 @@
 """User-related DiffSync models for nautobot-netbox-importer."""
 
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from django.contrib.auth import get_user_model
 
@@ -24,7 +24,7 @@ class ObjectPermission(NautobotBaseModel):
     groups: List[GroupRef] = []
     users: List[UserRef] = []
     actions: ArrayField
-    constraints: Optional[dict]
+    constraints: Optional[Union[dict, list]]
     description: str
     enabled: bool
 
