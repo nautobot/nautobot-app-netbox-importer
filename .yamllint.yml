@@ -8,3 +8,6 @@ rules:
   line-length: "disable"
   quoted-strings:
     quote-type: "double"
+ignore: |
+  *nautobot_expectations.yaml
+  *nautobot_objectchange_expectations.yaml

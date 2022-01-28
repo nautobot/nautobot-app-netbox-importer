@@ -686,7 +686,7 @@ class VirtualChassis(PrimaryModel):
         supposed to be in.
         """
         diffsync_record = super().create(diffsync, ids, attrs)
-        if diffsync_record is not None and diffsync_record.master is not None:
+        if diffsync_record is not None and diffsync_record.master is not None:  # pylint: disable=no-member
             nautobot_record = cls.nautobot_model().objects.get(**ids)
             nautobot_master = nautobot_record.master
             diffsync_master = diffsync.get("device", str(nautobot_master.pk))

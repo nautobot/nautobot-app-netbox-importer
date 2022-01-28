@@ -33,8 +33,8 @@ class TestImportObjectChange(TestImport):
         """One-time setup function called before running the test functions in this class."""
         super().setUpTestData()
 
-        with open(NETBOX_DATA_FILE, "r") as file_handle_1:
-            with open(NETBOX_OBJECTCHANGE_DATA_FILE, "r") as file_handle_2:
+        with open(NETBOX_DATA_FILE, "r", encoding="utf-8") as file_handle_1:
+            with open(NETBOX_OBJECTCHANGE_DATA_FILE, "r", encoding="utf-8") as file_handle_2:
                 CommandObjChange().handle(
                     json_file=file_handle_1,
                     objectchange_json_file=file_handle_2,
@@ -42,7 +42,7 @@ class TestImportObjectChange(TestImport):
                     verbosity=0,
                 )
 
-        with open(NAUTOBOT_OBJECTCHANGE_DATA_FILE, "r") as handle:
+        with open(NAUTOBOT_OBJECTCHANGE_DATA_FILE, "r", encoding="utf-8") as handle:
             cls.nautobot_data += yaml.safe_load(handle)
 
 
@@ -55,7 +55,7 @@ class TestImportObjectChangeMethods(TestCase):
         cls.cmd = CommandObjChange()
         cls.cmd.logger = Mock()
         cls.cmd.logger.warning = Mock()
-        with open(NETBOX_DATA_FILE, "r") as handle:
+        with open(NETBOX_DATA_FILE, "r", encoding="utf-8") as handle:
             Command().handle(
                 json_file=handle,
                 netbox_version=version.parse("2.10.4"),
@@ -76,7 +76,7 @@ class TestImportObjectChangeMethods(TestCase):
         for entry in ContentType.objects.all():
             cls.cmd.nautobot_contenttype_mapping[(entry.app_label, entry.model)] = entry.id
 
-        with open(NETBOX_OBJECTCHANGE_DATA_FILE, "r") as handle:
+        with open(NETBOX_OBJECTCHANGE_DATA_FILE, "r", encoding="utf-8") as handle:
             cls.objectchange_data = json.load(handle)
 
     def test_map_object_type(self):
