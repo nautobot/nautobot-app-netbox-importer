@@ -2,10 +2,14 @@
 
 ## 1.4.1 (2022-MM-DD)
 
+### Changed
+
+- #68 - Switched from Travis CI to GitHub Actions.
+
 ### Fixed
 
 - #63 - Fixed failure importing CustomField records into Nautobot 1.2.3 and later.
-- #64 - Fixed failure importing ObjectPermissions containing a list of multiple constraints
+- #64 - Fixed failure importing ObjectPermissions containing a list of multiple constraints.
 
 ## 1.4.0 (2021-06-29)
 
