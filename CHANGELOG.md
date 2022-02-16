@@ -1,6 +1,12 @@
 # Changelog
 
-## 1.4.1 (2022-MM-DD)
+## 1.4.2 (2022-02-16)
+
+### Fixed
+
+- Pinned `black` version for development to avoid some dependency resolution purgatory.
+
+## 1.4.1 (2022-02-16)
 
 ### Changed
 
