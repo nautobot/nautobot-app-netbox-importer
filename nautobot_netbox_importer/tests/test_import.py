@@ -27,7 +27,7 @@ class TestImport(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         """One-time setup function called before running the test functions in this class."""
-        with open(NETBOX_DATA_FILE, "r") as file_handle:
+        with open(NETBOX_DATA_FILE, "r", encoding="utf-8") as file_handle:
             Command().handle(
                 json_file=file_handle,
                 netbox_version=version.parse("2.10.4"),
@@ -35,7 +35,7 @@ class TestImport(TestCase):
                 bypass_data_validation=False,
             )
         # TODO check stdout/stderr for errors and such
-        with open(NAUTOBOT_DATA_FILE, "r") as handle:
+        with open(NAUTOBOT_DATA_FILE, "r", encoding="utf-8") as handle:
             cls.nautobot_data = yaml.safe_load(handle)
 
     def fixup_refs(self, model_class, refs):
@@ -105,7 +105,7 @@ class TestImport(TestCase):
 
     def test_resync_without_changes_correctness(self):
         """Resync (with no changes to the source data) and verify that data is still correct."""
-        with open(NETBOX_DATA_FILE, "r") as file_handle:
+        with open(NETBOX_DATA_FILE, "r", encoding="utf-8") as file_handle:
             Command().handle(
                 json_file=file_handle,
                 netbox_version=version.parse("2.10.4"),
@@ -125,7 +125,7 @@ class TestImportInvalid(TestCase):
         """Import a Rack whose assigned Site doesn't match the Site of its assigned RackGroup."""
         netbox_data_file = os.path.join(FIXTURES_DIR, "netbox_dump_invalid_rack.json")
 
-        with open(netbox_data_file, "r") as file_handle:
+        with open(netbox_data_file, "r", encoding="utf-8") as file_handle:
             Command().handle(
                 json_file=file_handle,
                 netbox_version=version.parse("2.10.3"),
@@ -138,7 +138,7 @@ class TestImportInvalid(TestCase):
         self.assertEqual(0, Rack.objects.count(), "Rack was created even though it failed model validation??")
 
         # Try again, this time with the flag
-        with open(netbox_data_file, "r") as file_handle:
+        with open(netbox_data_file, "r", encoding="utf-8") as file_handle:
             Command().handle(
                 json_file=file_handle,
                 netbox_version=version.parse("2.10.3"),

@@ -38,9 +38,9 @@ namespace = Collection("nautobot_netbox_importer")
 namespace.configure(
     {
         "nautobot_netbox_importer": {
-            "nautobot_ver": "1.0.1",
+            "nautobot_ver": "1.2.4",
             "project_name": "nautobot-netbox-importer",
-            "python_ver": "3.6",
+            "python_ver": "3.7",
             "local": False,
             "compose_dir": os.path.join(os.path.dirname(__file__), "development"),
             "compose_files": ["docker-compose.requirements.yml", "docker-compose.base.yml", "docker-compose.dev.yml"],
@@ -303,6 +303,17 @@ def pydocstyle(context):
 def bandit(context):
     """Run bandit to validate basic static code security analysis."""
     command = "bandit --recursive . --configfile .bandit.yml"
+    run_command(context, command)
+
+
+@task
+def yamllint(context):
+    """Run yamllint to validate formating adheres to NTC defined YAML standards.
+
+    Args:
+        context (obj): Used to run specific commands
+    """
+    command = "yamllint . --format standard"
     run_command(context, command)
 
 
