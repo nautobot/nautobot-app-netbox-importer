@@ -1,4 +1,6 @@
 [flake8]
 # E501: Line length is enforced by Black, so flake8 doesn't need to check it
 # W503: Black disagrees with this rule, as does PEP 8; Black wins
-ignore = E501, W503
+# E701: E701 multiple statements on one line (colon). Doesn't like pydantic class attrs "device_type: DeviceTypeRef"
+# E251: Spaces around None in default function argument. Black disagrees with this rule, as does PEP 8; Black wins
+ignore = E501, W503, E701, E251
