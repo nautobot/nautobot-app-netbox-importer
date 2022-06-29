@@ -27,12 +27,12 @@ nautobot = "*"
 
 [tool.poetry.dev-dependencies]
 invoke = "*"
-black = "*"
+black = "^22.3.0"
 bandit = "*"
 pylint = "*"
 pylint-django = "*"
 pydocstyle = "*"
-flake8 = "*"
+flake8 = "^3.9.2"
 
 [tool.black]
 line-length = 120
