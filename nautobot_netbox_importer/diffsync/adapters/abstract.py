@@ -231,7 +231,7 @@ class N2NDiffSync(DiffSync):
         # in case we have duplicate objects with the same unique_id but different PKs.
         modelname = obj.get_type()
         if obj.pk in self._data_by_pk[modelname]:
-            raise ObjectAlreadyExists(f"Object {modelname} with pk {obj.pk} already loaded")  # pylint: disable=E1120
+            raise ObjectAlreadyExists(f"Object {modelname} with pk {obj.pk} already loaded")
         self._data_by_pk[modelname][obj.pk] = obj
         super().add(obj)
 
@@ -288,7 +288,6 @@ class N2NDiffSync(DiffSync):
             )
         return instance
 
-    # pylint: disable=W0221
     def sync_from(
         self,
         source: DiffSync,
