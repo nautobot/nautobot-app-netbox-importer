@@ -1,7 +1,7 @@
 """Abstract base DiffSync adapter class for code shared by NetBox and Nautobot adapters."""
 
 from collections import defaultdict
-from typing import Callable, MutableMapping, Union
+from typing import Callable, MutableMapping, Optional, Text, Type, Union
 from uuid import UUID
 
 from diffsync import Diff, DiffSync, DiffSyncFlags, DiffSyncModel
@@ -231,7 +231,10 @@ class N2NDiffSync(DiffSync):
         # in case we have duplicate objects with the same unique_id but different PKs.
         modelname = obj.get_type()
         if obj.pk in self._data_by_pk[modelname]:
-            raise ObjectAlreadyExists(f"Object {modelname} with pk {obj.pk} already loaded")
+            raise ObjectAlreadyExists(
+                f"Object {modelname} with pk {obj.pk} already loaded",
+                self.get_by_pk(modelname, obj.pk),
+            )
         self._data_by_pk[modelname][obj.pk] = obj
         super().add(obj)
 
@@ -288,16 +291,17 @@ class N2NDiffSync(DiffSync):
             )
         return instance
 
-    def sync_from(
+    def sync_from(  # pylint: disable=too-many-arguments
         self,
         source: DiffSync,
-        diff_class: Diff = Diff,
+        diff_class: Type[Diff] = Diff,
         flags: DiffSyncFlags = DiffSyncFlags.NONE,
-        callback: Callable[[str, int, int], None] = None,
+        callback: Optional[Callable[[Text, int, int], None]] = None,
+        diff: Optional[Diff] = None,
     ):
         """Synchronize data from the given source DiffSync object into the current DiffSync object."""
         self._sync_summary = None
-        return super().sync_from(source, diff_class=diff_class, flags=flags, callback=callback)
+        return super().sync_from(source, diff_class=diff_class, flags=flags, callback=callback, diff=diff)
 
     def sync_complete(
         self,
