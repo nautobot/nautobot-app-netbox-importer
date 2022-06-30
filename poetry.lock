@@ -336,7 +336,7 @@ dev = ["tox", "bump2version (<1)", "sphinx (<2)", "importlib-metadata (<3)", "im
 
 [[package]]
 name = "diffsync"
-version = "1.5.0"
+version = "1.5.1"
 description = "Library to easily sync/diff/update 2 different data sources"
 category = "main"
 optional = false
@@ -1760,7 +1760,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "e483526cadd43597b8936da1da7a923a9ffd4c73192d55ead7c8f949690523ab"
+content-hash = "03352e39fd63628ba104f83e0ebe2376b4107050695194a9a632ecf2b6e71b0a"
 
 [metadata.files]
 amqp = [
@@ -1949,8 +1949,8 @@ deprecated = [
     {file = "Deprecated-1.2.13.tar.gz", hash = "sha256:43ac5335da90c31c24ba028af536a91d41d53f9e6901ddb021bcc572ce44e38d"},
 ]
 diffsync = [
-    {file = "diffsync-1.5.0-py3-none-any.whl", hash = "sha256:a19fcab2c09a0fa0ac11decff56d869638493feff916b5a680b78ffad69d7725"},
-    {file = "diffsync-1.5.0.tar.gz", hash = "sha256:091ae3ef9e758105b6d60619348734a9312029a48b49293e11289f8c5cfdbbec"},
+    {file = "diffsync-1.5.1-py3-none-any.whl", hash = "sha256:0a302b4753e9438838b7b4695b90df4d7cf82e2e10076878af23506bee3311fe"},
+    {file = "diffsync-1.5.1.tar.gz", hash = "sha256:84a736d03d385bd07cf7c86f57385d4130c3c3273bf7bc90febe2fa530ee1aa6"},
 ]
 dill = [
     {file = "dill-0.3.5.1-py2.py3-none-any.whl", hash = "sha256:33501d03270bbe410c72639b350e941882a8b0fd55357580fbc873fba0c59302"},
