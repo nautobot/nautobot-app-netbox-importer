@@ -49,12 +49,18 @@ class TestImportObjectChange(TestImport):
 class TestImportObjectChangeMethods(TestCase):
     """Test to import Command methods for import_netbox_objectchange_json."""
 
-    @classmethod
-    def setUpTestData(cls) -> None:
-        """One-time setup function called before running the test functions in this class."""
-        cls.cmd = CommandObjChange()
-        cls.cmd.logger = Mock()
-        cls.cmd.logger.warning = Mock()
+    def setUp(self) -> None:
+        """Pre-test setup function.
+
+        Note that this was originally a setUpTestData() classmethod, but when moving to a newer version of Django,
+        we found that then accessing `self.cmd` would result in Django throwing an infinite RecursionError.
+        Probably a Django bug, but changing to setUp() appears to avoid the issue at the cost of slightly slower tests.
+        """
+        self.cmd = CommandObjChange()
+        self.cmd.logger = Mock()
+        self.cmd.logger.warning = Mock()
+
+        # Import base test data into Nautobot
         with open(NETBOX_DATA_FILE, "r", encoding="utf-8") as handle:
             Command().handle(
                 json_file=handle,
@@ -64,20 +70,21 @@ class TestImportObjectChangeMethods(TestCase):
             )
 
             # Create ContentType Mappings
-            cls.cmd.netbox_contenttype_mapping = {}
+            self.cmd.netbox_contenttype_mapping = {}
             handle.seek(0)
             for entry in json.load(handle):
                 if entry["model"] == "contenttypes.contenttype":
-                    cls.cmd.netbox_contenttype_mapping[entry["pk"]] = (
+                    self.cmd.netbox_contenttype_mapping[entry["pk"]] = (
                         entry["fields"]["app_label"],
                         entry["fields"]["model"],
                     )
-        cls.cmdnautobot_contenttype_mapping = {}
+        self.cmd.nautobot_contenttype_mapping = {}
         for entry in ContentType.objects.all():
-            cls.cmd.nautobot_contenttype_mapping[(entry.app_label, entry.model)] = entry.id
+            self.cmd.nautobot_contenttype_mapping[(entry.app_label, entry.model)] = entry.id
 
+        # Load the objectchange data into memory in preparation for the test
         with open(NETBOX_OBJECTCHANGE_DATA_FILE, "r", encoding="utf-8") as handle:
-            cls.objectchange_data = json.load(handle)
+            self.objectchange_data = json.load(handle)
 
     def test_map_object_type(self):
         """Validate map_object_type method."""
@@ -87,14 +94,14 @@ class TestImportObjectChangeMethods(TestCase):
         entry = copy.deepcopy(ref_entry)
         for key in ("changed_object_type", "related_object_type"):
             if entry["fields"][key]:
-                assert self.cmd.map_object_type(key, entry, set()) is True
+                self.assertTrue(self.cmd.map_object_type(key, entry, set()))
 
         # Validate function when a nonexistent model in Nautobot is trying to be mapped from Netbox
         entry = copy.deepcopy(ref_entry)
         unexistant_contenttype = {"id": 1000, "tuple": ("unexistant", "model")}
         entry["fields"]["changed_object_type"] = unexistant_contenttype["id"]
         self.cmd.netbox_contenttype_mapping[unexistant_contenttype["id"]] = unexistant_contenttype["tuple"]
-        assert self.cmd.map_object_type("changed_object_type", entry, set()) is False
+        self.assertFalse(self.cmd.map_object_type("changed_object_type", entry, set()))
         self.cmd.logger.warning.assert_called_once_with(
             f"{unexistant_contenttype['tuple']} key is not present in Nautobot"
         )
@@ -106,10 +113,10 @@ class TestImportObjectChangeMethods(TestCase):
         entry = copy.deepcopy(ref_entry)
         self.cmd.process_objectchange(entry, set())
         obj = ObjectChange.objects.get(request_id=entry["fields"]["request_id"], time=entry["fields"]["time"])
-        assert str(obj.request_id) == entry["fields"]["request_id"]
+        self.assertEqual(str(obj.request_id), entry["fields"]["request_id"])
 
         # Second processing is to assess that the function is idempotent
         entry = copy.deepcopy(ref_entry)
         self.cmd.process_objectchange(entry, set())
         obj = ObjectChange.objects.get(request_id=entry["fields"]["request_id"], time=entry["fields"]["time"])
-        assert str(obj.request_id) == entry["fields"]["request_id"]
+        self.assertEqual(str(obj.request_id), entry["fields"]["request_id"])

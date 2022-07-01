@@ -38,7 +38,7 @@ namespace = Collection("nautobot_netbox_importer")
 namespace.configure(
     {
         "nautobot_netbox_importer": {
-            "nautobot_ver": "1.2.4",
+            "nautobot_ver": "1.3.7",
             "project_name": "nautobot-netbox-importer",
             "python_ver": "3.7",
             "local": False,
@@ -273,7 +273,7 @@ def black(context, autoformat=False):
 @task
 def flake8(context):
     """Check for PEP8 compliance and other style issues."""
-    command = "flake8 ."
+    command = "flake8 . --config .flake8"
     run_command(context, command)
 
 
