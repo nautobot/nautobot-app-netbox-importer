@@ -79,13 +79,7 @@ python netbox/manage.py dumpdata extras.ObjectChange\
 
 From within the Nautobot application environment, run `nautobot-server import_netbox_objectchange_json <json_file_without_objectchanges> <json_file_only_objectchanges> <netbox_version>`, for example `nautobot-server import_netbox_objectchange_json imp/script/import_netbox_json.json imp/script/netbox_only_objectchange.json 2.10.3`.
 
-
-## Use-cases and common workflows
-
 ## Screenshots
-
-!!! warning "Developer Note - Remove Me!"
-    Ideally captures every view exposed by the App. Should include a relevant dataset.
 
 ![Screenshot of the start of synchronization](../images/screenshot1.png)
 

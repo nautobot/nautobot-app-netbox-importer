@@ -8,10 +8,17 @@ To install the App, please follow the instructions detailed in the [Installation
 
 ## First steps with the App
 
-!!! warning "Developer Note - Remove Me!"
-    What (with screenshots preferably) does it look like to perform the simplest workflow within the App once installed?
+This plugin is not adding any new feature in the Nautobot UI or API but two new commands, one for importing data records into Nautobot and one for importing the database changelog into Nautobot as an optional secondary step.
+
+One the plugin is installed you will see both new commands available under `nautobot_netbox_importer` subsection of the `nautobot-server help` command:
+
+```bash
+$ nautobot-server help
+[nautobot_netbox_importer]
+    import_netbox_json
+    import_netbox_objectchange_json
+```
 
 ## What are the next steps?
 
-!!! warning "Developer Note - Remove Me!"
-    After taking the first steps, what else could the users look at doing.
+Next, it's time to pull information from the original Netbox database, and convert into JSON format to import into Nautobot.

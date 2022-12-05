@@ -7,21 +7,18 @@ This document provides an overview of the App including critical information and
 
 ## Description
 
+This application sole purpose is to facilitate data migration from Netbox to Nautobot, doing the proper data conversion through the process.
 
 ## Audience (User Personas) - Who should use this App?
 
-!!! warning "Developer Note - Remove Me!"
-    Who is this meant for/ who is the common user of this app?
+Netbox users looking to migrate their dataset into Nautobot.
 
 ## Authors and Maintainers
 
+@glennmatthews Glenn Matthews
+
 ## Nautobot Features Used
 
-!!! warning "Developer Note - Remove Me!"
-    What is shown today in the Installed Plugins page in Nautobot. What parts of Nautobot does it interact with, what does it add etc. ?
+This is a special plugin that doesn't add any Nautobot UI or API integration and focuses the data ingestion into the database.
 
-### Extras
 
-!!! warning "Developer Note - Remove Me!"
-    Custom Fields - things like which CFs are created by this app?
-    Jobs - are jobs, if so, which ones, installed by this app?
