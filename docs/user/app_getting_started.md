@@ -8,7 +8,7 @@ To install the App, please follow the instructions detailed in the [Installation
 
 ## First steps with the App
 
-This plugin is not adding any new feature in the Nautobot UI or API but two new commands, one for importing data records into Nautobot and one for importing the database changelog into Nautobot as an optional secondary step.
+This plugin adds no new features in the Nautobot UI or API, but adds two new management CLI commands, one for importing data records into Nautobot and one for importing the database changelog into Nautobot as an optional secondary step.
 
 One the plugin is installed you will see both new commands available under `nautobot_netbox_importer` subsection of the `nautobot-server help` command:
 

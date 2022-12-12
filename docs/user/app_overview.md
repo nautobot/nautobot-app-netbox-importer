@@ -7,11 +7,11 @@ This document provides an overview of the App including critical information and
 
 ## Description
 
-This application sole purpose is to facilitate data migration from Netbox to Nautobot, doing the proper data conversion through the process.
+This application's sole purpose is to facilitate data migration from NetBox to Nautobot, doing the proper data conversion through the process.
 
 ## Audience (User Personas) - Who should use this App?
 
-Netbox users looking to migrate their dataset into Nautobot.
+NetBox users looking to migrate their dataset into Nautobot.
 
 ## Authors and Maintainers
 

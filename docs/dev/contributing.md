@@ -25,7 +25,7 @@ Nautobot Netbox Importer will observe semantic versioning, as of 1.0. This may r
 
 ## Release Policy
 
-Nautobot Netbox Importer  has currently no intended scheduled release schedule, and will release new features in minor versions.
+Nautobot Netbox Importer has currently no set release schedule, and will release new features in minor versions.
 
 When a new release, from `develop` to `main`, is created the following should happen.
 
