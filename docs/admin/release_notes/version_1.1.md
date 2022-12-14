@@ -13,16 +13,16 @@ This document describes all new features and changes in the release `1.1`. The f
 
 ### Changed
 
-- #28 - Rework of internal data representations to use primary keys instead of natural keys for most models.
+- `#28` - Rework of internal data representations to use primary keys instead of natural keys for most models.
   This should fix many "duplicate object" problems reported by earlier versions of this plugin (#11, #19, #25, #26, #27)
 
 ### Fixed
 
-- #10 - Catch `ObjectDoesNotExist` exceptions instead of erroring out
-- #12 - Duplicate object reports should include primary key
-- #13 - Allow import of objects with custom field data referencing custom fields that no longer exist
-- #14 - Allow import of objects with old custom field data not matching latest requirements
-- #24 - Allow import of EUI MACAddress records
+- `#10` - Catch `ObjectDoesNotExist` exceptions instead of erroring out
+- `#12` - Duplicate object reports should include primary key
+- `#13` - Allow import of objects with custom field data referencing custom fields that no longer exist
+- `#14` - Allow import of objects with old custom field data not matching latest requirements
+- `#24` - Allow import of EUI MACAddress records
 
 ### Removed
 

@@ -8,7 +8,7 @@ This document describes all new features and changes in the release `1.0`. The f
 
 ### Added
 
-- #3 - Data exports from NetBox v2.10.5 are now permitted for importing.
+- `#3` - Data exports from NetBox v2.10.5 are now permitted for importing.
 
 ### Changed
 
@@ -17,13 +17,13 @@ This document describes all new features and changes in the release `1.0`. The f
 
 ### Fixed
 
-- #2 - `ObjectNotFound` is now caught when handling `GenericForeignKey` fields
-- #4 - Django `ValidationError` is now caught when creating/updating Nautobot data
-- #5 - Pydantic `ValidationError` is now caught when constructing internal data models
+- `#2` - `ObjectNotFound` is now caught when handling `GenericForeignKey` fields
+- `#4` - Django `ValidationError` is now caught when creating/updating Nautobot data
+- `#5` - Pydantic `ValidationError` is now caught when constructing internal data models
 - `Device`s with no specified `name` can now be imported successfully.
 - Device component templates are now imported _after_ `Device`s so as to avoid encountering errors when components are unexpectedly created from the templates.
 - `VRF`s with no specified `rd` can now be imported successfully.
-- #8 - Fixed errors in `Service` and `PowerOutletTemplate` model definitions that prevented them from being imported.
+- `#8` - Fixed errors in `Service` and `PowerOutletTemplate` model definitions that prevented them from being imported.
 
 ## v1.0.0 (2021-02-24)
 

@@ -8,19 +8,19 @@ This document describes all new features and changes in the release `1.2`. The f
 
 ### Fixed
 
-- #37 - Custom fields are now handled correctly on the second pass of the importer as well
+- `#37` - Custom fields are now handled correctly on the second pass of the importer as well
 
 ## v1.2.0 (2021-04-14)
 
 ### Added
 
-- #33 - Now supports the Django parameters `--no-color` and `--force-color`
+- `#33` - Now supports the Django parameters `--no-color` and `--force-color`
 
 ### Changed
 
-- #29 - Improved formatting of log output, added dynamic progress bars using `tqdm` library
+- `#29` - Improved formatting of log output, added dynamic progress bars using `tqdm` library
 
 ### Fixed
 
-- #31 - Records containing outdated custom field data should now be updated successfully
-- #32 - Status objects should not show as changed when resyncing data
+- `#31` - Records containing outdated custom field data should now be updated successfully
+- `#32` - Status objects should not show as changed when resyncing data
