@@ -106,6 +106,10 @@ nav:
       - Compatibility Matrix: "admin/compatibility_matrix.md"
       - Release Notes:
           - "admin/release_notes/index.md"
+          - v1.4: "admin/release_notes/version_1.4.md"
+          - v1.3: "admin/release_notes/version_1.3.md"
+          - v1.2: "admin/release_notes/version_1.2.md"
+          - v1.1: "admin/release_notes/version_1.1.md"
           - v1.0: "admin/release_notes/version_1.0.md"
   - Developer Guide:
       - Extending the App: "dev/extending.md"
@@ -113,6 +117,5 @@ nav:
       - Development Environment: "dev/dev_environment.md"
       - Code Reference:
           - "dev/code_reference/index.md"
-          - Package: "dev/code_reference/package.md"
           - Diffsync: "dev/code_reference/diffsync.md"
   - Nautobot Docs Home ↗︎: "https://docs.nautobot.com"
