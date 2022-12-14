@@ -13,7 +13,7 @@
 
 ## Overview
 
-> Developer Note: Add a long (2-3 paragraphs) description of what the App does, what problems it solves, what functionality it adds to Nautobot, what external systems it works with etc.
+This application's sole purpose is to facilitate data migration from NetBox to Nautobot, performing the proper data conversion through the process.
 
 ### Screenshots
 
