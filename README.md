@@ -1,233 +1,47 @@
 # Nautobot NetBox Importer
 
-A plugin for [Nautobot](https://github.com/nautobot/nautobot).
+<p align="center">
+  <img src="https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/docs/images/icon-nautobot-netbox-importer.png" class="logo" height="200px">
+  <br>
+  <a href="https://github.com/nautobot/nautobot-plugin-netbox-importer/actions"><img src="https://github.com/nautobot/nautobot-plugin-netbox-importer/actions/workflows/ci.yml/badge.svg?branch=main"></a>
+  <a href="https://docs.nautobot.com/projects/netbox-importer/en/latest"><img src="https://readthedocs.org/projects/nautobot-plugin-netbox-importer/badge/"></a>
+  <a href="https://pypi.org/project/nautobot-netbox-importer/"><img src="https://img.shields.io/pypi/v/nautobot-netbox-importer"></a>
+  <a href="https://pypi.org/project/nautobot-netbox-importer/"><img src="https://img.shields.io/pypi/dm/nautobot-netbox-importer"></a>
+  <br>
+  An <a href="https://www.networktocode.com/nautobot/apps/">App</a> for <a href="https://nautobot.com/">Nautobot</a>.
+</p>
 
-## Installation
+## Overview
 
-The plugin is available as a Python package in PyPI and can be installed with pip:
+This application's sole purpose is to facilitate data migration from NetBox to Nautobot, performing the proper data conversion through the process.
 
-```shell
-pip install nautobot-netbox-importer
-```
+### Screenshots
 
-> The plugin is compatible with Nautobot 1.0.0b3 and later and can handle JSON data exported from NetBox 2.10.3 thru 2.10.8  at present.
+More screenshots can be found in the [Using the App](https://docs.nautobot.com/projects/netbox-importer/en/latest/user/app_use_cases/) page in the documentation. Here's a quick overview of some of the plugin's added functionality:
 
-Once installed, the plugin needs to be enabled in your `nautobot_config.py`:
+![Screenshot of the start of synchronization](https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/docs/images/screenshot1.png)
 
-```python
-PLUGINS = ["nautobot_netbox_importer"]
-```
+![Screenshot of the completed process](https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/docs/images/screenshot2.png)
 
-## Usage
 
-This plugin provides two separate commands, one for importing data records into Nautobot and one for importing the database changelog into Nautobot as an optional secondary step.
+## Documentation
 
-### Importing data records into Nautobot
+Full documentation for this App can be found over on the [Nautobot Docs](https://docs.nautobot.com) website:
 
-#### Getting a data export from NetBox
+- [User Guide](https://docs.nautobot.com/projects/netbox-importer/en/latest/user/app_overview/) - Overview, Using the App, Getting Started.
+- [Administrator Guide](https://docs.nautobot.com/projects/netbox-importer/en/latest/admin/install/) - How to Install, Configure, Upgrade, or Uninstall the App.
+- [Developer Guide](https://docs.nautobot.com/projects/netbox-importer/en/latest/dev/contributing/) - Extending the App, Code Reference, Contribution Guide.
+- [Release Notes / Changelog](https://docs.nautobot.com/projects/netbox-importer/en/latest/admin/release_notes/).
+- [Frequently Asked Questions](https://docs.nautobot.com/projects/netbox-importer/en/latest/user/faq/).
 
-From the NetBox root directory, run the following command to produce a JSON file (here, `/tmp/netbox_data.json`) describing the contents of your NetBox database:
+### Contributing to the Documentation
 
-```shell
-python netbox/manage.py dumpdata \
-    --traceback --format=json \
-    --exclude admin.logentry --exclude sessions.session \
-    --exclude extras.ObjectChange --exclude extras.Script --exclude extras.Report \
-    > /tmp/netbox_data.json
-```
+You can find all the Markdown source for the App documentation under the [`docs`](https://github.com/nautobot/nautobot-plugin-netbox-importer/tree/develop/docs) folder in this repository. For simple edits, a Markdown capable editor is sufficient: clone the repository and edit away.
 
-#### Importing the data into Nautobot
+If you need to view the fully-generated documentation site, you can build it with [MkDocs](https://www.mkdocs.org/). A container hosting the documentation can be started using the `invoke` commands (details in the [Development Environment Guide](https://docs.nautobot.com/projects/netbox-importer/en/latest/dev/dev_environment/#docker-development-environment)) on [http://localhost:8001](http://localhost:8001). Using this container, as your changes to the documentation are saved, they will be automatically rebuilt and any pages currently being viewed will be reloaded in your browser.
 
-From within the Nautobot application environment, run `nautobot-server import_netbox_json <json_file> <netbox_version>`, for example `nautobot-server import_netbox_json /tmp/netbox_data.json 2.10.3`.
-
-#### Data validation and error handling
-
-Note that the importer *does* apply Nautobot's data validation standards to the data records as it imports them. If any data records fail data validation, you will see detailed error messages. For example, the following error might be generated if your NetBox data somehow contains a Rack that is assigned to Site-1 but belongs to a RackGroup located at Site-2:
-
-```
-09:42:43 error    Nautobot reported a data validation error - check your source data
-  action: create
-  exception: ['Assigned rack group must belong to parent site (Site-1).']
-  model: <class 'nautobot.dcim.models.racks.Rack'>
-  model_data:
-    {'asset_tag': None,
-     'comments': '',
-     'custom_field_data': {},
-     'desc_units': False,
-     'facility_id': ''
-     'group': <RackGroup: Cage2>,
-     'name': 'Rack-1',
-     'outer_depth': None,
-     'outer_unit': '',
-     'outer_width': None,
-     'pk': UUID('25b61428-813b-5d42-b7ea-38cd541c925a'),
-     'role': <RackRole: vPOD>,
-     'serial': '',
-     'site': <Site: Site-1>,
-     'status': <Status: Active>,
-     'tenant': None,
-     'type': '4-post-cabinet',
-     'u_height': 42,
-     'width': 19}
-```
-
-In this case, the import of this Rack into Nautobot will fail, and you may see a series of cascading errors as other objects dependent on this Rack (such as Devices) also fail due to the absence of this Rack.
-
-Normally the correct response to this sort of error is to understand the cause of the error, log into your NetBox instance and correct the invalid data, then re-export the data from NetBox and re-run the importer.
-
-**If**, however, fixing the source data in NetBox is not possible for whatever reason, you **can** instruct the importer to import data *even if it fails Nautobot's data validation checks*, by specifying the option `--bypass-data-validation`. This **will** result in your Nautobot database containing invalid data, which you will want to fix up in Nautobot as soon as possible to avoid unexpected errors in the future.
-
-When using the `--bypass-data-validation` option, data validation checks are still run, but any failures will be logged as warnings (rather than errors), so that you can still be aware of any issues that will need to be remediated in Nautobot.
-
-### Importing change logging (ObjectChange) records
-
-Because the database change log can be a massive amount of data, and often this historical information does not need to be imported, `ObjectChange` records are not included in the database export command above and are not handled by the `import_netbox_json` command. To import `ObjectChange` records specifically, **after** the previous Netbox import process has succeeded, you can do the following.
-
-#### Getting a data export from NetBox with ONLY ObjectChange items
-
-```shell
-python netbox/manage.py dumpdata extras.ObjectChange\
-    --traceback --format=json \
-    > /tmp/netbox_only_objectchange.json
-```
-
-#### Importing the ObjectChanges into Nautobot
-
-From within the Nautobot application environment, run `nautobot-server import_netbox_objectchange_json <json_file_without_objectchanges> <json_file_only_objectchanges> <netbox_version>`, for example `nautobot-server import_netbox_objectchange_json imp/script/import_netbox_json.json imp/script/netbox_only_objectchange.json 2.10.3`.
-
-## Contributing
-
-Most of the internal logic of this plugin is based on the [DiffSync](https://github.com/networktocode/diffsync) library, which in turn is built atop [Pydantic](https://github.com/samuelcolvin/pydantic/).
-A basic understanding of these two libraries will be helpful to those wishing to contribute to this project.
-
-Pull requests are welcomed and automatically built and tested against multiple version of Python and multiple versions of Nautobot through TravisCI.
-
-The project is packaged with a light development environment based on `docker-compose` to help with the local development of the project and to run the tests within TravisCI.
-
-The project is following Network to Code software development guideline and is leveraging:
-
-- Black, Pylint, Bandit and pydocstyle for Python linting and formatting.
-- Django unit test to ensure the plugin is working properly.
-- Poetry for packaging and dependency management.
-
-### Development Environment
-
-The development environment can be used in 2 ways. First, with a local poetry environment if you wish to develop outside of Docker. Second, inside of a docker container.
-
-#### Invoke tasks
-
-The [PyInvoke](http://www.pyinvoke.org/) library is used to provide some helper commands based on the environment.  There are a few configuration parameters which can be passed to PyInvoke to override the default configuration:
-
-* `nautobot_ver`: the version of Nautobot to use as a base for any built docker containers (default: develop-latest)
-* `project_name`: the default docker compose project name (default: nautobot-netbox-importer)
-* `python_ver`: the version of Python to use as a base for any built docker containers (default: 3.6)
-* `local`: a boolean flag indicating if invoke tasks should be run on the host or inside the docker containers (default: False, commands will be run in docker containers)
-* `compose_dir`: the full path to a directory containing the project compose files
-* `compose_files`: a list of compose files applied in order (see [Multiple Compose files](https://docs.docker.com/compose/extends/#multiple-compose-files) for more information)
-
-Using PyInvoke these configuration options can be overridden using [several methods](http://docs.pyinvoke.org/en/stable/concepts/configuration.html).  Perhaps the simplest is simply setting an environment variable `INVOKE_NAUTOBOT_NETBOX_IMPORTER_VARIABLE_NAME` where `VARIABLE_NAME` is the variable you are trying to override.  The only exception is `compose_files`, because it is a list it must be overridden in a yaml file.  There is an example `invoke.yml` in this directory which can be used as a starting point.
-
-#### Local Poetry Development Environment
-
-1.  Copy `development/creds.example.env` to `development/creds.env` (This file will be ignored by git and docker)
-2.  Uncomment the `POSTGRES_HOST`, `REDIS_HOST`, and `NAUTOBOT_ROOT` variables in `development/creds.env`
-3.  Create an invoke.yml with the following contents at the root of the repo:
-
-```shell
----
-nautobot_netbox_importer:
-  local: true
-  compose_files:
-    - "docker-compose.requirements.yml"
-```
-
-3.  Run the following commands:
-
-```shell
-poetry shell
-poetry install
-pip install nautobot
-export $(cat development/dev.env | xargs)
-export $(cat development/creds.env | xargs)
-```
-
-4.  You can now run nautobot-server commands as you would from the [Nautobot documentation](https://nautobot.readthedocs.io/en/latest/) for example to start the development server:
-
-```shell
-nautobot-server runserver 0.0.0.0:8080 --insecure
-```
-
-Nautobot server can now be accessed at [http://localhost:8080](http://localhost:8080).
-
-#### Docker Development Environment
-
-This project is managed by [Python Poetry](https://python-poetry.org/) and has a few requirements to setup your development environment:
-
-1.  Install Poetry, see the [Poetry Documentation](https://python-poetry.org/docs/#installation) for your operating system.
-2.  Install Docker, see the [Docker documentation](https://docs.docker.com/get-docker/) for your operating system.
-
-Once you have Poetry and Docker installed you can run the following commands to install all other development dependencies in an isolated python virtual environment:
-
-```shell
-poetry shell
-poetry install
-invoke start
-```
-
-Nautobot server can now be accessed at [http://localhost:8080](http://localhost:8080).
-
-### CLI Helper Commands
-
-The project includes a CLI helper based on [invoke](http://www.pyinvoke.org/) to help setup the development environment. The commands are listed below in 3 categories `dev environment`, `utility` and `testing`.
-
-Each command can be executed with `invoke <command>`. Environment variables `INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER` and `INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER` may be specified to override the default versions. Each command also has its own help `invoke <command> --help`
-
-#### Docker dev environment
-
-```no-highlight
-  build               Build Nautobot docker image.
-  debug               Start Nautobot and its dependencies in debug mode.
-  destroy             Destroy all containers and volumes.
-  restart             Gracefully restart all containers.
-  start               Start Nautobot and its dependencies in detached mode.
-  stop                Stop Nautobot and its dependencies.
-```
-
-#### Utility
-
-```no-highlight
-  check-migrations    Check for missing migrations.
-  cli                 Launch a bash shell inside the running Nautobot container.
-  createsuperuser     Create a new Nautobot superuser account (default: "admin"), will prompt for password.
-  generate-packages   Generate all Python packages inside docker and copy the file locally under dist/.
-  makemigrations      Perform makemigrations operation in Django.
-  migrate             Perform migrate operation in Django.
-  nbshell             Launch an interactive nbshell session.
-  post-upgrade        Performs Nautobot common post-upgrade operations using a single entrypoint.
-  vscode              Launch Visual Studio Code with the appropriate Environment variables to run in a container.
-```
-
-#### Testing
-
-```no-highlight
-  bandit              Run bandit to validate basic static code security analysis.
-  black               Check Python code style with Black.
-  flake8              Check for PEP8 compliance and other style issues.
-  hadolint            Check Dockerfile for hadolint compliance and other style issues.
-  pydocstyle          Run pydocstyle to validate docstring formatting adheres to standards.
-  pylint              Run pylint code analysis.
-  tests               Run all tests for this plugin.
-  unittest            Run Django unit tests for the plugin.
-  unittest-coverage   Report on code test coverage as measured by 'invoke unittest'.
-```
+Any PRs with fixes or improvements are very welcome!
 
 ## Questions
 
-For any questions or comments, please check the [FAQ](FAQ.md) first and feel free to swing by the [#nautobot slack channel](https://networktocode.slack.com/).
-Sign up [here](http://slack.networktocode.com/)
-
-## Screenshots
-
-![Screenshot of the start of synchronization](https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/media/screenshot1.png "Beginning synchronization")
-
-![Screenshot of the completed process](https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/media/screenshot2.png "Synchronization complete!")
+For any questions or comments, please check the [FAQ](https://docs.nautobot.com/projects/netbox-importer/en/latest/user/faq/) first. Feel free to also swing by the [Network to Code Slack](https://networktocode.slack.com/) (channel `#nautobot`), sign up [here](http://slack.networktocode.com/) if you don't have an account.
