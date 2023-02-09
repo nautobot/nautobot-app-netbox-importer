@@ -127,6 +127,11 @@ class NetBox210DiffSync(N2NDiffSync):
                         },
                     )
                 del data["choices"]
+        elif diffsync_model == self.virtualmachine:
+            # NetBox stores the vCPU value as DecimalField, Nautobot has PositiveSmallIntegerField, 
+            # so we need to cast here
+            if data['vcpus'] is not None:
+                data['vcpus'] = int(float(data['vcpus']))
 
         return self.make_model(diffsync_model, data)
 
