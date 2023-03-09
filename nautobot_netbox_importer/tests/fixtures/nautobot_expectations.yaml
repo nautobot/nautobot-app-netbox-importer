@@ -3116,6 +3116,25 @@
     tagged_vlans: []
     type: 1000base-t
     untagged_vlan: null
+- model: dcim.interface
+  ids:
+    device:
+      ids:
+        name: "VC A Member 2"
+    name: mgmt10
+  fields:
+    cable: null
+    description: ''
+    enabled: true
+    label: 'Management 10'
+    lag: null
+    mac_address: null
+    mgmt_only: false
+    mode: ""
+    mtu: null
+    tagged_vlans: []
+    type: other
+    untagged_vlan: null
 - model: dcim.frontport
   ids:
     name: Device A Front Port

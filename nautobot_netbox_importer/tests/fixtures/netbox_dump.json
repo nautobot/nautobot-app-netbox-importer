@@ -4418,6 +4418,30 @@
         }
     },
     {
+        "model": "dcim.interface",
+        "pk": 10,
+        "fields": {
+            "device": 6,
+            "name": "mgmt10",
+            "label": "Management 10",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "enabled": true,
+            "mac_address": null,
+            "mtu": null,
+            "mode": "",
+            "_name": "9999999999999999mgmt000010............",
+            "lag": null,
+            "type": "DNE",
+            "mgmt_only": false,
+            "untagged_vlan": null,
+            "tagged_vlans": []
+        }
+    },
+    {
         "model": "dcim.frontport",
         "pk": 1,
         "fields": {

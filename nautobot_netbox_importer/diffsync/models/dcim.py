@@ -8,7 +8,7 @@ are for populating data into Nautobot only, never the reverse.
 from typing import Any, List, Mapping, Optional
 
 from diffsync import DiffSync
-from pydantic import validator
+from pydantic import validator, root_validator
 import structlog
 
 import nautobot.dcim.models as dcim
@@ -53,6 +53,9 @@ from .references import (
     VLANRef,
     VirtualChassisRef,
 )
+
+
+INTERFACE_TYPE_CHOICES = set(dcim.Interface.type.field.choices.values())
 
 
 logger = structlog.get_logger()
@@ -307,6 +310,23 @@ class Interface(BaseInterfaceMixin, CableTerminationMixin, ComponentModel):
     mgmt_only: bool
     untagged_vlan: Optional[VLANRef]
     tagged_vlans: List[VLANRef] = []
+
+    @root_validator
+    def invalid_type_to_other(cls, values):
+        int_type = values.get("type")
+        if int_type and int_type not in INTERFACE_TYPE_CHOICES:
+            values["type"] = "other"
+            int_name = values.get("name", "Unknonw")
+            int_device = values.get("device", "Unknown")
+            if int_device != "Unknown":
+                device = dcim.Device.objects.filter(pk=int_device)
+                if device:
+                    int_device = device.first().name
+            logger.warning(
+                f"Netbox Interface.type of {int_type} is not supported by this version of Nautobot. "
+                f"Interface, {int_name}, on Device, {int_device}, will use a type of 'other'"
+            )
+        return values
 
 
 class InterfaceTemplate(ComponentTemplateModel):
