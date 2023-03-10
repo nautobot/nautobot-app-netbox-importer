@@ -313,7 +313,8 @@ class Interface(BaseInterfaceMixin, CableTerminationMixin, ComponentModel):
     tagged_vlans: List[VLANRef] = []
 
     @root_validator
-    def invalid_type_to_other(cls, values):
+    def invalid_type_to_other(cls, values):  # pylint: disable=no-self-argument,no-self-use
+        """Fixup Invalid Interface.type values for Nautobot."""
         int_type = values["type"]
         if int_type not in INTERFACE_TYPE_CHOICES:
             values["type"] = "other"
