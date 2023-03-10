@@ -12,6 +12,7 @@ from pydantic import validator, root_validator
 import structlog
 
 import nautobot.dcim.models as dcim
+from nautobot.dcim.choices import InterfaceTypeChoices
 
 from .abstract import (
     ArrayField,
@@ -55,7 +56,7 @@ from .references import (
 )
 
 
-INTERFACE_TYPE_CHOICES = set(dcim.Interface.type.field.choices.values())
+INTERFACE_TYPE_CHOICES = set(InterfaceTypeChoices.values())
 
 
 logger = structlog.get_logger()
@@ -313,18 +314,20 @@ class Interface(BaseInterfaceMixin, CableTerminationMixin, ComponentModel):
 
     @root_validator
     def invalid_type_to_other(cls, values):
-        int_type = values.get("type")
-        if int_type and int_type not in INTERFACE_TYPE_CHOICES:
+        int_type = values["type"]
+        if int_type not in INTERFACE_TYPE_CHOICES:
             values["type"] = "other"
-            int_name = values.get("name", "Unknonw")
-            int_device = values.get("device", "Unknown")
-            if int_device != "Unknown":
-                device = dcim.Device.objects.filter(pk=int_device)
-                if device:
-                    int_device = device.first().name
+            int_name = values["name"]
+            int_device = values["device"]
+            device = dcim.Device.objects.filter(pk=int_device)
+            if device:
+                int_device = device.first().name
             logger.warning(
-                f"Netbox Interface.type of {int_type} is not supported by this version of Nautobot. "
-                f"Interface, {int_name}, on Device, {int_device}, will use a type of 'other'"
+                "Encountered a NetBox Interface.type that is not valid in this version of Nautobot, will convert it",
+                interface_name=int_name,
+                interface_device_name_or_pk=int_name,
+                netbox_type=int_type,
+                nautobot_type="other",
             )
         return values
 
