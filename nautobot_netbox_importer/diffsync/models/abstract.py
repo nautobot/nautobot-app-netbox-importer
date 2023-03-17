@@ -9,7 +9,7 @@ import json
 import uuid
 
 from datetime import date, datetime
-from typing import Any, Mapping, Optional, Tuple, Union
+from typing import Any, Mapping, Optional, Tuple, Union, Iterable
 
 from diffsync import DiffSync, DiffSyncModel
 from django.core.exceptions import ObjectDoesNotExist, ValidationError as DjangoValidationError
@@ -568,7 +568,7 @@ class ComponentModel(CustomFieldModelMixin, NautobotBaseModel):
         if cls._type_choices is None:
             return values
         component_type_value = values["type"]
-        if component_type_value not in cls._type_choices:  # pylint: disable=no-member
+        if component_type_value not in cls._type_choices:  # pylint: disable=unsupported-membership-test
             values["type"] = "other"
             component_name = values["name"]
             device_name = None
@@ -599,7 +599,7 @@ class ComponentTemplateModel(CustomFieldModelMixin, NautobotBaseModel):
     label: str
     description: str
 
-    _type_choices = None
+    _type_choices: Optional[Iterable] = None
 
     @root_validator
     def invalid_type_to_other(cls, values):  # pylint: disable=no-self-argument,no-self-use
@@ -620,7 +620,7 @@ class ComponentTemplateModel(CustomFieldModelMixin, NautobotBaseModel):
         if cls._type_choices is None:
             return values
         component_type_value = values["type"]
-        if component_type_value not in cls._type_choices:
+        if component_type_value not in cls._type_choices:  # pylint: disable=unsupported-membership-test
             values["type"] = "other"
             component_name = values["name"]
             logger.warning(
