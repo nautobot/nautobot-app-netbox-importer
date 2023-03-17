@@ -107,7 +107,7 @@ class Cable(StatusModelMixin, PrimaryModel):
             term_a_id = values["termination_a_id"]
             term_b_id = values["termination_b_id"]
             logger.warning(
-                f"Encountered a NetBox {cls._modelname}.type that is not valid in this version of Nautoobt, will convert it",
+                f"Encountered a NetBox {cls._modelname}.type that is not valid in this version of Nautobot, will convert it",
                 termination_a_id=term_a_id,
                 termination_b_id=term_b_id,
                 netbox_type=cable_type,
@@ -594,7 +594,7 @@ class Rack(StatusModelMixin, PrimaryModel):
             tenant = values.get("tenant")
             name = values["name"]
             logger.warning(
-                f"Encountered a NetBox {cls._modelname}.type that is not valid in this version of Nautoobt, will convert it",
+                f"Encountered a NetBox {cls._modelname}.type that is not valid in this version of Nautobot, will convert it",
                 site=site,
                 tenant=tenant,
                 name=name,

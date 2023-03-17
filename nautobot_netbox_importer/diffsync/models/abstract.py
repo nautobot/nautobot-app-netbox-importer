@@ -547,6 +547,8 @@ class ComponentModel(CustomFieldModelMixin, NautobotBaseModel):
     label: str
     description: str
 
+    _type_choices = None
+
     @root_validator
     def invalid_type_to_other(cls, values):  # pylint: disable=no-self-argument,no-self-use
         """
@@ -556,15 +558,14 @@ class ComponentModel(CustomFieldModelMixin, NautobotBaseModel):
         choices. This uses Pydantic's root_validator to clean up the `type` data before loading
         it into a Model instance. All invalid types will be changed to "other."
 
-        Two things must be done in order for a Component Model to inherit this behavoir:
+        In order for a Component Model to inherit this behavoir, the Model must define a class
+        attribute named `_type_choices`. The `_type_choices` attribute should be a set of the
+        valid choices for the type per Nautobot.
 
-          1. The Model must define a `type` field.
-          2. The Model must define a class variable named `_type_choices`.
-
-        The `_type_choices` variable should be a set of the valid choices for the type per
-        Nautobot.
+        If the `_type_choices` attribute is defined, then the Model should also define a `type`
+        field that is required.
         """
-        if "type" not in cls.__fields__ or "_type_choices" not in cls.__dict__:
+        if cls._type_choices is None:
             return values
         component_type_value = values["type"]
         if component_type_value not in cls._type_choices:  # pylint: disable=no-member
@@ -572,9 +573,11 @@ class ComponentModel(CustomFieldModelMixin, NautobotBaseModel):
             component_name = values["name"]
             device_name = None
             device_pk = values["device"]
-            device = Device.objects.filter(pk=device_pk)
-            if device:
-                device_name = device.first().name
+            try:
+                device = Device.objects.get(pk=device_pk)
+                device_name = device.name
+            except Device.DoesNotExist:
+                device_name = None
             logger.warning(
                 f"Encountered a NetBox {cls._modelname}.type that is not valid in this version of Nautobot, will convert it",
                 component_type=cls._modelname,
@@ -596,6 +599,8 @@ class ComponentTemplateModel(CustomFieldModelMixin, NautobotBaseModel):
     label: str
     description: str
 
+    _type_choices = None
+
     @root_validator
     def invalid_type_to_other(cls, values):  # pylint: disable=no-self-argument,no-self-use
         """
@@ -605,18 +610,17 @@ class ComponentTemplateModel(CustomFieldModelMixin, NautobotBaseModel):
         choices. This uses Pydantic's root_validator to clean up the `type` data before loading it
         into a Model instance. All invalid types will be changed to "other."
 
-        Two things must be done in order for a Component Template Model to inherit this behavoir:
+        In order for a Component Template Model to inherit this behavoir, the Model must define a class
+        attribute named `_type_choices`. The `_type_choices` attribute should be a set of the
+        valid choices for the type per Nautobot.
 
-          1. The Model must define a `type` field.
-          2. The Model must define a class variable named `_type_choices`.
-
-        The `_type_choices` variable should be a set of the valid choices for the type per
-        Nautobot.
+        If the `_type_choices` attribute is defined, then the Model should also define a `type`
+        field that is required.
         """
-        if "type" not in cls.__fields__ or "_type_choices" not in cls.__dict__:
+        if cls._type_choices is None:
             return values
         component_type_value = values["type"]
-        if component_type_value not in cls._type_choices:  # pylint: disable=no-member
+        if component_type_value not in cls._type_choices:
             values["type"] = "other"
             component_name = values["name"]
             logger.warning(

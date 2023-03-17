@@ -3918,7 +3918,7 @@
             "_cable_peer_type": null,
             "_cable_peer_id": null,
             "_path": null,
-            "type": "DNE"
+            "type": "does-not-exist"
         }
     },
     {
@@ -3998,7 +3998,7 @@
             "_cable_peer_type": null,
             "_cable_peer_id": null,
             "_path": null,
-            "type": "DNE"
+            "type": "does-not-exist"
         }
     },
     {
@@ -4032,7 +4032,7 @@
             "_cable_peer_type": 4,
             "_cable_peer_id": 1,
             "_path": 8,
-            "type": "DNE",
+            "type": "does-not-exist",
             "maximum_draw": null,
             "allocated_draw": null
         }
@@ -4194,7 +4194,7 @@
             "_cable_peer_type": null,
             "_cable_peer_id": null,
             "_path": null,
-            "type": "DNE",
+            "type": "does-not-exist",
             "power_port": 6,
             "feed_leg": "A"
         }
@@ -4435,7 +4435,7 @@
             "mode": "",
             "_name": "9999999999999999mgmt000010............",
             "lag": null,
-            "type": "DNE",
+            "type": "does-not-exist",
             "mgmt_only": false,
             "untagged_vlan": null,
             "tagged_vlans": []
@@ -4521,7 +4521,7 @@
             "cable": null,
             "_cable_peer_type": null,
             "_cable_peer_id": null,
-            "type": "DNE",
+            "type": "does-not-exist",
             "rear_port": 5,
             "rear_port_position": 1
         }
@@ -4602,7 +4602,7 @@
             "cable": null,
             "_cable_peer_type": null,
             "_cable_peer_id": null,
-            "type": "DNE",
+            "type": "does-not-exist",
             "positions": 2
         }
     },
@@ -5272,7 +5272,7 @@
             "termination_a_id": 1,
             "termination_b_type": 7,
             "termination_b_id": 3,
-            "type": "DNE",
+            "type": "does-not-exist",
             "status": "connected",
             "label": "Circuit A to Circuit B",
             "color": "",
@@ -5460,7 +5460,7 @@
             "_name": "Console Port 00000002",
             "label": "Model B Console Port 2",
             "description": "Console Port template for Model B",
-            "type": "DNE"
+            "type": "does-not-exist"
         }
     },
     {
@@ -5484,7 +5484,7 @@
             "_name": "Console Server Port 00000002",
             "label": "Model B Console Server Port 2",
             "description": "Console Server Port template for Model B",
-            "type": "DNE"
+            "type": "does-not-exist"
         }
     },
     {
@@ -5510,7 +5510,7 @@
             "_name": "Power Port 00000002",
             "label": "Model B Power Port 2",
             "description": "Power Port template for Model B",
-            "type": "DNE",
+            "type": "does-not-exist",
             "maximum_draw": 100,
             "allocated_draw": 10
         }
@@ -5538,7 +5538,7 @@
             "_name": "Power Outlet 00000002",
             "label": "Model B Power Outlet 2",
             "description": "Power Outlet template for Model B",
-            "type": "DNE",
+            "type": "does-not-exist",
             "power_port": 2,
             "feed_leg": "B"
         }
@@ -5578,7 +5578,7 @@
             "label": "Ethernet 1",
             "description": "Ethernet interface template for Model B",
             "_name": "9999999999999999eth000001............",
-            "type": "DNE",
+            "type": "does-not-exist",
             "mgmt_only": false
         }
     },
@@ -5605,7 +5605,7 @@
             "_name": "Front Port 00000002",
             "label": "Model B Front Port 2",
             "description": "Front Port template for Model B",
-            "type": "DNE",
+            "type": "does-not-exist",
             "rear_port": 2,
             "rear_port_position": 2
         }
@@ -5632,7 +5632,7 @@
             "_name": "Rear Port 00000002",
             "label": "Model B Rear Port 2",
             "description": "Rear Port template for Model B",
-            "type": "DNE",
+            "type": "does-not-exist",
             "positions": 2
         }
     },
@@ -5823,7 +5823,7 @@
             "role": 2,
             "serial": "",
             "asset_tag": null,
-            "type": "DNE",
+            "type": "does-not-exist",
             "width": 19,
             "u_height": 42,
             "desc_units": true,
