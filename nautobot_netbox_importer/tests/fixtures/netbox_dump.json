@@ -6269,7 +6269,7 @@
         "fields": {
             "type": "text",
             "name": "Custom Text Field A",
-            "label": "",
+            "label": "Custom Text Field A",
             "description": "",
             "required": false,
             "filter_logic": "loose",

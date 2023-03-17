@@ -4816,7 +4816,7 @@
     default: null
     description: ''
     filter_logic: loose
-    label: ''
+    label: 'Custom Text Field A'
     required: false
     type: text
     validation_maximum: null
