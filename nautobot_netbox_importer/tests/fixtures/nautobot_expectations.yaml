@@ -2716,7 +2716,7 @@
     description: ""
     label: "Model A Console Port 1"
     name: "Console Port 1"
-    type: rj-45
+    type: other
 - model: dcim.consoleserverport
   ids:
     device:
@@ -2771,7 +2771,7 @@
     description: ''
     label: 'Model A Console Server Port 1'
     name: Console Server Port 1
-    type: rj-45
+    type: other
 - model: dcim.powerport
   ids:
     device:
@@ -2797,7 +2797,7 @@
     label: ''
     maximum_draw: null
     name: Device B Power Port
-    type: iec-60320-c8
+    type: other
 - model: dcim.powerport
   ids:
     device:
@@ -2810,7 +2810,7 @@
     label: ''
     maximum_draw: null
     name: Device A Child Power Port
-    type: ''
+    type: 'iec-60320-c8'
 - model: dcim.powerport
   ids:
     device:
@@ -2934,7 +2934,7 @@
           ids:
             name: "VC A Member 2"
         name: "Power Port 1"
-    type: "nema-5-30r"
+    type: "other"
 - model: dcim.interface
   ids:
     device:
@@ -3116,6 +3116,25 @@
     tagged_vlans: []
     type: 1000base-t
     untagged_vlan: null
+- model: dcim.interface
+  ids:
+    device:
+      ids:
+        name: "VC A Member 2"
+    name: mgmt10
+  fields:
+    cable: null
+    description: ''
+    enabled: true
+    label: 'Management 10'
+    lag: null
+    mac_address: null
+    mgmt_only: false
+    mode: ""
+    mtu: null
+    tagged_vlans: []
+    type: other
+    untagged_vlan: null
 - model: dcim.frontport
   ids:
     name: Device A Front Port
@@ -3199,7 +3218,7 @@
           ids:
             name: "VC A Member 2"
     rear_port_position: 1
-    type: 8p8c
+    type: other
 - model: dcim.rearport
   ids:
     name: "Device A Rear Port"
@@ -3259,7 +3278,7 @@
     description: ''
     label: "Model A Rear Port 1"
     positions: 2
-    type: 8p8c
+    type: other
 - model: dcim.devicebay
   ids:
     name: Device A Device Bay
@@ -3758,7 +3777,7 @@
 #     termination_a_type: 9
 #     termination_b_id: 2
 #     termination_b_type: 9
-#     type: ''
+#     type: 'cat5e'
 #   model: dcim.cable
 
 # - fields:
@@ -3772,7 +3791,7 @@
 #     termination_a_type: 10
 #     termination_b_id: 2
 #     termination_b_type: 10
-#     type: ''
+#     type: 'cat5e'
 #   model: dcim.cable
 
 # - fields:
@@ -3786,7 +3805,7 @@
 #     termination_a_type: 1
 #     termination_b_id: 1
 #     termination_b_type: 2
-#     type: ''
+#     type: 'cat5e'
 #   model: dcim.cable
 
 # - fields:
@@ -3800,7 +3819,7 @@
 #     termination_a_type: 3
 #     termination_b_id: 2
 #     termination_b_type: 4
-#     type: ''
+#     type: 'cat5e'
 #   model: dcim.cable
 
 # - fields:
@@ -3814,7 +3833,7 @@
 #     termination_a_type: 4
 #     termination_b_id: 2
 #     termination_b_type: 3
-#     type: ''
+#     type: 'cat5e'
 #   model: dcim.cable
 
 # - fields:
@@ -3842,8 +3861,22 @@
 #     termination_a_type: 11
 #     termination_b_id: 3
 #     termination_b_type: 3
-#     type: ''
+#     type: 'cat5e'
 #   model: dcim.cable
+
+#- fields:
+#    color: ''
+#    custom_field_data: {}
+#    label: ''
+#    length: null
+#    length_unit: ''
+#    status: connected
+#    termination_a_id: 1
+#    termination_a_type: 11
+#    termination_b_id: 3
+#    termination_b_type: 3
+#    type: 'other'
+#  model: dcim.cable
 
 # - fields:
 #     destination_id: 3
@@ -3974,6 +4007,16 @@
     label: "Model A Console Port 1"
     description: "Console Port template for Model A"
     type: "rj-45"
+- model: dcim.consoleporttemplate
+  ids:
+    name: "Console Port 2"
+  fields:
+    device_type:
+      ids:
+        model: "Model B"
+    label: "Model B Console Port 2"
+    description: "Console Port template for Model B"
+    type: "other"
 - model: dcim.consoleserverporttemplate
   ids:
     name: "Console Server Port 1"
@@ -3984,6 +4027,16 @@
     label: "Model A Console Server Port 1"
     description: "Console Server Port template for Model A"
     type: "rj-45"
+- model: dcim.consoleserverporttemplate
+  ids:
+    name: "Console Server Port 2"
+  fields:
+    device_type:
+      ids:
+        model: "Model B"
+    label: "Model B Console Server Port 2"
+    description: "Console Server Port template for Model B"
+    type: "other"
 - model: dcim.powerporttemplate
   ids:
     name: "Power Port 1"
@@ -3996,6 +4049,32 @@
     type: "nema-5-15p"
     maximum_draw: 100
     allocated_draw: 10
+- model: dcim.powerporttemplate
+  ids:
+    name: "Power Port 2"
+  fields:
+    device_type:
+      ids:
+        model: "Model B"
+    label: "Model B Power Port 2"
+    description: "Power Port template for Model B"
+    type: "other"
+    maximum_draw: 100
+    allocated_draw: 10
+- model: dcim.poweroutlettemplate
+  ids:
+    name: "Power Outlet 2"
+  fields:
+    device_type:
+      ids:
+        model: "Model B"
+    label: "Model B Power Outlet 2"
+    description: "Power Outlet template for Model B"
+    type: "other"
+    power_port:
+      ids:
+        name: "Power Port 2"
+    feed_leg: "B"
 - model: dcim.poweroutlettemplate
   ids:
     name: "Power Outlet 1"
@@ -4032,6 +4111,17 @@
     description: "Ethernet interface template for Model A"
     type: "100base-tx"
     mgmt_only: false
+- model: dcim.interfacetemplate
+  ids:
+    name: "eth1"
+  fields:
+    device_type:
+      ids:
+        model: "Model B"
+    label: "Ethernet 1"
+    description: "Ethernet interface template for Model B"
+    type: "other"
+    mgmt_only: false
 - model: dcim.frontporttemplate
   ids:
     name: "Front Port 1"
@@ -4046,6 +4136,20 @@
       ids:
         name: "Rear Port 1"
     rear_port_position: 1
+- model: dcim.frontporttemplate
+  ids:
+    name: "Front Port 2"
+  fields:
+    device_type:
+      ids:
+        model: "Model B"
+    label: "Model B Front Port 2"
+    description: "Front Port template for Model B"
+    type: "other"
+    rear_port:
+      ids:
+        name: "Rear Port 2"
+    rear_port_position: 2
 - model: dcim.rearporttemplate
   ids:
     name: "Rear Port 1"
@@ -4056,6 +4160,17 @@
     label: "Model A Rear Port 1"
     description: "Rear Port template for Model A"
     type: "8p8c"
+    positions: 2
+- model: dcim.rearporttemplate
+  ids:
+    name: "Rear Port 2"
+  fields:
+    device_type:
+      ids:
+        model: "Model B"
+    label: "Model B Rear Port 2"
+    description: "Rear Port template for Model B"
+    type: "other"
     positions: 2
 - model: dcim.devicebaytemplate
   ids:
@@ -4225,7 +4340,7 @@
     tenant:
       ids:
         name: "Tenant B"
-    type: ''
+    type: 'other'
     u_height: 42
     width: 19
 - model: dcim.rackreservation

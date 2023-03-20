@@ -8,10 +8,11 @@ are for populating data into Nautobot only, never the reverse.
 from typing import Any, List, Mapping, Optional
 
 from diffsync import DiffSync
-from pydantic import validator
+from pydantic import validator, root_validator
 import structlog
 
 import nautobot.dcim.models as dcim
+import nautobot.dcim.choices as dcim_choices
 
 from .abstract import (
     ArrayField,
@@ -89,6 +90,31 @@ class Cable(StatusModelMixin, PrimaryModel):
     length: Optional[int]
     length_unit: str
 
+    _type_choices = set(dcim_choices.CableTypeChoices.values())
+
+    @root_validator
+    def invalid_type_to_other(cls, values):  # pylint: disable=no-self-argument,no-self-use
+        """
+        Default invalid `type` fields to use `other` type.
+
+        The `type` field uses a ChoiceSet to limit valid choices. This uses Pydantic's
+        root_validator to clean up the `type` data before loading it into a Model
+        instance. All invalid types will be changed to "other."
+        """
+        cable_type = values["type"]
+        if cable_type not in cls._type_choices:
+            values["type"] = "other"
+            term_a_id = values["termination_a_id"]
+            term_b_id = values["termination_b_id"]
+            logger.warning(
+                f"Encountered a NetBox {cls._modelname}.type that is not valid in this version of Nautobot, will convert it",
+                termination_a_id=term_a_id,
+                termination_b_id=term_b_id,
+                netbox_type=cable_type,
+                nautobot_type="other",
+            )
+        return values
+
 
 class ConsolePort(CableTerminationMixin, ComponentModel):
     """A physical console port within a Device."""
@@ -98,6 +124,8 @@ class ConsolePort(CableTerminationMixin, ComponentModel):
     _nautobot_model = dcim.ConsolePort
 
     type: str
+
+    _type_choices = set(dcim_choices.ConsolePortTypeChoices.values())
 
 
 class ConsolePortTemplate(ComponentTemplateModel):
@@ -109,6 +137,8 @@ class ConsolePortTemplate(ComponentTemplateModel):
 
     type: str
 
+    _type_choices = set(dcim_choices.ConsolePortTypeChoices.values())
+
 
 class ConsoleServerPort(CableTerminationMixin, ComponentModel):
     """A physical port that provides access to console ports."""
@@ -119,6 +149,8 @@ class ConsoleServerPort(CableTerminationMixin, ComponentModel):
 
     type: str
 
+    _type_choices = set(dcim_choices.ConsolePortTypeChoices.values())
+
 
 class ConsoleServerPortTemplate(ComponentTemplateModel):
     """A template for a ConsoleServerPort."""
@@ -128,6 +160,8 @@ class ConsoleServerPortTemplate(ComponentTemplateModel):
     _nautobot_model = dcim.ConsoleServerPortTemplate
 
     type: str
+
+    _type_choices = set(dcim_choices.ConsolePortTypeChoices.values())
 
 
 class Device(ConfigContextModelMixin, StatusModelMixin, PrimaryModel):
@@ -273,6 +307,8 @@ class FrontPort(CableTerminationMixin, ComponentModel):
     rear_port: RearPortRef
     rear_port_position: int
 
+    _type_choices = set(dcim_choices.PortTypeChoices.values())
+
 
 class FrontPortTemplate(ComponentTemplateModel):
     """A template for a FrontPort."""
@@ -284,6 +320,8 @@ class FrontPortTemplate(ComponentTemplateModel):
     type: str
     rear_port: RearPortTemplateRef
     rear_port_position: int
+
+    _type_choices = set(dcim_choices.PortTypeChoices.values())
 
 
 class Interface(BaseInterfaceMixin, CableTerminationMixin, ComponentModel):
@@ -308,6 +346,8 @@ class Interface(BaseInterfaceMixin, CableTerminationMixin, ComponentModel):
     untagged_vlan: Optional[VLANRef]
     tagged_vlans: List[VLANRef] = []
 
+    _type_choices = set(dcim_choices.InterfaceTypeChoices.values())
+
 
 class InterfaceTemplate(ComponentTemplateModel):
     """A template for a physical data interface."""
@@ -318,6 +358,8 @@ class InterfaceTemplate(ComponentTemplateModel):
 
     type: str
     mgmt_only: bool
+
+    _type_choices = set(dcim_choices.InterfaceTypeChoices.values())
 
 
 class InventoryItem(MPTTModelMixin, ComponentModel):
@@ -427,6 +469,8 @@ class PowerOutlet(CableTerminationMixin, ComponentModel):
     power_port: Optional[PowerPortRef]
     feed_leg: str
 
+    _type_choices = set(dcim_choices.PowerOutletTypeChoices.values())
+
 
 class PowerOutletTemplate(ComponentTemplateModel):
     """A template for a PowerOutlet."""
@@ -438,6 +482,8 @@ class PowerOutletTemplate(ComponentTemplateModel):
     type: str
     power_port: Optional[PowerPortTemplateRef]
     feed_leg: str
+
+    _type_choices = set(dcim_choices.PowerOutletTypeChoices.values())
 
 
 class PowerPanel(PrimaryModel):
@@ -469,6 +515,8 @@ class PowerPort(CableTerminationMixin, ComponentModel):
     maximum_draw: Optional[int]
     allocated_draw: Optional[int]
 
+    _type_choices = set(dcim_choices.PowerPortTypeChoices.values())
+
 
 class PowerPortTemplate(ComponentTemplateModel):
     """A template for a PowerPort."""
@@ -480,6 +528,8 @@ class PowerPortTemplate(ComponentTemplateModel):
     type: str
     maximum_draw: Optional[int]
     allocated_draw: Optional[int]
+
+    _type_choices = set(dcim_choices.PowerPortTypeChoices.values())
 
 
 class Rack(StatusModelMixin, PrimaryModel):
@@ -525,6 +575,33 @@ class Rack(StatusModelMixin, PrimaryModel):
     outer_depth: Optional[int]
     outer_unit: str
     comments: str
+
+    _type_choices = set(dcim_choices.RackTypeChoices.values())
+
+    @root_validator
+    def invalid_type_to_other(cls, values):  # pylint: disable=no-self-argument,no-self-use
+        """
+        Default invalid `type` fields to use `other` type.
+
+        The `type` field uses a ChoiceSet to limit valid choices. This uses Pydantic's
+        root_validator to clean up the `type` data before loading it into a Model
+        instance. All invalid types will be changed to "other."
+        """
+        rack_type = values["type"]
+        if rack_type not in cls._type_choices:
+            values["type"] = "other"
+            site = values["site"]
+            tenant = values.get("tenant")
+            name = values["name"]
+            logger.warning(
+                f"Encountered a NetBox {cls._modelname}.type that is not valid in this version of Nautobot, will convert it",
+                site=site,
+                tenant=tenant,
+                name=name,
+                netbox_type=rack_type,
+                nautobot_type="other",
+            )
+        return values
 
 
 class RackGroup(MPTTModelMixin, OrganizationalModel):
@@ -584,6 +661,8 @@ class RearPort(CableTerminationMixin, ComponentModel):
     type: str
     positions: int
 
+    _type_choices = set(dcim_choices.PortTypeChoices.values())
+
 
 class RearPortTemplate(ComponentTemplateModel):
     """A template for a RearPort."""
@@ -594,6 +673,8 @@ class RearPortTemplate(ComponentTemplateModel):
 
     type: str
     positions: int
+
+    _type_choices = set(dcim_choices.PortTypeChoices.values())
 
 
 class Region(MPTTModelMixin, OrganizationalModel):

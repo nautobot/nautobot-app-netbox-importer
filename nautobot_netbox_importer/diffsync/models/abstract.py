@@ -9,19 +9,20 @@ import json
 import uuid
 
 from datetime import date, datetime
-from typing import Any, Mapping, Optional, Tuple, Union
+from typing import Any, Mapping, Optional, Tuple, Union, Iterable
 
 from diffsync import DiffSync, DiffSyncModel
 from django.core.exceptions import ObjectDoesNotExist, ValidationError as DjangoValidationError
 from django.db import models
 from django.db.utils import IntegrityError
 import netaddr
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator, root_validator
 from pydantic.error_wrappers import ValidationError as PydanticValidationError
 import structlog
 
 from nautobot.extras.models import ObjectChange, ChangeLoggedModel
 from nautobot.utilities.utils import serialize_object
+from nautobot.dcim.models import Device
 
 from .references import (
     foreign_key_field,
@@ -546,6 +547,47 @@ class ComponentModel(CustomFieldModelMixin, NautobotBaseModel):
     label: str
     description: str
 
+    _type_choices = None
+
+    @root_validator
+    def invalid_type_to_other(cls, values):  # pylint: disable=no-self-argument,no-self-use
+        """
+        Default invalid `type` fields to use `other` type.
+
+        Almost all Component Models have a `type` field that uses a ChoiceSet to limit valid
+        choices. This uses Pydantic's root_validator to clean up the `type` data before loading
+        it into a Model instance. All invalid types will be changed to "other."
+
+        In order for a Component Model to inherit this behavoir, the Model must define a class
+        attribute named `_type_choices`. The `_type_choices` attribute should be a set of the
+        valid choices for the type per Nautobot.
+
+        If the `_type_choices` attribute is defined, then the Model should also define a `type`
+        field that is required.
+        """
+        if cls._type_choices is None:
+            return values
+        component_type_value = values["type"]
+        if component_type_value not in cls._type_choices:  # pylint: disable=unsupported-membership-test
+            values["type"] = "other"
+            component_name = values["name"]
+            device_name = None
+            device_pk = values["device"]
+            try:
+                device = Device.objects.get(pk=device_pk)
+                device_name = device.name
+            except Device.DoesNotExist:
+                device_name = None
+            logger.warning(
+                f"Encountered a NetBox {cls._modelname}.type that is not valid in this version of Nautobot, will convert it",
+                component_type=cls._modelname,
+                component_name=component_name,
+                device_name_or_pk=device_name or device_pk,
+                netbox_type=component_type_value,
+                nautobot_type="other",
+            )
+        return values
+
 
 class ComponentTemplateModel(CustomFieldModelMixin, NautobotBaseModel):
     """Base class for Device component templates."""
@@ -556,6 +598,39 @@ class ComponentTemplateModel(CustomFieldModelMixin, NautobotBaseModel):
     name: str
     label: str
     description: str
+
+    _type_choices: Optional[Iterable] = None
+
+    @root_validator
+    def invalid_type_to_other(cls, values):  # pylint: disable=no-self-argument,no-self-use
+        """
+        Default invalid `type` fields to use `other` type.
+
+        Almost all Component Template Models have a `type` field that uses a ChoiceSet to limit valid
+        choices. This uses Pydantic's root_validator to clean up the `type` data before loading it
+        into a Model instance. All invalid types will be changed to "other."
+
+        In order for a Component Template Model to inherit this behavoir, the Model must define a class
+        attribute named `_type_choices`. The `_type_choices` attribute should be a set of the
+        valid choices for the type per Nautobot.
+
+        If the `_type_choices` attribute is defined, then the Model should also define a `type`
+        field that is required.
+        """
+        if cls._type_choices is None:
+            return values
+        component_type_value = values["type"]
+        if component_type_value not in cls._type_choices:  # pylint: disable=unsupported-membership-test
+            values["type"] = "other"
+            component_name = values["name"]
+            logger.warning(
+                f"Encountered a NetBox {cls._modelname}.type that is not valid in this version of Nautobot, will convert it",
+                component_type=cls._modelname,
+                component_name=component_name,
+                netbox_type=component_type_value,
+                nautobot_type="other",
+            )
+        return values
 
 
 class OrganizationalModel(  # pylint: disable=too-many-ancestors

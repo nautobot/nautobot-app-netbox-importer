@@ -3918,7 +3918,7 @@
             "_cable_peer_type": null,
             "_cable_peer_id": null,
             "_path": null,
-            "type": "rj-45"
+            "type": "does-not-exist"
         }
     },
     {
@@ -3998,7 +3998,7 @@
             "_cable_peer_type": null,
             "_cable_peer_id": null,
             "_path": null,
-            "type": "rj-45"
+            "type": "does-not-exist"
         }
     },
     {
@@ -4032,7 +4032,7 @@
             "_cable_peer_type": 4,
             "_cable_peer_id": 1,
             "_path": 8,
-            "type": "iec-60320-c8",
+            "type": "does-not-exist",
             "maximum_draw": null,
             "allocated_draw": null
         }
@@ -4050,7 +4050,7 @@
             "_cable_peer_type": 11,
             "_cable_peer_id": 1,
             "_path": 12,
-            "type": "",
+            "type": "iec-60320-c8",
             "maximum_draw": null,
             "allocated_draw": null
         }
@@ -4194,7 +4194,7 @@
             "_cable_peer_type": null,
             "_cable_peer_id": null,
             "_path": null,
-            "type": "nema-5-30r",
+            "type": "does-not-exist",
             "power_port": 6,
             "feed_leg": "A"
         }
@@ -4418,6 +4418,30 @@
         }
     },
     {
+        "model": "dcim.interface",
+        "pk": 10,
+        "fields": {
+            "device": 6,
+            "name": "mgmt10",
+            "label": "Management 10",
+            "description": "",
+            "cable": null,
+            "_cable_peer_type": null,
+            "_cable_peer_id": null,
+            "_path": null,
+            "enabled": true,
+            "mac_address": null,
+            "mtu": null,
+            "mode": "",
+            "_name": "9999999999999999mgmt000010............",
+            "lag": null,
+            "type": "does-not-exist",
+            "mgmt_only": false,
+            "untagged_vlan": null,
+            "tagged_vlans": []
+        }
+    },
+    {
         "model": "dcim.frontport",
         "pk": 1,
         "fields": {
@@ -4497,7 +4521,7 @@
             "cable": null,
             "_cable_peer_type": null,
             "_cable_peer_id": null,
-            "type": "8p8c",
+            "type": "does-not-exist",
             "rear_port": 5,
             "rear_port_position": 1
         }
@@ -4578,7 +4602,7 @@
             "cable": null,
             "_cable_peer_type": null,
             "_cable_peer_id": null,
-            "type": "8p8c",
+            "type": "does-not-exist",
             "positions": 2
         }
     },
@@ -5094,7 +5118,7 @@
             "termination_a_id": 1,
             "termination_b_type": 9,
             "termination_b_id": 2,
-            "type": "",
+            "type": "cat5e",
             "status": "connected",
             "label": "",
             "color": "",
@@ -5116,7 +5140,7 @@
             "termination_a_id": 1,
             "termination_b_type": 10,
             "termination_b_id": 2,
-            "type": "",
+            "type": "cat5e",
             "status": "planned",
             "label": "",
             "color": "",
@@ -5138,7 +5162,7 @@
             "termination_a_id": 1,
             "termination_b_type": 2,
             "termination_b_id": 1,
-            "type": "",
+            "type": "cat5e",
             "status": "connected",
             "label": "",
             "color": "",
@@ -5160,7 +5184,7 @@
             "termination_a_id": 1,
             "termination_b_type": 4,
             "termination_b_id": 2,
-            "type": "",
+            "type": "cat5e",
             "status": "connected",
             "label": "",
             "color": "",
@@ -5182,7 +5206,7 @@
             "termination_a_id": 1,
             "termination_b_type": 3,
             "termination_b_id": 2,
-            "type": "",
+            "type": "cat5e",
             "status": "decommissioning",
             "label": "",
             "color": "",
@@ -5204,7 +5228,7 @@
             "termination_a_id": 1,
             "termination_b_type": 3,
             "termination_b_id": 3,
-            "type": "",
+            "type": "cat5e",
             "status": "connected",
             "label": "",
             "color": "",
@@ -5226,7 +5250,29 @@
             "termination_a_id": 1,
             "termination_b_type": 7,
             "termination_b_id": 3,
-            "type": "",
+            "type": "cat5e",
+            "status": "connected",
+            "label": "Circuit A to Circuit B",
+            "color": "",
+            "length": null,
+            "length_unit": "",
+            "_abs_length": null,
+            "_termination_a_device": null,
+            "_termination_b_device": null
+        }
+    },
+    {
+        "model": "dcim.cable",
+        "pk": 10,
+        "fields": {
+            "created": "2021-03-23",
+            "last_updated": "2021-03-23T18:54:41.484Z",
+            "custom_field_data": {},
+            "termination_a_type": 7,
+            "termination_a_id": 1,
+            "termination_b_type": 7,
+            "termination_b_id": 3,
+            "type": "does-not-exist",
             "status": "connected",
             "label": "Circuit A to Circuit B",
             "color": "",
@@ -5406,6 +5452,18 @@
         }
     },
     {
+        "model": "dcim.consoleporttemplate",
+        "pk": 2,
+        "fields": {
+            "device_type": 3,
+            "name": "Console Port 2",
+            "_name": "Console Port 00000002",
+            "label": "Model B Console Port 2",
+            "description": "Console Port template for Model B",
+            "type": "does-not-exist"
+        }
+    },
+    {
         "model": "dcim.consoleserverporttemplate",
         "pk": 1,
         "fields": {
@@ -5415,6 +5473,18 @@
             "label": "Model A Console Server Port 1",
             "description": "Console Server Port template for Model A",
             "type": "rj-45"
+        }
+    },
+    {
+        "model": "dcim.consoleserverporttemplate",
+        "pk": 2,
+        "fields": {
+            "device_type": 3,
+            "name": "Console Server Port 2",
+            "_name": "Console Server Port 00000002",
+            "label": "Model B Console Server Port 2",
+            "description": "Console Server Port template for Model B",
+            "type": "does-not-exist"
         }
     },
     {
@@ -5432,6 +5502,20 @@
         }
     },
     {
+        "model": "dcim.powerporttemplate",
+        "pk": 2,
+        "fields": {
+            "device_type": 3,
+            "name": "Power Port 2",
+            "_name": "Power Port 00000002",
+            "label": "Model B Power Port 2",
+            "description": "Power Port template for Model B",
+            "type": "does-not-exist",
+            "maximum_draw": 100,
+            "allocated_draw": 10
+        }
+    },
+    {
         "model": "dcim.poweroutlettemplate",
         "pk": 1,
         "fields": {
@@ -5443,6 +5527,20 @@
             "type": "nema-5-30r",
             "power_port": 1,
             "feed_leg": "A"
+        }
+    },
+    {
+        "model": "dcim.poweroutlettemplate",
+        "pk": 2,
+        "fields": {
+            "device_type": 3,
+            "name": "Power Outlet 2",
+            "_name": "Power Outlet 00000002",
+            "label": "Model B Power Outlet 2",
+            "description": "Power Outlet template for Model B",
+            "type": "does-not-exist",
+            "power_port": 2,
+            "feed_leg": "B"
         }
     },
     {
@@ -5472,6 +5570,19 @@
         }
     },
     {
+        "model": "dcim.interfacetemplate",
+        "pk": 3,
+        "fields": {
+            "device_type": 3,
+            "name": "eth1",
+            "label": "Ethernet 1",
+            "description": "Ethernet interface template for Model B",
+            "_name": "9999999999999999eth000001............",
+            "type": "does-not-exist",
+            "mgmt_only": false
+        }
+    },
+    {
         "model": "dcim.frontporttemplate",
         "pk": 1,
         "fields": {
@@ -5486,6 +5597,20 @@
         }
     },
     {
+        "model": "dcim.frontporttemplate",
+        "pk": 2,
+        "fields": {
+            "device_type": 3,
+            "name": "Front Port 2",
+            "_name": "Front Port 00000002",
+            "label": "Model B Front Port 2",
+            "description": "Front Port template for Model B",
+            "type": "does-not-exist",
+            "rear_port": 2,
+            "rear_port_position": 2
+        }
+    },
+    {
         "model": "dcim.rearporttemplate",
         "pk": 1,
         "fields": {
@@ -5495,6 +5620,19 @@
             "label": "Model A Rear Port 1",
             "description": "Rear Port template for Model A",
             "type": "8p8c",
+            "positions": 2
+        }
+    },
+    {
+        "model": "dcim.rearporttemplate",
+        "pk": 2,
+        "fields": {
+            "device_type": 3,
+            "name": "Rear Port 2",
+            "_name": "Rear Port 00000002",
+            "label": "Model B Rear Port 2",
+            "description": "Rear Port template for Model B",
+            "type": "does-not-exist",
             "positions": 2
         }
     },
@@ -5685,7 +5823,7 @@
             "role": 2,
             "serial": "",
             "asset_tag": null,
-            "type": "",
+            "type": "does-not-exist",
             "width": 19,
             "u_height": 42,
             "desc_units": true,
