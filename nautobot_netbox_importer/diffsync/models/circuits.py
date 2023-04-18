@@ -49,6 +49,25 @@ class Provider(PrimaryModel):
     comments: str
 
 
+class ProviderNetwork(PrimaryModel):
+    _modelname = "providernetwork"
+    _attributes = (
+        *PrimaryModel._attributes,
+        "name",
+        "slug",
+        "provider",
+        "description",
+        "comments",
+    )
+    _nautobot_model = circuits.ProviderNetwork
+
+    name: str
+    slug: str
+    provider: ProviderRef
+    description: Optional[str]
+    comments: Optional[str]
+
+
 class CircuitType(OrganizationalModel):
     """Circuits can be organized by their functional role."""
 
