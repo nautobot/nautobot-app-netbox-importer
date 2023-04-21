@@ -50,6 +50,8 @@ class Provider(PrimaryModel):
 
 
 class ProviderNetwork(PrimaryModel):
+    """Service Provider Network Model."""
+
     _modelname = "providernetwork"
     _attributes = (
         *PrimaryModel._attributes,

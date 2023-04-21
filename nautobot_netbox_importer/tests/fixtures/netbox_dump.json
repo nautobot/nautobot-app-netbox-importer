@@ -3739,6 +3739,7 @@
             "name": "ProviderNetwork A",
             "slug": "providernetwork-a",
             "provider": 1,
+            "service_id": "",
             "comments": "",
             "description": ""
         }
