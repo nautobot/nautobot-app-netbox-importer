@@ -442,6 +442,28 @@ class NautobotBaseModel(DjangoBaseModel):
 
     pk: uuid.UUID
 
+    def __init__(self, *args, **kwargs):
+        """Initialize DiffSync instance and warn about unsupported fields."""
+        super().__init__(*args, **kwargs)
+        # Get fields passed from NetBox that have values and ignore internal fields
+        netbox_fields = {key for key, value in kwargs.items() if value and not key.startswith("_")}
+        # Get fields set on the model instance
+        instance_fields = self.__fields_set__
+        # Account for aliases when gettig a diff of fields instantiated on the model
+        field_aliases = {field.alias for field in self.__fields__.values() if field.alias}
+        ignored_fields = netbox_fields - instance_fields - field_aliases
+        if ignored_fields:
+            ignored_fields_with_values = (f"{field}={kwargs[field]}" for field in ignored_fields)
+            ignored_fields_str = ", ".join(ignored_fields_with_values)
+            self.diffsync.logger.warning(
+                "NetBox field not defined for DiffSync Model",
+                comment=(
+                    f"The following fields were defined in NetBox for {self._modelname}, "
+                    f"but they will be ignored by the Nautobot import: {ignored_fields_str}"
+                ),
+                pk=self.pk,
+            )
+
     @validator("pk", pre=True)
     def map_netbox_pk_to_nautobot_pk(cls, value):  # pylint: disable=no-self-argument
         """Deterministically map a NetBox integer primary key to a Nautobot UUID primary key.
