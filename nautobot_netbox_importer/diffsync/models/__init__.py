@@ -7,7 +7,7 @@ are for populating data into Nautobot only, never the reverse.
 
 from .auth import Group, Permission
 from .contenttypes import ContentType
-from .circuits import Provider, Circuit, CircuitTermination, CircuitType
+from .circuits import Provider, ProviderNetwork, Circuit, CircuitTermination, CircuitType
 from .dcim import (
     Cable,
     # TODO do we need CablePath, or just let it be rebuilt automatically?
@@ -117,6 +117,7 @@ __all__ = (
     "PowerPortTemplate",
     "Prefix",
     "Provider",
+    "ProviderNetwork",
     "Rack",
     "RackGroup",
     "RackReservation",

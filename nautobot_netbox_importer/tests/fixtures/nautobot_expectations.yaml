@@ -2552,6 +2552,33 @@
     noc_contact: ''
     portal_url: ''
     slug: provider-b
+- model: circuits.providernetwork
+  ids:
+    name: ProviderNetwork A
+    provider:
+      ids:
+        name: Provider A
+  fields:
+    created: '2021-02-21'
+    custom_field_data: {}
+    name: ProviderNetwork A
+    slug: providernetwork-a
+    comments: ''
+    description: ''
+- model: circuits.providernetwork
+  ids:
+    name: ProviderNetwork B
+    provider:
+      ids:
+        name: Provider B
+  fields:
+    created: '2021-02-21'
+    custom_field_data:
+      b: b
+    name: ProviderNetwork B
+    slug: providernetwork-b
+    comments: 'b'
+    description: 'b provider network'
 - model: circuits.circuittype
   ids:
     name: Circuit Type A

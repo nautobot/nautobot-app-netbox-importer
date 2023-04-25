@@ -3730,6 +3730,36 @@
         }
     },
     {
+        "model": "circuits.providernetwork",
+        "pk": 1,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:53:40.570Z",
+            "custom_field_data": {},
+            "name": "ProviderNetwork A",
+            "slug": "providernetwork-a",
+            "provider": 1,
+            "service_id": "",
+            "comments": "",
+            "description": ""
+        }
+    },
+    {
+        "model": "circuits.providernetwork",
+        "pk": 2,
+        "fields": {
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T23:53:40.570Z",
+            "custom_field_data": {"b": "b"},
+            "name": "ProviderNetwork B",
+            "slug": "providernetwork-b",
+            "provider": 2,
+            "service_id": "pnb",
+            "comments": "b",
+            "description": "b provider network"
+        }
+    },
+    {
         "model": "circuits.circuittype",
         "pk": 1,
         "fields": {

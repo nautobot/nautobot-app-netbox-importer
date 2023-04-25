@@ -38,6 +38,7 @@ class N2NDiffSync(DiffSync):
     circuittermination = n2nmodels.CircuitTermination
     circuittype = n2nmodels.CircuitType
     provider = n2nmodels.Provider
+    providernetwork = n2nmodels.ProviderNetwork
 
     # DCIM
     cable = n2nmodels.Cable
@@ -150,6 +151,7 @@ class N2NDiffSync(DiffSync):
         "clustergroup",
         "cluster",
         "provider",
+        "providernetwork",
         "circuittype",
         "circuit",
         "circuittermination",
