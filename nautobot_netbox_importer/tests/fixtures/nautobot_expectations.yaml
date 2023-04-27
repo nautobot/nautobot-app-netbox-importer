@@ -5033,6 +5033,18 @@
     value: "delta"
   fields:
     weight: 100
+- model: extras.note
+  ids:
+    assigned_object_type:
+      ids:
+        app_label: "dcim"
+        model: "site"
+# TODO    assigned_object_id: 1
+  user:
+    ids:
+      name: admin
+  note: "This is a comment"
+  created: "2021-02-21"
 - model: extras.tag
   ids:
     name: Tag A

@@ -299,6 +299,33 @@ class JobResult(NautobotBaseModel):
     created: Optional[datetime]  # Not synced
 
 
+class Note(ChangeLoggedModelMixin, NautobotBaseModel):
+    """
+    Representation of NetBox JournalEntry to Nautobot Note.
+
+    NetBox fields ignored: kind
+    Nautobot fields not supported by NetBox: user_name, slug
+    """
+
+    _modelname = "note"
+    _attributes = (
+        *ChangeLoggedModelMixin._attributes,
+        "assigned_object_type",
+        "assigned_object_id",
+        "user",
+        "note",
+    )
+    _nautobot_model = extras.Note
+
+    assigned_object_type: ContentTypeRef
+    _assigned_object_id = foreign_key_field("*assigned_object_type")
+    assigned_object_id: _assigned_object_id
+    # NetBox uses `created_by` where Nautobot uses `user`
+    user: UserRef = Field(alias="created_by")
+    # NetBox uses `comments` where Nautobot uses `note`
+    note: str = Field(alias="comments")
+
+
 class Status(ChangeLoggedModelMixin, NautobotBaseModel):
     """Representation of a status value."""
 

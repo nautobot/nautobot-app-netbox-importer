@@ -82,6 +82,7 @@ class N2NDiffSync(DiffSync):
     exporttemplate = n2nmodels.ExportTemplate
     imageattachment = n2nmodels.ImageAttachment
     jobresult = n2nmodels.JobResult
+    note = n2nmodels.Note
     status = n2nmodels.Status
     tag = n2nmodels.Tag
     taggeditem = n2nmodels.TaggedItem
@@ -214,6 +215,8 @@ class N2NDiffSync(DiffSync):
         "taggeditem",
         "imageattachment",
         "jobresult",
+        # Notes will have unknown dependencies
+        "note",
     )
 
     def __init__(self, *args, verbosity: int = 0, **kwargs):

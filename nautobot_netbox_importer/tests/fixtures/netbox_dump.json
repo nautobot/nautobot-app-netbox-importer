@@ -6495,6 +6495,19 @@
         }
     },
     {
+        "model": "extras.note",
+        "pk": 1,
+        "fields": {
+            "assigned_object_type": 36,
+            "assigned_object_id": 1,
+            "created_by": 1,
+            "kind": "info",
+            "comments": "This is a comment",
+            "created": "2021-02-21",
+            "last_updated": "2021-02-21T22:53:21.432Z"
+        }
+    },
+    {
         "model": "extras.tag",
         "pk": 1,
         "fields": {
