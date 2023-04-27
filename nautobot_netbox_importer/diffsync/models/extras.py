@@ -325,6 +325,12 @@ class Note(ChangeLoggedModelMixin, NautobotBaseModel):
     # NetBox uses `comments` where Nautobot uses `note`
     note: str = Field(alias="comments")
 
+    class Config:
+        """Pydantic configuration of the Note class."""
+
+        # Allow both "url" and "target_url" as property setters
+        allow_population_by_field_name = True
+
 
 class Status(ChangeLoggedModelMixin, NautobotBaseModel):
     """Representation of a status value."""
