@@ -339,6 +339,8 @@ class Status(ChangeLoggedModelMixin, NautobotBaseModel):
     _attributes = ("slug", "name", "color", "description", *ChangeLoggedModelMixin._attributes)  # TODO content_types?
     _nautobot_model = extras.Status
 
+    _ignored_fields = NautobotBaseModel._ignored_fields | {"destination_for_associations", "source_for_associations"}
+
     slug: str
     name: str
     color: str
