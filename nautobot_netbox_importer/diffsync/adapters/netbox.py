@@ -17,10 +17,59 @@ class NetBox210DiffSync(N2NDiffSync):
 
     logger = structlog.get_logger()
 
+    _unsupported_fields = {}
+
     def __init__(self, *args, source_data=None, **kwargs):
         """Store the provided source_data for use when load() is called later."""
         self.source_data = source_data
         super().__init__(*args, **kwargs)
+
+    @staticmethod
+    def _get_ignored_fields(netbox_data, nautobot_instance):
+        # Get fields passed from NetBox that have values and ignore internal fields
+        netbox_fields = {key for key, value in netbox_data.items() if value and not key.startswith("_")}
+        # Get fields set on the model instance
+        instance_fields = nautobot_instance.__fields_set__
+        # Account for aliases when gettig a diff of fields instantiated on the model
+        field_aliases = {field.alias for field in nautobot_instance.__fields__.values() if field.alias != field.name}
+        return netbox_fields - instance_fields - field_aliases - nautobot_instance._ignored_fields
+
+    def _log_ignored_fields_details(self, netbox_data, nautobot_instance, model_name, ignored_fields):
+        ignored_fields_with_values = (f"{field}={netbox_data[field]}" for field in ignored_fields)
+        ignored_fields_data_str = ", ".join(ignored_fields_with_values)
+        self.logger.debug(
+            "NetBox field not defined for DiffSync Model",
+            comment=(
+                f"The following fields were defined in NetBox for {model_name}, "
+                f"but they will be ignored by the Nautobot import: {ignored_fields_data_str}"
+            ),
+            pk=nautobot_instance.pk,
+        )
+
+    def _log_ignored_fields_info(self, model_name, ignored_fields):
+        log_message = (
+            f"The following fields are defined in NetBox for {model_name}, "
+            "but are not supported by this importer: {}"
+        )
+        # first time instance has ignored fields
+        if model_name not in self.__class__._unsupported_fields:
+            ignored_fields_str = ", ".join(ignored_fields)
+            self.logger.warning(log_message.format(ignored_fields_str))
+            self.__class__._unsupported_fields[model_name] = ignored_fields
+        # subsequent instances might have newly ignored fields
+        else:
+            unlogged_fields = ignored_fields - self.__class__._unsupported_fields[model_name]
+            if unlogged_fields:
+                unlogged_ignored_fields_str = ", ".join(unlogged_fields)
+                self.logger.warning(log_message.format(unlogged_ignored_fields_str))
+                self.__class__._unsupported_fields[model_name].update(unlogged_fields)
+
+    def _log_ignored_fields(self, netbox_data, nautobot_instance):
+        ignored_fields = self._get_ignored_fields(netbox_data, nautobot_instance)
+        if ignored_fields:
+            model_name = nautobot_instance._modelname
+            self._log_ignored_fields_details(netbox_data, nautobot_instance, model_name, ignored_fields)
+            self._log_ignored_fields_info(model_name, ignored_fields)
 
     def load_record(self, diffsync_model, record):  # pylint: disable=too-many-branches,too-many-statements
         """Instantiate the given model class from the given record."""
@@ -133,7 +182,9 @@ class NetBox210DiffSync(N2NDiffSync):
             if data["vcpus"] is not None:
                 data["vcpus"] = int(float(data["vcpus"]))
 
-        return self.make_model(diffsync_model, data)
+        instance = self.make_model(diffsync_model, data)
+        self._log_ignored_fields(data, instance)
+        return instance
 
     def load(self):
         """Load records from the provided source_data into DiffSync."""

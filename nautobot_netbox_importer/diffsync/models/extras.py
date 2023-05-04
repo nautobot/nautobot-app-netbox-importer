@@ -120,6 +120,8 @@ class CustomField(NautobotBaseModel):
     # Instead we store it in "actual_required" and fix it up only afterwards.
     actual_required: Optional[bool]
 
+    _ignored_fields = {"choices"}
+
     @classmethod
     def special_clean(cls, diffsync, ids, attrs):
         """Special-case handling for the "default" attribute."""
@@ -338,8 +340,6 @@ class Status(ChangeLoggedModelMixin, NautobotBaseModel):
     _modelname = "status"
     _attributes = ("slug", "name", "color", "description", *ChangeLoggedModelMixin._attributes)  # TODO content_types?
     _nautobot_model = extras.Status
-
-    _ignored_fields = NautobotBaseModel._ignored_fields | {"destination_for_associations", "source_for_associations"}
 
     slug: str
     name: str

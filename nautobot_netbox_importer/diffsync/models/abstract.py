@@ -65,7 +65,7 @@ class DjangoBaseModel(DiffSyncModel):
 
     # known fields in NetBox that should be ignored by the importer.
     # this is only for logging information, is not critical for the importer.
-    _ignored_fields = ({"id", "choices"})
+    _ignored_fields = {"id"}
 
     @classmethod
     def __init_subclass__(cls):
