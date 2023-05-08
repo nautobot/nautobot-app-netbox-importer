@@ -8,8 +8,6 @@ from typing import Dict, Set
 from diffsync.enum import DiffSyncModelFlags
 import structlog
 
-from nautobot.core.models import BaseModel
-
 from nautobot_netbox_importer.diffsync.models.abstract import NautobotBaseModel
 from nautobot_netbox_importer.diffsync.models.validation import netbox_pk_to_nautobot_pk
 from nautobot_netbox_importer.utils import ProgressBar
@@ -34,7 +32,7 @@ class NetBox210DiffSync(N2NDiffSync):
         return self.__class__._unsupported_fields  # pylint: disable=protected-access
 
     @staticmethod
-    def _get_ignored_fields(netbox_data: Dict, nautobot_instance: BaseModel) -> Set[str]:
+    def _get_ignored_fields(netbox_data: Dict, nautobot_instance: NautobotBaseModel) -> Set[str]:
         """
         Get fields from NetBox JSON that were not handled by the importer.
 
@@ -42,7 +40,7 @@ class NetBox210DiffSync(N2NDiffSync):
 
         Args:
             netbox_data: The NetBox data for a particular database entry.
-            nautobot_instance: The Nautobot ORM instance created for `netbox_data`.
+            nautobot_instance: The Nautobot DiffSync instance created for `netbox_data`.
 
         Returns:
             set: The NetBox field names ignored by the importer.
@@ -58,7 +56,7 @@ class NetBox210DiffSync(N2NDiffSync):
     def _log_ignored_fields_details(
         self,
         netbox_data: Dict,
-        nautobot_instance: BaseModel,
+        nautobot_instance: NautobotBaseModel,
         model_name: str,
         ignored_fields: Set[str],
     ) -> None:
@@ -72,7 +70,7 @@ class NetBox210DiffSync(N2NDiffSync):
 
         Args:
             netbox_data: The NetBox data for a particular database entry.
-            nautobot_instance: The Nautobot ORM instance created for `netbox_data`.
+            nautobot_instance: The Nautobot DiffSync instance created for `netbox_data`.
             model_name: The DiffSync modelname for the NetBox entry.
             ignored_fields: The field names in `netbox_data` that were ignored.
         """
@@ -102,7 +100,7 @@ class NetBox210DiffSync(N2NDiffSync):
 
         Args:
             netbox_data: The NetBox data for a particular database entry.
-            nautobot_instance: The Nautobot ORM instance created for `netbox_data`.
+            nautobot_instance: The Nautobot DiffSync instance created for `netbox_data`.
             model_name: The DiffSync modelname for the NetBox entry.
             ignored_fields: The field names in `netbox_data` that were ignored.
         """
@@ -126,14 +124,14 @@ class NetBox210DiffSync(N2NDiffSync):
     def _log_ignored_fields(
         self,
         netbox_data: Dict,
-        nautobot_instance: BaseModel,
+        nautobot_instance: NautobotBaseModel,
     ) -> None:
         """
         Convenience method for handling logging of ignored fields.
 
         Args:
             netbox_data: The NetBox data for a particular database entry.
-            nautobot_instance: The Nautobot ORM instance created for `netbox_data`.
+            nautobot_instance: The Nautobot DiffSync instance created for `netbox_data`.
         """
         ignored_fields = self._get_ignored_fields(netbox_data, nautobot_instance)
         if ignored_fields:
