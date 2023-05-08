@@ -1,5 +1,6 @@
 """Test cases for NetBox adapter."""
-from unittest import TestCase, mock
+import sys
+from unittest import TestCase, skipIf, mock
 
 from nautobot_netbox_importer.diffsync.adapters import netbox
 
@@ -73,6 +74,7 @@ class TestNetBoxAdapterMockInit(TestCase):
         actual = self.mock_adapter._get_ignored_fields(netbox_data, nautobot_instance)
         self.assertEqual(actual, {"b", "c"})
 
+    @skipIf(sys.version.startswith("3.7"), "mock_calls has different return signature")
     @mock.patch.object(netbox, "NautobotBaseModel", autospec=True)
     def test_log_ignored_fields_details(self, mock_nautobot_model):
         netbox_data = {"a": 1, "b": 2, "c": 3}
@@ -91,6 +93,7 @@ class TestNetBoxAdapterMockInit(TestCase):
             self.assertIn(model_name, comment)
             self.assertEqual(pk, nautobot_instance.pk)
 
+    @skipIf(sys.version.startswith("3.7"), "mock_calls has different return signature")
     def test_log_ignored_fields_info_first_time_log_warning(self):
         model_name = "mockmodel"
         ignored_fields = {"a", "b"}
@@ -103,6 +106,7 @@ class TestNetBoxAdapterMockInit(TestCase):
             self.assertTrue("a, b" in warning_message or "b, a" in warning_message)
             self.assertEqual(self.mock_adapter.unsupported_fields, {model_name: ignored_fields})
 
+    @skipIf(sys.version.startswith("3.7"), "mock_calls has different return signature")
     def test_log_ignored_fields_info_subsequent_time_log_warning(self):
         model_name = "mockmodel"
         existing_field = "cccccccccc"
