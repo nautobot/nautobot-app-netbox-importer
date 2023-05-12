@@ -79,7 +79,7 @@ class NetBox210DiffSync(N2NDiffSync):
         self.logger.debug(
             "NetBox field not defined for DiffSync Model",
             comment=(
-                f"The following fields were defined in NetBox for {model_name}, "
+                f"The following fields were defined in NetBox for {model_name} - {str(nautobot_instance)}, "
                 f"but they will be ignored by the Nautobot import: {ignored_fields_data_str}"
             ),
             pk=nautobot_instance.pk,
