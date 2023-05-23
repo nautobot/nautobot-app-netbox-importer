@@ -120,6 +120,8 @@ class CustomField(NautobotBaseModel):
     # Instead we store it in "actual_required" and fix it up only afterwards.
     actual_required: Optional[bool]
 
+    _ignored_fields = {"choices"} | NautobotBaseModel._ignored_fields
+
     @classmethod
     def special_clean(cls, diffsync, ids, attrs):
         """Special-case handling for the "default" attribute."""

@@ -63,6 +63,15 @@ class DjangoBaseModel(DiffSyncModel):
 
     pk: Union[uuid.UUID, int]
 
+    # known fields in NetBox that should be ignored by the importer.
+    # this is only for logging information, is not critical for the importer.
+    _ignored_fields = {"id"}
+
+    @property
+    def ignored_fields(self):
+        """Public interface for accessing class attr `_ignored_fields`."""
+        return self.__class__._ignored_fields  # pylint: disable=protected-access
+
     @classmethod
     def __init_subclass__(cls):
         """Automatically construct cls._fk_associations."""
