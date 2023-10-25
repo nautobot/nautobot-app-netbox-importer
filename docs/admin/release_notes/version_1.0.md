@@ -1,30 +1,48 @@
 # v1.0 Release Notes
 
+!!! warning "Developer Note - Remove Me!"
+    Guiding Principles:
+
+    - Changelogs are for humans, not machines.
+    - There should be an entry for every single version.
+    - The same types of changes should be grouped.
+    - Versions and sections should be linkable.
+    - The latest version comes first.
+    - The release date of each version is displayed.
+    - Mention whether you follow Semantic Versioning.
+
+    Types of changes:
+
+    - `Added` for new features.
+    - `Changed` for changes in existing functionality.
+    - `Deprecated` for soon-to-be removed features.
+    - `Removed` for now removed features.
+    - `Fixed` for any bug fixes.
+    - `Security` in case of vulnerabilities.
+
+
 This document describes all new features and changes in the release `1.0`. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Release Overview
 
-## v1.0.1 (2021-03-09)
+- Major features or milestones
+- Achieved in this `x.y` release
+- Changes to compatibility with Nautobot and/or other plugins, libraries etc.
+
+## [v1.0.1] - 2021-09-08
 
 ### Added
 
-- `#3` - Data exports from NetBox v2.10.5 are now permitted for importing.
-
 ### Changed
-
-- Improved logging of messages when various errors are encountered and handled.
-- Added more attributes to Device `_identifiers` list to further ensure uniqueness of individual Device records.
 
 ### Fixed
 
-- `#2` - `ObjectNotFound` is now caught when handling `GenericForeignKey` fields
-- `#4` - Django `ValidationError` is now caught when creating/updating Nautobot data
-- `#5` - Pydantic `ValidationError` is now caught when constructing internal data models
-- `Device`s with no specified `name` can now be imported successfully.
-- Device component templates are now imported _after_ `Device`s so as to avoid encountering errors when components are unexpectedly created from the templates.
-- `VRF`s with no specified `rd` can now be imported successfully.
-- `#8` - Fixed errors in `Service` and `PowerOutletTemplate` model definitions that prevented them from being imported.
+- [#123](https://github.com/nautobot/nautobot-plugin-netbox-importer/issues/123) Fixed Tag filtering not working in job launch form
 
-## v1.0.0 (2021-02-24)
+## [v1.0.0] - 2021-08-03
 
-Initial public release
+### Added
+
+### Changed
+
+### Fixed

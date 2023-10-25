@@ -1,0 +1,35 @@
+{
+    "cookiecutter": {
+        "codeowner_github_usernames": "@smith-ntc",
+        "full_name": "Network to Code, LLC",
+        "email": "opensource@networktocode.com",
+        "github_org": "nautobot",
+        "plugin_name": "nautobot_netbox_importer",
+        "verbose_name": "Nautobot NetBox Importer",
+        "plugin_slug": "nautobot-netbox-importer",
+        "project_slug": "nautobot-plugin-netbox-importer",
+        "repo_url": "https://github.com/nautobot/nautobot-plugin-netbox-importer",
+        "base_url": "netbox-importer",
+        "min_nautobot_version": "1.6.0",
+        "max_nautobot_version": "1.9999",
+        "camel_name": "NautobotNetboxImporter",
+        "project_short_description": "Data importer from NetBox 2.10.x to Nautobot.",
+        "model_class_name": "None",
+        "open_source_license": "Apache-2.0",
+        "docs_base_url": "https://docs.nautobot.com",
+        "docs_app_url": "https://docs.nautobot.com/projects/netbox-importer/en/latest",
+        "_drift_manager": {
+            "template": "https://github.com/nautobot/cookiecutter-nautobot-app.git",
+            "template_dir": "nautobot-app",
+            "template_ref": "develop",
+            "cookie_dir": "",
+            "branch_prefix": "drift-manager",
+            "pull_request_strategy": "create",
+            "post_actions": [
+                "black"
+            ],
+            "draft": true,
+            "baked_commit_ref": "8049fdf6443472afd47288205d8614c89d7b2c72"
+        }
+    }
+}

@@ -1,6 +1,6 @@
 ---
 dev_addr: "127.0.0.1:8001"
-edit_uri: "edit/develop/docs"
+edit_uri: "edit/main/nautobot-plugin-netbox-importer/docs"
 site_dir: "nautobot_netbox_importer/static/nautobot_netbox_importer/docs"
 site_name: "Nautobot NetBox Importer Documentation"
 site_url: "https://docs.nautobot.com/projects/netbox-importer/en/latest/"
@@ -14,13 +14,17 @@ theme:
     - "django"
     - "yaml"
   features:
-    - "navigation.tracking"
+    - "content.action.edit"
+    - "content.action.view"
+    - "content.code.copy"
+    - "navigation.footer"
+    - "navigation.indexes"
     - "navigation.tabs"
     - "navigation.tabs.sticky"
-    - "search.suggest"
+    - "navigation.tracking"
     - "search.highlight"
     - "search.share"
-    - "navigation.indexes"
+    - "search.suggest"
   favicon: "assets/favicon.ico"
   logo: "assets/nautobot_logo.svg"
   palette:
@@ -99,6 +103,7 @@ nav:
       - Getting Started: "user/app_getting_started.md"
       - Using the App: "user/app_use_cases.md"
       - Frequently Asked Questions: "user/faq.md"
+      - External Interactions: "user/external_interactions.md"
   - Administrator Guide:
       - Install and Configure: "admin/install.md"
       - Upgrade: "admin/upgrade.md"
@@ -106,16 +111,14 @@ nav:
       - Compatibility Matrix: "admin/compatibility_matrix.md"
       - Release Notes:
           - "admin/release_notes/index.md"
-          - v1.4: "admin/release_notes/version_1.4.md"
-          - v1.3: "admin/release_notes/version_1.3.md"
-          - v1.2: "admin/release_notes/version_1.2.md"
-          - v1.1: "admin/release_notes/version_1.1.md"
           - v1.0: "admin/release_notes/version_1.0.md"
   - Developer Guide:
       - Extending the App: "dev/extending.md"
       - Contributing to the App: "dev/contributing.md"
       - Development Environment: "dev/dev_environment.md"
+      - Architecture Decision Records: "dev/arch_decision.md"
       - Code Reference:
           - "dev/code_reference/index.md"
-          - Diffsync: "dev/code_reference/diffsync.md"
+          - Package: "dev/code_reference/package.md"
+          - API: "dev/code_reference/api.md"
   - Nautobot Docs Home ↗︎: "https://docs.nautobot.com"

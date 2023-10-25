@@ -1,28 +1,23 @@
-"""Plugin declaration for nautobot-netbox-importer."""
-
-try:
-    from importlib import metadata
-except ImportError:
-    # Python version < 3.8
-    import importlib_metadata as metadata
-
-from nautobot.extras.plugins import PluginConfig
+"""Plugin declaration for nautobot_netbox_importer."""
+# Metadata is inherited from Nautobot. If not including Nautobot in the environment, this should be added
+from importlib import metadata
 
 __version__ = metadata.version(__name__)
 
+from nautobot.extras.plugins import NautobotAppConfig
 
-class NautobotNetboxImporterConfig(PluginConfig):
-    """Plugin configuration for the nautobot-netbox-importer plugin."""
+
+class NautobotNetboxImporterConfig(NautobotAppConfig):
+    """Plugin configuration for the nautobot_netbox_importer plugin."""
 
     name = "nautobot_netbox_importer"
     verbose_name = "Nautobot NetBox Importer"
     version = __version__
     author = "Network to Code, LLC"
-    author_email = "opensource@networktocode.com"
-    description = "Data importer from NetBox 2.10.x to Nautobot."
+    description = "Data importer from NetBox 2.10.x to Nautobot.."
     base_url = "netbox-importer"
     required_settings = []
-    min_version = "1.4.0"
+    min_version = "1.6.0"
     max_version = "1.9999"
     default_settings = {}
     caching_config = {}

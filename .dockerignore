@@ -1,17 +1,16 @@
-.git
-dist
-dumps
-**/__pycache__/
-
 # Docker related
 development/Dockerfile
 development/docker-compose*.yml
 development/*.env
 *.env
+environments/
 
 # Python
 **/*.pyc
 **/*.pyo
+**/__pycache__/
+**/.pytest_cache/
+**/.venv/
 
 
 # Other
@@ -23,3 +22,6 @@ FAQ.md
 tasks.py
 LICENSE
 **/*.log
+**/.vscode/
+invoke*.yml
+tasks.py
