@@ -93,7 +93,8 @@ class Cable(StatusModelMixin, PrimaryModel):
     _type_choices = set(dcim_choices.CableTypeChoices.values())
 
     @root_validator
-    def invalid_type_to_other(cls, values):  # pylint: disable=no-self-argument,no-self-use
+    @classmethod
+    def invalid_type_to_other(cls, values):
         """
         Default invalid `type` fields to use `other` type.
 
@@ -276,14 +277,16 @@ class DeviceType(PrimaryModel):
     comments: str
 
     @validator("front_image", pre=True)
-    def front_imagefieldfile_to_str(cls, value):  # pylint: disable=no-self-argument,no-self-use
+    @classmethod
+    def front_imagefieldfile_to_str(cls, value):
         """Convert ImageFieldFile objects to strings."""
         if hasattr(value, "name"):
             value = value.name
         return value
 
     @validator("rear_image", pre=True)
-    def rear_imagefieldfile_to_str(cls, value):  # pylint: disable=no-self-argument,no-self-use
+    @classmethod
+    def rear_imagefieldfile_to_str(cls, value):
         """Convert ImageFieldFile objects to strings."""
         if hasattr(value, "name"):
             value = value.name
@@ -579,7 +582,8 @@ class Rack(StatusModelMixin, PrimaryModel):
     _type_choices = set(dcim_choices.RackTypeChoices.values())
 
     @root_validator
-    def invalid_type_to_other(cls, values):  # pylint: disable=no-self-argument,no-self-use
+    @classmethod
+    def invalid_type_to_other(cls, values):
         """
         Default invalid `type` fields to use `other` type.
 

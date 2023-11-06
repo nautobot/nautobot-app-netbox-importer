@@ -85,7 +85,7 @@ def enable_logging(verbosity=0, color=None):
         colorama.init()
     else:
         # Force colors or non-colors, as specified
-        colorama.init(strip=(not color))
+        colorama.init(strip=not color)
 
     structlog.configure(
         processors=[

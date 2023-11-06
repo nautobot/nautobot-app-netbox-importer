@@ -1,7 +1,7 @@
 """Abstract base DiffSync adapter class for code shared by NetBox and Nautobot adapters."""
 
 from collections import defaultdict
-from typing import Callable, MutableMapping, Optional, Text, Type, Union
+from typing import Callable, MutableMapping, Optional, Type, Union
 from uuid import UUID
 
 from diffsync import Diff, DiffSync, DiffSyncFlags, DiffSyncModel
@@ -301,7 +301,7 @@ class N2NDiffSync(DiffSync):
         source: DiffSync,
         diff_class: Type[Diff] = Diff,
         flags: DiffSyncFlags = DiffSyncFlags.NONE,
-        callback: Optional[Callable[[Text, int, int], None]] = None,
+        callback: Optional[Callable[[str, int, int], None]] = None,
         diff: Optional[Diff] = None,
     ):
         """Synchronize data from the given source DiffSync object into the current DiffSync object."""
