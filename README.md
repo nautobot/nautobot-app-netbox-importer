@@ -1,15 +1,5 @@
 # Nautobot NetBox Importer
 
-<!--
-Developer Note - Remove Me!
-
-The README will have certain links/images broken until the PR is merged into `develop`. Update the GitHub links with whichever branch you're using (main etc.) if different.
-
-The logo of the project is a placeholder (docs/images/icon-nautobot-netbox-importer.png) - please replace it with your app icon, making sure it's at least 200x200px and has a transparent background!
-
-To avoid extra work and temporary links, make sure that publishing docs (or merging a PR) is done at the same time as setting up the docs site on RTD, then test everything.
--->
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/docs/images/icon-nautobot-netbox-importer.png" class="logo" height="200px">
   <br>
@@ -23,25 +13,16 @@ To avoid extra work and temporary links, make sure that publishing docs (or merg
 
 ## Overview
 
-> Developer Note: Add a long (2-3 paragraphs) description of what the App does, what problems it solves, what functionality it adds to Nautobot, what external systems it works with etc.
+This application's sole purpose is to facilitate data migration from NetBox to Nautobot, performing the proper data conversion through the process.
 
 ### Screenshots
 
-> Developer Note: Add any representative screenshots of the App in action. These images should also be added to the `docs/user/app_use_cases.md` section.
-
-> Developer Note: Place the files in the `docs/images/` folder and link them using only full URLs from GitHub, for example: `![Overview](https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/docs/images/plugin-overview.png)`. This absolute static linking is required to ensure the README renders properly in GitHub, the docs site, and any other external sites like PyPI.
-
 More screenshots can be found in the [Using the App](https://docs.nautobot.com/projects/netbox-importer/en/latest/user/app_use_cases/) page in the documentation. Here's a quick overview of some of the plugin's added functionality:
 
-![](https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/docs/images/placeholder.png)
+![Screenshot of the start of synchronization](https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/docs/images/screenshot1.png)
 
-## Try it out!
+![Screenshot of the completed process](https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/docs/images/screenshot2.png)
 
-> Developer Note: Only keep this section if appropriate. Update link to correct sandbox.
-
-This App is installed in the Nautobot Community Sandbox found over at [demo.nautobot.com](https://demo.nautobot.com/)!
-
-> For a full list of all the available always-on sandbox environments, head over to the main page on [networktocode.com](https://www.networktocode.com/nautobot/sandbox-environments/).
 
 ## Documentation
 

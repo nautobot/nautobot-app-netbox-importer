@@ -11,3 +11,5 @@ rules:
 ignore: |
   .venv/
   compose.yaml
+  *nautobot_expectations.yaml
+  *nautobot_objectchange_expectations.yaml
