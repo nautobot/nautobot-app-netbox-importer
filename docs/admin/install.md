@@ -12,10 +12,7 @@ Here you will find detailed instructions on how to **install** and **configure**
 
 ### Access Requirements
 
-!!! warning "Developer Note - Remove Me!"
-    What external systems (if any) it needs access to in order to work.
-
-TBD: Describe NetBox access requirement.
+The plugin does not directly communicate with NetBox, data is imported by first running a Django data dump command from the CLI of the NetBox server then providing the JSON export to a management command on the Nautobot server. Detailed instructions are located on the [Using the App](../user/app_use_cases.md) page.
 
 ## Install Guide
 
