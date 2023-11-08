@@ -22,3 +22,5 @@ $ nautobot-server help
 ## What are the next steps?
 
 Next, it's time to pull information from the original Netbox database, and convert into JSON format to import into Nautobot.
+
+You can check out the [Use Cases](app_use_cases.md) section for more examples.

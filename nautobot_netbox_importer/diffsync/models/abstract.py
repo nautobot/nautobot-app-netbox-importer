@@ -205,7 +205,7 @@ class DjangoBaseModel(DiffSyncModel):
         cls, diffsync: DiffSync, nautobot_model, ids: Mapping, attrs: Mapping, multivalue_attrs: Mapping
     ):
         """Helper method to create() - actually populate Nautobot data."""
-        model_data = dict(**ids, **attrs, **multivalue_attrs)
+        model_data = {**ids, **attrs, **multivalue_attrs}
         try:
             # Custom fields are a special case - because in NetBox the values defined on a particular record are
             # only loosely coupled to the CustomField definition itself, it's quite possible that these two may be
@@ -321,7 +321,7 @@ class DjangoBaseModel(DiffSyncModel):
                     action="create",
                     exception=str(exc),
                     model=cls.get_type(),
-                    model_data=dict(**diffsync_ids, **diffsync_attrs),
+                    model_data={**diffsync_ids, **diffsync_attrs},
                 )
         return None
 
@@ -330,7 +330,7 @@ class DjangoBaseModel(DiffSyncModel):
         diffsync: DiffSync, nautobot_model, ids: Mapping, attrs: Mapping, multivalue_attrs: Mapping
     ):
         """Helper method to update() - actually update Nautobot data."""
-        model_data = dict(**ids, **attrs, **multivalue_attrs)
+        model_data = {**ids, **attrs, **multivalue_attrs}
         try:
             record = nautobot_model.objects.get(**ids)
             custom_field_data = attrs.pop("custom_field_data", None)
@@ -425,7 +425,7 @@ class DjangoBaseModel(DiffSyncModel):
                     action="update",
                     exception=str(exc),
                     model=self.get_type(),
-                    model_data=dict(**diffsync_ids, **diffsync_attrs),
+                    model_data={**diffsync_ids, **diffsync_attrs},
                 )
 
         return None
@@ -475,7 +475,8 @@ class BaseInterfaceMixin(BaseModel):
     mode: str
 
     @validator("mac_address", pre=True)
-    def eui_to_str(cls, value):  # pylint: disable=no-self-argument,no-self-use
+    @classmethod
+    def eui_to_str(cls, value):
         """Nautobot reports MAC addresses as netaddr.EUI objects; coerce them to strings."""
         if isinstance(value, netaddr.EUI):
             value = str(value)
@@ -500,7 +501,8 @@ class ChangeLoggedModelMixin(BaseModel):
     last_updated: Optional[datetime]
 
     @validator("created", pre=True)
-    def check_created(cls, value):  # pylint: disable=no-self-argument,no-self-use
+    @classmethod
+    def check_created(cls, value):
         """Pre-cleaning: in JSON dump from Django, date string is formatted differently than Pydantic expects."""
         if isinstance(value, str) and value.endswith("T00:00:00Z"):
             value = value.replace("T00:00:00Z", "")
@@ -559,7 +561,8 @@ class ComponentModel(CustomFieldModelMixin, NautobotBaseModel):
     _type_choices = None
 
     @root_validator
-    def invalid_type_to_other(cls, values):  # pylint: disable=no-self-argument,no-self-use
+    @classmethod
+    def invalid_type_to_other(cls, values):
         """
         Default invalid `type` fields to use `other` type.
 
@@ -611,7 +614,8 @@ class ComponentTemplateModel(CustomFieldModelMixin, NautobotBaseModel):
     _type_choices: Optional[Iterable] = None
 
     @root_validator
-    def invalid_type_to_other(cls, values):  # pylint: disable=no-self-argument,no-self-use
+    @classmethod
+    def invalid_type_to_other(cls, values):
         """
         Default invalid `type` fields to use `other` type.
 

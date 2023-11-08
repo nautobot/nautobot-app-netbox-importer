@@ -111,7 +111,8 @@ class Circuit(StatusModelMixin, PrimaryModel):
     comments: str
 
     @validator("install_date", pre=True)
-    def check_install_date(cls, value):  # pylint: disable=no-self-argument,no-self-use
+    @classmethod
+    def check_install_date(cls, value):
         """Pre-cleaning: in JSON dump from Django, date string is formatted differently than Pydantic expects."""
         if isinstance(value, str) and value.endswith("T00:00:00Z"):
             value = value.replace("T00:00:00Z", "")

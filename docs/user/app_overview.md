@@ -20,5 +20,3 @@ NetBox users looking to migrate their dataset into Nautobot.
 ## Nautobot Features Used
 
 This is a special plugin that doesn't add any Nautobot UI or API integration and focuses the data ingestion into the database.
-
-

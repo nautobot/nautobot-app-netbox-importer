@@ -2,19 +2,22 @@
 
 Here you will find detailed instructions on how to **install** and **configure** the App within your Nautobot environment.
 
-
 ## Prerequisites
 
-- The plugin is compatible with Nautobot 1.0.0b3 and later and can handle JSON data exported from NetBox 2.10.3 thru 2.10.8  at present. 
+- The plugin is compatible with Nautobot 1.6.0 and higher.
+- Databases supported: PostgreSQL, MySQL
 
 !!! note
     Please check the [dedicated page](compatibility_matrix.md) for a full compatibility matrix and the deprecation policy.
 
+### Access Requirements
+
+The plugin does not directly communicate with NetBox, data is imported by first running a Django data dump command from the CLI of the NetBox server then providing the JSON export to a management command on the Nautobot server. Detailed instructions are located on the [Using the App](../user/app_use_cases.md) page.
 
 ## Install Guide
 
 !!! note
-    Plugins can be installed manually or using Python's `pip`. See the [nautobot documentation](https://docs.nautobot.com/projects/core/en/stable/plugins/#install-the-package) for more details. The pip package name for this plugin is [`nautobot-netbox-importer`](https://pypi.org/project/nautobot-netbox-importer/).
+    Plugins can be installed manually or using Python's `pip`. See the [Nautobot documentation](https://nautobot.readthedocs.io/en/latest/plugins/#install-the-package) for more details. The pip package name for this plugin is [`nautobot-netbox-importer`](https://pypi.org/project/nautobot-netbox-importer/).
 
 The plugin is available as a Python package via PyPI and can be installed with `pip`:
 
@@ -53,3 +56,7 @@ Then restart (if necessary) the Nautobot services which may include:
 ```shell
 sudo systemctl restart nautobot nautobot-worker nautobot-scheduler
 ```
+
+## App Configuration
+
+There is no specific configuration required for the App to work.

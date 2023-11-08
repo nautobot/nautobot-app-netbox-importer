@@ -232,7 +232,8 @@ class ImageAttachment(NautobotBaseModel):
     created: datetime
 
     @validator("image", pre=True)
-    def imagefieldfile_to_str(cls, value):  # pylint: disable=no-self-argument,no-self-use
+    @classmethod
+    def imagefieldfile_to_str(cls, value):
         """Convert ImageFieldFile objects to strings."""
         if hasattr(value, "name"):
             value = value.name
