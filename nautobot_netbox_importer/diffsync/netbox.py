@@ -131,6 +131,8 @@ def _define_units(wrapper: SourceModelWrapper, field_name: FieldName) -> None:
 
     wrapper.add_importer(importer, field_name, "JSONField")
 
+
+# pylint: disable=too-many-statements
 def _setup_models(netbox: SourceAdapter) -> None:
     """Setup NetBox models importers."""
 
@@ -370,7 +372,7 @@ def _setup_models(netbox: SourceAdapter) -> None:
 
 
 @atomic
-def sync_to_nautobot(file_path: Union[str, Path], dry_run=True) -> None:
+def sync_to_nautobot(file_path: Union[str, Path], dry_run=True, print_summary=True) -> SourceAdapter:
     """Import a NetBox export file."""
 
     def read_source_file():
@@ -393,14 +395,11 @@ def sync_to_nautobot(file_path: Union[str, Path], dry_run=True) -> None:
 
     nautobot = netbox.import_nautobot()
     nautobot.sync_from(netbox)
-    validation_errors = nautobot.get_validation_errors(log=False)
-    print("= Validation errors: ===========================")
-    count = 0
-    for instance, error in validation_errors:
-        count += 1
-        print(f"  {instance}: {error}")
-    print("Total validation errors:", count)
-    print("================================================")
+
+    if print_summary:
+        netbox.print_summary(nautobot)
 
     if dry_run:
         raise ValueError("Aborting the transaction due to the dry-run mode.")
+
+    return netbox

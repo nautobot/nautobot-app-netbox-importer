@@ -11,7 +11,6 @@ from typing import Tuple
 from typing import Type
 from uuid import UUID
 
-from diffsync import DiffSync
 from diffsync import DiffSyncModel
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
@@ -21,8 +20,10 @@ from pydantic import Field as PydanticField
 from .base import EMPTY_VALUES
 from .base import INTERNAL_TYPE_TO_ANNOTATION
 from .base import REFERENCE_INTERNAL_TYPES
+from .base import BaseDiffSync
 from .base import ContentTypeStr
 from .base import FieldName
+from .base import GenericForeignKey
 from .base import InternalFieldTypeStr
 from .base import NautobotBaseModel
 from .base import RecordData
@@ -96,9 +97,10 @@ class NautobotModelWrapper:
             raise NotImplementedError("Primary key field must be named 'id'")
         self.add_field(self.pk_name, self.pk_type)
         self.constructor_kwargs: Dict[FieldName, Any] = {}
+        self.count = 0
 
     def get_importer(self) -> Type["ImporterModel"]:
-        """Get the DiffSync model for this model."""
+        """Get the DiffSync model for this wrapper."""
         if self.importer:
             return self.importer
 
@@ -174,7 +176,7 @@ class ImporterModel(DiffSyncModel):
     _wrapper: NautobotModelWrapper
 
     @classmethod
-    def create(cls, diffsync: DiffSync, ids: dict, attrs: dict) -> Optional[DiffSyncModel]:
+    def create(cls, diffsync: BaseDiffSync, ids: dict, attrs: dict) -> Optional[DiffSyncModel]:
         """Create this model instance, both in Nautobot and in DiffSync."""
         instance = cls._wrapper.model(**cls._wrapper.constructor_kwargs, **ids)
         if not isinstance(diffsync, NautobotAdapter):
@@ -196,15 +198,15 @@ class ImporterModel(DiffSyncModel):
         return super().update(attrs)
 
 
-class NautobotAdapter(DiffSync):
+class NautobotAdapter(BaseDiffSync):
     """Nautobot DiffSync Adapter."""
 
-    def __init__(self, name="Nautobot", *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         """Initialize the adapter."""
-        super().__init__(name, *args, **kwargs)
+        super().__init__("Nautobot", *args, **kwargs)
         self.clean_failures: Set[NautobotBaseModel] = set()
 
-    def get_validation_errors(self, log=True) -> Generator[Tuple[NautobotBaseModel, ValidationError], None, None]:
+    def iter_validation_errors(self, log=True) -> Generator[Tuple[NautobotBaseModel, ValidationError], None, None]:
         """Re-run clean() on all instances that failed validation."""
         for instance in self.clean_failures:
             instance = instance.__class__.objects.get(id=instance.id)
@@ -215,47 +217,29 @@ class NautobotAdapter(DiffSync):
                 if log:
                     logger.error("Clean failed: %s %s", instance, instance.__dict__, exc_info=True)
 
+    # pylint: disable=too-many-statements
     def save_nautobot_instance(self, instance: NautobotBaseModel, values: RecordData, fields: NautobotFields) -> None:
         """Save a Nautobot instance."""
-        m2m_fields = {}
 
-        # TBD: Fails with dcim.rack
-        # _FORCE_FIELDS = ("created", "last_updated",)
-        # force_fields = set()
+        def set_custom_field(value: Any):
+            # TBD: Consider just updating without removing
+            custom_field_data = getattr(instance, "custom_field_data", None)
+            if custom_field_data is None:
+                raise TypeError("Missing custom_field_data")
+            custom_field_data.clear()
+            if value:
+                custom_field_data.update(value)
 
-        def set_value(field_name: FieldName, value: Any, internal_type: InternalFieldTypeStr):
-            # if field_name in _FORCE_FIELDS:
-            #     force_fields.add(field_name)
+        def set_generic_foreign_key(field: GenericForeignKey, value: Any):
+            if value:
+                foreign_model = get_model_from_name(value[0])
+                setattr(instance, field.ct_field, ContentType.objects.get_for_model(foreign_model))
+                setattr(instance, field.fk_field, value[1])
+            else:
+                setattr(instance, field.fk_field, None)
+                setattr(instance, field.ct_field, None)
 
-            if internal_type == "ManyToManyField":
-                m2m_fields[field_name] = value
-                return
-
-            if internal_type == "CustomFieldData":
-                custom_field_data = getattr(instance, "custom_field_data", None)
-                if custom_field_data is None:
-                    raise TypeError("Missing custom_field_data")
-                custom_field_data.clear()
-                if value:
-                    custom_field_data.update(value)
-                return
-
-            if internal_type == "Any":
-                setattr(instance, field_name, value)
-                return
-
-            field = instance._meta.get_field(field_name)  # type: ignore
-
-            if internal_type == "GenericForeignKey":
-                if value:
-                    foreign_model = get_model_from_name(value[0])
-                    setattr(instance, field.ct_field, ContentType.objects.get_for_model(foreign_model))
-                    setattr(instance, field.fk_field, value[1])
-                else:
-                    setattr(instance, field.fk_field, None)
-                    setattr(instance, field.ct_field, None)
-                return
-
+        def set_empty(field_name: FieldName, value: Any):
             if value in EMPTY_VALUES:
                 if field.default not in EMPTY_VALUES:
                     setattr(instance, field_name, field.default)
@@ -266,32 +250,60 @@ class NautobotAdapter(DiffSync):
             else:
                 setattr(instance, field_name, value)
 
+        def save():
+            try:
+                instance.clean()
+            # `clean()` can be called again by `iter_validation_errors()` after adding everything to the database
+            # pylint: disable=broad-exception-caught
+            except Exception:
+                self.clean_failures.add(instance)
+
+            try:
+                instance.save()
+            except Exception:
+                logger.error("Save failed: %s %s", instance, instance.__dict__, exc_info=True)
+                raise
+
+            # See `force_fields` above
+            # if force_fields:
+            #     instance.save(update_fields=force_fields)
+
+            for field_name, value in m2m_fields.items():
+                field = getattr(instance, field_name)
+                if value:
+                    field.set(value)
+                else:
+                    field.clear()
+
+        # TBD: Fails with dcim.rack
+        # _FORCE_FIELDS = ("created", "last_updated",)
+        # force_fields = set()
+        # Possible to implement for other models?
+
+        m2m_fields = {}
+
         for field_name, value in values.items():
-            set_value(field_name, value, fields[field_name])
+            # if field_name in _FORCE_FIELDS:
+            #     force_fields.add(field_name)
+            #     continue
 
-        try:
-            instance.clean()
-        # `clean()` can be called again by `get_validation_errors()` after adding everything to the database
-        # pylint: disable=broad-exception-caught
-        except Exception:
-            self.clean_failures.add(instance)
-
-        try:
-            instance.save()
-        except Exception:
-            logger.error("Save failed: %s %s", instance, instance.__dict__, exc_info=True)
-            raise
-
-        # See `force_fields` above
-        # if force_fields:
-        #     instance.save(update_fields=force_fields)
-
-        for field_name, value in m2m_fields.items():
-            field = getattr(instance, field_name)
-            if value:
-                field.set(value)
+            internal_type = fields[field_name]
+            if internal_type == "ManyToManyField":
+                m2m_fields[field_name] = value
+            elif internal_type == "CustomFieldData":
+                set_custom_field(value)
+            elif internal_type == "Any":
+                setattr(instance, field_name, value)
             else:
-                field.clear()
+                field = instance._meta.get_field(field_name)  # type: ignore
+                if internal_type == "GenericForeignKey":
+                    set_generic_foreign_key(field, value)
+                elif value in EMPTY_VALUES:
+                    set_empty(field_name, value)
+                else:
+                    setattr(instance, field_name, value)
+
+        save()
 
 
 def get_nautobot_instance_data(instance: NautobotBaseModel, fields: NautobotFields) -> RecordData:

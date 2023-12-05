@@ -15,12 +15,14 @@ from uuid import NAMESPACE_DNS
 from uuid import UUID
 from uuid import uuid5
 
+from diffsync import DiffSync
+from diffsync.store.local import LocalStore
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Field as DjangoField
 from django.db.models.fields import NOT_PROVIDED
-from nautobot.core.models import BaseModel as NautobotBaseModel
+from nautobot.core.models import BaseModel
 from nautobot.core.utils.lookup import get_model_from_name
 
 logger = logging.getLogger("nautobot-netbox-importer")
@@ -31,7 +33,7 @@ ContentTypeValue = Union[int, ContentTypeStr, List, Tuple[str, str]]
 FieldName = str
 RecordData = MutableMapping[FieldName, Any]
 InternalFieldTypeStr = str
-NautobotBaseMode = NautobotBaseModel
+NautobotBaseModel = BaseModel
 NautobotBaseModelType = Type[NautobotBaseModel]
 
 EMPTY_VALUES = [None, set(), tuple(), {}, [], "", NOT_PROVIDED]
@@ -113,3 +115,14 @@ def get_internal_field_type(field: DjangoField) -> InternalFieldTypeStr:
         return field.get_internal_type()
 
     raise NotImplementedError(f"Unsupported field type {field}")
+
+
+class BaseDiffSync(DiffSync):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # TBD: Should be fixed in DiffSync.
+        # This is a work around to allow testing multiple imports in a single test run.
+        self.top_level.clear()
+        if isinstance(self.store, LocalStore):
+            self.store._data.clear()
