@@ -59,6 +59,14 @@ INTERNAL_TYPE_TO_ANNOTATION: Mapping[InternalFieldTypeStr, type] = {
     "TextField": str,
     "UUIDField": UUID,
 }
+INTEGER_INTERNAL_TYPES: Iterable[InternalFieldTypeStr] = (
+    "AutoField",
+    "BigIntegerField",
+    "IntegerField",
+    "PositiveIntegerField",
+    "PositiveSmallIntegerField",
+    "SmallIntegerField",
+)
 REFERENCE_INTERNAL_TYPES: Iterable[InternalFieldTypeStr] = (
     "ForeignKey",
     "ForeignKeyWithAutoRelatedName",
@@ -100,6 +108,8 @@ def get_content_type_id(content_type: ContentTypeValue) -> int:
         return content_type
 
     if not isinstance(content_type, str):
+        if not len(content_type) == 2:
+            raise ValueError(f"Invalid content type {content_type}")
         content_type = ".".join(content_type)
 
     instance = ContentType.objects.get_for_model(get_model_from_name(content_type))
@@ -117,12 +127,29 @@ def get_internal_field_type(field: DjangoField) -> InternalFieldTypeStr:
     raise NotImplementedError(f"Unsupported field type {field}")
 
 
-class BaseDiffSync(DiffSync):
+def get_source_value(source: RecordData, source_name: FieldName, default_value: Any) -> Any:
+    """Get a value from the source data, returning a default value if the value exists in source and is empty."""
+    if source_name not in source:
+        return None
+
+    result = source[source_name]
+    return default_value if result in EMPTY_VALUES else result
+
+
+class BaseAdapter(DiffSync):
+    """Base class for NetBox adapters."""
+
     def __init__(self, *args, **kwargs):
+        """Initialize the adapter."""
         super().__init__(*args, **kwargs)
 
+        self.cleanup()
+
+    def cleanup(self):
+        """Clean up the adapter."""
         # TBD: Should be fixed in DiffSync.
         # This is a work around to allow testing multiple imports in a single test run.
         self.top_level.clear()
         if isinstance(self.store, LocalStore):
+            # pylint: disable=protected-access
             self.store._data.clear()

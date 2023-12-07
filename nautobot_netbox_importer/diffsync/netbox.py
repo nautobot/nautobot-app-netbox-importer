@@ -7,6 +7,7 @@ from typing import Union
 from django.db.transaction import atomic
 from nautobot.ipam.models import get_default_namespace
 
+from .base import EMPTY_VALUES
 from .base import FieldName
 from .base import RecordData
 from .source import AddFieldDuplicity
@@ -23,7 +24,7 @@ def _define_tagged_object(wrapper: SourceModelWrapper, field_name: FieldName) ->
             target[field_name] = None
             return
 
-        related_wrapper = wrapper.adapter.get_wrapper(content_type)
+        related_wrapper = wrapper.adapter.get_or_create_wrapper(content_type)
         result = related_wrapper.get_pk_from_uid(object_id)
         target[field_name] = result
         related_wrapper.add_reference(result, wrapper)
@@ -32,7 +33,7 @@ def _define_tagged_object(wrapper: SourceModelWrapper, field_name: FieldName) ->
 
 
 def _define_choices(wrapper: SourceModelWrapper, field_name: FieldName) -> None:
-    choices_wrapper = wrapper.adapter.get_wrapper("extras.customfieldchoice")
+    choices_wrapper = wrapper.adapter.get_or_create_wrapper("extras.customfieldchoice")
 
     def importer(source: RecordData, target: RecordData) -> None:
         choices = source.get(field_name, None)
@@ -69,7 +70,7 @@ def _define_location_type(wrapper: SourceModelWrapper, field_name: FieldName) ->
 
     wrapper.set_references_forwarding("dcim.locationtype", field_name)
 
-    location_type_wrapper = wrapper.adapter.get_wrapper("dcim.locationtype")
+    location_type_wrapper = wrapper.adapter.get_or_create_wrapper("dcim.locationtype")
     name = _name_from_wrapper(wrapper)
     location_type_id = location_type_wrapper.cache_data({"id": name, "name": name, "nestable": True})
 
@@ -86,12 +87,11 @@ def _define_location(wrapper: SourceModelWrapper, field_name: FieldName) -> None
         raise ValueError("_define_location only supports location and parent")
     field_name = f"{field_name}_id"
 
-    wrapper.processed_fields.add("region")
-    wrapper.processed_fields.add("site")
+    wrapper.nautobot.ignore_fields("region", "site")
 
-    location_wrapper = adapter.get_wrapper("dcim.location")
-    site_wrapper = adapter.get_wrapper("dcim.site")
-    region_wrapper = adapter.get_wrapper("dcim.region")
+    location_wrapper = adapter.get_or_create_wrapper("dcim.location")
+    site_wrapper = adapter.get_or_create_wrapper("dcim.site")
+    region_wrapper = adapter.get_or_create_wrapper("dcim.region")
 
     def importer(source: RecordData, target: RecordData) -> None:
         parent = source.get("parent", None)
@@ -121,23 +121,31 @@ def _define_location(wrapper: SourceModelWrapper, field_name: FieldName) -> None
 
 def _define_units(wrapper: SourceModelWrapper, field_name: FieldName) -> None:
     def importer(source: RecordData, target: RecordData) -> None:
+        # NetBox 3.4 units is `list[int]`, previous versions are JSON string with list of strings
         units = source.get(field_name, None)
-        if units:
+
+        if units in EMPTY_VALUES:
+            return
+
+        if isinstance(units, str):
             units = json.loads(units)
-        if units:
-            target[field_name] = [int(unit) for unit in units]
-        else:
-            target[field_name] = None
+            if units:
+                units = [int(unit) for unit in units]
+
+        target[field_name] = units
 
     wrapper.add_importer(importer, field_name, "JSONField")
 
 
 # pylint: disable=too-many-statements
-def _setup_models(netbox: SourceAdapter) -> None:
+def _setup_models(adapter: SourceAdapter) -> None:
     """Setup NetBox models importers."""
 
     def _role_definition_factory(role_content_type: str):
-        role_wrapper = netbox.define_model(role_content_type, "extras.role")
+        if role_content_type in adapter.wrappers:
+            role_wrapper = adapter.wrappers[role_content_type]
+        else:
+            role_wrapper = adapter.define_model(role_content_type, "extras.role")
         role_wrapper.add_field("content_types", "content_types", AddFieldDuplicity.IGNORE)
         role_wrapper.add_field("color", "color", AddFieldDuplicity.IGNORE)
 
@@ -146,7 +154,7 @@ def _setup_models(netbox: SourceAdapter) -> None:
 
         return definition
 
-    netbox.ignore_fields(
+    adapter.ignore_fields(
         "mark_connected",  # Not supported in Nautobot
         "slug",  # Removed in Nautobot 2
         # Following fields fails for dcim.rack, see `./source.py` `_FORCE_FIELDS`
@@ -154,10 +162,10 @@ def _setup_models(netbox: SourceAdapter) -> None:
         "last_updated",
     )
 
-    netbox.ignore_models(
-        "contenttypes.contenttype",
-        "sessions.session",
-        "dcim.cablepath",  # TBD recreate in Nautobot
+    adapter.ignore_models(
+        "contenttypes.contenttype",  # Nautobot has own content types
+        "sessions.session",  # Nautobot has own sessions
+        "dcim.cablepath",  # Recreated in Nautobot
         "admin.logentry",  # NetBox 3.0 TBD verify
         "users.userconfig",  # NetBox 3.0 TBD verify
         "auth.permission",  # NetBox 3.0 TBD verify
@@ -174,111 +182,93 @@ def _setup_models(netbox: SourceAdapter) -> None:
         "dcim.moduletype",  # NetBox 3.2 TBD verify
     )
 
-    netbox.define_model("extras.status", identifiers=["name"]).set_default_reference(
-        name="Unknown",
-        content_types=None,
-    )
-    netbox.define_model("extras.role")
-    netbox.define_model("extras.customfieldchoice").set_fields(
-        "custom_field",
-        "value",
-    )
-    netbox.define_model("dcim.locationtype").set_default_reference(
-        id="Unknown",
-        name="Unknown",
-        nestable=True,
-        content_types=None,
-    )
-    location = netbox.define_model("dcim.location")
-    location.set_fields(
-        "status",
-        location_type=_define_location_type,
-        parent=_define_location,
-        lft=None,
-        rght=None,
-        tree_id=None,
-        level=None,
-    )
-    netbox.define_model("auth.user", "users.user", ["username"]).set_fields(
+    adapter.define_model("auth.user", "users.user", ["username"]).set_fields(
         last_login=None,
         is_superuser=None,  # NetBox 3.1 TBD verify
         password=None,  # NetBox 3.1 TBD verify
         user_permissions=None,  # NetBox 3.1 TBD verify
     )
-    netbox.define_model("auth.group", identifiers=["name"]).set_fields(
+    adapter.define_model("auth.group", identifiers=["name"]).set_fields(
         permissions=None,  # NetBox 3.1 TBD verify
     )
-    netbox.define_model("circuits.circuit").set_fields(
+    adapter.define_model("extras.status", identifiers=["name"]).set_default_reference(
+        name="Unknown",
+        content_types=None,
+    )
+    adapter.define_model("extras.role")
+    adapter.define_model("extras.customfieldchoice").set_fields(
+        "custom_field",
+        "value",
+    )
+    adapter.define_model("dcim.locationtype").set_default_reference(
+        id="Unknown",
+        name="Unknown",
+        nestable=True,
+        content_types=None,
+    )
+    location = adapter.define_model("dcim.location")
+    location.set_fields(
+        "status",
+        location_type=_define_location_type,
+        parent=_define_location,
+    )
+    adapter.define_model("circuits.circuit").set_fields(
         type="circuit_type",
         termination_a="circuit_termination_a",
         termination_z="circuit_termination_z",
     )
-    netbox.define_model("dcim.rackreservation").set_fields(
+    adapter.define_model("dcim.rackreservation").set_fields(
         units=_define_units,
     )
-    netbox.define_model("dcim.rack").set_fields(
+    adapter.define_model("dcim.rack").set_fields(
         location=_define_location,
         role=_role_definition_factory("dcim.rackrole"),
     )
-    netbox.define_model("dcim.cable").set_fields(
-        termination_a="termination_a",
-        termination_b="termination_b",
+    adapter.define_model("dcim.cable").set_fields(
+        "termination_a",
+        "termination_b",
     )
-    ipaddress = netbox.define_model("ipam.ipaddress")
-    ipaddress.set_fields(
-        role=_role_definition_factory("ipam.role"),
-        vrf=None,  # TBD verify
-    )
-    ipaddress.nautobot.set_instance_defaults(namespace=get_default_namespace())
-    netbox.define_model("ipam.vlan").set_fields(
-        group="vlan_group",
-        location=_define_location,
-        role=_role_definition_factory("ipam.role"),
-    )
-    netbox.define_model("tenancy.tenant").set_fields(
+    adapter.define_model("tenancy.tenant").set_fields(
         group="tenant_group",
     )
-    netbox.define_model("virtualization.cluster").set_fields(
+    adapter.define_model("virtualization.cluster").set_fields(
         type="cluster_type",
         group="cluster_group",
         location=_define_location,
     )
-    netbox.define_model("circuits.circuittermination").set_fields(
+    adapter.define_model("circuits.circuittermination").set_fields(
         location=_define_location,
     )
-    netbox.define_model("dcim.consoleport").set_fields(
+    adapter.define_model("dcim.consoleport").set_fields(
         speed=None,  # TBD verify
     )
-    netbox.define_model(
+    adapter.define_model(
         "dcim.powerport",
     )
-    netbox.define_model(
+    adapter.define_model(
         "dcim.poweroutlet",
     )
-    netbox.define_model("dcim.interfacetemplate").set_fields(
+    adapter.define_model("dcim.interfacetemplate").set_fields(
         module_type=None,  # TBD verify
     )
-    netbox.define_model("dcim.interface").set_fields(
+    adapter.define_model("dcim.interface").set_fields(
         "status",
         parent=None,  # TBD verify
         tagged_vlans=None,  # TBD verify
         module=None,  # TBD verify
     )
-    netbox.define_model("dcim.frontport").set_fields(
+    adapter.define_model("dcim.frontport").set_fields(
         color=None,  # TBD verify
     )
-    netbox.define_model("dcim.rearport").set_fields(
+    adapter.define_model("dcim.rearport").set_fields(
         color=None,  # TBD verify
     )
-    netbox.define_model("dcim.devicerole", "extras.role").set_fields(
-        vm_role=None,  # TBD verify
-    )
-    manufacturer = netbox.define_model("dcim.manufacturer")
+    manufacturer = adapter.define_model("dcim.manufacturer")
     manufacturer.set_default_reference(
         id="Unknown",
         name="Unknown",
     )
-    device_type = netbox.define_model("dcim.devicetype")
+    device_type = adapter.define_model("dcim.devicetype")
     device_type.set_fields(
         front_image=None,  # TBD verify
         rear_image=None,  # TBD verify
@@ -288,84 +278,85 @@ def _setup_models(netbox: SourceAdapter) -> None:
         manufacturer=manufacturer.get_default_reference_pk(),
         model="Unknown",
     )
-    netbox.define_model("dcim.moduletype", "dcim.devicetype")
-    netbox.define_model("dcim.device").set_fields(
+    adapter.define_model("dcim.devicerole", "extras.role").set_fields(
+        vm_role=None,  # TBD verify
+    )
+    adapter.define_model("dcim.device").set_fields(
         location=_define_location,
         device_role=_role_definition_factory("dcim.devicerole"),
         local_context_data=None,  # TBD verify
     )
-    netbox.define_model("dcim.powerpanel").set_fields(
+    adapter.define_model("dcim.powerpanel").set_fields(
         location=_define_location,
     )
-    netbox.define_model("dcim.frontporttemplate").set_fields(
+    adapter.define_model("dcim.frontporttemplate").set_fields(
         rear_port="rear_port_template",
         color=None,  # TBD verify
     )
-    netbox.define_model("dcim.rearporttemplate").set_fields(
+    adapter.define_model("dcim.rearporttemplate").set_fields(
         color=None,  # TBD verify
     )
-    netbox.define_model("dcim.region", "dcim.location").set_fields(
-        "status",
-        location_type=_define_location_type,
-        parent=_define_location,
-        lft=None,
-        rght=None,
-        tree_id=None,
-        level=None,
-        group=None,
-    )
-    netbox.define_model("dcim.site", "dcim.location").set_fields(
+    adapter.define_model("dcim.region", "dcim.location").set_fields(
         "status",
         location_type=_define_location_type,
         parent=_define_location,
         group=None,
     )
-    netbox.define_model("ipam.prefix").set_fields(
+    adapter.define_model("dcim.site", "dcim.location").set_fields(
+        "status",
+        location_type=_define_location_type,
+        parent=_define_location,
+        group=None,
+    )
+    ipaddress = adapter.define_model("ipam.ipaddress")
+    ipaddress.set_fields(
+        role=_role_definition_factory("ipam.role"),
+        vrf=None,  # TBD verify
+    )
+    ipaddress.nautobot.set_instance_defaults(namespace=get_default_namespace())
+    adapter.define_model("ipam.prefix").set_fields(
         location=_define_location,
         role=_role_definition_factory("ipam.role"),
         is_pool=None,  # TBD verify
         mark_utilized=None,  # TBD verify
         vrf=None,  # TBD verify
     )
-    netbox.define_model("ipam.vrf").set_fields(
+    adapter.define_model("ipam.vrf").set_fields(
         enforce_unique=None,  # TBD verify
     )
-    netbox.define_model("ipam.aggregate", "ipam.prefix").set_fields(
+    adapter.define_model("ipam.aggregate", "ipam.prefix").set_fields(
         "status",
     )
-    netbox.define_model("ipam.vlan").set_fields(
+    adapter.define_model("ipam.vlan").set_fields(
+        group="vlan_group",
+        location=_define_location,
+        role=_role_definition_factory("ipam.role"),
         min_vid=None,  # TBD verify
         max_vid=None,  # TBD verify
     )
-    netbox.define_model("ipam.vlangroup").set_fields(
+    adapter.define_model("ipam.vlangroup").set_fields(
         scope_id=None,  # TBD verify
         scope_type=None,  # TBD verify
         min_vid=None,  # TBD verify
         max_vid=None,  # TBD verify
     )
-    netbox.define_model("extras.customfield").set_fields(
+    adapter.define_model("extras.customfield").set_fields(
         name="key",
         choices=_define_choices,
     )
-    netbox.define_model("tenancy.tenantgroup").set_fields(
-        lft=None,
-        rght=None,
-        tree_id=None,
-        level=None,
-    )
-    virtual_machine = netbox.define_model("virtualization.virtualmachine")
+    virtual_machine = adapter.define_model("virtualization.virtualmachine")
     virtual_machine.set_fields(
         role=_role_definition_factory("dcim.devicerole"),
         local_context_data=None,  # TBD verify
     )
-    netbox.define_model("virtualization.vminterface").set_fields(
+    adapter.define_model("virtualization.vminterface").set_fields(
         "status",
         parent=None,  # TBD verify
     )
-    netbox.define_model("dcim.poweroutlettemplate").set_fields(
+    adapter.define_model("dcim.poweroutlettemplate").set_fields(
         power_port="power_port_template",
     )
-    netbox.define_model("extras.taggeditem").set_fields(
+    adapter.define_model("extras.taggeditem").set_fields(
         object_id=_define_tagged_object,
         content_types="content_types",
     )
@@ -375,6 +366,16 @@ def _setup_models(netbox: SourceAdapter) -> None:
 def sync_to_nautobot(file_path: Union[str, Path], dry_run=True, print_summary=True) -> SourceAdapter:
     """Import a NetBox export file."""
 
+    def process_cable_termination(source_data: RecordData) -> str:
+        # NetBox 3.3 split the dcim.cable model into dcim.cable and dcim.cabletermination models.
+        # TBD: Resolve this in the specific wrappers for dcim.cable and dcim.cableterminationa and dcim.cableterminationz to avoid overriding the default values
+        cable_end = source_data.pop("cable_end").lower()
+        source_data["id"] = source_data.pop("cable")
+        source_data[f"termination_{cable_end}_type"] = source_data.pop("termination_type")
+        source_data[f"termination_{cable_end}_id"] = source_data.pop("termination_id")
+
+        return "dcim.cable"
+
     def read_source_file():
         with open(file_path, "r", encoding="utf8") as file:
             data = json.load(file)
@@ -383,23 +384,29 @@ def sync_to_nautobot(file_path: Union[str, Path], dry_run=True, print_summary=Tr
             content_type = item["model"]
             netbox_pk = item.get("pk", None)
             source_data = item["fields"]
+
             if netbox_pk:
                 source_data["id"] = netbox_pk
+
+            if content_type == "dcim.cabletermination":
+                content_type = process_cable_termination(source_data)
+
             yield SourceRecord(content_type, source_data)
 
-    netbox = SourceAdapter("NetBox")
+    source = SourceAdapter("NetBox")
 
-    _setup_models(netbox)
+    _setup_models(source)
 
-    netbox.import_data(read_source_file)
+    source.import_data(read_source_file)
 
-    nautobot = netbox.import_nautobot()
-    nautobot.sync_from(netbox)
+    nautobot = source.import_nautobot()
+    nautobot.sync_from(source)
 
+    validation_errors = nautobot.get_validation_errors()
     if print_summary:
-        netbox.print_summary(nautobot)
+        source.print_summary(validation_errors)
 
     if dry_run:
         raise ValueError("Aborting the transaction due to the dry-run mode.")
 
-    return netbox
+    return source

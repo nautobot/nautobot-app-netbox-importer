@@ -2,7 +2,6 @@
 
 from typing import Any
 from typing import Dict
-from typing import Generator
 from typing import Iterable
 from typing import MutableMapping
 from typing import Optional
@@ -15,19 +14,20 @@ from diffsync import DiffSyncModel
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from nautobot.core.utils.lookup import get_model_from_name
+from django.db.models import Max
 from pydantic import Field as PydanticField
 
 from .base import EMPTY_VALUES
 from .base import INTERNAL_TYPE_TO_ANNOTATION
 from .base import REFERENCE_INTERNAL_TYPES
-from .base import BaseDiffSync
+from .base import BaseAdapter
 from .base import ContentTypeStr
 from .base import FieldName
 from .base import GenericForeignKey
 from .base import InternalFieldTypeStr
-from .base import NautobotBaseModel
+from .base import NautobotBaseModel, NautobotBaseModelType
 from .base import RecordData
-from .base import logger
+from .base import logger, Uid
 
 NautobotFields = MutableMapping[FieldName, InternalFieldTypeStr]
 
@@ -80,6 +80,7 @@ IMPORT_ORDER: Iterable[ContentTypeStr] = (
 )
 
 
+# pylint: disable=too-many-instance-attributes
 class NautobotModelWrapper:
     """Wrapper for a Nautobot model."""
 
@@ -96,8 +97,18 @@ class NautobotModelWrapper:
         if self.pk_name != "id":
             raise NotImplementedError("Primary key field must be named 'id'")
         self.add_field(self.pk_name, self.pk_type)
+
+        if self.pk_type == "UUIDField":
+            self.last_id = 0
+        elif self.pk_type == "AutoField":
+            self.last_id = self.model.objects.aggregate(Max("id"))["id__max"] or 0
+        else:
+            raise ValueError(f"Unsupported pk_type {self.pk_type}")
+
         self.constructor_kwargs: Dict[FieldName, Any] = {}
-        self.count = 0
+        self.imported_count = 0
+        # TBD: Merge ignored_fields to fields
+        self.ignored_fields: Set[FieldName] = set(self.pk_name)
 
     def get_importer(self) -> Type["ImporterModel"]:
         """Get the DiffSync model for this wrapper."""
@@ -127,6 +138,8 @@ class NautobotModelWrapper:
         for field_name, internal_type in self.fields.items():
             if field_name in identifiers:
                 continue
+            if field_name in self.ignored_fields:
+                continue
             if internal_type == "GenericForeignKey":
                 annotation = Tuple[ContentTypeStr, UUID]
             elif internal_type in REFERENCE_INTERNAL_TYPES:
@@ -154,8 +167,13 @@ class NautobotModelWrapper:
 
         return self.importer
 
+    def ignore_fields(self, *field_name: FieldName) -> None:
+        """Skip a field when importing."""
+        self.ignored_fields.update(field_name)
+
     def add_field(self, field_name: FieldName, internal_type: InternalFieldTypeStr) -> None:
         """Add a field to the model."""
+        # TBD: Lock down the fields after the importer is created
         logger.debug("Adding nautobot field %s %s %s", self.content_type, field_name, internal_type)
         if field_name in self.fields and self.fields[field_name] != internal_type:
             raise ValueError(f"Field {field_name} already exists with different type {self.fields[field_name]}")
@@ -176,7 +194,7 @@ class ImporterModel(DiffSyncModel):
     _wrapper: NautobotModelWrapper
 
     @classmethod
-    def create(cls, diffsync: BaseDiffSync, ids: dict, attrs: dict) -> Optional[DiffSyncModel]:
+    def create(cls, diffsync: BaseAdapter, ids: dict, attrs: dict) -> Optional[DiffSyncModel]:
         """Create this model instance, both in Nautobot and in DiffSync."""
         instance = cls._wrapper.model(**cls._wrapper.constructor_kwargs, **ids)
         if not isinstance(diffsync, NautobotAdapter):
@@ -198,24 +216,37 @@ class ImporterModel(DiffSyncModel):
         return super().update(attrs)
 
 
-class NautobotAdapter(BaseDiffSync):
+class NautobotAdapter(BaseAdapter):
     """Nautobot DiffSync Adapter."""
 
     def __init__(self, *args, **kwargs):
         """Initialize the adapter."""
         super().__init__("Nautobot", *args, **kwargs)
-        self.clean_failures: Set[NautobotBaseModel] = set()
+        self.clean_failures: Dict[NautobotBaseModelType, Set[Uid]] = {}
+        self.validation_errors: Optional[Dict[NautobotBaseModelType, Set[ValidationError]]] = None
 
-    def iter_validation_errors(self, log=True) -> Generator[Tuple[NautobotBaseModel, ValidationError], None, None]:
+    def get_validation_errors(self) -> Dict[NautobotBaseModelType, Set[ValidationError]]:
         """Re-run clean() on all instances that failed validation."""
-        for instance in self.clean_failures:
-            instance = instance.__class__.objects.get(id=instance.id)
-            try:
-                instance.clean()
-            except ValidationError as error:
-                yield instance, error
-                if log:
-                    logger.error("Clean failed: %s %s", instance, instance.__dict__, exc_info=True)
+        if self.validation_errors is not None:
+            return self.validation_errors
+
+        self.validation_errors = {}
+
+        failures = self.clean_failures
+        self.clean_failures = {}
+
+        for model_type, uids in failures.items():
+            for uid in uids:
+                instance = model_type.objects.get(id=uid)
+                try:
+                    instance.clean()
+                except ValidationError as error:
+                    if model_type in self.validation_errors:
+                        self.validation_errors[model_type].add(error)
+                    else:
+                        self.validation_errors[model_type] = set([error])
+
+        return self.validation_errors
 
     # pylint: disable=too-many-statements
     def save_nautobot_instance(self, instance: NautobotBaseModel, values: RecordData, fields: NautobotFields) -> None:
@@ -256,7 +287,13 @@ class NautobotAdapter(BaseDiffSync):
             # `clean()` can be called again by `iter_validation_errors()` after adding everything to the database
             # pylint: disable=broad-exception-caught
             except Exception:
-                self.clean_failures.add(instance)
+                id = instance.id
+                if not isinstance(id, Uid):
+                    raise TypeError(f"Invalid id {id}")
+                if instance.__class__ in self.clean_failures:
+                    self.clean_failures[instance.__class__].add(id)
+                else:
+                    self.clean_failures[instance.__class__] = set([id])
 
             try:
                 instance.save()
@@ -264,7 +301,7 @@ class NautobotAdapter(BaseDiffSync):
                 logger.error("Save failed: %s %s", instance, instance.__dict__, exc_info=True)
                 raise
 
-            # See `force_fields` above
+            # See `force_fields` below
             # if force_fields:
             #     instance.save(update_fields=force_fields)
 
