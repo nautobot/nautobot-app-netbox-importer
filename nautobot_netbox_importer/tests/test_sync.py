@@ -9,7 +9,6 @@ from nautobot_netbox_importer.command_utils import enable_logging
 from nautobot_netbox_importer.diffsync.netbox import sync_to_nautobot
 
 _EXPECTED_COUNTS = {}
-
 _EXPECTED_COUNTS["3.0"] = {
     "circuits.circuit": 29,
     "circuits.circuittermination": 45,
@@ -55,7 +54,6 @@ _EXPECTED_COUNTS["3.0"] = {
     "virtualization.virtualmachine": 180,
     "virtualization.vminterface": 720,
 }
-
 _EXPECTED_COUNTS["3.1"] = {
     **_EXPECTED_COUNTS["3.0"],
     "auth.group": 1,
@@ -78,7 +76,6 @@ _EXPECTED_COUNTS["3.1"] = {
     "ipam.rir": 8,
     "users.user": 6,
 }
-
 _EXPECTED_COUNTS["3.2"] = {
     **_EXPECTED_COUNTS["3.1"],
     "dcim.devicetype": 15,
@@ -87,13 +84,29 @@ _EXPECTED_COUNTS["3.2"] = {
     "ipam.prefix": 94,
     "ipam.ipaddress": 180,
 }
-
 _EXPECTED_COUNTS["3.3"] = {
     **_EXPECTED_COUNTS["3.2"],
 }
-
 _EXPECTED_COUNTS["3.4"] = {
     **_EXPECTED_COUNTS["3.3"],
+}
+
+_EXPECTED_VALIDATION_ERRORS = {}
+_EXPECTED_VALIDATION_ERRORS["3.0"] = {
+    "dcim.location": 2,
+    "dcim.powerfeed": 48,
+}
+_EXPECTED_VALIDATION_ERRORS["3.1"] = {
+    **_EXPECTED_VALIDATION_ERRORS["3.0"],
+}
+_EXPECTED_VALIDATION_ERRORS["3.2"] = {
+    **_EXPECTED_VALIDATION_ERRORS["3.1"],
+}
+_EXPECTED_VALIDATION_ERRORS["3.3"] = {
+    **_EXPECTED_VALIDATION_ERRORS["3.2"],
+}
+_EXPECTED_VALIDATION_ERRORS["3.4"] = {
+    **_EXPECTED_VALIDATION_ERRORS["3.3"],
 }
 
 
@@ -127,7 +140,7 @@ class TestSync(TestCase):
             tmp_file.write(response.text)
             tmp_filename = tmp_file.name
 
-        netbox = sync_to_nautobot(tmp_filename, dry_run=False)
+        netbox, nautobot = sync_to_nautobot(tmp_filename, dry_run=False)
 
         for content_type, expected_count in _EXPECTED_COUNTS[version].items():
             model = get_model_from_name(content_type)
@@ -137,3 +150,6 @@ class TestSync(TestCase):
             self.assertEqual(imported_count, expected_count, f"Import count mismatch for {content_type}")
             current_count = model.objects.count()
             self.assertGreaterEqual(current_count, expected_count, f"Count mismatch for {content_type}")
+
+        validation_errors = {key: len(value) for key, value in nautobot.get_validation_errors().items()}
+        self.assertEqual(validation_errors, _EXPECTED_VALIDATION_ERRORS[version], "Validation errors mismatch")

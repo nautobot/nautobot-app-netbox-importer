@@ -14,20 +14,22 @@
 - [x] Create `CablePath` objects after importing to Nautobot.
     - `CablePath` objects seems to be created out of the box.
 - [x] Write developer documentation.
-- [ ] Better implement validation after everything is written, before transaction commit.
-- [ ] Auto skip fields not present in Nautobot model.
-- [ ] Use `dcim.cabletermination[x]` as a source model.
+- [x] Test for number of validation errors.
+- [x] Auto skip fields not present in Nautobot model.
+- [x] Use `dcim.cabletermination[x]` as a source model.
+- [ ] Better output content_types and fields mappings.
 - [ ] Implement writing `created` and `last_updated` fields.
-- [ ] Test for number of validation errors.
 - [ ] Test to re-run the import.
 - [ ] Parametrize importer to fail if any validation fails.
-- [ ] Better output content_types and fields mappings.
 - [ ] Summarize overall stats including validation errors types with counts.
 - [ ] Resolve TBDs in `nautobot_netbox_importer/diffsync/netbox.py`.
 - [ ] Refactor fields factories.
 - [ ] Resolve validation error: `django.core.exceptions.ValidationError: ['Rack R308 (Row 3) and power panel Panel 4 (MDF) are in different locations']`.
 - [ ] Resolve validation error: `django.core.exceptions.ValidationError: {'parent': ['A Location of type Location may only have a Location of the same type as its parent.']}`.
 - [ ] Remove debug prints.
+
+## Later
+
 - [ ] Implement SSoT Job.
     - [ ] Allow DiffSync deleting in Nautobot?
     - [ ] Add-only `ManyToMany` field values?

@@ -9,6 +9,7 @@ from typing import Dict
 from typing import Generator
 from typing import Iterable
 from typing import List
+from typing import Mapping
 from typing import NamedTuple
 from typing import Optional
 from typing import OrderedDict
@@ -83,15 +84,21 @@ class ReferencesForwarding(NamedTuple):
 class SourceModelWrapper:
     """Definition of a source model mapping to Nautobot model."""
 
-    def __init__(self, adapter: "SourceAdapter", content_type: ContentTypeStr, nautobot_wrapper: NautobotModelWrapper):
+    def __init__(
+        self,
+        adapter: "SourceAdapter",
+        content_type: ContentTypeStr,
+        nautobot_wrapper: NautobotModelWrapper,
+        extend_wrapper: Optional["SourceModelWrapper"] = None,
+    ):
         """Initialize the SourceModelWrapper."""
         if content_type in adapter.wrappers:
             raise ValueError(f"Duplicate content type {content_type}")
 
-        adapter.not_initialized_wrappers.add(self)
         adapter.wrappers[content_type] = self
 
         self.adapter = adapter
+        self.extend_wrapper = extend_wrapper
         self.content_type = content_type
         self.importers: List[SourceFieldImporter] = []
         self.references: Dict[Uid, Set[SourceModelWrapper]] = {}
@@ -105,7 +112,7 @@ class SourceModelWrapper:
 
         self.nautobot = nautobot_wrapper
 
-        self.can_add_fields = True
+        self.can_be_configured = True
         self.fields: Dict[FieldName, SourceFieldDefinition] = {}
         self.add_field(self.nautobot.pk_name, None, duplicity=AddFieldDuplicity.FAIL)
 
@@ -148,17 +155,17 @@ class SourceModelWrapper:
             if duplicity != AddFieldDuplicity.REPLACE:
                 raise NotImplementedError(f"Unsupported duplicity {duplicity}")
 
-        if not self.can_add_fields:
+        if definition is None:
+            logger.warning("Skipping field %s %s", self.content_type, name)
+        else:
+            logger.warning("Adding field %s %s %s", self.content_type, name, definition)
+
+        if not self.can_be_configured:
             if definition is None:
                 self.nautobot.ignore_fields(name)
                 return
             raise ValueError(f"Can't add field {name} to {self.content_type}, it's already imported")
 
-        print(f"Adding field {self.content_type} {name} {definition}")
-        if definition is None:
-            logger.warning("Skipping field %s %s", self.content_type, name)
-        else:
-            logger.debug("Adding field %s %s %s", self.content_type, name, definition)
         self.fields[name] = definition
 
     def add_role_importer(self, source_name: FieldName, role_wrapper: "SourceModelWrapper") -> None:
@@ -181,7 +188,7 @@ class SourceModelWrapper:
 
     def create_importers(self) -> None:
         """Create importers for all fields."""
-        self.can_add_fields = False
+        self.can_be_configured = False
         for field_name, definition in self.fields.items():
             if definition is None:
                 continue
@@ -222,7 +229,9 @@ class SourceModelWrapper:
         if uid in self.uid_to_pk_cache:
             return self.uid_to_pk_cache[uid]
         if self.nautobot.pk_type == "UUIDField":
-            return source_pk_to_uuid(self.content_type, uid)
+            if self.extend_wrapper:
+                return self.extend_wrapper.get_pk_from_uid(uid)
+            return source_pk_to_uuid(self.content_type or self.content_type, uid)
 
         if self.nautobot.pk_type == "AutoField":
             self.nautobot.last_id += 1
@@ -269,7 +278,7 @@ class SourceModelWrapper:
         nautobot_content_type = self.nautobot.content_type
         importer_model = self.nautobot.get_importer()
         uid = self.get_pk_from_data(data)
-        # print(f"Importing item {self.content_type} {uid} {data}")
+        print(f"Importing item {self.content_type} {uid} {data}")
         instance = self.adapter.get_or_none(importer_model, {"id": uid})
 
         target_data = {}
@@ -283,7 +292,7 @@ class SourceModelWrapper:
             if field_name in target_data:
                 del target_data[field_name]
 
-        # print(f"Importing as {target_data}")
+        print(f"Importing as {target_data}")
 
         try:
             if instance:
@@ -315,13 +324,20 @@ class SourceModelWrapper:
         try:
             field = meta.get_field(target_name)
         except DjangoFieldDoesNotExist:
-            return "Any", None
+            if hasattr(self.nautobot.model, target_name):
+                return "Any", None
+            print(f"Missing field {self.content_type} {target_name}")
+            raise
 
         return get_internal_field_type(field), field
 
     def add_default_importer(self, source_name: FieldName, nautobot_name: FieldName) -> None:
         """Add a default importer for a given source field."""
-        internal_type, nautobot_field = self.get_type_and_field(nautobot_name)
+        try:
+            internal_type, nautobot_field = self.get_type_and_field(nautobot_name)
+        except DjangoFieldDoesNotExist:
+            self.add_field(source_name, None, AddFieldDuplicity.IGNORE)
+            return
 
         if not nautobot_field:
             importer = _property_importer_factory(source_name, nautobot_name)
@@ -362,7 +378,7 @@ class SourceModelWrapper:
                 return self.import_record(self.cached_data[uid])
             raise
 
-    def get_default_reference_pk(self) -> Uid:
+    def get_default_reference_uid(self) -> Uid:
         """Get the default reference to this model."""
         if self.default_reference_pk:
             return self.default_reference_pk
@@ -439,10 +455,69 @@ class SourceAdapter(BaseAdapter):
         super().__init__(name, *args, **kwargs)
 
         self.wrappers: OrderedDict[ContentTypeStr, SourceModelWrapper] = OrderedDict()
-        self.not_initialized_wrappers: Set[SourceModelWrapper] = set()
+        self.nautobot_wrappers: Dict[ContentTypeStr, NautobotModelWrapper] = {}
         self.ignored_fields: Set[FieldName] = set()
-        self.ignored_models: Set[ContentTypeStr] = set()
-        self.content_type_back_mapping: Dict[ContentTypeStr, Optional[ContentTypeStr]] = {}
+        self.ignored_content_types: Set[ContentTypeStr] = set()
+
+        # From Nautobot to Source
+        self.content_types_back_mapping: Dict[ContentTypeStr, Optional[ContentTypeStr]] = {}
+
+    def configure(
+        self,
+        ignore_fields: Optional[Iterable[FieldName]] = None,
+        ignore_content_types: Optional[Iterable[ContentTypeStr]] = None,
+    ) -> None:
+        """Configure the adapter."""
+        if ignore_fields:
+            self.ignored_fields.update(ignore_fields)
+
+        if ignore_content_types:
+            self.ignored_content_types.update(ignore_content_types)
+
+    # pylint: disable=too-many-arguments, too-many-branches
+    def configure_model(
+        self,
+        content_type: ContentTypeStr,
+        nautobot_content_type: Optional[ContentTypeStr] = None,
+        extend_content_type: Optional[ContentTypeStr] = None,
+        identifiers: Optional[Iterable[FieldName]] = None,
+        fields: Optional[Mapping[FieldName, SourceFieldDefinition]] = None,
+        default_reference: Optional[RecordData] = None,
+    ) -> SourceModelWrapper:
+        """Dynamically create a wrapper for a given source content type."""
+        if extend_content_type:
+            extend_wrapper = self.wrappers[extend_content_type]
+            if nautobot_content_type and nautobot_content_type != extend_wrapper.nautobot.content_type:
+                raise ValueError(f"Extension should have different content type {nautobot_content_type}")
+            nautobot_content_type = extend_wrapper.nautobot.content_type
+        else:
+            extend_wrapper = None
+            nautobot_content_type = nautobot_content_type or content_type
+            if nautobot_content_type in self.content_types_back_mapping:
+                if self.content_types_back_mapping[nautobot_content_type] != content_type:
+                    self.content_types_back_mapping[nautobot_content_type] = None
+            else:
+                self.content_types_back_mapping[nautobot_content_type] = content_type
+
+        if content_type in self.wrappers:
+            wrapper = self.wrappers[content_type]
+        else:
+            if nautobot_content_type in self.nautobot_wrappers:
+                nautobot_wrapper = self.nautobot_wrappers[nautobot_content_type]
+            else:
+                nautobot_wrapper = NautobotModelWrapper(nautobot_content_type)
+                self.nautobot_wrappers[nautobot_content_type] = nautobot_wrapper
+
+            wrapper = SourceModelWrapper(self, content_type, nautobot_wrapper, extend_wrapper)
+
+        if identifiers:
+            wrapper.set_identifiers(identifiers)
+        if fields:
+            wrapper.set_fields(**fields)
+        if default_reference:
+            wrapper.set_default_reference(**default_reference)
+
+        return wrapper
 
     def print_summary(self, validation_errors) -> None:
         """Print a summary of the import."""
@@ -453,26 +528,25 @@ class SourceAdapter(BaseAdapter):
 
         if validation_errors:
             print("- Validation errors: ---------------------------")
+            total = 0
             for model_type, errors in validation_errors.items():
+                total += len(errors)
                 print(f"  {model_type}: {len(errors)}")
                 for error in errors:
                     print(f"    {error}")
-            print("Total validation errors:", len(validation_errors))
+            print("Total validation errors:", total)
         else:
             print("- No validation errors ------------------------")
 
         print("================================================")
 
-    def ignore_fields(self, *field_names: FieldName) -> None:
-        """Skip fields during import."""
-        self.ignored_fields.update(field_names)
-
     def get_or_create_wrapper(
         self,
         value: Union[None, ContentTypeValue, SourceModelWrapper, NautobotModelWrapper, NautobotBaseModelType],
-        map_back: bool = False,
     ) -> SourceModelWrapper:
         """Get a source Wrapper for a given content type."""
+        map_back = False
+
         if not value:
             raise ValueError("Missing value")
 
@@ -480,8 +554,10 @@ class SourceAdapter(BaseAdapter):
             return value
 
         if isinstance(value, type(NautobotBaseModel)):
+            map_back = True
             value = value._meta.label.lower()  # type: ignore
         elif isinstance(value, NautobotModelWrapper):
+            map_back = True
             value = value.content_type
 
         if isinstance(value, str):
@@ -493,8 +569,8 @@ class SourceAdapter(BaseAdapter):
         else:
             raise ValueError(f"Invalid content type {value}")
 
-        if map_back and value in self.content_type_back_mapping:
-            back_mapping = self.content_type_back_mapping.get(value, None)
+        if map_back and value in self.content_types_back_mapping:
+            back_mapping = self.content_types_back_mapping.get(value, None)
             if not back_mapping:
                 raise ValueError(f"Unambiguous content type back mapping {value}")
             value = back_mapping
@@ -502,54 +578,18 @@ class SourceAdapter(BaseAdapter):
         if value in self.wrappers:
             return self.wrappers[value]
 
-        return self.define_model(value)
-
-    def ignore_models(self, *content_types: ContentTypeStr) -> None:
-        """Disable import of a source model."""
-        for content_type in content_types:
-            self.ignored_models.add(content_type)
-
-    def define_model(
-        self,
-        content_type: ContentTypeStr,
-        nautobot_content_type: Optional[ContentTypeStr] = None,
-        identifiers: Optional[Iterable[FieldName]] = None,
-    ) -> SourceModelWrapper:
-        """Dynamically create a wrapper for a given source content type."""
-        if not nautobot_content_type:
-            nautobot_content_type = content_type
-
-        if nautobot_content_type != content_type:
-            if nautobot_content_type in self.content_type_back_mapping:
-                self.content_type_back_mapping[content_type] = None
-            else:
-                self.content_type_back_mapping[nautobot_content_type] = content_type
-
-        if nautobot_content_type in self.wrappers:
-            nautobot_wrapper = self.wrappers[nautobot_content_type].nautobot
-        elif nautobot_content_type != content_type:
-            nautobot_wrapper = self.define_model(nautobot_content_type).nautobot
-        else:
-            nautobot_wrapper = NautobotModelWrapper(nautobot_content_type)
-
-        wrapper = SourceModelWrapper(self, content_type, nautobot_wrapper)
-        if identifiers:
-            wrapper.set_identifiers(identifiers)
-
-        return wrapper
+        return self.configure_model(value)
 
     def import_data(self, get_source_data: SourceDataGenerator) -> None:
         """Import data from the source."""
 
         def create_structure(content_type: ContentTypeStr, data: RecordData):
-            if content_type in self.ignored_models:
-                return
             if content_type in self.wrappers:
                 wrapper = self.wrappers[content_type]
                 if wrapper is None:
                     return
             else:
-                wrapper = self.define_model(content_type)
+                wrapper = self.configure_model(content_type)
 
             for field_name in data.keys():
                 if field_name in wrapper.fields:
@@ -561,16 +601,20 @@ class SourceAdapter(BaseAdapter):
 
         # First pass to create wrappers structure
         for content_type, data in get_source_data():
-            create_structure(content_type, data)
+            if content_type not in self.ignored_content_types:
+                create_structure(content_type, data)
 
         # Create importers and enhance structure
-        while self.not_initialized_wrappers:
-            wrapper = self.not_initialized_wrappers.pop()
-            wrapper.create_importers()
+        while True:
+            wrappers = [wrapper for wrapper in self.wrappers.values() if wrapper.can_be_configured]
+            if not wrappers:
+                break
+            for wrapper in wrappers:
+                wrapper.create_importers()
 
         # Second pass to import actual data
         for content_type, data in get_source_data():
-            if content_type in self.ignored_models:
+            if content_type in self.ignored_content_types:
                 continue
             wrapper = self.wrappers.get(content_type, None)
             if wrapper:
@@ -675,7 +719,7 @@ def _generic_relation_importer_factory(
     # TBD: Consider storing the content_type and related id in separate fields for ImporterModel
     type_name = f"{source_name}_type"
     id_name = f"{source_name}_id"
-    wrapper.nautobot.ignore_fields(type_name, id_name)
+    wrapper.nautobot.ignore_fields(type_name, id_name, f"{type_name}_id")
 
     def importer(source: RecordData, target: RecordData) -> None:
         content_type = source.get(type_name, None)
@@ -701,7 +745,7 @@ def _relation_importer_factory(
     source_name: FieldName,
     nautobot_name: FieldName,
 ) -> SourceFieldImporter:
-    related_wrapper = wrapper.adapter.get_or_create_wrapper(field.related_model, map_back=True)
+    related_wrapper = wrapper.adapter.get_or_create_wrapper(field.related_model)
 
     if related_wrapper.nautobot.pk_type == "UUIDField":
         return _uuid_importer_factory(wrapper, field, source_name, nautobot_name, related_wrapper)
@@ -761,7 +805,7 @@ def _m2m_importer_factory(
     source_name: FieldName,
     nautobot_name: FieldName,
 ) -> SourceFieldImporter:
-    related_wrapper = wrapper.adapter.get_or_create_wrapper(field.related_model, map_back=True)
+    related_wrapper = wrapper.adapter.get_or_create_wrapper(field.related_model)
 
     if related_wrapper.content_type == "contenttypes.contenttype":
         return _content_types_importer_factory(source_name, nautobot_name)

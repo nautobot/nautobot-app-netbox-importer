@@ -169,9 +169,9 @@ class NautobotModelWrapper:
 
         return self.importer
 
-    def ignore_fields(self, *field_name: FieldName) -> None:
-        """Skip a field when importing."""
-        self.ignored_fields.update(field_name)
+    def ignore_fields(self, *field_names: FieldName) -> None:
+        """Skip a fields when importing."""
+        self.ignored_fields.update(field_names)
 
     def add_field(self, field_name: FieldName, internal_type: InternalFieldTypeStr) -> None:
         """Add a field to the model."""
@@ -225,9 +225,9 @@ class NautobotAdapter(BaseAdapter):
         """Initialize the adapter."""
         super().__init__("Nautobot", *args, **kwargs)
         self.clean_failures: Dict[NautobotBaseModelType, Set[Uid]] = {}
-        self.validation_errors: Optional[Dict[NautobotBaseModelType, Set[ValidationError]]] = None
+        self.validation_errors: Optional[Dict[ContentTypeStr, Set[ValidationError]]] = None
 
-    def get_validation_errors(self) -> Dict[NautobotBaseModelType, Set[ValidationError]]:
+    def get_validation_errors(self) -> Dict[ContentTypeStr, Set[ValidationError]]:
         """Re-run clean() on all instances that failed validation."""
         if self.validation_errors is not None:
             return self.validation_errors
@@ -238,15 +238,17 @@ class NautobotAdapter(BaseAdapter):
         self.clean_failures = {}
 
         for model_type, uids in failures.items():
+            errors = None
             for uid in uids:
                 instance = model_type.objects.get(id=uid)
                 try:
                     instance.clean()
                 except ValidationError as error:
-                    if model_type in self.validation_errors:
-                        self.validation_errors[model_type].add(error)
+                    if errors:
+                        errors.add(error)
                     else:
-                        self.validation_errors[model_type] = set([error])
+                        errors = set([error])
+                        self.validation_errors[model_type._meta.label.lower()] = errors  # type: ignore
 
         return self.validation_errors
 

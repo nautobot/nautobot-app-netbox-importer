@@ -49,7 +49,6 @@ INTERNAL_TYPE_TO_ANNOTATION: Mapping[InternalFieldTypeStr, type] = {
     "DateField": datetime.date,
     "DateTimeField": datetime.datetime,
     "DecimalField": decimal.Decimal,
-    "Int": int,
     "IntegerField": int,
     "JSONField": Any,
     "PositiveIntegerField": int,
