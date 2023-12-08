@@ -13,8 +13,8 @@ from uuid import UUID
 from diffsync import DiffSyncModel
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
-from nautobot.core.utils.lookup import get_model_from_name
 from django.db.models import Max
+from nautobot.core.utils.lookup import get_model_from_name
 from pydantic import Field as PydanticField
 
 from .base import EMPTY_VALUES
@@ -25,9 +25,11 @@ from .base import ContentTypeStr
 from .base import FieldName
 from .base import GenericForeignKey
 from .base import InternalFieldTypeStr
-from .base import NautobotBaseModel, NautobotBaseModelType
+from .base import NautobotBaseModel
+from .base import NautobotBaseModelType
 from .base import RecordData
-from .base import logger, Uid
+from .base import Uid
+from .base import logger
 
 NautobotFields = MutableMapping[FieldName, InternalFieldTypeStr]
 
@@ -286,14 +288,14 @@ class NautobotAdapter(BaseAdapter):
                 instance.clean()
             # `clean()` can be called again by `iter_validation_errors()` after adding everything to the database
             # pylint: disable=broad-exception-caught
-            except Exception:
-                id = instance.id
-                if not isinstance(id, Uid):
-                    raise TypeError(f"Invalid id {id}")
+            except Exception as exc:
+                uid = instance.id
+                if not isinstance(uid, Uid):
+                    raise TypeError(f"Invalid uid {uid}") from exc
                 if instance.__class__ in self.clean_failures:
-                    self.clean_failures[instance.__class__].add(id)
+                    self.clean_failures[instance.__class__].add(uid)
                 else:
-                    self.clean_failures[instance.__class__] = set([id])
+                    self.clean_failures[instance.__class__] = set([uid])
 
             try:
                 instance.save()
