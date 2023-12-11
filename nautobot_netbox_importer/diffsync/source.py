@@ -1,8 +1,6 @@
-"""Generic Nautobot DiffSync Importer."""
+"""Generic DiffSync Source Importer."""
 import datetime
 import json
-from enum import Enum
-from enum import auto
 from typing import Any
 from typing import Callable
 from typing import Dict
@@ -14,11 +12,11 @@ from typing import NamedTuple
 from typing import Optional
 from typing import OrderedDict
 from typing import Set
-from typing import Tuple
 from typing import Union
 from uuid import UUID
 
 from diffsync.exceptions import ObjectNotFound as DiffSyncObjectNotFound
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.core.exceptions import FieldDoesNotExist as DjangoFieldDoesNotExist
 from django.db.models import Field as DjangoField
 from nautobot.core.models.tree_queries import TreeModel
@@ -37,8 +35,6 @@ from .base import NautobotBaseModelType
 from .base import RecordData
 from .base import Uid
 from .base import get_content_type_id
-from .base import get_internal_field_type
-from .base import get_source_value
 from .base import logger
 from .base import source_pk_to_uuid
 from .nautobot import IMPORT_ORDER
@@ -57,20 +53,12 @@ class SourceRecord(NamedTuple):
 
 SourceDataGenerator = Callable[[], Iterable[SourceRecord]]
 SourceFieldImporter = Callable[[RecordData, RecordData], None]
-SourceFieldImporterFactory = Callable[["SourceModelWrapper", FieldName], None]
+SourceFieldImporterFactory = Callable[["SourceField"], None]
 SourceFieldDefinition = Union[
     None,  # Ignore field
     FieldName,  # Rename field
     SourceFieldImporterFactory,  # Field importer factory
 ]
-
-
-class AddFieldDuplicity(Enum):
-    """Add field duplicity."""
-
-    IGNORE = auto()
-    REPLACE = auto()
-    FAIL = auto()
 
 
 class ReferencesForwarding(NamedTuple):
@@ -80,13 +68,209 @@ class ReferencesForwarding(NamedTuple):
     field_name: FieldName
 
 
+class SourceAdapter(BaseAdapter):
+    """Source DiffSync Adapter."""
+
+    def __init__(self, name: str, *args, **kwargs):
+        """Initialize the SourceAdapter."""
+        super().__init__(name, *args, **kwargs)
+
+        self.wrappers: OrderedDict[ContentTypeStr, SourceModelWrapper] = OrderedDict()
+        self.nautobot_wrappers: Dict[ContentTypeStr, NautobotModelWrapper] = {}
+        self.ignored_fields: Set[FieldName] = set()
+        self.ignored_content_types: Set[ContentTypeStr] = set()
+
+        # From Nautobot to Source content type mapping
+        # When multiple source content types are mapped to single nautobot content type, mapping is set to `None`
+        self.content_types_back_mapping: Dict[ContentTypeStr, Optional[ContentTypeStr]] = {}
+
+    def configure(
+        self,
+        ignore_fields: Optional[Iterable[FieldName]] = None,
+        ignore_content_types: Optional[Iterable[ContentTypeStr]] = None,
+    ) -> None:
+        """Configure the adapter."""
+        if ignore_fields:
+            self.ignored_fields.update(ignore_fields)
+        if ignore_content_types:
+            self.ignored_content_types.update(ignore_content_types)
+
+    # pylint: disable=too-many-arguments, too-many-branches
+    def configure_model(
+        self,
+        content_type: ContentTypeStr,
+        nautobot_content_type: Optional[ContentTypeStr] = None,
+        extend_content_type: Optional[ContentTypeStr] = None,
+        identifiers: Optional[Iterable[FieldName]] = None,
+        fields: Optional[Mapping[FieldName, SourceFieldDefinition]] = None,
+        default_reference: Optional[RecordData] = None,
+    ) -> "SourceModelWrapper":
+        """Dynamically create and configure a wrapper for a given source content type."""
+        if extend_content_type:
+            extend_wrapper = self.wrappers[extend_content_type]
+            if nautobot_content_type and nautobot_content_type != extend_wrapper.nautobot.content_type:
+                raise ValueError(f"Extension should have different content type {nautobot_content_type}")
+            nautobot_content_type = extend_wrapper.nautobot.content_type
+        else:
+            extend_wrapper = None
+            nautobot_content_type = nautobot_content_type or content_type
+            if nautobot_content_type in self.content_types_back_mapping:
+                if self.content_types_back_mapping[nautobot_content_type] != content_type:
+                    self.content_types_back_mapping[nautobot_content_type] = None
+            else:
+                self.content_types_back_mapping[nautobot_content_type] = content_type
+
+        if content_type in self.wrappers:
+            wrapper = self.wrappers[content_type]
+        else:
+            if nautobot_content_type in self.nautobot_wrappers:
+                nautobot_wrapper = self.nautobot_wrappers[nautobot_content_type]
+            else:
+                nautobot_wrapper = NautobotModelWrapper(nautobot_content_type)
+                self.nautobot_wrappers[nautobot_content_type] = nautobot_wrapper
+
+            wrapper = SourceModelWrapper(self, content_type, nautobot_wrapper, extend_wrapper)
+
+        if identifiers:
+            wrapper.set_identifiers(identifiers)
+        if fields:
+            wrapper.set_fields(**fields)
+        if default_reference:
+            wrapper.set_default_reference(**default_reference)
+
+        return wrapper
+
+    def get_or_create_wrapper(
+        self,
+        value: Union[None, ContentTypeValue, "SourceModelWrapper", NautobotModelWrapper, NautobotBaseModelType],
+    ) -> "SourceModelWrapper":
+        """Get a source Wrapper for a given content type."""
+        map_back = False
+
+        if not value:
+            raise ValueError("Missing value")
+
+        if isinstance(value, SourceModelWrapper):
+            return value
+
+        if isinstance(value, type(NautobotBaseModel)):
+            map_back = True
+            value = value._meta.label.lower()  # type: ignore
+        elif isinstance(value, NautobotModelWrapper):
+            map_back = True
+            value = value.content_type
+
+        if isinstance(value, str):
+            pass
+        elif isinstance(value, int):
+            raise NotImplementedError("Integer content type")
+        elif isinstance(value, Iterable) and len(value) == 2:
+            value = ".".join(value)
+        else:
+            raise ValueError(f"Invalid content type {value}")
+
+        if map_back and value in self.content_types_back_mapping:
+            back_mapping = self.content_types_back_mapping.get(value, None)
+            if not back_mapping:
+                raise ValueError(f"Unambiguous content type back mapping {value}")
+            value = back_mapping
+
+        if value in self.wrappers:
+            return self.wrappers[value]
+
+        return self.configure_model(value)
+
+    def import_data(self, get_source_data: SourceDataGenerator) -> None:
+        """Import data from the source."""
+
+        def create_structure(content_type: ContentTypeStr, data: RecordData):
+            if content_type in self.wrappers:
+                wrapper = self.wrappers[content_type]
+                if wrapper is None:
+                    return
+            else:
+                wrapper = self.configure_model(content_type)
+
+            for field_name in data.keys():
+                if field_name.startswith("_") or field_name in self.ignored_fields:
+                    wrapper.add_field(field_name, None, from_data=True)
+                else:
+                    wrapper.add_field(field_name, field_name, from_data=True)
+
+        # First pass to enhance pre-defined wrappers structure
+        for content_type, data in get_source_data():
+            if content_type not in self.ignored_content_types:
+                create_structure(content_type, data)
+
+        # Create importers, wrappers structure is updated as needed
+        while True:
+            wrappers = [wrapper for wrapper in self.wrappers.values() if wrapper.importers is None]
+            if not wrappers:
+                break
+            for wrapper in wrappers:
+                wrapper.create_importers()
+
+        # Second pass to import actual data
+        for content_type, data in get_source_data():
+            if content_type in self.ignored_content_types:
+                continue
+            wrapper = self.wrappers.get(content_type, None)
+            if wrapper:
+                wrapper.import_record(data)
+
+        # Post processing
+        while any(wrapper.post_import() for wrapper in self.wrappers.values()):
+            pass
+
+    def import_nautobot(self) -> NautobotAdapter:
+        """Import all Nautobot data."""
+        nautobot = NautobotAdapter()
+
+        for nautobot_wrapper in self.get_imported_nautobot_wrappers():
+            importer_model = nautobot_wrapper.importer
+            if not importer_model:
+                raise TypeError(f"Missing importer_model for {nautobot_wrapper.content_type}")
+
+            for nautobot_instance in nautobot_wrapper.model.objects.all():
+                data = get_nautobot_instance_data(nautobot_instance, nautobot_wrapper.fields)
+                try:
+                    instance = importer_model(**data, diffsync=nautobot)
+                    nautobot.add(instance)
+                except Exception:
+                    logger.error("Failed to create instance %s", data, exc_info=True)
+                    raise
+
+            # pylint: disable=protected-access
+            model_name = importer_model._modelname
+            self.top_level.append(model_name)
+            setattr(self, model_name, importer_model)
+            setattr(nautobot, model_name, getattr(self, model_name))
+
+        return nautobot
+
+    def get_imported_nautobot_wrappers(self) -> Generator[NautobotModelWrapper, None, None]:
+        """Get a list of Nautobot model wrappers in the order of import."""
+        result = OrderedDict()
+
+        for wrapper in self.wrappers.values():
+            if wrapper and wrapper.imported_count > 0 and wrapper.nautobot.content_type not in result:
+                result[wrapper.nautobot.content_type] = wrapper.nautobot
+
+        for content_type in IMPORT_ORDER:
+            if content_type in result:
+                yield result[content_type]
+                del result[content_type]
+
+        yield from result.values()
+
+
 # pylint: disable=too-many-instance-attributes
 class SourceModelWrapper:
     """Definition of a source model mapping to Nautobot model."""
 
     def __init__(
         self,
-        adapter: "SourceAdapter",
+        adapter: SourceAdapter,
         content_type: ContentTypeStr,
         nautobot_wrapper: NautobotModelWrapper,
         extend_wrapper: Optional["SourceModelWrapper"] = None,
@@ -94,28 +278,36 @@ class SourceModelWrapper:
         """Initialize the SourceModelWrapper."""
         if content_type in adapter.wrappers:
             raise ValueError(f"Duplicate content type {content_type}")
-
         adapter.wrappers[content_type] = self
-
         self.adapter = adapter
-        self.extend_wrapper = extend_wrapper
         self.content_type = content_type
-        self.importers: List[SourceFieldImporter] = []
-        self.references: Dict[Uid, Set[SourceModelWrapper]] = {}
-        self.uid_to_pk_cache: Dict[Uid, Uid] = {}
-        self.cached_data: Dict[Uid, RecordData] = {}
-        self.references_forwarding: Optional[ReferencesForwarding] = None
-        self.imported_count = 0
-        self.identifiers = ONLY_ID_IDENTIFIERS
-
-        self.default_reference_pk: Optional[Uid] = None
-
         self.nautobot = nautobot_wrapper
 
-        self.can_be_configured = True
-        self.fields: Dict[FieldName, SourceFieldDefinition] = {}
-        self.add_field(self.nautobot.pk_name, None, duplicity=AddFieldDuplicity.FAIL)
+        # Source field names when referencing this model
+        self.identifiers = ONLY_ID_IDENTIFIERS
 
+        # Used to autofill `content_types` field
+        self.references: Dict[Uid, Set[SourceModelWrapper]] = {}
+        self.references_forwarding: Optional[ReferencesForwarding] = None
+
+        # Whether importing record data exteds existing record
+        self.extend_wrapper = extend_wrapper
+
+        # Importers
+        self.importers: Optional[List[SourceFieldImporter]] = None
+
+        # Caching
+        self.uid_to_pk_cache: Dict[Uid, Uid] = {}
+        self.cached_data: Dict[Uid, RecordData] = {}
+        self.default_reference_pk: Optional[Uid] = None
+
+        # Stats
+        self.imported_count = 0
+
+        # Source fields defintions
+        self.fields: OrderedDict[FieldName, SourceField] = OrderedDict()
+        self.add_field(self.nautobot.pk_name, None)
+        self.fields[self.nautobot.pk_name].nautobot_name = self.nautobot.pk_name
         if issubclass(self.nautobot.model, TreeModel):
             self.set_fields(
                 tree_id=None,
@@ -135,102 +327,62 @@ class SourceModelWrapper:
             self.identifiers = list(identifiers)
 
     def set_references_forwarding(self, content_type: ContentTypeStr, field_name: FieldName) -> None:
-        """Set references forwarding to another model."""
+        """Set references forwarding to another model.
+
+        When other models reference this model, they will be forwarded to `content_type` source model wrapper, based on `field_name`.
+        e.g. References to Site, Region or Location are forwarded to LocationType.
+        """
         self.references_forwarding = ReferencesForwarding(content_type, field_name)
 
     def set_fields(self, *field_names: FieldName, **fields: SourceFieldDefinition) -> None:
         """Set fields definitions."""
         for field_name in field_names:
-            self.add_field(field_name, field_name, duplicity=AddFieldDuplicity.REPLACE)
+            self.add_field(field_name, field_name)
         for field_name, definition in fields.items():
-            self.add_field(field_name, definition, duplicity=AddFieldDuplicity.REPLACE)
+            self.add_field(field_name, definition)
 
-    def add_field(self, name: FieldName, definition: SourceFieldDefinition, duplicity=AddFieldDuplicity.FAIL) -> None:
+    def format_field_name(self, name: FieldName) -> str:
+        """Format a field name for logging."""
+        return f"{self.content_type}->{name}"
+
+    def add_field(self, name: FieldName, definition: SourceFieldDefinition, from_data: bool = False) -> None:
         """Add a field definition for a source field."""
-        if name in self.fields or name in self.nautobot.ignored_fields:
-            if duplicity == AddFieldDuplicity.IGNORE:
-                return
-            if duplicity == AddFieldDuplicity.FAIL:
-                raise ValueError(f"Duplicate field {name}")
-            if duplicity != AddFieldDuplicity.REPLACE:
-                raise NotImplementedError(f"Unsupported duplicity {duplicity}")
-
-        if definition is None:
-            logger.warning("Skipping field %s %s", self.content_type, name)
+        if self.importers is not None:
+            raise ValueError(f"Can't add field {self.format_field_name(name)}, model's importers already created.")
+        if name in self.fields:
+            self.fields[name].reset_definition(definition, from_data)
         else:
-            logger.warning("Adding field %s %s %s", self.content_type, name, definition)
-
-        if not self.can_be_configured:
-            if definition is None:
-                self.nautobot.ignore_fields(name)
-                return
-            raise ValueError(f"Can't add field {name} to {self.content_type}, it's already imported")
-
-        self.fields[name] = definition
-
-    def add_role_importer(self, source_name: FieldName, role_wrapper: "SourceModelWrapper") -> None:
-        """Add a field definition for a role field."""
-        nautobot_name = "role_id"
-
-        def importer(source: RecordData, target: RecordData) -> None:
-            value = source.get(source_name, None)
-            if value in EMPTY_VALUES:
-                return
-
-            if value:
-                uuid = role_wrapper.get_pk_from_uid(value)
-                target[nautobot_name] = uuid
-                role_wrapper.add_reference(uuid, self)
-            else:
-                raise ValueError(f"Invalid value {value} for field {source_name}")
-
-        self.add_importer(importer, nautobot_name, "RoleField")
+            self.fields[name] = SourceField(self, name, definition, from_data)
 
     def create_importers(self) -> None:
         """Create importers for all fields."""
-        self.can_be_configured = False
-        for field_name, definition in self.fields.items():
-            if definition is None:
-                continue
+        if self.importers is not None:
+            raise RuntimeError(f"Importers already created for {self.content_type}")
 
-            if isinstance(definition, FieldName):
+        while True:
+            fields = [field_name for field_name, field in self.fields.items() if not field.processed]
+            if not fields:
+                break
+
+            for field_name in fields:
                 try:
-                    self.add_default_importer(field_name, definition)
+                    self.fields[field_name].create_importer()
                 except Exception:
-                    logger.error("Failed to create importer for %s %s", self.content_type, field_name)
+                    logger.error("Failed to create importer for %s", self.format_field_name(field_name))
                     raise
-                continue
 
-            if callable(definition):
-                try:
-                    definition(self, field_name)
-                except Exception:
-                    logger.error("Failed to create importer for %s %s", self.content_type, field_name)
-                    raise
-                continue
-
-            raise NotImplementedError(f"Unsupported field definition {definition}")
-
-    def add_importer(
-        self,
-        definition: SourceFieldImporter,
-        nautobot_field: Optional[FieldName] = None,
-        field_type: Optional[InternalFieldTypeStr] = None,
-    ) -> None:
-        """Add a field importer."""
-        self.importers.append(definition)
-        if nautobot_field:
-            if not field_type:
-                raise ValueError("Missing field_type")
-            self.nautobot.add_field(nautobot_field, field_type)
+        self.importers = [field.importer for field in self.fields.values() if field.importer]
 
     def get_pk_from_uid(self, uid: Uid) -> Uid:
         """Get a source primary key for a given source uid."""
         if uid in self.uid_to_pk_cache:
             return self.uid_to_pk_cache[uid]
+
         if self.nautobot.pk_type == "UUIDField":
             if self.extend_wrapper:
-                return self.extend_wrapper.get_pk_from_uid(uid)
+                result = self.extend_wrapper.get_pk_from_uid(uid)
+                self.uid_to_pk_cache[uid] = result
+                return result
             return source_pk_to_uuid(self.content_type or self.content_type, uid)
 
         if self.nautobot.pk_type == "AutoField":
@@ -278,21 +430,16 @@ class SourceModelWrapper:
         nautobot_content_type = self.nautobot.content_type
         importer_model = self.nautobot.get_importer()
         uid = self.get_pk_from_data(data)
-        print(f"Importing item {self.content_type} {uid} {data}")
         instance = self.adapter.get_or_none(importer_model, {"id": uid})
 
         target_data = {}
         if uid:
             target_data["id"] = uid
 
+        if self.importers is None:
+            raise RuntimeError(f"Importers not created for {self.content_type}")
         for importer in self.importers:
             importer(data, target_data)
-
-        for field_name in self.nautobot.ignored_fields:
-            if field_name in target_data:
-                del target_data[field_name]
-
-        print(f"Importing as {target_data}")
 
         try:
             if instance:
@@ -308,63 +455,12 @@ class SourceModelWrapper:
                 instance = importer_model(**target_data, diffsync=self.adapter)
                 self.adapter.add(instance)
                 self.nautobot.imported_count += 1
-                self.imported_count += 1
+
+            self.imported_count += 1
             return instance
         except Exception:
             logger.error("Failed to create or add instance %s %s %s %s", nautobot_content_type, data, uid, target_data)
             raise
-
-    def get_type_and_field(self, target_name: FieldName) -> Tuple[InternalFieldTypeStr, Optional[DjangoField]]:
-        """Get a field type and field for a given target field name."""
-        meta = self.nautobot.model._meta
-
-        if target_name == "custom_field_data":
-            return "CustomFieldData", meta.get_field("_custom_field_data")
-
-        try:
-            field = meta.get_field(target_name)
-        except DjangoFieldDoesNotExist:
-            if hasattr(self.nautobot.model, target_name):
-                return "Any", None
-            print(f"Missing field {self.content_type} {target_name}")
-            raise
-
-        return get_internal_field_type(field), field
-
-    def add_default_importer(self, source_name: FieldName, nautobot_name: FieldName) -> None:
-        """Add a default importer for a given source field."""
-        try:
-            internal_type, nautobot_field = self.get_type_and_field(nautobot_name)
-        except DjangoFieldDoesNotExist:
-            self.add_field(source_name, None, AddFieldDuplicity.IGNORE)
-            return
-
-        if not nautobot_field:
-            importer = _property_importer_factory(source_name, nautobot_name)
-        elif internal_type == "CustomFieldData":
-            importer = _property_importer_factory(source_name, nautobot_name)
-        elif internal_type == "JSONField":
-            importer = _json_importer_factory(source_name, nautobot_name)
-        elif internal_type == "DateField":
-            importer = _date_importer_factory(source_name, nautobot_name)
-        elif internal_type == "DateTimeField":
-            importer = _datetime_importer_factory(source_name, nautobot_name)
-        elif internal_type == "ManyToManyField":
-            importer = _m2m_importer_factory(self, nautobot_field, source_name, nautobot_name)
-        elif internal_type == "StatusField":
-            nautobot_name = f"{nautobot_name}_id"
-            importer = _status_importer_factory(self, nautobot_field, source_name, nautobot_name)
-        elif internal_type == "GenericForeignKey":
-            importer = _generic_relation_importer_factory(self, source_name, nautobot_name)
-        elif internal_type in REFERENCE_INTERNAL_TYPES:
-            nautobot_name = f"{nautobot_name}_id"
-            importer = _relation_importer_factory(self, nautobot_field, source_name, nautobot_name)
-        elif internal_type in INTEGER_INTERNAL_TYPES:
-            importer = _integer_importer_factory(nautobot_field, source_name, nautobot_name)
-        else:
-            importer = _field_importer_factory(nautobot_field, source_name, nautobot_name)
-
-        self.add_importer(importer, nautobot_name, internal_type)
 
     def get(self, uid: Uid) -> ImporterModel:
         """Get a single item from the source."""
@@ -389,8 +485,9 @@ class SourceModelWrapper:
 
         If `data` are referenced by other models, they will be imported automatically, otherwise they will be ignored.
         """
-        for field_name in data.keys():
-            self.add_field(field_name, field_name, AddFieldDuplicity.IGNORE)
+        if self.importers is None:
+            for field_name in data.keys():
+                self.add_field(field_name, field_name, from_data=True)
 
         uid = self.get_pk_from_data(data)
         self.cached_data[uid] = data
@@ -447,495 +544,395 @@ class SourceModelWrapper:
             self.references[uid] = {wrapper}
 
 
-class SourceAdapter(BaseAdapter):
-    """Source DiffSync Adapter."""
+# pylint: disable=too-many-public-methods
+class SourceField:
+    """Source Field."""
 
-    def __init__(self, name: str, *args, **kwargs):
-        """Initialize the SourceAdapter."""
-        super().__init__(name, *args, **kwargs)
-
-        self.wrappers: OrderedDict[ContentTypeStr, SourceModelWrapper] = OrderedDict()
-        self.nautobot_wrappers: Dict[ContentTypeStr, NautobotModelWrapper] = {}
-        self.ignored_fields: Set[FieldName] = set()
-        self.ignored_content_types: Set[ContentTypeStr] = set()
-
-        # From Nautobot to Source
-        self.content_types_back_mapping: Dict[ContentTypeStr, Optional[ContentTypeStr]] = {}
-
-    def configure(
+    def __init__(
         self,
-        ignore_fields: Optional[Iterable[FieldName]] = None,
-        ignore_content_types: Optional[Iterable[ContentTypeStr]] = None,
-    ) -> None:
-        """Configure the adapter."""
-        if ignore_fields:
-            self.ignored_fields.update(ignore_fields)
-
-        if ignore_content_types:
-            self.ignored_content_types.update(ignore_content_types)
-
-    # pylint: disable=too-many-arguments, too-many-branches
-    def configure_model(
-        self,
-        content_type: ContentTypeStr,
-        nautobot_content_type: Optional[ContentTypeStr] = None,
-        extend_content_type: Optional[ContentTypeStr] = None,
-        identifiers: Optional[Iterable[FieldName]] = None,
-        fields: Optional[Mapping[FieldName, SourceFieldDefinition]] = None,
-        default_reference: Optional[RecordData] = None,
-    ) -> SourceModelWrapper:
-        """Dynamically create a wrapper for a given source content type."""
-        if extend_content_type:
-            extend_wrapper = self.wrappers[extend_content_type]
-            if nautobot_content_type and nautobot_content_type != extend_wrapper.nautobot.content_type:
-                raise ValueError(f"Extension should have different content type {nautobot_content_type}")
-            nautobot_content_type = extend_wrapper.nautobot.content_type
+        wrapper: SourceModelWrapper,
+        name: FieldName,
+        definition: SourceFieldDefinition,
+        from_data=False,
+    ):
+        """Initialize the SourceField."""
+        self.wrapper = wrapper
+        self.name = name
+        self.from_data = from_data
+        self.is_custom = not from_data
+        self.definition = definition
+        self.processed = False
+        if definition is None:
+            logger.warning("Skipping field %s", wrapper.format_field_name(name))
         else:
-            extend_wrapper = None
-            nautobot_content_type = nautobot_content_type or content_type
-            if nautobot_content_type in self.content_types_back_mapping:
-                if self.content_types_back_mapping[nautobot_content_type] != content_type:
-                    self.content_types_back_mapping[nautobot_content_type] = None
-            else:
-                self.content_types_back_mapping[nautobot_content_type] = content_type
+            logger.warning("Adding field %s", wrapper.format_field_name(name))
+        self.nautobot_name: FieldName = ""
+        self.importer: Optional[SourceFieldImporter] = None
+        self.internal_type: InternalFieldTypeStr = "None"
+        self.django_field: Optional[DjangoField] = None
+        self.default_value: Any = None
 
-        if content_type in self.wrappers:
-            wrapper = self.wrappers[content_type]
+    def __str__(self) -> str:
+        """Return a string representation of the field."""
+        return self.wrapper.format_field_name(self.name)
+
+    def reset_definition(self, definition: SourceFieldDefinition, from_data: bool) -> None:
+        """Set a custom definition for the field."""
+        if from_data:
+            self.from_data = True
+            return
+        if self.processed:
+            raise RuntimeError(f"Field already processed. {self.wrapper.format_field_name(self.name)}")
+        if self.is_custom:
+            raise RuntimeError(
+                f"Can't set custom definition for a non-custom field {self.wrapper.format_field_name(self.name)}"
+            )
+        self.is_custom = True
+        self.definition = definition
+
+    def create_importer(self) -> None:
+        """Create importer for the field."""
+        if self.processed:
+            raise RuntimeError(f"Field {self.wrapper.format_field_name(self.name)} already processed")
+        self.processed = True
+
+        if self.definition is None:
+            return
+
+        if isinstance(self.definition, FieldName):
+            self.set_default_importer(self.definition)
+        elif callable(self.definition):
+            self.definition(self)
         else:
-            if nautobot_content_type in self.nautobot_wrappers:
-                nautobot_wrapper = self.nautobot_wrappers[nautobot_content_type]
-            else:
-                nautobot_wrapper = NautobotModelWrapper(nautobot_content_type)
-                self.nautobot_wrappers[nautobot_content_type] = nautobot_wrapper
+            raise NotImplementedError(f"Unsupported field definition {self.definition}")
 
-            wrapper = SourceModelWrapper(self, content_type, nautobot_wrapper, extend_wrapper)
+    def get_source_value(self, source: RecordData) -> Any:
+        """Get a value from the source data, returning a default value if the value is empty."""
+        if self.name not in source:
+            return self.default_value
 
-        if identifiers:
-            wrapper.set_identifiers(identifiers)
-        if fields:
-            wrapper.set_fields(**fields)
-        if default_reference:
-            wrapper.set_default_reference(**default_reference)
+        result = source[self.name]
+        return self.default_value if result in EMPTY_VALUES else result
 
-        return wrapper
+    def set_nautobot_field(self, nautobot_name: FieldName) -> None:
+        """Set a Nautobot field name for the field."""
+        meta = self.wrapper.nautobot.model._meta
 
-    def print_summary(self, validation_errors) -> None:
-        """Print a summary of the import."""
-        print("= Summary ======================================")
-
-        for wrapper in self.get_imported_nautobot_wrappers():
-            print(f"  {wrapper.content_type}: {wrapper.imported_count}")
-
-        if validation_errors:
-            print("- Validation errors: ---------------------------")
-            total = 0
-            for model_type, errors in validation_errors.items():
-                total += len(errors)
-                print(f"  {model_type}: {len(errors)}")
-                for error in errors:
-                    print(f"    {error}")
-            print("Total validation errors:", total)
+        if nautobot_name == "custom_field_data":
+            self.django_field = meta.get_field("_custom_field_data")
+            self.internal_type = "CustomFieldData"
         else:
-            print("- No validation errors ------------------------")
-
-        print("================================================")
-
-    def get_or_create_wrapper(
-        self,
-        value: Union[None, ContentTypeValue, SourceModelWrapper, NautobotModelWrapper, NautobotBaseModelType],
-    ) -> SourceModelWrapper:
-        """Get a source Wrapper for a given content type."""
-        map_back = False
-
-        if not value:
-            raise ValueError("Missing value")
-
-        if isinstance(value, SourceModelWrapper):
-            return value
-
-        if isinstance(value, type(NautobotBaseModel)):
-            map_back = True
-            value = value._meta.label.lower()  # type: ignore
-        elif isinstance(value, NautobotModelWrapper):
-            map_back = True
-            value = value.content_type
-
-        if isinstance(value, str):
-            pass
-        elif isinstance(value, int):
-            raise NotImplementedError("Integer content type")
-        elif isinstance(value, Iterable) and len(value) == 2:
-            value = ".".join(value)
-        else:
-            raise ValueError(f"Invalid content type {value}")
-
-        if map_back and value in self.content_types_back_mapping:
-            back_mapping = self.content_types_back_mapping.get(value, None)
-            if not back_mapping:
-                raise ValueError(f"Unambiguous content type back mapping {value}")
-            value = back_mapping
-
-        if value in self.wrappers:
-            return self.wrappers[value]
-
-        return self.configure_model(value)
-
-    def import_data(self, get_source_data: SourceDataGenerator) -> None:
-        """Import data from the source."""
-
-        def create_structure(content_type: ContentTypeStr, data: RecordData):
-            if content_type in self.wrappers:
-                wrapper = self.wrappers[content_type]
-                if wrapper is None:
+            try:
+                self.django_field = meta.get_field(nautobot_name)
+                if isinstance(self.django_field, GenericForeignKey):
+                    # GenericForeignKey is not a real field, doesn't have `get_internal_type` method
+                    self.internal_type = "GenericForeignKey"
+                elif hasattr(self.django_field, "get_internal_type"):
+                    self.internal_type = self.django_field.get_internal_type()
+                    if self.internal_type in REFERENCE_INTERNAL_TYPES and self.internal_type != "ManyToManyField":
+                        # Reference fields are converted to id fields
+                        nautobot_name = f"{nautobot_name}_id"
+                else:
+                    raise NotImplementedError(f"Unsupported field type {self}")
+            except DjangoFieldDoesNotExist:
+                if not hasattr(self.wrapper.nautobot.model, nautobot_name):
+                    logger.warning(f"Missing field {self.wrapper.format_field_name(nautobot_name)}")
                     return
-            else:
-                wrapper = self.configure_model(content_type)
+                self.internal_type = "Property"
 
-            for field_name in data.keys():
-                if field_name in wrapper.fields:
-                    continue
-                if field_name.startswith("_") or field_name in self.ignored_fields:
-                    wrapper.add_field(field_name, None, AddFieldDuplicity.FAIL)
-                    continue
-                wrapper.add_field(field_name, field_name, AddFieldDuplicity.FAIL)
+        self.nautobot_name = nautobot_name
+        self.wrapper.nautobot.add_field(nautobot_name, self.internal_type)
+        if self.django_field:
+            self.default_value = getattr(self.django_field, "default", None)
+            if self.default_value in EMPTY_VALUES:
+                self.default_value = None
 
-        # First pass to create wrappers structure
-        for content_type, data in get_source_data():
-            if content_type not in self.ignored_content_types:
-                create_structure(content_type, data)
+    def set_importer(self, importer: Optional[SourceFieldImporter]) -> None:
+        """Set field importer."""
+        self.importer = importer
 
-        # Create importers and enhance structure
-        while True:
-            wrappers = [wrapper for wrapper in self.wrappers.values() if wrapper.can_be_configured]
-            if not wrappers:
-                break
-            for wrapper in wrappers:
-                wrapper.create_importers()
-
-        # Second pass to import actual data
-        for content_type, data in get_source_data():
-            if content_type in self.ignored_content_types:
-                continue
-            wrapper = self.wrappers.get(content_type, None)
-            if wrapper:
-                wrapper.import_record(data)
-
-        # Post processing
-        while any(wrapper.post_import() for wrapper in self.wrappers.values()):
-            pass
-
-    def import_nautobot(self) -> NautobotAdapter:
-        """Import all Nautobot data."""
-        nautobot = NautobotAdapter()
-
-        for wrapper in self.get_imported_nautobot_wrappers():
-            importer_model = wrapper.importer
-            if not importer_model:
-                raise TypeError(f"Missing importer_model for {wrapper.content_type}")
-
-            for nautobot_instance in wrapper.model.objects.all():
-                data = get_nautobot_instance_data(nautobot_instance, wrapper.fields)
-                try:
-                    instance = importer_model(**data, diffsync=nautobot)
-                    nautobot.add(instance)
-                except Exception:
-                    logger.error("Failed to create instance %s", data, exc_info=True)
-                    raise
-
-            # pylint: disable=protected-access
-            model_name = importer_model._modelname
-            self.top_level.append(model_name)
-            setattr(self, model_name, importer_model)
-            setattr(nautobot, model_name, getattr(self, model_name))
-
-        return nautobot
-
-    def get_imported_nautobot_wrappers(self) -> Generator[NautobotModelWrapper, None, None]:
-        """Get a list of Nautobot model wrappers in the order of import."""
-        wrappers = OrderedDict()
-
-        for wrapper in self.wrappers.values():
-            if wrapper and wrapper.imported_count > 0 and wrapper.nautobot.content_type not in wrappers:
-                wrappers[wrapper.nautobot.content_type] = wrapper.nautobot
-
-        for content_type in IMPORT_ORDER:
-            if content_type in wrappers:
-                yield wrappers[content_type]
-                del wrappers[content_type]
-
-        yield from wrappers.values()
-
-
-def _property_importer_factory(source_name: FieldName, nautobot_name: FieldName) -> SourceFieldImporter:
-    def importer(source: RecordData, target: RecordData) -> None:
-        value = source.get(source_name, None)
-        if value not in EMPTY_VALUES:
-            target[nautobot_name] = value
-
-    return importer
-
-
-def _integer_importer_factory(
-    field: DjangoField,
-    source_name: FieldName,
-    nautobot_name: FieldName,
-) -> SourceFieldImporter:
-    default_value = None if field.default in EMPTY_VALUES else field.default
-
-    def importer(source: RecordData, target: RecordData) -> None:
-        value = get_source_value(source, source_name, default_value)
-        if value in EMPTY_VALUES:
+    def set_default_importer(self, nautobot_name: FieldName) -> None:
+        """Set default field importer."""
+        self.set_nautobot_field(nautobot_name)
+        if self.internal_type == "None":
             return
 
-        float_value = float(value)
-        if not float_value.is_integer():
-            raise ValueError(f"Invalid value {value} for field {source_name}")
-
-        target[nautobot_name] = int(float_value)
-
-    return importer
-
-
-def _field_importer_factory(
-    field: DjangoField,
-    source_name: FieldName,
-    nautobot_name: FieldName,
-) -> SourceFieldImporter:
-    default_value = None if field.default in EMPTY_VALUES else field.default
-
-    def importer(source: RecordData, target: RecordData) -> None:
-        value = get_source_value(source, source_name, default_value)
-        if value not in EMPTY_VALUES:
-            target[nautobot_name] = value
-
-    return importer
-
-
-def _generic_relation_importer_factory(
-    wrapper: SourceModelWrapper,
-    source_name: FieldName,
-    nautobot_name: FieldName,
-) -> SourceFieldImporter:
-    # TBD: Consider storing the content_type and related id in separate fields for ImporterModel
-    type_name = f"{source_name}_type"
-    id_name = f"{source_name}_id"
-    wrapper.nautobot.ignore_fields(type_name, id_name, f"{type_name}_id")
-
-    def importer(source: RecordData, target: RecordData) -> None:
-        content_type = source.get(type_name, None)
-        if not content_type:
-            return
-
-        related_wrapper = wrapper.adapter.get_or_create_wrapper(content_type)
-
-        value = source.get(id_name, None)
-        if value is None:
-            raise ValueError(f"Missing {id_name} for {type_name} {related_wrapper.content_type}")
-
-        result = related_wrapper.get_pk_from_identifiers(value)
-        target[nautobot_name] = (related_wrapper.content_type, result)
-        related_wrapper.add_reference(result, wrapper)
-
-    return importer
-
-
-def _relation_importer_factory(
-    wrapper: SourceModelWrapper,
-    field: DjangoField,
-    source_name: FieldName,
-    nautobot_name: FieldName,
-) -> SourceFieldImporter:
-    related_wrapper = wrapper.adapter.get_or_create_wrapper(field.related_model)
-
-    if related_wrapper.nautobot.pk_type == "UUIDField":
-        return _uuid_importer_factory(wrapper, field, source_name, nautobot_name, related_wrapper)
-
-    if related_wrapper.content_type == "contenttypes.contenttype":
-        return _content_type_importer_factory(wrapper, source_name, nautobot_name)
-
-    raise NotImplementedError(f"Unsupported relation importer {wrapper.content_type} field {field}")
-
-
-def _content_type_importer_factory(
-    wrapper: SourceModelWrapper,
-    source_name: FieldName,
-    nautobot_name: FieldName,
-) -> SourceFieldImporter:
-    def importer(source: RecordData, target: RecordData) -> None:
-        content_type = source.get(source_name, None)
-        if not content_type:
-            return
-
-        related_wrapper = wrapper.adapter.get_or_create_wrapper(content_type)
-        target[nautobot_name] = related_wrapper.nautobot.get_content_type().id  # type: ignore
-
-    return importer
-
-
-def _uuid_importer_factory(
-    wrapper: SourceModelWrapper,
-    field: DjangoField,
-    source_name: FieldName,
-    nautobot_name: FieldName,
-    related_wrapper: SourceModelWrapper,
-) -> SourceFieldImporter:
-    default_value = related_wrapper.default_reference_pk if field.default in EMPTY_VALUES else field.default
-
-    if not (default_value is None or isinstance(default_value, UUID)):
-        raise NotImplementedError(f"Default value {default_value} is not a UUID")
-
-    def importer(source: RecordData, target: RecordData) -> None:
-        value = get_source_value(source, source_name, default_value)
-        if value in EMPTY_VALUES:
-            return
-
-        if isinstance(value, Uid):
-            result = related_wrapper.get_pk_from_uid(value)
+        if not self.django_field:
+            self.set_property_importer()
+        elif self.internal_type == "CustomFieldData":
+            self.set_property_importer()
+        elif self.internal_type == "JSONField":
+            self.set_json_importer()
+        elif self.internal_type == "DateField":
+            self.set_date_importer()
+        elif self.internal_type == "DateTimeField":
+            self.set_datetime_importer()
+        elif self.internal_type == "ManyToManyField":
+            self.set_m2m_importer()
+        elif self.internal_type == "StatusField":
+            self.set_status_importer()
+        elif self.internal_type == "GenericForeignKey":
+            self.set_generic_relation_importer()
+        elif self.internal_type in REFERENCE_INTERNAL_TYPES:
+            self.set_relation_importer()
+        elif self.internal_type in INTEGER_INTERNAL_TYPES:
+            self.set_integer_importer()
         else:
-            result = related_wrapper.get_pk_from_identifiers(value)
-        target[nautobot_name] = result
-        related_wrapper.add_reference(result, wrapper)
+            self.set_field_importer()
 
-    return importer
+    def set_property_importer(self) -> None:
+        """Set a property importer."""
 
+        def importer(source: RecordData, target: RecordData) -> None:
+            value = source.get(self.name, None)
+            if value not in EMPTY_VALUES:
+                target[self.nautobot_name] = value
 
-def _m2m_importer_factory(
-    wrapper: SourceModelWrapper,
-    field: DjangoField,
-    source_name: FieldName,
-    nautobot_name: FieldName,
-) -> SourceFieldImporter:
-    related_wrapper = wrapper.adapter.get_or_create_wrapper(field.related_model)
+        self.set_importer(importer)
 
-    if related_wrapper.content_type == "contenttypes.contenttype":
-        return _content_types_importer_factory(source_name, nautobot_name)
+    def set_role_importer(self, role_wrapper: "SourceModelWrapper") -> None:
+        """Set a role field importer."""
 
-    if related_wrapper.identifiers is not ONLY_ID_IDENTIFIERS:
-        return _identifiers_importer_factory(related_wrapper, source_name, nautobot_name)
-
-    return _uuids_importer_factory(source_name, nautobot_name, related_wrapper)
-
-
-def _identifiers_importer_factory(
-    related_wrapper: SourceModelWrapper,
-    source_name: FieldName,
-    nautobot_name: FieldName,
-) -> SourceFieldImporter:
-    def importer(source: RecordData, target: RecordData) -> None:
-        values = source.get(source_name, None)
-        if values in EMPTY_VALUES:
-            return
-
-        if not isinstance(values, (list, set)):
-            raise ValueError(f"Invalid value {values} for field {source_name}")
-
-        target[nautobot_name] = set(related_wrapper.get_pk_from_identifiers(item) for item in values)
-
-    return importer
-
-
-def _content_types_importer_factory(source_name: FieldName, nautobot_name: FieldName) -> SourceFieldImporter:
-    def importer(source: RecordData, target: RecordData) -> None:
-        values = source.get(source_name, None)
-        if values in EMPTY_VALUES:
-            return
-
-        if not isinstance(values, (list, set)):
-            raise ValueError(f"Invalid value {values} for field {source_name}")
-
-        target[nautobot_name] = set(get_content_type_id(item) for item in values)
-
-    return importer
-
-
-def _uuids_importer_factory(
-    source_name: FieldName,
-    nautobot_name: FieldName,
-    related_wrapper: SourceModelWrapper,
-) -> SourceFieldImporter:
-    def importer(source: RecordData, target: RecordData) -> None:
-        value = source.get(source_name, None)
-        if value in EMPTY_VALUES:
-            return
-
-        if isinstance(value, (UUID, str, int)):
-            target[nautobot_name] = {related_wrapper.get_pk_from_uid(value)}
-        elif isinstance(value, (list, set, tuple)):
-            target[nautobot_name] = set(related_wrapper.get_pk_from_uid(item) for item in value)
-        else:
-            raise ValueError(f"Invalid value {value} for field {source_name}")
-
-    return importer
-
-
-def _datetime_importer_factory(source_name: FieldName, nautobot_name: FieldName) -> SourceFieldImporter:
-    def importer(source: RecordData, target: RecordData) -> None:
-        value = source.get(source_name, None)
-        if value in EMPTY_VALUES:
-            return
-
-        if not isinstance(value, datetime.datetime):
-            value = datetime.datetime.fromisoformat(str(value))
-
-        target[nautobot_name] = value
-
-    return importer
-
-
-def _json_importer_factory(source_name: FieldName, nautobot_name: FieldName) -> SourceFieldImporter:
-    def importer(source: RecordData, target: RecordData) -> None:
-        value = source.get(source_name, None)
-        if value in EMPTY_VALUES:
-            return
-
-        if isinstance(value, str):
-            value = json.loads(value)
-
-        target[nautobot_name] = value
-
-    return importer
-
-
-def _date_importer_factory(source_name: FieldName, nautobot_name: FieldName) -> SourceFieldImporter:
-    def importer(source: RecordData, target: RecordData) -> None:
-        value = source.get(source_name, None)
-        if value in EMPTY_VALUES:
-            return
-
-        if not isinstance(value, datetime.date):
-            value = datetime.date.fromisoformat(str(value))
-
-        target[nautobot_name] = value
-
-    return importer
-
-
-def _status_importer_factory(
-    wrapper: SourceModelWrapper,
-    field: DjangoField,
-    source_name: FieldName,
-    nautobot_name: FieldName,
-) -> SourceFieldImporter:
-    status_wrapper = wrapper.adapter.get_or_create_wrapper("extras.status")
-    default_value = status_wrapper.default_reference_pk if field.default in EMPTY_VALUES else field.default
-
-    if not (default_value is None or isinstance(default_value, UUID)):
-        raise NotImplementedError(f"Default value {default_value} is not a UUID")
-
-    def importer(source: RecordData, target: RecordData) -> None:
-        value = source.get(source_name, None)
-        if not value:
-            value = default_value
-            if not value:
+        def importer(source: RecordData, target: RecordData) -> None:
+            value = source.get(self.name, None)
+            if value in EMPTY_VALUES:
                 return
-            status_wrapper.add_reference(default_value, wrapper)  # type: ignore
+
+            uuid = role_wrapper.get_pk_from_uid(value)  # type: ignore
+            target[self.nautobot_name] = uuid
+            role_wrapper.add_reference(uuid, self.wrapper)
+
+        self.set_nautobot_field("role")
+        self.set_importer(importer)
+
+    def set_json_importer(self) -> None:
+        """Set a JSON field importer."""
+
+        def importer(source: RecordData, target: RecordData) -> None:
+            value = source.get(self.name, None)
+            if value in EMPTY_VALUES:
+                return
+
+            if isinstance(value, str):
+                value = json.loads(value)
+
+            target[self.nautobot_name] = value
+
+        self.set_importer(importer)
+
+    def set_integer_importer(self) -> None:
+        """Set an integer field importer."""
+
+        def importer(source: RecordData, target: RecordData) -> None:
+            value = self.get_source_value(source)
+            if value in EMPTY_VALUES:
+                return
+
+            float_value = float(value)
+            if not float_value.is_integer():
+                raise ValueError(f"Invalid value {value} for field {self}")
+
+            target[self.nautobot_name] = int(float_value)
+
+        self.set_importer(importer)
+
+    def set_field_importer(self) -> None:
+        """Set a field importer."""
+
+        def importer(source: RecordData, target: RecordData) -> None:
+            value = self.get_source_value(source)
+            if value not in EMPTY_VALUES:
+                target[self.nautobot_name] = value
+
+        self.set_importer(importer)
+
+    def set_generic_relation_importer(self) -> None:
+        """Set a generic relation importer."""
+        # TBD: Consider storing the content_type and related id in separate fields for ImporterModel
+        type_name = f"{self.name}_type"
+        id_name = f"{self.name}_id"
+        self.wrapper.add_field(type_name, None)
+        self.wrapper.add_field(id_name, None)
+
+        def importer(source: RecordData, target: RecordData) -> None:
+            content_type = source.get(type_name, None)
+            if not content_type:
+                return
+
+            related_wrapper = self.wrapper.adapter.get_or_create_wrapper(content_type)
+
+            value = source.get(id_name, None)
+            if value is None:
+                raise ValueError(f"Missing {id_name} for {type_name} {related_wrapper.content_type}")
+
+            result = related_wrapper.get_pk_from_identifiers(value)
+            target[self.nautobot_name] = (related_wrapper.content_type, result)
+            related_wrapper.add_reference(result, self.wrapper)
+
+        self.set_importer(importer)
+
+    def set_relation_importer(self) -> None:
+        """Set a relation importer."""
+        if isinstance(self.django_field, DjangoField):
+            related_wrapper = self.wrapper.adapter.get_or_create_wrapper(self.django_field.related_model)
+
+            if related_wrapper.nautobot.pk_type == "UUIDField":
+                return self.set_uuid_importer(related_wrapper)
+
+            if related_wrapper.content_type == "contenttypes.contenttype":
+                return self.set_content_type_importer()
+
+        raise NotImplementedError(f"Unsupported relation importer {self}")
+
+    def set_content_type_importer(self) -> None:
+        """Set a content type importer."""
+
+        def importer(source: RecordData, target: RecordData) -> None:
+            content_type = source.get(self.name, None)
+            if not content_type:
+                return
+
+            related_wrapper = self.wrapper.adapter.get_or_create_wrapper(content_type)
+            target[self.nautobot_name] = related_wrapper.nautobot.get_content_type().id  # type: ignore
+
+        self.set_importer(importer)
+
+    def set_uuid_importer(self, related_wrapper: SourceModelWrapper) -> None:
+        """Set a UUID importer."""
+        if self.default_value in EMPTY_VALUES and related_wrapper.default_reference_pk:
+            self.default_value = related_wrapper.default_reference_pk
+
+        if not (self.default_value is None or isinstance(self.default_value, UUID)):
+            raise NotImplementedError(f"Default value {self.default_value} is not a UUID")
+
+        def importer(source: RecordData, target: RecordData) -> None:
+            value = self.get_source_value(source)
+            if value in EMPTY_VALUES:
+                return
+
+            if isinstance(value, Uid):
+                result = related_wrapper.get_pk_from_uid(value)
+            else:
+                result = related_wrapper.get_pk_from_identifiers(value)
+            target[self.nautobot_name] = result
+            related_wrapper.add_reference(result, self.wrapper)
+
+        self.set_importer(importer)
+
+    def set_m2m_importer(self) -> None:
+        """Set a many to many importer."""
+        if not isinstance(self.django_field, DjangoField):
+            raise NotImplementedError(f"Unsupported m2m importer {self}")
+
+        related_wrapper = self.wrapper.adapter.get_or_create_wrapper(self.django_field.related_model)
+
+        if related_wrapper.content_type == "contenttypes.contenttype":
+            self.set_content_types_importer()
+        elif related_wrapper.identifiers is not ONLY_ID_IDENTIFIERS:
+            self.set_identifiers_importer(related_wrapper)
         else:
-            name = value[0].upper() + value[1:]
-            value = status_wrapper.get_pk_from_identifiers([name])
-            if value not in status_wrapper.cached_data:
-                status_wrapper.cached_data[value] = {"name": name}
+            self.set_uuids_importer(related_wrapper)
 
-        target[nautobot_name] = value
-        status_wrapper.add_reference(value, wrapper)
+    def set_identifiers_importer(self, related_wrapper: SourceModelWrapper) -> None:
+        """Set a identifiers importer."""
 
-    return importer
+        def importer(source: RecordData, target: RecordData) -> None:
+            values = source.get(self.name, None)
+            if values in EMPTY_VALUES:
+                return
+
+            if not isinstance(values, (list, set)):
+                raise ValueError(f"Invalid value {values} for field {self.name}")
+
+            target[self.nautobot_name] = set(related_wrapper.get_pk_from_identifiers(item) for item in values)
+
+        self.set_importer(importer)
+
+    def set_content_types_importer(self) -> None:
+        """Set a content types importer."""
+
+        def importer(source: RecordData, target: RecordData) -> None:
+            values = source.get(self.name, None)
+            if values in EMPTY_VALUES:
+                return
+
+            if not isinstance(values, (list, set)):
+                raise ValueError(f"Invalid value {values} for field {self.name}")
+
+            target[self.nautobot_name] = set(get_content_type_id(item) for item in values)
+
+        self.set_importer(importer)
+
+    def set_uuids_importer(self, related_wrapper: SourceModelWrapper) -> None:
+        """Set a UUIDs importer."""
+
+        def importer(source: RecordData, target: RecordData) -> None:
+            value = source.get(self.name, None)
+            if value in EMPTY_VALUES:
+                return
+
+            if isinstance(value, (UUID, str, int)):
+                target[self.nautobot_name] = {related_wrapper.get_pk_from_uid(value)}
+            elif isinstance(value, (list, set, tuple)):
+                target[self.nautobot_name] = set(related_wrapper.get_pk_from_uid(item) for item in value)
+            else:
+                raise ValueError(f"Invalid value {value} for field {self.name}")
+
+        self.set_importer(importer)
+
+    def set_datetime_importer(self) -> None:
+        """Set a datetime importer."""
+
+        def importer(source: RecordData, target: RecordData) -> None:
+            value = source.get(self.name, None)
+            if value in EMPTY_VALUES:
+                return
+
+            if not isinstance(value, datetime.datetime):
+                value = datetime.datetime.fromisoformat(str(value))
+
+            target[self.nautobot_name] = value
+
+        self.set_importer(importer)
+
+    def set_date_importer(self) -> None:
+        """Set a date importer."""
+
+        def importer(source: RecordData, target: RecordData) -> None:
+            value = source.get(self.name, None)
+            if value in EMPTY_VALUES:
+                return
+
+            if not isinstance(value, datetime.date):
+                value = datetime.date.fromisoformat(str(value))
+
+            target[self.nautobot_name] = value
+
+        self.set_importer(importer)
+
+    def set_status_importer(self) -> None:
+        """Set a status importer."""
+        status_wrapper = self.wrapper.adapter.get_or_create_wrapper("extras.status")
+        if not self.default_value:
+            self.default_value = status_wrapper.default_reference_pk
+
+        if not (self.default_value is None or isinstance(self.default_value, UUID)):
+            raise NotImplementedError(f"Default value {self.default_value} is not a UUID")
+
+        def importer(source: RecordData, target: RecordData) -> None:
+            value = source.get(self.name, None)
+            if not value:
+                value = self.default_value
+                if not value:
+                    return
+                status_wrapper.add_reference(self.default_value, self.wrapper)  # type: ignore
+            else:
+                name = value[0].upper() + value[1:]
+                value = status_wrapper.get_pk_from_identifiers([name])
+                if value not in status_wrapper.cached_data:
+                    status_wrapper.cached_data[value] = {"name": name}
+
+            target[self.nautobot_name] = value
+            status_wrapper.add_reference(value, self.wrapper)
+
+        self.set_importer(importer)

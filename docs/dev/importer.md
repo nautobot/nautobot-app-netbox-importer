@@ -42,7 +42,7 @@ The first data iteration constructs the wrapping structure, which includes:
 
 - `SourceAdapter` with all source model `adapter.wrappers`.
     - The `SourceAdapter` manages `SourceModelWrapper` and `NautobotModelWrapper` instances.
-- A `SourceModelWrapper` for each source content type, with `source_wrapper.fields` detailing field names and configurations (e.g., the results of `set_fields()`).
+- A `SourceModelWrapper` for each source content type, with `source_wrapper.fields` detailing how to import the source data.
     - Each `SourceModelWrapper` instance corresponds to a single `NautobotModelWrapper` instance.
 - A `NautobotModelWrapper` for each Nautobot content type, detailing `nautobot_wrapper.fields` and types, aiding in constructing the `DiffSyncModel` importer.
     - A single `NautobotModelWrapper` instance can be referenced by multiple `SourceModelWrapper` instances.

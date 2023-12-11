@@ -1,4 +1,4 @@
-"""Generic Nautobot DiffSync Importer."""
+"""Nautobot DiffSync Importer."""
 
 from typing import Any
 from typing import Dict
@@ -11,6 +11,7 @@ from typing import Type
 from uuid import UUID
 
 from diffsync import DiffSyncModel
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db.models import Max
@@ -23,7 +24,6 @@ from .base import REFERENCE_INTERNAL_TYPES
 from .base import BaseAdapter
 from .base import ContentTypeStr
 from .base import FieldName
-from .base import GenericForeignKey
 from .base import InternalFieldTypeStr
 from .base import NautobotBaseModel
 from .base import NautobotBaseModelType
@@ -109,8 +109,6 @@ class NautobotModelWrapper:
 
         self.constructor_kwargs: Dict[FieldName, Any] = {}
         self.imported_count = 0
-        # TBD: Merge ignored_fields to fields
-        self.ignored_fields: Set[FieldName] = set(self.pk_name)
 
     def get_importer(self) -> Type["ImporterModel"]:
         """Get the DiffSync model for this wrapper."""
@@ -140,8 +138,6 @@ class NautobotModelWrapper:
         for field_name, internal_type in self.fields.items():
             if field_name in identifiers:
                 continue
-            if field_name in self.ignored_fields:
-                continue
             if internal_type == "GenericForeignKey":
                 annotation = Tuple[ContentTypeStr, UUID]
             elif internal_type in REFERENCE_INTERNAL_TYPES:
@@ -169,13 +165,11 @@ class NautobotModelWrapper:
 
         return self.importer
 
-    def ignore_fields(self, *field_names: FieldName) -> None:
-        """Skip a fields when importing."""
-        self.ignored_fields.update(field_names)
-
     def add_field(self, field_name: FieldName, internal_type: InternalFieldTypeStr) -> None:
         """Add a field to the model."""
-        # TBD: Lock down the fields after the importer is created
+        if self.importer:
+            raise RuntimeError("Cannot add fields after the importer has been created")
+
         logger.debug("Adding nautobot field %s %s %s", self.content_type, field_name, internal_type)
         if field_name in self.fields and self.fields[field_name] != internal_type:
             raise ValueError(f"Field {field_name} already exists with different type {self.fields[field_name]}")
@@ -257,7 +251,6 @@ class NautobotAdapter(BaseAdapter):
         """Save a Nautobot instance."""
 
         def set_custom_field(value: Any):
-            # TBD: Consider just updating without removing
             custom_field_data = getattr(instance, "custom_field_data", None)
             if custom_field_data is None:
                 raise TypeError("Missing custom_field_data")
@@ -333,7 +326,7 @@ class NautobotAdapter(BaseAdapter):
                 m2m_fields[field_name] = value
             elif internal_type == "CustomFieldData":
                 set_custom_field(value)
-            elif internal_type == "Any":
+            elif internal_type == "Property":
                 setattr(instance, field_name, value)
             else:
                 field = instance._meta.get_field(field_name)  # type: ignore
@@ -358,7 +351,7 @@ def get_nautobot_instance_data(instance: NautobotBaseModel, fields: NautobotFiel
             return (value._meta.label.lower(), value.pk)  # type: ignore
         if internal_type == "ManyToManyField":
             return set(item.id for item in value.all()) or None  # type: ignore
-        if internal_type == "Any":
+        if internal_type == "Property":
             return str(value)
         if internal_type == "CustomFieldData":
             return value

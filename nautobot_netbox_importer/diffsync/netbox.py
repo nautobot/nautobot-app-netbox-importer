@@ -1,8 +1,8 @@
 """NetBox to Nautobot importer."""
-
 import json
 from pathlib import Path
-from typing import Union, Tuple
+from typing import Tuple
+from typing import Union
 
 from django.db.transaction import atomic
 from nautobot.ipam.models import get_default_namespace
@@ -10,35 +10,37 @@ from nautobot.ipam.models import get_default_namespace
 from nautobot_netbox_importer.diffsync.nautobot import NautobotAdapter
 
 from .base import EMPTY_VALUES
-from .base import FieldName
 from .base import RecordData
-from .source import AddFieldDuplicity
 from .source import SourceAdapter
-from .source import SourceModelWrapper
+from .source import SourceField
 from .source import SourceRecord
+from .summary import print_fields_mapping
+from .summary import print_summary
 
 
-def _define_tagged_object(wrapper: SourceModelWrapper, field_name: FieldName) -> None:
+def _define_tagged_object(field: SourceField) -> None:
+    field.set_nautobot_field(field.name)
+
     def importer(source: RecordData, target: RecordData) -> None:
         content_type = source.get("content_type", None)
-        object_id = source.get(field_name, None)
+        object_id = source.get(field.name, None)
         if not object_id or not content_type:
-            target[field_name] = None
+            target[field.name] = None
             return
 
-        related_wrapper = wrapper.adapter.get_or_create_wrapper(content_type)
+        related_wrapper = field.wrapper.adapter.get_or_create_wrapper(content_type)
         result = related_wrapper.get_pk_from_uid(object_id)
-        target[field_name] = result
-        related_wrapper.add_reference(result, wrapper)
+        target[field.name] = result
+        related_wrapper.add_reference(result, field.wrapper)
 
-    wrapper.add_importer(importer, field_name, "UUIDField")
+    field.set_importer(importer)
 
 
-def _define_choices(wrapper: SourceModelWrapper, field_name: FieldName) -> None:
-    choices_wrapper = wrapper.adapter.get_or_create_wrapper("extras.customfieldchoice")
+def _define_choices(field: SourceField) -> None:
+    choices_wrapper = field.wrapper.adapter.get_or_create_wrapper("extras.customfieldchoice")
 
     def importer(source: RecordData, target: RecordData) -> None:
-        choices = source.get(field_name, None)
+        choices = source.get(field.name, None)
         if not choices:
             return
 
@@ -55,7 +57,7 @@ def _define_choices(wrapper: SourceModelWrapper, field_name: FieldName) -> None:
                 },
             )
 
-    wrapper.add_importer(importer)
+    field.set_importer(importer)
 
 
 def _name_from_wrapper(wrapper) -> str:
@@ -67,34 +69,33 @@ def _name_from_wrapper(wrapper) -> str:
     return name[0].upper() + name[1:]
 
 
-def _define_location_type(wrapper: SourceModelWrapper, field_name: FieldName) -> None:
-    field_name = f"{field_name}_id"
+def _define_location_type(field: SourceField) -> None:
+    field.set_nautobot_field(field.name)
+    field.wrapper.set_references_forwarding("dcim.locationtype", field.nautobot_name)
 
-    wrapper.set_references_forwarding("dcim.locationtype", field_name)
-
-    location_type_wrapper = wrapper.adapter.get_or_create_wrapper("dcim.locationtype")
-    name = _name_from_wrapper(wrapper)
+    location_type_wrapper = field.wrapper.adapter.get_or_create_wrapper("dcim.locationtype")
+    name = _name_from_wrapper(field.wrapper)
     location_type_id = location_type_wrapper.cache_data({"id": name, "name": name, "nestable": True})
 
     def importer(_, target: RecordData) -> None:
-        target[field_name] = location_type_id
-        location_type_wrapper.add_reference(location_type_id, wrapper)
+        target[field.nautobot_name] = location_type_id
+        location_type_wrapper.add_reference(location_type_id, field.wrapper)
 
-    wrapper.add_importer(importer, field_name, "UUIDField")
+    field.set_importer(importer)
 
 
-def _define_location(wrapper: SourceModelWrapper, field_name: FieldName) -> None:
-    adapter = wrapper.adapter
-    if field_name not in ["location", "parent"]:
+def _define_location(field: SourceField) -> None:
+    if field.name not in ["location", "parent"]:
         raise ValueError("_define_location only supports location and parent")
-    field_name = f"{field_name}_id"
+    field.set_nautobot_field(field.name)
 
-    wrapper.add_field("region", None, AddFieldDuplicity.IGNORE)
-    wrapper.add_field("site", None, AddFieldDuplicity.IGNORE)
+    wrapper = field.wrapper
+    wrapper.add_field("region", None)
+    wrapper.add_field("site", None)
 
-    location_wrapper = adapter.get_or_create_wrapper("dcim.location")
-    site_wrapper = adapter.get_or_create_wrapper("dcim.site")
-    region_wrapper = adapter.get_or_create_wrapper("dcim.region")
+    location_wrapper = wrapper.adapter.get_or_create_wrapper("dcim.location")
+    site_wrapper = wrapper.adapter.get_or_create_wrapper("dcim.site")
+    region_wrapper = wrapper.adapter.get_or_create_wrapper("dcim.region")
 
     def importer(source: RecordData, target: RecordData) -> None:
         parent = source.get("parent", None)
@@ -102,7 +103,7 @@ def _define_location(wrapper: SourceModelWrapper, field_name: FieldName) -> None
         site = source.get("site", None)
         region = source.get("region", None)
 
-        if field_name == "parent_id" and parent:
+        if field.nautobot_name == "parent_id" and parent:
             result = wrapper.get_pk_from_uid(parent)
             wrapper.add_reference(result, wrapper)
         elif location:
@@ -117,16 +118,17 @@ def _define_location(wrapper: SourceModelWrapper, field_name: FieldName) -> None
         else:
             result = None
 
-        target[field_name] = result
+        target[field.nautobot_name] = result
 
-    wrapper.add_importer(importer, field_name, "UUIDField")
+    field.set_importer(importer)
 
 
-def _define_units(wrapper: SourceModelWrapper, field_name: FieldName) -> None:
+def _define_units(field: SourceField) -> None:
+    field.set_nautobot_field(field.name)
+
     def importer(source: RecordData, target: RecordData) -> None:
         # NetBox 3.4 units is `list[int]`, previous versions are JSON string with list of strings
-        units = source.get(field_name, None)
-
+        units = source.get(field.name, None)
         if units in EMPTY_VALUES:
             return
 
@@ -135,28 +137,29 @@ def _define_units(wrapper: SourceModelWrapper, field_name: FieldName) -> None:
             if units:
                 units = [int(unit) for unit in units]
 
-        target[field_name] = units
+        target[field.name] = units
 
-    wrapper.add_importer(importer, field_name, "JSONField")
+    field.set_importer(importer)
 
 
-# pylint: disable=too-many-statements
+def _role_definition_factory(adapter: SourceAdapter, role_content_type: str):
+    if role_content_type in adapter.wrappers:
+        role_wrapper = adapter.wrappers[role_content_type]
+    else:
+        role_wrapper = adapter.configure_model(
+            role_content_type,
+            nautobot_content_type="extras.role",
+            fields={"color": "color", "content_types": "content_types"},
+        )
+
+    def definition(field: SourceField) -> None:
+        field.set_role_importer(role_wrapper)
+
+    return definition
+
+
 def _setup_source() -> SourceAdapter:
     """Setup NetBox models importers."""
-
-    def _role_definition_factory(role_content_type: str):
-        if role_content_type in adapter.wrappers:
-            role_wrapper = adapter.wrappers[role_content_type]
-        else:
-            role_wrapper = adapter.configure_model(role_content_type, nautobot_content_type="extras.role")
-        role_wrapper.add_field("content_types", "content_types", AddFieldDuplicity.IGNORE)
-        # role_wrapper.add_field("color", "color", AddFieldDuplicity.IGNORE)
-
-        def definition(wrapper: SourceModelWrapper, field_name: FieldName) -> None:
-            wrapper.add_role_importer(field_name, role_wrapper)
-
-        return definition
-
     adapter = SourceAdapter(name="NetBox")
     adapter.configure(
         ignore_fields=(
@@ -185,6 +188,15 @@ def _setup_source() -> SourceAdapter:
         },
     )
 
+    _setup_base(adapter)
+    _setup_dcim(adapter)
+    _setup_ipam(adapter)
+    _setup_virtualization(adapter)
+
+    return adapter
+
+
+def _setup_base(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "extras.status",
         identifiers=["name"],
@@ -213,7 +225,6 @@ def _setup_source() -> SourceAdapter:
         "extras.taggeditem",
         fields={
             "object_id": _define_tagged_object,
-            "content_types": "content_types",
         },
     )
     adapter.configure_model(
@@ -252,11 +263,26 @@ def _setup_source() -> SourceAdapter:
         },
     )
     adapter.configure_model(
+        "tenancy.tenant",
+        fields={
+            "group": "tenant_group",
+        },
+    )
+
+
+def _setup_dcim(adapter: SourceAdapter) -> None:
+    adapter.configure_model(
         "circuits.circuit",
         fields={
             "type": "circuit_type",
             "termination_a": "circuit_termination_a",
             "termination_z": "circuit_termination_z",
+        },
+    )
+    adapter.configure_model(
+        "circuits.circuittermination",
+        fields={
+            "location": _define_location,
         },
     )
     adapter.configure_model(
@@ -269,7 +295,7 @@ def _setup_source() -> SourceAdapter:
         "dcim.rack",
         fields={
             "location": _define_location,
-            "role": _role_definition_factory("dcim.rackrole"),
+            "role": _role_definition_factory(adapter, "dcim.rackrole"),
         },
     )
     adapter.configure_model(
@@ -291,26 +317,6 @@ def _setup_source() -> SourceAdapter:
         extend_content_type="dcim.cable",
         fields={
             "termination_b": "termination_b",
-        },
-    )
-    adapter.configure_model(
-        "tenancy.tenant",
-        fields={
-            "group": "tenant_group",
-        },
-    )
-    adapter.configure_model(
-        "virtualization.cluster",
-        fields={
-            "type": "cluster_type",
-            "group": "cluster_group",
-            "location": _define_location,
-        },
-    )
-    adapter.configure_model(
-        "circuits.circuittermination",
-        fields={
-            "location": _define_location,
         },
     )
     adapter.configure_model(
@@ -348,7 +354,7 @@ def _setup_source() -> SourceAdapter:
         "dcim.device",
         fields={
             "location": _define_location,
-            "device_role": _role_definition_factory("dcim.devicerole"),
+            "device_role": _role_definition_factory(adapter, "dcim.devicerole"),
         },
     )
     adapter.configure_model(
@@ -381,10 +387,19 @@ def _setup_source() -> SourceAdapter:
             "parent": _define_location,
         },
     )
+    adapter.configure_model(
+        "dcim.poweroutlettemplate",
+        fields={
+            "power_port": "power_port_template",
+        },
+    )
+
+
+def _setup_ipam(adapter: SourceAdapter) -> None:
     ipaddress = adapter.configure_model(
         "ipam.ipaddress",
         fields={
-            "role": _role_definition_factory("ipam.role"),
+            "role": _role_definition_factory(adapter, "ipam.role"),
         },
     )
     ipaddress.nautobot.set_instance_defaults(namespace=get_default_namespace())
@@ -392,7 +407,7 @@ def _setup_source() -> SourceAdapter:
         "ipam.prefix",
         fields={
             "location": _define_location,
-            "role": _role_definition_factory("ipam.role"),
+            "role": _role_definition_factory(adapter, "ipam.role"),
         },
     )
     adapter.configure_model(
@@ -407,13 +422,24 @@ def _setup_source() -> SourceAdapter:
         fields={
             "group": "vlan_group",
             "location": _define_location,
-            "role": _role_definition_factory("ipam.role"),
+            "role": _role_definition_factory(adapter, "ipam.role"),
+        },
+    )
+
+
+def _setup_virtualization(adapter: SourceAdapter) -> None:
+    adapter.configure_model(
+        "virtualization.cluster",
+        fields={
+            "type": "cluster_type",
+            "group": "cluster_group",
+            "location": _define_location,
         },
     )
     adapter.configure_model(
         "virtualization.virtualmachine",
         fields={
-            "role": _role_definition_factory("dcim.devicerole"),
+            "role": _role_definition_factory(adapter, "dcim.devicerole"),
         },
     )
     adapter.configure_model(
@@ -423,19 +449,14 @@ def _setup_source() -> SourceAdapter:
             "parent": None,  # TBD verify
         },
     )
-    adapter.configure_model(
-        "dcim.poweroutlettemplate",
-        fields={
-            "power_port": "power_port_template",
-        },
-    )
-
-    return adapter
 
 
 @atomic
 def sync_to_nautobot(
-    file_path: Union[str, Path], dry_run=True, print_summary=True
+    file_path: Union[str, Path],
+    dry_run=True,
+    summary=False,
+    field_mapping=False,
 ) -> Tuple[SourceAdapter, NautobotAdapter]:
     """Import a NetBox export file."""
 
@@ -473,9 +494,10 @@ def sync_to_nautobot(
     nautobot = source.import_nautobot()
     nautobot.sync_from(source)
 
-    validation_errors = nautobot.get_validation_errors()
-    if print_summary:
-        source.print_summary(validation_errors)
+    if summary:
+        print_summary(source, nautobot)
+    if field_mapping:
+        print_fields_mapping(source)
 
     if dry_run:
         raise ValueError("Aborting the transaction due to the dry-run mode.")
