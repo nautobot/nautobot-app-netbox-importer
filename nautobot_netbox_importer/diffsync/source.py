@@ -398,7 +398,7 @@ class SourceModelWrapper:
     def get_pk_from_identifiers(self, data: Union[Uid, Iterable[Uid]]) -> Uid:
         """Get a source primary key for a given source identifiers."""
         if self.identifiers is ONLY_ID_IDENTIFIERS:
-            if isinstance(data, UUID) or isinstance(data, str) or isinstance(data, int):
+            if isinstance(data, (UUID, str, int)):
                 return self.get_pk_from_uid(data)
 
             raise ValueError(f"Invalid identifiers {data} for {self.identifiers}")
@@ -812,7 +812,7 @@ class SourceField:
             if value in EMPTY_VALUES:
                 return
 
-            if isinstance(value, UUID) or isinstance(value, str) or isinstance(value, int):
+            if isinstance(value, (UUID, str, int)):
                 result = related_wrapper.get_pk_from_uid(value)
             else:
                 result = related_wrapper.get_pk_from_identifiers(value)
