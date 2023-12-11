@@ -636,7 +636,7 @@ class SourceField:
                     raise NotImplementedError(f"Unsupported field type {self}")
             except DjangoFieldDoesNotExist:
                 if not hasattr(self.wrapper.nautobot.model, nautobot_name):
-                    logger.warning(f"Missing field {self.wrapper.format_field_name(nautobot_name)}")
+                    logger.warning("Missing field %s", self.wrapper.format_field_name(nautobot_name))
                     return
                 self.internal_type = "Property"
 
