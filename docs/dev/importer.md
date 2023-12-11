@@ -112,7 +112,7 @@ classDiagram
         content_type: ContentTypeStr
         identifiers: Iterable[FieldName]
         references_forwarding: ContentTypeStr, FieldName
-        fields: Mapping[FieldName, SourceFieldDefinition]
+        fields: Mapping[FieldName, SourceField]
         importers: List[SourceFieldImporter]
         - Caching ------------------
         references: Mapping[Uid, Set[SourceModelWrapper]]
@@ -120,7 +120,6 @@ classDiagram
         default_reference_pk: Uid
         cached_data: Mapping[Uid, RecordData]
         last_id: Uid  # For AutoField PKs
-        processed_fields: Set[FieldName]
         imported_count: int
     }
     class NautobotModelWrapper {
@@ -134,7 +133,8 @@ classDiagram
         count: int
     }
     class NautobotAdapter {
-        clean_failures: Set[NautobotBaseModel]
+        self.clean_failures: Dict[NautobotBaseModelType, Set[Uid]]
+        self.validation_errors: Optional[Dict[ContentTypeStr, Set[ValidationError]]]
         ------------------
         importer_model_1: ImporterModel
         importer_model_2: ImporterModel
