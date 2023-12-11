@@ -285,7 +285,7 @@ class NautobotAdapter(BaseAdapter):
             # pylint: disable=broad-exception-caught
             except Exception as exc:
                 uid = instance.id
-                if not isinstance(uid, Uid):
+                if not (isinstance(uid, UUID) or isinstance(uid, str) or isinstance(uid, int)):
                     raise TypeError(f"Invalid uid {uid}") from exc
                 if instance.__class__ in self.clean_failures:
                     self.clean_failures[instance.__class__].add(uid)

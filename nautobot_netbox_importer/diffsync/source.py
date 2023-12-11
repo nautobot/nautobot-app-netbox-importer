@@ -20,6 +20,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.core.exceptions import FieldDoesNotExist as DjangoFieldDoesNotExist
 from django.db.models import Field as DjangoField
 from nautobot.core.models.tree_queries import TreeModel
+from dateutil import parser as datetime_parser
 
 from .base import EMPTY_VALUES
 from .base import INTEGER_INTERNAL_TYPES
@@ -397,9 +398,10 @@ class SourceModelWrapper:
     def get_pk_from_identifiers(self, data: Union[Uid, Iterable[Uid]]) -> Uid:
         """Get a source primary key for a given source identifiers."""
         if self.identifiers is ONLY_ID_IDENTIFIERS:
-            if not isinstance(data, Uid):
-                raise ValueError(f"Invalid identifiers {data} for {self.identifiers}")
-            return self.get_pk_from_uid(data)
+            if isinstance(data, UUID) or isinstance(data, str) or isinstance(data, int):
+                return self.get_pk_from_uid(data)
+
+            raise ValueError(f"Invalid identifiers {data} for {self.identifiers}")
 
         if not isinstance(data, list):
             data = list(data)  # type: ignore
@@ -810,7 +812,7 @@ class SourceField:
             if value in EMPTY_VALUES:
                 return
 
-            if isinstance(value, Uid):
+            if isinstance(value, UUID) or isinstance(value, str) or isinstance(value, int):
                 result = related_wrapper.get_pk_from_uid(value)
             else:
                 result = related_wrapper.get_pk_from_identifiers(value)
@@ -889,7 +891,7 @@ class SourceField:
                 return
 
             if not isinstance(value, datetime.datetime):
-                value = datetime.datetime.fromisoformat(str(value))
+                value = datetime_parser.isoparse(str(value))
 
             target[self.nautobot_name] = value
 
