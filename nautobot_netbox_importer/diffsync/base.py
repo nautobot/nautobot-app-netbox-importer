@@ -18,10 +18,8 @@ from uuid import uuid5
 from diffsync import DiffSync
 from diffsync.store.local import LocalStore
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
 from django.db.models.fields import NOT_PROVIDED
 from nautobot.core.models import BaseModel
-from nautobot.core.utils.lookup import get_model_from_name
 
 logger = logging.getLogger("nautobot-netbox-importer")
 
@@ -33,6 +31,7 @@ RecordData = MutableMapping[FieldName, Any]
 InternalFieldTypeStr = str
 NautobotBaseModel = BaseModel
 NautobotBaseModelType = Type[NautobotBaseModel]
+GenericForeignValue = Tuple[ContentTypeStr, Uid]
 
 EMPTY_VALUES = [None, set(), tuple(), {}, [], "", NOT_PROVIDED]
 ONLY_ID_IDENTIFIERS: List[FieldName] = ["id"]
@@ -97,20 +96,6 @@ def source_pk_to_uuid(content_type: ContentTypeStr, pk: Uid) -> UUID:
         settings.SECRET_KEY,
     )
     return uuid5(namespace, f"{content_type}:{pk}")
-
-
-def get_content_type_id(content_type: ContentTypeValue) -> int:
-    """Get the Django content type ID for a given content type."""
-    if isinstance(content_type, int):
-        return content_type
-
-    if not isinstance(content_type, str):
-        if not len(content_type) == 2:
-            raise ValueError(f"Invalid content type {content_type}")
-        content_type = ".".join(content_type)
-
-    instance = ContentType.objects.get_for_model(get_model_from_name(content_type))
-    return instance.id
 
 
 class BaseAdapter(DiffSync):

@@ -7,10 +7,9 @@ from typing import Union
 from django.db.transaction import atomic
 from nautobot.ipam.models import get_default_namespace
 
-from nautobot_netbox_importer.diffsync.nautobot import NautobotAdapter
-
 from .base import EMPTY_VALUES
 from .base import RecordData
+from .nautobot import NautobotAdapter
 from .source import SourceAdapter
 from .source import SourceField
 from .source import SourceRecord
@@ -60,21 +59,14 @@ def _define_choices(field: SourceField) -> None:
     field.set_importer(importer)
 
 
-def _name_from_wrapper(wrapper) -> str:
-    """Return model name with upper cased first letter.
-
-    e.g. `dcim.site` -> `Site`
-    """
-    name = wrapper.content_type.split(".")[1]
-    return name[0].upper() + name[1:]
-
-
 def _define_location_type(field: SourceField) -> None:
     field.set_nautobot_field(field.name)
     field.wrapper.set_references_forwarding("dcim.locationtype", field.nautobot_name)
 
     location_type_wrapper = field.wrapper.adapter.get_or_create_wrapper("dcim.locationtype")
-    name = _name_from_wrapper(field.wrapper)
+    # Uppercase the first letter of the content type name
+    name = field.wrapper.content_type.split(".")[1]
+    name = name[0].upper() + name[1:]
     location_type_id = location_type_wrapper.cache_data({"id": name, "name": name, "nestable": True})
 
     def importer(_, target: RecordData) -> None:
@@ -462,7 +454,6 @@ def sync_to_nautobot(
 
     def process_cable_termination(source_data: RecordData) -> str:
         # NetBox 3.3 split the dcim.cable model into dcim.cable and dcim.cabletermination models.
-        # TBD: Resolve this in the specific wrappers for dcim.cable and dcim.cableterminationa and dcim.cableterminationz to avoid overriding the default values
         cable_end = source_data.pop("cable_end").lower()
         source_data["id"] = source_data.pop("cable")
         source_data[f"termination_{cable_end}_type"] = source_data.pop("termination_type")
@@ -471,6 +462,7 @@ def sync_to_nautobot(
         return f"dcim.cabletermination_{cable_end}"
 
     def read_source_file():
+        # TBD: Consider stream processing to avoid loading the entire file into memory
         with open(file_path, "r", encoding="utf8") as file:
             data = json.load(file)
 

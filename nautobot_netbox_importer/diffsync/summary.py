@@ -35,11 +35,10 @@ def print_summary(source: SourceAdapter, nautobot: NautobotAdapter) -> None:
     for wrapper in source.get_imported_nautobot_wrappers():
         print(f"  {wrapper.content_type}: {wrapper.imported_count}")
 
-    validation_errors = nautobot.get_validation_errors()
-    if validation_errors:
+    if nautobot.validation_errors:
         print("- Validation errors: ---------------------------")
         total = 0
-        for model_type, errors in validation_errors.items():
+        for model_type, errors in nautobot.validation_errors.items():
             total += len(errors)
             print(f"  {model_type}: {len(errors)}")
             for error in errors:
@@ -58,7 +57,7 @@ def print_summary(source: SourceAdapter, nautobot: NautobotAdapter) -> None:
     print("- Content Types Back Mapping -------------------")
     print("Back mapping deviations from Nautobot content type to source content type")
     for content_type, back_mapping in source.content_types_back_mapping.items():
-        wrapper = source.nautobot_wrappers[content_type]
+        wrapper = source.nautobot.wrappers[content_type]
         if wrapper.imported_count == 0 or content_type == back_mapping:
             continue
         if back_mapping:

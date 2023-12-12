@@ -151,5 +151,5 @@ class TestSync(TestCase):
             current_count = model.objects.count()
             self.assertGreaterEqual(current_count, expected_count, f"Count mismatch for {content_type}")
 
-        validation_errors = {key: len(value) for key, value in nautobot.get_validation_errors().items()}
+        validation_errors = {key: len(value) for key, value in nautobot.validation_errors.items()}
         self.assertEqual(validation_errors, _EXPECTED_VALIDATION_ERRORS[version], "Validation errors mismatch")

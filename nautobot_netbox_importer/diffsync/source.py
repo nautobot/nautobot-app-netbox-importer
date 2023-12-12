@@ -15,12 +15,13 @@ from typing import Set
 from typing import Union
 from uuid import UUID
 
+from dateutil import parser as datetime_parser
 from diffsync.exceptions import ObjectNotFound as DiffSyncObjectNotFound
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import FieldDoesNotExist as DjangoFieldDoesNotExist
 from django.db.models import Field as DjangoField
 from nautobot.core.models.tree_queries import TreeModel
-from dateutil import parser as datetime_parser
 
 from .base import EMPTY_VALUES
 from .base import INTEGER_INTERNAL_TYPES
@@ -35,14 +36,12 @@ from .base import NautobotBaseModel
 from .base import NautobotBaseModelType
 from .base import RecordData
 from .base import Uid
-from .base import get_content_type_id
 from .base import logger
 from .base import source_pk_to_uuid
 from .nautobot import IMPORT_ORDER
 from .nautobot import ImporterModel
 from .nautobot import NautobotAdapter
 from .nautobot import NautobotModelWrapper
-from .nautobot import get_nautobot_instance_data
 
 
 class SourceRecord(NamedTuple):
@@ -77,7 +76,7 @@ class SourceAdapter(BaseAdapter):
         super().__init__(name, *args, **kwargs)
 
         self.wrappers: OrderedDict[ContentTypeStr, SourceModelWrapper] = OrderedDict()
-        self.nautobot_wrappers: Dict[ContentTypeStr, NautobotModelWrapper] = {}
+        self.nautobot = NautobotAdapter()
         self.ignored_fields: Set[FieldName] = set()
         self.ignored_content_types: Set[ContentTypeStr] = set()
 
@@ -110,7 +109,7 @@ class SourceAdapter(BaseAdapter):
         if extend_content_type:
             extend_wrapper = self.wrappers[extend_content_type]
             if nautobot_content_type and nautobot_content_type != extend_wrapper.nautobot.content_type:
-                raise ValueError(f"Extension should have different content type {nautobot_content_type}")
+                raise ValueError(f"Extension should have the same Nautobot content type {nautobot_content_type}")
             nautobot_content_type = extend_wrapper.nautobot.content_type
         else:
             extend_wrapper = None
@@ -124,12 +123,7 @@ class SourceAdapter(BaseAdapter):
         if content_type in self.wrappers:
             wrapper = self.wrappers[content_type]
         else:
-            if nautobot_content_type in self.nautobot_wrappers:
-                nautobot_wrapper = self.nautobot_wrappers[nautobot_content_type]
-            else:
-                nautobot_wrapper = NautobotModelWrapper(nautobot_content_type)
-                self.nautobot_wrappers[nautobot_content_type] = nautobot_wrapper
-
+            nautobot_wrapper = self.nautobot.get_or_create_wrapper(nautobot_content_type)
             wrapper = SourceModelWrapper(self, content_type, nautobot_wrapper, extend_wrapper)
 
         if identifiers:
@@ -181,6 +175,19 @@ class SourceAdapter(BaseAdapter):
 
         return self.configure_model(value)
 
+    def get_nautobot_content_type_instance(self, content_type: ContentTypeValue) -> ContentType:
+        """Get the Django content type ID for a given content type."""
+        if isinstance(content_type, int):
+            raise NotImplementedError("Integer content type not implemented")
+        if not isinstance(content_type, str):
+            if not len(content_type) == 2:
+                raise ValueError(f"Invalid content type {content_type}")
+            content_type = ".".join(content_type)
+
+        wrapper = self.get_or_create_wrapper(content_type)
+
+        return wrapper.nautobot.content_type_instance
+
     def import_data(self, get_source_data: SourceDataGenerator) -> None:
         """Import data from the source."""
 
@@ -225,18 +232,16 @@ class SourceAdapter(BaseAdapter):
 
     def import_nautobot(self) -> NautobotAdapter:
         """Import all Nautobot data."""
-        nautobot = NautobotAdapter()
-
         for nautobot_wrapper in self.get_imported_nautobot_wrappers():
             importer_model = nautobot_wrapper.importer
             if not importer_model:
                 raise TypeError(f"Missing importer_model for {nautobot_wrapper.content_type}")
 
             for nautobot_instance in nautobot_wrapper.model.objects.all():
-                data = get_nautobot_instance_data(nautobot_instance, nautobot_wrapper.fields)
+                data = nautobot_wrapper.get_data_from_instance(nautobot_instance)
                 try:
-                    instance = importer_model(**data, diffsync=nautobot)
-                    nautobot.add(instance)
+                    instance = importer_model(**data, diffsync=self.nautobot)
+                    self.nautobot.add(instance)
                 except Exception:
                     logger.error("Failed to create instance %s", data, exc_info=True)
                     raise
@@ -245,9 +250,9 @@ class SourceAdapter(BaseAdapter):
             model_name = importer_model._modelname
             self.top_level.append(model_name)
             setattr(self, model_name, importer_model)
-            setattr(nautobot, model_name, getattr(self, model_name))
+            setattr(self.nautobot, model_name, getattr(self, model_name))
 
-        return nautobot
+        return self.nautobot
 
     def get_imported_nautobot_wrappers(self) -> Generator[NautobotModelWrapper, None, None]:
         """Get a list of Nautobot model wrappers in the order of import."""
@@ -297,10 +302,12 @@ class SourceModelWrapper:
         # Importers
         self.importers: Optional[List[SourceFieldImporter]] = None
 
+        # Default reference to this model
+        self.default_reference_uid: Optional[Uid] = None
+
         # Caching
-        self.uid_to_pk_cache: Dict[Uid, Uid] = {}
-        self.cached_data: Dict[Uid, RecordData] = {}
-        self.default_reference_pk: Optional[Uid] = None
+        self._uid_to_pk_cache: Dict[Uid, Uid] = {}
+        self._cached_data: Dict[Uid, RecordData] = {}
 
         # Stats
         self.imported_count = 0
@@ -351,7 +358,11 @@ class SourceModelWrapper:
         if self.importers is not None:
             raise ValueError(f"Can't add field {self.format_field_name(name)}, model's importers already created.")
         if name in self.fields:
-            self.fields[name].reset_definition(definition, from_data)
+            if from_data:
+                # Do not update the definition from data when already defined
+                self.fields[name].from_data = True
+            else:
+                self.fields[name].reset_definition(definition)
         else:
             self.fields[name] = SourceField(self, name, definition, from_data)
 
@@ -376,23 +387,21 @@ class SourceModelWrapper:
 
     def get_pk_from_uid(self, uid: Uid) -> Uid:
         """Get a source primary key for a given source uid."""
-        if uid in self.uid_to_pk_cache:
-            return self.uid_to_pk_cache[uid]
+        if uid in self._uid_to_pk_cache:
+            return self._uid_to_pk_cache[uid]
 
         if self.nautobot.pk_type == "UUIDField":
             if self.extend_wrapper:
                 result = self.extend_wrapper.get_pk_from_uid(uid)
-                self.uid_to_pk_cache[uid] = result
-                return result
-            return source_pk_to_uuid(self.content_type or self.content_type, uid)
-
-        if self.nautobot.pk_type == "AutoField":
+            else:
+                result = source_pk_to_uuid(self.content_type or self.content_type, uid)
+        elif self.nautobot.pk_type == "AutoField":
             self.nautobot.last_id += 1
             result = self.nautobot.last_id
         else:
             raise ValueError(f"Unsupported pk_type {self.nautobot.pk_type}")
 
-        self.uid_to_pk_cache[uid] = result
+        self._uid_to_pk_cache[uid] = result
         return result
 
     def get_pk_from_identifiers(self, data: Union[Uid, Iterable[Uid]]) -> Uid:
@@ -409,13 +418,13 @@ class SourceModelWrapper:
             raise ValueError(f"Invalid identifiers {data} for {self.identifiers}")
 
         uid = json.dumps(data)
-        if uid in self.uid_to_pk_cache:
-            return self.uid_to_pk_cache[uid]
+        if uid in self._uid_to_pk_cache:
+            return self._uid_to_pk_cache[uid]
 
         filter_kwargs = {self.identifiers[index]: value for index, value in enumerate(data)}
         try:
             nautobot_instance = self.nautobot.model.objects.get(**filter_kwargs)
-            self.cached_data[uid] = get_nautobot_instance_data(nautobot_instance, self.nautobot.fields)
+            self._uid_to_pk_cache[uid] = nautobot_instance.id
             return nautobot_instance.id
         except self.nautobot.model.DoesNotExist:  # type: ignore
             return self.get_pk_from_uid(uid)
@@ -440,6 +449,7 @@ class SourceModelWrapper:
 
         if self.importers is None:
             raise RuntimeError(f"Importers not created for {self.content_type}")
+
         for importer in self.importers:
             importer(data, target_data)
 
@@ -472,14 +482,14 @@ class SourceModelWrapper:
                 raise TypeError(f"Invalid result type {result}")
             return result
         except DiffSyncObjectNotFound:
-            if uid in self.cached_data:
-                return self.import_record(self.cached_data[uid])
+            if uid in self._cached_data:
+                return self.import_record(self._cached_data[uid])
             raise
 
     def get_default_reference_uid(self) -> Uid:
         """Get the default reference to this model."""
-        if self.default_reference_pk:
-            return self.default_reference_pk
+        if self.default_reference_uid:
+            return self.default_reference_uid
         raise ValueError("Missing default reference")
 
     def cache_data(self, data: RecordData) -> Uid:
@@ -487,17 +497,20 @@ class SourceModelWrapper:
 
         If `data` are referenced by other models, they will be imported automatically, otherwise they will be ignored.
         """
+        uid = self.get_pk_from_data(data)
+        if uid in self._cached_data:
+            return uid
+
         if self.importers is None:
             for field_name in data.keys():
                 self.add_field(field_name, field_name, from_data=True)
 
-        uid = self.get_pk_from_data(data)
-        self.cached_data[uid] = data
+        self._cached_data[uid] = data
         return uid
 
     def set_default_reference(self, **data: Any) -> None:
         """Set the default reference to this model."""
-        self.default_reference_pk = self.cache_data(data)
+        self.default_reference_uid = self.cache_data(data)
 
     def post_import(self) -> bool:
         """Post import processing.
@@ -526,7 +539,7 @@ class SourceModelWrapper:
             if "content_types" not in self.nautobot.fields:
                 continue
 
-            content_types = set(wrapper.nautobot.get_content_type().id for wrapper in content_types)  # type: ignore
+            content_types = set(wrapper.nautobot.content_type_instance.pk for wrapper in content_types)
             target_content_types = getattr(instance, "content_types", None)
             if target_content_types != content_types:
                 if target_content_types:
@@ -578,16 +591,13 @@ class SourceField:
         """Return a string representation of the field."""
         return self.wrapper.format_field_name(self.name)
 
-    def reset_definition(self, definition: SourceFieldDefinition, from_data: bool) -> None:
+    def reset_definition(self, definition: SourceFieldDefinition) -> None:
         """Set a custom definition for the field."""
-        if from_data:
-            self.from_data = True
-            return
         if self.processed:
             raise RuntimeError(f"Field already processed. {self.wrapper.format_field_name(self.name)}")
         if self.is_custom:
             raise RuntimeError(
-                f"Can't set custom definition for a non-custom field {self.wrapper.format_field_name(self.name)}"
+                f"Can't reset custom definition for a non-custom field {self.wrapper.format_field_name(self.name)}"
             )
         self.is_custom = True
         self.definition = definition
@@ -638,7 +648,10 @@ class SourceField:
                     raise NotImplementedError(f"Unsupported field type {self}")
             except DjangoFieldDoesNotExist:
                 if not hasattr(self.wrapper.nautobot.model, nautobot_name):
-                    logger.warning("Missing field %s", self.wrapper.format_field_name(nautobot_name))
+                    logger.warning(
+                        "Missing Nautobot field or property %s, skipping",
+                        self.wrapper.format_field_name(nautobot_name),
+                    )
                     return
                 self.internal_type = "Property"
 
@@ -659,7 +672,7 @@ class SourceField:
         if self.internal_type == "None":
             return
 
-        if not self.django_field:
+        if self.internal_type == "Property":
             self.set_property_importer()
         elif self.internal_type == "CustomFieldData":
             self.set_property_importer()
@@ -788,21 +801,19 @@ class SourceField:
 
     def set_content_type_importer(self) -> None:
         """Set a content type importer."""
+        adapter = self.wrapper.adapter
 
         def importer(source: RecordData, target: RecordData) -> None:
             content_type = source.get(self.name, None)
-            if not content_type:
-                return
-
-            related_wrapper = self.wrapper.adapter.get_or_create_wrapper(content_type)
-            target[self.nautobot_name] = related_wrapper.nautobot.get_content_type().id  # type: ignore
+            if content_type:
+                target[self.nautobot_name] = adapter.get_nautobot_content_type_instance(content_type).pk
 
         self.set_importer(importer)
 
     def set_uuid_importer(self, related_wrapper: SourceModelWrapper) -> None:
         """Set a UUID importer."""
-        if self.default_value in EMPTY_VALUES and related_wrapper.default_reference_pk:
-            self.default_value = related_wrapper.default_reference_pk
+        if self.default_value in EMPTY_VALUES and related_wrapper.default_reference_uid:
+            self.default_value = related_wrapper.default_reference_uid
 
         if not (self.default_value is None or isinstance(self.default_value, UUID)):
             raise NotImplementedError(f"Default value {self.default_value} is not a UUID")
@@ -852,6 +863,7 @@ class SourceField:
 
     def set_content_types_importer(self) -> None:
         """Set a content types importer."""
+        adapter = self.wrapper.adapter
 
         def importer(source: RecordData, target: RecordData) -> None:
             values = source.get(self.name, None)
@@ -861,7 +873,7 @@ class SourceField:
             if not isinstance(values, (list, set)):
                 raise ValueError(f"Invalid value {values} for field {self.name}")
 
-            target[self.nautobot_name] = set(get_content_type_id(item) for item in values)
+            target[self.nautobot_name] = set(adapter.get_nautobot_content_type_instance(item).pk for item in values)
 
         self.set_importer(importer)
 
@@ -916,23 +928,19 @@ class SourceField:
         """Set a status importer."""
         status_wrapper = self.wrapper.adapter.get_or_create_wrapper("extras.status")
         if not self.default_value:
-            self.default_value = status_wrapper.default_reference_pk
+            self.default_value = status_wrapper.default_reference_uid
 
         if not (self.default_value is None or isinstance(self.default_value, UUID)):
             raise NotImplementedError(f"Default value {self.default_value} is not a UUID")
 
         def importer(source: RecordData, target: RecordData) -> None:
-            value = source.get(self.name, None)
-            if not value:
+            status = source.get(self.name, None)
+            if status:
+                value = status_wrapper.cache_data({"name": status[0].upper() + status[1:]})
+            else:
                 value = self.default_value
                 if not value:
                     return
-                status_wrapper.add_reference(self.default_value, self.wrapper)  # type: ignore
-            else:
-                name = value[0].upper() + value[1:]
-                value = status_wrapper.get_pk_from_identifiers([name])
-                if value not in status_wrapper.cached_data:
-                    status_wrapper.cached_data[value] = {"name": name}
 
             target[self.nautobot_name] = value
             status_wrapper.add_reference(value, self.wrapper)

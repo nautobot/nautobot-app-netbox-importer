@@ -1,6 +1,6 @@
 # Importer Documentation
 
-This document details the importer process,
+This document details the importer process.
 
 ## Stages
 
@@ -10,27 +10,22 @@ The importer process consists of the following stages:
 
 Before importing, it is essential to define any deviations between the source structure and the target Nautobot structure. This is configured within `nautobot_plugin_netbox_importer/diffsync/netbox.py`.
 
-The initial step requires creating a `SourceAdapter()`. The following adjustments can be defined using the adapter:
+The initial step requires creating a `SourceAdapter()`. To configure global importer settings, use `adapter.configure()`. The following arguments are available:
 
-- Use `adapter.ignore_models()` to skip certain source models during the import.
-- Use `adapter.ignore_fields()` to skip specific fields across all models.
+- `ignore_content_types` to skip certain source models during the import.
+- `ignore_fields` to skip specific fields across all models.
 
-Customize individual models that differ from the Nautobot model using `SourceModelWrapper()`. This is achieved through `adapter.define_model(content_type: ContentTypeStr)`. You can specify additional parameters like:
+Customize individual models that differ from the Nautobot model using `SourceModelWrapper()`. This is achieved through `adapter.configure_model(content_type: ContentTypeStr)`. You can specify additional arguments like:
 
 - `nautobot_content_type`: Define this when the Nautobot content type differs from the source.
 - `identifiers`: List of fields that are identifiable as unique references in the source data.
-
-Next, configure the `SourceModelWrapper()` to handle:
-
-- Forward references using `source_wrapper.set_forwarding_references(target_content_type: ContentTypeStr, relation_field_name: FieldName)`. This helps to correctly associate `content_types` fields, such as `LocationType`, when the source references `Site`, `Region`, or `Location`.
-- Set a default reference using `source_wrapper.set_default_reference(**data)`. These defaults fill in data for absent source references that must be specified in Nautobot, such as `Status`.
-- Provide default values for Nautobot model instances with `source_wrapper.nautobot.set_instance_defaults(**defaults)`.
-
-Field customization is possible via `source_wrapper.set_fields(**fields)` by:
-
-- Ignoring a field using `set_fields(field_name=None)`.
-- Renaming a field using `set_fields(field_name="new_field_name")`.
-- Assigning a `Callable` for specialized field handling, e.g., `set_fields(role=_role_definition_factory("dcim.rackrole")`, which maps the `role` field to the `dcim.rackrole` content type.
+- `default_reference`: `RecordData` dictionary of default value to reference this model. This is useful when the source data does not specify a reference that is required in Nautobot.
+- `extend_content_type`: Define, when this source model extends another source model to merge into single Nautobot model.
+- `fields`: Define the source fields and how to import them. This argument is a dictionary of `FieldName` to `SourceFieldDefinition` instances.
+    - `SourceFieldDefinition` can be one of:
+        - `None`: to ignore the field.
+        - Nautobot `FieldName` to rename the field.
+        - `Callable` for specialized field handling, e.g., `_role_definition_factory(adapter, "dcim.rackrole")`, which maps the `role` field to the `dcim.rackrole` content type.
 
 ### Defining Source Data
 
@@ -61,11 +56,11 @@ This stage involves the second data iteration, where `DiffSyncModel` instances a
 
 ### Updating Referenced Content Types
 
-The updating of `content_types` fields, based on cached references, occurs in this phase.
+The updating of `content_types` fields, based on cached references, occurs in this phase. It's possible to define forwarding references using `source_wrapper.set_references_forwarding()`, e.g. references to `dcim.location` are forwarded to `dcim.locationtype`.
 
 ### Reading Nautobot Data
 
-`NautobotAdapter()` initiates and reads from the Nautobot database, considering only content type models with at least one instance of imported data.
+`NautobotAdapter()` initiates and reads from the Nautobot database, considering only models with at least one instance of imported data.
 
 ### Syncing to Nautobot
 
@@ -98,7 +93,7 @@ classDiagram
     }
     class SourceAdapter {
         wrappers: Mapping[ContentTypeStr, SourceModelWrapper]
-        not_initialized_wrappers: Set[SourceModelWrapper]
+        nautobot: NautobotAdapter
         ignored_fields: Set[FieldName]
         ignored_models: Set[ContentTypeStr]
         ------------------
@@ -114,13 +109,13 @@ classDiagram
         references_forwarding: ContentTypeStr, FieldName
         fields: Mapping[FieldName, SourceField]
         importers: List[SourceFieldImporter]
+        extend_wrapper: Optional[SourceModelWrapper]
+        imported_count: int
         - Caching ------------------
         references: Mapping[Uid, Set[SourceModelWrapper]]
-        uid_to_pk_cache: Mapping[Uid, Uid]
-        default_reference_pk: Uid
-        cached_data: Mapping[Uid, RecordData]
-        last_id: Uid  # For AutoField PKs
-        imported_count: int
+        default_reference_uid: Uid
+        _uid_to_pk_cache: Mapping[Uid, Uid]
+        _cached_data: Mapping[Uid, RecordData]
     }
     class NautobotModelWrapper {
         content_type: ContentTypeStr
@@ -130,11 +125,13 @@ classDiagram
         pk_type: InternalFieldTypeStr
         pk_name: FieldName
         constructor_kwargs: Mapping[FieldName, Any]
-        count: int
+        imported_count: int
+        last_id: Uid  # For AutoField PKs
+        _clean_failures: Set[Uid]]
     }
     class NautobotAdapter {
-        self.clean_failures: Dict[NautobotBaseModelType, Set[Uid]]
-        self.validation_errors: Optional[Dict[ContentTypeStr, Set[ValidationError]]]
+        wrappers: Mapping[ContentTypeStr, SourceModelWrapper]
+        validation_errors: Dict[ContentTypeStr, Set[ValidationError]]
         ------------------
         importer_model_1: ImporterModel
         importer_model_2: ImporterModel
