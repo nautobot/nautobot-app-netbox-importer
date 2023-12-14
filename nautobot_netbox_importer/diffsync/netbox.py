@@ -279,6 +279,7 @@ def _setup_circuits(adapter: SourceAdapter) -> None:
         },
     )
 
+
 def _setup_dcim(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "dcim.rackreservation",
