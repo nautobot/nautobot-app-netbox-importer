@@ -182,6 +182,7 @@ def _setup_source() -> SourceAdapter:
 
     _setup_base(adapter)
     _setup_dcim(adapter)
+    _setup_circuits(adapter)
     _setup_ipam(adapter)
     _setup_virtualization(adapter)
 
@@ -262,7 +263,7 @@ def _setup_base(adapter: SourceAdapter) -> None:
     )
 
 
-def _setup_dcim(adapter: SourceAdapter) -> None:
+def _setup_circuits(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "circuits.circuit",
         fields={
@@ -277,6 +278,8 @@ def _setup_dcim(adapter: SourceAdapter) -> None:
             "location": _define_location,
         },
     )
+
+def _setup_dcim(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "dcim.rackreservation",
         fields={
