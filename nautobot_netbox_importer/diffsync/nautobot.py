@@ -5,6 +5,7 @@ from typing import Dict
 from typing import Iterable
 from typing import Mapping
 from typing import MutableMapping
+from typing import NamedTuple
 from typing import Optional
 from typing import Set
 from typing import Tuple
@@ -12,27 +13,29 @@ from typing import Type
 from uuid import UUID
 
 from diffsync import DiffSyncModel
-from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db.models import Max
 from nautobot.core.utils.lookup import get_model_from_name
-from pydantic import Field as PydanticField
 
 from .base import EMPTY_VALUES
 from .base import INTERNAL_TYPE_TO_ANNOTATION
 from .base import REFERENCE_INTERNAL_TYPES
 from .base import BaseAdapter
 from .base import ContentTypeStr
+from .base import DjangoFieldDoesNotExist
+from .base import DjangoModelMeta
 from .base import FieldName
+from .base import GenericForeignKey
 from .base import GenericForeignValue
 from .base import InternalFieldTypeStr
 from .base import NautobotBaseModel
+from .base import NautobotBaseModelType
+from .base import NautobotField
+from .base import PydanticField
 from .base import RecordData
 from .base import Uid
 from .base import logger
-
-NautobotFields = MutableMapping[FieldName, InternalFieldTypeStr]
 
 # Helper to determine the import order of models.
 # Due to dependencies among Nautobot models, certain models must be imported first to ensure successful `instance.save()` calls without errors.
@@ -95,7 +98,7 @@ class NautobotAdapter(BaseAdapter):
         self._validation_errors = {}
         for wrapper in self.wrappers.values():
             for uid in wrapper.get_clean_failures():
-                instance = wrapper.model.objects.get(id=uid)
+                instance = wrapper.model.objects.get(pk=uid)
                 try:
                     instance.clean()
                 except ValidationError as error:
@@ -113,6 +116,17 @@ class NautobotAdapter(BaseAdapter):
         return nautobot_wrapper
 
 
+class NautobotFieldWrapper(NamedTuple):
+    """Wrapper for a Nautobot field."""
+
+    name: FieldName
+    internal_type: InternalFieldTypeStr
+    field: Optional[NautobotField] = None
+
+
+NautobotFields = MutableMapping[FieldName, NautobotFieldWrapper]
+
+
 # pylint: disable=too-many-instance-attributes
 class NautobotModelWrapper:
     """Wrapper for a Nautobot model."""
@@ -121,33 +135,59 @@ class NautobotModelWrapper:
         """Initialize the wrapper."""
         self._content_type_instance = None
         self.content_type = content_type
-        self.model = get_model_from_name(content_type)
+        try:
+            self._model = get_model_from_name(content_type)
+            self.disabled = False
+        except TypeError:
+            self.disabled = True
+
         self.fields: NautobotFields = {}
         self.importer: Optional[Type[ImporterModel]] = None
         self._clean_failures: Set[Uid] = set()
 
-        pk_field = self.model._meta.pk
-        self.pk_type = pk_field.get_internal_type()
-        self.pk_name = pk_field.name
-        if self.pk_name != "id":
-            raise NotImplementedError("Primary key field must be named 'id'")
-        self.add_field(self.pk_name, self.pk_type)
+        self.last_id = 0
 
-        if self.pk_type == "UUIDField":
-            self.last_id = 0
-        elif self.pk_type == "AutoField":
-            self.last_id = self.model.objects.aggregate(Max("id"))["id__max"] or 0
+        if self.disabled:
+            logger.warning("Skipping unknown model %s", content_type)
+            self._pk_field = None
         else:
-            raise ValueError(f"Unsupported pk_type {self.pk_type}")
+            self._pk_field = self.add_field(self.model_meta.pk.name)  # type: ignore
+            if not self._pk_field:
+                raise ValueError(f"Missing pk field for {self.content_type}")
+
+            if self._pk_field.internal_type == "AutoField":
+                self.last_id = (
+                    self.model.objects.aggregate(Max(self._pk_field.name))[f"{self._pk_field.name}__max"] or 0
+                )
 
         self.constructor_kwargs: Dict[FieldName, Any] = {}
         self.imported_count = 0
+
+    @property
+    def pk_field(self) -> NautobotFieldWrapper:
+        """Get the pk field."""
+        if not self._pk_field:
+            raise ValueError(f"Missing pk field for {self.content_type}")
+        return self._pk_field
 
     def get_clean_failures(self) -> Set[Uid]:
         """Get the set of instances that failed to clean."""
         failures = self._clean_failures
         self._clean_failures = set()
         return failures
+
+    @property
+    def model(self) -> NautobotBaseModelType:
+        """Get the Nautobot model."""
+        if self.disabled:
+            raise NotImplementedError("Cannot use disabled model")
+
+        return self._model
+
+    @property
+    def model_meta(self) -> DjangoModelMeta:
+        """Get the Nautobot model meta."""
+        return self.model._meta  # type: ignore
 
     def get_importer(self) -> Type["ImporterModel"]:
         """Get the DiffSync model for this wrapper."""
@@ -166,34 +206,29 @@ class NautobotModelWrapper:
             "_wrapper": self,
         }
 
-        meta = self.model._meta
-        if not meta.pk:
-            raise NotImplementedError("Missing primary key field")
+        annotations[self.pk_field.name] = INTERNAL_TYPE_TO_ANNOTATION[self.pk_field.internal_type]
+        identifiers.append(self.pk_field.name)
+        class_definition[self.pk_field.name] = PydanticField()
 
-        annotations[self.pk_name] = INTERNAL_TYPE_TO_ANNOTATION[self.pk_type]
-        identifiers.append(self.pk_name)
-        class_definition[self.pk_name] = PydanticField()
-
-        for field_name, internal_type in self.fields.items():
-            if field_name in identifiers:
+        for field in self.fields.values():
+            if field.name in identifiers:
                 continue
-            if internal_type == "GenericForeignKey":
+            if field.internal_type == "GenericForeignKey":
                 annotation = Tuple[ContentTypeStr, UUID]
-            elif internal_type in REFERENCE_INTERNAL_TYPES:
-                field = meta.get_field(field_name)
-                related_model = field.related_model
+            elif field.internal_type in REFERENCE_INTERNAL_TYPES:
+                related_model = getattr(field.field, "related_model")
                 if not related_model:
-                    raise ValueError(f"Missing related model for field {field_name}")
+                    raise ValueError(f"Missing related model for field {field.name}")
                 referenced_internal_type = related_model._meta.pk.get_internal_type()
                 annotation = INTERNAL_TYPE_TO_ANNOTATION[referenced_internal_type]
-                if internal_type == "ManyToManyField":
+                if field.internal_type == "ManyToManyField":
                     annotation = Set[annotation]
             else:
-                annotation = INTERNAL_TYPE_TO_ANNOTATION[internal_type]
+                annotation = INTERNAL_TYPE_TO_ANNOTATION[field.internal_type]
 
-            attributes.append(field_name)
-            annotations[field_name] = Optional[annotation]
-            class_definition[field_name] = PydanticField(default=None)
+            attributes.append(field.name)
+            annotations[field.name] = Optional[annotation]
+            class_definition[field.name] = PydanticField(default=None)
 
         logger.debug("Creating model %s", class_definition)
         try:
@@ -204,15 +239,50 @@ class NautobotModelWrapper:
 
         return self.importer
 
-    def add_field(self, field_name: FieldName, internal_type: InternalFieldTypeStr) -> None:
+    def _field_from_name(self, field_name: FieldName) -> Optional[NautobotFieldWrapper]:
+        meta = self.model_meta
+
+        if field_name == "custom_field_data":
+            return NautobotFieldWrapper(field_name, "CustomFieldData", meta.get_field("_custom_field_data"))
+
+        try:
+            field = meta.get_field(field_name)
+        except DjangoFieldDoesNotExist:
+            if not hasattr(self.model, field_name):
+                return None
+            return NautobotFieldWrapper(field_name, "Property")
+
+        if isinstance(field, GenericForeignKey):
+            # GenericForeignKey is not a real field, doesn't have `get_internal_type` method
+            return NautobotFieldWrapper(field_name, "GenericForeignKey", field)
+
+        if not hasattr(field, "get_internal_type"):
+            raise NotImplementedError(f"Unsupported field type {self.content_type} {field_name}")
+
+        internal_type = field.get_internal_type()
+        if internal_type in REFERENCE_INTERNAL_TYPES and internal_type != "ManyToManyField":
+            # Reference fields are converted to id fields
+            return NautobotFieldWrapper(f"{field_name}_id", internal_type, field)
+        return NautobotFieldWrapper(field_name, internal_type, field)
+
+    def add_field(self, field_name: FieldName) -> Optional[NautobotFieldWrapper]:
         """Add a field to the model."""
         if self.importer:
             raise RuntimeError("Cannot add fields after the importer has been created")
 
-        logger.debug("Adding nautobot field %s %s %s", self.content_type, field_name, internal_type)
-        if field_name in self.fields and self.fields[field_name] != internal_type:
-            raise ValueError(f"Field {field_name} already exists with different type {self.fields[field_name]}")
-        self.fields[field_name] = internal_type
+        field = self._field_from_name(field_name)
+        if not field:
+            return None
+
+        if field.name in self.fields:
+            existing_field = self.fields[field.name]
+            if existing_field.internal_type != field.internal_type:
+                raise ValueError(f"Field {field.name} already exists with different type {self.fields[field.name]}")
+            return existing_field
+
+        logger.debug("Adding nautobot field %s %s %s", self.content_type, field.name, field.internal_type)
+        self.fields[field.name] = field
+        return field
 
     @property
     def content_type_instance(self) -> ContentType:
@@ -235,15 +305,15 @@ class NautobotModelWrapper:
             if internal_type == "GenericForeignKey":
                 return (value._meta.label.lower(), value.pk)  # type: ignore
             if internal_type == "ManyToManyField":
-                return set(item.id for item in value.all()) or None  # type: ignore
+                return set(item.pk for item in value.all()) or None  # type: ignore
             if internal_type == "Property":
                 return str(value)
             if internal_type == "CustomFieldData":
                 return value
             return value
 
-        result = {field_name: get_value(field_name, internal_type) for field_name, internal_type in self.fields.items()}
-        result["id"] = instance.id
+        result = {field.name: get_value(field.name, field.internal_type) for field in self.fields.values()}
+        result[self.pk_field.name] = instance.pk
         return result
 
     # pylint: disable=too-many-statements
@@ -281,7 +351,7 @@ class NautobotModelWrapper:
             # `clean()` can be called again by getting `validation_errors` property after importing all data
             # pylint: disable=broad-exception-caught
             except Exception as exc:
-                uid = instance.id
+                uid = instance.pk
                 if not isinstance(uid, (UUID, str, int)):
                     raise TypeError(f"Invalid uid {uid}") from exc
                 self._clean_failures.add(uid)
@@ -315,7 +385,7 @@ class NautobotModelWrapper:
             #     force_fields.add(field_name)
             #     continue
 
-            internal_type = self.fields[field_name]
+            internal_type = self.fields[field_name].internal_type
             if internal_type == "ManyToManyField":
                 m2m_fields[field_name] = value
             elif internal_type == "CustomFieldData":
@@ -350,12 +420,12 @@ class ImporterModel(DiffSyncModel):
 
     def update(self, attrs: dict) -> Optional[DiffSyncModel]:
         """Update this model instance, both in Nautobot and in DiffSync."""
-        uid = getattr(self, "id", None)
+        uid = getattr(self, self._wrapper.pk_field.name, None)
         if not uid:
-            raise NotImplementedError("Cannot update model without id")
+            raise NotImplementedError("Cannot update model without pk")
 
         model = self._wrapper.model
-        instance = model.objects.get(id=uid)
+        instance = model.objects.get(pk=uid)
         if not isinstance(self.diffsync, NautobotAdapter):
             raise TypeError(f"Invalid diffsync type {self.diffsync}")
         self._wrapper.save_nautobot_instance(instance, attrs)

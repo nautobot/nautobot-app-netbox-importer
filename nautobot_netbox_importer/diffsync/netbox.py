@@ -61,16 +61,16 @@ def _define_choices(field: SourceField) -> None:
 
 def _define_location_type(field: SourceField) -> None:
     field.set_nautobot_field(field.name)
-    field.wrapper.set_references_forwarding("dcim.locationtype", field.nautobot_name)
+    field.wrapper.set_references_forwarding("dcim.locationtype", field.nautobot.name)
 
     location_type_wrapper = field.wrapper.adapter.get_or_create_wrapper("dcim.locationtype")
     # Uppercase the first letter of the content type name
     name = field.wrapper.content_type.split(".")[1]
     name = name[0].upper() + name[1:]
-    location_type_id = location_type_wrapper.cache_data({"id": name, "name": name, "nestable": True})
+    location_type_id = location_type_wrapper.cache_record({"id": name, "name": name, "nestable": True})
 
     def importer(_, target: RecordData) -> None:
-        target[field.nautobot_name] = location_type_id
+        target[field.nautobot.name] = location_type_id
         location_type_wrapper.add_reference(location_type_id, field.wrapper)
 
     field.set_importer(importer)
@@ -95,7 +95,7 @@ def _define_location(field: SourceField) -> None:
         site = source.get("site", None)
         region = source.get("region", None)
 
-        if field.nautobot_name == "parent_id" and parent:
+        if field.nautobot.name == "parent_id" and parent:
             result = wrapper.get_pk_from_uid(parent)
             wrapper.add_reference(result, wrapper)
         elif location:
@@ -110,7 +110,7 @@ def _define_location(field: SourceField) -> None:
         else:
             result = None
 
-        target[field.nautobot_name] = result
+        target[field.nautobot.name] = result
 
     field.set_importer(importer)
 
@@ -166,17 +166,6 @@ def _setup_source() -> SourceAdapter:
             "admin.logentry": None,  # NetBox 3.0 TBD verify
             "users.userconfig": None,  # NetBox 3.0 TBD verify
             "auth.permission": None,  # NetBox 3.0 TBD verify
-            "dcim.sitegroup": None,  # NetBox 3.1 TBD verify
-            "ipam.asn": None,  # NetBox 3.1 TBD verify
-            "ipam.iprange": None,  # NetBox 3.1 TBD verify
-            "tenancy.contactgroup": None,  # NetBox 3.1 TBD verify
-            "tenancy.contactrole": None,  # NetBox 3.1 TBD verify
-            "tenancy.contact": None,  # NetBox 3.1 TBD verify
-            "tenancy.contactassignment": None,  # NetBox 3.1 TBD verify
-            "dcim.module": None,  # NetBox 3.2 TBD verify
-            "dcim.modulebay": None,  # NetBox 3.2 TBD verify
-            "dcim.modulebaytemplate": None,  # NetBox 3.2 TBD verify
-            "dcim.moduletype": None,  # NetBox 3.2 TBD verify
         },
     )
 

@@ -18,8 +18,13 @@ from uuid import uuid5
 from diffsync import DiffSync
 from diffsync.store.local import LocalStore
 from django.conf import settings
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.core.exceptions import FieldDoesNotExist as _DjangoFieldDoesNotExist
+from django.db.models import Field as _DjangoField
 from django.db.models.fields import NOT_PROVIDED
+from django.db.models.options import Options as _DjangoModelMeta
 from nautobot.core.models import BaseModel
+from pydantic import Field as _PydanticField
 
 logger = logging.getLogger("nautobot-netbox-importer")
 
@@ -31,10 +36,14 @@ RecordData = MutableMapping[FieldName, Any]
 InternalFieldTypeStr = str
 NautobotBaseModel = BaseModel
 NautobotBaseModelType = Type[NautobotBaseModel]
+DjangoField = _DjangoField
+DjangoFieldDoesNotExist = _DjangoFieldDoesNotExist
 GenericForeignValue = Tuple[ContentTypeStr, Uid]
+NautobotField = Union[_DjangoField, GenericForeignKey]
+DjangoModelMeta = _DjangoModelMeta
+PydanticField = _PydanticField
 
 EMPTY_VALUES = [None, set(), tuple(), {}, [], "", NOT_PROVIDED]
-ONLY_ID_IDENTIFIERS: List[FieldName] = ["id"]
 INTERNAL_TYPE_TO_ANNOTATION: Mapping[InternalFieldTypeStr, type] = {
     "AutoField": int,
     "BigIntegerField": int,

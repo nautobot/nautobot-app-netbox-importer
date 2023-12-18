@@ -7,8 +7,9 @@ def print_fields_mapping(source: SourceAdapter) -> None:
     """Print fields mapping."""
 
     def get_mapping(field):
-        if field.nautobot_name:
-            return field.nautobot_name
+        nautobot_field = getattr(field, "_nautobot")
+        if nautobot_field:
+            return nautobot_field.name
 
         if not field.importer:
             return "SKIPPED"
@@ -50,6 +51,9 @@ def print_summary(source: SourceAdapter, nautobot: NautobotAdapter) -> None:
     print("- Content Types Mapping ------------------------")
     print("Mapping deviations from source content type to Nautobot content type")
     for content_type, wrapper in source.wrappers.items():
+        if wrapper.disabled:
+            print(f"  {content_type} -> SKIPPED")
+            continue
         if wrapper.imported_count == 0 or content_type == wrapper.nautobot.content_type:
             continue
         print(f"  {content_type} -> {wrapper.nautobot.content_type}")

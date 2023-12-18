@@ -109,7 +109,7 @@ classDiagram
         references_forwarding: ContentTypeStr, FieldName
         fields: Mapping[FieldName, SourceField]
         importers: List[SourceFieldImporter]
-        extend_wrapper: Optional[SourceModelWrapper]
+        extends_wrapper: Optional[SourceModelWrapper]
         imported_count: int
         - Caching ------------------
         references: Mapping[Uid, Set[SourceModelWrapper]]
@@ -126,7 +126,7 @@ classDiagram
         pk_name: FieldName
         constructor_kwargs: Mapping[FieldName, Any]
         imported_count: int
-        last_id: Uid  # For AutoField PKs
+        last_id: int  # For AutoField PKs
         _clean_failures: Set[Uid]]
     }
     class NautobotAdapter {
