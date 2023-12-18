@@ -90,6 +90,12 @@ _EXPECTED_COUNTS["3.3"] = {
 _EXPECTED_COUNTS["3.4"] = {
     **_EXPECTED_COUNTS["3.3"],
 }
+_EXPECTED_COUNTS["3.5"] = {
+    **_EXPECTED_COUNTS["3.4"],
+}
+_EXPECTED_COUNTS["3.6"] = {
+    **_EXPECTED_COUNTS["3.5"],
+}
 
 _EXPECTED_VALIDATION_ERRORS = {}
 _EXPECTED_VALIDATION_ERRORS["3.0"] = {
@@ -107,6 +113,12 @@ _EXPECTED_VALIDATION_ERRORS["3.3"] = {
 }
 _EXPECTED_VALIDATION_ERRORS["3.4"] = {
     **_EXPECTED_VALIDATION_ERRORS["3.3"],
+}
+_EXPECTED_VALIDATION_ERRORS["3.5"] = {
+    **_EXPECTED_VALIDATION_ERRORS["3.4"],
+}
+_EXPECTED_VALIDATION_ERRORS["3.6"] = {
+    **_EXPECTED_VALIDATION_ERRORS["3.5"],
 }
 
 
@@ -127,6 +139,12 @@ class TestSync(TestCase):
 
     def test_sync_3_4(self):
         self._sync("3.4")
+
+    def test_sync_3_5(self):
+        self._sync("3.5")
+
+    def test_sync_3_6(self):
+        self._sync("3.6")
 
     def _sync(self, version: str):
         """Test sync."""

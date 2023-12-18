@@ -351,6 +351,7 @@ def _setup_dcim(adapter: SourceAdapter) -> None:
         fields={
             "location": _define_location,
             "device_role": _role_definition_factory(adapter, "dcim.devicerole"),
+            "role": _role_definition_factory(adapter, "dcim.devicerole"),
         },
     )
     adapter.configure_model(
