@@ -60,7 +60,7 @@ def print_summary(source: SourceAdapter, nautobot: NautobotAdapter) -> None:
 
     print("- Content Types Back Mapping -------------------")
     print("Back mapping deviations from Nautobot content type to source content type")
-    for content_type, back_mapping in source.content_types_back_mapping.items():
+    for content_type, back_mapping in getattr(source, "_content_types_back_mapping").items():
         wrapper = source.nautobot.wrappers[content_type]
         if wrapper.imported_count == 0 or content_type == back_mapping:
             continue
