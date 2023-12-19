@@ -1,5 +1,4 @@
 """Nautobot DiffSync Importer."""
-
 from typing import Any
 from typing import Dict
 from typing import Iterable
@@ -38,7 +37,6 @@ from .base import Uid
 from .base import logger
 from .base import normalize_datetime
 
-_FORCE_FIELDS = {"last_updated"}
 # Helper to determine the import order of models.
 # Due to dependencies among Nautobot models, certain models must be imported first to ensure successful `instance.save()` calls without errors.
 # Models listed here take precedence over others, which are sorted by the order they're introduced to the importer.
@@ -299,7 +297,7 @@ class NautobotModelWrapper:
 
     def get_data_from_instance(self, instance: NautobotBaseModel) -> RecordData:
         """Get the data for a Nautobot instance."""
-
+        # pylint: disable=too-many-return-statements
         def get_value(field_name, internal_type) -> Any:
             value = getattr(instance, field_name, None)
             if value in EMPTY_VALUES:
@@ -320,7 +318,7 @@ class NautobotModelWrapper:
         result[self.pk_field.name] = instance.pk
         return result
 
-    # pylint: disable=too-many-statements
+    # pylint: disable=too-many-statements,too-many-branches
     def save_nautobot_instance(self, instance: NautobotBaseModel, values: RecordData) -> None:
         """Save a Nautobot instance."""
 
@@ -350,9 +348,10 @@ class NautobotModelWrapper:
             else:
                 setattr(instance, field_name, None)
 
-        def set_field(field_name: FieldName, value: Any):
-            field_wrapper = self.fields[field_name]
+        m2m_fields = set()
 
+        for field_name, value in values.items():
+            field_wrapper = self.fields[field_name]
             if field_wrapper.internal_type == "ManyToManyField":
                 m2m_fields.add(field_name)
             elif field_wrapper.internal_type == "CustomFieldData":
@@ -366,25 +365,11 @@ class NautobotModelWrapper:
             else:
                 setattr(instance, field_name, value)
 
-        m2m_fields = set()
-        force_fields = set()
-
-        for field_name, value in values.items():
-            if field_name in _FORCE_FIELDS:
-                force_fields.add(field_name)
-            else:
-                set_field(field_name, value)
-
         try:
             instance.save()
         except Exception:
             logger.error("Save failed: %s %s", instance, instance.__dict__, exc_info=True)
             raise
-
-        if force_fields:
-            for field_name in force_fields:
-                set_field(field_name, values[field_name])
-            instance.save(update_fields=force_fields)
 
         for field_name in m2m_fields:
             field = getattr(instance, field_name)
@@ -405,7 +390,6 @@ class NautobotModelWrapper:
             self._clean_failures.add(uid)
 
 
-
 class ImporterModel(DiffSyncModel):
     """Base class for all DiffSync models."""
 
@@ -415,9 +399,14 @@ class ImporterModel(DiffSyncModel):
     def create(cls, diffsync: BaseAdapter, ids: dict, attrs: dict) -> Optional[DiffSyncModel]:
         """Create this model instance, both in Nautobot and in DiffSync."""
         instance = cls._wrapper.model(**cls._wrapper.constructor_kwargs, **ids)
-        if not isinstance(diffsync, NautobotAdapter):
-            raise TypeError(f"Invalid diffsync type {diffsync}")
+
+        # Created needs to be set after saving the instance
+        created = attrs.pop("created", None)
         cls._wrapper.save_nautobot_instance(instance, attrs)
+        if created:
+            setattr(instance, "created", created)
+            instance.save()
+
         return super().create(diffsync, ids, attrs)
 
     def update(self, attrs: dict) -> Optional[DiffSyncModel]:
@@ -428,7 +417,8 @@ class ImporterModel(DiffSyncModel):
 
         model = self._wrapper.model
         instance = model.objects.get(pk=uid)
-        if not isinstance(self.diffsync, NautobotAdapter):
-            raise TypeError(f"Invalid diffsync type {self.diffsync}")
+        # Sync "created" only on create
+        attrs.pop("created", None)
         self._wrapper.save_nautobot_instance(instance, attrs)
+
         return super().update(attrs)

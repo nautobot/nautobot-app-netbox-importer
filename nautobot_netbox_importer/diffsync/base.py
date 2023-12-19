@@ -1,14 +1,14 @@
 """Generic DiffSync Importer base module."""
 
 import datetime
-from dateutil import parser as datetime_parser
 import decimal
 import logging
-from typing import Any, Optional
+from typing import Any
 from typing import Iterable
 from typing import List
 from typing import Mapping
 from typing import MutableMapping
+from typing import Optional
 from typing import Tuple
 from typing import Type
 from typing import Union
@@ -16,6 +16,7 @@ from uuid import NAMESPACE_DNS
 from uuid import UUID
 from uuid import uuid5
 
+from dateutil import parser as datetime_parser
 from diffsync import DiffSync
 from diffsync.store.local import LocalStore
 from django.conf import settings
@@ -109,6 +110,7 @@ def source_pk_to_uuid(content_type: ContentTypeStr, pk: Uid) -> UUID:
 
 
 def normalize_datetime(value: Any) -> Optional[datetime.datetime]:
+    """Normalize datetime values to UTC to compare with DiffSync."""
     if not value:
         return None
 
