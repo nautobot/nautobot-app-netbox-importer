@@ -187,7 +187,6 @@ def _setup_base(adapter: SourceAdapter) -> None:
             "content_types": [],
         },
     )
-    # TBD: Verify if necessary
     adapter.configure_model("extras.role")
     adapter.configure_model(
         "extras.customfield",
@@ -233,7 +232,7 @@ def _setup_base(adapter: SourceAdapter) -> None:
         fields={
             "last_login": None,
             "is_superuser": None,  # NetBox 3.1 TBD verify
-            "password": None,  # NetBox 3.1 TBD verify
+            "password": None,  # Should not be attempted to migrated
             "user_permissions": None,  # NetBox 3.1 TBD verify
         },
     )
