@@ -154,11 +154,9 @@ def _setup_source() -> SourceAdapter:
     """Setup NetBox models importers."""
     adapter = SourceAdapter(name="NetBox")
     adapter.configure(
-        ignore_fields=(
-            # Following fields fails for dcim.rack, see `./source.py` `_FORCE_FIELDS`
-            "created",
-            "last_updated",
-        ),
+        ignore_fields={
+            "last_updated": None,  # It's updated on every save and can't be imported
+        },
         ignore_content_types={
             "contenttypes.contenttype": None,  # Nautobot has own content types, handled via migrations
             "sessions.session": None,  # Nautobot has own sessions, sessions should never cross apps

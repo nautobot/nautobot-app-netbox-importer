@@ -1,6 +1,6 @@
 """Summary of the import."""
-from nautobot_netbox_importer.diffsync.source import SourceAdapter
 from nautobot_netbox_importer.diffsync.nautobot import NautobotAdapter
+from nautobot_netbox_importer.diffsync.source import SourceAdapter
 
 
 def print_fields_mapping(source: SourceAdapter) -> None:
@@ -9,7 +9,7 @@ def print_fields_mapping(source: SourceAdapter) -> None:
     def get_mapping(field):
         nautobot_field = getattr(field, "_nautobot")
         if nautobot_field:
-            return nautobot_field.name
+            return f"{nautobot_field.name} ({nautobot_field.internal_type})"
 
         if not field.importer:
             return "SKIPPED"

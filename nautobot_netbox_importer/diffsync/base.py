@@ -1,9 +1,10 @@
 """Generic DiffSync Importer base module."""
 
 import datetime
+from dateutil import parser as datetime_parser
 import decimal
 import logging
-from typing import Any
+from typing import Any, Optional
 from typing import Iterable
 from typing import List
 from typing import Mapping
@@ -105,6 +106,19 @@ def source_pk_to_uuid(content_type: ContentTypeStr, pk: Uid) -> UUID:
         settings.SECRET_KEY,
     )
     return uuid5(namespace, f"{content_type}:{pk}")
+
+
+def normalize_datetime(value: Any) -> Optional[datetime.datetime]:
+    if not value:
+        return None
+
+    if not isinstance(value, datetime.datetime):
+        value = datetime_parser.isoparse(str(value))
+
+    if value.tzinfo is None:
+        return value.replace(tzinfo=datetime.timezone.utc)
+
+    return value.astimezone(datetime.timezone.utc)
 
 
 class BaseAdapter(DiffSync):

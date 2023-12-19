@@ -15,7 +15,6 @@ from typing import Set
 from typing import Union
 from uuid import UUID
 
-from dateutil import parser as datetime_parser
 from diffsync.exceptions import ObjectNotFound as DiffSyncObjectNotFound
 from django.contrib.contenttypes.models import ContentType
 from nautobot.core.models.tree_queries import TreeModel
@@ -33,6 +32,7 @@ from .base import NautobotBaseModelType
 from .base import RecordData
 from .base import Uid
 from .base import logger
+from .base import normalize_datetime
 from .base import source_pk_to_uuid
 from .nautobot import IMPORT_ORDER
 from .nautobot import ImporterModel
@@ -904,13 +904,8 @@ class SourceField:
 
         def importer(source: RecordData, target: RecordData) -> None:
             value = source.get(self.name, None)
-            if value in EMPTY_VALUES:
-                return
-
-            if not isinstance(value, datetime.datetime):
-                value = datetime_parser.isoparse(str(value))
-
-            target[self.nautobot.name] = value
+            if value not in EMPTY_VALUES:
+                target[self.nautobot.name] = normalize_datetime(value)
 
         self.set_importer(importer)
 

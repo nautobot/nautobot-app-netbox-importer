@@ -36,7 +36,9 @@ from .base import PydanticField
 from .base import RecordData
 from .base import Uid
 from .base import logger
+from .base import normalize_datetime
 
+_FORCE_FIELDS = {"last_updated"}
 # Helper to determine the import order of models.
 # Due to dependencies among Nautobot models, certain models must be imported first to ensure successful `instance.save()` calls without errors.
 # Models listed here take precedence over others, which are sorted by the order they're introduced to the importer.
@@ -310,6 +312,8 @@ class NautobotModelWrapper:
                 return str(value)
             if internal_type == "CustomFieldData":
                 return value
+            if internal_type == "DateTimeField":
+                return normalize_datetime(value)
             return value
 
         result = {field.name: get_value(field.name, field.internal_type) for field in self.fields.values()}
@@ -328,7 +332,10 @@ class NautobotModelWrapper:
             if value:
                 custom_field_data.update(value)
 
-        def set_generic_foreign_key(field: GenericForeignKey, value: Optional[GenericForeignValue]):
+        def set_generic_foreign_key(field, value: Optional[GenericForeignValue]):
+            if not isinstance(field, GenericForeignKey):
+                raise TypeError(f"Invalid field type {field}")
+
             if value:
                 foreign_model = get_model_from_name(value[0])
                 setattr(instance, field.ct_field, ContentType.objects.get_for_model(foreign_model))
@@ -337,71 +344,66 @@ class NautobotModelWrapper:
                 setattr(instance, field.fk_field, None)
                 setattr(instance, field.ct_field, None)
 
-        def set_empty(field_name: FieldName):
-            if field.default not in EMPTY_VALUES:
-                setattr(instance, field_name, field.default)
-            elif field.blank and not field.null:
+        def set_empty(field, field_name: FieldName):
+            if field.blank and not field.null:
                 setattr(instance, field_name, "")
             else:
                 setattr(instance, field_name, None)
 
-        def save():
-            try:
-                instance.clean()
-            # `clean()` can be called again by getting `validation_errors` property after importing all data
-            # pylint: disable=broad-exception-caught
-            except Exception as exc:
-                uid = instance.pk
-                if not isinstance(uid, (UUID, str, int)):
-                    raise TypeError(f"Invalid uid {uid}") from exc
-                self._clean_failures.add(uid)
+        def set_field(field_name: FieldName, value: Any):
+            field_wrapper = self.fields[field_name]
 
-            try:
-                instance.save()
-            except Exception:
-                logger.error("Save failed: %s %s", instance, instance.__dict__, exc_info=True)
-                raise
+            if field_wrapper.internal_type == "ManyToManyField":
+                m2m_fields.add(field_name)
+            elif field_wrapper.internal_type == "CustomFieldData":
+                set_custom_field_data(value)
+            elif field_wrapper.internal_type == "Property":
+                setattr(instance, field_name, value)
+            elif field_wrapper.internal_type == "GenericForeignKey":
+                set_generic_foreign_key(field_wrapper.field, value)
+            elif value in EMPTY_VALUES:
+                set_empty(field_wrapper.field, field_name)
+            else:
+                setattr(instance, field_name, value)
 
-            # See `force_fields` below
-            # if force_fields:
-            #     instance.save(update_fields=force_fields)
-
-            for field_name, value in m2m_fields.items():
-                field = getattr(instance, field_name)
-                if value:
-                    field.set(value)
-                else:
-                    field.clear()
-
-        # TBD: Fails with dcim.rack
-        # _FORCE_FIELDS = ("created", "last_updated",)
-        # force_fields = set()
-        # Possible to implement for other models?
-
-        m2m_fields = {}
+        m2m_fields = set()
+        force_fields = set()
 
         for field_name, value in values.items():
-            # if field_name in _FORCE_FIELDS:
-            #     force_fields.add(field_name)
-            #     continue
-
-            internal_type = self.fields[field_name].internal_type
-            if internal_type == "ManyToManyField":
-                m2m_fields[field_name] = value
-            elif internal_type == "CustomFieldData":
-                set_custom_field_data(value)
-            elif internal_type == "Property":
-                setattr(instance, field_name, value)
+            if field_name in _FORCE_FIELDS:
+                force_fields.add(field_name)
             else:
-                field = instance._meta.get_field(field_name)  # type: ignore
-                if internal_type == "GenericForeignKey":
-                    set_generic_foreign_key(field, value)
-                elif value in EMPTY_VALUES:
-                    set_empty(field_name)
-                else:
-                    setattr(instance, field_name, value)
+                set_field(field_name, value)
 
-        save()
+        try:
+            instance.save()
+        except Exception:
+            logger.error("Save failed: %s %s", instance, instance.__dict__, exc_info=True)
+            raise
+
+        if force_fields:
+            for field_name in force_fields:
+                set_field(field_name, values[field_name])
+            instance.save(update_fields=force_fields)
+
+        for field_name in m2m_fields:
+            field = getattr(instance, field_name)
+            value = values[field_name]
+            if value:
+                field.set(value)
+            else:
+                field.clear()
+
+        try:
+            instance.clean()
+        # `clean()` can be called again by getting `validation_errors` property after importing all data
+        # pylint: disable=broad-exception-caught
+        except Exception as exc:
+            uid = instance.pk
+            if not isinstance(uid, (UUID, str, int)):
+                raise TypeError(f"Invalid uid {uid}") from exc
+            self._clean_failures.add(uid)
+
 
 
 class ImporterModel(DiffSyncModel):
