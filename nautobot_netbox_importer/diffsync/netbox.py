@@ -160,12 +160,12 @@ def _setup_source() -> SourceAdapter:
             "last_updated",
         ),
         ignore_content_types={
-            "contenttypes.contenttype": None,  # Nautobot has own content types
-            "sessions.session": None,  # Nautobot has own sessions
-            "dcim.cablepath": None,  # Recreated in Nautobot
-            "admin.logentry": None,  # NetBox 3.0 TBD verify
-            "users.userconfig": None,  # NetBox 3.0 TBD verify
-            "auth.permission": None,  # NetBox 3.0 TBD verify
+            "contenttypes.contenttype": None,  # Nautobot has own content types, handled via migrations
+            "sessions.session": None,  # Nautobot has own sessions, sessions should never cross apps
+            "dcim.cablepath": None,  # Recreated in Nautobot on signal when circuit termination is created
+            "admin.logentry": None,  # Not directly used in Nautobot
+            "users.userconfig": None,  # May not have a 1 to 1 translation to Nautobot
+            "auth.permission": None,  # Handled via a Nautobot model and may not be a 1 to 1
         },
     )
 
