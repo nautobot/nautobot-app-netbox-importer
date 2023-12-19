@@ -307,7 +307,7 @@ def _setup_dcim(adapter: SourceAdapter) -> None:
         "dcim.interface",
         fields={
             "status": "status",
-            "parent": None,  # TBD verify
+            "parent": "parent_interface",
         },
     )
     manufacturer = adapter.configure_model(
@@ -431,7 +431,7 @@ def _setup_virtualization(adapter: SourceAdapter) -> None:
         "virtualization.vminterface",
         fields={
             "status": "status",
-            "parent": None,  # TBD verify
+            "parent": "parent_interface",
         },
     )
 
