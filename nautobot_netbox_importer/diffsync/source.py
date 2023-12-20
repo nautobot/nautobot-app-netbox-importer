@@ -242,7 +242,7 @@ class SourceAdapter(BaseAdapter):
         while any(wrapper.post_import() for wrapper in self.wrappers.values()):
             pass
 
-    def import_nautobot(self) -> NautobotAdapter:
+    def import_nautobot(self) -> None:
         """Import all Nautobot data."""
         for nautobot_wrapper in self.get_imported_nautobot_wrappers():
             importer_model = nautobot_wrapper.importer
@@ -263,8 +263,6 @@ class SourceAdapter(BaseAdapter):
             self.top_level.append(model_name)
             setattr(self, model_name, importer_model)
             setattr(self.nautobot, model_name, getattr(self, model_name))
-
-        return self.nautobot
 
     def get_imported_nautobot_wrappers(self) -> Generator[NautobotModelWrapper, None, None]:
         """Get a list of Nautobot model wrappers in the order of import."""

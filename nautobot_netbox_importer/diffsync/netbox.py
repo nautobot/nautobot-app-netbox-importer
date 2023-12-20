@@ -1,20 +1,24 @@
 """NetBox to Nautobot importer."""
 import json
 from pathlib import Path
-from typing import Tuple
 from typing import Union
 
+from django.core.management import call_command
 from django.db.transaction import atomic
 from nautobot.ipam.models import get_default_namespace
 
 from .base import EMPTY_VALUES
 from .base import RecordData
-from .nautobot import NautobotAdapter
+from .base import logger
 from .source import SourceAdapter
 from .source import SourceField
 from .source import SourceRecord
 from .summary import print_fields_mapping
 from .summary import print_summary
+
+
+class _DryRunException(Exception):
+    """Exception raised when a dry-run is requested."""
 
 
 def _define_tagged_object(field: SourceField) -> None:
@@ -435,14 +439,7 @@ def _setup_virtualization(adapter: SourceAdapter) -> None:
 
 
 @atomic
-def sync_to_nautobot(
-    file_path: Union[str, Path],
-    dry_run=True,
-    summary=False,
-    field_mapping=False,
-) -> Tuple[SourceAdapter, NautobotAdapter]:
-    """Import a NetBox export file."""
-
+def _exec_sync(source: SourceAdapter, file_path: Union[str, Path], dry_run=True) -> None:
     def process_cable_termination(source_data: RecordData) -> str:
         # NetBox 3.3 split the dcim.cable model into dcim.cable and dcim.cabletermination models.
         cable_end = source_data.pop("cable_end").lower()
@@ -453,7 +450,6 @@ def sync_to_nautobot(
         return f"dcim.cabletermination_{cable_end}"
 
     def read_source_file():
-        # TBD: Consider stream processing to avoid loading the entire file into memory
         with open(file_path, "r", encoding="utf8") as file:
             data = json.load(file)
 
@@ -470,19 +466,39 @@ def sync_to_nautobot(
 
             yield SourceRecord(content_type, source_data)
 
+    source.import_data(read_source_file)
+    source.import_nautobot()
+
+    source.nautobot.sync_from(source)
+
+    if dry_run:
+        raise _DryRunException("Aborting the transaction due to the dry-run mode.")
+
+
+def sync_to_nautobot(
+    file_path: Union[str, Path],
+    dry_run=True,
+    summary=False,
+    field_mapping=False,
+    update_paths=False,
+) -> SourceAdapter:
+    """Import a NetBox export file into Nautobot."""
     source = _setup_source()
 
-    source.import_data(read_source_file)
+    try:
+        _exec_sync(source, file_path, dry_run)
+    except _DryRunException:
+        pass
 
-    nautobot = source.import_nautobot()
-    nautobot.sync_from(source)
+    if update_paths:
+        logger.info("Updating paths ...")
+        call_command("trace_paths", no_input=True)
+        logger.info(" ... Updating paths completed.")
 
     if summary:
-        print_summary(source, nautobot)
+        print_summary(source)
+
     if field_mapping:
         print_fields_mapping(source)
 
-    if dry_run:
-        raise ValueError("Aborting the transaction due to the dry-run mode.")
-
-    return source, nautobot
+    return source

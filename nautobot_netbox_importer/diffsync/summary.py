@@ -1,5 +1,4 @@
 """Summary of the import."""
-from nautobot_netbox_importer.diffsync.nautobot import NautobotAdapter
 from nautobot_netbox_importer.diffsync.source import SourceAdapter
 
 
@@ -28,8 +27,9 @@ def print_fields_mapping(source: SourceAdapter) -> None:
     print("================================================")
 
 
-def print_summary(source: SourceAdapter, nautobot: NautobotAdapter) -> None:
+def print_summary(source: SourceAdapter) -> None:
     """Print a summary of the import."""
+    nautobot = source.nautobot
     print("= Import Summary ===============================")
 
     print("- Nautobot Models Imports: ---------------------")

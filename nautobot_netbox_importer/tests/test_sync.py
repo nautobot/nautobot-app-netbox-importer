@@ -158,16 +158,16 @@ class TestSync(TestCase):
             tmp_file.write(response.text)
             tmp_filename = tmp_file.name
 
-        _, nautobot = sync_to_nautobot(tmp_filename, dry_run=False)
+        source = sync_to_nautobot(tmp_filename, dry_run=False)
 
         for content_type, expected_count in _EXPECTED_COUNTS[version].items():
             model = get_model_from_name(content_type)
-            imported_count = nautobot.wrappers[content_type].imported_count
+            imported_count = source.nautobot.wrappers[content_type].imported_count
             if imported_count != expected_count:
                 print(f"Import count mismatch for {content_type}")
             self.assertEqual(imported_count, expected_count, f"Import count mismatch for {content_type}")
             current_count = model.objects.count()
             self.assertGreaterEqual(current_count, expected_count, f"Count mismatch for {content_type}")
 
-        validation_errors = {key: len(value) for key, value in nautobot.validation_errors.items()}
+        validation_errors = {key: len(value) for key, value in source.nautobot.validation_errors.items()}
         self.assertEqual(validation_errors, _EXPECTED_VALIDATION_ERRORS[version], "Validation errors mismatch")
