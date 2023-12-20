@@ -116,7 +116,7 @@ erDiagram
     SourceModelWrapper ||--o{ SourceField : "creates"
     SourceAdapter ||--|| NautobotAdapter : "links to"
     NautobotAdapter ||--o{ NautobotModelWrapper : "creates"
-    SourceModelWrapper ||--|| NautobotModelWrapper : "links to"
+    SourceModelWrapper }o--|| NautobotModelWrapper : "links to"
     NautobotModelWrapper ||--o{ NautobotFieldWrapper : "creates"
     NautobotModelWrapper ||--|| NautobotModel : "links to"
     SourceField ||--|| NautobotFieldWrapper : "links to"
