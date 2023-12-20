@@ -158,7 +158,7 @@ class TestSync(TestCase):
             tmp_file.write(response.text)
             tmp_filename = tmp_file.name
 
-        source = sync_to_nautobot(tmp_filename, dry_run=False)
+        source = sync_to_nautobot(tmp_filename, dry_run=False, bypass_data_validation=True)
 
         for content_type, expected_count in _EXPECTED_COUNTS[version].items():
             model = get_model_from_name(content_type)

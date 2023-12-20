@@ -21,6 +21,10 @@ class _DryRunException(Exception):
     """Exception raised when a dry-run is requested."""
 
 
+class _ValidationErrorsDetected(Exception):
+    """Exception raised when validation errors are detected."""
+
+
 def _define_tagged_object(field: SourceField) -> None:
     field.set_nautobot_field(field.name)
 
@@ -439,7 +443,7 @@ def _setup_virtualization(adapter: SourceAdapter) -> None:
 
 
 @atomic
-def _exec_sync(source: SourceAdapter, file_path: Union[str, Path], dry_run=True) -> None:
+def _exec_sync(source: SourceAdapter, file_path: Union[str, Path], dry_run: bool, bypass_data_validation: bool) -> None:
     def process_cable_termination(source_data: RecordData) -> str:
         # NetBox 3.3 split the dcim.cable model into dcim.cable and dcim.cabletermination models.
         cable_end = source_data.pop("cable_end").lower()
@@ -471,34 +475,36 @@ def _exec_sync(source: SourceAdapter, file_path: Union[str, Path], dry_run=True)
 
     source.nautobot.sync_from(source)
 
+    if not bypass_data_validation:
+        if source.nautobot.validation_errors:
+            raise _ValidationErrorsDetected("Data validation errors detected, aborting the transaction.")
+
     if dry_run:
         raise _DryRunException("Aborting the transaction due to the dry-run mode.")
 
 
-def sync_to_nautobot(
-    file_path: Union[str, Path],
-    dry_run=True,
-    summary=False,
-    field_mapping=False,
-    update_paths=False,
-) -> SourceAdapter:
+def sync_to_nautobot(file_path: Union[str, Path], **options) -> SourceAdapter:
     """Import a NetBox export file into Nautobot."""
     source = _setup_source()
 
+    commited = False
     try:
-        _exec_sync(source, file_path, dry_run)
+        _exec_sync(source, file_path, options.get("dry_run", True), options.get("bypass_data_validation", False))
+        commited = True
     except _DryRunException:
-        pass
+        logger.warning("Dry-run mode, no data has been imported.")
+    except _ValidationErrorsDetected:
+        logger.warning("Data validation errors detected, no data has been imported.")
 
-    if update_paths:
+    if commited and options.get("update_paths", False):
         logger.info("Updating paths ...")
         call_command("trace_paths", no_input=True)
         logger.info(" ... Updating paths completed.")
 
-    if summary:
+    if options.get("summary", False):
         print_summary(source)
 
-    if field_mapping:
+    if options.get("field_mapping", False):
         print_fields_mapping(source)
 
     return source
