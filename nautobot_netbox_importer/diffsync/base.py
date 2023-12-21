@@ -3,6 +3,7 @@
 import datetime
 import decimal
 import logging
+from enum import Enum
 from typing import Any
 from typing import Iterable
 from typing import List
@@ -35,7 +36,6 @@ ContentTypeStr = str
 ContentTypeValue = Union[int, ContentTypeStr, List, Tuple[str, str]]
 FieldName = str
 RecordData = MutableMapping[FieldName, Any]
-InternalFieldTypeStr = str
 NautobotBaseModel = BaseModel
 NautobotBaseModelType = Type[NautobotBaseModel]
 DjangoField = _DjangoField
@@ -45,45 +45,129 @@ NautobotField = Union[_DjangoField, GenericForeignKey]
 DjangoModelMeta = _DjangoModelMeta
 PydanticField = _PydanticField
 
-EMPTY_VALUES = [None, set(), tuple(), {}, [], "", NOT_PROVIDED]
-INTERNAL_TYPE_TO_ANNOTATION: Mapping[InternalFieldTypeStr, type] = {
-    "AutoField": int,
-    "BigIntegerField": int,
-    "BinaryField": str,
-    "BooleanField": bool,
-    "CharField": str,
-    "CustomFieldData": Any,
-    "DateField": datetime.date,
-    "DateTimeField": datetime.datetime,
-    "DecimalField": decimal.Decimal,
-    "IntegerField": int,
-    "JSONField": Any,
-    "PositiveIntegerField": int,
-    "PositiveSmallIntegerField": int,
-    "Property": Any,
-    "SlugField": str,
-    "SmallIntegerField": int,
-    "TextField": str,
-    "UUIDField": UUID,
+
+class InternalFieldType(Enum):
+    """Internal field types."""
+
+    AUTO_FIELD = "AutoField"
+    BIG_INTEGER_FIELD = "BigIntegerField"
+    BINARY_FIELD = "BinaryField"
+    BOOLEAN_FIELD = "BooleanField"
+    CHAR_FIELD = "CharField"
+    CUSTOM_FIELD_DATA = "CustomFieldData"
+    DATE_FIELD = "DateField"
+    DATE_TIME_FIELD = "DateTimeField"
+    DECIMAL_FIELD = "DecimalField"
+    DO_NOT_IMPORT_LAST_UPDATED = "DoNotImportLastUpdated"
+    FOREIGN_KEY = "ForeignKey"
+    FOREIGN_KEY_WITH_AUTO_RELATED_NAME = "ForeignKeyWithAutoRelatedName"
+    GENERIC_FOREIGN_KEY = "GenericForeignKey"
+    INTEGER_FIELD = "IntegerField"
+    JSON_FIELD = "JSONField"
+    MANY_TO_MANY_FIELD = "ManyToManyField"
+    NOT_FOUND = "NotFound"
+    ONE_TO_ONE_FIELD = "OneToOneField"
+    POSITIVE_INTEGER_FIELD = "PositiveIntegerField"
+    POSITIVE_SMALL_INTEGER_FIELD = "PositiveSmallIntegerField"
+    PRIVATE_PROPERTY = "PrivateProperty"
+    PROPERTY = "Property"
+    READ_ONLY_PROPERTY = "ReadOnlyProperty"
+    ROLE_FIELD = "RoleField"
+    SLUG_FIELD = "SlugField"
+    SMALL_INTEGER_FIELD = "SmallIntegerField"
+    STATUS_FIELD = "StatusField"
+    TEXT_FIELD = "TextField"
+    TREE_NODE_FOREIGN_KEY = "TreeNodeForeignKey"
+    UUID_FIELD = "UUIDField"
+
+
+StrToInternalFieldType = {item.value: item for item in InternalFieldType.__members__.values()}
+
+INTERNAL_TYPE_TO_ANNOTATION: Mapping[InternalFieldType, type] = {
+    InternalFieldType.AUTO_FIELD: int,
+    InternalFieldType.BIG_INTEGER_FIELD: int,
+    InternalFieldType.BINARY_FIELD: bytes,
+    InternalFieldType.BOOLEAN_FIELD: bool,
+    InternalFieldType.CHAR_FIELD: str,
+    InternalFieldType.CUSTOM_FIELD_DATA: Any,
+    InternalFieldType.DATE_FIELD: datetime.date,
+    InternalFieldType.DATE_TIME_FIELD: datetime.datetime,
+    InternalFieldType.DECIMAL_FIELD: decimal.Decimal,
+    InternalFieldType.INTEGER_FIELD: int,
+    InternalFieldType.JSON_FIELD: Any,
+    InternalFieldType.POSITIVE_INTEGER_FIELD: int,
+    InternalFieldType.POSITIVE_SMALL_INTEGER_FIELD: int,
+    InternalFieldType.PROPERTY: Any,
+    InternalFieldType.SLUG_FIELD: str,
+    InternalFieldType.SMALL_INTEGER_FIELD: int,
+    InternalFieldType.TEXT_FIELD: str,
+    InternalFieldType.UUID_FIELD: UUID,
 }
-INTEGER_INTERNAL_TYPES: Iterable[InternalFieldTypeStr] = (
-    "AutoField",
-    "BigIntegerField",
-    "IntegerField",
-    "PositiveIntegerField",
-    "PositiveSmallIntegerField",
-    "SmallIntegerField",
+
+INTEGER_INTERNAL_TYPES: Iterable[InternalFieldType] = (
+    InternalFieldType.AUTO_FIELD,
+    InternalFieldType.BIG_INTEGER_FIELD,
+    InternalFieldType.INTEGER_FIELD,
+    InternalFieldType.POSITIVE_INTEGER_FIELD,
+    InternalFieldType.POSITIVE_SMALL_INTEGER_FIELD,
+    InternalFieldType.SMALL_INTEGER_FIELD,
 )
-REFERENCE_INTERNAL_TYPES: Iterable[InternalFieldTypeStr] = (
-    "ForeignKey",
-    "ForeignKeyWithAutoRelatedName",
-    "GenericForeignKey",
-    "ManyToManyField",
-    "OneToOneField",
-    "RoleField",
-    "StatusField",
-    "TreeNodeForeignKey",
+
+REFERENCE_INTERNAL_TYPES: Iterable[InternalFieldType] = (
+    InternalFieldType.FOREIGN_KEY,
+    InternalFieldType.FOREIGN_KEY_WITH_AUTO_RELATED_NAME,
+    InternalFieldType.GENERIC_FOREIGN_KEY,
+    InternalFieldType.MANY_TO_MANY_FIELD,
+    InternalFieldType.ONE_TO_ONE_FIELD,
+    InternalFieldType.ROLE_FIELD,
+    InternalFieldType.STATUS_FIELD,
+    InternalFieldType.TREE_NODE_FOREIGN_KEY,
 )
+
+DONT_IMPORT_TYPES: Iterable[InternalFieldType] = (
+    InternalFieldType.DO_NOT_IMPORT_LAST_UPDATED,
+    InternalFieldType.NOT_FOUND,
+    InternalFieldType.PRIVATE_PROPERTY,
+    InternalFieldType.READ_ONLY_PROPERTY,
+)
+
+EMPTY_VALUES = [None, set(), tuple(), {}, [], "", NOT_PROVIDED]
+
+
+# pylint: disable=too-many-return-statements
+def get_nautobot_field_and_type(
+    model: NautobotBaseModelType,
+    field_name: str,
+) -> Tuple[Optional[NautobotField], InternalFieldType]:
+    """Get Nautobot field and internal field type."""
+    if field_name.startswith("_"):
+        return None, InternalFieldType.PRIVATE_PROPERTY
+
+    meta = model._meta  # type: ignore
+    try:
+        field = meta.get_field(field_name)
+    except DjangoFieldDoesNotExist:
+        if field_name == "custom_field_data":
+            return meta.get_field("_custom_field_data"), InternalFieldType.CUSTOM_FIELD_DATA
+
+        prop = getattr(model, field_name, None)
+        if not prop:
+            return None, InternalFieldType.NOT_FOUND
+        if isinstance(prop, property) and not prop.fset:
+            return None, InternalFieldType.READ_ONLY_PROPERTY
+        return None, InternalFieldType.PROPERTY
+
+    if field_name == "last_updated":
+        return field, InternalFieldType.DO_NOT_IMPORT_LAST_UPDATED
+
+    if isinstance(field, GenericForeignKey):
+        # GenericForeignKey is not a real field, doesn't have `get_internal_type` method
+        return field, InternalFieldType.GENERIC_FOREIGN_KEY
+
+    try:
+        return field, StrToInternalFieldType[field.get_internal_type()]
+    except KeyError as error:
+        raise NotImplementedError(f"Unsupported field type {meta.app_label}.{meta.model_name}.{field_name}") from error
 
 
 def source_pk_to_uuid(content_type: ContentTypeStr, pk: Uid) -> UUID:

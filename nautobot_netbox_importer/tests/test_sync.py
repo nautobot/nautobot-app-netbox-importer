@@ -6,6 +6,7 @@ from django.test import TestCase
 from nautobot.core.utils.lookup import get_model_from_name
 
 from nautobot_netbox_importer.command_utils import enable_logging
+from nautobot_netbox_importer.diffsync.netbox import NetBoxImporterOptions
 from nautobot_netbox_importer.diffsync.netbox import sync_to_nautobot
 
 _EXPECTED_COUNTS = {}
@@ -64,6 +65,7 @@ _EXPECTED_COUNTS["3.1"] = {
     "dcim.devicetype": 14,
     "dcim.interface": 1554,
     "dcim.interfacetemplate": 268,
+    "dcim.locationtype": 6,
     "dcim.manufacturer": 15,
     "dcim.powerport": 75,
     "dcim.powerporttemplate": 26,
@@ -99,7 +101,6 @@ _EXPECTED_COUNTS["3.6"] = {
 
 _EXPECTED_VALIDATION_ERRORS = {}
 _EXPECTED_VALIDATION_ERRORS["3.0"] = {
-    "dcim.location": 2,
     "dcim.powerfeed": 48,
 }
 _EXPECTED_VALIDATION_ERRORS["3.1"] = {
@@ -158,7 +159,14 @@ class TestSync(TestCase):
             tmp_file.write(response.text)
             tmp_filename = tmp_file.name
 
-        source = sync_to_nautobot(tmp_filename, dry_run=False, bypass_data_validation=True)
+        source = sync_to_nautobot(
+            tmp_filename,
+            NetBoxImporterOptions(
+                dry_run=False,
+                bypass_data_validation=True,
+                sitegroup_parent_always_region=True,
+            ),
+        )
 
         for content_type, expected_count in _EXPECTED_COUNTS[version].items():
             model = get_model_from_name(content_type)
@@ -169,5 +177,5 @@ class TestSync(TestCase):
             current_count = model.objects.count()
             self.assertGreaterEqual(current_count, expected_count, f"Count mismatch for {content_type}")
 
-        validation_errors = {key: len(value) for key, value in source.nautobot.validation_errors.items()}
-        self.assertEqual(validation_errors, _EXPECTED_VALIDATION_ERRORS[version], "Validation errors mismatch")
+        validation_issues = {key: len(value) for key, value in source.nautobot.validation_issues.items()}
+        self.assertEqual(validation_issues, _EXPECTED_VALIDATION_ERRORS[version], "Validation errors mismatch")

@@ -1,28 +1,37 @@
 """Summary of the import."""
 from nautobot_netbox_importer.diffsync.source import SourceAdapter
+from nautobot_netbox_importer.diffsync.source import SourceField
 
 
 def print_fields_mapping(source: SourceAdapter) -> None:
     """Print fields mapping."""
 
-    def get_mapping(field):
+    def get_field(field: SourceField):
+        yield field.name
+        if field.from_data:
+            yield "(DATA)"
+        if field.is_custom:
+            yield "(CUSTOM)"
+
+        yield "=>"
+
         nautobot_field = getattr(field, "_nautobot")
         if nautobot_field:
-            return f"{nautobot_field.name} ({nautobot_field.internal_type})"
+            yield nautobot_field.name
+            yield f"({nautobot_field.internal_type.value})"
+        elif not field.importer:
+            yield "SKIPPED"
+        else:
+            yield "CUSTOM IMPORTER"
 
-        if not field.importer:
-            return "SKIPPED"
-
-        return "CUSTOM IMPORTER"
-
-    print("= Field Mapping ================================")
+    print("= Fields Mapping ===============================")
     for content_type, wrapper in source.wrappers.items():
         if wrapper.imported_count == 0:
             continue
 
         print(f"- {content_type} --------------------------------")
         for field in wrapper.fields.values():
-            print(f"  {field.name} => {get_mapping(field)}")
+            print(" ".join(get_field(field)))
 
     print("================================================")
 
@@ -36,37 +45,38 @@ def print_summary(source: SourceAdapter) -> None:
     for wrapper in source.get_imported_nautobot_wrappers():
         print(f"  {wrapper.content_type}: {wrapper.imported_count}")
 
-    if nautobot.validation_errors:
-        print("- Validation errors: ---------------------------")
+    if nautobot.validation_issues:
+        print("- Validation issues: ---------------------------")
         total = 0
-        for model_type, errors in nautobot.validation_errors.items():
-            total += len(errors)
-            print(f"  {model_type}: {len(errors)}")
-            for error in errors:
+        for model_type, issues in nautobot.validation_issues.items():
+            total += len(issues)
+            print(f"  {model_type}: {len(issues)}")
+            for error in issues:
                 print(f"    {error}")
-        print("Total validation errors:", total)
+        print("Total validation issues:", total)
     else:
-        print("- No validation errors ------------------------")
+        print("- No validation issues -------------------------")
 
-    print("- Content Types Mapping ------------------------")
+    back_mapping = getattr(source, "_content_types_back_mapping")
+    print("- Content Types Deviations ---------------------")
     print("Mapping deviations from source content type to Nautobot content type")
     for content_type, wrapper in source.wrappers.items():
-        if wrapper.disabled:
-            print(f"  {content_type} -> SKIPPED")
-            continue
-        if wrapper.imported_count == 0 or content_type == wrapper.nautobot.content_type:
-            continue
-        print(f"  {content_type} -> {wrapper.nautobot.content_type}")
+        if wrapper.disable_reason:
+            print(
+                f"  {content_type} -> {wrapper.nautobot.content_type}; Disabled with reason: {wrapper.disable_reason}"
+            )
+        elif back_mapping.get(wrapper.nautobot.content_type, "") is None:
+            print(f"  {content_type} -> {wrapper.nautobot.content_type}")
 
     print("- Content Types Back Mapping -------------------")
     print("Back mapping deviations from Nautobot content type to source content type")
-    for content_type, back_mapping in getattr(source, "_content_types_back_mapping").items():
-        wrapper = source.nautobot.wrappers[content_type]
-        if wrapper.imported_count == 0 or content_type == back_mapping:
+    for nautobot_content_type, content_type in back_mapping.items():
+        wrapper = source.nautobot.wrappers[nautobot_content_type]
+        if nautobot_content_type == content_type:
             continue
-        if back_mapping:
-            print(f"  {content_type} -> {back_mapping}")
+        if content_type:
+            print(f"  {nautobot_content_type} -> {content_type}")
         else:
-            print(f"  {content_type} -> Unambiguous")
+            print(f"  {nautobot_content_type} -> Unambiguous")
 
     print("================================================")

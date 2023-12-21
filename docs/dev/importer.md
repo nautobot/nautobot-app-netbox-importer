@@ -16,15 +16,23 @@ Acts as the Nautobot adapter, model wrappers and detailing field mappings specif
 
 ### [Source](../../nautobot_netbox_importer/diffsync/source.py)
 
-Sets up a generic source adapter, inclusive of model wrappers and field mappings. Depends on `base.py` and `nautobot.py`.
+Sets up a generic source adapter, inclusive of model wrappers and field mappings. Depends on and `nautobot.py`.
 
-### [NetBox](../../nautobot_netbox_importer/diffsync/netbox.py)
+### [Fields](../../nautobot_netbox_importer/diffsync/fields.py)
 
-Serves as the source adapter for NetBox data imports into Nautobot, building upon the generic source adapter. Depends on `source.py`, `nautobot.py`, and `base.py`.
+Generic field definitions factories. Depends on `source.py`.
 
 ### [Summary](../../nautobot_netbox_importer/diffsync/summary.py)
 
 Provides utility functions for summarizing data structures and displaying import statistics, leveraging the adapters introduced in `nautobot.py` and `source.py`.
+
+### [NetBox](../../nautobot_netbox_importer/diffsync/netbox.py)
+
+Serves as the source adapter for NetBox data imports into Nautobot, building upon the generic source adapter. Depends on `source.py`, `nautobot.py` and `fields.py`. Uses `locations.py`.
+
+### [Locations](../../nautobot_netbox_importer/diffsync/locations.py)
+
+NetBox specific location models definitions. Depends on `source.py` and `fields.py`.
 
 ## Stages
 
@@ -36,7 +44,7 @@ Before importing, it is essential to define any deviations between the source st
 
 The initial step requires creating a `SourceAdapter()`. To configure global importer settings, use `adapter.configure()`. The following arguments are available:
 
-- `ignore_content_types` to skip certain source models during the import.
+- `disable_content_types` to skip certain source models during the import.
 - `ignore_fields` to skip specific fields across all models.
 
 Customize individual models that differ from the Nautobot model using `SourceModelWrapper()`. This is achieved through `adapter.configure_model(content_type: ContentTypeStr)`. You can specify additional arguments like:
@@ -155,7 +163,7 @@ erDiagram
     }
     NautobotAdapter {
         Mapping wrappers
-        Set validation_errors
+        Set validation_issues
         ImporterModel importer_model_1
         ImporterModel importer_model_2
     }
@@ -165,7 +173,7 @@ erDiagram
         NautobotBaseModelType model
         Mapping fields
         ImporterModelClass importer
-        InternalFieldTypeStr pk_type
+        InternalFieldType pk_type
         FieldName pk_name
         Mapping constructor_kwargs
         int imported_count
@@ -174,7 +182,7 @@ erDiagram
     }
     NautobotFieldWrapper {
         FieldName name
-        InternalFieldTypeStr internal_type
+        InternalFieldType internal_type
         DjangoField field
     }
     ImporterModelClass {

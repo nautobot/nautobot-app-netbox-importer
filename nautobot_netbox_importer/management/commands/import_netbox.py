@@ -3,7 +3,7 @@ import argparse
 
 from django.core.management.base import BaseCommand
 
-from nautobot_netbox_importer.diffsync.netbox import sync_to_nautobot
+from nautobot_netbox_importer.diffsync.netbox import NetBoxImporterOptions, sync_to_nautobot
 
 
 class Command(BaseCommand):
@@ -45,12 +45,31 @@ class Command(BaseCommand):
         parser.add_argument(
             "--bypass-data-validation",
             action="store_true",
+            dest="bypass_data_validation",
             help="Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of "
             "data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. "
             "USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, "
             "*correct* the invalid data in NetBox, and *re-import* with the corrected data!",
         )
+        parser.add_argument(
+            "--sitegroup-parent-always-region",
+            action="store_true",
+            dest="sitegroup_parent_always_region",
+            help="When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, "
+            "to be a `Region` location type. This is a workaround to fix validation issues "
+            "`'A Location of type Location may only have a Location of the same type as its parent.'`.",
+        )
+        parser.add_argument(
+            # fix_powerfeed_locations: bool = False
+            "--fix-powerfeed-locations",
+            action="store_true",
+            dest="fix_powerfeed_locations",
+            help="Fix panel location to match rack location based on powerfeed.",
+        )
 
     def handle(self, json_file, **options):
         """Handle execution of the import_netbox management command."""
-        sync_to_nautobot(json_file.name, **options)
+        # pylint: disable=protected-access
+        keys = NetBoxImporterOptions._fields
+        filtered_options = {key: value for key, value in options.items() if key in keys}
+        sync_to_nautobot(json_file.name, NetBoxImporterOptions(**filtered_options))

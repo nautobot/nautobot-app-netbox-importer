@@ -1,15 +1,20 @@
-"""NetBox to Nautobot importer."""
+"""NetBox to Nautobot Source Importer Definitions."""
 import json
 from pathlib import Path
+from typing import NamedTuple
 from typing import Union
+from uuid import UUID
 
 from django.core.management import call_command
 from django.db.transaction import atomic
 from nautobot.ipam.models import get_default_namespace
 
+from . import fields
 from .base import EMPTY_VALUES
 from .base import RecordData
 from .base import logger
+from .locations import define_location
+from .locations import setup_locations
 from .source import SourceAdapter
 from .source import SourceField
 from .source import SourceRecord
@@ -17,12 +22,24 @@ from .summary import print_fields_mapping
 from .summary import print_summary
 
 
+class NetBoxImporterOptions(NamedTuple):
+    """NetBox importer options."""
+
+    dry_run: bool = True
+    bypass_data_validation: bool = False
+    summary: bool = False
+    field_mapping: bool = False
+    update_paths: bool = False
+    fix_powerfeed_locations: bool = False
+    sitegroup_parent_always_region: bool = False
+
+
 class _DryRunException(Exception):
     """Exception raised when a dry-run is requested."""
 
 
-class _ValidationErrorsDetected(Exception):
-    """Exception raised when validation errors are detected."""
+class _ValidationIssuesDetected(Exception):
+    """Exception raised when validation issues are detected."""
 
 
 def _define_tagged_object(field: SourceField) -> None:
@@ -32,12 +49,12 @@ def _define_tagged_object(field: SourceField) -> None:
         content_type = source.get("content_type", None)
         object_id = source.get(field.name, None)
         if not object_id or not content_type:
-            target[field.name] = None
+            target[field.nautobot.name] = None
             return
 
         related_wrapper = field.wrapper.adapter.get_or_create_wrapper(content_type)
         result = related_wrapper.get_pk_from_uid(object_id)
-        target[field.name] = result
+        target[field.nautobot.name] = result
         related_wrapper.add_reference(result, field.wrapper)
 
     field.set_importer(importer)
@@ -67,62 +84,6 @@ def _define_choices(field: SourceField) -> None:
     field.set_importer(importer)
 
 
-def _define_location_type(field: SourceField) -> None:
-    field.set_nautobot_field(field.name)
-    field.wrapper.set_references_forwarding("dcim.locationtype", field.nautobot.name)
-
-    location_type_wrapper = field.wrapper.adapter.get_or_create_wrapper("dcim.locationtype")
-    # Uppercase the first letter of the content type name
-    name = field.wrapper.content_type.split(".")[1]
-    name = name[0].upper() + name[1:]
-    location_type_id = location_type_wrapper.cache_record({"id": name, "name": name, "nestable": True})
-
-    def importer(_, target: RecordData) -> None:
-        target[field.nautobot.name] = location_type_id
-        location_type_wrapper.add_reference(location_type_id, field.wrapper)
-
-    field.set_importer(importer)
-
-
-def _define_location(field: SourceField) -> None:
-    if field.name not in ["location", "parent"]:
-        raise ValueError("_define_location only supports location and parent")
-    field.set_nautobot_field(field.name)
-
-    wrapper = field.wrapper
-    wrapper.add_field("region", None)
-    wrapper.add_field("site", None)
-
-    location_wrapper = wrapper.adapter.get_or_create_wrapper("dcim.location")
-    site_wrapper = wrapper.adapter.get_or_create_wrapper("dcim.site")
-    region_wrapper = wrapper.adapter.get_or_create_wrapper("dcim.region")
-
-    def importer(source: RecordData, target: RecordData) -> None:
-        parent = source.get("parent", None)
-        location = source.get("location", None)
-        site = source.get("site", None)
-        region = source.get("region", None)
-
-        if field.nautobot.name == "parent_id" and parent:
-            result = wrapper.get_pk_from_uid(parent)
-            wrapper.add_reference(result, wrapper)
-        elif location:
-            result = location_wrapper.get_pk_from_uid(location)
-            location_wrapper.add_reference(result, wrapper)
-        elif site:
-            result = site_wrapper.get_pk_from_uid(site)
-            site_wrapper.add_reference(result, wrapper)
-        elif region:
-            result = region_wrapper.get_pk_from_uid(region)
-            region_wrapper.add_reference(result, wrapper)
-        else:
-            result = None
-
-        target[field.nautobot.name] = result
-
-    field.set_importer(importer)
-
-
 def _define_units(field: SourceField) -> None:
     field.set_nautobot_field(field.name)
 
@@ -137,45 +98,44 @@ def _define_units(field: SourceField) -> None:
             if units:
                 units = [int(unit) for unit in units]
 
-        target[field.name] = units
+        target[field.nautobot.name] = units
 
     field.set_importer(importer)
 
 
-def _role_definition_factory(adapter: SourceAdapter, role_content_type: str):
-    if role_content_type in adapter.wrappers:
-        role_wrapper = adapter.wrappers[role_content_type]
-    else:
-        role_wrapper = adapter.configure_model(
-            role_content_type,
-            nautobot_content_type="extras.role",
-            fields={"color": "color", "content_types": "content_types"},
-        )
-
-    def definition(field: SourceField) -> None:
-        field.set_role_importer(role_wrapper)
-
-    return definition
-
-
-def _setup_source() -> SourceAdapter:
+def _setup_source(file_path: Union[str, Path], options: NetBoxImporterOptions) -> SourceAdapter:
     """Setup NetBox models importers."""
-    adapter = SourceAdapter(name="NetBox")
-    adapter.configure(
-        ignore_fields={
-            "last_updated": None,  # It's updated on every save and can't be imported
-        },
-        ignore_content_types={
-            "contenttypes.contenttype": None,  # Nautobot has own content types, handled via migrations
-            "sessions.session": None,  # Nautobot has own sessions, sessions should never cross apps
-            "dcim.cablepath": None,  # Recreated in Nautobot on signal when circuit termination is created
-            "admin.logentry": None,  # Not directly used in Nautobot
-            "users.userconfig": None,  # May not have a 1 to 1 translation to Nautobot
-            "auth.permission": None,  # Handled via a Nautobot model and may not be a 1 to 1
-        },
-    )
+
+    def process_cable_termination(source_data: RecordData) -> str:
+        # NetBox 3.3 split the dcim.cable model into dcim.cable and dcim.cabletermination models.
+        cable_end = source_data.pop("cable_end").lower()
+        source_data["id"] = source_data.pop("cable")
+        source_data[f"termination_{cable_end}_type"] = source_data.pop("termination_type")
+        source_data[f"termination_{cable_end}_id"] = source_data.pop("termination_id")
+
+        return f"dcim.cabletermination_{cable_end}"
+
+    def read_source_file():
+        with open(file_path, "r", encoding="utf8") as file:
+            data = json.load(file)
+
+        for item in data:
+            content_type = item["model"]
+            netbox_pk = item.get("pk", None)
+            source_data = item["fields"]
+
+            if netbox_pk:
+                source_data["id"] = netbox_pk
+
+            if content_type == "dcim.cabletermination":
+                content_type = process_cable_termination(source_data)
+
+            yield SourceRecord(content_type, source_data)
+
+    adapter = SourceAdapter(name="NetBox", get_source_data=read_source_file)
 
     _setup_base(adapter)
+    setup_locations(adapter, options.sitegroup_parent_always_region)
     _setup_dcim(adapter)
     _setup_circuits(adapter)
     _setup_ipam(adapter)
@@ -185,6 +145,13 @@ def _setup_source() -> SourceAdapter:
 
 
 def _setup_base(adapter: SourceAdapter) -> None:
+    adapter.disable_model("contenttypes.contenttype", "Nautobot has own content types; Handled via migrations")
+    adapter.disable_model("sessions.session", "Nautobot has own sessions, sessions should never cross apps")
+    adapter.disable_model("dcim.cablepath", "Recreated in Nautobot on signal when circuit termination is created")
+    adapter.disable_model("admin.logentry", "Not directly used in Nautobot")
+    adapter.disable_model("users.userconfig", "May not have a 1 to 1 translation to Nautobot")
+    adapter.disable_model("auth.permission", "Handled via a Nautobot model and may not be a 1 to 1")
+
     adapter.configure_model(
         "extras.status",
         identifiers=["name"],
@@ -215,38 +182,20 @@ def _setup_base(adapter: SourceAdapter) -> None:
         },
     )
     adapter.configure_model(
-        "dcim.locationtype",
-        default_reference={
-            "id": "Unknown",
-            "name": "Unknown",
-            "nestable": True,
-            "content_types": [],
-        },
-    )
-    adapter.configure_model(
-        "dcim.location",
-        fields={
-            "status": "status",
-            "location_type": _define_location_type,
-            "parent": _define_location,
-        },
-    )
-    adapter.configure_model(
         "auth.user",
         nautobot_content_type="users.user",
         identifiers=["username"],
         fields={
             "last_login": None,
-            "is_superuser": None,  # NetBox 3.1 TBD verify
             "password": None,  # Should not be attempted to migrated
-            "user_permissions": None,  # NetBox 3.1 TBD verify
+            "user_permissions": None,
         },
     )
     adapter.configure_model(
         "auth.group",
         identifiers=["name"],
         fields={
-            "permissions": None,  # NetBox 3.1 TBD verify
+            "permissions": None,
         },
     )
     adapter.configure_model(
@@ -269,7 +218,7 @@ def _setup_circuits(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "circuits.circuittermination",
         fields={
-            "location": _define_location,
+            "location": define_location,
         },
     )
 
@@ -284,8 +233,8 @@ def _setup_dcim(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "dcim.rack",
         fields={
-            "location": _define_location,
-            "role": _role_definition_factory(adapter, "dcim.rackrole"),
+            "location": define_location,
+            "role": fields.role(adapter, "dcim.rackrole"),
         },
     )
     adapter.configure_model(
@@ -326,8 +275,8 @@ def _setup_dcim(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "dcim.devicetype",
         fields={
-            "front_image": None,  # TBD verify
-            "rear_image": None,  # TBD verify
+            "front_image": None,
+            "rear_image": None,
             "color": "color",
         },
         default_reference={
@@ -343,39 +292,21 @@ def _setup_dcim(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "dcim.device",
         fields={
-            "location": _define_location,
-            "device_role": _role_definition_factory(adapter, "dcim.devicerole"),
-            "role": _role_definition_factory(adapter, "dcim.devicerole"),
+            "location": define_location,
+            "device_role": fields.role(adapter, "dcim.devicerole"),
+            "role": fields.role(adapter, "dcim.devicerole"),
         },
     )
     adapter.configure_model(
         "dcim.powerpanel",
         fields={
-            "location": _define_location,
+            "location": define_location,
         },
     )
     adapter.configure_model(
         "dcim.frontporttemplate",
         fields={
             "rear_port": "rear_port_template",
-        },
-    )
-    adapter.configure_model(
-        "dcim.region",
-        "dcim.location",
-        fields={
-            "status": "status",
-            "location_type": _define_location_type,
-            "parent": _define_location,
-        },
-    )
-    adapter.configure_model(
-        "dcim.site",
-        "dcim.location",
-        fields={
-            "status": "status",
-            "location_type": _define_location_type,
-            "parent": _define_location,
         },
     )
     adapter.configure_model(
@@ -390,15 +321,15 @@ def _setup_ipam(adapter: SourceAdapter) -> None:
     ipaddress = adapter.configure_model(
         "ipam.ipaddress",
         fields={
-            "role": _role_definition_factory(adapter, "ipam.role"),
+            "role": fields.role(adapter, "ipam.role"),
         },
     )
     ipaddress.nautobot.set_instance_defaults(namespace=get_default_namespace())
     adapter.configure_model(
         "ipam.prefix",
         fields={
-            "location": _define_location,
-            "role": _role_definition_factory(adapter, "ipam.role"),
+            "location": define_location,
+            "role": fields.role(adapter, "ipam.role"),
         },
     )
     adapter.configure_model(
@@ -412,8 +343,8 @@ def _setup_ipam(adapter: SourceAdapter) -> None:
         "ipam.vlan",
         fields={
             "group": "vlan_group",
-            "location": _define_location,
-            "role": _role_definition_factory(adapter, "ipam.role"),
+            "location": define_location,
+            "role": fields.role(adapter, "ipam.role"),
         },
     )
 
@@ -424,13 +355,13 @@ def _setup_virtualization(adapter: SourceAdapter) -> None:
         fields={
             "type": "cluster_type",
             "group": "cluster_group",
-            "location": _define_location,
+            "location": define_location,
         },
     )
     adapter.configure_model(
         "virtualization.virtualmachine",
         fields={
-            "role": _role_definition_factory(adapter, "dcim.devicerole"),
+            "role": fields.role(adapter, "dcim.devicerole"),
         },
     )
     adapter.configure_model(
@@ -442,69 +373,103 @@ def _setup_virtualization(adapter: SourceAdapter) -> None:
     )
 
 
+# pylint: disable=too-many-locals
+def _fix_powerfeed_locations(adapter: SourceAdapter) -> None:
+    """Fix panel location to match rack location based on powerfeed."""
+    region_wrapper = adapter.wrappers["dcim.region"]
+    site_wrapper = adapter.wrappers["dcim.site"]
+    location_wrapper = adapter.wrappers["dcim.location"]
+    rack_wrapper = adapter.wrappers.get("dcim.rack", None)
+    panel_wrapper = adapter.wrappers.get("dcim.powerpanel", None)
+    if not (rack_wrapper and panel_wrapper):
+        return
+
+    importer = adapter.wrappers["dcim.powerfeed"].nautobot.importer
+    if not importer:
+        return
+
+    for item in adapter.get_all(importer):
+        rack_id = getattr(item, "rack_id", None)
+        panel_id = getattr(item, "power_panel_id", None)
+        if not (rack_id and panel_id):
+            continue
+
+        rack = rack_wrapper.get(rack_id)
+        panel = panel_wrapper.get(panel_id)
+
+        rack_location_uid = getattr(rack, "location_id", None)
+        panel_location_uid = getattr(panel, "location_id", None)
+        if rack_location_uid == panel_location_uid:
+            continue
+
+        if rack_location_uid:
+            location_uid = rack_location_uid
+            target = panel
+            target_wrapper = panel_wrapper
+        else:
+            location_uid = panel_location_uid
+            target = rack
+            target_wrapper = rack_wrapper
+
+        if not isinstance(location_uid, UUID):
+            raise TypeError(f"Location UID must be UUID, got {type(location_uid)}")
+
+        target.location_id = location_uid
+        adapter.update(target)
+
+        # Need to update references, to properly update `content_types` fields
+        # References can be counted and removed, if needed
+        if location_uid in region_wrapper.references:
+            region_wrapper.add_reference(location_uid, target_wrapper)
+        elif location_uid in site_wrapper.references:
+            site_wrapper.add_reference(location_uid, target_wrapper)
+        elif location_uid in location_wrapper.references:
+            location_wrapper.add_reference(location_uid, target_wrapper)
+        else:
+            raise ValueError(f"Unknown location type {location_uid}")
+
+
 @atomic
-def _exec_sync(source: SourceAdapter, file_path: Union[str, Path], dry_run: bool, bypass_data_validation: bool) -> None:
-    def process_cable_termination(source_data: RecordData) -> str:
-        # NetBox 3.3 split the dcim.cable model into dcim.cable and dcim.cabletermination models.
-        cable_end = source_data.pop("cable_end").lower()
-        source_data["id"] = source_data.pop("cable")
-        source_data[f"termination_{cable_end}_type"] = source_data.pop("termination_type")
-        source_data[f"termination_{cable_end}_id"] = source_data.pop("termination_id")
+def _exec_sync(source: SourceAdapter, options: NetBoxImporterOptions) -> None:
+    source.import_data()
+    if options.fix_powerfeed_locations:
+        _fix_powerfeed_locations(source)
+    source.post_import()
 
-        return f"dcim.cabletermination_{cable_end}"
+    nautobot = source.nautobot
+    nautobot.load_data()
 
-    def read_source_file():
-        with open(file_path, "r", encoding="utf8") as file:
-            data = json.load(file)
+    nautobot.sync_from(source)
 
-        for item in data:
-            content_type = item["model"]
-            netbox_pk = item.get("pk", None)
-            source_data = item["fields"]
+    if nautobot.validation_issues and not options.bypass_data_validation:
+        raise _ValidationIssuesDetected("Data validation issues detected, aborting the transaction.")
 
-            if netbox_pk:
-                source_data["id"] = netbox_pk
-
-            if content_type == "dcim.cabletermination":
-                content_type = process_cable_termination(source_data)
-
-            yield SourceRecord(content_type, source_data)
-
-    source.import_data(read_source_file)
-    source.import_nautobot()
-
-    source.nautobot.sync_from(source)
-
-    if not bypass_data_validation:
-        if source.nautobot.validation_errors:
-            raise _ValidationErrorsDetected("Data validation errors detected, aborting the transaction.")
-
-    if dry_run:
+    if options.dry_run:
         raise _DryRunException("Aborting the transaction due to the dry-run mode.")
 
 
-def sync_to_nautobot(file_path: Union[str, Path], **options) -> SourceAdapter:
+def sync_to_nautobot(file_path: Union[str, Path], options: NetBoxImporterOptions) -> SourceAdapter:
     """Import a NetBox export file into Nautobot."""
-    source = _setup_source()
+    adapter = _setup_source(file_path, options)
 
     commited = False
     try:
-        _exec_sync(source, file_path, options.get("dry_run", True), options.get("bypass_data_validation", False))
+        _exec_sync(adapter, options)
         commited = True
     except _DryRunException:
         logger.warning("Dry-run mode, no data has been imported.")
-    except _ValidationErrorsDetected:
-        logger.warning("Data validation errors detected, no data has been imported.")
+    except _ValidationIssuesDetected:
+        logger.warning("Data validation issues detected, no data has been imported.")
 
-    if commited and options.get("update_paths", False):
+    if commited and options.update_paths:
         logger.info("Updating paths ...")
         call_command("trace_paths", no_input=True)
         logger.info(" ... Updating paths completed.")
 
-    if options.get("summary", False):
-        print_summary(source)
+    if options.summary:
+        print_summary(adapter)
 
-    if options.get("field_mapping", False):
-        print_fields_mapping(source)
+    if options.field_mapping:
+        print_fields_mapping(adapter)
 
-    return source
+    return adapter
