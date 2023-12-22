@@ -1,6 +1,6 @@
 """Summary of the import."""
-from nautobot_netbox_importer.diffsync.source import SourceAdapter
-from nautobot_netbox_importer.diffsync.source import SourceField
+from .source import SourceAdapter
+from .source import SourceField
 
 
 def print_fields_mapping(source: SourceAdapter) -> None:

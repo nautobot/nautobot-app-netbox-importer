@@ -1,5 +1,4 @@
 """Generic DiffSync Importer base module."""
-
 import datetime
 import decimal
 import logging
@@ -13,7 +12,6 @@ from typing import Optional
 from typing import Tuple
 from typing import Type
 from typing import Union
-from uuid import NAMESPACE_DNS
 from uuid import UUID
 from uuid import uuid5
 
@@ -170,7 +168,12 @@ def get_nautobot_field_and_type(
         raise NotImplementedError(f"Unsupported field type {meta.app_label}.{meta.model_name}.{field_name}") from error
 
 
-def source_pk_to_uuid(content_type: ContentTypeStr, pk: Uid) -> UUID:
+def source_pk_to_uuid(
+    content_type: ContentTypeStr,
+    pk: Uid,
+    # Namespace is defined as random constant UUID combined with settings.SECRET_KEY
+    namespace=uuid5(UUID("33c07af8-e425-43b2-b8d0-52289dfe7cf2"), settings.SECRET_KEY),
+) -> UUID:
     """Deterministically map source primary key to a UUID primary key.
 
     One of the reasons Nautobot moved from sequential integers to UUIDs was to protect the application
@@ -186,10 +189,6 @@ def source_pk_to_uuid(content_type: ContentTypeStr, pk: Uid) -> UUID:
     if not pk or not isinstance(pk, str):
         raise ValueError(f"Invalid primary key {pk}")
 
-    namespace = uuid5(
-        NAMESPACE_DNS,  # not really but nothing actually enforces this
-        settings.SECRET_KEY,
-    )
     return uuid5(namespace, f"{content_type}:{pk}")
 
 
@@ -208,7 +207,7 @@ def normalize_datetime(value: Any) -> Optional[datetime.datetime]:
 
 
 class BaseAdapter(DiffSync):
-    """Base class for NetBox adapters."""
+    """Base class for Generator Adapters."""
 
     def __init__(self, *args, **kwargs):
         """Initialize the adapter."""

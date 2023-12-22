@@ -4,65 +4,54 @@ This document details the importer process.
 
 ## Overview
 
-Within the `nautobot_netbox_importer/diffsync` directory, you'll find the DiffSync related code, modularized into distinct components, each serving a unique purpose within the system:
+The implementation is divided into two components: generic and NetBox specific.
 
-### [Base](../../nautobot_netbox_importer/diffsync/base.py)
+### Generic Component
 
-Implements base classes and utilities used across the application, also defining constants and shared types.
+The generic component encompasses the `NautobotAdapter` and `SourceAdapter` capable of generating `DiffSyncModel` classes based on the input data, the current version of Nautobot, and any deviations defined in the source configuration.
 
-### [Nautobot](../../nautobot_netbox_importer/diffsync/nautobot.py)
+It comprises the following modules, located in the `nautobot_netbox_importer/generator` directory:
 
-Acts as the Nautobot adapter, model wrappers and detailing field mappings specific to Nautobot. Depends on `base.py`.
+- `base.py`: Implements base classes and utilities utilized throughout the application, also establishing constants and shared type definitions.
+- `nautobot.py`: Provides the `NautobotAdapter`, along with `NautobotModelWrapper` and `NautobotFieldWrapper` classes that define the Nautobot structure.
+- `source.py`: Offers the `SourceAdapater`, `SourceModelWrapper` and `SourceField` classes that define the source structure.
+- `fields.py`: Contains factories for fields deviation definitions.
+- `summary.py`: Supplies utility functions for summarizing data structures and presenting import statistics.
 
-### [Source](../../nautobot_netbox_importer/diffsync/source.py)
+### NetBox Specific Component
 
-Sets up a generic source adapter, inclusive of model wrappers and field mappings. Depends on and `nautobot.py`.
+The NetBox specific component is further segmented into two sections, located in the `nautobot_netbox_importer/diffsync` directory:
 
-### [Fields](../../nautobot_netbox_importer/diffsync/fields.py)
-
-Generic field definitions factories. Depends on `source.py`.
-
-### [Summary](../../nautobot_netbox_importer/diffsync/summary.py)
-
-Provides utility functions for summarizing data structures and displaying import statistics, leveraging the adapters introduced in `nautobot.py` and `source.py`.
-
-### [NetBox](../../nautobot_netbox_importer/diffsync/netbox.py)
-
-Serves as the source adapter for NetBox data imports into Nautobot, building upon the generic source adapter. Depends on `source.py`, `nautobot.py` and `fields.py`. Uses `locations.py`.
-
-### [Locations](../../nautobot_netbox_importer/diffsync/locations.py)
-
-NetBox specific location models definitions. Depends on `source.py` and `fields.py`.
+- `adapter.py`: Inherits `NetBoxAdapter` from the generic `SourceAdapter` and implements the data reader and importer that facilitate the transition from NetBox to Nautobot.
+- `models` directory: Contains individual module files that define deviations and field mappings from NetBox to Nautobot.
 
 ## Stages
 
-The importer process consists of the following stages:
+The import process consists of the following stages:
+
+### Defining a Source Data
+
+The initial step involves creating a `SourceAdapter()`. It accepts an argument, `get_source_data`, which is `Callable` that returns `Iterable` of the source data items. Each source data item is encapsulated in `SourceRecord(content_type: ContentTypeStr, data: Dict)` instances. `SourceAdapter` constructor also passes any additional arguments to its ancestor, the `DiffSync` class.
+
+The data undergoes two cycles: the first to establish the structure and the second to import the actual data.
 
 ### Defining the Source Structure Deviations
 
-Before importing, it is essential to define any deviations between the source structure and the target Nautobot structure. This is configured within `nautobot_plugin_netbox_importer/diffsync/netbox.py`.
+Before importing, it is essential to define any deviations between the source structure and the target Nautobot structure.
 
-The initial step requires creating a `SourceAdapter()`. To configure global importer settings, use `adapter.configure()`. The following arguments are available:
-
-- `disable_content_types` to skip certain source models during the import.
-- `ignore_fields` to skip specific fields across all models.
-
-Customize individual models that differ from the Nautobot model using `SourceModelWrapper()`. This is achieved through `adapter.configure_model(content_type: ContentTypeStr)`. You can specify additional arguments like:
+This is achieved through `adapter.configure_model(content_type: ContentTypeStr)`. You can specify additional arguments such as:
 
 - `nautobot_content_type`: Define this when the Nautobot content type differs from the source.
-- `disable`: To disable the import of this model.
-- `identifiers`: List of fields that are identifiable as unique references in the source data.
-- `default_reference`: `RecordData` dictionary of default value to reference this model. This is useful when the source data does not specify a reference that is required in Nautobot.
-- `extend_content_type`: Define, when this source model extends another source model to merge into single Nautobot model.
-- `fields`: Define the source fields and how to import them. This argument is a dictionary of `FieldName` to `SourceFieldDefinition` instances.
+- `identifiers`: A list of fields identifiable as unique references in the source data.
+- `default_reference`: A `RecordData` dictionary of default values to reference this model. This is useful when the source data does not provide a reference that is required in Nautobot.
+- `extend_content_type`: Define this when a source model extends another source model to merge into a single Nautobot model.
+- `fields`: Define the source fields and how they should be imported. This argument is a dictionary mapping `FieldName` to `SourceFieldDefinition` instances.
     - `SourceFieldDefinition` can be one of:
         - `None`: to ignore the field.
-        - Nautobot `FieldName` to rename the field.
-        - `Callable` for specialized field handling, e.g., `_role_definition_factory(adapter, "dcim.rackrole")`, which maps the `role` field to the `dcim.rackrole` content type.
+        - A Nautobot `FieldName` to rename the field.
+        - A `Callable` for specialized field handling, for example, `_role_definition_factory(adapter, "dcim.rackrole")`, which maps the `role` field to the `dcim.rackrole` content type.
 
-### Defining Source Data Generator
-
-To input source data, use `adapter.import_data(get_source_data: SourceDataGenerator)`. The data goes through two cycles: first to establish the structure and then to import actual data. Source data are encapsulated as `SourceRecord(content_type: ContentTypeStr, data: Dict)` instances.
+To disable specific content types, use `adapter.disable_model(content_type: ContentTypeStr, reason: str)`.
 
 ### Reading Source Structure
 

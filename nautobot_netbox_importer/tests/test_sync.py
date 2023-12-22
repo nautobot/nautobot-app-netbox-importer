@@ -6,8 +6,8 @@ from django.test import TestCase
 from nautobot.core.utils.lookup import get_model_from_name
 
 from nautobot_netbox_importer.command_utils import enable_logging
-from nautobot_netbox_importer.diffsync.netbox import NetBoxImporterOptions
-from nautobot_netbox_importer.diffsync.netbox import sync_to_nautobot
+from nautobot_netbox_importer.diffsync.adapter import NetBoxImporterOptions
+from nautobot_netbox_importer.diffsync.adapter import NetBoxAdapter
 
 _EXPECTED_COUNTS = {}
 _EXPECTED_COUNTS["3.0"] = {
@@ -159,7 +159,7 @@ class TestSync(TestCase):
             tmp_file.write(response.text)
             tmp_filename = tmp_file.name
 
-        source = sync_to_nautobot(
+        source = NetBoxAdapter(
             tmp_filename,
             NetBoxImporterOptions(
                 dry_run=False,
@@ -167,6 +167,7 @@ class TestSync(TestCase):
                 sitegroup_parent_always_region=True,
             ),
         )
+        source.import_to_nautobot()
 
         for content_type, expected_count in _EXPECTED_COUNTS[version].items():
             model = get_model_from_name(content_type)

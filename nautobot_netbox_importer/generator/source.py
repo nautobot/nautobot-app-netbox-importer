@@ -70,13 +70,19 @@ class ReferencesForwarding(NamedTuple):
 class SourceAdapter(BaseAdapter):
     """Source DiffSync Adapter."""
 
-    def __init__(self, name: str, get_source_data: SourceDataGenerator, *args, **kwargs):
+    def __init__(
+        self,
+        get_source_data: SourceDataGenerator,
+        *args,
+        nautobot: Optional[NautobotAdapter] = None,
+        **kwargs,
+    ):
         """Initialize the SourceAdapter."""
-        super().__init__(name, *args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.get_source_data = get_source_data
         self.wrappers: OrderedDict[ContentTypeStr, SourceModelWrapper] = OrderedDict()
-        self.nautobot = NautobotAdapter()
+        self.nautobot = nautobot or NautobotAdapter()
 
         # From Nautobot to Source content type mapping
         # When multiple source content types are mapped to the single nautobot content type, mapping is set to `None`

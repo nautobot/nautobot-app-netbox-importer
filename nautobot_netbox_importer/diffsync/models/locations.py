@@ -1,8 +1,8 @@
 """NetBox Specific Locations handling."""
-from . import fields
-from .base import RecordData
-from .source import SourceAdapter
-from .source import SourceField
+from nautobot_netbox_importer.generator import RecordData
+from nautobot_netbox_importer.generator import SourceAdapter
+from nautobot_netbox_importer.generator import SourceField
+from nautobot_netbox_importer.generator import fields
 
 
 def define_location(field: SourceField) -> None:

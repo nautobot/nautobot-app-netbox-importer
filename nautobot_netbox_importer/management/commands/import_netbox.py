@@ -3,7 +3,8 @@ import argparse
 
 from django.core.management.base import BaseCommand
 
-from nautobot_netbox_importer.diffsync.netbox import NetBoxImporterOptions, sync_to_nautobot
+from nautobot_netbox_importer.diffsync.adapter import NetBoxAdapter
+from nautobot_netbox_importer.diffsync.adapter import NetBoxImporterOptions
 
 
 class Command(BaseCommand):
@@ -60,16 +61,19 @@ class Command(BaseCommand):
             "`'A Location of type Location may only have a Location of the same type as its parent.'`.",
         )
         parser.add_argument(
-            # fix_powerfeed_locations: bool = False
             "--fix-powerfeed-locations",
             action="store_true",
             dest="fix_powerfeed_locations",
             help="Fix panel location to match rack location based on powerfeed.",
         )
 
-    def handle(self, json_file, **options):
+    def handle(self, *args, **options):
         """Handle execution of the import_netbox management command."""
         # pylint: disable=protected-access
+        json_file = args[0]
+
         keys = NetBoxImporterOptions._fields
         filtered_options = {key: value for key, value in options.items() if key in keys}
-        sync_to_nautobot(json_file.name, NetBoxImporterOptions(**filtered_options))
+
+        adapter = NetBoxAdapter(json_file.name, NetBoxImporterOptions(**filtered_options))
+        adapter.import_to_nautobot()
