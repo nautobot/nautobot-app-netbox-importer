@@ -28,7 +28,7 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.8,<3.12"
 # Used for local development
-nautobot = "^1.6.0"
+nautobot = "^1.6.8"
 diffsync = "^1.5.1"
 tqdm = "^4.59.0"
 colorama = "^0.4.4"
