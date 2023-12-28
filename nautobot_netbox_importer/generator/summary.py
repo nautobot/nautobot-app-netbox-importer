@@ -1,6 +1,7 @@
 """Summary of the import."""
 from .source import SourceAdapter
 from .source import SourceField
+from .base import DiffSummary
 
 
 def print_fields_mapping(source: SourceAdapter) -> None:
@@ -36,10 +37,15 @@ def print_fields_mapping(source: SourceAdapter) -> None:
     print("================================================")
 
 
-def print_summary(source: SourceAdapter) -> None:
+# pylint: disable=too-many-branches
+def print_summary(source: SourceAdapter, diff_summary: DiffSummary) -> None:
     """Print a summary of the import."""
     nautobot = source.nautobot
     print("= Import Summary ===============================")
+
+    print("- Diff Summary: ---------------------")
+    for key, value in diff_summary.items():
+        print(f"  {key}: {value}")
 
     print("- Nautobot Models Imports: ---------------------")
     for wrapper in source.get_imported_nautobot_wrappers():

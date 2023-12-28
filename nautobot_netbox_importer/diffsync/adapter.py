@@ -8,6 +8,7 @@ from typing import Union
 from django.core.management import call_command
 from django.db.transaction import atomic
 
+from nautobot_netbox_importer.generator import DiffSummary
 from nautobot_netbox_importer.generator import RecordData
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceRecord
@@ -51,6 +52,7 @@ class NetBoxAdapter(SourceAdapter):
         """Initialize NetBox Source Adapter."""
         super().__init__(name="NetBox", get_source_data=_get_source_reader(file_path), *args, **kwargs)
         self.options = options
+        self.diff_summary: DiffSummary = {}
 
         setup_base(self)
         setup_locations(self, options.sitegroup_parent_always_region)
@@ -83,7 +85,7 @@ class NetBoxAdapter(SourceAdapter):
             logger.info(" ... Updating paths completed.")
 
         if self.options.summary:
-            print_summary(self)
+            print_summary(self, self.diff_summary)
 
         if self.options.field_mapping:
             print_fields_mapping(self)
@@ -92,7 +94,8 @@ class NetBoxAdapter(SourceAdapter):
     def _atomic_import(self) -> None:
         self.load_data()
 
-        self.nautobot.sync_from(self)
+        diff = self.nautobot.sync_from(self)
+        self.diff_summary = diff.summary()
 
         if self.nautobot.validation_issues and not self.options.bypass_data_validation:
             raise _ValidationIssuesDetected("Data validation issues detected, aborting the transaction.")

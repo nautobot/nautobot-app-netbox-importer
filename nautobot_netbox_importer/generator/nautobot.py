@@ -162,7 +162,7 @@ class NautobotModelWrapper:
         self.last_id = 0
 
         if self.disabled:
-            logger.warning("Skipping unknown model %s", content_type)
+            logger.info("Skipping unknown model %s", content_type)
             self._pk_field = None
         else:
             self._pk_field = self.add_field(self.model_meta.pk.name)  # type: ignore
@@ -281,7 +281,6 @@ class NautobotModelWrapper:
         result.model_flags = self.flags
         self._nautobot_to_diffsync(nautobot_instance, result)
         self.adapter.add(result)
-        self.imported_count += 1
 
         return result
 

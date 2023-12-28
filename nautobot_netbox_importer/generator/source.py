@@ -605,9 +605,9 @@ class SourceField:
         self.definition = definition
         self.processed = False
         if definition is None:
-            logger.warning("Skipping field %s", wrapper.format_field_name(name))
+            logger.info("Skipping field %s", wrapper.format_field_name(name))
         else:
-            logger.warning("Adding field %s", wrapper.format_field_name(name))
+            logger.debug("Adding field %s", wrapper.format_field_name(name))
         self._nautobot: Optional[NautobotFieldWrapper] = None
         self.importer: Optional[SourceFieldImporter] = None
         self.default_value: Any = None

@@ -42,6 +42,7 @@ GenericForeignValue = Tuple[ContentTypeStr, Uid]
 NautobotField = Union[_DjangoField, GenericForeignKey]
 DjangoModelMeta = _DjangoModelMeta
 PydanticField = _PydanticField
+DiffSummary = Mapping[str, int]
 
 
 class InternalFieldType(Enum):
