@@ -3,6 +3,7 @@ from . import fields
 from .base import EMPTY_VALUES
 from .base import RecordData
 from .base import logger
+from .source import DiffSyncBaseModel
 from .source import SourceAdapter
 from .source import SourceField
 from .source import SourceRecord
@@ -10,6 +11,7 @@ from .summary import print_fields_mapping
 from .summary import print_summary
 
 __all__ = (
+    "DiffSyncBaseModel",
     "EMPTY_VALUES",
     "RecordData",
     "RecordData",

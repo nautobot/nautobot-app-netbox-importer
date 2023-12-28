@@ -48,6 +48,7 @@ class InternalFieldType(Enum):
     """Internal field types."""
 
     AUTO_FIELD = "AutoField"
+    BIG_AUTO_FIELD = "BigAutoField"
     BIG_INTEGER_FIELD = "BigIntegerField"
     BINARY_FIELD = "BinaryField"
     BOOLEAN_FIELD = "BooleanField"
@@ -83,6 +84,7 @@ StrToInternalFieldType = {item.value: item for item in InternalFieldType.__membe
 
 INTERNAL_TYPE_TO_ANNOTATION: Mapping[InternalFieldType, type] = {
     InternalFieldType.AUTO_FIELD: int,
+    InternalFieldType.BIG_AUTO_FIELD: int,
     InternalFieldType.BIG_INTEGER_FIELD: int,
     InternalFieldType.BINARY_FIELD: bytes,
     InternalFieldType.BOOLEAN_FIELD: bool,
@@ -102,8 +104,14 @@ INTERNAL_TYPE_TO_ANNOTATION: Mapping[InternalFieldType, type] = {
     InternalFieldType.UUID_FIELD: UUID,
 }
 
+INTEGER_AUTO_FIELD_TYPES: Iterable[InternalFieldType] = (
+    InternalFieldType.AUTO_FIELD,
+    InternalFieldType.BIG_AUTO_FIELD,
+)
+
 INTEGER_INTERNAL_TYPES: Iterable[InternalFieldType] = (
     InternalFieldType.AUTO_FIELD,
+    InternalFieldType.BIG_AUTO_FIELD,
     InternalFieldType.BIG_INTEGER_FIELD,
     InternalFieldType.INTEGER_FIELD,
     InternalFieldType.POSITIVE_INTEGER_FIELD,

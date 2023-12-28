@@ -61,7 +61,7 @@ The first data iteration constructs the wrapping structure, which includes:
     - The `SourceAdapter` manages `SourceModelWrapper` and `NautobotModelWrapper` instances.
 - A `SourceModelWrapper` for each source content type, with `source_wrapper.fields` detailing how to import the source data.
     - Each `SourceModelWrapper` instance corresponds to a single `NautobotModelWrapper` instance.
-- A `NautobotModelWrapper` for each Nautobot content type, detailing `nautobot_wrapper.fields` and types, aiding in constructing the `DiffSyncModel` importer.
+- A `NautobotModelWrapper` for each Nautobot content type, detailing `nautobot_wrapper.fields` and types, aiding in constructing the `DiffSyncModel` instances.
     - A single `NautobotModelWrapper` instance can be referenced by multiple `SourceModelWrapper` instances.
 
 During this phase, all non-defined but present source fields are appended to the `source_wrapper.fields`, focusing on field names, not values.
@@ -102,7 +102,7 @@ If any failure occurs during the process, a rollback is triggered, undoing all c
 
 ## ER Diagram
 
-Illustrated below is the ER diagram for the importer structure, created to import data from source to Nautobot.
+Illustrated below is the ER diagram for the generator structure, created to import data from source to Nautobot.
 
 ```mermaid
 erDiagram
@@ -117,29 +117,30 @@ erDiagram
     NautobotModelWrapper ||--o{ NautobotFieldWrapper : "creates"
     NautobotModelWrapper ||--|| NautobotModel : "links to"
     SourceField ||--|| NautobotFieldWrapper : "links to"
-    NautobotModelWrapper ||--|| ImporterModelClass : "creates"
-    DiffSyncModel ||--o{ ImporterModelClass : "is ancestor"
+    NautobotModelWrapper ||--|| DiffSyncBaseModel : "creates"
+    DiffSyncModel ||--o{ DiffSyncBaseModel : "is ancestor"
     SourceAdapter {
         Mapping wrappers
         NautobotAdapter nautobot
         Set ignored_fields
         Set ignored_models
-        ImporterModel importer_model_1
-        ImporterModel importer_model_2
+        DiffSyncBaseModel diffsync_model_1
+        DiffSyncBaseModel diffsync_model_2
+        DiffSyncBaseModel diffsync_model_x
     }
     SourceModelWrapper {
         SourceAdapter adapter
         ContentTypeStr content_type
         NautobotModelWrapper nautobot
-        bool disabled
+        String disable_reason
         Iterable identifiers
-        ContentTypeStr references_forwarding
         Mapping fields
         List[Callable] importers
         SourceModelWrapper extends_wrapper
         int imported_count
-        Mapping references
         Uid default_reference_uid
+        Mapping _references
+        ContentTypeStr _references_forwarding
         Mapping _uid_to_pk_cache
         Mapping _cached_data
     }
@@ -153,15 +154,16 @@ erDiagram
     NautobotAdapter {
         Mapping wrappers
         Set validation_issues
-        ImporterModel importer_model_1
-        ImporterModel importer_model_2
+        DiffSyncBaseModel diffsync_model_1
+        DiffSyncBaseModel diffsync_model_2
+        DiffSyncBaseModel diffsync_model_x
     }
     NautobotModelWrapper {
         ContentTypeStr content_type
         bool disabled
         NautobotBaseModelType model
         Mapping fields
-        ImporterModelClass importer
+        Type[DiffSyncBaseModel] diffsync_class
         InternalFieldType pk_type
         FieldName pk_name
         Mapping constructor_kwargs
@@ -174,10 +176,11 @@ erDiagram
         InternalFieldType internal_type
         DjangoField field
     }
-    ImporterModelClass {
+    DiffSyncBaseModel {
         NautobotModelWrapper _wrapper
         Type field_1
         Type field_2
+        Type field_x
     }
 ```
 

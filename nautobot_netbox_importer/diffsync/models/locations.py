@@ -1,4 +1,5 @@
 """NetBox Specific Locations handling."""
+from nautobot_netbox_importer.generator import DiffSyncBaseModel
 from nautobot_netbox_importer.generator import RecordData
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceField
@@ -8,7 +9,8 @@ from nautobot_netbox_importer.generator import fields
 def define_location(field: SourceField) -> None:
     """Define location field for NetBox importer."""
     field.set_nautobot_field(field.name)
-    field.handle_siblings("region", "site")
+    field.handle_sibling("site")
+    field.handle_sibling("region")
 
     wrapper = field.wrapper
 
@@ -16,7 +18,7 @@ def define_location(field: SourceField) -> None:
     site_wrapper = wrapper.adapter.wrappers["dcim.site"]
     region_wrapper = wrapper.adapter.wrappers["dcim.region"]
 
-    def importer(source: RecordData, target: RecordData) -> None:
+    def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
         location = source.get(field.name, None)
         site = source.get("site", None)
         region = source.get("region", None)
@@ -34,7 +36,7 @@ def define_location(field: SourceField) -> None:
         else:
             return
 
-        target[field.nautobot.name] = result
+        setattr(target, field.nautobot.name, result)
 
     field.set_importer(importer)
 
@@ -44,25 +46,25 @@ def _define_site_region(field: SourceField) -> None:
 
     region_wrapper = field.wrapper.adapter.wrappers["dcim.region"]
 
-    def importer(source: RecordData, target: RecordData) -> None:
+    def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
         value = source.get(field.name, None)
         if not value:
             return
 
         result = region_wrapper.get_pk_from_uid(value)
         region_wrapper.add_reference(result, field.wrapper)
-        target[field.nautobot.name] = result
+        setattr(target, field.nautobot.name, result)
 
     field.set_importer(importer)
 
 
 def _define_location_parent(field: SourceField) -> None:
     field.set_nautobot_field(field.name)
-    field.handle_siblings("site")
+    field.handle_sibling("site")
 
     site_wrapper = field.wrapper.adapter.wrappers["dcim.site"]
 
-    def importer(source: RecordData, target: RecordData) -> None:
+    def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
         parent = source.get(field.name, None)
         site = source.get("site", None)
 
@@ -75,7 +77,7 @@ def _define_location_parent(field: SourceField) -> None:
         else:
             return
 
-        target[field.nautobot.name] = result
+        setattr(target, field.nautobot.name, result)
 
     field.set_importer(importer)
 
@@ -87,7 +89,7 @@ def _define_site_group(field: SourceField) -> None:
 
     field.set_nautobot_field("location_type")
 
-    def importer(source: RecordData, target: RecordData) -> None:
+    def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
         group = source.get(field.name, None)
         if group:
             result = site_group_wrapper.get_pk_from_uid(group)
@@ -96,45 +98,41 @@ def _define_site_group(field: SourceField) -> None:
             result = site_type_uid
             location_type_wrapper.add_reference(result, field.wrapper)
 
-        target[field.nautobot.name] = result
+        setattr(target, field.nautobot.name, result)
 
     field.set_importer(importer)
 
 
 def setup_locations(adapter: SourceAdapter, sitegroup_parent_always_region) -> None:
     """Setup locations for NetBox importer."""
-    location_type_wrapper = adapter.configure_model(
-        "dcim.locationtype",
-        fields={
-            # TBD: Verify necessity
-            "parent": fields.pass_through(),
-        },
-        default_reference={
-            "id": "Unknown",
-            "name": "Unknown",
-            "nestable": True,
-            "content_types": [],
-        },
-    )
+    location_type_wrapper = adapter.configure_model("dcim.locationtype")
 
-    region_type_uid = location_type_wrapper.cache_record({"id": "Region", "name": "Region", "nestable": True})
+    region_type_uid = location_type_wrapper.cache_record(
+        {
+            "id": "Region",
+            "name": "Region",
+            "nestable": True,
+            "content_types": None,
+        }
+    )
     site_type_uid = location_type_wrapper.cache_record(
-        {"id": "Site", "name": "Site", "nestable": False, "parent": region_type_uid}
+        {
+            "id": "Site",
+            "name": "Site",
+            "nestable": False,
+            "parent": region_type_uid,
+        }
     )
     location_type_uid = location_type_wrapper.cache_record(
-        {"id": "Location", "name": "Location", "nestable": True, "parent": site_type_uid}
+        {
+            "id": "Location",
+            "name": "Location",
+            "nestable": True,
+            "parent": site_type_uid,
+        }
     )
 
     adapter.configure_model(
-        # EXAMPLE DATA:{
-        #   "model": "dcim.sitegroup",
-        #   "pk": 1,
-        #   "fields": {
-        #     "parent": null,
-        #     "name": "Customer Sites",
-        #     "description": "",
-        #   }
-        # },
         "dcim.sitegroup",
         nautobot_content_type="dcim.locationtype",
         fields={
@@ -144,45 +142,15 @@ def setup_locations(adapter: SourceAdapter, sitegroup_parent_always_region) -> N
     )
 
     adapter.configure_model(
-        # EXAMPLE DATA:{
-        #   "model": "dcim.region",
-        #   "pk": 1,
-        #   "fields": {
-        #     "parent": null,
-        #     "name": "North America",
-        #     "description": "",
-        #   }
-        # },
         "dcim.region",
         nautobot_content_type="dcim.location",
         fields={
             "status": "status",
-            # "parent": _define_region_parent,
             "location_type": fields.constant(region_type_uid),
         },
     )
 
     adapter.configure_model(
-        # EXAMPLE DATA:{
-        #   "model": "dcim.site",
-        #   "pk": 1,
-        #   "fields": {
-        #     "description": "",
-        #     "comments": "",
-        #     "name": "DM-NYC",
-        #     "status": "active",
-        #     "region": 43,
-        #     "group": 3,
-        #     "tenant": 5,
-        #     "facility": "",
-        #     "time_zone": null,
-        #     "physical_address": "",
-        #     "shipping_address": "",
-        #     "latitude": null,
-        #     "longitude": null,
-        #     "asns": []
-        #   }
-        # },
         "dcim.site",
         nautobot_content_type="dcim.location",
         fields={
@@ -192,18 +160,6 @@ def setup_locations(adapter: SourceAdapter, sitegroup_parent_always_region) -> N
     )
 
     adapter.configure_model(
-        # EXAMPLE DATA:{
-        #   "model": "dcim.location",
-        #   "pk": 1,
-        #   "fields": {
-        #     "parent": null,
-        #     "name": "Row 1",
-        #     "description": "",
-        #     "site": 21,
-        #     "status": "active",
-        #     "tenant": null,
-        #   }
-        # },
         "dcim.location",
         fields={
             "status": "status",
@@ -214,5 +170,4 @@ def setup_locations(adapter: SourceAdapter, sitegroup_parent_always_region) -> N
 
     for name in ["region", "site", "location"]:
         wrapper = adapter.wrappers[f"dcim.{name}"]
-        location_type_wrapper.add_reference(location_type_wrapper.get_pk_from_uid(name.capitalize()), wrapper)
         wrapper.set_references_forwarding("dcim.locationtype", "location_type_id")

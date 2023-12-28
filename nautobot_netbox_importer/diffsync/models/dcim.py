@@ -3,6 +3,7 @@ import json
 from uuid import UUID
 
 from nautobot_netbox_importer.generator import EMPTY_VALUES
+from nautobot_netbox_importer.generator import DiffSyncBaseModel
 from nautobot_netbox_importer.generator import RecordData
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceField
@@ -14,7 +15,7 @@ from .locations import define_location
 def _define_units(field: SourceField) -> None:
     field.set_nautobot_field(field.name)
 
-    def importer(source: RecordData, target: RecordData) -> None:
+    def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
         # NetBox 3.4 units is `list[int]`, previous versions are JSON string with list of strings
         units = source.get(field.name, None)
         if units in EMPTY_VALUES:
@@ -25,7 +26,7 @@ def _define_units(field: SourceField) -> None:
             if units:
                 units = [int(unit) for unit in units]
 
-        target[field.nautobot.name] = units
+        setattr(target, field.nautobot.name, units)
 
     field.set_importer(importer)
 
@@ -132,23 +133,19 @@ def fix_power_feed_locations(adapter: SourceAdapter) -> None:
     region_wrapper = adapter.wrappers["dcim.region"]
     site_wrapper = adapter.wrappers["dcim.site"]
     location_wrapper = adapter.wrappers["dcim.location"]
-    rack_wrapper = adapter.wrappers.get("dcim.rack", None)
-    panel_wrapper = adapter.wrappers.get("dcim.powerpanel", None)
-    if not (rack_wrapper and panel_wrapper):
-        return
+    rack_wrapper = adapter.wrappers["dcim.rack"]
+    panel_wrapper = adapter.wrappers["dcim.powerpanel"]
 
-    importer = adapter.wrappers["dcim.powerfeed"].nautobot.importer
-    if not importer:
-        return
+    diffsync_class = adapter.wrappers["dcim.powerfeed"].nautobot.diffsync_class
 
-    for item in adapter.get_all(importer):
+    for item in adapter.get_all(diffsync_class):
         rack_id = getattr(item, "rack_id", None)
         panel_id = getattr(item, "power_panel_id", None)
         if not (rack_id and panel_id):
             continue
 
-        rack = rack_wrapper.get(rack_id)
-        panel = panel_wrapper.get(panel_id)
+        rack = rack_wrapper.get_or_create(rack_id)
+        panel = panel_wrapper.get_or_create(panel_id)
 
         rack_location_uid = getattr(rack, "location_id", None)
         panel_location_uid = getattr(panel, "location_id", None)

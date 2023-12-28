@@ -3,6 +3,7 @@ from typing import Any
 from typing import Optional
 
 from .base import EMPTY_VALUES
+from .nautobot import DiffSyncBaseModel
 from .source import FieldName
 from .source import RecordData
 from .source import SourceAdapter
@@ -28,13 +29,13 @@ def role(adapter: SourceAdapter, source_content_type: str) -> SourceFieldDefinit
     def definition(field: SourceField) -> None:
         field.set_nautobot_field("role")
 
-        def importer(source: RecordData, target: RecordData) -> None:
+        def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(field.name, None)
             if value in EMPTY_VALUES:
                 return
 
             uuid = role_wrapper.get_pk_from_uid(value)  # type: ignore
-            target[field.nautobot.name] = uuid
+            setattr(target, field.nautobot.name, uuid)
             role_wrapper.add_reference(uuid, field.wrapper)
 
         field.set_importer(importer)
@@ -54,7 +55,7 @@ def source_constant(value: Any, nautobot_name: Optional[FieldName] = None) -> So
         if not original_importer:
             return
 
-        def importer(source: RecordData, target: RecordData) -> None:
+        def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             source[field.name] = value
             original_importer(source, target)
 
@@ -72,8 +73,8 @@ def constant(value: Any, nautobot_name: Optional[FieldName] = None) -> SourceFie
     def definition(field: SourceField) -> None:
         field.set_nautobot_field(nautobot_name or field.name)
 
-        def importer(_: RecordData, target: RecordData) -> None:
-            target[field.nautobot.name] = value
+        def importer(_: RecordData, target: DiffSyncBaseModel) -> None:
+            setattr(target, field.nautobot.name, value)
 
         field.set_importer(importer)
 
@@ -90,10 +91,10 @@ def pass_through(nautobot_name: Optional[FieldName] = None) -> SourceFieldDefini
         """Create a pass-through field definition."""
         field.set_nautobot_field(nautobot_name or field.name)
 
-        def importer(source: RecordData, target: RecordData) -> None:
+        def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(field.name, None)
             if value:
-                target[field.nautobot.name] = value
+                setattr(target, field.nautobot.name, value)
 
         field.set_importer(importer)
 

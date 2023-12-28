@@ -11,7 +11,9 @@ from typing import Tuple
 from typing import Type
 from uuid import UUID
 
+from diffsync import DiffSync
 from diffsync import DiffSyncModel
+from diffsync.enum import DiffSyncModelFlags
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db.models import Max
@@ -19,6 +21,7 @@ from nautobot.core.utils.lookup import get_model_from_name
 
 from .base import DONT_IMPORT_TYPES
 from .base import EMPTY_VALUES
+from .base import INTEGER_AUTO_FIELD_TYPES
 from .base import INTERNAL_TYPE_TO_ANNOTATION
 from .base import REFERENCE_INTERNAL_TYPES
 from .base import BaseAdapter
@@ -100,24 +103,6 @@ class NautobotAdapter(BaseAdapter):
         self._validation_issues: Optional[Dict[ContentTypeStr, Set[ValidationIssue]]] = None
         self.wrappers: Dict[ContentTypeStr, NautobotModelWrapper] = {}
 
-    def load_data(self) -> None:
-        """Import all Nautobot data."""
-        for name in self.top_level:
-            importer_model = getattr(self, name)
-            if not importer_model:
-                raise TypeError(f"Missing importer_model for {name}")
-            # pylint: disable=protected-access
-            nautobot_wrapper = importer_model._wrapper
-
-            for nautobot_instance in nautobot_wrapper.model.objects.all():
-                data = nautobot_wrapper.get_data_from_instance(nautobot_instance)
-                try:
-                    instance = importer_model(**data, diffsync=self)
-                    self.add(instance)
-                except Exception:
-                    logger.error("Failed to create instance %s", data, exc_info=True)
-                    raise
-
     @property
     def validation_issues(self) -> Dict[ContentTypeStr, Set[ValidationIssue]]:
         """Re-run clean() on all instances that failed validation."""
@@ -126,14 +111,9 @@ class NautobotAdapter(BaseAdapter):
 
         self._validation_issues = {}
         for wrapper in self.wrappers.values():
-            for uid in wrapper.get_clean_failures():
-                instance = wrapper.model.objects.get(pk=uid)
-                try:
-                    instance.clean()
-                except ValidationError as error:
-                    self._validation_issues.setdefault(wrapper.content_type, set()).add(
-                        ValidationIssue(uid, str(instance), error)
-                    )
+            issues = wrapper.get_validation_issues()
+            if issues:
+                self._validation_issues[wrapper.content_type] = issues
 
         return self._validation_issues
 
@@ -142,9 +122,7 @@ class NautobotAdapter(BaseAdapter):
         if content_type in self.wrappers:
             return self.wrappers[content_type]
 
-        nautobot_wrapper = NautobotModelWrapper(content_type)
-        self.wrappers[content_type] = nautobot_wrapper
-        return nautobot_wrapper
+        return NautobotModelWrapper(self, content_type)
 
 
 class NautobotFieldWrapper(NamedTuple):
@@ -162,19 +140,24 @@ NautobotFields = MutableMapping[FieldName, NautobotFieldWrapper]
 class NautobotModelWrapper:
     """Wrapper for a Nautobot model."""
 
-    def __init__(self, content_type: ContentTypeStr):
+    def __init__(self, adapter: NautobotAdapter, content_type: ContentTypeStr):
         """Initialize the wrapper."""
+        self._diffsync_class: Optional[Type[DiffSyncBaseModel]] = None
+        self._clean_failures: Set[Uid] = set()
         self._content_type_instance = None
+        self.flags = DiffSyncModelFlags.SKIP_UNMATCHED_DST
+
+        self.adapter = adapter
+        adapter.wrappers[content_type] = self
         self.content_type = content_type
         try:
             self._model = get_model_from_name(content_type)
             self.disabled = False
         except TypeError:
+            self._model = None
             self.disabled = True
 
         self.fields: NautobotFields = {}
-        self.importer: Optional[Type[ImporterModel]] = None
-        self._clean_failures: Set[Uid] = set()
 
         self.last_id = 0
 
@@ -186,13 +169,19 @@ class NautobotModelWrapper:
             if not self._pk_field:
                 raise ValueError(f"Missing pk field for {self.content_type}")
 
-            if self._pk_field.internal_type == InternalFieldType.AUTO_FIELD:
+            if self._pk_field.internal_type in INTEGER_AUTO_FIELD_TYPES:
                 self.last_id = (
                     self.model.objects.aggregate(Max(self._pk_field.name))[f"{self._pk_field.name}__max"] or 0
                 )
 
         self.constructor_kwargs: Dict[FieldName, Any] = {}
         self.imported_count = 0
+
+        logger.debug("Created %s", self)
+
+    def __str__(self) -> str:
+        """Return a string representation of the wrapper."""
+        return f"{self.__class__.__name__}<{self.content_type}>"
 
     @property
     def pk_field(self) -> NautobotFieldWrapper:
@@ -201,28 +190,26 @@ class NautobotModelWrapper:
             raise ValueError(f"Missing pk field for {self.content_type}")
         return self._pk_field
 
-    def get_clean_failures(self) -> Set[Uid]:
-        """Get the set of instances that failed to clean."""
-        failures = self._clean_failures
-        self._clean_failures = set()
-        return failures
-
     @property
     def model(self) -> NautobotBaseModelType:
         """Get the Nautobot model."""
-        if self.disabled:
-            raise NotImplementedError("Cannot use disabled model")
-        return self._model
+        if self._model:
+            return self._model
+        raise NotImplementedError("Cannot use disabled model")
 
     @property
     def model_meta(self) -> DjangoModelMeta:
         """Get the Nautobot model meta."""
         return self.model._meta  # type: ignore
 
-    def get_importer(self) -> Type["ImporterModel"]:
-        """Get the DiffSync model for this wrapper."""
-        if self.importer:
-            return self.importer
+    @property
+    def diffsync_class(self) -> Type["DiffSyncBaseModel"]:
+        """Get `DiffSyncModel` class for this wrapper."""
+        if self._diffsync_class:
+            return self._diffsync_class
+
+        if self.disabled:
+            raise RuntimeError("Cannot create importer for disabled model")
 
         annotations = {}
         attributes = []
@@ -260,19 +247,74 @@ class NautobotModelWrapper:
             annotations[field.name] = Optional[annotation]
             class_definition[field.name] = PydanticField(default=None)
 
-        logger.debug("Creating model %s", class_definition)
         try:
-            self.importer = type(class_definition["_modelname"], (ImporterModel,), class_definition)
+            self._diffsync_class = type(class_definition["_modelname"], (DiffSyncBaseModel,), class_definition)
         except Exception:
-            logger.error("Failed to create model %s", class_definition, exc_info=True)
+            logger.error("Failed to create DiffSync Model %s", class_definition, exc_info=True)
             raise
 
-        return self.importer
+        logger.debug("Created DiffSync Model %s", class_definition)
+
+        return self._diffsync_class
+
+    def find_or_create(self, identifiers_kwargs: dict) -> Optional[DiffSyncModel]:
+        """Find a DiffSync instance based on filter kwargs or create a new instance from Nautobot if possible."""
+        result = self.adapter.get_or_none(self.diffsync_class, identifiers_kwargs)
+        if result:
+            return result
+
+        try:
+            nautobot_instance = self.model.objects.get(**identifiers_kwargs)
+        except self.model.DoesNotExist:  # type: ignore
+            return None
+
+        diffsync_class = self.diffsync_class
+
+        uid = getattr(nautobot_instance, self.pk_field.name)
+        kwargs = {self.pk_field.name: uid}
+        if identifiers_kwargs != kwargs:
+            result = self.adapter.get_or_none(diffsync_class, kwargs)
+            if result:
+                return result
+
+        result = diffsync_class(**kwargs, diffsync=self.adapter)  # type: ignore
+        result.model_flags = self.flags
+        self._nautobot_to_diffsync(nautobot_instance, result)
+        self.adapter.add(result)
+        self.imported_count += 1
+
+        return result
+
+    def get_validation_issues(self) -> Set[ValidationIssue]:
+        """Get the set of instances that failed to clean."""
+        result = set()
+
+        for uid in self._clean_failures:
+            try:
+                instance = self.model.objects.get(id=uid)
+            except self.model.DoesNotExist as error:  # type: ignore
+                # This can happen with Tree models, some issue is there. Ignore for now, just show validation issue.
+                result.add(
+                    ValidationIssue(
+                        uid,
+                        "",
+                        ValidationError(f"Instance was not found, event it was saved. {error}"),
+                    )
+                )
+            else:
+                try:
+                    instance.clean()
+                except ValidationError as error:
+                    result.add(ValidationIssue(uid, str(instance), error))
+
+        self._clean_failures = set()
+
+        return result
 
     def add_field(self, field_name: FieldName) -> NautobotFieldWrapper:
         """Add a field to the model."""
-        if self.importer:
-            raise RuntimeError("Cannot add fields after the importer has been created")
+        if self._diffsync_class:
+            raise RuntimeError("Cannot add fields after the DiffSync Model has been created")
 
         nautobot_field, internal_type = get_nautobot_field_and_type(self.model, field_name)
 
@@ -306,34 +348,32 @@ class NautobotModelWrapper:
         """Set default values for a Nautobot instance constructor."""
         self.constructor_kwargs = defaults
 
-    def get_data_from_instance(self, instance: NautobotBaseModel) -> RecordData:
-        """Get the data for a Nautobot instance."""
-        # pylint: disable=too-many-return-statements
-        def get_value(field_name, internal_type) -> Any:
-            if internal_type in DONT_IMPORT_TYPES:
-                return None
-            value = getattr(instance, field_name, None)
-            if value in EMPTY_VALUES:
-                return None
-            if internal_type == InternalFieldType.GENERIC_FOREIGN_KEY:
-                return (value._meta.label.lower(), value.pk)  # type: ignore
-            if internal_type == InternalFieldType.MANY_TO_MANY_FIELD:
-                return set(item.pk for item in value.all()) or None  # type: ignore
-            if internal_type == InternalFieldType.PROPERTY:
-                return str(value)
-            if internal_type == InternalFieldType.CUSTOM_FIELD_DATA:
-                return value
-            if internal_type == InternalFieldType.DATE_TIME_FIELD:
-                return normalize_datetime(value)
-            return value
+    def _nautobot_to_diffsync(self, source: NautobotBaseModel, target: "DiffSyncBaseModel") -> None:
+        """Copy data from Nautobot instance to DiffSync Model."""
 
-        result = {
-            field.name: get_value(field.name, field.internal_type)
-            for field in self.fields.values()
-            if field.internal_type not in DONT_IMPORT_TYPES
-        }
-        result[self.pk_field.name] = instance.pk
-        return result
+        def set_value(field_name, internal_type) -> None:
+            if internal_type in DONT_IMPORT_TYPES:
+                return
+
+            value = getattr(source, field_name, None)
+            if value in EMPTY_VALUES:
+                return
+
+            if internal_type == InternalFieldType.GENERIC_FOREIGN_KEY:
+                setattr(target, field_name, (value._meta.label.lower(), value.pk))  # type: ignore
+            elif internal_type == InternalFieldType.MANY_TO_MANY_FIELD:
+                values = value.all()  # type: ignore
+                if values:
+                    setattr(target, field_name, set(item.pk for item in values))
+            elif internal_type == InternalFieldType.PROPERTY:
+                setattr(target, field_name, str(value))
+            elif internal_type == InternalFieldType.DATE_TIME_FIELD:
+                setattr(target, field_name, normalize_datetime(value))
+            else:
+                setattr(target, field_name, value)
+
+        for field in self.fields.values():
+            set_value(field.name, field.internal_type)
 
     # pylint: disable=too-many-statements,too-many-branches
     def save_nautobot_instance(self, instance: NautobotBaseModel, values: RecordData) -> None:
@@ -401,22 +441,22 @@ class NautobotModelWrapper:
 
         try:
             instance.clean()
-        # `clean()` can be called again by getting `validation_issues` property after importing all data
         # pylint: disable=broad-exception-caught
         except Exception as exc:
-            uid = instance.pk
+            # `clean()` can be called again by getting `validation_issues` property after importing all data
+            uid = getattr(instance, self.pk_field.name, None)
             if not isinstance(uid, (UUID, str, int)):
                 raise TypeError(f"Invalid uid {uid}") from exc
             self._clean_failures.add(uid)
 
 
-class ImporterModel(DiffSyncModel):
+class DiffSyncBaseModel(DiffSyncModel):
     """Base class for all DiffSync models."""
 
     _wrapper: NautobotModelWrapper
 
     @classmethod
-    def create(cls, diffsync: BaseAdapter, ids: dict, attrs: dict) -> Optional[DiffSyncModel]:
+    def create(cls, diffsync: DiffSync, ids: dict, attrs: dict) -> Optional["DiffSyncBaseModel"]:
         """Create this model instance, both in Nautobot and in DiffSync."""
         instance = cls._wrapper.model(**cls._wrapper.constructor_kwargs, **ids)
 
@@ -429,16 +469,15 @@ class ImporterModel(DiffSyncModel):
 
         return super().create(diffsync, ids, attrs)
 
-    def update(self, attrs: dict) -> Optional[DiffSyncModel]:
+    def update(self, attrs: dict) -> Optional["DiffSyncBaseModel"]:
         """Update this model instance, both in Nautobot and in DiffSync."""
         uid = getattr(self, self._wrapper.pk_field.name, None)
         if not uid:
             raise NotImplementedError("Cannot update model without pk")
 
         model = self._wrapper.model
-        instance = model.objects.get(pk=uid)
-        # Sync "created" only on create
-        attrs.pop("created", None)
+        filter_kwargs = {self._wrapper.pk_field.name: uid}
+        instance = model.objects.get(**filter_kwargs)
         self._wrapper.save_nautobot_instance(instance, attrs)
 
         return super().update(attrs)

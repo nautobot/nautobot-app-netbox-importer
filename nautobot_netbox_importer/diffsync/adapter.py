@@ -92,12 +92,9 @@ class NetBoxAdapter(SourceAdapter):
     def _atomic_import(self) -> None:
         self.load_data()
 
-        nautobot = self.nautobot
-        nautobot.load_data()
+        self.nautobot.sync_from(self)
 
-        nautobot.sync_from(self)
-
-        if nautobot.validation_issues and not self.options.bypass_data_validation:
+        if self.nautobot.validation_issues and not self.options.bypass_data_validation:
             raise _ValidationIssuesDetected("Data validation issues detected, aborting the transaction.")
 
         if self.options.dry_run:
