@@ -1,0 +1,83 @@
+[
+{
+  "model": "dcim.rack",
+  "pk": "368dfeb1-eb21-528f-a9f8-827ce66bdeb3",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:03.647Z",
+    "_custom_field_data": {},
+    "name": "R307",
+    "_name": "R00000307",
+    "status": "4611b2a3-a7a7-490b-bb88-5d6892153cb7",
+    "role": null,
+    "facility_id": null,
+    "location": "a7f18fd3-b68a-5304-903a-6996f5ac9731",
+    "rack_group": null,
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "serial": "",
+    "asset_tag": null,
+    "type": "4-post-cabinet",
+    "width": 19,
+    "u_height": 48,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.rack",
+  "pk": "70586a39-5938-5e69-9d17-0fd275579052",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:03.609Z",
+    "_custom_field_data": {},
+    "name": "R208",
+    "_name": "R00000208",
+    "status": "483d0e13-a967-4761-9a15-cd0bd9d91f25",
+    "role": "64ca3e93-e3cc-5779-95d5-f3286c52deca",
+    "facility_id": null,
+    "location": "b5694fca-f156-5163-8ae8-db7cceb93eaf",
+    "rack_group": null,
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "serial": "",
+    "asset_tag": null,
+    "type": "4-post-cabinet",
+    "width": 19,
+    "u_height": 48,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.rack",
+  "pk": "c0ae439b-07d2-572a-b03e-904e10e95e58",
+  "fields": {
+    "created": "2020-12-20T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:03.506Z",
+    "_custom_field_data": {},
+    "name": "Comms closet",
+    "_name": "Comms closet",
+    "status": "483d0e13-a967-4761-9a15-cd0bd9d91f25",
+    "role": null,
+    "facility_id": null,
+    "location": "142cf7ab-8551-5911-97b1-b5f18dd7ae6a",
+    "rack_group": null,
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "serial": "",
+    "asset_tag": null,
+    "type": "wall-cabinet",
+    "width": 19,
+    "u_height": 12,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+}
+]

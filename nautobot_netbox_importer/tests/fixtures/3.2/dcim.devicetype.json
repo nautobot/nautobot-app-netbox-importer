@@ -1,0 +1,56 @@
+[
+{
+  "model": "dcim.devicetype",
+  "pk": "1edf9408-8f18-5b48-94db-ef8c8e7c9001",
+  "fields": {
+    "created": "2020-12-22T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:30.819Z",
+    "_custom_field_data": {},
+    "manufacturer": "94e7b59b-659f-5c68-9958-a3e82f19aa9f",
+    "model": "C9200-48P",
+    "part_number": "C9200-48P",
+    "u_height": 1,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": "[Cisco Catalyst 9200 Series Switches Data Sheet](https://www.cisco.com/c/en/us/products/collateral/switches/catalyst-9200-series-switches/nb-06-cat9200-ser-data-sheet-cte-en.html)"
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "c40e8fa5-0254-5b8f-97da-19b227497d92",
+  "fields": {
+    "created": "2023-12-29T09:49:30.836Z",
+    "last_updated": "2023-12-29T09:49:30.836Z",
+    "_custom_field_data": {},
+    "manufacturer": "f5136724-0984-5e3b-b073-ea6d83116997",
+    "model": "Unknown",
+    "part_number": "",
+    "u_height": 1,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "e95ceab6-30ed-5b5c-86d3-ae2cff3d51b3",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:30.823Z",
+    "_custom_field_data": {},
+    "manufacturer": "c5902059-194c-583a-83c3-058cd5ed3f5a",
+    "model": "24-Port Patch Panel",
+    "part_number": "",
+    "u_height": 1,
+    "is_full_depth": false,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": ""
+  }
+}
+]

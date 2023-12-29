@@ -1,0 +1,35 @@
+[
+{
+  "model": "virtualization.clustertype",
+  "pk": "362f6e2e-82b8-5cc8-ab87-fa937df79d69",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:18.829Z",
+    "_custom_field_data": {},
+    "name": "Amazon Web Services",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustertype",
+  "pk": "40ad4d12-4324-581c-9f4a-a87421336e3b",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:18.831Z",
+    "_custom_field_data": {},
+    "name": "Microsoft Azure",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustertype",
+  "pk": "786c136a-fff1-5f84-8d0c-c43610039f45",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:18.832Z",
+    "_custom_field_data": {},
+    "name": "DigitalOcean",
+    "description": ""
+  }
+}
+]

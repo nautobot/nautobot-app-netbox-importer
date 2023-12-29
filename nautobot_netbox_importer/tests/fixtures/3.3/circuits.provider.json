@@ -1,0 +1,50 @@
+[
+{
+  "model": "circuits.provider",
+  "pk": "26f37428-e26a-5e09-8b52-664df6624a2c",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:50:14.133Z",
+    "_custom_field_data": {},
+    "name": "Comcast",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "aaa90236-9b2a-5ae3-901d-59574a1d3da0",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:50:14.130Z",
+    "_custom_field_data": {},
+    "name": "AT&T",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "dda5b9ab-0d5c-54b1-901a-773a0cc4fca3",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:50:14.131Z",
+    "_custom_field_data": {},
+    "name": "CenturyLink",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+}
+]

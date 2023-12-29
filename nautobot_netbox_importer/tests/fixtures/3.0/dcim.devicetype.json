@@ -1,0 +1,56 @@
+[
+{
+  "model": "dcim.devicetype",
+  "pk": "516e3837-80ac-587b-b541-1811ea94f597",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:48:12.557Z",
+    "_custom_field_data": {},
+    "manufacturer": "c5902059-194c-583a-83c3-058cd5ed3f5a",
+    "model": "48-Port Patch Panel",
+    "part_number": "",
+    "u_height": 2,
+    "is_full_depth": false,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "7d87e054-c030-5f5c-ac14-a84a14a872c9",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:48:12.564Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "model": "QFX10002-36Q",
+    "part_number": "",
+    "u_height": 2,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": "[Juniper QFX10002 Data Sheet](https://www.juniper.net/assets/us/en/local/pdf/datasheets/1000531-en.pdf)"
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "b1fc894c-dddf-56a0-8bf4-92467a5d97bd",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:48:12.561Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "model": "QFX5110-48S-4C",
+    "part_number": "",
+    "u_height": 1,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": ""
+  }
+}
+]

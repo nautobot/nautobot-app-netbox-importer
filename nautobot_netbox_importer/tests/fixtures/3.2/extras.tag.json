@@ -1,0 +1,41 @@
+[
+{
+  "model": "extras.tag",
+  "pk": "0695d8ef-849b-5a4b-99a8-3f005d3c50c4",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:54.670Z",
+    "_custom_field_data": {},
+    "name": "Bravo",
+    "color": "f44336",
+    "description": "",
+    "content_types": []
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "15eed64b-038b-5fe8-a7e8-49045f7b19d7",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:54.689Z",
+    "_custom_field_data": {},
+    "name": "Papa",
+    "color": "8bc34a",
+    "description": "",
+    "content_types": []
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "a5277d98-faca-5fdb-a37e-63b6cddb6bf9",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:54.674Z",
+    "_custom_field_data": {},
+    "name": "Echo",
+    "color": "ff66ff",
+    "description": "",
+    "content_types": []
+  }
+}
+]

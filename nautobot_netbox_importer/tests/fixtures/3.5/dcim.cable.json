@@ -1,0 +1,68 @@
+[
+{
+  "model": "dcim.cable",
+  "pk": "385dfc85-06c4-5e6e-b407-b57eb16d9fe1",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:52.507Z",
+    "_custom_field_data": {},
+    "termination_a_type": 13,
+    "termination_a_id": "f9dad70a-40bd-51c2-b2cf-9b59d58ddc1f",
+    "termination_b_type": 13,
+    "termination_b_id": "941150b4-3a33-5faa-b04b-d8aa3ea08817",
+    "type": "cat5e",
+    "status": "ade1a3dc-129f-4a7d-8b51-f17e6a3a5fb2",
+    "label": "",
+    "color": "ff5722",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null,
+    "_termination_a_device": "d85ae2a6-3ae0-5e9a-baaa-cebb5561fbb2",
+    "_termination_b_device": "622c7e12-6c5e-5f23-8cff-13a85ad9d11c"
+  }
+},
+{
+  "model": "dcim.cable",
+  "pk": "8e6a22e5-2131-5ced-9b36-91f9bac7c164",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:54.367Z",
+    "_custom_field_data": {},
+    "termination_a_type": 13,
+    "termination_a_id": "dfc3c07d-e287-5947-bb52-5cf917949130",
+    "termination_b_type": 57,
+    "termination_b_id": "18ff0d3c-4b4b-5f48-a427-46357f02ada0",
+    "type": "",
+    "status": "ade1a3dc-129f-4a7d-8b51-f17e6a3a5fb2",
+    "label": "",
+    "color": "",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null,
+    "_termination_a_device": "51b30b85-3937-54f2-b400-10a33e9ecfc7",
+    "_termination_b_device": "5ed7a02c-455c-5614-8447-03d98c39dbac"
+  }
+},
+{
+  "model": "dcim.cable",
+  "pk": "d889a323-a83a-58ef-97c9-656c6b2ad93c",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:53.868Z",
+    "_custom_field_data": {},
+    "termination_a_type": 45,
+    "termination_a_id": "231e3dab-ca69-5a35-9f5a-c5aaafde04ab",
+    "termination_b_type": 70,
+    "termination_b_id": "3784ad2e-685a-503f-8f14-8c866ae9ad62",
+    "type": "",
+    "status": "ade1a3dc-129f-4a7d-8b51-f17e6a3a5fb2",
+    "label": "",
+    "color": "",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null,
+    "_termination_a_device": null,
+    "_termination_b_device": "af442925-b894-597c-847f-a2f91397aa20"
+  }
+}
+]

@@ -1,0 +1,50 @@
+[
+{
+  "model": "circuits.provider",
+  "pk": "259e85ef-c01a-5e32-9be4-bc9e51e66949",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:36.818Z",
+    "_custom_field_data": {},
+    "name": "NTT",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "26f37428-e26a-5e09-8b52-664df6624a2c",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:36.813Z",
+    "_custom_field_data": {},
+    "name": "Comcast",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "ca4799a6-0f04-5a91-a532-647cd388bcb5",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:36.820Z",
+    "_custom_field_data": {},
+    "name": "Zayo",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+}
+]

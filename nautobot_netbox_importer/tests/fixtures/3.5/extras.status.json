@@ -1,0 +1,50 @@
+[
+{
+  "model": "extras.status",
+  "pk": "379b5594-5ab7-430c-beb6-ff8b3a709e01",
+  "fields": {
+    "created": "2023-12-29T00:00:00Z",
+    "last_updated": "2023-12-29T08:07:24.348Z",
+    "_custom_field_data": {},
+    "name": "Provisioning",
+    "color": "2196f3",
+    "description": "Circuit is being provisioned",
+    "content_types": [
+      1
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "944ab53a-344c-4d84-b33b-85bc85bb14a6",
+  "fields": {
+    "created": "2023-12-29T00:00:00Z",
+    "last_updated": "2023-12-29T08:07:24.376Z",
+    "_custom_field_data": {},
+    "name": "Inventory",
+    "color": "9e9e9e",
+    "description": "Device is in inventory",
+    "content_types": [
+      3
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "d1c0a1fd-359c-47b0-9d64-be0b6443fad1",
+  "fields": {
+    "created": "2023-12-29T00:00:00Z",
+    "last_updated": "2023-12-29T08:07:24.353Z",
+    "_custom_field_data": {},
+    "name": "Offline",
+    "color": "ffc107",
+    "description": "Unit is offline",
+    "content_types": [
+      1,
+      3,
+      4,
+      9
+    ]
+  }
+}
+]

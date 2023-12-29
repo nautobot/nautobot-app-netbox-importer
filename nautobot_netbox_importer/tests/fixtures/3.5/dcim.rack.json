@@ -1,0 +1,83 @@
+[
+{
+  "model": "dcim.rack",
+  "pk": "7c8034cd-4a7a-50e8-bfbf-7afefb242189",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:50.246Z",
+    "_custom_field_data": {},
+    "name": "R306",
+    "_name": "R00000306",
+    "status": "4611b2a3-a7a7-490b-bb88-5d6892153cb7",
+    "role": null,
+    "facility_id": null,
+    "location": "a7f18fd3-b68a-5304-903a-6996f5ac9731",
+    "rack_group": null,
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "serial": "",
+    "asset_tag": null,
+    "type": "4-post-cabinet",
+    "width": 19,
+    "u_height": 48,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.rack",
+  "pk": "907cfa96-7ffe-52ed-8d93-b50a0e105b2d",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:50.289Z",
+    "_custom_field_data": {},
+    "name": "Plant 2",
+    "_name": "Plant 00000002",
+    "status": "483d0e13-a967-4761-9a15-cd0bd9d91f25",
+    "role": "2cd43277-bd9f-529a-9212-1f6e50ab765d",
+    "facility_id": null,
+    "location": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+    "rack_group": null,
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "serial": "",
+    "asset_tag": null,
+    "type": "2-post-frame",
+    "width": 19,
+    "u_height": 42,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.rack",
+  "pk": "b63cf024-f02f-5a00-9426-f96385dd767f",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:50.199Z",
+    "_custom_field_data": {},
+    "name": "R205",
+    "_name": "R00000205",
+    "status": "483d0e13-a967-4761-9a15-cd0bd9d91f25",
+    "role": "64ca3e93-e3cc-5779-95d5-f3286c52deca",
+    "facility_id": null,
+    "location": "b5694fca-f156-5163-8ae8-db7cceb93eaf",
+    "rack_group": null,
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "serial": "",
+    "asset_tag": null,
+    "type": "4-post-cabinet",
+    "width": 19,
+    "u_height": 48,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+}
+]

@@ -1,0 +1,50 @@
+[
+{
+  "model": "circuits.provider",
+  "pk": "0be72b58-db27-5eb4-984c-84d0083d2012",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:30.794Z",
+    "_custom_field_data": {},
+    "name": "GTT",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "30efd662-fc9b-5892-b2be-adeb8091cb29",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:30.796Z",
+    "_custom_field_data": {},
+    "name": "Level 3",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "655d27a8-dc6b-5d9e-95f6-5518915fbf3f",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:30.801Z",
+    "_custom_field_data": {},
+    "name": "NCSU Facilities",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": "Local maintainer for NC State communications facilities"
+  }
+}
+]

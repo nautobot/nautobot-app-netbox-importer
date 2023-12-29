@@ -1,0 +1,47 @@
+[
+{
+  "model": "dcim.consoleporttemplate",
+  "pk": "394ef929-bbef-5470-8da7-b0cdb6246418",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2023-12-29T09:50:57.717Z",
+    "_custom_field_data": {},
+    "device_type": "86c8ea5d-3bac-514f-b0ce-da555e3f0bef",
+    "name": "con 0",
+    "_name": "con 00000000",
+    "label": "",
+    "description": "",
+    "type": "rj-45"
+  }
+},
+{
+  "model": "dcim.consoleporttemplate",
+  "pk": "a0e8d948-5687-50ce-a7c1-c8bf94f4427d",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2023-12-29T09:50:57.707Z",
+    "_custom_field_data": {},
+    "device_type": "257dca9a-92d2-5f02-af45-4de316a47b71",
+    "name": "Console-RE0",
+    "_name": "Console-RE00000000",
+    "label": "",
+    "description": "",
+    "type": "rj-45"
+  }
+},
+{
+  "model": "dcim.consoleporttemplate",
+  "pk": "b8ae6655-1367-555a-9093-cb7d4cd0dc14",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2023-12-29T09:50:57.716Z",
+    "_custom_field_data": {},
+    "device_type": "9cbb3312-7783-519f-be1b-5c849324a2d1",
+    "name": "Console",
+    "_name": "Console",
+    "label": "",
+    "description": "",
+    "type": "rj-45"
+  }
+}
+]

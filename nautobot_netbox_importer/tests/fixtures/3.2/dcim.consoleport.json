@@ -1,0 +1,59 @@
+[
+{
+  "model": "dcim.consoleport",
+  "pk": "0443091b-5c51-5f04-b111-6a4ac3cd8a15",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:30.871Z",
+    "_custom_field_data": {},
+    "device": "908beb71-b80d-5ca2-a653-5751f6516abf",
+    "name": "usb",
+    "_name": "usb",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "type": "usb-mini-b"
+  }
+},
+{
+  "model": "dcim.consoleport",
+  "pk": "3b9a9c13-4305-5adf-a578-9f4856f15edc",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:30.876Z",
+    "_custom_field_data": {},
+    "device": "882ac986-ee6b-5cd1-ad7b-799dd1bc11d6",
+    "name": "con 0",
+    "_name": "con 00000000",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "type": "rj-45"
+  }
+},
+{
+  "model": "dcim.consoleport",
+  "pk": "b6b8d115-c512-582c-af0e-a5699172e96e",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:30.879Z",
+    "_custom_field_data": {},
+    "device": "51b30b85-3937-54f2-b400-10a33e9ecfc7",
+    "name": "Console",
+    "_name": "Console",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "type": "rj-45"
+  }
+}
+]

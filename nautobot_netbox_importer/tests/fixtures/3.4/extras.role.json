@@ -1,0 +1,50 @@
+[
+{
+  "model": "extras.role",
+  "pk": "82689c2f-55ae-5aed-a236-55db8e7c08de",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:50:56.614Z",
+    "_custom_field_data": {},
+    "name": "Patch Panel",
+    "color": "607d8b",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      3
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "88c2a18f-8196-5263-b6e3-cf79c16c33ce",
+  "fields": {
+    "created": "2020-12-20T00:00:00Z",
+    "last_updated": "2023-12-29T09:50:56.605Z",
+    "_custom_field_data": {},
+    "name": "Core Switch",
+    "color": "3f51b5",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      3
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "bb9e74be-8d95-5f58-8bde-11d6f6aa3efe",
+  "fields": {
+    "created": "2020-12-20T00:00:00Z",
+    "last_updated": "2023-12-29T09:50:56.607Z",
+    "_custom_field_data": {},
+    "name": "Distribution Switch",
+    "color": "2196f3",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      3
+    ]
+  }
+}
+]

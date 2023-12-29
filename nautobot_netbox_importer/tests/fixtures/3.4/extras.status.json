@@ -1,0 +1,49 @@
+[
+{
+  "model": "extras.status",
+  "pk": "1164f33e-d5c1-481e-a1c3-36083935adea",
+  "fields": {
+    "created": "2023-12-29T00:00:00Z",
+    "last_updated": "2023-12-29T08:07:29.573Z",
+    "_custom_field_data": {},
+    "name": "Maintenance",
+    "color": "9e9e9e",
+    "description": "Unit is under maintenance",
+    "content_types": [
+      12,
+      13
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "2c209760-0c83-454a-84b1-b348b15e7b21",
+  "fields": {
+    "created": "2023-12-29T00:00:00Z",
+    "last_updated": "2023-12-29T08:07:24.372Z",
+    "_custom_field_data": {},
+    "name": "Staged",
+    "color": "2196f3",
+    "description": "Unit has been staged",
+    "content_types": [
+      3,
+      9
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "90ef0b5d-5e04-5ff3-b1a4-695a42311ede",
+  "fields": {
+    "created": "2023-12-29T09:50:56.598Z",
+    "last_updated": "2023-12-29T09:50:56.598Z",
+    "_custom_field_data": {},
+    "name": "Container",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      7
+    ]
+  }
+}
+]

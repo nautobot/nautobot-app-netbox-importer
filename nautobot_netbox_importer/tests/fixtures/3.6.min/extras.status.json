@@ -1,0 +1,55 @@
+[
+{
+  "model": "extras.status",
+  "pk": "2c209760-0c83-454a-84b1-b348b15e7b21",
+  "fields": {
+    "created": "2023-12-29T00:00:00Z",
+    "last_updated": "2023-12-29T08:07:24.372Z",
+    "_custom_field_data": {},
+    "name": "Staged",
+    "color": "2196f3",
+    "description": "Unit has been staged",
+    "content_types": [
+      3,
+      9
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "51c9f2e3-1f68-4630-9634-90e6337ef6dc",
+  "fields": {
+    "created": "2023-12-29T00:00:00Z",
+    "last_updated": "2023-12-29T08:07:24.374Z",
+    "_custom_field_data": {},
+    "name": "Failed",
+    "color": "f44336",
+    "description": "Unit has failed",
+    "content_types": [
+      3,
+      4,
+      9,
+      12,
+      13
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "e09cec04-b3ab-4bef-9f23-b703624b7c84",
+  "fields": {
+    "created": "2023-12-29T00:00:00Z",
+    "last_updated": "2023-12-29T08:07:24.396Z",
+    "_custom_field_data": {},
+    "name": "Deprecated",
+    "color": "f44336",
+    "description": "Unit has been deprecated",
+    "content_types": [
+      5,
+      6,
+      7,
+      8
+    ]
+  }
+}
+]

@@ -1,0 +1,35 @@
+[
+{
+  "model": "dcim.manufacturer",
+  "pk": "9568e4c1-fa0c-5c43-9606-e25166e67765",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2023-12-29T09:48:29.215Z",
+    "_custom_field_data": {},
+    "name": "Arista",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "eac77e47-fec1-5dca-8dbb-0b0081c69078",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2023-12-29T09:48:29.222Z",
+    "_custom_field_data": {},
+    "name": "F5",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "ed9063cf-cab5-5c3a-8eb0-c1c67bc73990",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2023-12-29T09:48:29.219Z",
+    "_custom_field_data": {},
+    "name": "Dell",
+    "description": ""
+  }
+}
+]

@@ -1,0 +1,62 @@
+[
+{
+  "model": "circuits.circuit",
+  "pk": "4374dbcd-3a43-5dad-a198-a1e4408e12e3",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:36.615Z",
+    "_custom_field_data": {},
+    "cid": "1002843016",
+    "status": "483d0e13-a967-4761-9a15-cd0bd9d91f25",
+    "provider": "dda5b9ab-0d5c-54b1-901a-773a0cc4fca3",
+    "circuit_type": "77b0ea76-dd49-526f-9e5b-7526b5abaa3d",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": null,
+    "circuit_termination_z": "f7de4dae-a236-5547-b5cd-6193cfb3e93a"
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": "8698bc50-a0f2-5e15-b909-de4f0cd241f8",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:36.780Z",
+    "_custom_field_data": {},
+    "cid": "LQRT4981",
+    "status": "483d0e13-a967-4761-9a15-cd0bd9d91f25",
+    "provider": "30efd662-fc9b-5892-b2be-adeb8091cb29",
+    "circuit_type": "0c9d650f-39cd-5060-809c-8cbc291e9fbb",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": "c5e8e593-6283-57df-a3f9-602421ef6ff9",
+    "circuit_termination_z": "76778cb6-5778-5b1c-a532-4be79f243f48"
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": "c7567502-db33-5e3e-83b7-a4942a3875b4",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:36.744Z",
+    "_custom_field_data": {},
+    "cid": "KAGO3917",
+    "status": "483d0e13-a967-4761-9a15-cd0bd9d91f25",
+    "provider": "30efd662-fc9b-5892-b2be-adeb8091cb29",
+    "circuit_type": "0c9d650f-39cd-5060-809c-8cbc291e9fbb",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": "023d1166-2b82-5567-9413-4a67f19bc01e",
+    "circuit_termination_z": "ded67bdf-1285-5798-8037-153132a5920b"
+  }
+}
+]

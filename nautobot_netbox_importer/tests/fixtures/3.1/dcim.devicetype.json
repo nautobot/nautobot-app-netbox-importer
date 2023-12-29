@@ -1,0 +1,56 @@
+[
+{
+  "model": "dcim.devicetype",
+  "pk": "86c8ea5d-3bac-514f-b0ce-da555e3f0bef",
+  "fields": {
+    "created": "2020-12-20T00:00:00Z",
+    "last_updated": "2023-12-29T09:48:49.396Z",
+    "_custom_field_data": {},
+    "manufacturer": "94e7b59b-659f-5c68-9958-a3e82f19aa9f",
+    "model": "ISR 1111-8P",
+    "part_number": "C1111-8P",
+    "u_height": 1,
+    "is_full_depth": false,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "b1fc894c-dddf-56a0-8bf4-92467a5d97bd",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:48:49.410Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "model": "QFX5110-48S-4C",
+    "part_number": "",
+    "u_height": 1,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "e3072e65-9267-5e44-bbc4-28875ce2893c",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2023-12-29T09:48:49.408Z",
+    "_custom_field_data": {},
+    "manufacturer": "70bcef54-cbf3-5783-b7e1-537b7b90707f",
+    "model": "48-Pair Fiber Panel",
+    "part_number": "",
+    "u_height": 2,
+    "is_full_depth": false,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": ""
+  }
+}
+]

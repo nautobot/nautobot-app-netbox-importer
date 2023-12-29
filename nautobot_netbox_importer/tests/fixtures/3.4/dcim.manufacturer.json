@@ -1,0 +1,35 @@
+[
+{
+  "model": "dcim.manufacturer",
+  "pk": "253a7358-75a8-5a54-ac5d-a6dffb849fc6",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:15.286Z",
+    "_custom_field_data": {},
+    "name": "Opengear",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "94e7b59b-659f-5c68-9958-a3e82f19aa9f",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:15.280Z",
+    "_custom_field_data": {},
+    "name": "Cisco",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "ed9063cf-cab5-5c3a-8eb0-c1c67bc73990",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2023-12-29T09:51:15.281Z",
+    "_custom_field_data": {},
+    "name": "Dell",
+    "description": ""
+  }
+}
+]

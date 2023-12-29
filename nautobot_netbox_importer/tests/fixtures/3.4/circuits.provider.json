@@ -1,0 +1,50 @@
+[
+{
+  "model": "circuits.provider",
+  "pk": "0be72b58-db27-5eb4-984c-84d0083d2012",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:50:57.607Z",
+    "_custom_field_data": {},
+    "name": "GTT",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "cf5379f2-858b-5981-b731-bbdab1ba475e",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:50:57.611Z",
+    "_custom_field_data": {},
+    "name": "Verizon",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "dda5b9ab-0d5c-54b1-901a-773a0cc4fca3",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T09:50:57.604Z",
+    "_custom_field_data": {},
+    "name": "CenturyLink",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+}
+]

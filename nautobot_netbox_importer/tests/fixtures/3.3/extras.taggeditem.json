@@ -1,0 +1,29 @@
+[
+{
+  "model": "extras.taggeditem",
+  "pk": "6cad6ca3-9da7-5e3b-bc04-1ec430ed6a17",
+  "fields": {
+    "content_type": 14,
+    "object_id": "bdc2d9f4-61ea-5eac-98fd-d11492c25be2",
+    "tag": "1ad47bb4-58dc-5d32-8b72-538c689ff02c"
+  }
+},
+{
+  "model": "extras.taggeditem",
+  "pk": "7fd971db-c8c8-56f4-bc52-d75ccd1ccecd",
+  "fields": {
+    "content_type": 14,
+    "object_id": "9166c738-f6df-5237-805a-1367272ca9c9",
+    "tag": "b0ca481e-e144-58fc-9fef-a6249bce7ee9"
+  }
+},
+{
+  "model": "extras.taggeditem",
+  "pk": "a8b8711a-969b-5476-958a-c65c6c581145",
+  "fields": {
+    "content_type": 14,
+    "object_id": "920970b7-44b2-5c1d-862d-d9f568553e53",
+    "tag": "a5277d98-faca-5fdb-a37e-63b6cddb6bf9"
+  }
+}
+]

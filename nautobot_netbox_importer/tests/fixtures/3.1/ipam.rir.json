@@ -1,0 +1,38 @@
+[
+{
+  "model": "ipam.rir",
+  "pk": "611086a8-5f68-549b-904b-b9df116a526e",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:11.584Z",
+    "_custom_field_data": {},
+    "name": "RFC 6598",
+    "is_private": true,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "9a496681-ac3d-5e1a-9453-4a69b6aed1a2",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:11.583Z",
+    "_custom_field_data": {},
+    "name": "RFC 1918",
+    "is_private": true,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "bf8e7943-daf2-5ce7-bde3-d4e1bb30188b",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2023-12-29T09:49:11.580Z",
+    "_custom_field_data": {},
+    "name": "LACNIC",
+    "is_private": false,
+    "description": "Latin America and Caribbean Network Information Centre"
+  }
+}
+]

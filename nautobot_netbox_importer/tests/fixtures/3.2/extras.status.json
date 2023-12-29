@@ -1,0 +1,67 @@
+[
+{
+  "model": "extras.status",
+  "pk": "2c209760-0c83-454a-84b1-b348b15e7b21",
+  "fields": {
+    "created": "2023-12-29T00:00:00Z",
+    "last_updated": "2023-12-29T08:07:24.372Z",
+    "_custom_field_data": {},
+    "name": "Staged",
+    "color": "2196f3",
+    "description": "Unit has been staged",
+    "content_types": [
+      3,
+      9
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "41f5804b-2a7b-4030-b073-ab5e8f5ece26",
+  "fields": {
+    "created": "2023-12-29T00:00:00Z",
+    "last_updated": "2023-12-29T08:07:24.364Z",
+    "_custom_field_data": {},
+    "name": "Decommissioning",
+    "color": "ffc107",
+    "description": "Unit is being decommissioned",
+    "content_types": [
+      2,
+      3,
+      9,
+      12,
+      13,
+      14,
+      19,
+      20
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "483d0e13-a967-4761-9a15-cd0bd9d91f25",
+  "fields": {
+    "created": "2023-12-29T00:00:00Z",
+    "last_updated": "2023-12-29T08:07:24.350Z",
+    "_custom_field_data": {},
+    "name": "Active",
+    "color": "4caf50",
+    "description": "Unit is active",
+    "content_types": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      12,
+      13,
+      14,
+      19,
+      20
+    ]
+  }
+}
+]
