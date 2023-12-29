@@ -13,7 +13,6 @@ from nautobot_netbox_importer.generator import RecordData
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceRecord
 from nautobot_netbox_importer.generator import logger
-from nautobot_netbox_importer.generator import print_fields_mapping
 from nautobot_netbox_importer.generator import print_summary
 
 from .models.base import setup_base
@@ -85,10 +84,7 @@ class NetBoxAdapter(SourceAdapter):
             logger.info(" ... Updating paths completed.")
 
         if self.options.summary:
-            print_summary(self, self.diff_summary)
-
-        if self.options.field_mapping:
-            print_fields_mapping(self)
+            print_summary(self, self.diff_summary, self.options.field_mapping)
 
     @atomic
     def _atomic_import(self) -> None:

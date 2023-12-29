@@ -1,16 +1,33 @@
 """Test cases for NetBox adapter."""
+import json
+from pathlib import Path
 from tempfile import NamedTemporaryFile
+from unittest.mock import patch
+from typing import Iterable
 
 import requests
+from django.core.management import call_command
+from django.core.serializers import serialize
 from django.test import TestCase
 
 from nautobot_netbox_importer.command_utils import enable_logging
 from nautobot_netbox_importer.diffsync.adapter import NetBoxAdapter
 from nautobot_netbox_importer.diffsync.adapter import NetBoxImporterOptions
+from nautobot_netbox_importer.generator import ContentTypeStr
 
+_FIXTURES_PATH = Path(__file__).parent / "fixtures"
+_DONT_COMPARE_FIELDS = ["created", "last_updated"]
+_SAMPLE_COUNT = 3
 _SKIPPED_CONTENT_TYPES = ["contenttypes.contenttype"]
 
+# All versions specified in _EXPECTED_SUMMARY are tested as separate test cases
 _EXPECTED_SUMMARY = {}
+_EXPECTED_SUMMARY["3.6.min"] = {
+    "create": 115,
+    "delete": 0,
+    "no-change": 1,
+    "update": 0,
+}
 _EXPECTED_SUMMARY["3.0"] = {
     "create": 4976,
     "delete": 0,
@@ -40,6 +57,14 @@ _EXPECTED_SUMMARY["3.6"] = {
 }
 
 _EXPECTED_COUNTS = {}
+_EXPECTED_COUNTS["3.6.min"] = {
+    "extras.customfield": 1,
+    "extras.status": 2,
+    "dcim.locationtype": 6,
+    "dcim.location": 95,
+    "tenancy.tenantgroup": 1,
+    "tenancy.tenant": 11,
+}
 _EXPECTED_COUNTS["3.0"] = {
     "circuits.circuit": 29,
     "circuits.circuittermination": 45,
@@ -134,6 +159,7 @@ _EXPECTED_COUNTS["3.6"] = {
 }
 
 _EXPECTED_VALIDATION_ERRORS = {}
+_EXPECTED_VALIDATION_ERRORS["3.6.min"] = {}
 _EXPECTED_VALIDATION_ERRORS["3.0"] = {
     "dcim.powerfeed": 48,
 }
@@ -160,6 +186,8 @@ _EXPECTED_VALIDATION_ERRORS["3.6"] = {
 class TestImport(TestCase):
     """Unittest for NetBox adapter."""
 
+    # Ensure that SECRET_KEY is set to a known value, to generate the same UUIDs
+    @patch("django.conf.settings.SECRET_KEY", "testing_secret_key")
     def setUp(self):
         """Set up test environment."""
         super().setUp()
@@ -168,41 +196,52 @@ class TestImport(TestCase):
 
     def _import(self, version: str):
         """Test import."""
-        url = f"https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/netbox-demo-v{version}.json"
-        response = requests.get(url, timeout=30)
-        response.raise_for_status()
+        path = _FIXTURES_PATH / version / "input.json"
+        print(f"Importing {path}")
+        if not path.is_file():
+            url = f"https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/netbox-demo-v{version}.json"
+            response = requests.get(url, timeout=30)
+            response.raise_for_status()
 
-        with NamedTemporaryFile(mode="w+", delete=False) as tmp_file:
-            tmp_file.write(response.text)
-            tmp_filename = tmp_file.name
+            with NamedTemporaryFile(mode="w+", delete=False) as tmp_file:
+                tmp_file.write(response.text)
+                path = Path(tmp_file.name)
 
-        with self.subTest(f"First Import NetBox v{version}"):
-            source, created_models, skipped_count = self._import_file(tmp_filename, version)
-            expected_summary = {
-                **_EXPECTED_SUMMARY[version],
-                "skip": skipped_count,
-            }
-            self.assertEqual(source.diff_summary, expected_summary, "Summary mismatch")
-            validation_issues = {key: len(value) for key, value in source.nautobot.validation_issues.items()}
-            self.assertEqual(validation_issues, _EXPECTED_VALIDATION_ERRORS[version], "Validation issues mismatch")
+        # Import the file to fresh Nautobot instance
+        source, created_models, skipped_count = self._import_file(path, version)
+        expected_summary = {
+            **_EXPECTED_SUMMARY[version],
+            "skip": skipped_count,
+        }
+        self.assertEqual(source.diff_summary, expected_summary, "Summary mismatch")
+        validation_issues = {key: len(value) for key, value in source.nautobot.validation_issues.items()}
+        self.assertEqual(validation_issues, _EXPECTED_VALIDATION_ERRORS[version], "Validation issues mismatch")
 
-        with self.subTest(f"Re-Import NetBox v{version}"):
-            expected_summary = {
-                **expected_summary,
-                "no-change": expected_summary["no-change"] + expected_summary["create"],
-                "create": 0,
-            }
-            source, updated_models, skipped_count = self._import_file(tmp_filename, version)
-            self.assertEqual(skipped_count, expected_summary["skip"], "Skipped count mismatch")
-            self.assertEqual(source.diff_summary, expected_summary, "Summary mismatch")
-            self.assertEqual(source.nautobot.validation_issues, {}, "No validation issues expected")
-            self.assertEqual(updated_models, created_models, "Models counts mismatch")
-            total = sum(created_models.values())
-            self.assertEqual(total, expected_summary["no-change"], "Total mismatch")
+        # Re-import the same file to verify that nothing has changed
+        expected_summary = {
+            **expected_summary,
+            "no-change": expected_summary["no-change"] + expected_summary["create"],
+            "create": 0,
+        }
+        source, updated_models, skipped_count = self._import_file(path, version)
+        self.assertEqual(skipped_count, expected_summary["skip"], "Skipped count mismatch")
+        self.assertEqual(source.diff_summary, expected_summary, "Summary mismatch")
+        self.assertEqual(source.nautobot.validation_issues, {}, "No validation issues expected")
+        self.assertEqual(updated_models, created_models, "Models counts mismatch")
+        total = sum(created_models.values())
+        self.assertEqual(total, expected_summary["no-change"], "Total mismatch")
 
-    def _import_file(self, tmp_filename: str, version: str):
+        dir_path = _FIXTURES_PATH / version
+        if not (dir_path).is_dir():
+            dir_path.mkdir(parents=True)
+
+        for content_type in created_models:
+            with self.subTest(f"Verify data {version} {content_type}"):
+                self._verify_model(source, version, content_type)
+
+    def _import_file(self, input_path: Path, version: str):
         source = NetBoxAdapter(
-            tmp_filename,
+            input_path,
             NetBoxImporterOptions(
                 dry_run=False,
                 bypass_data_validation=True,
@@ -236,8 +275,48 @@ class TestImport(TestCase):
 
         return source, imported_models, skipped_count
 
+    def _verify_model(self, source: NetBoxAdapter, version: str, content_type: ContentTypeStr):
+        """Verify data."""
+        path = _FIXTURES_PATH / version / f"{content_type}.json"
+        if not path.is_file():
+            _generate_fixtures(source, content_type, path)
+            self.fail("Fixture file was generated, please re-run the test")
 
-def _create_test_methods():
+        data = json.loads(path.read_text())
+        model = source.nautobot.wrappers[content_type].model
+        for item in data:
+            self.assertEqual(content_type, item["model"], f"Content type mismatch for {content_type} {item}")
+
+            instance = model.objects.get(pk=item["pk"])
+            formatted = json.loads(serialize("json", [instance], ensure_ascii=False))[0]
+            self.assertEqual(formatted["pk"], item["pk"], f"PK mismatch for {content_type} {instance}")
+
+            expected = {
+                key: value
+                for key, value in item["fields"].items()
+                if not key.startswith("_") and key not in _DONT_COMPARE_FIELDS
+            }
+            instance_data = {key: value for key, value in formatted["fields"].items() if key in expected}
+            self.assertEqual(instance_data, expected, f"Data mismatch for {content_type} {instance}")
+
+
+def _generate_fixtures(source: NetBoxAdapter, content_type: ContentTypeStr, output_path: Path):
+    """Generate fixture file containing `_SAMPLE_COUNT` random instaces for the specified content type.
+
+    Should be used only with the lowest supported Nautobot version.
+    """
+    wrapper = source.nautobot.wrappers[content_type]
+    random_instances = wrapper.model.objects.order_by("?")[:_SAMPLE_COUNT]
+    call_command(
+        "dumpdata",
+        content_type,
+        indent=2,
+        pks=",".join(str(instance.pk) for instance in random_instances),
+        output=output_path,
+    )
+
+
+def _create_test_cases(versions: Iterable[str]):
     """Create test method for each NetBox version."""
 
     def create_test_method(version):
@@ -247,10 +326,10 @@ def _create_test_methods():
 
         return test_import_version
 
-    for version in _EXPECTED_COUNTS:
+    for version in versions:
         test_method = create_test_method(version)
         method_name = f"test_import_{version.replace('.', '_')}"
         setattr(TestImport, method_name, test_method)
 
 
-_create_test_methods()
+_create_test_cases(_EXPECTED_SUMMARY)

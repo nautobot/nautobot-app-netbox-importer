@@ -170,4 +170,5 @@ def setup_locations(adapter: SourceAdapter, sitegroup_parent_always_region) -> N
 
     for name in ["region", "site", "location"]:
         wrapper = adapter.wrappers[f"dcim.{name}"]
+        location_type_wrapper.add_reference(location_type_wrapper.get_pk_from_uid(name.capitalize()), wrapper)
         wrapper.set_references_forwarding("dcim.locationtype", "location_type_id")

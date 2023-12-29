@@ -292,7 +292,7 @@ class NautobotModelWrapper:
             try:
                 instance = self.model.objects.get(id=uid)
             except self.model.DoesNotExist as error:  # type: ignore
-                # This can happen with Tree models, some issue is there. Ignore for now, just show validation issue.
+                # This can happen with Tree models, some issue is there. Ignore for now, just add the validation issue.
                 result.add(
                     ValidationIssue(
                         uid,
@@ -305,6 +305,9 @@ class NautobotModelWrapper:
                     instance.clean()
                 except ValidationError as error:
                     result.add(ValidationIssue(uid, str(instance), error))
+                # pylint: disable-next=broad-exception-caught
+                except Exception as error:
+                    result.add(ValidationIssue(uid, str(instance), ValidationError(f"Unknown error: {error}")))
 
         self._clean_failures = set()
 
