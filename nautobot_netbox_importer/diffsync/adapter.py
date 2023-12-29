@@ -1,10 +1,14 @@
 """NetBox to Nautobot Source Importer Definitions."""
-import json
+from gzip import GzipFile
 from pathlib import Path
 from typing import Generator
 from typing import NamedTuple
 from typing import Union
+from urllib.parse import ParseResult
+from urllib.parse import urlparse
 
+import ijson
+import requests
 from django.core.management import call_command
 from django.db.transaction import atomic
 
@@ -22,6 +26,10 @@ from .models.dcim import setup_dcim
 from .models.ipam import setup_ipam
 from .models.locations import setup_locations
 from .models.virtualization import setup_virtualization
+
+_FileRef = Union[str, Path, ParseResult]
+
+_HTTP_TIMEOUT = 60
 
 
 class _DryRunException(Exception):
@@ -47,9 +55,9 @@ class NetBoxImporterOptions(NamedTuple):
 class NetBoxAdapter(SourceAdapter):
     """NetBox Source Adapter."""
 
-    def __init__(self, file_path: Union[str, Path], options: NetBoxImporterOptions, *args, **kwargs):
+    def __init__(self, input_ref: _FileRef, options: NetBoxImporterOptions, *args, **kwargs):
         """Initialize NetBox Source Adapter."""
-        super().__init__(name="NetBox", get_source_data=_get_source_reader(file_path), *args, **kwargs)
+        super().__init__(name="NetBox", get_source_data=_get_reader(input_ref), *args, **kwargs)
         self.options = options
         self.diff_summary: DiffSummary = {}
 
@@ -100,8 +108,8 @@ class NetBoxAdapter(SourceAdapter):
             raise _DryRunException("Aborting the transaction due to the dry-run mode.")
 
 
-def _get_source_reader(file_path: Union[str, Path]):
-    """Read NetBox source file."""
+def _get_reader(input_ref: _FileRef):
+    """Read NetBox source file from file or HTTP resource."""
 
     def process_cable_termination(source_data: RecordData) -> str:
         # NetBox 3.3 split the dcim.cable model into dcim.cable and dcim.cabletermination models.
@@ -112,21 +120,61 @@ def _get_source_reader(file_path: Union[str, Path]):
 
         return f"dcim.cabletermination_{cable_end}"
 
-    def read() -> Generator[SourceRecord, None, None]:
-        with open(file_path, "r", encoding="utf8") as file:
-            data = json.load(file)
+    def read_item(item: dict) -> SourceRecord:
+        content_type = item["model"]
+        netbox_pk = item.get("pk", None)
+        source_data = item["fields"]
 
-        for item in data:
-            content_type = item["model"]
-            netbox_pk = item.get("pk", None)
-            source_data = item["fields"]
+        if netbox_pk:
+            source_data["id"] = netbox_pk
 
-            if netbox_pk:
-                source_data["id"] = netbox_pk
+        if content_type == "dcim.cabletermination":
+            content_type = process_cable_termination(source_data)
 
-            if content_type == "dcim.cabletermination":
-                content_type = process_cable_termination(source_data)
+        return SourceRecord(content_type, source_data)
 
-            yield SourceRecord(content_type, source_data)
+    def read_path() -> Generator[SourceRecord, None, None]:
+        with open(path, "rb") as file:
+            for item in ijson.items(file, "item"):
+                yield read_item(item)
 
-    return read
+    def read_url() -> Generator[SourceRecord, None, None]:
+        with requests.get(url.geturl(), stream=True, timeout=_HTTP_TIMEOUT) as response:
+            response.raise_for_status()
+            if response.headers.get("Content-Encoding") == "gzip":
+                stream = GzipFile(fileobj=response.raw)
+            else:
+                stream = response.raw
+
+            for item in ijson.items(stream, "item"):
+                yield read_item(item)
+
+    def verify_file(file_path) -> Path:
+        result = Path(file_path)
+        if not result.is_file():
+            raise FileNotFoundError(f"File {input_ref} does not exist.")
+        return result
+
+    if isinstance(input_ref, str):
+        url = urlparse(input_ref)
+
+        if not url.scheme:
+            path = verify_file(input_ref)
+            return read_path
+
+        if url.scheme == "file":
+            path = verify_file(url.path)
+            return read_path
+
+        if url.scheme in ["http", "https"]:
+            return read_url
+
+    if isinstance(input_ref, Path):
+        path = verify_file(input_ref)
+        return read_path
+
+    if isinstance(input_ref, ParseResult):
+        url = input_ref
+        return read_url
+
+    raise ValueError(f"Unsupported file reference: {input_ref}")

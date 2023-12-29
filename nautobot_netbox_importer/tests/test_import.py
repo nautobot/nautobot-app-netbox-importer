@@ -1,11 +1,9 @@
 """Test cases for NetBox adapter."""
 import json
 from pathlib import Path
-from tempfile import NamedTemporaryFile
-from unittest.mock import patch
 from typing import Iterable
+from unittest.mock import patch
 
-import requests
 from django.core.management import call_command
 from django.core.serializers import serialize
 from django.test import TestCase
@@ -196,19 +194,12 @@ class TestImport(TestCase):
 
     def _import(self, version: str):
         """Test import."""
-        path = _FIXTURES_PATH / version / "input.json"
-        print(f"Importing {path}")
-        if not path.is_file():
-            url = f"https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/netbox-demo-v{version}.json"
-            response = requests.get(url, timeout=30)
-            response.raise_for_status()
-
-            with NamedTemporaryFile(mode="w+", delete=False) as tmp_file:
-                tmp_file.write(response.text)
-                path = Path(tmp_file.name)
+        input_ref = _FIXTURES_PATH / version / "input.json"
+        if not input_ref.is_file():
+            input_ref = f"https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/netbox-demo-v{version}.json"
 
         # Import the file to fresh Nautobot instance
-        source, created_models, skipped_count = self._import_file(path, version)
+        source, created_models, skipped_count = self._import_file(input_ref, version)
         expected_summary = {
             **_EXPECTED_SUMMARY[version],
             "skip": skipped_count,
@@ -223,7 +214,7 @@ class TestImport(TestCase):
             "no-change": expected_summary["no-change"] + expected_summary["create"],
             "create": 0,
         }
-        source, updated_models, skipped_count = self._import_file(path, version)
+        source, updated_models, skipped_count = self._import_file(input_ref, version)
         self.assertEqual(skipped_count, expected_summary["skip"], "Skipped count mismatch")
         self.assertEqual(source.diff_summary, expected_summary, "Summary mismatch")
         self.assertEqual(source.nautobot.validation_issues, {}, "No validation issues expected")
@@ -231,17 +222,17 @@ class TestImport(TestCase):
         total = sum(created_models.values())
         self.assertEqual(total, expected_summary["no-change"], "Total mismatch")
 
+        # Verify data
         dir_path = _FIXTURES_PATH / version
         if not (dir_path).is_dir():
             dir_path.mkdir(parents=True)
-
         for content_type in created_models:
             with self.subTest(f"Verify data {version} {content_type}"):
                 self._verify_model(source, version, content_type)
 
-    def _import_file(self, input_path: Path, version: str):
+    def _import_file(self, input_ref, version: str):
         source = NetBoxAdapter(
-            input_path,
+            input_ref,
             NetBoxImporterOptions(
                 dry_run=False,
                 bypass_data_validation=True,
