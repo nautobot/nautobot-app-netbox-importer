@@ -7,62 +7,42 @@ from unittest.mock import patch
 from django.core.management import call_command
 from django.core.serializers import serialize
 from django.test import TestCase
+from nautobot.ipam.models import Namespace
 
-from nautobot_netbox_importer.command_utils import enable_logging
+from nautobot_netbox_importer.command_utils import enable_logging as mute_diffsync_logging
 from nautobot_netbox_importer.diffsync.adapter import NetBoxAdapter
 from nautobot_netbox_importer.diffsync.adapter import NetBoxImporterOptions
 from nautobot_netbox_importer.generator import ContentTypeStr
 
-_FIXTURES_PATH = Path(__file__).parent / "fixtures"
 _DONT_COMPARE_FIELDS = ["created", "last_updated"]
+_FIXTURES_PATH = Path(__file__).parent / "fixtures"
+_NETBOX_DATA_URL = "https://raw.githubusercontent.com/netbox-community/netbox-demo-data"
 _SAMPLE_COUNT = 3
 _SKIPPED_CONTENT_TYPES = ["contenttypes.contenttype"]
 
+_INPUTS = {
+    "3.0": f"{_NETBOX_DATA_URL}/c6a9c8835836a0629bde0713f33038ec9b8d56ea/json/netbox-demo-v3.0.json",
+    "3.1": f"{_NETBOX_DATA_URL}/c6a9c8835836a0629bde0713f33038ec9b8d56ea/json/netbox-demo-v3.1.json",
+    "3.2": f"{_NETBOX_DATA_URL}/c6a9c8835836a0629bde0713f33038ec9b8d56ea/json/netbox-demo-v3.2.json",
+    "3.3": f"{_NETBOX_DATA_URL}/c6a9c8835836a0629bde0713f33038ec9b8d56ea/json/netbox-demo-v3.3.json",
+    "3.4": f"{_NETBOX_DATA_URL}/c6a9c8835836a0629bde0713f33038ec9b8d56ea/json/netbox-demo-v3.4.json",
+    "3.5": f"{_NETBOX_DATA_URL}/c6a9c8835836a0629bde0713f33038ec9b8d56ea/json/netbox-demo-v3.5.json",
+    "3.6": f"{_NETBOX_DATA_URL}/c6a9c8835836a0629bde0713f33038ec9b8d56ea/json/netbox-demo-v3.6.json",
+}
+
 # All versions specified in _EXPECTED_SUMMARY are tested as separate test cases
-_EXPECTED_SUMMARY = {}
-_EXPECTED_SUMMARY["3.6.min"] = {
-    "create": 115,
-    "delete": 0,
-    "no-change": 1,
-    "update": 0,
-}
-_EXPECTED_SUMMARY["3.0"] = {
-    "create": 4976,
-    "delete": 0,
-    "no-change": 3,
-    "update": 0,
-}
-_EXPECTED_SUMMARY["3.1"] = {
-    **_EXPECTED_SUMMARY["3.0"],
-    "create": 5612,
-    "no-change": 4,
-}
-_EXPECTED_SUMMARY["3.2"] = {
-    **_EXPECTED_SUMMARY["3.1"],
-    "create": 5866,
-}
-_EXPECTED_SUMMARY["3.3"] = {
-    **_EXPECTED_SUMMARY["3.2"],
-}
-_EXPECTED_SUMMARY["3.4"] = {
-    **_EXPECTED_SUMMARY["3.3"],
-}
-_EXPECTED_SUMMARY["3.5"] = {
-    **_EXPECTED_SUMMARY["3.4"],
-}
-_EXPECTED_SUMMARY["3.6"] = {
-    **_EXPECTED_SUMMARY["3.5"],
+_EXPECTED_SUMMARY = {
+    "3.0": 4979,
+    "3.1": 5616,
+    "3.2": 5870,
+    "3.3": 5870,
+    "3.4": 5870,
+    "3.5": 5870,
+    "3.6": 5870,
+    "3.6.min": 116,
 }
 
 _EXPECTED_COUNTS = {}
-_EXPECTED_COUNTS["3.6.min"] = {
-    "extras.customfield": 1,
-    "extras.status": 2,
-    "dcim.locationtype": 6,
-    "dcim.location": 95,
-    "tenancy.tenantgroup": 1,
-    "tenancy.tenant": 11,
-}
 _EXPECTED_COUNTS["3.0"] = {
     "circuits.circuit": 29,
     "circuits.circuittermination": 45,
@@ -155,9 +135,16 @@ _EXPECTED_COUNTS["3.5"] = {
 _EXPECTED_COUNTS["3.6"] = {
     **_EXPECTED_COUNTS["3.5"],
 }
+_EXPECTED_COUNTS["3.6.min"] = {
+    "extras.customfield": 1,
+    "extras.status": 2,
+    "dcim.locationtype": 6,
+    "dcim.location": 95,
+    "tenancy.tenantgroup": 1,
+    "tenancy.tenant": 11,
+}
 
 _EXPECTED_VALIDATION_ERRORS = {}
-_EXPECTED_VALIDATION_ERRORS["3.6.min"] = {}
 _EXPECTED_VALIDATION_ERRORS["3.0"] = {
     "dcim.powerfeed": 48,
 }
@@ -179,41 +166,51 @@ _EXPECTED_VALIDATION_ERRORS["3.5"] = {
 _EXPECTED_VALIDATION_ERRORS["3.6"] = {
     **_EXPECTED_VALIDATION_ERRORS["3.5"],
 }
+_EXPECTED_VALIDATION_ERRORS["3.6.min"] = {}
 
 
+# Ensure that SECRET_KEY is set to a known value, to generate the same UUIDs
+@patch("django.conf.settings.SECRET_KEY", "testing_secret_key")
 class TestImport(TestCase):
     """Unittest for NetBox adapter."""
 
-    # Ensure that SECRET_KEY is set to a known value, to generate the same UUIDs
-    @patch("django.conf.settings.SECRET_KEY", "testing_secret_key")
     def setUp(self):
         """Set up test environment."""
         super().setUp()
 
-        enable_logging()
+        call_command("flush", interactive=False)
+
+        Namespace.objects.create(
+            pk="26756c2d-fddd-4128-9f88-dbcbddcbef45",
+            name="Global",
+            description="Default Global namespace. Created by Nautobot.",
+        )
+
+        mute_diffsync_logging()
 
     def _import(self, version: str):
         """Test import."""
-        input_ref = _FIXTURES_PATH / version / "input.json"
-        if not input_ref.is_file():
-            input_ref = f"https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/netbox-demo-v{version}.json"
+        if version in _INPUTS:
+            input_ref = _INPUTS[version]
+        else:
+            input_ref = _FIXTURES_PATH / version / "input.json"
 
         # Import the file to fresh Nautobot instance
         source, created_models, skipped_count = self._import_file(input_ref, version)
         expected_summary = {
-            **_EXPECTED_SUMMARY[version],
+            "create": _EXPECTED_SUMMARY[version],
             "skip": skipped_count,
+            "no-change": 0,
+            "delete": 0,
+            "update": 0,
         }
         self.assertEqual(source.diff_summary, expected_summary, "Summary mismatch")
         validation_issues = {key: len(value) for key, value in source.nautobot.validation_issues.items()}
         self.assertEqual(validation_issues, _EXPECTED_VALIDATION_ERRORS[version], "Validation issues mismatch")
 
         # Re-import the same file to verify that nothing has changed
-        expected_summary = {
-            **expected_summary,
-            "no-change": expected_summary["no-change"] + expected_summary["create"],
-            "create": 0,
-        }
+        expected_summary["no-change"] = expected_summary["create"]
+        expected_summary["create"] = 0
         source, updated_models, skipped_count = self._import_file(input_ref, version)
         self.assertEqual(skipped_count, expected_summary["skip"], "Skipped count mismatch")
         self.assertEqual(source.diff_summary, expected_summary, "Summary mismatch")
@@ -223,7 +220,7 @@ class TestImport(TestCase):
         self.assertEqual(total, expected_summary["no-change"], "Total mismatch")
 
         # Verify data
-        dir_path = _FIXTURES_PATH / version
+        dir_path = _FIXTURES_PATH / version / "samples"
         if not (dir_path).is_dir():
             dir_path.mkdir(parents=True)
         for content_type in created_models:
@@ -268,7 +265,7 @@ class TestImport(TestCase):
 
     def _verify_model(self, source: NetBoxAdapter, version: str, content_type: ContentTypeStr):
         """Verify data."""
-        path = _FIXTURES_PATH / version / f"{content_type}.json"
+        path = _FIXTURES_PATH / version / "samples" / f"{content_type}.json"
         if not path.is_file():
             _generate_fixtures(source, content_type, path)
             self.fail("Fixture file was generated, please re-run the test")
@@ -278,17 +275,24 @@ class TestImport(TestCase):
         for item in data:
             self.assertEqual(content_type, item["model"], f"Content type mismatch for {content_type} {item}")
 
-            instance = model.objects.get(pk=item["pk"])
+            uid = item["pk"]
+            instance = model.objects.get(pk=uid)
             formatted = json.loads(serialize("json", [instance], ensure_ascii=False))[0]
-            self.assertEqual(formatted["pk"], item["pk"], f"PK mismatch for {content_type} {instance}")
 
-            expected = {
-                key: value
-                for key, value in item["fields"].items()
-                if not key.startswith("_") and key not in _DONT_COMPARE_FIELDS
-            }
-            instance_data = {key: value for key, value in formatted["fields"].items() if key in expected}
-            self.assertEqual(instance_data, expected, f"Data mismatch for {content_type} {instance}")
+            self.assertEqual(formatted["pk"], uid, f"PK mismatch for {content_type} {instance}")
+            formatted_fields = formatted["fields"]
+
+            for key, value in item["fields"].items():
+                if key.startswith("_") or key in _DONT_COMPARE_FIELDS:
+                    continue
+                if key == "content_types":
+                    self.assertEqual(
+                        sorted(formatted_fields[key]),
+                        sorted(value),
+                        f"Data mismatch for {content_type} {uid} {key}",
+                    )
+                else:
+                    self.assertEqual(formatted_fields[key], value, f"Data mismatch for {content_type} {uid} {key}")
 
 
 def _generate_fixtures(source: NetBoxAdapter, content_type: ContentTypeStr, output_path: Path):

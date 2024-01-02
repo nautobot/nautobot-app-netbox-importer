@@ -1,0 +1,53 @@
+[
+{
+  "model": "dcim.frontporttemplate",
+  "pk": "0140ade8-e5e5-5d4e-ae55-a05c7cc1f14d",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:19.289Z",
+    "_custom_field_data": {},
+    "device_type": "516e3837-80ac-587b-b541-1811ea94f597",
+    "name": "Port 38",
+    "_name": "Port 00000038",
+    "label": "",
+    "description": "",
+    "type": "8p8c",
+    "rear_port_template": "2cb4fe1d-95c5-51d0-bde0-e9a6023511b7",
+    "rear_port_position": 1
+  }
+},
+{
+  "model": "dcim.frontporttemplate",
+  "pk": "8c0a9a61-801f-5023-bd4f-eb0bd426c3d0",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:19.183Z",
+    "_custom_field_data": {},
+    "device_type": "e95ceab6-30ed-5b5c-86d3-ae2cff3d51b3",
+    "name": "Port 3",
+    "_name": "Port 00000003",
+    "label": "",
+    "description": "",
+    "type": "8p8c",
+    "rear_port_template": "0ba60cfc-46ff-59b1-9f61-f5c21564d693",
+    "rear_port_position": 1
+  }
+},
+{
+  "model": "dcim.frontporttemplate",
+  "pk": "ec106045-01f9-5366-bb50-87e99856a23d",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:19.332Z",
+    "_custom_field_data": {},
+    "device_type": "e3072e65-9267-5e44-bbc4-28875ce2893c",
+    "name": "Port 14",
+    "_name": "Port 00000014",
+    "label": "",
+    "description": "",
+    "type": "sc",
+    "rear_port_template": "34f8258a-5deb-5f1e-b939-b33d4d3b07a9",
+    "rear_port_position": 14
+  }
+}
+]

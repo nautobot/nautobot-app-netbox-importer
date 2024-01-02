@@ -1,0 +1,47 @@
+[
+{
+  "model": "tenancy.tenant",
+  "pk": "50369baf-2664-5398-ae46-90eba767ddae",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:09.235Z",
+    "_custom_field_data": {
+      "cust_id": "CYB01"
+    },
+    "name": "Cyberdyne Systems",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:09.232Z",
+    "_custom_field_data": {
+      "cust_id": "DMI01"
+    },
+    "name": "Dunder-Mifflin, Inc.",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "9b6fe81e-92b4-5b82-8769-39a7627c566e",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:09.226Z",
+    "_custom_field_data": {
+      "cust_id": "INI04"
+    },
+    "name": "Initech",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+}
+]

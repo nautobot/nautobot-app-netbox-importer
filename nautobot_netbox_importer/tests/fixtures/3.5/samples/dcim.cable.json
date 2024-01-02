@@ -1,0 +1,68 @@
+[
+{
+  "model": "dcim.cable",
+  "pk": "ba5539a9-9687-5da3-a03b-ff9c61f85613",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:55.475Z",
+    "_custom_field_data": {},
+    "termination_a_type": 27,
+    "termination_a_id": "913ad25c-96c3-5e48-9a8a-62ec9ee64dc5",
+    "termination_b_type": 32,
+    "termination_b_id": "0169bb63-bb85-52ad-a6b1-afba5a758686",
+    "type": "cat5e",
+    "status": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
+    "label": "",
+    "color": "2196f3",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null,
+    "_termination_a_device": null,
+    "_termination_b_device": "882ac986-ee6b-5cd1-ad7b-799dd1bc11d6"
+  }
+},
+{
+  "model": "dcim.cable",
+  "pk": "bccaf88e-b5c2-5b9d-9006-791ab29ccfba",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:54.786Z",
+    "_custom_field_data": {},
+    "termination_a_type": 27,
+    "termination_a_id": "f2575b41-c704-5d89-b4d4-db535083ad79",
+    "termination_b_type": 32,
+    "termination_b_id": "f99656cb-776a-540f-8c1b-0a39063dc377",
+    "type": "smf",
+    "status": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
+    "label": "",
+    "color": "ffeb3b",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null,
+    "_termination_a_device": null,
+    "_termination_b_device": "c47be8fc-ce7f-5230-ad8d-5be2cb66fb6e"
+  }
+},
+{
+  "model": "dcim.cable",
+  "pk": "d93cf9c8-e94c-57cf-9f55-b41b3a447b56",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:57.293Z",
+    "_custom_field_data": {},
+    "termination_a_type": 32,
+    "termination_a_id": "6df072ba-7864-54f2-8483-e650a106831c",
+    "termination_b_type": 35,
+    "termination_b_id": "3c547caf-1575-51be-bb70-aff4720f64d9",
+    "type": "",
+    "status": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
+    "label": "",
+    "color": "",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null,
+    "_termination_a_device": "db219c8e-9ec1-5881-8b6c-620f6342cfb1",
+    "_termination_b_device": "af442925-b894-597c-847f-a2f91397aa20"
+  }
+}
+]

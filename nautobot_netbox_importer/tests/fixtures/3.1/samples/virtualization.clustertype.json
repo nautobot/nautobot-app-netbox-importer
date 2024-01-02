@@ -1,0 +1,35 @@
+[
+{
+  "model": "virtualization.clustertype",
+  "pk": "40ad4d12-4324-581c-9f4a-a87421336e3b",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:00.007Z",
+    "_custom_field_data": {},
+    "name": "Microsoft Azure",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustertype",
+  "pk": "49f2845e-b8f4-58e3-8534-2a1131071e25",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:00.006Z",
+    "_custom_field_data": {},
+    "name": "Google Cloud",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustertype",
+  "pk": "834802b2-bb11-5319-9ddb-4269f943171c",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:00.011Z",
+    "_custom_field_data": {},
+    "name": "KVM",
+    "description": ""
+  }
+}
+]

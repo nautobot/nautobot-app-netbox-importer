@@ -1,0 +1,38 @@
+[
+{
+  "model": "dcim.powerpanel",
+  "pk": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+  "fields": {
+    "created": "2021-04-05T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:38.381Z",
+    "_custom_field_data": {},
+    "location": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+    "rack_group": null,
+    "name": "Panel 1"
+  }
+},
+{
+  "model": "dcim.powerpanel",
+  "pk": "78d58858-0cc7-530a-8a3b-daa91a436803",
+  "fields": {
+    "created": "2021-04-05T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:38.383Z",
+    "_custom_field_data": {},
+    "location": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+    "rack_group": null,
+    "name": "Panel 2"
+  }
+},
+{
+  "model": "dcim.powerpanel",
+  "pk": "d74c0a43-19ad-5743-b7e7-96532d49ade3",
+  "fields": {
+    "created": "2021-04-05T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:38.386Z",
+    "_custom_field_data": {},
+    "location": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+    "rack_group": null,
+    "name": "Panel 3"
+  }
+}
+]

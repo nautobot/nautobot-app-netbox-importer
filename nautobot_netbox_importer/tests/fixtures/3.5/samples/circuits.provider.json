@@ -1,0 +1,50 @@
+[
+{
+  "model": "circuits.provider",
+  "pk": "aaa90236-9b2a-5ae3-901d-59574a1d3da0",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:40.563Z",
+    "_custom_field_data": {},
+    "name": "AT&T",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "ca4799a6-0f04-5a91-a532-647cd388bcb5",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:40.571Z",
+    "_custom_field_data": {},
+    "name": "Zayo",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "cf5379f2-858b-5981-b731-bbdab1ba475e",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:40.570Z",
+    "_custom_field_data": {},
+    "name": "Verizon",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+}
+]

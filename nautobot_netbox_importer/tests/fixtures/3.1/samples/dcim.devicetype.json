@@ -1,0 +1,56 @@
+[
+{
+  "model": "dcim.devicetype",
+  "pk": "1edf9408-8f18-5b48-94db-ef8c8e7c9001",
+  "fields": {
+    "created": "2020-12-22T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:40.264Z",
+    "_custom_field_data": {},
+    "manufacturer": "94e7b59b-659f-5c68-9958-a3e82f19aa9f",
+    "model": "C9200-48P",
+    "part_number": "C9200-48P",
+    "u_height": 1,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": "[Cisco Catalyst 9200 Series Switches Data Sheet](https://www.cisco.com/c/en/us/products/collateral/switches/catalyst-9200-series-switches/nb-06-cat9200-ser-data-sheet-cte-en.html)"
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "89343eba-98ad-5be4-9c74-49ac12a1f2ef",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:40.258Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "model": "EX4200-48T",
+    "part_number": "",
+    "u_height": 1,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": "[Juniper EX4200 Data Sheet](https://www.juniper.net/assets/us/en/local/pdf/datasheets/1000215-en.pdf)"
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "b1fc894c-dddf-56a0-8bf4-92467a5d97bd",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:40.274Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "model": "QFX5110-48S-4C",
+    "part_number": "",
+    "u_height": 1,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": ""
+  }
+}
+]

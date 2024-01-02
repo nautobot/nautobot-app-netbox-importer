@@ -1,0 +1,35 @@
+[
+{
+  "model": "dcim.manufacturer",
+  "pk": "6aa5ca05-59ef-5474-809e-7fca74e90e42",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:43.472Z",
+    "_custom_field_data": {},
+    "name": "Brocade",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "cd71b840-b2de-5cc6-a46a-50f75eafb4d8",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:43.475Z",
+    "_custom_field_data": {},
+    "name": "Extreme",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "d9d589db-ff6e-5151-8af2-d8512bb09cfd",
+  "fields": {
+    "created": "2020-12-22T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:43.481Z",
+    "_custom_field_data": {},
+    "name": "APC",
+    "description": ""
+  }
+}
+]

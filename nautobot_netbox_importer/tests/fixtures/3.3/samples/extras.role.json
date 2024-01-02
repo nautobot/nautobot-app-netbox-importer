@@ -1,0 +1,50 @@
+[
+{
+  "model": "extras.role",
+  "pk": "64ca3e93-e3cc-5779-95d5-f3286c52deca",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:08.584Z",
+    "_custom_field_data": {},
+    "name": "Compute",
+    "color": "2196f3",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      60
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "d75605e8-12b6-5748-9411-a653cd5ee239",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:08.579Z",
+    "_custom_field_data": {},
+    "name": "ToR Switch",
+    "color": "ff5722",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      42
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "f8193196-4bba-54a7-a850-92f647f6cdc4",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:08.581Z",
+    "_custom_field_data": {},
+    "name": "Infrastructure",
+    "color": "00bcd4",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      60
+    ]
+  }
+}
+]

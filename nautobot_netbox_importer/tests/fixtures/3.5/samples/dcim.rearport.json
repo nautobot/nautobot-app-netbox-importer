@@ -1,0 +1,59 @@
+[
+{
+  "model": "dcim.rearport",
+  "pk": "4e3ac0c4-d119-52ce-9be9-15b75338d92b",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:53.851Z",
+    "_custom_field_data": {},
+    "device": "90c0386a-96e0-56ea-85dd-2c2d83dda214",
+    "name": "Port 42",
+    "_name": "Port 00000042",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "type": "110-punch",
+    "positions": 1
+  }
+},
+{
+  "model": "dcim.rearport",
+  "pk": "71079d83-95bf-51e8-967b-b37016e9f20d",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:53.889Z",
+    "_custom_field_data": {},
+    "device": "6de81103-8dc0-532a-8da6-54760b1673b8",
+    "name": "Port 15",
+    "_name": "Port 00000015",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "type": "110-punch",
+    "positions": 1
+  }
+},
+{
+  "model": "dcim.rearport",
+  "pk": "9b3ace10-57fa-5749-96d9-eae6af955a88",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:54.313Z",
+    "_custom_field_data": {},
+    "device": "390df0b2-a8c6-52d7-83d1-d8ad3172d5ee",
+    "name": "Port 12",
+    "_name": "Port 00000012",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "type": "110-punch",
+    "positions": 1
+  }
+}
+]

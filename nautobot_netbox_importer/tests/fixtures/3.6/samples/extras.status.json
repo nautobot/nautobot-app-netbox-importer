@@ -1,0 +1,55 @@
+[
+{
+  "model": "extras.status",
+  "pk": "9172bac4-6144-54e5-b44d-f530905f8d05",
+  "fields": {
+    "created": "2024-01-02T12:08:24.661Z",
+    "last_updated": "2024-01-02T12:08:24.661Z",
+    "_custom_field_data": {},
+    "name": "Available",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      60
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
+  "fields": {
+    "created": "2024-01-02T12:08:24.659Z",
+    "last_updated": "2024-01-02T12:08:24.659Z",
+    "_custom_field_data": {},
+    "name": "Connected",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      45
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+  "fields": {
+    "created": "2024-01-02T12:08:24.653Z",
+    "last_updated": "2024-01-02T12:08:24.653Z",
+    "_custom_field_data": {},
+    "name": "Active",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      68,
+      69,
+      58,
+      72,
+      42,
+      117,
+      56,
+      26,
+      60
+    ]
+  }
+}
+]
