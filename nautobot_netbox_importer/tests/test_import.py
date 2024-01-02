@@ -178,9 +178,7 @@ class TestImport(TestCase):
         """Set up test environment."""
         super().setUp()
 
-        call_command("flush", interactive=False)
-
-        Namespace.objects.create(
+        Namespace.objects.get_or_create(
             pk="26756c2d-fddd-4128-9f88-dbcbddcbef45",
             name="Global",
             description="Default Global namespace. Created by Nautobot.",
@@ -267,19 +265,19 @@ class TestImport(TestCase):
             _generate_fixtures(source, content_type, path)
             self.fail("Fixture file was generated, please re-run the test")
 
-        data = json.loads(path.read_text())
+        samples = json.loads(path.read_text())
         model = source.nautobot.wrappers[content_type].model
-        for item in data:
-            self.assertEqual(content_type, item["model"], f"Content type mismatch for {content_type} {item}")
+        for sample in samples:
+            self.assertEqual(content_type, sample["model"], f"Content type mismatch for {content_type} {sample}")
 
-            uid = item["pk"]
+            uid = sample["pk"]
             instance = model.objects.get(pk=uid)
             formatted = json.loads(serialize("json", [instance], ensure_ascii=False))[0]
 
             self.assertEqual(formatted["pk"], uid, f"PK mismatch for {content_type} {instance}")
             formatted_fields = formatted["fields"]
 
-            for key, value in item["fields"].items():
+            for key, value in sample["fields"].items():
                 if key.startswith("_") or key in _DONT_COMPARE_FIELDS:
                     continue
                 if key == "content_types":

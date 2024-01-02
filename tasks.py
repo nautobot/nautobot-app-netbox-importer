@@ -644,10 +644,15 @@ def check_migrations(context):
 def dump_test_environment(context):
     """Dump the test environment to a file.
 
+    !!! WARNING !!!! This task removes all data from the default nautobot database.
+
     Use to recreate the test environment dump file after adding tested content types and re-creating the test fixtures.
 
-    Expected to be run after containers are started and migrations are applied.
-    Removes data from the default nautobot database.
+    Pre-requisities:
+
+    - Use on the minimal Nautobot version supported.
+    - Nautobot container is running.
+    - Migrations are applied.
 
     Creates a dump.sql file in the tests/fixtures directory with flushed database to keep the content types IDs
     consistent across tests.
@@ -675,7 +680,7 @@ def dump_test_environment(context):
 
 
 @task
-def load_test_environment(context, keepdb=False):
+def load_test_environment(context, db_name="test_nautobot"):
     """Ensure that the test environment is ready.
 
     To create dump.sql file, use the following commands:
@@ -685,19 +690,16 @@ def load_test_environment(context, keepdb=False):
     start(context, "db")
     _await_healthy_service(context, "db")
 
-    db_name = "test_nautobot"
-
-    if not keepdb:
-        command = [
-            "exec -- db sh -c",
-            "'",
-            "dropdb",
-            "--if-exists",
-            "--user=$POSTGRES_USER",
-            db_name,
-            "'",
-        ]
-        docker_compose(context, " ".join(command), pty=True)
+    command = [
+        "exec -- db sh -c",
+        "'",
+        "dropdb",
+        "--if-exists",
+        "--user=$POSTGRES_USER",
+        db_name,
+        "'",
+    ]
+    docker_compose(context, " ".join(command), pty=True, hide=True)
 
     command = [
         "exec -- db sh -c",
@@ -707,12 +709,7 @@ def load_test_environment(context, keepdb=False):
         db_name,
         "'",
     ]
-    try:
-        docker_compose(context, " ".join(command), pty=True)
-    # pylint: disable-next=broad-exception-caught
-    except Exception:
-        # Database already exists, skip the dump import
-        return
+    docker_compose(context, " ".join(command), pty=True, hide=True)
 
     command = [
         "exec -- db sh -c",
@@ -723,7 +720,7 @@ def load_test_environment(context, keepdb=False):
         "'",
         f"< '{_TEST_DUMP_PATH}'",
     ]
-    docker_compose(context, " ".join(command), pty=False)
+    docker_compose(context, " ".join(command), pty=False, hide=True)
 
 
 @task(
@@ -746,8 +743,9 @@ def unittest(
     verbose=False,
 ):
     """Run Nautobot unit tests."""
-    load_test_environment(context, keepdb)
-    keepdb = True
+    if not keepdb:
+        load_test_environment(context)
+        keepdb = True
 
     command = f"coverage run --module nautobot.core.cli test {label}"
 
