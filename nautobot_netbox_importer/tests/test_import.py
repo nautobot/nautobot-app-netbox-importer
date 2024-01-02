@@ -190,10 +190,7 @@ class TestImport(TestCase):
 
     def _import(self, version: str):
         """Test import."""
-        if version in _INPUTS:
-            input_ref = _INPUTS[version]
-        else:
-            input_ref = _FIXTURES_PATH / version / "input.json"
+        input_ref = _INPUTS.get(version, _FIXTURES_PATH / version / "input.json")
 
         # Import the file to fresh Nautobot instance
         source, created_models, skipped_count = self._import_file(input_ref, version)
