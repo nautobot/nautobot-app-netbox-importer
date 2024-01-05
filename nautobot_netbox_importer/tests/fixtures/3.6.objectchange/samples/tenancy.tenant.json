@@ -1,0 +1,41 @@
+[
+{
+  "model": "tenancy.tenant",
+  "pk": "35f6098e-5c2c-58b3-824c-9b5c024a4321",
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2024-01-05T13:21:53.409Z",
+    "_custom_field_data": {},
+    "name": "Jimbob's Banking & Trust",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "4827cc52-b419-5b58-8ed1-65210bfa04c5",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-05T13:21:53.406Z",
+    "_custom_field_data": {},
+    "name": "Umbrella Corporation",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "50369baf-2664-5398-ae46-90eba767ddae",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-05T13:21:53.405Z",
+    "_custom_field_data": {},
+    "name": "Cyberdyne Systems",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "Another test description",
+    "comments": ""
+  }
+}
+]

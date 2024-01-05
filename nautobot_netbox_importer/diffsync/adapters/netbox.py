@@ -19,13 +19,13 @@ from nautobot_netbox_importer.generator import SourceRecord
 from nautobot_netbox_importer.generator import logger
 from nautobot_netbox_importer.generator import print_summary
 
-from .models.base import setup_base
-from .models.circuits import setup_circuits
-from .models.dcim import fix_power_feed_locations
-from .models.dcim import setup_dcim
-from .models.ipam import setup_ipam
-from .models.locations import setup_locations
-from .models.virtualization import setup_virtualization
+from nautobot_netbox_importer.diffsync.models.base import setup_base
+from nautobot_netbox_importer.diffsync.models.circuits import setup_circuits
+from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations
+from nautobot_netbox_importer.diffsync.models.dcim import setup_dcim
+from nautobot_netbox_importer.diffsync.models.ipam import setup_ipam
+from nautobot_netbox_importer.diffsync.models.locations import setup_locations
+from nautobot_netbox_importer.diffsync.models.virtualization import setup_virtualization
 
 _FileRef = Union[str, Path, ParseResult]
 
@@ -55,9 +55,13 @@ class NetBoxImporterOptions(NamedTuple):
 class NetBoxAdapter(SourceAdapter):
     """NetBox Source Adapter."""
 
-    def __init__(self, input_ref: _FileRef, options: NetBoxImporterOptions, *args, **kwargs):
+    # pylint: disable=keyword-arg-before-vararg
+    def __init__(self, input_ref: _FileRef, options: NetBoxImporterOptions, job=None, sync=None, *args, **kwargs):
         """Initialize NetBox Source Adapter."""
         super().__init__(name="NetBox", get_source_data=_get_reader(input_ref), *args, **kwargs)
+        self.job = job
+        self.sync = sync
+
         self.options = options
         self.diff_summary: DiffSummary = {}
 
@@ -68,7 +72,7 @@ class NetBoxAdapter(SourceAdapter):
         setup_ipam(self)
         setup_virtualization(self)
 
-    def load_data(self) -> None:
+    def load(self) -> None:
         """Load data from NetBox."""
         self.import_data()
         if self.options.fix_powerfeed_locations:
@@ -96,7 +100,7 @@ class NetBoxAdapter(SourceAdapter):
 
     @atomic
     def _atomic_import(self) -> None:
-        self.load_data()
+        self.load()
 
         diff = self.nautobot.sync_from(self)
         self.diff_summary = diff.summary()

@@ -84,11 +84,10 @@ def constant(value: Any, nautobot_name: Optional[FieldName] = None) -> SourceFie
 def pass_through(nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
     """Create a pass-through field definition.
 
-    Use to pass-through the value from source to target without changing it.
+    Use to pass-through the value from source to target without changing it by the default importer.
     """
 
     def definition(field: SourceField) -> None:
-        """Create a pass-through field definition."""
         field.set_nautobot_field(nautobot_name or field.name)
 
         def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
@@ -97,5 +96,19 @@ def pass_through(nautobot_name: Optional[FieldName] = None) -> SourceFieldDefini
                 setattr(target, field.nautobot.name, value)
 
         field.set_importer(importer)
+
+    return definition
+
+
+def force(nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
+    """Mark Nautobot field as forced.
+
+    Use to force the field to be saved in Nautobot in the second save attempt after the initial save to override the
+    default value set by Nautobot.
+    """
+
+    def definition(field: SourceField) -> None:
+        field.set_default_importer(nautobot_name or field.name)
+        field.nautobot.force = True
 
     return definition

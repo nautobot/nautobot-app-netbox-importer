@@ -125,12 +125,18 @@ class NautobotAdapter(BaseAdapter):
         return NautobotModelWrapper(self, content_type)
 
 
-class NautobotFieldWrapper(NamedTuple):
+# pylint: disable=too-few-public-methods
+class NautobotFieldWrapper:
     """Wrapper for a Nautobot field."""
 
-    name: FieldName
-    internal_type: InternalFieldType
-    field: Optional[NautobotField] = None
+    def __init__(self, name: FieldName, internal_type: InternalFieldType, field: Optional[NautobotField] = None):
+        """Initialize the wrapper."""
+        self.name = name
+        self.internal_type = internal_type
+        self.field = field
+
+        # Forced fields needs to be saved in a separate step after the initial save.
+        self.force = self.name == "created"
 
 
 NautobotFields = MutableMapping[FieldName, NautobotFieldWrapper]
@@ -408,6 +414,7 @@ class NautobotModelWrapper:
                 setattr(instance, field_name, None)
 
         m2m_fields = set()
+        force_fields = {}
 
         for field_name, value in values.items():
             field_wrapper = self.fields[field_name]
@@ -418,12 +425,12 @@ class NautobotModelWrapper:
                 m2m_fields.add(field_name)
             elif field_wrapper.internal_type == InternalFieldType.CUSTOM_FIELD_DATA:
                 set_custom_field_data(value)
-            elif field_wrapper.internal_type == InternalFieldType.PROPERTY:
-                setattr(instance, field_name, value)
             elif field_wrapper.internal_type == InternalFieldType.GENERIC_FOREIGN_KEY:
                 set_generic_foreign_key(field_wrapper.field, value)
             elif value in EMPTY_VALUES:
                 set_empty(field_wrapper.field, field_name)
+            elif field_wrapper.force:
+                force_fields[field_name] = value
             else:
                 setattr(instance, field_name, value)
 
@@ -432,6 +439,12 @@ class NautobotModelWrapper:
         except Exception:
             logger.error("Save failed: %s %s", instance, instance.__dict__, exc_info=True)
             raise
+
+        if force_fields:
+            # These fields has to be set after the initial save to override any default values.
+            for field_name, value in force_fields.items():
+                setattr(instance, field_name, value)
+            instance.save()
 
         for field_name in m2m_fields:
             field = getattr(instance, field_name)
@@ -462,12 +475,7 @@ class DiffSyncBaseModel(DiffSyncModel):
         """Create this model instance, both in Nautobot and in DiffSync."""
         instance = cls._wrapper.model(**cls._wrapper.constructor_kwargs, **ids)
 
-        # Created needs to be set after saving the instance
-        created = attrs.pop("created", None)
         cls._wrapper.save_nautobot_instance(instance, attrs)
-        if created:
-            setattr(instance, "created", created)
-            instance.save()
 
         return super().create(diffsync, ids, attrs)
 

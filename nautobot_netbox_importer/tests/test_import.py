@@ -10,8 +10,8 @@ from django.test import TestCase
 from nautobot.ipam.models import Namespace
 
 from nautobot_netbox_importer.command_utils import enable_logging as mute_diffsync_logging
-from nautobot_netbox_importer.diffsync.adapter import NetBoxAdapter
-from nautobot_netbox_importer.diffsync.adapter import NetBoxImporterOptions
+from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter
+from nautobot_netbox_importer.diffsync.adapters import NetBoxImporterOptions
 from nautobot_netbox_importer.generator import ContentTypeStr
 
 _DONT_COMPARE_FIELDS = ["created", "last_updated"]
@@ -40,6 +40,7 @@ _EXPECTED_SUMMARY = {
     "3.5": 5870,
     "3.6": 5870,
     "3.6.min": 116,
+    "3.6.objectchange": 14,
 }
 
 _EXPECTED_COUNTS = {}
@@ -143,6 +144,13 @@ _EXPECTED_COUNTS["3.6.min"] = {
     "tenancy.tenantgroup": 1,
     "tenancy.tenant": 11,
 }
+_EXPECTED_COUNTS["3.6.objectchange"] = {
+    "dcim.locationtype": 3,
+    "extras.objectchange": 4,
+    "tenancy.tenantgroup": 1,
+    "tenancy.tenant": 5,
+    "users.user": 1,
+}
 
 _EXPECTED_VALIDATION_ERRORS = {}
 _EXPECTED_VALIDATION_ERRORS["3.0"] = {
@@ -167,6 +175,7 @@ _EXPECTED_VALIDATION_ERRORS["3.6"] = {
     **_EXPECTED_VALIDATION_ERRORS["3.5"],
 }
 _EXPECTED_VALIDATION_ERRORS["3.6.min"] = {}
+_EXPECTED_VALIDATION_ERRORS["3.6.objectchange"] = {}
 
 
 # Ensure that SECRET_KEY is set to a known value, to generate the same UUIDs

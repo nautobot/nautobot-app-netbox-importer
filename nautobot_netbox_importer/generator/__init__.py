@@ -6,6 +6,7 @@ from .base import DiffSummary
 from .base import RecordData
 from .base import Uid
 from .base import logger
+from .nautobot import NautobotAdapter
 from .source import DiffSyncBaseModel
 from .source import SourceAdapter
 from .source import SourceField
@@ -18,6 +19,7 @@ __all__ = (
     "ContentTypeStr",
     "DiffSummary",
     "DiffSyncBaseModel",
+    "NautobotAdapter",
     "RecordData",
     "RecordData",
     "SourceAdapter",

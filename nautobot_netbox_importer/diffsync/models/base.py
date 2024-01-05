@@ -8,6 +8,7 @@ from nautobot_netbox_importer.generator import DiffSyncBaseModel
 from nautobot_netbox_importer.generator import RecordData
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceField
+from nautobot_netbox_importer.generator import fields
 
 
 def _define_choices(field: SourceField) -> None:
@@ -58,12 +59,6 @@ def _setup_object_change(adapter: SourceAdapter) -> None:
     """Map NetBox object change to Nautobot.
 
     JSON file with object changes need to have all content types exported first to properly map the content types.
-
-    Example NetBox command to export object changes:
-
-    ```
-    ./manage.py dumpdata --indent 2 contenttypes.contenttype extras.objectchange > objectchange.json
-    ```
     """
 
     def define_changed_object(field: SourceField) -> None:
@@ -97,6 +92,7 @@ def _setup_object_change(adapter: SourceAdapter) -> None:
             "user_name": define_user,
             "changed_object_type": define_changed_object,
             "postchange_data": "object_data",
+            "time": fields.force(),
         },
     )
 

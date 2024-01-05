@@ -2,7 +2,7 @@
 # Metadata is inherited from Nautobot. If not including Nautobot in the environment, this should be added
 from importlib import metadata
 
-from nautobot.extras.plugins import NautobotAppConfig
+from nautobot.apps import NautobotAppConfig
 
 __version__ = metadata.version(__name__)
 

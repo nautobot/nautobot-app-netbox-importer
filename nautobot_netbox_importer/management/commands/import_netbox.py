@@ -3,14 +3,14 @@ import argparse
 
 from django.core.management.base import BaseCommand
 
-from nautobot_netbox_importer.diffsync.adapter import NetBoxAdapter
-from nautobot_netbox_importer.diffsync.adapter import NetBoxImporterOptions
+from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter
+from nautobot_netbox_importer.diffsync.adapters import NetBoxImporterOptions
 
 
 class Command(BaseCommand):
     """Implementation of import_netbox command."""
 
-    help = "Import a NetBox YAML data dump into Nautobot's database"
+    help = "Import a NetBox JSON data dump into Nautobot's database"
 
     def add_arguments(self, parser):
         """Add parser arguments to the import_netbox management command."""
@@ -35,13 +35,13 @@ class Command(BaseCommand):
             "--field-mapping",
             action="store_true",
             dest="field_mapping",
-            help="Show a mapping of NetBox fields to Nautobot fields.",
+            help="Show a mapping of NetBox fields to Nautobot fields. Only printed when `--summary` is also specified.",
         )
         parser.add_argument(
             "--update-paths",
             action="store_true",
             dest="update_paths",
-            help="Call management command to update paths after the import.",
+            help="Call management command `trace_paths` to update paths after the import.",
         )
         parser.add_argument(
             "--bypass-data-validation",

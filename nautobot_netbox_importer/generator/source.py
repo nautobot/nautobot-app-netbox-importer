@@ -33,7 +33,7 @@ from .base import NautobotBaseModel
 from .base import NautobotBaseModelType
 from .base import RecordData
 from .base import Uid
-from .base import logger
+from .base import logger as default_logger
 from .base import normalize_datetime
 from .base import source_pk_to_uuid
 from .nautobot import IMPORT_ORDER
@@ -75,6 +75,7 @@ class SourceAdapter(BaseAdapter):
         get_source_data: SourceDataGenerator,
         *args,
         nautobot: Optional[NautobotAdapter] = None,
+        logger=None,
         **kwargs,
     ):
         """Initialize the SourceAdapter."""
@@ -84,6 +85,7 @@ class SourceAdapter(BaseAdapter):
         self.wrappers: OrderedDict[ContentTypeStr, SourceModelWrapper] = OrderedDict()
         self.nautobot = nautobot or NautobotAdapter()
         self.content_type_ids_mapping: Dict[int, SourceModelWrapper] = {}
+        self.logger = logger or default_logger
 
         # From Nautobot to Source content type mapping
         # When multiple source content types are mapped to the single nautobot content type, mapping is set to `None`
@@ -180,7 +182,7 @@ class SourceAdapter(BaseAdapter):
         if map_back and value in self._content_types_back_mapping:
             back_mapping = self._content_types_back_mapping.get(value, None)
             if not back_mapping:
-                raise ValueError(f"Unambiguous content type back mapping {value}")
+                raise ValueError(f"Ambiguous content type back mapping {value}")
             value = back_mapping
 
         if value in self.wrappers:
@@ -204,7 +206,7 @@ class SourceAdapter(BaseAdapter):
 
         return wrapper.nautobot.content_type_instance.pk
 
-    def load_data(self) -> None:
+    def load(self) -> None:
         """Load data from the source."""
         self.import_data()
         self.post_import()
@@ -256,6 +258,7 @@ class SourceAdapter(BaseAdapter):
             self.top_level.append(model_name)
             setattr(self, model_name, diffsync_class)
             setattr(self.nautobot, model_name, getattr(self, model_name))
+            self.logger.info(f"Imported {nautobot_wrapper.imported_count} {model_name}")
 
     def get_imported_nautobot_wrappers(self) -> Generator[NautobotModelWrapper, None, None]:
         """Get a list of Nautobot model wrappers in the order of import."""
@@ -338,7 +341,7 @@ class SourceModelWrapper:
                     level=None,
                 )
 
-        logger.debug("Created %s", self)
+        self.adapter.logger.debug("Created %s", self)
 
     def __str__(self) -> str:
         """Return a string representation of the wrapper."""
@@ -403,7 +406,7 @@ class SourceModelWrapper:
                 try:
                     field.create_importer()
                 except Exception:
-                    logger.error("Failed to create importer for %s", field)
+                    self.adapter.logger.error("Failed to create importer for %s", field)
                     raise
 
         self.importers = [field.importer for field in self.fields.values() if field.importer]
@@ -463,7 +466,7 @@ class SourceModelWrapper:
 
     def import_record(self, data: RecordData, target: Optional[DiffSyncBaseModel] = None) -> DiffSyncBaseModel:
         """Import a single item from the source."""
-        logger.debug("Importing record %s %s", self, data)
+        self.adapter.logger.debug("Importing record %s %s", self, data)
         if self.importers is None:
             raise RuntimeError(f"Importers not created for {self}")
 
@@ -474,7 +477,7 @@ class SourceModelWrapper:
         for importer in self.importers:
             importer(data, target)
 
-        logger.debug("Imported %s %s", uid, target.get_attrs())
+        self.adapter.logger.debug("Imported %s %s", uid, target.get_attrs())
 
         self.imported_count += 1
         return target
@@ -530,7 +533,7 @@ class SourceModelWrapper:
 
         self._cached_data[uid] = data
 
-        logger.debug("Cached %s %s %s", self, uid, data)
+        self.adapter.logger.debug("Cached %s %s %s", self, uid, data)
 
         return uid
 
@@ -580,7 +583,7 @@ class SourceModelWrapper:
 
     def add_reference(self, uid: Uid, wrapper: "SourceModelWrapper") -> None:
         """Add a reference from one content type to another."""
-        logger.debug("Adding reference %s %s %s", self.content_type, uid, wrapper.content_type)
+        self.adapter.logger.debug("Adding reference %s %s %s", self.content_type, uid, wrapper.content_type)
         if not uid:
             raise ValueError(f"Invalid uid {uid} for {self.content_type}")
         self._references.setdefault(uid, set()).add(wrapper)
@@ -605,9 +608,9 @@ class SourceField:
         self.definition = definition
         self.processed = False
         if definition is None:
-            logger.info("Skipping field %s", wrapper.format_field_name(name))
+            self.wrapper.adapter.logger.info("Skipping field %s", wrapper.format_field_name(name))
         else:
-            logger.debug("Adding field %s", wrapper.format_field_name(name))
+            self.wrapper.adapter.logger.debug("Adding field %s", wrapper.format_field_name(name))
         self._nautobot: Optional[NautobotFieldWrapper] = None
         self.importer: Optional[SourceFieldImporter] = None
         self.default_value: Any = None
@@ -683,6 +686,7 @@ class SourceField:
             raise RuntimeError(f"Importer already set for {self}")
         self.importer = importer
 
+    # pylint: disable=too-many-branches
     def set_default_importer(self, nautobot_name: FieldName) -> None:
         """Set default field importer."""
         internal_type = self.set_nautobot_field(nautobot_name).internal_type
@@ -699,6 +703,8 @@ class SourceField:
             self.set_date_importer()
         elif internal_type == InternalFieldType.DATE_TIME_FIELD:
             self.set_datetime_importer()
+        elif internal_type == InternalFieldType.UUID_FIELD:
+            self.set_uuid_importer()
         elif internal_type == InternalFieldType.MANY_TO_MANY_FIELD:
             self.set_m2m_importer()
         elif internal_type == InternalFieldType.STATUS_FIELD:
@@ -798,14 +804,14 @@ class SourceField:
                 related_wrapper = self.wrapper.adapter.get_or_create_wrapper(self.nautobot.field.related_model)
 
             if related_wrapper.nautobot.pk_field.internal_type == InternalFieldType.UUID_FIELD:
-                return self.set_uuid_importer(related_wrapper)
+                return self.set_relation_uuid_importer(related_wrapper)
 
             if related_wrapper.content_type == "contenttypes.contenttype":
-                return self.set_content_type_importer()
+                return self.set_relation_content_type_importer()
 
         raise NotImplementedError(f"Unsupported relation importer {self}")
 
-    def set_content_type_importer(self) -> None:
+    def set_relation_content_type_importer(self) -> None:
         """Set a content type importer."""
         adapter = self.wrapper.adapter
 
@@ -816,7 +822,7 @@ class SourceField:
 
         self.set_importer(importer)
 
-    def set_uuid_importer(self, related_wrapper: SourceModelWrapper) -> None:
+    def set_relation_uuid_importer(self, related_wrapper: SourceModelWrapper) -> None:
         """Set a UUID importer."""
         if self.default_value in EMPTY_VALUES and related_wrapper.default_reference_uid:
             self.default_value = related_wrapper.default_reference_uid
@@ -907,6 +913,16 @@ class SourceField:
             value = source.get(self.name, None)
             if value not in EMPTY_VALUES:
                 setattr(target, self.nautobot.name, normalize_datetime(value))
+
+        self.set_importer(importer)
+
+    def set_uuid_importer(self) -> None:
+        """Set a datetime importer."""
+
+        def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+            value = source.get(self.name, None)
+            if value not in EMPTY_VALUES:
+                setattr(target, self.nautobot.name, UUID(value))
 
         self.set_importer(importer)
 

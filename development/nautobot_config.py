@@ -124,12 +124,18 @@ if not _TESTING:
         },
     }
 
+    if DEBUG:
+        LOGGING["loggers"]["nautobot-netbox-importer"] = LOGGING["loggers"]["nautobot"]
+
 #
 # Apps
 #
 
 # Enable installed Apps. Add the name of each App to the list.
-PLUGINS = ["nautobot_netbox_importer"]
+PLUGINS = [
+    "nautobot_netbox_importer",
+    "nautobot_ssot",
+]
 
 # Apps configuration settings. These settings are used by various Apps that the user may have installed.
 # Each key in the dictionary is the name of an installed App and its value is a dictionary of settings.

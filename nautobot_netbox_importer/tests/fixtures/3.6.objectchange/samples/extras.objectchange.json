@@ -1,0 +1,89 @@
+[
+{
+  "model": "extras.objectchange",
+  "pk": "04efae2b-ca9f-5b08-93b9-5564abe91176",
+  "fields": {
+    "time": "2024-01-05T12:32:23.219Z",
+    "user": "b6111f2f-ede6-5a47-b0e5-3842b76f14cd",
+    "user_name": "admin",
+    "request_id": "58cc5d3f-7fb7-43a0-b987-65e0056e4690",
+    "action": "update",
+    "changed_object_type": 109,
+    "changed_object_id": "50369baf-2664-5398-ae46-90eba767ddae",
+    "change_context": "",
+    "change_context_detail": "",
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Cyberdyne Systems",
+    "object_data": {
+      "name": "Cyberdyne Systems",
+      "slug": "cyberdyne",
+      "tags": [],
+      "group": 1,
+      "created": "2020-12-19T00:00:00Z",
+      "comments": "",
+      "description": "Another test description",
+      "last_updated": "2024-01-05T12:32:23.202Z"
+    },
+    "object_data_v2": null
+  }
+},
+{
+  "model": "extras.objectchange",
+  "pk": "d48f1955-d003-5a92-8d5f-5199ed647e67",
+  "fields": {
+    "time": "2024-01-05T12:32:02.703Z",
+    "user": "b6111f2f-ede6-5a47-b0e5-3842b76f14cd",
+    "user_name": "admin",
+    "request_id": "a6bb56b7-6324-45ae-b80e-f34431e92747",
+    "action": "update",
+    "changed_object_type": 109,
+    "changed_object_id": "50369baf-2664-5398-ae46-90eba767ddae",
+    "change_context": "",
+    "change_context_detail": "",
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Cyberdyne Systems",
+    "object_data": {
+      "name": "Cyberdyne Systems",
+      "slug": "cyberdyne",
+      "tags": [],
+      "group": 1,
+      "created": "2020-12-19T00:00:00Z",
+      "comments": "",
+      "description": "Test description",
+      "last_updated": "2024-01-05T12:32:02.695Z"
+    },
+    "object_data_v2": null
+  }
+},
+{
+  "model": "extras.objectchange",
+  "pk": "feab2d19-d1dd-54fc-9521-36930f5437ff",
+  "fields": {
+    "time": "2024-01-05T12:32:42.591Z",
+    "user": "b6111f2f-ede6-5a47-b0e5-3842b76f14cd",
+    "user_name": "admin",
+    "request_id": "7465f726-b405-44ad-a3a8-69ebd3f08ebb",
+    "action": "update",
+    "changed_object_type": 109,
+    "changed_object_id": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "change_context": "",
+    "change_context_detail": "",
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Dunder-Mifflin, Inc.",
+    "object_data": {
+      "name": "Dunder-Mifflin, Inc.",
+      "slug": "dunder-mifflin",
+      "tags": [],
+      "group": 1,
+      "created": "2020-12-19T00:00:00Z",
+      "comments": "",
+      "description": "Test description",
+      "last_updated": "2024-01-05T12:32:42.577Z"
+    },
+    "object_data_v2": null
+  }
+}
+]

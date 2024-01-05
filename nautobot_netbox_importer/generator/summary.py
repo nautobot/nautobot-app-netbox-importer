@@ -3,6 +3,15 @@ from .base import DiffSummary
 from .source import SourceAdapter
 from .source import SourceField
 
+_FILL_UP_LENGTH = 80
+
+
+def _print(*strings: str):
+    fill = strings[0][0]
+    result = " ".join(strings)
+    result = result + (fill * (_FILL_UP_LENGTH - len(result)))
+    print(result)
+
 
 def _print_fields_mapping(source: SourceAdapter) -> None:
     """Print fields mapping."""
@@ -29,7 +38,7 @@ def _print_fields_mapping(source: SourceAdapter) -> None:
         if wrapper.imported_count == 0:
             continue
 
-        print(f". {content_type} ................................")
+        _print(f". {content_type} => {wrapper.nautobot.content_type} ")
         for field in wrapper.fields.values():
             print(" ".join(get_field(field)))
 
@@ -40,60 +49,60 @@ def _print_back_mapping(source: SourceAdapter) -> None:
         if nautobot_content_type == content_type:
             continue
         if content_type:
-            print(f"  {nautobot_content_type} -> {content_type}")
+            print(f"{nautobot_content_type} => {content_type}")
         else:
-            print(f"  {nautobot_content_type} -> Unambiguous")
+            print(f"{nautobot_content_type} => Ambiguous")
 
 
 def _print_content_types_deviations(source: SourceAdapter) -> None:
-    back_mapping = getattr(source, "_content_types_back_mapping")
     for content_type, wrapper in source.wrappers.items():
-        if wrapper.disable_reason:
-            print(
-                f"  {content_type} -> {wrapper.nautobot.content_type}; Disabled with reason: {wrapper.disable_reason}"
-            )
-        elif back_mapping.get(wrapper.nautobot.content_type, "") is None:
-            print(f"  {content_type} -> {wrapper.nautobot.content_type}")
+        if wrapper.nautobot.disabled:
+            print(f"{content_type}: Nautobot Model `{wrapper.nautobot.content_type}` Not Found")
+        elif wrapper.disable_reason:
+            print(f"{content_type} | Disabled with reason: {wrapper.disable_reason}")
+        elif content_type != wrapper.nautobot.content_type:
+            print(f"{content_type} => {wrapper.nautobot.content_type}")
 
 
 def _print_validation_issues(source: SourceAdapter) -> None:
     total = 0
-    for model_type, issues in source.nautobot.validation_issues.items():
+    for content_type, issues in source.nautobot.validation_issues.items():
         total += len(issues)
-        print(f"  {model_type}: {len(issues)}")
+        _print(f". {content_type}: {len(issues)} ")
         for error in issues:
-            print(f"    {error}")
+            print(f"{error}")
+    _print(".")
     print("Total validation issues:", total)
 
 
 def print_summary(source: SourceAdapter, diff_summary: DiffSummary, field_mappings=True) -> None:
     """Print a summary of the import."""
-    print("= Import Summary ===============================")
+    _print("= Import Summary: ")
 
-    print("- Diff Summary: ---------------------")
+    _print("- DiffSync Summary: ")
     for key, value in diff_summary.items():
-        print(f"  {key}: {value}")
+        print(f"{key}: {value}")
 
-    print("- Nautobot Models Imports: ---------------------")
+    _print("- Nautobot Models Summary: ")
     for wrapper in source.get_imported_nautobot_wrappers():
-        print(f"  {wrapper.content_type}: {wrapper.imported_count}")
+        print(f"{wrapper.content_type}: {wrapper.imported_count}")
 
+    _print("- Validation issues: ")
     if source.nautobot.validation_issues:
-        print("- Validation issues: ---------------------------")
         _print_validation_issues(source)
     else:
-        print("- No validation issues -------------------------")
+        print("  No validation issues found.")
 
-    print("- Content Types Deviations ---------------------")
-    print("Mapping deviations from source content type to Nautobot content type")
+    _print("- Content Types Mapping Deviations: ")
+    print("  Mapping deviations from source content type to Nautobot content type")
     _print_content_types_deviations(source)
 
-    print("- Content Types Back Mapping -------------------")
-    print("Back mapping deviations from Nautobot content type to source content type")
+    _print("- Content Types Back Mapping: ")
+    print("  Back mapping deviations from Nautobot content type to the source content type")
     _print_back_mapping(source)
 
     if field_mappings:
-        print("- Fields Mapping -------------------------------")
+        _print("- Fields Mapping: ")
         _print_fields_mapping(source)
 
-    print("================================================")
+    _print("=")
