@@ -134,7 +134,6 @@ if not _TESTING:
 # Enable installed Apps. Add the name of each App to the list.
 PLUGINS = [
     "nautobot_netbox_importer",
-    "nautobot_ssot",
 ]
 
 # Apps configuration settings. These settings are used by various Apps that the user may have installed.

@@ -1,4 +1,4 @@
-"""Nautobot Adapter for NetBox SSoT app."""
+"""Nautobot Adapter for NetBox Importer."""
 from nautobot_netbox_importer.generator import NautobotAdapter as _NautobotAdapter
 
 
