@@ -116,11 +116,11 @@ nav:
           - v1.1: "admin/release_notes/version_1.1.md"
           - v1.0: "admin/release_notes/version_1.0.md"
   - Developer Guide:
-      - Importer Description: "dev/importer.md"
       - Extending the App: "dev/extending.md"
       - Contributing to the App: "dev/contributing.md"
       - Development Environment: "dev/dev_environment.md"
       - Architecture Decision Records: "dev/arch_decision.md"
+      - Generator Description: "dev/generator.md"
       - Code Reference:
           - "dev/code_reference/index.md"
           - Package: "dev/code_reference/package.md"
