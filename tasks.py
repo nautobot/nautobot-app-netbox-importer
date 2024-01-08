@@ -680,7 +680,7 @@ def dump_test_environment(context):
 
 
 @task
-def load_test_environment(context, db_name="test_nautobot"):
+def load_test_environment(context, db_name="test_nautobot", keepdb=False):
     """Ensure that the test environment is ready.
 
     To create dump.sql file, use the following commands:
@@ -690,16 +690,17 @@ def load_test_environment(context, db_name="test_nautobot"):
     start(context, "db")
     _await_healthy_service(context, "db")
 
-    command = [
-        "exec -- db sh -c",
-        "'",
-        "dropdb",
-        "--if-exists",
-        "--user=$POSTGRES_USER",
-        db_name,
-        "'",
-    ]
-    docker_compose(context, " ".join(command), pty=True, hide=True)
+    if not keepdb:
+        command = [
+            "exec -- db sh -c",
+            "'",
+            "dropdb",
+            "--if-exists",
+            "--user=$POSTGRES_USER",
+            db_name,
+            "'",
+        ]
+        docker_compose(context, " ".join(command), pty=True, hide=True)
 
     command = [
         "exec -- db sh -c",
@@ -709,7 +710,13 @@ def load_test_environment(context, db_name="test_nautobot"):
         db_name,
         "'",
     ]
-    docker_compose(context, " ".join(command), pty=True, hide=True)
+    try:
+        docker_compose(context, " ".join(command), pty=True, hide=True)
+    # pylint: disable=broad-except
+    except Exception:
+        if keepdb:
+            return
+        raise
 
     command = [
         "exec -- db sh -c",
@@ -743,8 +750,8 @@ def unittest(
     verbose=False,
 ):
     """Run Nautobot unit tests."""
+    load_test_environment(context, keepdb=keepdb)
     if not keepdb:
-        load_test_environment(context)
         keepdb = True
 
     command = f"coverage run --module nautobot.core.cli test {label}"
