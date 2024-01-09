@@ -117,7 +117,7 @@ erDiagram
     SourceModelWrapper }o--|| NautobotModelWrapper : "links to"
     NautobotModelWrapper ||--o{ NautobotFieldWrapper : "creates"
     NautobotModelWrapper ||--|| NautobotModel : "links to"
-    SourceField ||--|| NautobotFieldWrapper : "links to"
+    SourceField }o--|| NautobotFieldWrapper : "links to"
     NautobotModelWrapper ||--|| DiffSyncBaseModel : "creates"
     DiffSyncModel ||--o{ DiffSyncBaseModel : "is ancestor"
     SourceAdapter {
