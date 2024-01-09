@@ -20,10 +20,11 @@ It comprises the following modules, located in the `nautobot_netbox_importer/gen
 
 ### NetBox Specific Component
 
-The NetBox specific component is further segmented into two sections, located in the `nautobot_netbox_importer/diffsync` directory:
+The NetBox specific component is further segmented into sections, located in the `nautobot_netbox_importer/diffsync` directory:
 
-- `adapter.py`: Inherits `NetBoxAdapter` from the generic `SourceAdapter` and implements the data reader and importer that facilitate the transition from NetBox to Nautobot.
-- `models` directory: Contains individual module files that define deviations and field mappings from NetBox to Nautobot.
+- `adapters/nautobot.py`: Inherits `NautobotAdapter` from the generic `NautobotAdapter` and implements pieces necessary for SSoT job.
+- `adapters/netbox.py`: Inherits `NetBoxAdapter` from the generic `SourceAdapter` and implements the data reader and importer that facilitate the transition from NetBox to Nautobot.
+- `models/` directory: Contains individual module files that define deviations and field mappings from NetBox to Nautobot.
 
 ## Stages
 
