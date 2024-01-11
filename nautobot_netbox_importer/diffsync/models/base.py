@@ -135,7 +135,7 @@ def _setup_content_types(adapter: SourceAdapter) -> None:
     )
 
 
-def setup_base(adapter: SourceAdapter) -> None:
+def setup(adapter: SourceAdapter) -> None:
     """Map NetBox base models to Nautobot."""
     adapter.disable_model("sessions.session", "Nautobot has own sessions, sessions should never cross apps.")
     adapter.disable_model("admin.logentry", "Not directly used in Nautobot.")

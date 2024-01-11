@@ -1,6 +1,7 @@
 """Definition of "manage.py import_netbox" Django command for use with Nautobot."""
 import argparse
 
+from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter
@@ -67,13 +68,13 @@ class Command(BaseCommand):
             help="Fix panel location to match rack location based on powerfeed.",
         )
 
-    def handle(self, *args, **options):
+    def handle(self, json_file, **kwargs):  # type: ignore
         """Handle execution of the import_netbox management command."""
+        call_command("migrate")
+
         # pylint: disable=protected-access
-        json_file = args[0]
-
         keys = NetBoxImporterOptions._fields
-        filtered_options = {key: value for key, value in options.items() if key in keys}
+        options = NetBoxImporterOptions(**{key: value for key, value in kwargs.items() if key in keys})
 
-        adapter = NetBoxAdapter(json_file.name, NetBoxImporterOptions(**filtered_options))
+        adapter = NetBoxAdapter(json_file.name, options)
         adapter.import_to_nautobot()

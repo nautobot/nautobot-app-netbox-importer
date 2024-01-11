@@ -38,7 +38,7 @@ def _pre_import_cable_termination(source: RecordData) -> None:
     source[f"termination_{cable_end}_id"] = source.pop("termination_id")
 
 
-def setup_dcim(adapter: SourceAdapter) -> None:
+def setup(adapter: SourceAdapter) -> None:
     """Map NetBox DCIM models to Nautobot."""
     adapter.disable_model("dcim.cablepath", "Recreated in Nautobot on signal when circuit termination is created")
     adapter.configure_model(

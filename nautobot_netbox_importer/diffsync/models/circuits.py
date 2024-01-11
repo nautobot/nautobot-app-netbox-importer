@@ -4,7 +4,7 @@ from nautobot_netbox_importer.generator import SourceAdapter
 from .locations import define_location
 
 
-def setup_circuits(adapter: SourceAdapter) -> None:
+def setup(adapter: SourceAdapter) -> None:
     """Map NetBox circuits models to Nautobot."""
     adapter.configure_model(
         "circuits.circuit",

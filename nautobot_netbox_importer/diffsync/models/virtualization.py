@@ -5,7 +5,7 @@ from nautobot_netbox_importer.generator import fields
 from .locations import define_location
 
 
-def setup_virtualization(adapter: SourceAdapter) -> None:
+def setup(adapter: SourceAdapter) -> None:
     """Map NetBox virtualization models to Nautobot."""
     adapter.configure_model(
         "virtualization.cluster",

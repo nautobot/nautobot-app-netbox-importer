@@ -103,8 +103,11 @@ def _define_site_group(field: SourceField) -> None:
     field.set_importer(importer)
 
 
-def setup_locations(adapter: SourceAdapter, sitegroup_parent_always_region) -> None:
+def setup(adapter: SourceAdapter) -> None:
     """Setup locations for NetBox importer."""
+    options = getattr(adapter, "options", {})
+    sitegroup_parent_always_region = getattr(options, "sitegroup_parent_always_region", False)
+
     location_type_wrapper = adapter.configure_model("dcim.locationtype")
 
     region_type_uid = location_type_wrapper.cache_record(

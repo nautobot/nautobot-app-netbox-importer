@@ -1,6 +1,7 @@
 """NetBox to Nautobot Source Importer Definitions."""
 from gzip import GzipFile
 from pathlib import Path
+from typing import Callable
 from typing import Generator
 from typing import NamedTuple
 from typing import Union
@@ -12,19 +13,15 @@ import requests
 from django.core.management import call_command
 from django.db.transaction import atomic
 
-from nautobot_netbox_importer.diffsync.models.base import setup_base
-from nautobot_netbox_importer.diffsync.models.circuits import setup_circuits
 from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations
-from nautobot_netbox_importer.diffsync.models.dcim import setup_dcim
-from nautobot_netbox_importer.diffsync.models.ipam import setup_ipam
-from nautobot_netbox_importer.diffsync.models.locations import setup_locations
-from nautobot_netbox_importer.diffsync.models.virtualization import setup_virtualization
 from nautobot_netbox_importer.generator import DiffSummary
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceDataGenerator
 from nautobot_netbox_importer.generator import SourceRecord
 from nautobot_netbox_importer.generator import logger
 from nautobot_netbox_importer.generator import print_summary
+from nautobot_netbox_importer.utils import GENERATOR_SETUP_MODULES
+from nautobot_netbox_importer.utils import register_generator_setup
 
 _FileRef = Union[str, Path, ParseResult]
 
@@ -51,6 +48,12 @@ class NetBoxImporterOptions(NamedTuple):
     sitegroup_parent_always_region: bool = False
 
 
+AdapterSetupFunction = Callable[[SourceAdapter], None]
+
+for _name in ("base", "locations", "dcim", "circuits", "ipam", "virtualization"):
+    register_generator_setup(f"nautobot_netbox_importer.diffsync.models.{_name}")
+
+
 class NetBoxAdapter(SourceAdapter):
     """NetBox Source Adapter."""
 
@@ -64,12 +67,9 @@ class NetBoxAdapter(SourceAdapter):
         self.options = options
         self.diff_summary: DiffSummary = {}
 
-        setup_base(self)
-        setup_locations(self, options.sitegroup_parent_always_region)
-        setup_dcim(self)
-        setup_circuits(self)
-        setup_ipam(self)
-        setup_virtualization(self)
+        for name in GENERATOR_SETUP_MODULES:
+            setup = __import__(name, fromlist=["setup"]).setup
+            setup(self)
 
     def load(self) -> None:
         """Load data from NetBox."""
