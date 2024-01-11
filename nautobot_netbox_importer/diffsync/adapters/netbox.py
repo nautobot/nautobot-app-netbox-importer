@@ -12,13 +12,6 @@ import requests
 from django.core.management import call_command
 from django.db.transaction import atomic
 
-from nautobot_netbox_importer.generator import DiffSummary
-from nautobot_netbox_importer.generator import RecordData
-from nautobot_netbox_importer.generator import SourceAdapter
-from nautobot_netbox_importer.generator import SourceRecord
-from nautobot_netbox_importer.generator import logger
-from nautobot_netbox_importer.generator import print_summary
-
 from nautobot_netbox_importer.diffsync.models.base import setup_base
 from nautobot_netbox_importer.diffsync.models.circuits import setup_circuits
 from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations
@@ -26,6 +19,12 @@ from nautobot_netbox_importer.diffsync.models.dcim import setup_dcim
 from nautobot_netbox_importer.diffsync.models.ipam import setup_ipam
 from nautobot_netbox_importer.diffsync.models.locations import setup_locations
 from nautobot_netbox_importer.diffsync.models.virtualization import setup_virtualization
+from nautobot_netbox_importer.generator import DiffSummary
+from nautobot_netbox_importer.generator import SourceAdapter
+from nautobot_netbox_importer.generator import SourceDataGenerator
+from nautobot_netbox_importer.generator import SourceRecord
+from nautobot_netbox_importer.generator import logger
+from nautobot_netbox_importer.generator import print_summary
 
 _FileRef = Union[str, Path, ParseResult]
 
@@ -112,19 +111,8 @@ class NetBoxAdapter(SourceAdapter):
             raise _DryRunException("Aborting the transaction due to the dry-run mode.")
 
 
-def _get_reader(input_ref: _FileRef):
-    """Read NetBox source file from file or HTTP resource."""
-
-    def process_cable_termination(source_data: RecordData) -> str:
-        # NetBox 3.3 split the dcim.cable model into dcim.cable and dcim.cabletermination models.
-        cable_end = source_data.pop("cable_end").lower()
-        source_data["id"] = source_data.pop("cable")
-        source_data[f"termination_{cable_end}_type"] = source_data.pop("termination_type")
-        source_data[f"termination_{cable_end}_id"] = source_data.pop("termination_id")
-
-        return f"dcim.cabletermination_{cable_end}"
-
-    def read_item(item: dict) -> SourceRecord:
+def _read_stream(stream) -> Generator[SourceRecord, None, None]:
+    for item in ijson.items(stream, "item"):
         content_type = item["model"]
         netbox_pk = item.get("pk", None)
         source_data = item["fields"]
@@ -132,17 +120,23 @@ def _get_reader(input_ref: _FileRef):
         if netbox_pk:
             source_data["id"] = netbox_pk
 
-        if content_type == "dcim.cabletermination":
-            content_type = process_cable_termination(source_data)
+        yield SourceRecord(content_type, source_data)
 
-        return SourceRecord(content_type, source_data)
 
-    def read_path() -> Generator[SourceRecord, None, None]:
-        with open(path, "rb") as file:
-            for item in ijson.items(file, "item"):
-                yield read_item(item)
+def _get_reader_from_path(file_path: Union[str, Path]) -> SourceDataGenerator:
+    result = Path(file_path)
+    if not result.is_file():
+        raise FileNotFoundError(f"File {file_path} does not exist.")
 
-    def read_url() -> Generator[SourceRecord, None, None]:
+    def reader():
+        with open(result, "rb") as file:
+            yield from _read_stream(file)
+
+    return reader
+
+
+def _get_reader_from_url(url: ParseResult) -> SourceDataGenerator:
+    def reader():
         with requests.get(url.geturl(), stream=True, timeout=_HTTP_TIMEOUT) as response:
             response.raise_for_status()
             if response.headers.get("Content-Encoding") == "gzip":
@@ -150,35 +144,29 @@ def _get_reader(input_ref: _FileRef):
             else:
                 stream = response.raw
 
-            for item in ijson.items(stream, "item"):
-                yield read_item(item)
+            yield from _read_stream(stream)
 
-    def verify_file(file_path) -> Path:
-        result = Path(file_path)
-        if not result.is_file():
-            raise FileNotFoundError(f"File {input_ref} does not exist.")
-        return result
+    return reader
 
+
+def _get_reader(input_ref: _FileRef) -> SourceDataGenerator:
+    """Read NetBox source file from file or HTTP resource."""
     if isinstance(input_ref, str):
         url = urlparse(input_ref)
 
         if not url.scheme:
-            path = verify_file(input_ref)
-            return read_path
+            return _get_reader_from_path(input_ref)
 
         if url.scheme == "file":
-            path = verify_file(url.path)
-            return read_path
+            return _get_reader_from_path(url.path)
 
         if url.scheme in ["http", "https"]:
-            return read_url
+            return _get_reader_from_url(url)
 
     if isinstance(input_ref, Path):
-        path = verify_file(input_ref)
-        return read_path
+        return _get_reader_from_path(input_ref)
 
     if isinstance(input_ref, ParseResult):
-        url = input_ref
-        return read_url
+        return _get_reader_from_url(input_ref)
 
     raise ValueError(f"Unsupported file reference: {input_ref}")

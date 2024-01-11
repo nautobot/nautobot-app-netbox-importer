@@ -112,3 +112,15 @@ def force(nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
         field.nautobot.force = True
 
     return definition
+
+
+def disable(reason: str) -> SourceFieldDefinition:
+    """Disable the field.
+
+    Use to disable the field import with the given reason.
+    """
+
+    def definition(field: SourceField) -> None:
+        field.disable(reason)
+
+    return definition

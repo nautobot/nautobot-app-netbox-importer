@@ -31,6 +31,13 @@ def _define_units(field: SourceField) -> None:
     field.set_importer(importer)
 
 
+def _pre_import_cable_termination(source: RecordData) -> None:
+    cable_end = source.pop("cable_end").lower()
+    source["id"] = source.pop("cable")
+    source[f"termination_{cable_end}_type"] = source.pop("termination_type")
+    source[f"termination_{cable_end}_id"] = source.pop("termination_id")
+
+
 def setup_dcim(adapter: SourceAdapter) -> None:
     """Map NetBox DCIM models to Nautobot."""
     adapter.disable_model("dcim.cablepath", "Recreated in Nautobot on signal when circuit termination is created")
@@ -55,16 +62,11 @@ def setup_dcim(adapter: SourceAdapter) -> None:
         },
     )
     adapter.configure_model(
-        "dcim.cabletermination_a",
+        "dcim.cabletermination",
         extend_content_type="dcim.cable",
+        pre_import=_pre_import_cable_termination,
         fields={
             "termination_a": "termination_a",
-        },
-    )
-    adapter.configure_model(
-        "dcim.cabletermination_b",
-        extend_content_type="dcim.cable",
-        fields={
             "termination_b": "termination_b",
         },
     )
@@ -85,8 +87,8 @@ def setup_dcim(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "dcim.devicetype",
         fields={
-            "front_image": None,
-            "rear_image": None,
+            "front_image": fields.disable("Import does not contain images"),
+            "rear_image": fields.disable("Import does not contain images"),
             "color": "color",
         },
         default_reference={

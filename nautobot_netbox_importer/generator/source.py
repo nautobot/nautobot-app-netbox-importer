@@ -102,6 +102,7 @@ class SourceAdapter(BaseAdapter):
         default_reference: Optional[RecordData] = None,
         flags: Optional[DiffSyncModelFlags] = None,
         nautobot_flags: Optional[DiffSyncModelFlags] = None,
+        pre_import: Optional[Callable[[RecordData], None]] = None,
     ) -> "SourceModelWrapper":
         """Create if not exist and configure a wrapper for a given source content type.
 
@@ -140,6 +141,8 @@ class SourceAdapter(BaseAdapter):
             wrapper.flags = flags
         if nautobot_flags is not None:
             wrapper.nautobot.flags = nautobot_flags
+        if pre_import:
+            wrapper.pre_import = pre_import
 
         return wrapper
 
@@ -225,6 +228,8 @@ class SourceAdapter(BaseAdapter):
             if wrapper.disable_reason:
                 continue
 
+            if wrapper.pre_import:
+                wrapper.pre_import(data)
             for field_name in data.keys():
                 wrapper.add_field(field_name, field_name, from_data=True)
 
@@ -299,7 +304,7 @@ class SourceModelWrapper:
         self.content_type = content_type
         self.nautobot = nautobot_wrapper
         if self.nautobot.disabled:
-            self.disable_reason = "Nautobot Model Not Found"
+            self.disable_reason = f"Nautobot content type: `{nautobot_wrapper.content_type}` not found"
         else:
             self.disable_reason = ""
 
@@ -307,7 +312,7 @@ class SourceModelWrapper:
         self.identifiers: Optional[List[FieldName]] = None
 
         # Used to autofill `content_types` field
-        self._references: Dict[Uid, Set[SourceModelWrapper]] = {}
+        self.references: Dict[Uid, Set[SourceModelWrapper]] = {}
         self._references_forwarding: Optional[ReferencesForwarding] = None
 
         # Whether importing record data exteds existing record
@@ -334,13 +339,10 @@ class SourceModelWrapper:
             pk_field.processed = True
 
             if issubclass(self.nautobot.model, TreeModel):
-                self.set_fields(
-                    tree_id=None,
-                    lft=None,
-                    rght=None,
-                    level=None,
-                )
+                for name in ("tree_id", "lft", "rght", "level"):
+                    self.disable_field(name, "Tree fields doesn't need to be imported")
 
+        self.pre_import: Optional[Callable[[RecordData], None]] = None
         self.adapter.logger.debug("Created %s", self)
 
     def __str__(self) -> str:
@@ -362,6 +364,12 @@ class SourceModelWrapper:
         e.g. References to Site, Region or Location are forwarded to LocationType.
         """
         self._references_forwarding = ReferencesForwarding(content_type, field_name)
+
+    def disable_field(self, field_name: FieldName, reason: str) -> "SourceField":
+        """Disable field importing."""
+        field = self.add_field(field_name, None)
+        field.disable(reason)
+        return field
 
     def set_fields(self, *field_names: FieldName, **fields: SourceFieldDefinition) -> None:
         """Set fields definitions."""
@@ -388,7 +396,6 @@ class SourceModelWrapper:
                 field.reset_definition(definition)
         else:
             field = SourceField(self, name, definition, from_data)
-            self.fields[name] = field
 
         return field
 
@@ -470,6 +477,9 @@ class SourceModelWrapper:
         if self.importers is None:
             raise RuntimeError(f"Importers not created for {self}")
 
+        if self.pre_import:
+            self.pre_import(data)
+
         uid = self.get_pk_from_data(data)
         if not target:
             target = self.get_or_create(uid)
@@ -548,11 +558,11 @@ class SourceModelWrapper:
 
         Returns False if no post processing is needed, otherwise True.
         """
-        if not self._references:
+        if not self.references:
             return False
 
-        references = self._references
-        self._references = {}
+        references = self.references
+        self.references = {}
 
         if self._references_forwarding:
             forward_to = self.adapter.get_or_create_wrapper(self._references_forwarding.content_type)
@@ -586,7 +596,7 @@ class SourceModelWrapper:
         self.adapter.logger.debug("Adding reference %s %s %s", self.content_type, uid, wrapper.content_type)
         if not uid:
             raise ValueError(f"Invalid uid {uid} for {self.content_type}")
-        self._references.setdefault(uid, set()).add(wrapper)
+        self.references.setdefault(uid, set()).add(wrapper)
 
 
 # pylint: disable=too-many-public-methods
@@ -602,18 +612,17 @@ class SourceField:
     ):
         """Initialize the SourceField."""
         self.wrapper = wrapper
+        wrapper.fields[name] = self
+
         self.name = name
         self.from_data = from_data
         self.is_custom = not from_data
         self.definition = definition
         self.processed = False
-        if definition is None:
-            self.wrapper.adapter.logger.info("Skipping field %s", wrapper.format_field_name(name))
-        else:
-            self.wrapper.adapter.logger.debug("Adding field %s", wrapper.format_field_name(name))
         self._nautobot: Optional[NautobotFieldWrapper] = None
         self.importer: Optional[SourceFieldImporter] = None
         self.default_value: Any = None
+        self.disable_reason: str = ""
 
     def __str__(self) -> str:
         """Return a string representation of the field."""
@@ -626,8 +635,15 @@ class SourceField:
             raise RuntimeError(f"Missing Nautobot field for {self}")
         return self._nautobot
 
+    def disable(self, reason: str) -> None:
+        """Disable field importing."""
+        self.definition = None
+        self.importer = None
+        self.processed = True
+        self.disable_reason = reason
+
     def handle_sibling(self, name, nautobot_name: Optional[FieldName] = None) -> "SourceField":
-        """Specify, that this field definition handles other field."""
+        """Specify, that this field importer handles other field."""
         sibling = self.wrapper.add_field(name, None)
         sibling.importer = None
         sibling.processed = True

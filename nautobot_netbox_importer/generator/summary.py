@@ -29,10 +29,13 @@ def _print_fields_mapping(source: SourceAdapter) -> None:
         if nautobot_field:
             yield nautobot_field.name
             yield f"({nautobot_field.internal_type.value})"
-        elif not field.importer:
-            yield "SKIPPED"
+        elif field.importer:
+            yield "Custom Importer"
+        elif field.disable_reason:
+            yield "Disabled with reason:"
+            yield field.disable_reason
         else:
-            yield "CUSTOM IMPORTER"
+            yield "Disabled"
 
     for content_type, wrapper in source.wrappers.items():
         if wrapper.imported_count == 0:
@@ -56,10 +59,10 @@ def _print_back_mapping(source: SourceAdapter) -> None:
 
 def _print_content_types_deviations(source: SourceAdapter) -> None:
     for content_type, wrapper in source.wrappers.items():
-        if wrapper.nautobot.disabled:
-            print(f"{content_type}: Nautobot Model `{wrapper.nautobot.content_type}` Not Found")
-        elif wrapper.disable_reason:
-            print(f"{content_type} | Disabled with reason: {wrapper.disable_reason}")
+        if wrapper.disable_reason:
+            print(f"{content_type} => {wrapper.nautobot.content_type} | Disabled with reason: {wrapper.disable_reason}")
+        elif wrapper.extends_wrapper:
+            print(f"{content_type} EXTENDS {wrapper.extends_wrapper.content_type} => {wrapper.nautobot.content_type}")
         elif content_type != wrapper.nautobot.content_type:
             print(f"{content_type} => {wrapper.nautobot.content_type}")
 

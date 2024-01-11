@@ -9,6 +9,7 @@ from .base import logger
 from .nautobot import NautobotAdapter
 from .source import DiffSyncBaseModel
 from .source import SourceAdapter
+from .source import SourceDataGenerator
 from .source import SourceField
 from .source import SourceFieldImporterFactory
 from .source import SourceRecord
@@ -24,6 +25,7 @@ __all__ = (
     "RecordData",
     "SourceAdapter",
     "SourceField",
+    "SourceDataGenerator",
     "SourceFieldImporterFactory",
     "SourceRecord",
     "Uid",

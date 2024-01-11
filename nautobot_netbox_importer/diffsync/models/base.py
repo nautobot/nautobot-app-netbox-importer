@@ -179,16 +179,16 @@ def setup_base(adapter: SourceAdapter) -> None:
         nautobot_content_type="users.user",
         identifiers=["username"],
         fields={
-            "last_login": None,  # Should not be attempted to migrated
-            "password": None,  # Should not be attempted to migrated
-            "user_permissions": None,
+            "last_login": fields.disable("Should not be attempted to migrated"),
+            "password": fields.disable("Should not be attempted to migrated"),
+            "user_permissions": fields.disable("Permissions import are not implemented yet"),
         },
     )
     adapter.configure_model(
         "auth.group",
         identifiers=["name"],
         fields={
-            "permissions": None,
+            "permissions": fields.disable("Permissions import are not implemented yet"),
         },
     )
     adapter.configure_model(
