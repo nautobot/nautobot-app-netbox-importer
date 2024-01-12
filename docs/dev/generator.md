@@ -1,6 +1,6 @@
-# Importer Documentation
+# Generator Documentation
 
-This document details the importer process.
+This document details the generator structure, which is responsible for importing data from NetBox to Nautobot.
 
 ## Overview
 
@@ -34,7 +34,7 @@ The import process consists of the following stages:
 
 The initial step involves creating a `SourceAdapter()`. It accepts an argument, `get_source_data`, which is `Callable` that returns `Iterable` of the source data items. Each source data item is encapsulated in `SourceRecord(content_type: ContentTypeStr, data: Dict)` instances. `SourceAdapter` constructor also passes any additional arguments to its ancestor, the `DiffSync` class.
 
-The data undergoes two cycles: the first to establish the structure and the second to import the actual data.
+The data undergoes two cycles: the first to establish the structure and the second to import the actual data, as described in the following sections.
 
 ### Defining the Source Structure Deviations
 
@@ -79,21 +79,19 @@ During this stage, the system performs a second iteration over the input data. T
 
 Each `DiffSyncModel` class is dynamically generated as needed. The fields within a `DiffSyncModel` are defined using `nautobot_wrapper.fields`. These fields map directly to the attributes of the source data.
 
+For each source record, the importer attempts to read the corresponding Nautobot objects as well, based on the `identifiers` if they are defined in the source model, or on a generated record's primary key. The primary key is deterministically generated using UUID5, based on the source content type and primary key. If the source primary key is already a UUID, it is passed through without change.
+
 ### Updating Referenced Content Types
 
 The updating of `content_types` fields, based on cached references, occurs in this phase. It's possible to define forwarding references using `source_wrapper.set_references_forwarding()`, e.g. references to `dcim.location` are forwarded to `dcim.locationtype`.
 
-### Reading Nautobot Data
-
-`NautobotAdapter()` reads from the Nautobot database, considering only models with at least one instance of imported data from source. To add data to the DiffSync structure, it uses `DiffSyncModel()` classes created in the previous steps.
-
 ### Syncing to Nautobot
 
-Data sync to Nautobot is executed using `nautobot_adapter.sync_from(source_adapter)` from the `diffsync` library. The `instance.save()` method is used, accommodating instances that fail `instance.clean()`. These instances are verified in the following step.
+Data sync to Nautobot is executed using `nautobot_adapter.sync_from(source_adapter)` from the `diffsync` library. The `object.save()` method is used, accommodating objects that fail `object.clean()`. These objects are verified in the following step.
 
 ### Validating the Data
 
-After saving all instances, the system verifies the data consistency by re-running `clean()` on instances that failed during the previous step. All validation errors are collected and can be displayed to the user.
+After saving all objects, the system verifies the data consistency by re-running `clean()` on objects that failed during the previous step. All validation errors are collected and can be displayed to the user.
 
 ### Committing the Transaction
 
@@ -187,15 +185,16 @@ erDiagram
 
 ## Other Techniques
 
-- Generating deterministic primary keys for Nautobot instances based on the source identifiers using UUID5.
+- Generating deterministic primary keys for Nautobot objects based on the source identifiers using UUID5.
 - Skipping absent Nautobot models and fields.
 - Normalizing `datetime` values.
 - Stabilizing import order.
 - Caching:
     - Pre-defined records.
     - Source identifiers to Nautobot primary keys.
-    - Content type instances.
-    - Referencing content types to instances to autofill `content_types` fields.
+    - Content type objects.
+    - Referencing content types to objects to autofill `content_types` fields.
 - Using Nautobot default values to fill in missing source data.
 - Auto set-up importers for relation fields.
 - Storing content type back mapping.
+

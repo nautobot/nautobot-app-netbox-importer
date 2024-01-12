@@ -17,7 +17,7 @@ The summary is divided into several sections as described below.
 
 ## DiffSync Summary
 
-The first section is the import summary. It shows a summary from the underlying `DiffSync` library.
+The first section is the import summary. It shows a basic summary from the underlying [DiffSync](https://github.com/networktocode/diffsync) library.
 
 ```
 = Import Summary: ==============================================================
@@ -28,6 +28,10 @@ delete: 0
 no-change: 4
 skip: 119
 ```
+
+In this case, skipped objects are `ContentType` objects, as these are not directly imported into Nautobot.
+
+`update` and `no-change` are those objects that are already in Nautobot. Typically, these are `User`, `Status`, `Role` or similar objects. Detailed information about these objects is shown in the debug log.
 
 ## Nautobot Models Summary
 
@@ -103,50 +107,7 @@ ValidationIssue(uid=UUID('0e23ee26-033e-5cfd-8bce-b5ef5909e13c'), name='P2-10B',
 ValidationIssue(uid=UUID('38f5aa36-561b-5cd8-8362-9d093ff7b89a'), name='P1-15A', error=ValidationError(['Rack R207 (Row 2) and power panel Panel 1 (MDF) are in different locations']))
 ValidationIssue(uid=UUID('872d498b-e156-57b9-8f1d-f595c31ef703'), name='P3-5A', error=ValidationError(['Rack R305 (Row 3) and power panel Panel 3 (MDF) are in different locations']))
 ValidationIssue(uid=UUID('17a0b412-4187-51a2-a238-901b3a275bcd'), name='P1-14A', error=ValidationError(['Rack R206 (Row 2) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('f2ee9737-42d8-5093-a349-be97765a39e0'), name='P1-2A', error=ValidationError(['Rack R102 (Row 1) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('c0e96716-af7f-5b78-8210-d51b55fa53d2'), name='P1-1A', error=ValidationError(['Rack R101 (Row 1) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('7c07894e-9772-5e1c-a418-bdf3fd58e7c3'), name='P1-7A', error=ValidationError(['Rack R107 (Row 1) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('47f69d3d-8fcd-5b63-8695-21aa51fb4fbf'), name='P2-9B', error=ValidationError(['Rack R201 (Row 2) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('b3bfb863-c40a-5c49-b82e-1095037d3578'), name='P3-3A', error=ValidationError(['Rack R303 (Row 3) and power panel Panel 3 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('a5511926-c977-593b-9bf1-57c8175be85d'), name='P2-5B', error=ValidationError(['Rack R105 (Row 1) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('e1b4bb92-803c-59f4-90a7-4f5deb95abc2'), name='P4-2B', error=ValidationError(['Rack R302 (Row 3) and power panel Panel 4 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('e04582bd-f2cb-5deb-b374-be9260cd5b27'), name='P4-6B', error=ValidationError(['Rack R306 (Row 3) and power panel Panel 4 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('05541f06-08c9-5d84-a8b6-13ce3cd45938'), name='P3-8A', error=ValidationError(['Rack R308 (Row 3) and power panel Panel 3 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('b9c591cd-fdc0-5cf2-83c4-400554b811cd'), name='P1-16A', error=ValidationError(['Rack R208 (Row 2) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('53ed215b-9003-522d-9cb1-d48dbb18fdc2'), name='P3-7A', error=ValidationError(['Rack R307 (Row 3) and power panel Panel 3 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('10da56b6-09b1-5da6-9505-d9253863e062'), name='P3-1A', error=ValidationError(['Rack R301 (Row 3) and power panel Panel 3 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('3f702c58-7dea-5b78-a007-17f40b465810'), name='P1-10A', error=ValidationError(['Rack R202 (Row 2) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('5fa35cf7-5d55-5533-99ee-7d1ecaa69856'), name='P2-1B', error=ValidationError(['Rack R101 (Row 1) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('b4031fa2-14a6-5d06-a3a2-3a3376b10d72'), name='P1-11A', error=ValidationError(['Rack R203 (Row 2) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('d951d5fc-81be-51ae-98a1-7759c859d904'), name='P4-5B', error=ValidationError(['Rack R305 (Row 3) and power panel Panel 4 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('29b6b9f0-f50a-592c-8e3f-e415a0bf4cd4'), name='P4-1B', error=ValidationError(['Rack R301 (Row 3) and power panel Panel 4 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('05f5bb91-e84c-5908-8d9a-8256959bfcab'), name='P2-11B', error=ValidationError(['Rack R203 (Row 2) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('31f1abb3-660f-5a57-9256-42be3d5b75cf'), name='P2-3B', error=ValidationError(['Rack R103 (Row 1) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('cd4f8f27-620f-59fe-aa9a-4c13ff4a7274'), name='P1-12A', error=ValidationError(['Rack R204 (Row 2) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('e1672072-7885-5330-a7dd-52f3769d4863'), name='P1-5A', error=ValidationError(['Rack R105 (Row 1) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('bb4485d0-144b-506f-a8ab-faf523304cf8'), name='P4-7B', error=ValidationError(['Rack R307 (Row 3) and power panel Panel 4 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('c6b3c62b-5f0d-51d1-95d9-761914979d47'), name='P3-6A', error=ValidationError(['Rack R306 (Row 3) and power panel Panel 3 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('7eae2a15-d2d0-52ab-bfcf-3cf6823078cf'), name='P2-7B', error=ValidationError(['Rack R107 (Row 1) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('5a2f51ea-7a05-53d2-8a47-cd383629a343'), name='P1-13A', error=ValidationError(['Rack R205 (Row 2) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('8cf662de-a918-5648-b152-d71da75a7392'), name='P3-4A', error=ValidationError(['Rack R304 (Row 3) and power panel Panel 3 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('07316815-d36d-552d-8859-03e7fe09354a'), name='P2-13B', error=ValidationError(['Rack R205 (Row 2) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('194e2d64-c904-59bc-af2c-e040beb3aeac'), name='P2-14B', error=ValidationError(['Rack R206 (Row 2) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('3213730d-18bd-5a3a-9828-4ab023ed4652'), name='P1-6A', error=ValidationError(['Rack R106 (Row 1) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('1f4b42df-43ce-52aa-8a61-4a19ce1af962'), name='P4-3B', error=ValidationError(['Rack R303 (Row 3) and power panel Panel 4 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('416a01e5-fbf9-522e-b9e9-4037cf8c984f'), name='P1-4A', error=ValidationError(['Rack R104 (Row 1) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('fcb61481-0da8-5412-b68b-2463016a017d'), name='P2-12B', error=ValidationError(['Rack R204 (Row 2) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('c2893189-8044-5d85-8e91-7832c201474d'), name='P1-8A', error=ValidationError(['Rack R108 (Row 1) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('06ebb1db-aaa0-5b24-a832-8ca1671f8b0a'), name='P2-4B', error=ValidationError(['Rack R104 (Row 1) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('a7c6bcef-dbe4-51cd-a6d0-14ab5facbe5e'), name='P1-3A', error=ValidationError(['Rack R103 (Row 1) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('451c4aad-d892-5114-8724-be2f8148c322'), name='P2-2B', error=ValidationError(['Rack R102 (Row 1) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('7257a622-3ca0-5163-8b6e-5e88c573b17e'), name='P2-16B', error=ValidationError(['Rack R208 (Row 2) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('6a1a4ac2-e77b-526b-9aa6-8c7903e5f572'), name='P2-8B', error=ValidationError(['Rack R108 (Row 1) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('87cf96f1-95fa-546c-9665-977f42764f8b'), name='P4-4B', error=ValidationError(['Rack R304 (Row 3) and power panel Panel 4 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('314fead6-ffae-51f7-abb0-2edcf7d6da49'), name='P3-2A', error=ValidationError(['Rack R302 (Row 3) and power panel Panel 3 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('20b3c4c0-eb30-5f8b-adcf-20e4fa5d0061'), name='P2-15B', error=ValidationError(['Rack R207 (Row 2) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('0434ed4d-cc76-5051-a38c-b84ed32de2c1'), name='P2-6B', error=ValidationError(['Rack R106 (Row 1) and power panel Panel 2 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('6203a499-6777-5cd0-841b-fa6339c48890'), name='P1-9A', error=ValidationError(['Rack R201 (Row 2) and power panel Panel 1 (MDF) are in different locations']))
-ValidationIssue(uid=UUID('3338c701-47fd-513e-945a-78a98b84d7f0'), name='P4-8B', error=ValidationError(['Rack R308 (Row 3) and power panel Panel 4 (MDF) are in different locations']))
+...
 ................................................................................
 Total validation issues: 48
 ```
@@ -155,67 +116,67 @@ Total validation issues: 48
 
 This section shows deviations from NetBox content type to Nautobot content type. Only those content types that differ between NetBox and Nautobot are shown.
 
+`EXTENDS` means that the NetBox object of such a content type is merged with another object. For example, `CableTermination` objects are merged with the corresponding `Cable` objects before diffing and importing them into Nautobot.
+
 ```
-- Content Types Mapping Deviations: ----------------------------------------------------
+- Content Types Mapping Deviations: --------------------------------------------
   Mapping deviations from source content type to Nautobot content type
-sessions.session | Disabled with reason: Nautobot has own sessions, sessions should never cross apps.
-admin.logentry | Disabled with reason: Not directly used in Nautobot.
-users.userconfig: Nautobot Model Not Found
-auth.permission | Disabled with reason: Handled via a Nautobot model and may not be a 1 to 1.
+sessions.session => sessions.session | Disabled with reason: Nautobot has own sessions, sessions should never cross apps.
+admin.logentry => admin.logentry | Disabled with reason: Not directly used in Nautobot.
+users.userconfig => users.userconfig | Disabled with reason: May not have a 1 to 1 translation to Nautobot.
+auth.permission => auth.permission | Disabled with reason: Handled via a Nautobot model and may not be a 1 to 1.
 auth.user => users.user
 dcim.sitegroup => dcim.locationtype
 dcim.region => dcim.location
 dcim.site => dcim.location
-dcim.cablepath | Disabled with reason: Recreated in Nautobot on signal when circuit termination is created
+dcim.cablepath => dcim.cablepath | Disabled with reason: Recreated in Nautobot on signal when circuit termination is created
 dcim.rackrole => extras.role
-dcim.cabletermination_a => dcim.cable
-dcim.cabletermination_b => dcim.cable
+dcim.cabletermination EXTENDS dcim.cable => dcim.cable
 dcim.devicerole => extras.role
 ipam.role => extras.role
 ipam.aggregate => ipam.prefix
-dcim.modulebay: Nautobot Model Not Found
-dcim.modulebaytemplate: Nautobot Model Not Found
-dcim.moduletype: Nautobot Model Not Found
-dcim.module: Nautobot Model Not Found
-ipam.asn: Nautobot Model Not Found
-ipam.iprange: Nautobot Model Not Found
-tenancy.contactgroup: Nautobot Model Not Found
-tenancy.contactrole: Nautobot Model Not Found
-tenancy.contact: Nautobot Model Not Found
-tenancy.contactassignment: Nautobot Model Not Found
-dcim.inventoryitemrole: Nautobot Model Not Found
-dcim.inventoryitemtemplate: Nautobot Model Not Found
-dcim.cabletermination: Nautobot Model Not Found
-dcim.virtualdevicecontext: Nautobot Model Not Found
-ipam.fhrpgroup: Nautobot Model Not Found
-ipam.fhrpgroupassignment: Nautobot Model Not Found
-ipam.servicetemplate: Nautobot Model Not Found
-ipam.l2vpn: Nautobot Model Not Found
-ipam.l2vpntermination: Nautobot Model Not Found
-extras.report: Nautobot Model Not Found
-extras.script: Nautobot Model Not Found
-extras.journalentry: Nautobot Model Not Found
-extras.configrevision: Nautobot Model Not Found
-extras.savedfilter: Nautobot Model Not Found
-extras.cachedvalue: Nautobot Model Not Found
-extras.branch: Nautobot Model Not Found
-extras.stagedchange: Nautobot Model Not Found
-users.adminuser: Nautobot Model Not Found
-wireless.wirelesslangroup: Nautobot Model Not Found
-wireless.wirelesslan: Nautobot Model Not Found
-wireless.wirelesslink: Nautobot Model Not Found
-django_rq.queue: Nautobot Model Not Found
-secrets.secret: Nautobot Model Not Found
-secrets.secretrole: Nautobot Model Not Found
-secrets.userkey: Nautobot Model Not Found
-secrets.sessionkey: Nautobot Model Not Found
+dcim.modulebay => dcim.modulebay | Disabled with reason: Nautobot content type: `dcim.modulebay` not found
+dcim.modulebaytemplate => dcim.modulebaytemplate | Disabled with reason: Nautobot content type: `dcim.modulebaytemplate` not found
+dcim.moduletype => dcim.moduletype | Disabled with reason: Nautobot content type: `dcim.moduletype` not found
+dcim.module => dcim.module | Disabled with reason: Nautobot content type: `dcim.module` not found
+ipam.asn => ipam.asn | Disabled with reason: Nautobot content type: `ipam.asn` not found
+ipam.iprange => ipam.iprange | Disabled with reason: Nautobot content type: `ipam.iprange` not found
+tenancy.contactgroup => tenancy.contactgroup | Disabled with reason: Nautobot content type: `tenancy.contactgroup` not found
+tenancy.contactrole => tenancy.contactrole | Disabled with reason: Nautobot content type: `tenancy.contactrole` not found
+tenancy.contact => tenancy.contact | Disabled with reason: Nautobot content type: `tenancy.contact` not found
+tenancy.contactassignment => tenancy.contactassignment | Disabled with reason: Nautobot content type: `tenancy.contactassignment` not found
+dcim.inventoryitemrole => dcim.inventoryitemrole | Disabled with reason: Nautobot content type: `dcim.inventoryitemrole` not found
+dcim.inventoryitemtemplate => dcim.inventoryitemtemplate | Disabled with reason: Nautobot content type: `dcim.inventoryitemtemplate` not found
+dcim.virtualdevicecontext => dcim.virtualdevicecontext | Disabled with reason: Nautobot content type: `dcim.virtualdevicecontext` not found
+ipam.fhrpgroup => ipam.fhrpgroup | Disabled with reason: Nautobot content type: `ipam.fhrpgroup` not found
+ipam.fhrpgroupassignment => ipam.fhrpgroupassignment | Disabled with reason: Nautobot content type: `ipam.fhrpgroupassignment` not found
+ipam.servicetemplate => ipam.servicetemplate | Disabled with reason: Nautobot content type: `ipam.servicetemplate` not found
+ipam.l2vpn => ipam.l2vpn | Disabled with reason: Nautobot content type: `ipam.l2vpn` not found
+ipam.l2vpntermination => ipam.l2vpntermination | Disabled with reason: Nautobot content type: `ipam.l2vpntermination` not found
+extras.report => extras.report | Disabled with reason: Nautobot content type: `extras.report` not found
+extras.script => extras.script | Disabled with reason: Nautobot content type: `extras.script` not found
+extras.journalentry => extras.journalentry | Disabled with reason: Nautobot content type: `extras.journalentry` not found
+extras.configrevision => extras.configrevision | Disabled with reason: Nautobot content type: `extras.configrevision` not found
+extras.savedfilter => extras.savedfilter | Disabled with reason: Nautobot content type: `extras.savedfilter` not found
+extras.cachedvalue => extras.cachedvalue | Disabled with reason: Nautobot content type: `extras.cachedvalue` not found
+extras.branch => extras.branch | Disabled with reason: Nautobot content type: `extras.branch` not found
+extras.stagedchange => extras.stagedchange | Disabled with reason: Nautobot content type: `extras.stagedchange` not found
+users.adminuser => users.adminuser | Disabled with reason: Nautobot content type: `users.adminuser` not found
+wireless.wirelesslangroup => wireless.wirelesslangroup | Disabled with reason: Nautobot content type: `wireless.wirelesslangroup` not found
+wireless.wirelesslan => wireless.wirelesslan | Disabled with reason: Nautobot content type: `wireless.wirelesslan` not found
+wireless.wirelesslink => wireless.wirelesslink | Disabled with reason: Nautobot content type: `wireless.wirelesslink` not found
+django_rq.queue => django_rq.queue | Disabled with reason: Nautobot content type: `django_rq.queue` not found
+secrets.secret => secrets.secret | Disabled with reason: Nautobot content type: `secrets.secret` not found
+secrets.secretrole => secrets.secretrole | Disabled with reason: Nautobot content type: `secrets.secretrole` not found
+secrets.userkey => secrets.userkey | Disabled with reason: Nautobot content type: `secrets.userkey` not found
+secrets.sessionkey => secrets.sessionkey | Disabled with reason: Nautobot content type: `secrets.sessionkey` not found
 ```
 
 ## Content Types Back Mapping
 
 This section shows back mapping deviations from Nautobot content types to NetBox content types. Only those content types that differ between NetBox and Nautobot are shown.
 
-"Ambiguous" means that there are multiple NetBox content types that map to the same Nautobot content type.
+`Ambiguous` means that there are multiple NetBox content types that map to the same Nautobot content type.
 
 ```
 - Content Types Back Mapping: --------------------------------------------------
@@ -239,12 +200,12 @@ Each line consists of the following:
 - `=>` as a separator.
 - Nautobot field name.
 - Field type in parentheses with the following special cases:
-    - `SKIPPED` means the field is intentionally skipped by the importer.
+    -  `Disabled with reason: ...` means the field is intentionally disabled by the importer as it's not possible to import it to Nautobot.
     - `(ReadOnlyProperty')` marks fields that are read-only properties in Nautobot and can't be imported.
     - `(PrivateProperty)` marks fields that are prefixed with an underscore `_` and are considered private properties. Those fields are not imported.
     - `(NotFound)` indicates the field is not found in Nautobot and can't be imported.
-    - `(DoNotImportLastUpdated)` are fields that are not imported as they are automatically updated by Nautobot.
-    - `CUSTOM IMPORTER` marks fields that do not have a direct mapping to Nautobot and can potentially be imported to other content types, e.g., NetBox's `CustomField.choices` field to Nautobot's `CustomFieldChoice` instances.
+    - `(DoNotImportLastUpdated)` marks the `last_updated` field, which is changed in Nautobot with each object update, as not to be imported.
+    - `Custom Importer` marks fields that do not have a direct mapping to Nautobot and can potentially be imported to other content types, e.g., NetBox's `CustomField.choices` field to Nautobot's `CustomFieldChoice` objects.
     - `(Property)` marks fields that are class properties rather than Django fields. These are imported.
 
 ```
@@ -260,7 +221,7 @@ content_types (DATA) => content_types (ManyToManyField)
 . extras.customfield => extras.customfield .....................................
 id (DATA) (CUSTOM) => id (UUIDField)
 name (DATA) (CUSTOM) => key (SlugField)
-choices (CUSTOM) => CUSTOM IMPORTER
+choices (CUSTOM) => Custom Importer
 created (DATA) => created (DateTimeField)
 last_updated (DATA) => last_updated (DoNotImportLastUpdated)
 type (DATA) => type (CharField)
@@ -286,9 +247,9 @@ content_type (DATA) => content_type_id (ForeignKey)
 tag (DATA) => tag_id (ForeignKey)
 . auth.user => users.user ......................................................
 id (CUSTOM) => id (UUIDField)
-last_login (DATA) (CUSTOM) => SKIPPED
-password (DATA) (CUSTOM) => SKIPPED
-user_permissions (DATA) (CUSTOM) => SKIPPED
+last_login (DATA) (CUSTOM) => Disabled with reason: Should not be attempted to migrated
+password (DATA) (CUSTOM) => Disabled with reason: Should not be attempted to migrated
+user_permissions (DATA) (CUSTOM) => Disabled with reason: Permissions import are not implemented yet
 is_superuser (DATA) => is_superuser (BooleanField)
 username (DATA) => username (CharField)
 first_name (DATA) => first_name (CharField)
@@ -300,7 +261,7 @@ date_joined (DATA) => date_joined (DateTimeField)
 groups (DATA) => groups (ManyToManyField)
 . auth.group => auth.group .....................................................
 id (CUSTOM) => id (AutoField)
-permissions (DATA) (CUSTOM) => SKIPPED
+permissions (DATA) (CUSTOM) => Disabled with reason: Permissions import are not implemented yet
 name (DATA) => name (CharField)
 . tenancy.tenant => tenancy.tenant .............................................
 id (DATA) (CUSTOM) => id (UUIDField)
@@ -314,20 +275,20 @@ name (DATA) => name (CharField)
 slug (DATA) => slug (NotFound)
 . dcim.locationtype => dcim.locationtype .......................................
 id (DATA) (CUSTOM) => id (UUIDField)
-tree_id (CUSTOM) => SKIPPED
-lft (CUSTOM) => SKIPPED
-rght (CUSTOM) => SKIPPED
-level (CUSTOM) => SKIPPED
+tree_id (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+lft (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+rght (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+level (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
 name (DATA) => name (CharField)
 nestable (DATA) => nestable (BooleanField)
 content_types (DATA) => content_types (ManyToManyField)
 parent (DATA) => parent_id (TreeNodeForeignKey)
 . dcim.sitegroup => dcim.locationtype ..........................................
 id (DATA) (CUSTOM) => id (UUIDField)
-tree_id (DATA) (CUSTOM) => SKIPPED
-lft (DATA) (CUSTOM) => SKIPPED
-rght (DATA) (CUSTOM) => SKIPPED
-level (DATA) (CUSTOM) => SKIPPED
+tree_id (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+lft (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+rght (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+level (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
 parent (DATA) (CUSTOM) => parent_id (TreeNodeForeignKey)
 nestable (CUSTOM) => nestable (BooleanField)
 created (DATA) => created (DateTimeField)
@@ -338,10 +299,10 @@ slug (DATA) => slug (NotFound)
 description (DATA) => description (CharField)
 . dcim.region => dcim.location .................................................
 id (DATA) (CUSTOM) => id (UUIDField)
-tree_id (DATA) (CUSTOM) => SKIPPED
-lft (DATA) (CUSTOM) => SKIPPED
-rght (DATA) (CUSTOM) => SKIPPED
-level (DATA) (CUSTOM) => SKIPPED
+tree_id (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+lft (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+rght (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+level (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
 status (CUSTOM) => status_id (StatusField)
 location_type (CUSTOM) => location_type_id (ForeignKey)
 created (DATA) => created (DateTimeField)
@@ -353,10 +314,10 @@ slug (DATA) => slug (NotFound)
 description (DATA) => description (CharField)
 . dcim.site => dcim.location ...................................................
 id (DATA) (CUSTOM) => id (UUIDField)
-tree_id (CUSTOM) => SKIPPED
-lft (CUSTOM) => SKIPPED
-rght (CUSTOM) => SKIPPED
-level (CUSTOM) => SKIPPED
+tree_id (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+lft (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+rght (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+level (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
 region (DATA) (CUSTOM) => parent_id (TreeNodeForeignKey)
 group (DATA) (CUSTOM) => location_type_id (ForeignKey)
 created (DATA) => created (DateTimeField)
@@ -378,10 +339,10 @@ longitude (DATA) => longitude (DecimalField)
 asns (DATA) => asns (NotFound)
 . dcim.location => dcim.location ...............................................
 id (DATA) (CUSTOM) => id (UUIDField)
-tree_id (DATA) (CUSTOM) => SKIPPED
-lft (DATA) (CUSTOM) => SKIPPED
-rght (DATA) (CUSTOM) => SKIPPED
-level (DATA) (CUSTOM) => SKIPPED
+tree_id (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+lft (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+rght (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+level (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
 status (DATA) (CUSTOM) => status_id (StatusField)
 location_type (CUSTOM) => location_type_id (ForeignKey)
 parent (DATA) (CUSTOM) => parent_id (TreeNodeForeignKey)
@@ -466,22 +427,16 @@ termination_a_type (CUSTOM) => termination_a (GenericForeignKey)
 termination_a_id (CUSTOM) => termination_a (GenericForeignKey)
 termination_b_type (CUSTOM) => termination_b (GenericForeignKey)
 termination_b_id (CUSTOM) => termination_b (GenericForeignKey)
-. dcim.cabletermination_a => dcim.cable ........................................
+. dcim.cabletermination => dcim.cable ..........................................
 id (DATA) (CUSTOM) => id (UUIDField)
 termination_a (CUSTOM) => termination_a (GenericForeignKey)
+termination_b (CUSTOM) => termination_b (GenericForeignKey)
 _device (DATA) => _device (PrivateProperty)
 _rack (DATA) => _rack (PrivateProperty)
 _location (DATA) => _location (PrivateProperty)
 _site (DATA) => _site (PrivateProperty)
 termination_a_type (DATA) (CUSTOM) => termination_a (GenericForeignKey)
 termination_a_id (DATA) (CUSTOM) => termination_a (GenericForeignKey)
-. dcim.cabletermination_b => dcim.cable ........................................
-id (DATA) (CUSTOM) => id (UUIDField)
-termination_b (CUSTOM) => termination_b (GenericForeignKey)
-_device (DATA) => _device (PrivateProperty)
-_rack (DATA) => _rack (PrivateProperty)
-_location (DATA) => _location (PrivateProperty)
-_site (DATA) => _site (PrivateProperty)
 termination_b_type (DATA) (CUSTOM) => termination_b (GenericForeignKey)
 termination_b_id (DATA) (CUSTOM) => termination_b (GenericForeignKey)
 . dcim.interface => dcim.interface .............................................
@@ -535,8 +490,8 @@ slug (DATA) => slug (NotFound)
 description (DATA) => description (CharField)
 . dcim.devicetype => dcim.devicetype ...........................................
 id (DATA) (CUSTOM) => id (UUIDField)
-front_image (DATA) (CUSTOM) => SKIPPED
-rear_image (DATA) (CUSTOM) => SKIPPED
+front_image (DATA) (CUSTOM) => Disabled with reason: Import does not contain images
+rear_image (DATA) (CUSTOM) => Disabled with reason: Import does not contain images
 color (CUSTOM) => color (NotFound)
 manufacturer (DATA) => manufacturer_id (ForeignKey)
 model (DATA) => model (CharField)
@@ -633,43 +588,6 @@ device_type (DATA) => device_type_id (ForeignKeyWithAutoRelatedName)
 module_type (DATA) => module_type (NotFound)
 type (DATA) => type (CharField)
 feed_leg (DATA) => feed_leg (CharField)
-. circuits.circuit => circuits.circuit .........................................
-id (DATA) (CUSTOM) => id (UUIDField)
-type (DATA) (CUSTOM) => circuit_type_id (ForeignKey)
-termination_a (DATA) (CUSTOM) => circuit_termination_a_id (ForeignKey)
-termination_z (DATA) (CUSTOM) => circuit_termination_z_id (ForeignKey)
-created (DATA) => created (DateTimeField)
-last_updated (DATA) => last_updated (DoNotImportLastUpdated)
-custom_field_data (DATA) => custom_field_data (CustomFieldData)
-description (DATA) => description (CharField)
-comments (DATA) => comments (TextField)
-cid (DATA) => cid (CharField)
-provider (DATA) => provider_id (ForeignKey)
-provider_account (DATA) => provider_account (NotFound)
-status (DATA) => status_id (StatusField)
-tenant (DATA) => tenant_id (ForeignKey)
-install_date (DATA) => install_date (DateField)
-termination_date (DATA) => termination_date (NotFound)
-commit_rate (DATA) => commit_rate (PositiveIntegerField)
-. circuits.circuittermination => circuits.circuittermination ...................
-id (DATA) (CUSTOM) => id (UUIDField)
-location (CUSTOM) => location_id (ForeignKey)
-created (DATA) => created (DateTimeField)
-last_updated (DATA) => last_updated (DoNotImportLastUpdated)
-custom_field_data (DATA) => custom_field_data (CustomFieldData)
-cable (DATA) => cable_id (ForeignKey)
-cable_end (DATA) => cable_end (NotFound)
-mark_connected (DATA) => mark_connected (NotFound)
-circuit (DATA) => circuit_id (ForeignKey)
-term_side (DATA) => term_side (CharField)
-site (DATA) (CUSTOM) => location_id (ForeignKey)
-provider_network (DATA) => provider_network_id (ForeignKey)
-port_speed (DATA) => port_speed (PositiveIntegerField)
-upstream_speed (DATA) => upstream_speed (PositiveIntegerField)
-xconnect_id (DATA) => xconnect_id (CharField)
-pp_info (DATA) => pp_info (CharField)
-description (DATA) => description (CharField)
-region (CUSTOM) => location_id (ForeignKey)
 . ipam.role => extras.role .....................................................
 id (DATA) (CUSTOM) => id (UUIDField)
 color (CUSTOM) => color (CharField)
@@ -801,6 +719,43 @@ description (DATA) => description (CharField)
 untagged_vlan (DATA) => untagged_vlan_id (ForeignKey)
 vrf (DATA) => vrf_id (ForeignKey)
 tagged_vlans (DATA) => tagged_vlans (ManyToManyField)
+. circuits.circuit => circuits.circuit .........................................
+id (DATA) (CUSTOM) => id (UUIDField)
+type (DATA) (CUSTOM) => circuit_type_id (ForeignKey)
+termination_a (DATA) (CUSTOM) => circuit_termination_a_id (ForeignKey)
+termination_z (DATA) (CUSTOM) => circuit_termination_z_id (ForeignKey)
+created (DATA) => created (DateTimeField)
+last_updated (DATA) => last_updated (DoNotImportLastUpdated)
+custom_field_data (DATA) => custom_field_data (CustomFieldData)
+description (DATA) => description (CharField)
+comments (DATA) => comments (TextField)
+cid (DATA) => cid (CharField)
+provider (DATA) => provider_id (ForeignKey)
+provider_account (DATA) => provider_account (NotFound)
+status (DATA) => status_id (StatusField)
+tenant (DATA) => tenant_id (ForeignKey)
+install_date (DATA) => install_date (DateField)
+termination_date (DATA) => termination_date (NotFound)
+commit_rate (DATA) => commit_rate (PositiveIntegerField)
+. circuits.circuittermination => circuits.circuittermination ...................
+id (DATA) (CUSTOM) => id (UUIDField)
+location (CUSTOM) => location_id (ForeignKey)
+created (DATA) => created (DateTimeField)
+last_updated (DATA) => last_updated (DoNotImportLastUpdated)
+custom_field_data (DATA) => custom_field_data (CustomFieldData)
+cable (DATA) => cable_id (ForeignKey)
+cable_end (DATA) => cable_end (NotFound)
+mark_connected (DATA) => mark_connected (NotFound)
+circuit (DATA) => circuit_id (ForeignKey)
+term_side (DATA) => term_side (CharField)
+site (DATA) (CUSTOM) => location_id (ForeignKey)
+provider_network (DATA) => provider_network_id (ForeignKey)
+port_speed (DATA) => port_speed (PositiveIntegerField)
+upstream_speed (DATA) => upstream_speed (PositiveIntegerField)
+xconnect_id (DATA) => xconnect_id (CharField)
+pp_info (DATA) => pp_info (CharField)
+description (DATA) => description (CharField)
+region (CUSTOM) => location_id (ForeignKey)
 . circuits.circuittype => circuits.circuittype .................................
 id (DATA) (CUSTOM) => id (UUIDField)
 created (DATA) => created (DateTimeField)
@@ -1084,10 +1039,10 @@ color (DATA) => color (CharField)
 description (DATA) => description (CharField)
 . tenancy.tenantgroup => tenancy.tenantgroup ...................................
 id (DATA) (CUSTOM) => id (UUIDField)
-tree_id (DATA) (CUSTOM) => SKIPPED
-lft (DATA) (CUSTOM) => SKIPPED
-rght (DATA) (CUSTOM) => SKIPPED
-level (DATA) (CUSTOM) => SKIPPED
+tree_id (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+lft (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+rght (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+level (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
 created (DATA) => created (DateTimeField)
 last_updated (DATA) => last_updated (DoNotImportLastUpdated)
 custom_field_data (DATA) => custom_field_data (CustomFieldData)
