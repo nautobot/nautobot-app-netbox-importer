@@ -106,6 +106,14 @@ invoke build
 
 Follow the steps outlined in the "What has to be done to support a minor NetBox version?" section.
 
+## What has to be done to support a NetBox App?
+
+To support a NetBox App, carry out the same steps as in [this question](#what-has-to-be-done-to-support-a-minor-netbox-version).
+
+## What has to be done to support a major Nautobot / NetBox App version?
+
+Multiple major versions of the Nautobot or NetBox App can be supported within a single `nautobot-netbox-importer` major release. However, if an app introduces new models or fields that deviate from NetBox, then the steps described above should be followed.
+
 ## Why are `DiffSyncModel` classes generated dynamically?
 
 `DiffSyncModel` classes are generated dynamically to efficiently support compatibility with various versions of NetBox and Nautobot, as well as Nautobot apps, using a single codebase. This method avoids the need for manually updating the code for each combination of NetBox/Nautobot versions and Nautobot apps, which would be complicated and time-consuming. Dynamic generation allows `DiffSyncModel` classes to adapt to the given data and the current Nautobot models, enabling us to maintain compatibility with minimal manual intervention.
