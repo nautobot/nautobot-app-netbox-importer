@@ -1,0 +1,62 @@
+[
+{
+  "model": "ipam.ipaddress",
+  "pk": "4fcdde09-e6d5-5208-a715-5b0e34f42bdf",
+  "fields": {
+    "created": "2022-04-08T00:25:22.586Z",
+    "last_updated": "2024-01-02T12:07:58.572Z",
+    "_custom_field_data": {},
+    "host": "172.16.0.10",
+    "mask_length": 24,
+    "type": "host",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": null,
+    "parent": "32bded30-89da-5a7f-9b21-66af799bf284",
+    "ip_version": 4,
+    "tenant": null,
+    "nat_inside": null,
+    "dns_name": "",
+    "description": ""
+  }
+},
+{
+  "model": "ipam.ipaddress",
+  "pk": "534d5cae-b42a-5ec5-bd6a-547644b71b3b",
+  "fields": {
+    "created": "2022-04-08T00:25:23.949Z",
+    "last_updated": "2024-01-02T12:07:58.650Z",
+    "_custom_field_data": {},
+    "host": "172.16.0.24",
+    "mask_length": 24,
+    "type": "host",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": null,
+    "parent": "32bded30-89da-5a7f-9b21-66af799bf284",
+    "ip_version": 4,
+    "tenant": null,
+    "nat_inside": null,
+    "dns_name": "",
+    "description": ""
+  }
+},
+{
+  "model": "ipam.ipaddress",
+  "pk": "9a599a31-7ab3-594b-b730-0f4e44b52f62",
+  "fields": {
+    "created": "2022-04-08T00:25:29.449Z",
+    "last_updated": "2024-01-02T12:07:58.964Z",
+    "_custom_field_data": {},
+    "host": "172.18.0.19",
+    "mask_length": 24,
+    "type": "host",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": null,
+    "parent": "f005909f-a780-5de5-bfec-32bb1bcd720d",
+    "ip_version": 4,
+    "tenant": null,
+    "nat_inside": null,
+    "dns_name": "",
+    "description": ""
+  }
+}
+]

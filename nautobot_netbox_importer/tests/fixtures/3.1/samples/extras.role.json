@@ -1,0 +1,49 @@
+[
+{
+  "model": "extras.role",
+  "pk": "a1720482-adab-5218-8fcb-429fba65690f",
+  "fields": {
+    "created": "2021-04-05T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:39.242Z",
+    "_custom_field_data": {},
+    "name": "Database Server",
+    "color": "cddc39",
+    "description": "",
+    "weight": null,
+    "content_types": []
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "aeb42967-678b-5d83-b25f-de46ae18875b",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:39.262Z",
+    "_custom_field_data": {},
+    "name": "Access - Wireless",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": 1000,
+    "content_types": [
+      72,
+      68
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "f8193196-4bba-54a7-a850-92f647f6cdc4",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:39.247Z",
+    "_custom_field_data": {},
+    "name": "Infrastructure",
+    "color": "00bcd4",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      60
+    ]
+  }
+}
+]

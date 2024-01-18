@@ -1,0 +1,50 @@
+[
+{
+  "model": "circuits.provider",
+  "pk": "259e85ef-c01a-5e32-9be4-bc9e51e66949",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:16.396Z",
+    "_custom_field_data": {},
+    "name": "NTT",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "26f37428-e26a-5e09-8b52-664df6624a2c",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:16.391Z",
+    "_custom_field_data": {},
+    "name": "Comcast",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "aaa90236-9b2a-5ae3-901d-59574a1d3da0",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:16.388Z",
+    "_custom_field_data": {},
+    "name": "AT&T",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+}
+]

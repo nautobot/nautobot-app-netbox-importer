@@ -1,0 +1,47 @@
+[
+{
+  "model": "virtualization.cluster",
+  "pk": "46b45688-8e65-5009-9e12-7fd0ea171410",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:44.588Z",
+    "_custom_field_data": {},
+    "name": "gc-asia-northeast3",
+    "cluster_type": "49f2845e-b8f4-58e3-8534-2a1131071e25",
+    "cluster_group": "7a2352bc-7253-5c1d-bb1f-0a4a1412dc9e",
+    "tenant": null,
+    "location": null,
+    "comments": ""
+  }
+},
+{
+  "model": "virtualization.cluster",
+  "pk": "49679048-e284-52ee-935f-96a4316b8d38",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:44.571Z",
+    "_custom_field_data": {},
+    "name": "gc-southamerica-southeast1",
+    "cluster_type": "49f2845e-b8f4-58e3-8534-2a1131071e25",
+    "cluster_group": "aa168442-0c73-5681-b8bd-243f5f93842f",
+    "tenant": null,
+    "location": null,
+    "comments": ""
+  }
+},
+{
+  "model": "virtualization.cluster",
+  "pk": "b9f4422d-6887-5cc2-b703-07ae64ca2d26",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:44.570Z",
+    "_custom_field_data": {},
+    "name": "gc-northamerica-northeast1",
+    "cluster_type": "49f2845e-b8f4-58e3-8534-2a1131071e25",
+    "cluster_group": "f296b7c8-68ed-5c8a-85fc-11ef680cbe7e",
+    "tenant": null,
+    "location": null,
+    "comments": ""
+  }
+}
+]

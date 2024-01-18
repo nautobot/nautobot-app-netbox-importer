@@ -1,0 +1,50 @@
+[
+{
+  "model": "dcim.interfacetemplate",
+  "pk": "2464541e-9267-52e2-919a-baf7e916e4b7",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:07.676Z",
+    "_custom_field_data": {},
+    "device_type": "b1fc894c-dddf-56a0-8bf4-92467a5d97bd",
+    "name": "xe-0/0/25",
+    "label": "",
+    "description": "",
+    "_name": "0000000099999999xe-000025............",
+    "type": "10gbase-x-sfpp",
+    "mgmt_only": false
+  }
+},
+{
+  "model": "dcim.interfacetemplate",
+  "pk": "3155884a-1ef6-5027-88c6-fd1c540863a7",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:07.404Z",
+    "_custom_field_data": {},
+    "device_type": "03d4a2c5-e08b-5cc1-924d-c401194d393c",
+    "name": "xe-0/0/1",
+    "label": "",
+    "description": "",
+    "_name": "0000000099999999xe-000001............",
+    "type": "10gbase-x-xfp",
+    "mgmt_only": false
+  }
+},
+{
+  "model": "dcim.interfacetemplate",
+  "pk": "ef2f3fb3-b8e9-5619-b4aa-1bfd3545242e",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:07.513Z",
+    "_custom_field_data": {},
+    "device_type": "9cbb3312-7783-519f-be1b-5c849324a2d1",
+    "name": "xe-0/0/24",
+    "label": "",
+    "description": "",
+    "_name": "0000000099999999xe-000024............",
+    "type": "10gbase-t",
+    "mgmt_only": false
+  }
+}
+]

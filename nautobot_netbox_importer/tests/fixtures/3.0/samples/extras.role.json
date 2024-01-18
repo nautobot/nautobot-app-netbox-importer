@@ -1,0 +1,52 @@
+[
+{
+  "model": "extras.role",
+  "pk": "6a0592ca-5680-5ebd-a728-6871e0e7ec3d",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:15.338Z",
+    "_custom_field_data": {},
+    "name": "Access - Data",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": 1000,
+    "content_types": [
+      72,
+      68
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "88c2a18f-8196-5263-b6e3-cf79c16c33ce",
+  "fields": {
+    "created": "2020-12-20T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:15.309Z",
+    "_custom_field_data": {},
+    "name": "Core Switch",
+    "color": "3f51b5",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      42
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "aeb42967-678b-5d83-b25f-de46ae18875b",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:15.344Z",
+    "_custom_field_data": {},
+    "name": "Access - Wireless",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": 1000,
+    "content_types": [
+      72,
+      68
+    ]
+  }
+}
+]

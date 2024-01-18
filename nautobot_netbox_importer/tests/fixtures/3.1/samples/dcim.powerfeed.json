@@ -1,0 +1,77 @@
+[
+{
+  "model": "dcim.powerfeed",
+  "pk": "05541f06-08c9-5d84-a8b6-13ce3cd45938",
+  "fields": {
+    "created": "2021-04-05T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:52.704Z",
+    "_custom_field_data": {},
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "power_panel": "d74c0a43-19ad-5743-b7e7-96532d49ade3",
+    "rack": "d1b8fb44-5ac2-5f32-a1b4-bc669201f368",
+    "name": "P3-8A",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "type": "primary",
+    "supply": "ac",
+    "phase": "single-phase",
+    "voltage": 220,
+    "amperage": 20,
+    "max_utilization": 80,
+    "available_power": 3520,
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.powerfeed",
+  "pk": "10da56b6-09b1-5da6-9505-d9253863e062",
+  "fields": {
+    "created": "2021-04-05T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:52.679Z",
+    "_custom_field_data": {},
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "power_panel": "d74c0a43-19ad-5743-b7e7-96532d49ade3",
+    "rack": "000a90c0-0499-5ad5-9f12-936fde3b8735",
+    "name": "P3-1A",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "type": "primary",
+    "supply": "ac",
+    "phase": "single-phase",
+    "voltage": 220,
+    "amperage": 20,
+    "max_utilization": 80,
+    "available_power": 3520,
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.powerfeed",
+  "pk": "38f5aa36-561b-5cd8-8362-9d093ff7b89a",
+  "fields": {
+    "created": "2021-04-05T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:52.671Z",
+    "_custom_field_data": {},
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "power_panel": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+    "rack": "2ad09e04-b923-5eca-9fc0-7b1dcae72bf5",
+    "name": "P1-15A",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "type": "primary",
+    "supply": "ac",
+    "phase": "single-phase",
+    "voltage": 220,
+    "amperage": 20,
+    "max_utilization": 80,
+    "available_power": 3520,
+    "comments": ""
+  }
+}
+]

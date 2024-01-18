@@ -2,7 +2,7 @@
 # Metadata is inherited from Nautobot. If not including Nautobot in the environment, this should be added
 from importlib import metadata
 
-from nautobot.extras.plugins import NautobotAppConfig
+from nautobot.apps import NautobotAppConfig
 
 __version__ = metadata.version(__name__)
 
@@ -17,8 +17,8 @@ class NautobotNetboxImporterConfig(NautobotAppConfig):
     description = "Data importer from NetBox 2.10.x to Nautobot."
     base_url = "netbox-importer"
     required_settings = []
-    min_version = "1.6.0"
-    max_version = "1.9999"
+    min_version = "2.0.6"
+    max_version = "2.9999"
     default_settings = {}
     caching_config = {}
 

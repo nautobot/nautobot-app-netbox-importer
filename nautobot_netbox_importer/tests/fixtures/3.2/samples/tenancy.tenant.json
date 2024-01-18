@@ -1,0 +1,47 @@
+[
+{
+  "model": "tenancy.tenant",
+  "pk": "325fbd45-7e2d-5f37-b0ab-f179a4d2f291",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.351Z",
+    "_custom_field_data": {
+      "cust_id": "PPI02"
+    },
+    "name": "Pied Piper",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "35f6098e-5c2c-58b3-824c-9b5c024a4321",
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.362Z",
+    "_custom_field_data": {
+      "cust_id": ""
+    },
+    "name": "Jimbob's Banking & Trust",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "40244885-7452-547f-ae8c-28d0a85a4d7c",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.356Z",
+    "_custom_field_data": {
+      "cust_id": "WAY01"
+    },
+    "name": "Wayne Enterprises",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+}
+]

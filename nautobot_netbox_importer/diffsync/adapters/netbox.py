@@ -1,278 +1,172 @@
-"""DiffSync adapters for NetBox data dumps."""
+"""NetBox to Nautobot Source Importer Definitions."""
+from gzip import GzipFile
+from pathlib import Path
+from typing import Callable
+from typing import Generator
+from typing import NamedTuple
+from typing import Union
+from urllib.parse import ParseResult
+from urllib.parse import urlparse
 
-import json
-from uuid import uuid4
+import ijson
+import requests
+from django.core.management import call_command
+from django.db.transaction import atomic
 
-from typing import Dict, Set
+from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations
+from nautobot_netbox_importer.generator import DiffSummary
+from nautobot_netbox_importer.generator import SourceAdapter
+from nautobot_netbox_importer.generator import SourceDataGenerator
+from nautobot_netbox_importer.generator import SourceRecord
+from nautobot_netbox_importer.generator import logger
+from nautobot_netbox_importer.generator import print_summary
+from nautobot_netbox_importer.utils import GENERATOR_SETUP_MODULES
+from nautobot_netbox_importer.utils import register_generator_setup
 
-from diffsync.enum import DiffSyncModelFlags
-import structlog
+_FileRef = Union[str, Path, ParseResult]
 
-from nautobot_netbox_importer.diffsync.models.abstract import NautobotBaseModel
-from nautobot_netbox_importer.diffsync.models.validation import netbox_pk_to_nautobot_pk
-from nautobot_netbox_importer.utils import ProgressBar
-from .abstract import N2NDiffSync
+_HTTP_TIMEOUT = 60
 
 
-class NetBox210DiffSync(N2NDiffSync):
-    """DiffSync adapter for working with data from NetBox 2.10.x."""
+class _DryRunException(Exception):
+    """Exception raised when a dry-run is requested."""
 
-    logger = structlog.get_logger()
 
-    _unsupported_fields = {}
+class _ValidationIssuesDetected(Exception):
+    """Exception raised when validation issues are detected."""
 
-    def __init__(self, *args, source_data=None, **kwargs):
-        """Store the provided source_data for use when load() is called later."""
-        self.source_data = source_data
-        super().__init__(*args, **kwargs)
 
-    @property
-    def unsupported_fields(self):
-        """Public interface for accessing class attr `_unsupported_fields`."""
-        return self.__class__._unsupported_fields  # pylint: disable=protected-access
+class NetBoxImporterOptions(NamedTuple):
+    """NetBox importer options."""
 
-    @staticmethod
-    def _get_ignored_fields(netbox_data: Dict, nautobot_instance: NautobotBaseModel) -> Set[str]:
-        """
-        Get fields from NetBox JSON that were not handled by the importer.
+    dry_run: bool = True
+    bypass_data_validation: bool = False
+    summary: bool = False
+    field_mapping: bool = False
+    update_paths: bool = False
+    fix_powerfeed_locations: bool = False
+    sitegroup_parent_always_region: bool = False
 
-        This only counts fields that have values.
 
-        Args:
-            netbox_data: The NetBox data for a particular database entry.
-            nautobot_instance: The Nautobot DiffSync instance created for `netbox_data`.
+AdapterSetupFunction = Callable[[SourceAdapter], None]
 
-        Returns:
-            set: The NetBox field names ignored by the importer.
-        """
-        # Get fields passed from NetBox that have values and ignore internal fields
-        netbox_fields = {key for key, value in netbox_data.items() if value and not key.startswith("_")}
-        # Get fields set on the model instance
-        instance_fields = nautobot_instance.__fields_set__
-        # Account for aliases when gettig a diff of fields instantiated on the model
-        field_aliases = {field.alias for field in nautobot_instance.__fields__.values() if field.alias != field.name}
-        return netbox_fields - instance_fields - field_aliases - nautobot_instance.ignored_fields
+for _name in ("base", "locations", "dcim", "circuits", "ipam", "virtualization"):
+    register_generator_setup(f"nautobot_netbox_importer.diffsync.models.{_name}")
 
-    def _log_ignored_fields_details(
-        self,
-        netbox_data: Dict,
-        nautobot_instance: NautobotBaseModel,
-        model_name: str,
-        ignored_fields: Set[str],
-    ) -> None:
-        """
-        Log a debug message for NetBox fields ignored by the importer.
 
-        This will log for every instance of fields that were ignored by the
-        importer, so if there are a 100 instances of a model with an ignored
-        field, then 100 log entries will be generated. In order to prevent the
-        logs from generating too much noise, this is only logged as a debug.
+class NetBoxAdapter(SourceAdapter):
+    """NetBox Source Adapter."""
 
-        Args:
-            netbox_data: The NetBox data for a particular database entry.
-            nautobot_instance: The Nautobot DiffSync instance created for `netbox_data`.
-            model_name: The DiffSync modelname for the NetBox entry.
-            ignored_fields: The field names in `netbox_data` that were ignored.
-        """
-        ignored_fields_with_values = (f"{field}={netbox_data[field]}" for field in ignored_fields)
-        ignored_fields_data_str = ", ".join(ignored_fields_with_values)
-        self.logger.debug(
-            "NetBox field not defined for DiffSync Model",
-            comment=(
-                f"The following fields were defined in NetBox for {model_name} - {str(nautobot_instance)}, "
-                f"but they will be ignored by the Nautobot import: {ignored_fields_data_str}"
-            ),
-            pk=nautobot_instance.pk,
-        )
+    # pylint: disable=keyword-arg-before-vararg
+    def __init__(self, input_ref: _FileRef, options: NetBoxImporterOptions, job=None, sync=None, *args, **kwargs):
+        """Initialize NetBox Source Adapter."""
+        super().__init__(name="NetBox", get_source_data=_get_reader(input_ref), *args, **kwargs)
+        self.job = job
+        self.sync = sync
 
-    def _log_ignored_fields_info(
-        self,
-        model_name: str,
-        ignored_fields: Set[str],
-    ) -> None:
-        """
-        Log a warning message for NetBox fields ignored by the importer.
+        self.options = options
+        self.diff_summary: DiffSummary = {}
 
-        This will log a warning for each unique field that is ignored by the
-        importer, so if there are 100 instances of a model with an ignored field,
-        then only 1 entry will be logged. This is used to inform users that the
-        field is not supported by the importer, but not flood the logs.
+        for name in GENERATOR_SETUP_MODULES:
+            setup = __import__(name, fromlist=["setup"]).setup
+            setup(self)
 
-        Args:
-            netbox_data: The NetBox data for a particular database entry.
-            nautobot_instance: The Nautobot DiffSync instance created for `netbox_data`.
-            model_name: The DiffSync modelname for the NetBox entry.
-            ignored_fields: The field names in `netbox_data` that were ignored.
-        """
-        log_message = (
-            f"The following fields are defined in NetBox for {model_name}, "
-            "but are not supported by this importer: {}"
-        )
-        # first time instance has ignored fields
-        if model_name not in self.unsupported_fields:
-            ignored_fields_str = ", ".join(ignored_fields)
-            self.logger.warning(log_message.format(ignored_fields_str))
-            self.unsupported_fields[model_name] = ignored_fields
-        # subsequent instances might have newly ignored fields
-        else:
-            unlogged_fields = ignored_fields - self.unsupported_fields[model_name]
-            if unlogged_fields:
-                unlogged_ignored_fields_str = ", ".join(unlogged_fields)
-                self.logger.warning(log_message.format(unlogged_ignored_fields_str))
-                self.unsupported_fields[model_name].update(unlogged_fields)
+    def load(self) -> None:
+        """Load data from NetBox."""
+        self.import_data()
+        if self.options.fix_powerfeed_locations:
+            fix_power_feed_locations(self)
+        self.post_import()
 
-    def _log_ignored_fields(
-        self,
-        netbox_data: Dict,
-        nautobot_instance: NautobotBaseModel,
-    ) -> None:
-        """
-        Convenience method for handling logging of ignored fields.
+    def import_to_nautobot(self) -> None:
+        """Import a NetBox export file into Nautobot."""
+        commited = False
+        try:
+            self._atomic_import()
+            commited = True
+        except _DryRunException:
+            logger.warning("Dry-run mode, no data has been imported.")
+        except _ValidationIssuesDetected:
+            logger.warning("Data validation issues detected, no data has been imported.")
 
-        Args:
-            netbox_data: The NetBox data for a particular database entry.
-            nautobot_instance: The Nautobot DiffSync instance created for `netbox_data`.
-        """
-        ignored_fields = self._get_ignored_fields(netbox_data, nautobot_instance)
-        if ignored_fields:
-            model_name = nautobot_instance._modelname  # pylint: disable=protected-access
-            self._log_ignored_fields_details(netbox_data, nautobot_instance, model_name, ignored_fields)
-            self._log_ignored_fields_info(model_name, ignored_fields)
+        if commited and self.options.update_paths:
+            logger.info("Updating paths ...")
+            call_command("trace_paths", no_input=True)
+            logger.info(" ... Updating paths completed.")
 
-    def load_record(self, diffsync_model, record):  # pylint: disable=too-many-branches,too-many-statements
-        """Instantiate the given model class from the given record."""
-        data = record["fields"].copy()
-        data["pk"] = record["pk"]
+        if self.options.summary:
+            print_summary(self, self.diff_summary, self.options.field_mapping)
 
-        # Fixup fields that are actually foreign-key (FK) associations by replacing
-        # their FK ids with the DiffSync model unique-id fields.
-        for key, target_name in diffsync_model.fk_associations().items():
-            if key not in data or not data[key]:
-                # Null reference, no processing required.
-                continue
+    @atomic
+    def _atomic_import(self) -> None:
+        self.load()
 
-            if target_name == "status":
-                # Special case as Status is a hard-coded field in NetBox, not a model reference
-                # Construct an appropriately-formatted mock natural key and use that instead
-                # TODO: we could also do this with a custom validator on the StatusRef model; might be better?
-                data[key] = {"slug": data[key]}
-                continue
+        diff = self.nautobot.sync_from(self)
+        self.diff_summary = diff.summary()
 
-            # In the case of generic foreign keys, we have to actually check a different field
-            # on the DiffSync model to determine the model type that this foreign key is referring to.
-            # By convention, we label such fields with a '*', as if this were a C pointer.
-            if target_name.startswith("*"):
-                target_content_type_field = target_name[1:]
-                target_content_type_pk = record["fields"][target_content_type_field]
-                if not isinstance(target_content_type_pk, int):
-                    self.logger.error(f"Invalid content-type PK value {target_content_type_pk}")
-                    data[key] = None
-                    continue
-                target_content_type_record = self.get_by_pk(self.contenttype, target_content_type_pk)
-                target_name = target_content_type_record.model
+        if self.nautobot.validation_issues and not self.options.bypass_data_validation:
+            raise _ValidationIssuesDetected("Data validation issues detected, aborting the transaction.")
 
-            # Identify the DiffSyncModel class that this FK is pointing to
-            try:
-                target_class = getattr(self, target_name)
-            except AttributeError:
-                self.logger.warning("Unknown/unrecognized class name!", name=target_name)
-                data[key] = None
-                continue
+        if self.options.dry_run:
+            raise _DryRunException("Aborting the transaction due to the dry-run mode.")
 
-            if isinstance(data[key], list):
-                # This field is a one-to-many or many-to-many field, a list of foreign key references.
-                if issubclass(target_class, NautobotBaseModel):
-                    # Replace each NetBox integer FK with the corresponding deterministic Nautobot UUID FK.
-                    data[key] = [netbox_pk_to_nautobot_pk(target_name, pk) for pk in data[key]]
-                else:
-                    # It's a base Django model such as ContentType or Group.
-                    # Since we can't easily control its PK in Nautobot, use its natural key instead.
-                    #
-                    # Special case: there are ContentTypes in NetBox that don't exist in Nautobot,
-                    # skip over references to them.
-                    references = [self.get_by_pk(target_name, pk) for pk in data[key]]
-                    references = filter(lambda entry: not entry.model_flags & DiffSyncModelFlags.IGNORE, references)
-                    data[key] = [entry.get_identifiers() for entry in references]
-            elif isinstance(data[key], int):
-                # Standard NetBox integer foreign-key reference
-                if issubclass(target_class, NautobotBaseModel):
-                    # Replace the NetBox integer FK with the corresponding deterministic Nautobot UUID FK.
-                    data[key] = netbox_pk_to_nautobot_pk(target_name, data[key])
-                else:
-                    # It's a base Django model such as ContentType or Group.
-                    # Since we can't easily control its PK in Nautobot, use its natural key instead
-                    reference = self.get_by_pk(target_name, data[key])
-                    if reference.model_flags & DiffSyncModelFlags.IGNORE:
-                        data[key] = None
-                    else:
-                        data[key] = reference.get_identifiers()
+
+def _read_stream(stream) -> Generator[SourceRecord, None, None]:
+    for item in ijson.items(stream, "item"):
+        content_type = item["model"]
+        netbox_pk = item.get("pk", None)
+        source_data = item["fields"]
+
+        if netbox_pk:
+            source_data["id"] = netbox_pk
+
+        yield SourceRecord(content_type, source_data)
+
+
+def _get_reader_from_path(file_path: Union[str, Path]) -> SourceDataGenerator:
+    result = Path(file_path)
+    if not result.is_file():
+        raise FileNotFoundError(f"File {file_path} does not exist.")
+
+    def reader():
+        with open(result, "rb") as file:
+            yield from _read_stream(file)
+
+    return reader
+
+
+def _get_reader_from_url(url: ParseResult) -> SourceDataGenerator:
+    def reader():
+        with requests.get(url.geturl(), stream=True, timeout=_HTTP_TIMEOUT) as response:
+            response.raise_for_status()
+            if response.headers.get("Content-Encoding") == "gzip":
+                stream = GzipFile(fileobj=response.raw)
             else:
-                self.logger.error(f"Invalid PK value {data[key]}")
-                data[key] = None
+                stream = response.raw
 
-        if diffsync_model == self.user:
-            # NetBox has separate User and UserConfig models, but in Nautobot they're combined.
-            # Load the corresponding UserConfig into the User record for completeness.
-            self.logger.debug("Looking for UserConfig corresponding to User", username=data["username"])
-            for other_record in self.source_data:
-                if other_record["model"] == "users.userconfig" and other_record["fields"]["user"] == record["pk"]:
-                    data["config_data"] = other_record["fields"]["data"]
-                    break
-            else:
-                self.logger.warning("No UserConfig found for User", username=data["username"], pk=record["pk"])
-                data["config_data"] = {}
-        elif diffsync_model == self.customfield:
-            # Because marking a custom field as "required" doesn't automatically assign a value to pre-existing records,
-            # we never want to enforce 'required=True' at import time as there may be otherwise valid records that predate
-            # the creation of this field. Store it on a private field instead and we'll fix it up at the end.
-            data["actual_required"] = data["required"]
-            data["required"] = False
+            yield from _read_stream(stream)
 
-            if data["type"] == "select":
-                # NetBox stores the choices for a "select" CustomField (NetBox has no "multiselect" CustomFields)
-                # locally within the CustomField model, whereas Nautobot has a separate CustomFieldChoices model.
-                # So we need to split the choices out into separate DiffSync instances.
-                # Since "choices" is an ArrayField, we have to parse it from the JSON string
-                # see also models.abstract.ArrayField
-                for choice in json.loads(data["choices"]):
-                    self.make_model(
-                        self.customfieldchoice,
-                        {
-                            "pk": uuid4(),
-                            "field": netbox_pk_to_nautobot_pk("customfield", record["pk"]),
-                            "value": choice,
-                        },
-                    )
-                del data["choices"]
-        elif diffsync_model == self.virtualmachine:
-            # NetBox stores the vCPU value as DecimalField, Nautobot has PositiveSmallIntegerField,
-            # so we need to cast here
-            if data["vcpus"] is not None:
-                data["vcpus"] = int(float(data["vcpus"]))
+    return reader
 
-        instance = self.make_model(diffsync_model, data)
-        self._log_ignored_fields(data, instance)
-        return instance
 
-    def load(self):
-        """Load records from the provided source_data into DiffSync."""
-        self.logger.info("Loading imported NetBox source data into DiffSync...")
-        for modelname in ("contenttype", "permission", *self.top_level):
-            diffsync_model = getattr(self, modelname)
-            content_type_label = diffsync_model.nautobot_model()._meta.label_lower
-            # Handle a NetBox vs Nautobot discrepancy - the Nautobot target model is 'users.user',
-            # but the NetBox data export will have user records under the label 'auth.user'.
-            if content_type_label == "users.user":
-                content_type_label = "auth.user"
-            records = [record for record in self.source_data if record["model"] == content_type_label]
-            if records:
-                for record in ProgressBar(
-                    records,
-                    desc=f"{modelname:<25}",  # len("consoleserverporttemplate")
-                    verbosity=self.verbosity,
-                ):
-                    self.load_record(diffsync_model, record)
+def _get_reader(input_ref: _FileRef) -> SourceDataGenerator:
+    """Read NetBox source file from file or HTTP resource."""
+    if isinstance(input_ref, str):
+        url = urlparse(input_ref)
 
-        self.logger.info("Data loading from NetBox source data complete.")
-        # Discard the source data to free up memory
-        self.source_data = None
+        if not url.scheme:
+            return _get_reader_from_path(input_ref)
+
+        if url.scheme == "file":
+            return _get_reader_from_path(url.path)
+
+        if url.scheme in ["http", "https"]:
+            return _get_reader_from_url(url)
+
+    if isinstance(input_ref, Path):
+        return _get_reader_from_path(input_ref)
+
+    if isinstance(input_ref, ParseResult):
+        return _get_reader_from_url(input_ref)
+
+    raise ValueError(f"Unsupported file reference: {input_ref}")

@@ -13,9 +13,13 @@ limitations under the License.
 """
 
 import os
+from pathlib import Path
+from time import sleep
 
 from invoke.collection import Collection
 from invoke.tasks import task as invoke_task
+
+_TEST_DUMP_PATH = Path(__file__).parent / "nautobot_netbox_importer" / "tests" / "fixtures" / "dump.sql"
 
 
 def is_truthy(arg):
@@ -46,7 +50,7 @@ namespace = Collection("nautobot_netbox_importer")
 namespace.configure(
     {
         "nautobot_netbox_importer": {
-            "nautobot_ver": "1.6.0",
+            "nautobot_ver": "2.0.6",
             "project_name": "nautobot-netbox-importer",
             "python_ver": "3.11",
             "local": False,
@@ -65,6 +69,25 @@ namespace.configure(
 
 def _is_compose_included(context, name):
     return f"docker-compose.{name}.yml" in context.nautobot_netbox_importer.compose_files
+
+
+def _await_healthy_service(context, service):
+    container_id = docker_compose(context, f"ps -q -- {service}", pty=False, echo=False, hide=True).stdout.strip()
+    _await_healthy_container(context, container_id)
+
+
+def _await_healthy_container(context, container_id):
+    while True:
+        result = context.run(
+            "docker inspect --format='{{.State.Health.Status}}' " + container_id,
+            pty=False,
+            echo=False,
+            hide=True,
+        )
+        if result.stdout.strip() == "healthy":
+            break
+        print(f"Waiting for `{container_id}` container to become healthy ...")
+        sleep(1)
 
 
 def task(function=None, *args, **kwargs):
@@ -617,6 +640,96 @@ def check_migrations(context):
     run_command(context, command)
 
 
+@task
+def dump_test_environment(context):
+    """Dump the test environment to a file.
+
+    !!! WARNING !!!! This task removes all data from the default nautobot database.
+
+    Use to recreate the test environment dump file after adding tested content types and re-creating the test fixtures.
+
+    Pre-requisities:
+
+    - Use on the minimal Nautobot version supported.
+    - Nautobot container is running.
+    - Migrations are applied.
+
+    Creates a dump.sql file in the tests/fixtures directory with flushed database to keep the content types IDs
+    consistent across tests.
+    """
+    command = [
+        "exec -- nautobot",
+        "nautobot-server",
+        "flush",
+        "--noinput",
+    ]
+    docker_compose(context, " ".join(command), pty=True)
+
+    command = [
+        "exec -- db sh -c",
+        "'",
+        "pg_dump",
+        "--clean",
+        "--username=$POSTGRES_USER",
+        "--dbname=$POSTGRES_DB",
+        "--inserts",
+        "'",
+        f"> '{_TEST_DUMP_PATH}'",
+    ]
+    docker_compose(context, " ".join(command), pty=True)
+
+
+@task
+def load_test_environment(context, db_name="test_nautobot", keepdb=False):
+    """Ensure that the test environment is ready.
+
+    To create dump.sql file, use the following commands:
+
+    invoke dump-test-environment
+    """
+    start(context, "db")
+    _await_healthy_service(context, "db")
+
+    if not keepdb:
+        command = [
+            "exec -- db sh -c",
+            "'",
+            "dropdb",
+            "--if-exists",
+            "--user=$POSTGRES_USER",
+            db_name,
+            "'",
+        ]
+        docker_compose(context, " ".join(command), pty=True, hide=True)
+
+    command = [
+        "exec -- db sh -c",
+        "'",
+        "createdb",
+        "--user=$POSTGRES_USER",
+        db_name,
+        "'",
+    ]
+    try:
+        docker_compose(context, " ".join(command), pty=True, hide=True)
+    # pylint: disable=broad-except
+    except Exception:
+        if keepdb:
+            return
+        raise
+
+    command = [
+        "exec -- db sh -c",
+        "'",
+        "psql",
+        "--username=$POSTGRES_USER",
+        db_name,
+        "'",
+        f"< '{_TEST_DUMP_PATH}'",
+    ]
+    docker_compose(context, " ".join(command), pty=False, hide=True)
+
+
 @task(
     help={
         "keepdb": "save and re-use test database between test runs for faster re-testing.",
@@ -637,6 +750,10 @@ def unittest(
     verbose=False,
 ):
     """Run Nautobot unit tests."""
+    load_test_environment(context, keepdb=keepdb)
+    if not keepdb:
+        keepdb = True
+
     command = f"coverage run --module nautobot.core.cli test {label}"
 
     if keepdb:

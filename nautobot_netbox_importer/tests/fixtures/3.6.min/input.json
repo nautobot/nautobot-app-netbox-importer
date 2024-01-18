@@ -1,0 +1,2096 @@
+[
+{
+  "model": "tenancy.tenantgroup",
+  "pk": 1,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-19T02:43:53.309Z",
+    "custom_field_data": {},
+    "parent": null,
+    "description": "",
+    "name": "Customers",
+    "slug": "customers",
+    "lft": 1,
+    "rght": 2,
+    "tree_id": 1,
+    "level": 0
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 1,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:27.571Z",
+    "custom_field_data": {
+      "cust_id": "INI04"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Initech",
+    "slug": "initech",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 2,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:28.013Z",
+    "custom_field_data": {
+      "cust_id": "STR01"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Strickland Propane",
+    "slug": "strickland-propane",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 3,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:27.776Z",
+    "custom_field_data": {
+      "cust_id": "PPI02"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Pied Piper",
+    "slug": "pied-piper",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 4,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:27.927Z",
+    "custom_field_data": {
+      "cust_id": "STA03"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Stark Industries",
+    "slug": "stark-industries",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 5,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:27.515Z",
+    "custom_field_data": {
+      "cust_id": "DMI01"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Dunder-Mifflin, Inc.",
+    "slug": "dunder-mifflin",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 6,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:28.158Z",
+    "custom_field_data": {
+      "cust_id": "WAY01"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Wayne Enterprises",
+    "slug": "wayne-enterprises",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 7,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:27.449Z",
+    "custom_field_data": {
+      "cust_id": "CYB01"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Cyberdyne Systems",
+    "slug": "cyberdyne",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 8,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:28.103Z",
+    "custom_field_data": {
+      "cust_id": "UMB01"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Umbrella Corporation",
+    "slug": "umbrella",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 9,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:27.631Z",
+    "custom_field_data": {
+      "cust_id": "YKY01"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Nakatomi Corportation",
+    "slug": "nakatomi",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 10,
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2021-03-10T20:44:16.078Z",
+    "custom_field_data": {
+      "cust_id": ""
+    },
+    "description": "",
+    "comments": "",
+    "name": "Jimbob's Banking & Trust",
+    "slug": "jimbobs-banking-trust",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 13,
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2021-04-02T16:46:50.851Z",
+    "custom_field_data": {
+      "cust_id": ""
+    },
+    "description": "",
+    "comments": "",
+    "name": "NC State University",
+    "slug": "nc-state",
+    "group": 1
+  }
+},
+{
+  "model": "extras.customfield",
+  "pk": 1,
+  "fields": {
+    "created": "2021-09-09T00:00:00Z",
+    "last_updated": "2021-09-09T14:52:44.516Z",
+    "type": "text",
+    "object_type": null,
+    "name": "cust_id",
+    "label": "Customer ID",
+    "group_name": "",
+    "description": "",
+    "required": false,
+    "search_weight": 1000,
+    "filter_logic": "exact",
+    "default": null,
+    "weight": 100,
+    "validation_minimum": null,
+    "validation_maximum": null,
+    "validation_regex": "^[A-Z]{3}\\d{2}$",
+    "choice_set": null,
+    "ui_visibility": "read-write",
+    "content_types": [
+      [
+        "tenancy",
+        "tenant"
+      ]
+    ]
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 1,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:10:30.195Z",
+    "custom_field_data": {},
+    "parent": null,
+    "name": "North America",
+    "slug": "north-america",
+    "description": "",
+    "lft": 1,
+    "rght": 110,
+    "tree_id": 4,
+    "level": 0
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 2,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:10:30.261Z",
+    "custom_field_data": {},
+    "parent": null,
+    "name": "South America",
+    "slug": "south-america",
+    "description": "",
+    "lft": 1,
+    "rght": 2,
+    "tree_id": 6,
+    "level": 0
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 3,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:10:30.298Z",
+    "custom_field_data": {},
+    "parent": null,
+    "name": "Europe",
+    "slug": "europe",
+    "description": "",
+    "lft": 1,
+    "rght": 10,
+    "tree_id": 3,
+    "level": 0
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 4,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:10:30.332Z",
+    "custom_field_data": {},
+    "parent": null,
+    "name": "Africa",
+    "slug": "africa",
+    "description": "",
+    "lft": 1,
+    "rght": 2,
+    "tree_id": 1,
+    "level": 0
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 5,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:10:30.367Z",
+    "custom_field_data": {},
+    "parent": null,
+    "name": "Asia",
+    "slug": "asia",
+    "description": "",
+    "lft": 1,
+    "rght": 8,
+    "tree_id": 2,
+    "level": 0
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 6,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:10:30.401Z",
+    "custom_field_data": {},
+    "parent": null,
+    "name": "Oceania",
+    "slug": "oceania",
+    "description": "",
+    "lft": 1,
+    "rght": 2,
+    "tree_id": 5,
+    "level": 0
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 7,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:17:10.906Z",
+    "custom_field_data": {},
+    "parent": 1,
+    "name": "United States",
+    "slug": "us",
+    "description": "",
+    "lft": 6,
+    "rght": 109,
+    "tree_id": 4,
+    "level": 1
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 8,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:17:10.994Z",
+    "custom_field_data": {},
+    "parent": 1,
+    "name": "Canada",
+    "slug": "ca",
+    "description": "",
+    "lft": 2,
+    "rght": 3,
+    "tree_id": 4,
+    "level": 1
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 9,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:17:11.071Z",
+    "custom_field_data": {},
+    "parent": 1,
+    "name": "Mexico",
+    "slug": "mx",
+    "description": "",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 4,
+    "level": 1
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 10,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:17:11.121Z",
+    "custom_field_data": {},
+    "parent": 3,
+    "name": "Netherlands",
+    "slug": "nl",
+    "description": "",
+    "lft": 6,
+    "rght": 7,
+    "tree_id": 3,
+    "level": 1
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 11,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:17:11.170Z",
+    "custom_field_data": {},
+    "parent": 3,
+    "name": "United Kingdon",
+    "slug": "gb",
+    "description": "",
+    "lft": 8,
+    "rght": 9,
+    "tree_id": 3,
+    "level": 1
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 12,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:17:11.219Z",
+    "custom_field_data": {},
+    "parent": 3,
+    "name": "France",
+    "slug": "fr",
+    "description": "",
+    "lft": 2,
+    "rght": 3,
+    "tree_id": 3,
+    "level": 1
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 13,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:17:11.272Z",
+    "custom_field_data": {},
+    "parent": 3,
+    "name": "Germany",
+    "slug": "de",
+    "description": "",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 3,
+    "level": 1
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 14,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:17:11.318Z",
+    "custom_field_data": {},
+    "parent": 5,
+    "name": "Singapore",
+    "slug": "sg",
+    "description": "",
+    "lft": 6,
+    "rght": 7,
+    "tree_id": 2,
+    "level": 1
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 15,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:17:11.368Z",
+    "custom_field_data": {},
+    "parent": 5,
+    "name": "China",
+    "slug": "cn",
+    "description": "",
+    "lft": 2,
+    "rght": 3,
+    "tree_id": 2,
+    "level": 1
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 16,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:17:11.423Z",
+    "custom_field_data": {},
+    "parent": 5,
+    "name": "India",
+    "slug": "in",
+    "description": "",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 2,
+    "level": 1
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 32,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.266Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Washington",
+    "slug": "us-wa",
+    "description": "",
+    "lft": 101,
+    "rght": 102,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 33,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.350Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Wisconsin",
+    "slug": "us-wi",
+    "description": "",
+    "lft": 105,
+    "rght": 106,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 34,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.432Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "West Virginia",
+    "slug": "us-wv",
+    "description": "",
+    "lft": 103,
+    "rght": 104,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 35,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.480Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Florida",
+    "slug": "us-fl",
+    "description": "",
+    "lft": 25,
+    "rght": 26,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 36,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.529Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Wyoming",
+    "slug": "us-wy",
+    "description": "",
+    "lft": 107,
+    "rght": 108,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 37,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.578Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "New Hampshire",
+    "slug": "us-nh",
+    "description": "",
+    "lft": 65,
+    "rght": 66,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 38,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.626Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "New Jersey",
+    "slug": "us-nj",
+    "description": "",
+    "lft": 67,
+    "rght": 68,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 39,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.676Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "New Mexico",
+    "slug": "us-nm",
+    "description": "",
+    "lft": 69,
+    "rght": 70,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 40,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.725Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "North Carolina",
+    "slug": "us-nc",
+    "description": "",
+    "lft": 73,
+    "rght": 74,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 41,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.772Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "North Dakota",
+    "slug": "us-nd",
+    "description": "",
+    "lft": 75,
+    "rght": 76,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 42,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.820Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Nebraska",
+    "slug": "us-ne",
+    "description": "",
+    "lft": 61,
+    "rght": 62,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 43,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.867Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "New York",
+    "slug": "us-ny",
+    "description": "",
+    "lft": 71,
+    "rght": 72,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 44,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.916Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Rhode Island",
+    "slug": "us-ri",
+    "description": "",
+    "lft": 85,
+    "rght": 86,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 45,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:27.964Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Nevada",
+    "slug": "us-nv",
+    "description": "",
+    "lft": 63,
+    "rght": 64,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 46,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.012Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Colorado",
+    "slug": "us-co",
+    "description": "",
+    "lft": 17,
+    "rght": 18,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 47,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.060Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "California",
+    "slug": "us-ca",
+    "description": "",
+    "lft": 15,
+    "rght": 16,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 48,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.108Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Georgia",
+    "slug": "us-ga",
+    "description": "",
+    "lft": 27,
+    "rght": 28,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 49,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.157Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Connecticut",
+    "slug": "us-ct",
+    "description": "",
+    "lft": 19,
+    "rght": 20,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 50,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.207Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Oklahoma",
+    "slug": "us-ok",
+    "description": "",
+    "lft": 79,
+    "rght": 80,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 51,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.255Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Ohio",
+    "slug": "us-oh",
+    "description": "",
+    "lft": 77,
+    "rght": 78,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 52,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.303Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Kansas",
+    "slug": "us-ks",
+    "description": "",
+    "lft": 39,
+    "rght": 40,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 53,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.350Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "South Carolina",
+    "slug": "us-sc",
+    "description": "",
+    "lft": 87,
+    "rght": 88,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 54,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.398Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Kentucky",
+    "slug": "us-ky",
+    "description": "",
+    "lft": 41,
+    "rght": 42,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 55,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.457Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Oregon",
+    "slug": "us-or",
+    "description": "",
+    "lft": 81,
+    "rght": 82,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 56,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.532Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "South Dakota",
+    "slug": "us-sd",
+    "description": "",
+    "lft": 89,
+    "rght": 90,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 57,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.596Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Delaware",
+    "slug": "us-de",
+    "description": "",
+    "lft": 21,
+    "rght": 22,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 58,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.647Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "District of Columbia",
+    "slug": "us-dc",
+    "description": "",
+    "lft": 23,
+    "rght": 24,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 59,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.695Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Hawaii",
+    "slug": "us-hi",
+    "description": "",
+    "lft": 29,
+    "rght": 30,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 60,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.742Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Texas",
+    "slug": "us-tx",
+    "description": "",
+    "lft": 93,
+    "rght": 94,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 61,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.789Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Louisiana",
+    "slug": "us-la",
+    "description": "",
+    "lft": 43,
+    "rght": 44,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 62,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.836Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Tennessee",
+    "slug": "us-tn",
+    "description": "",
+    "lft": 91,
+    "rght": 92,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 63,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.884Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Pennsylvania",
+    "slug": "us-pa",
+    "description": "",
+    "lft": 83,
+    "rght": 84,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 64,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.932Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Virginia",
+    "slug": "us-va",
+    "description": "",
+    "lft": 99,
+    "rght": 100,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 65,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:28.979Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Alaska",
+    "slug": "us-ak",
+    "description": "",
+    "lft": 9,
+    "rght": 10,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 66,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.027Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Alabama",
+    "slug": "us-al",
+    "description": "",
+    "lft": 7,
+    "rght": 8,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 67,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.075Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Arkansas",
+    "slug": "us-ar",
+    "description": "",
+    "lft": 13,
+    "rght": 14,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 68,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.123Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Vermont",
+    "slug": "us-vt",
+    "description": "",
+    "lft": 97,
+    "rght": 98,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 69,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.171Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Illinois",
+    "slug": "us-il",
+    "description": "",
+    "lft": 33,
+    "rght": 34,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 70,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.219Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Indiana",
+    "slug": "us-in",
+    "description": "",
+    "lft": 35,
+    "rght": 36,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 71,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.267Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Iowa",
+    "slug": "us-ia",
+    "description": "",
+    "lft": 37,
+    "rght": 38,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 72,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.316Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Arizona",
+    "slug": "us-az",
+    "description": "",
+    "lft": 11,
+    "rght": 12,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 73,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.364Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Idaho",
+    "slug": "us-id",
+    "description": "",
+    "lft": 31,
+    "rght": 32,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 74,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.411Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Maine",
+    "slug": "us-me",
+    "description": "",
+    "lft": 45,
+    "rght": 46,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 75,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.460Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Maryland",
+    "slug": "us-md",
+    "description": "",
+    "lft": 47,
+    "rght": 48,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 76,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.508Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Massachusetts",
+    "slug": "us-ma",
+    "description": "",
+    "lft": 49,
+    "rght": 50,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 77,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.556Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Utah",
+    "slug": "us-ut",
+    "description": "",
+    "lft": 95,
+    "rght": 96,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 78,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.624Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Missouri",
+    "slug": "us-mo",
+    "description": "",
+    "lft": 57,
+    "rght": 58,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 79,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.697Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Minnesota",
+    "slug": "us-mn",
+    "description": "",
+    "lft": 53,
+    "rght": 54,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 80,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.752Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Michigan",
+    "slug": "us-mi",
+    "description": "",
+    "lft": 51,
+    "rght": 52,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 81,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.800Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Montana",
+    "slug": "us-mt",
+    "description": "",
+    "lft": 59,
+    "rght": 60,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.region",
+  "pk": 82,
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2020-12-18T02:29:29.848Z",
+    "custom_field_data": {},
+    "parent": 7,
+    "name": "Mississippi",
+    "slug": "us-ms",
+    "description": "",
+    "lft": 55,
+    "rght": 56,
+    "tree_id": 4,
+    "level": 2
+  }
+},
+{
+  "model": "dcim.sitegroup",
+  "pk": 1,
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2021-12-30T15:41:01.816Z",
+    "custom_field_data": {},
+    "parent": null,
+    "name": "Customer Sites",
+    "slug": "customer-sites",
+    "description": "",
+    "lft": 1,
+    "rght": 6,
+    "tree_id": 1,
+    "level": 0
+  }
+},
+{
+  "model": "dcim.sitegroup",
+  "pk": 2,
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2021-12-30T15:41:13.892Z",
+    "custom_field_data": {},
+    "parent": 1,
+    "name": "Branch Offices",
+    "slug": "branch-offices",
+    "description": "",
+    "lft": 2,
+    "rght": 3,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "dcim.sitegroup",
+  "pk": 3,
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2021-12-30T15:41:22.089Z",
+    "custom_field_data": {},
+    "parent": 1,
+    "name": "Headquarters",
+    "slug": "headquarters",
+    "description": "",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 1,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.458Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-NYC",
+    "_name": "DM-NYC",
+    "slug": "dm-nyc",
+    "status": "active",
+    "region": 43,
+    "group": 3,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 2,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.384Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Akron",
+    "_name": "DM-Akron",
+    "slug": "dm-akron",
+    "status": "active",
+    "region": 51,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 3,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.397Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Albany",
+    "_name": "DM-Albany",
+    "slug": "dm-albany",
+    "status": "active",
+    "region": 43,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 4,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.409Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Binghamton",
+    "_name": "DM-Binghamton",
+    "slug": "dm-binghamton",
+    "status": "active",
+    "region": 43,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 5,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.422Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Buffalo",
+    "_name": "DM-Buffalo",
+    "slug": "dm-buffalo",
+    "status": "active",
+    "region": 43,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 6,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.434Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Camden",
+    "_name": "DM-Camden",
+    "slug": "dm-camden",
+    "status": "active",
+    "region": 38,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 7,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.445Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Nashua",
+    "_name": "DM-Nashua",
+    "slug": "dm-nashua",
+    "status": "active",
+    "region": 37,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 8,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:46:40.331Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Pittsfield",
+    "_name": "DM-Pittsfield",
+    "slug": "dm-pittsfield",
+    "status": "active",
+    "region": 76,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 9,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.477Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Rochester",
+    "_name": "DM-Rochester",
+    "slug": "dm-rochester",
+    "status": "active",
+    "region": 43,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 10,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.489Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Scranton",
+    "_name": "DM-Scranton",
+    "slug": "dm-scranton",
+    "status": "active",
+    "region": 63,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 11,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.501Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Stamford",
+    "_name": "DM-Stamford",
+    "slug": "dm-stamford",
+    "status": "active",
+    "region": 49,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 12,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.513Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Syracuse",
+    "_name": "DM-Syracuse",
+    "slug": "dm-syracuse",
+    "status": "active",
+    "region": 43,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 13,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.525Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Utica",
+    "_name": "DM-Utica",
+    "slug": "dm-utica",
+    "status": "active",
+    "region": 43,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 14,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.537Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "DM-Yonkers",
+    "_name": "DM-Yonkers",
+    "slug": "dm-yonkers",
+    "status": "active",
+    "region": 43,
+    "group": 2,
+    "tenant": 5,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 15,
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.573Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "JBB Branch 104",
+    "_name": "JBB Branch 00000104",
+    "slug": "jbb-branch-104",
+    "status": "active",
+    "region": 33,
+    "group": 2,
+    "tenant": 10,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "7 Indian Spring Lane\r\nMenasha, WI 54952",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 16,
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.585Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "JBB Branch 109",
+    "_name": "JBB Branch 00000109",
+    "slug": "jbb-branch-109",
+    "status": "active",
+    "region": 64,
+    "group": 2,
+    "tenant": 10,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "14 South Mill Pond Ave.\r\nAnnandale, VA 22003",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 17,
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.597Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "JBB Branch 115",
+    "_name": "JBB Branch 00000115",
+    "slug": "jbb-branch-115",
+    "status": "active",
+    "region": 44,
+    "group": 2,
+    "tenant": 10,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "44 Blue Spring Dr.\r\nWest Warwick, RI 02893",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 18,
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.609Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "JBB Branch 120",
+    "_name": "JBB Branch 00000120",
+    "slug": "jbb-branch-120",
+    "status": "active",
+    "region": 43,
+    "group": 2,
+    "tenant": 10,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "682 Marlborough Street\r\nHicksville, NY 11801",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 19,
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.621Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "JBB Branch 127",
+    "_name": "JBB Branch 00000127",
+    "slug": "jbb-branch-127",
+    "status": "active",
+    "region": 35,
+    "group": 2,
+    "tenant": 10,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "7730 Summerhouse St.\r\nOrange Park, FL 32065",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 20,
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.634Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "JBB Branch 133",
+    "_name": "JBB Branch 00000133",
+    "slug": "jbb-branch-133",
+    "status": "active",
+    "region": 43,
+    "group": 2,
+    "tenant": 10,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "1 Old Union Ave.\r\nTroy, NY 12180",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 21,
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.647Z",
+    "custom_field_data": {},
+    "description": "Main Distribution Frame",
+    "comments": "",
+    "name": "MDF",
+    "_name": "MDF",
+    "slug": "ncsu-065",
+    "status": "active",
+    "region": 40,
+    "group": null,
+    "tenant": 13,
+    "facility": "065",
+    "time_zone": null,
+    "physical_address": "401 Dan Allen Dr., Raleigh, NC 27607",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 22,
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.549Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "D. S. Weaver Labs",
+    "_name": "D. S. Weaver Labs",
+    "slug": "ncsu-117",
+    "status": "active",
+    "region": 40,
+    "group": null,
+    "tenant": 13,
+    "facility": "DSW",
+    "time_zone": null,
+    "physical_address": "3110 Faucette Dr., Raleigh, NC 27607",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 23,
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.561Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "Grinnells Lab",
+    "_name": "Grinnells Lab",
+    "slug": "ncsu-118",
+    "status": "active",
+    "region": 40,
+    "group": null,
+    "tenant": 13,
+    "facility": "GRL",
+    "time_zone": null,
+    "physical_address": "3200 Faucette Dr., Raleigh, NC 27607",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 24,
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2021-12-30T15:45:37.371Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "Butler Communications",
+    "_name": "Butler Communications",
+    "slug": "ncsu-128",
+    "status": "active",
+    "region": 40,
+    "group": null,
+    "tenant": 13,
+    "facility": "BUT",
+    "time_zone": null,
+    "physical_address": "3210 Faucette Dr., Raleigh, NC 27607",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
+  "model": "dcim.location",
+  "pk": 1,
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2021-04-02T16:57:17.398Z",
+    "custom_field_data": {},
+    "parent": null,
+    "name": "Row 1",
+    "slug": "row-1",
+    "description": "",
+    "site": 21,
+    "status": "active",
+    "tenant": null,
+    "lft": 1,
+    "rght": 2,
+    "tree_id": 1,
+    "level": 0
+  }
+},
+{
+  "model": "dcim.location",
+  "pk": 2,
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2021-04-02T16:57:24.629Z",
+    "custom_field_data": {},
+    "parent": null,
+    "name": "Row 2",
+    "slug": "row-2",
+    "description": "",
+    "site": 21,
+    "status": "active",
+    "tenant": null,
+    "lft": 1,
+    "rght": 2,
+    "tree_id": 2,
+    "level": 0
+  }
+},
+{
+  "model": "dcim.location",
+  "pk": 3,
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2021-04-02T16:57:31.713Z",
+    "custom_field_data": {},
+    "parent": null,
+    "name": "Row 3",
+    "slug": "row-3",
+    "description": "",
+    "site": 21,
+    "status": "active",
+    "tenant": null,
+    "lft": 1,
+    "rght": 2,
+    "tree_id": 3,
+    "level": 0
+  }
+},
+{
+  "model": "dcim.location",
+  "pk": 4,
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2021-04-02T16:57:37.732Z",
+    "custom_field_data": {},
+    "parent": null,
+    "name": "Row 4",
+    "slug": "row-4",
+    "description": "",
+    "site": 21,
+    "status": "active",
+    "tenant": null,
+    "lft": 1,
+    "rght": 2,
+    "tree_id": 4,
+    "level": 0
+  }
+}
+]
+

@@ -1,788 +1,181 @@
-"""DCIM model class definitions for nautobot-netbox-importer.
+"""NetBox to Nautobot DCIM Models Mapping."""
+import json
+from uuid import UUID
 
-Note that in most cases the same model classes are used for both NetBox imports and Nautobot exports.
-Because this plugin is meant *only* for NetBox-to-Nautobot migration, the create/update/delete methods on these classes
-are for populating data into Nautobot only, never the reverse.
-"""
-# pylint: disable=too-many-ancestors
-from typing import Any, List, Mapping, Optional
+from nautobot_netbox_importer.generator import EMPTY_VALUES
+from nautobot_netbox_importer.generator import DiffSyncBaseModel
+from nautobot_netbox_importer.generator import RecordData
+from nautobot_netbox_importer.generator import SourceAdapter
+from nautobot_netbox_importer.generator import SourceField
+from nautobot_netbox_importer.generator import fields
 
-from diffsync import DiffSync
-from pydantic import validator, root_validator
-import structlog
-
-import nautobot.dcim.models as dcim
-import nautobot.dcim.choices as dcim_choices
-
-from .abstract import (
-    ArrayField,
-    BaseInterfaceMixin,
-    CableTerminationMixin,
-    ComponentModel,
-    ComponentTemplateModel,
-    ConfigContextModelMixin,
-    MPTTModelMixin,
-    NautobotBaseModel,
-    OrganizationalModel,
-    PrimaryModel,
-    StatusModelMixin,
-)
-from .references import (
-    foreign_key_field,
-    ClusterRef,
-    ContentTypeRef,
-    DeviceRef,
-    DeviceRoleRef,
-    DeviceTypeRef,
-    IPAddressRef,
-    InterfaceRef,
-    InventoryItemRef,
-    ManufacturerRef,
-    PlatformRef,
-    PowerPanelRef,
-    PowerPortRef,
-    PowerPortTemplateRef,
-    RackGroupRef,
-    RackRef,
-    RackRoleRef,
-    RearPortRef,
-    RearPortTemplateRef,
-    RegionRef,
-    SiteRef,
-    TenantRef,
-    UserRef,
-    VLANRef,
-    VirtualChassisRef,
-)
+from .locations import define_location
 
 
-logger = structlog.get_logger()
+def _define_units(field: SourceField) -> None:
+    field.set_nautobot_field(field.name)
+
+    def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+        # NetBox 3.4 units is `list[int]`, previous versions are JSON string with list of strings
+        units = source.get(field.name, None)
+        if units in EMPTY_VALUES:
+            return
+
+        if isinstance(units, str):
+            units = json.loads(units)
+            if units:
+                units = [int(unit) for unit in units]
+
+        setattr(target, field.nautobot.name, units)
+
+    field.set_importer(importer)
 
 
-class Cable(StatusModelMixin, PrimaryModel):
-    """A physical connection between two endpoints."""
+def _pre_import_cable_termination(source: RecordData) -> None:
+    cable_end = source.pop("cable_end").lower()
+    source["id"] = source.pop("cable")
+    source[f"termination_{cable_end}_type"] = source.pop("termination_type")
+    source[f"termination_{cable_end}_id"] = source.pop("termination_id")
 
-    _modelname = "cable"
-    _attributes = (
-        *PrimaryModel._attributes,
-        *StatusModelMixin._attributes,
-        "termination_a_type",
-        "termination_a_id",
-        "termination_b_type",
-        "termination_b_id",
-        "type",
-        "label",
-        "color",
-        "length",
-        "length_unit",
+
+def setup(adapter: SourceAdapter) -> None:
+    """Map NetBox DCIM models to Nautobot."""
+    adapter.disable_model("dcim.cablepath", "Recreated in Nautobot on signal when circuit termination is created")
+    adapter.configure_model(
+        "dcim.rackreservation",
+        fields={
+            "units": _define_units,
+        },
     )
-    _nautobot_model = dcim.Cable
-
-    termination_a_type: ContentTypeRef
-    _termination_a_id = foreign_key_field("*termination_a_type")
-    termination_a_id: _termination_a_id
-    termination_b_type: ContentTypeRef
-    _termination_b_id = foreign_key_field("*termination_b_type")
-    termination_b_id: _termination_b_id
-    type: str
-    label: str
-    color: str
-    length: Optional[int]
-    length_unit: str
-
-    _type_choices = set(dcim_choices.CableTypeChoices.values())
-
-    @root_validator
-    @classmethod
-    def invalid_type_to_other(cls, values):
-        """
-        Default invalid `type` fields to use `other` type.
-
-        The `type` field uses a ChoiceSet to limit valid choices. This uses Pydantic's
-        root_validator to clean up the `type` data before loading it into a Model
-        instance. All invalid types will be changed to "other."
-        """
-        cable_type = values["type"]
-        if cable_type not in cls._type_choices:
-            values["type"] = "other"
-            term_a_id = values["termination_a_id"]
-            term_b_id = values["termination_b_id"]
-            logger.warning(
-                f"Encountered a NetBox {cls._modelname}.type that is not valid in this version of Nautobot, will convert it",
-                termination_a_id=term_a_id,
-                termination_b_id=term_b_id,
-                netbox_type=cable_type,
-                nautobot_type="other",
-            )
-        return values
-
-
-class ConsolePort(CableTerminationMixin, ComponentModel):
-    """A physical console port within a Device."""
-
-    _modelname = "consoleport"
-    _attributes = (*ComponentModel._attributes, *CableTerminationMixin._attributes, "type")
-    _nautobot_model = dcim.ConsolePort
-
-    type: str
-
-    _type_choices = set(dcim_choices.ConsolePortTypeChoices.values())
-
-
-class ConsolePortTemplate(ComponentTemplateModel):
-    """A template for a ConsolePort."""
-
-    _modelname = "consoleporttemplate"
-    _attributes = (*ComponentTemplateModel._attributes, "type")
-    _nautobot_model = dcim.ConsolePortTemplate
-
-    type: str
-
-    _type_choices = set(dcim_choices.ConsolePortTypeChoices.values())
-
-
-class ConsoleServerPort(CableTerminationMixin, ComponentModel):
-    """A physical port that provides access to console ports."""
-
-    _modelname = "consoleserverport"
-    _attributes = (*ComponentModel._attributes, *CableTerminationMixin._attributes, "type")
-    _nautobot_model = dcim.ConsoleServerPort
-
-    type: str
-
-    _type_choices = set(dcim_choices.ConsolePortTypeChoices.values())
-
-
-class ConsoleServerPortTemplate(ComponentTemplateModel):
-    """A template for a ConsoleServerPort."""
-
-    _modelname = "consoleserverporttemplate"
-    _attributes = (*ComponentTemplateModel._attributes, "type")
-    _nautobot_model = dcim.ConsoleServerPortTemplate
-
-    type: str
-
-    _type_choices = set(dcim_choices.ConsolePortTypeChoices.values())
-
-
-class Device(ConfigContextModelMixin, StatusModelMixin, PrimaryModel):
-    """A Device represents a piece of physical hardware mounted within a Rack."""
-
-    _modelname = "device"
-    _attributes = (
-        *PrimaryModel._attributes,
-        *ConfigContextModelMixin._attributes,
-        *StatusModelMixin._attributes,
-        "site",
-        "tenant",
-        "name",
-        "rack",
-        "position",
-        "face",
-        "vc_position",
-        "vc_priority",
-        "device_type",
-        "device_role",
-        "platform",
-        "serial",
-        "asset_tag",
-        "cluster",
-        "virtual_chassis",
-        "primary_ip4",
-        "primary_ip6",
-        "comments",
+    adapter.configure_model(
+        "dcim.rack",
+        fields={
+            "location": define_location,
+            "role": fields.role(adapter, "dcim.rackrole"),
+        },
     )
-    _nautobot_model = dcim.Device
-
-    site: Optional[SiteRef]
-    tenant: Optional[TenantRef]
-    name: Optional[str]
-    rack: Optional[RackRef]
-    position: Optional[int]
-    face: str  # may not be None but may be empty
-    vc_position: Optional[int]
-    vc_priority: Optional[int]
-    device_type: DeviceTypeRef
-    device_role: DeviceRoleRef
-    platform: Optional[PlatformRef]
-    serial: str  # may not be None but may be empty
-    asset_tag: Optional[str]
-    cluster: Optional[ClusterRef]
-
-    virtual_chassis: Optional[VirtualChassisRef]
-    primary_ip4: Optional[IPAddressRef]
-    primary_ip6: Optional[IPAddressRef]
-    comments: str
-
-
-class DeviceBay(ComponentModel):
-    """An empty space within a Device which can house a child Device."""
-
-    _modelname = "devicebay"
-    _attributes = (*ComponentModel._attributes, "installed_device")
-    _nautobot_model = dcim.DeviceBay
-
-    installed_device: Optional[DeviceRef]
-
-
-class DeviceBayTemplate(ComponentTemplateModel):
-    """A template for a DeviceBay."""
-
-    _modelname = "devicebaytemplate"
-    _nautobot_model = dcim.DeviceBayTemplate
-
-
-class DeviceRole(OrganizationalModel):
-    """Devices are organized by functional role."""
-
-    _modelname = "devicerole"
-    _attributes = (*OrganizationalModel._attributes, "name", "slug", "color", "vm_role", "description")
-    _nautobot_model = dcim.DeviceRole
-
-    name: str
-    slug: str
-    color: str
-    vm_role: bool
-    description: str
-
-
-class DeviceType(PrimaryModel):
-    """A DeviceType represents a particular make and model of device."""
-
-    _modelname = "devicetype"
-    _attributes = (
-        *PrimaryModel._attributes,
-        "manufacturer",
-        "model",
-        "slug",
-        "part_number",
-        "u_height",
-        "is_full_depth",
-        "subdevice_role",
-        "front_image",
-        "rear_image",
-        "comments",
+    adapter.configure_model(
+        "dcim.cable",
+        fields={
+            "termination_a": "termination_a",
+            "termination_b": "termination_b",
+        },
     )
-    _nautobot_model = dcim.DeviceType
-
-    manufacturer: ManufacturerRef
-    model: str
-    slug: str
-    part_number: str
-    u_height: int
-    is_full_depth: bool
-    subdevice_role: str
-    front_image: str
-    rear_image: str
-    comments: str
-
-    @validator("front_image", pre=True)
-    @classmethod
-    def front_imagefieldfile_to_str(cls, value):
-        """Convert ImageFieldFile objects to strings."""
-        if hasattr(value, "name"):
-            value = value.name
-        return value
-
-    @validator("rear_image", pre=True)
-    @classmethod
-    def rear_imagefieldfile_to_str(cls, value):
-        """Convert ImageFieldFile objects to strings."""
-        if hasattr(value, "name"):
-            value = value.name
-        return value
-
-
-class FrontPort(CableTerminationMixin, ComponentModel):
-    """A pass-through port on the front of a Device."""
-
-    _modelname = "frontport"
-    _attributes = (
-        *ComponentModel._attributes,
-        *CableTerminationMixin._attributes,
-        "type",
-        "rear_port",
-        "rear_port_position",
+    adapter.configure_model(
+        "dcim.cabletermination",
+        extend_content_type="dcim.cable",
+        pre_import=_pre_import_cable_termination,
+        fields={
+            "termination_a": "termination_a",
+            "termination_b": "termination_b",
+        },
     )
-    _nautobot_model = dcim.FrontPort
-
-    type: str
-    rear_port: RearPortRef
-    rear_port_position: int
-
-    _type_choices = set(dcim_choices.PortTypeChoices.values())
-
-
-class FrontPortTemplate(ComponentTemplateModel):
-    """A template for a FrontPort."""
-
-    _modelname = "frontporttemplate"
-    _attributes = (*ComponentTemplateModel._attributes, "type", "rear_port", "rear_port_position")
-    _nautobot_model = dcim.FrontPortTemplate
-
-    type: str
-    rear_port: RearPortTemplateRef
-    rear_port_position: int
-
-    _type_choices = set(dcim_choices.PortTypeChoices.values())
-
-
-class Interface(BaseInterfaceMixin, CableTerminationMixin, ComponentModel):
-    """A network interface within a Device."""
-
-    _modelname = "interface"
-    _attributes = (
-        *ComponentModel._attributes,
-        *CableTerminationMixin._attributes,
-        *BaseInterfaceMixin._attributes,
-        "lag",
-        "type",
-        "mgmt_only",
-        "untagged_vlan",
-        "tagged_vlans",
+    adapter.configure_model(
+        "dcim.interface",
+        fields={
+            "status": "status",
+            "parent": "parent_interface",
+        },
     )
-    _nautobot_model = dcim.Interface
-
-    lag: Optional[InterfaceRef]
-    type: str
-    mgmt_only: bool
-    untagged_vlan: Optional[VLANRef]
-    tagged_vlans: List[VLANRef] = []
-
-    _type_choices = set(dcim_choices.InterfaceTypeChoices.values())
-
-
-class InterfaceTemplate(ComponentTemplateModel):
-    """A template for a physical data interface."""
-
-    _modelname = "interfacetemplate"
-    _attributes = (*ComponentTemplateModel._attributes, "type", "mgmt_only")
-    _nautobot_model = dcim.InterfaceTemplate
-
-    type: str
-    mgmt_only: bool
-
-    _type_choices = set(dcim_choices.InterfaceTypeChoices.values())
-
-
-class InventoryItem(MPTTModelMixin, ComponentModel):
-    """A serialized piece of hardware within a Device."""
-
-    _modelname = "inventoryitem"
-    _attributes = (
-        *ComponentModel._attributes,
-        "device",
-        "parent",
-        "name",
-        "manufacturer",
-        "part_id",
-        "serial",
-        "asset_tag",
-        "discovered",
+    manufacturer = adapter.configure_model(
+        "dcim.manufacturer",
+        default_reference={
+            "id": "Unknown",
+            "name": "Unknown",
+        },
     )
-    _nautobot_model = dcim.InventoryItem
-
-    parent: Optional[InventoryItemRef]
-    manufacturer: Optional[ManufacturerRef]
-    part_id: str
-    serial: str
-    asset_tag: Optional[str]
-    discovered: bool
-
-
-class Manufacturer(OrganizationalModel):
-    """A Manufacturer represents a company which produces hardware devices."""
-
-    _modelname = "manufacturer"
-    _attributes = (*OrganizationalModel._attributes, "name", "slug", "description")
-    _nautobot_model = dcim.Manufacturer
-
-    name: str
-    slug: str
-    description: str
-
-
-class Platform(OrganizationalModel):
-    """Platform refers to the software or firmware running on a device."""
-
-    _modelname = "platform"
-    _attributes = (
-        *OrganizationalModel._attributes,
-        "name",
-        "slug",
-        "manufacturer",
-        "napalm_driver",
-        "napalm_args",
-        "description",
+    adapter.configure_model(
+        "dcim.devicetype",
+        fields={
+            "front_image": fields.disable("Import does not contain images"),
+            "rear_image": fields.disable("Import does not contain images"),
+            "color": "color",
+        },
+        default_reference={
+            "id": "Unknown",
+            "manufacturer": manufacturer.get_default_reference_uid(),
+            "model": "Unknown",
+        },
     )
-    _nautobot_model = dcim.Platform
-
-    name: str
-    slug: str
-    manufacturer: Optional[ManufacturerRef]
-    napalm_driver: str
-    napalm_args: Optional[dict]
-    description: str
-
-
-class PowerFeed(CableTerminationMixin, StatusModelMixin, PrimaryModel):
-    """An electrical circuit delivered from a PowerPanel."""
-
-    _modelname = "powerfeed"
-    _attributes = (
-        *PrimaryModel._attributes,
-        *CableTerminationMixin._attributes,
-        *StatusModelMixin._attributes,
-        "power_panel",
-        "name",
-        "rack",
-        "type",
-        "supply",
-        "phase",
-        "voltage",
-        "amperage",
-        "max_utilization",
-        "available_power",
-        "comments",
+    adapter.configure_model(
+        "dcim.devicerole",
+        nautobot_content_type="extras.role",
     )
-    _nautobot_model = dcim.PowerFeed
-
-    power_panel: PowerPanelRef
-    name: str
-
-    rack: Optional[RackRef]
-    type: str
-    supply: str
-    phase: str
-    voltage: int
-    amperage: int
-    max_utilization: int
-    available_power: int
-    comments: str
-
-
-class PowerOutlet(CableTerminationMixin, ComponentModel):
-    """A physical power outlet (output) within a Device."""
-
-    _modelname = "poweroutlet"
-    _attributes = (*ComponentModel._attributes, *CableTerminationMixin._attributes, "type", "power_port", "feed_leg")
-    _nautobot_model = dcim.PowerOutlet
-
-    type: str
-    power_port: Optional[PowerPortRef]
-    feed_leg: str
-
-    _type_choices = set(dcim_choices.PowerOutletTypeChoices.values())
-
-
-class PowerOutletTemplate(ComponentTemplateModel):
-    """A template for a PowerOutlet."""
-
-    _modelname = "poweroutlettemplate"
-    _attributes = (*ComponentTemplateModel._attributes, "type", "power_port", "feed_leg")
-    _nautobot_model = dcim.PowerOutletTemplate
-
-    type: str
-    power_port: Optional[PowerPortTemplateRef]
-    feed_leg: str
-
-    _type_choices = set(dcim_choices.PowerOutletTypeChoices.values())
-
-
-class PowerPanel(PrimaryModel):
-    """A distribution point for electrical power."""
-
-    _modelname = "powerpanel"
-    _attributes = (*PrimaryModel._attributes, "site", "name", "rack_group")
-    _nautobot_model = dcim.PowerPanel
-
-    site: SiteRef
-    name: str
-    rack_group: Optional[RackGroupRef]
-
-
-class PowerPort(CableTerminationMixin, ComponentModel):
-    """A physical power supply (input) port within a Device."""
-
-    _modelname = "powerport"
-    _attributes = (
-        *ComponentModel._attributes,
-        *CableTerminationMixin._attributes,
-        "type",
-        "maximum_draw",
-        "allocated_draw",
+    adapter.configure_model(
+        "dcim.device",
+        fields={
+            "location": define_location,
+            "device_role": fields.role(adapter, "dcim.devicerole"),
+            "role": fields.role(adapter, "dcim.devicerole"),
+        },
     )
-    _nautobot_model = dcim.PowerPort
-
-    type: str
-    maximum_draw: Optional[int]
-    allocated_draw: Optional[int]
-
-    _type_choices = set(dcim_choices.PowerPortTypeChoices.values())
-
-
-class PowerPortTemplate(ComponentTemplateModel):
-    """A template for a PowerPort."""
-
-    _modelname = "powerporttemplate"
-    _attributes = (*ComponentTemplateModel._attributes, "type", "maximum_draw", "allocated_draw")
-    _nautobot_model = dcim.PowerPortTemplate
-
-    type: str
-    maximum_draw: Optional[int]
-    allocated_draw: Optional[int]
-
-    _type_choices = set(dcim_choices.PowerPortTypeChoices.values())
-
-
-class Rack(StatusModelMixin, PrimaryModel):
-    """Devices are housed within Racks."""
-
-    _modelname = "rack"
-    _attributes = (
-        *PrimaryModel._attributes,
-        *StatusModelMixin._attributes,
-        "group",
-        "name",
-        "facility_id",
-        "site",
-        "tenant",
-        "role",
-        "serial",
-        "asset_tag",
-        "type",
-        "width",
-        "u_height",
-        "desc_units",
-        "outer_width",
-        "outer_depth",
-        "outer_unit",
-        "comments",
+    adapter.configure_model(
+        "dcim.powerpanel",
+        fields={
+            "location": define_location,
+        },
     )
-    _nautobot_model = dcim.Rack
-
-    group: Optional[RackGroupRef]
-    name: str
-
-    facility_id: Optional[str]
-    site: SiteRef
-    tenant: Optional[TenantRef]
-    role: Optional[RackRoleRef]
-    serial: str
-    asset_tag: Optional[str]
-    type: str
-    width: int
-    u_height: int
-    desc_units: bool
-    outer_width: Optional[int]
-    outer_depth: Optional[int]
-    outer_unit: str
-    comments: str
-
-    _type_choices = set(dcim_choices.RackTypeChoices.values())
-
-    @root_validator
-    @classmethod
-    def invalid_type_to_other(cls, values):
-        """
-        Default invalid `type` fields to use `other` type.
-
-        The `type` field uses a ChoiceSet to limit valid choices. This uses Pydantic's
-        root_validator to clean up the `type` data before loading it into a Model
-        instance. All invalid types will be changed to "other."
-        """
-        rack_type = values["type"]
-        if rack_type not in cls._type_choices:
-            values["type"] = "other"
-            site = values["site"]
-            tenant = values.get("tenant")
-            name = values["name"]
-            logger.warning(
-                f"Encountered a NetBox {cls._modelname}.type that is not valid in this version of Nautobot, will convert it",
-                site=site,
-                tenant=tenant,
-                name=name,
-                netbox_type=rack_type,
-                nautobot_type="other",
-            )
-        return values
-
-
-class RackGroup(MPTTModelMixin, OrganizationalModel):
-    """Racks can be grouped as subsets within a Site."""
-
-    _modelname = "rackgroup"
-    _attributes = (*OrganizationalModel._attributes, "site", "name", "slug", "parent", "description")
-    # Not all Racks belong to a RackGroup, so we don't treat Racks as a child.
-    _nautobot_model = dcim.RackGroup
-
-    site: SiteRef
-    name: str
-    slug: str
-    parent: Optional[RackGroupRef]
-    description: str
-
-
-class RackReservation(PrimaryModel):
-    """One or more reserved units within a Rack."""
-
-    _modelname = "rackreservation"
-    _attributes = (*PrimaryModel._attributes, "rack", "units", "tenant", "user", "description")
-    _nautobot_model = dcim.RackReservation
-
-    rack: RackRef
-    units: ArrayField
-    tenant: Optional[TenantRef]
-    user: UserRef
-    description: str
-
-
-class RackRole(OrganizationalModel):
-    """Racks can be organized by functional role."""
-
-    _modelname = "rackrole"
-    _attributes = (*OrganizationalModel._attributes, "name", "slug", "color", "description")
-    _nautobot_model = dcim.RackRole
-
-    name: str
-    slug: str
-    color: str
-    description: str
-
-
-class RearPort(CableTerminationMixin, ComponentModel):
-    """A pass-through port on the rear of a Device."""
-
-    _modelname = "rearport"
-    _attributes = (
-        *ComponentModel._attributes,
-        *CableTerminationMixin._attributes,
-        "type",
-        "positions",
+    adapter.configure_model(
+        "dcim.frontporttemplate",
+        fields={
+            "rear_port": "rear_port_template",
+        },
     )
-    _nautobot_model = dcim.RearPort
-
-    type: str
-    positions: int
-
-    _type_choices = set(dcim_choices.PortTypeChoices.values())
-
-
-class RearPortTemplate(ComponentTemplateModel):
-    """A template for a RearPort."""
-
-    _modelname = "rearporttemplate"
-    _attributes = (*ComponentTemplateModel._attributes, "type", "positions")
-    _nautobot_model = dcim.RearPortTemplate
-
-    type: str
-    positions: int
-
-    _type_choices = set(dcim_choices.PortTypeChoices.values())
-
-
-class Region(MPTTModelMixin, OrganizationalModel):
-    """Sites can be grouped within geographic Regions."""
-
-    _modelname = "region"
-    _attributes = (*OrganizationalModel._attributes, "name", "parent", "slug", "description")
-    # Not all Sites belong to a Region, so we don't treat Sites as a child.
-    _nautobot_model = dcim.Region
-
-    name: str
-    parent: Optional[RegionRef]
-    slug: str
-    description: str
-
-
-class Site(StatusModelMixin, PrimaryModel):
-    """A Site represents a geographic location within a network."""
-
-    _modelname = "site"
-    _attributes = (
-        *PrimaryModel._attributes,
-        *StatusModelMixin._attributes,
-        "name",
-        "slug",
-        "region",
-        "tenant",
-        "facility",
-        "asn",
-        "time_zone",
-        "description",
-        "physical_address",
-        "shipping_address",
-        "latitude",
-        "longitude",
-        "contact_name",
-        "contact_phone",
-        "contact_email",
-        "comments",
+    adapter.configure_model(
+        "dcim.poweroutlettemplate",
+        fields={
+            "power_port": "power_port_template",
+        },
     )
-    _nautobot_model = dcim.Site
-
-    name: str
-    slug: str
-    region: Optional[RegionRef]
-    tenant: Optional[TenantRef]
-    facility: str
-    asn: Optional[int]
-    time_zone: Optional[str]
-    description: str
-    physical_address: str
-    shipping_address: str
-    latitude: Optional[float]
-    longitude: Optional[float]
-    contact_name: str
-    contact_phone: str
-    contact_email: str
-    comments: str
-
-    _name: Optional[str]
-    images: Any
-
-    def __init__(self, *args, **kwargs):
-        """Explicitly convert time_zone to a string if needed."""
-        if "time_zone" in kwargs and kwargs["time_zone"]:
-            kwargs["time_zone"] = str(kwargs["time_zone"])
-        super().__init__(*args, **kwargs)
 
 
-class VirtualChassis(PrimaryModel):
-    """A collection of Devices which operate with a shared control plane."""
+# pylint: disable=too-many-locals
+def fix_power_feed_locations(adapter: SourceAdapter) -> None:
+    """Fix panel location to match rack location based on powerfeed."""
+    region_wrapper = adapter.wrappers["dcim.region"]
+    site_wrapper = adapter.wrappers["dcim.site"]
+    location_wrapper = adapter.wrappers["dcim.location"]
+    rack_wrapper = adapter.wrappers["dcim.rack"]
+    panel_wrapper = adapter.wrappers["dcim.powerpanel"]
 
-    _modelname = "virtualchassis"
-    _attributes = (*PrimaryModel._attributes, "master", "name", "domain")
-    _nautobot_model = dcim.VirtualChassis
+    diffsync_class = adapter.wrappers["dcim.powerfeed"].nautobot.diffsync_class
 
-    master: Optional[DeviceRef]
-    name: str
-    domain: str
+    for item in adapter.get_all(diffsync_class):
+        rack_id = getattr(item, "rack_id", None)
+        panel_id = getattr(item, "power_panel_id", None)
+        if not (rack_id and panel_id):
+            continue
 
-    @classmethod
-    def create(cls, diffsync: DiffSync, ids: Mapping, attrs: Mapping) -> Optional[NautobotBaseModel]:
-        """Create an instance of this model, both in Nautobot and in DiffSync.
+        rack = rack_wrapper.get_or_create(rack_id)
+        panel = panel_wrapper.get_or_create(panel_id)
 
-        There is an odd behavior (bug?) in Nautobot 1.0.0 wherein when creating a VirtualChassis with
-        a predefined "master" Device, it changes the master device's position to 1 regardless of what
-        it was previously configured to. This will cause us problems later when we attempt to associate
-        member devices with the VirtualChassis if there's a member that's supposed to be using position 1.
-        So, we take it upon ourselves to overrule Nautobot and put the master back into the position it's
-        supposed to be in.
-        """
-        diffsync_record = super().create(diffsync, ids, attrs)
-        if diffsync_record is not None and diffsync_record.master is not None:  # pylint: disable=no-member
-            nautobot_record = cls.nautobot_model().objects.get(**ids)
-            nautobot_master = nautobot_record.master
-            diffsync_master = diffsync.get("device", str(nautobot_master.pk))
-            if nautobot_master.vc_position != diffsync_master.vc_position:
-                logger.debug(
-                    "Fixing up master device vc_position",
-                    virtual_chassis=diffsync_record,
-                    incorrect_position=nautobot_master.vc_position,
-                    correct_position=diffsync_master.vc_position,
-                )
-                nautobot_master.vc_position = diffsync_master.vc_position
-                nautobot_master.save()
+        rack_location_uid = getattr(rack, "location_id", None)
+        panel_location_uid = getattr(panel, "location_id", None)
+        if rack_location_uid == panel_location_uid:
+            continue
 
-        return diffsync_record
+        if rack_location_uid:
+            location_uid = rack_location_uid
+            target = panel
+            target_wrapper = panel_wrapper
+        else:
+            location_uid = panel_location_uid
+            target = rack
+            target_wrapper = rack_wrapper
+
+        if not isinstance(location_uid, UUID):
+            raise TypeError(f"Location UID must be UUID, got {type(location_uid)}")
+
+        target.location_id = location_uid
+        adapter.update(target)
+
+        # Need to update references, to properly update `content_types` fields
+        # References can be counted and removed, if needed
+        if location_uid in region_wrapper.references:
+            region_wrapper.add_reference(location_uid, target_wrapper)
+        elif location_uid in site_wrapper.references:
+            site_wrapper.add_reference(location_uid, target_wrapper)
+        elif location_uid in location_wrapper.references:
+            location_wrapper.add_reference(location_uid, target_wrapper)
+        else:
+            raise ValueError(f"Unknown location type {location_uid}")

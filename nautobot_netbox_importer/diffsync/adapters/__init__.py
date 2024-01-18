@@ -1,20 +1,11 @@
-"""DiffSync adapters for nautobot-netbox-importer."""
+"""Adapter classes for loading DiffSyncModels with data from NetBox or Nautobot."""
 
-from packaging import version
-
-from .nautobot import NautobotDiffSync
-from .netbox import NetBox210DiffSync
-
-netbox_adapters = {
-    version.parse("2.10.3"): NetBox210DiffSync,
-    version.parse("2.10.4"): NetBox210DiffSync,
-    version.parse("2.10.5"): NetBox210DiffSync,
-    version.parse("2.10.6"): NetBox210DiffSync,
-    version.parse("2.10.7"): NetBox210DiffSync,
-    version.parse("2.10.8"): NetBox210DiffSync,
-}
+from .nautobot import NautobotAdapter
+from .netbox import NetBoxAdapter
+from .netbox import NetBoxImporterOptions
 
 __all__ = (
-    "netbox_adapters",
-    "NautobotDiffSync",
+    "NautobotAdapter",
+    "NetBoxAdapter",
+    "NetBoxImporterOptions",
 )

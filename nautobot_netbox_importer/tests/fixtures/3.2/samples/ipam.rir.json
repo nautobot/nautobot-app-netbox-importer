@@ -1,0 +1,38 @@
+[
+{
+  "model": "ipam.rir",
+  "pk": "611086a8-5f68-549b-904b-b9df116a526e",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:44.940Z",
+    "_custom_field_data": {},
+    "name": "RFC 6598",
+    "is_private": true,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "7644f7e1-a8cc-5ec7-8117-c364269de709",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:44.934Z",
+    "_custom_field_data": {},
+    "name": "RIPE NCC",
+    "is_private": false,
+    "description": "Réseaux IP Européens Network Coordination Centre"
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "bf8e7943-daf2-5ce7-bde3-d4e1bb30188b",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:44.937Z",
+    "_custom_field_data": {},
+    "name": "LACNIC",
+    "is_private": false,
+    "description": "Latin America and Caribbean Network Information Centre"
+  }
+}
+]

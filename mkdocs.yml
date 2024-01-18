@@ -102,6 +102,7 @@ nav:
       - App Overview: "user/app_overview.md"
       - Getting Started: "user/app_getting_started.md"
       - Using the App: "user/app_use_cases.md"
+      - Importer Summary: "user/summary.md"
       - Frequently Asked Questions: "user/faq.md"
   - Administrator Guide:
       - Install and Configure: "admin/install.md"
@@ -120,6 +121,9 @@ nav:
       - Contributing to the App: "dev/contributing.md"
       - Development Environment: "dev/dev_environment.md"
       - Architecture Decision Records: "dev/arch_decision.md"
+      - Generator Description: "dev/generator.md"
+      - Data Flow: "dev/data_flow.md"
+      - Frequently Asked Questions: "dev/faq.md"
       - Code Reference:
           - "dev/code_reference/index.md"
           - Package: "dev/code_reference/package.md"

@@ -1,0 +1,59 @@
+[
+{
+  "model": "dcim.consoleport",
+  "pk": "7f99eee2-8525-5d19-9768-64524c692d69",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:16.435Z",
+    "_custom_field_data": {},
+    "device": "f510c5ff-e1f8-5adc-9fb5-30bc5791b42e",
+    "name": "con 0",
+    "_name": "con 00000000",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "type": "rj-45"
+  }
+},
+{
+  "model": "dcim.consoleport",
+  "pk": "bc826ec9-9431-58cd-994a-9324fd7cf73e",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:16.442Z",
+    "_custom_field_data": {},
+    "device": "f5cd899a-dec6-56c9-9045-514d562631d5",
+    "name": "con 0",
+    "_name": "con 00000000",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "type": "rj-45"
+  }
+},
+{
+  "model": "dcim.consoleport",
+  "pk": "c1445969-3ffd-5068-b975-4fdbbc59ac27",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:16.445Z",
+    "_custom_field_data": {},
+    "device": "d85ae2a6-3ae0-5e9a-baaa-cebb5561fbb2",
+    "name": "con 0",
+    "_name": "con 00000000",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "type": "rj-45"
+  }
+}
+]
