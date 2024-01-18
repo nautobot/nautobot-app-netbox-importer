@@ -1,1 +1,1 @@
-"""Unit tests for nautobot_netbox_importer plugin."""
+"""Unit tests for nautobot_netbox_importer app."""

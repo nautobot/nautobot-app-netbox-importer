@@ -19,4 +19,11 @@ NetBox users looking to migrate their dataset into Nautobot.
 
 ## Nautobot Features Used
 
-This is a special plugin that doesn't add any Nautobot UI or API integration and focuses the data ingestion into the database.
+!!! warning "Developer Note - Remove Me!"
+    What is shown today in the Installed Apps page in Nautobot. What parts of Nautobot does it interact with, what does it add etc. ?
+
+### Extras
+
+!!! warning "Developer Note - Remove Me!"
+    Custom Fields - things like which CFs are created by this app?
+    Jobs - are jobs, if so, which ones, installed by this app?
