@@ -24,7 +24,6 @@ def setup(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "virtualization.vminterface",
         fields={
-            "status": "status",
             "parent": "parent_interface",
         },
     )

@@ -1,11 +1,14 @@
 """Definition of "manage.py import_netbox" Django command for use with Nautobot."""
 import argparse
+import json
+from pathlib import Path
 
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter
 from nautobot_netbox_importer.diffsync.adapters import NetBoxImporterOptions
+from nautobot_netbox_importer.generator import get_mapping
 
 
 class Command(BaseCommand):
@@ -67,8 +70,13 @@ class Command(BaseCommand):
             dest="fix_powerfeed_locations",
             help="Fix panel location to match rack location based on powerfeed.",
         )
+        parser.add_argument(
+            "--save-mappings-file",
+            dest="save_mappings_file",
+            help="File path to write the JSON mapping to.",
+        )
 
-    def handle(self, json_file, **kwargs):  # type: ignore
+    def handle(self, json_file, save_mappings_file, **kwargs):  # type: ignore
         """Handle execution of the import_netbox management command."""
         call_command("migrate")
 
@@ -78,3 +86,6 @@ class Command(BaseCommand):
 
         adapter = NetBoxAdapter(json_file.name, options)
         adapter.import_to_nautobot()
+        if save_mappings_file:
+            mapping = get_mapping(adapter)
+            Path(save_mappings_file).write_text(json.dumps(mapping, indent=4))

@@ -25,10 +25,7 @@ def setup(adapter: SourceAdapter) -> None:
     )
     adapter.configure_model(
         "ipam.aggregate",
-        "ipam.prefix",
-        fields={
-            "status": "status",
-        },
+        nautobot_content_type="ipam.prefix",
     )
     adapter.configure_model(
         "ipam.vlan",
@@ -37,4 +34,8 @@ def setup(adapter: SourceAdapter) -> None:
             "location": define_location,
             "role": fields.role(adapter, "ipam.role"),
         },
+    )
+    adapter.configure_model(
+        "ipam.FHRPGroup",
+        nautobot_content_type="dcim.InterfaceRedundancyGroup",
     )

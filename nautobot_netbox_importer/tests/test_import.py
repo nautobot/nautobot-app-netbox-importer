@@ -1,7 +1,6 @@
 """Test cases for NetBox adapter."""
 import json
 from pathlib import Path
-from typing import Iterable
 from unittest.mock import patch
 
 from django.core.management import call_command
@@ -39,8 +38,7 @@ _EXPECTED_SUMMARY = {
     "3.4": 5870,
     "3.5": 5870,
     "3.6": 5870,
-    "3.6.min": 116,
-    "3.6.objectchange": 14,
+    "3.6.custom": 31,
 }
 
 _EXPECTED_COUNTS = {}
@@ -136,20 +134,16 @@ _EXPECTED_COUNTS["3.5"] = {
 _EXPECTED_COUNTS["3.6"] = {
     **_EXPECTED_COUNTS["3.5"],
 }
-_EXPECTED_COUNTS["3.6.min"] = {
+_EXPECTED_COUNTS["3.6.custom"] = {
+    "auth.group": 1,
+    "dcim.interfaceredundancygroup": 1,
     "extras.customfield": 1,
-    "extras.status": 2,
-    "dcim.locationtype": 6,
-    "dcim.location": 95,
-    "tenancy.tenantgroup": 1,
+    "extras.note": 2,
+    "extras.objectchange": 7,
+    "extras.status": 1,
     "tenancy.tenant": 11,
-}
-_EXPECTED_COUNTS["3.6.objectchange"] = {
-    "dcim.locationtype": 3,
-    "extras.objectchange": 4,
     "tenancy.tenantgroup": 1,
-    "tenancy.tenant": 5,
-    "users.user": 1,
+    "users.user": 6,
 }
 
 _EXPECTED_VALIDATION_ERRORS = {}
@@ -174,8 +168,7 @@ _EXPECTED_VALIDATION_ERRORS["3.5"] = {
 _EXPECTED_VALIDATION_ERRORS["3.6"] = {
     **_EXPECTED_VALIDATION_ERRORS["3.5"],
 }
-_EXPECTED_VALIDATION_ERRORS["3.6.min"] = {}
-_EXPECTED_VALIDATION_ERRORS["3.6.objectchange"] = {}
+_EXPECTED_VALIDATION_ERRORS["3.6.custom"] = {}
 
 
 # Ensure that SECRET_KEY is set to a known value, to generate the same UUIDs
@@ -315,7 +308,7 @@ def _generate_fixtures(source: NetBoxAdapter, content_type: ContentTypeStr, outp
     )
 
 
-def _create_test_cases(versions: Iterable[str]):
+def _create_test_cases():
     """Create test method for each NetBox version."""
 
     def create_test_method(version):
@@ -325,10 +318,12 @@ def _create_test_cases(versions: Iterable[str]):
 
         return test_import_version
 
-    for version in versions:
+    directories = set(directory.name for directory in Path(_FIXTURES_PATH).glob("*") if directory.is_dir())
+
+    for version in set(_INPUTS) | set(_EXPECTED_SUMMARY) | directories:
         test_method = create_test_method(version)
         method_name = f"test_import_{version.replace('.', '_')}"
         setattr(TestImport, method_name, test_method)
 
 
-_create_test_cases(_EXPECTED_SUMMARY)
+_create_test_cases()

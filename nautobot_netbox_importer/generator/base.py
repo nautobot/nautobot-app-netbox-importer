@@ -4,7 +4,6 @@ import decimal
 import logging
 from enum import Enum
 from typing import Any
-from typing import Iterable
 from typing import List
 from typing import Mapping
 from typing import MutableMapping
@@ -19,9 +18,8 @@ from dateutil import parser as datetime_parser
 from diffsync import DiffSync
 from diffsync.store.local import LocalStore
 from django.conf import settings
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.core.exceptions import FieldDoesNotExist as _DjangoFieldDoesNotExist
-from django.db.models import Field as _DjangoField
+from django.core.exceptions import FieldDoesNotExist as DjangoFieldDoesNotExist
+from django.db.models import Field as DjangoField
 from django.db.models.fields import NOT_PROVIDED
 from django.db.models.options import Options as _DjangoModelMeta
 from nautobot.core.models import BaseModel
@@ -36,10 +34,7 @@ FieldName = str
 RecordData = MutableMapping[FieldName, Any]
 NautobotBaseModel = BaseModel
 NautobotBaseModelType = Type[NautobotBaseModel]
-DjangoField = _DjangoField
-DjangoFieldDoesNotExist = _DjangoFieldDoesNotExist
 GenericForeignValue = Tuple[ContentTypeStr, Uid]
-NautobotField = Union[_DjangoField, GenericForeignKey]
 DjangoModelMeta = _DjangoModelMeta
 PydanticField = _PydanticField
 DiffSummary = Mapping[str, int]
@@ -58,10 +53,8 @@ class InternalFieldType(Enum):
     DATE_FIELD = "DateField"
     DATE_TIME_FIELD = "DateTimeField"
     DECIMAL_FIELD = "DecimalField"
-    DO_NOT_IMPORT_LAST_UPDATED = "DoNotImportLastUpdated"
     FOREIGN_KEY = "ForeignKey"
     FOREIGN_KEY_WITH_AUTO_RELATED_NAME = "ForeignKeyWithAutoRelatedName"
-    GENERIC_FOREIGN_KEY = "GenericForeignKey"
     INTEGER_FIELD = "IntegerField"
     JSON_FIELD = "JSONField"
     MANY_TO_MANY_FIELD = "ManyToManyField"
@@ -105,58 +98,38 @@ INTERNAL_TYPE_TO_ANNOTATION: Mapping[InternalFieldType, type] = {
     InternalFieldType.UUID_FIELD: UUID,
 }
 
-INTEGER_AUTO_FIELD_TYPES: Iterable[InternalFieldType] = (
-    InternalFieldType.AUTO_FIELD,
-    InternalFieldType.BIG_AUTO_FIELD,
+# Fields to auto add to source and target wrappers
+AUTO_ADD_FIELDS = (
+    "content_types",
+    "status",
 )
 
-INTEGER_INTERNAL_TYPES: Iterable[InternalFieldType] = (
-    InternalFieldType.AUTO_FIELD,
-    InternalFieldType.BIG_AUTO_FIELD,
-    InternalFieldType.BIG_INTEGER_FIELD,
-    InternalFieldType.INTEGER_FIELD,
-    InternalFieldType.POSITIVE_INTEGER_FIELD,
-    InternalFieldType.POSITIVE_SMALL_INTEGER_FIELD,
-    InternalFieldType.SMALL_INTEGER_FIELD,
+EMPTY_VALUES = (
+    "",
+    NOT_PROVIDED,
+    None,
+    [],
+    dict,  # CustomFieldData field has `dict` class as the default value
+    set(),
+    tuple(),
+    {},
 )
 
-REFERENCE_INTERNAL_TYPES: Iterable[InternalFieldType] = (
-    InternalFieldType.FOREIGN_KEY,
-    InternalFieldType.FOREIGN_KEY_WITH_AUTO_RELATED_NAME,
-    InternalFieldType.GENERIC_FOREIGN_KEY,
-    InternalFieldType.MANY_TO_MANY_FIELD,
-    InternalFieldType.ONE_TO_ONE_FIELD,
-    InternalFieldType.ROLE_FIELD,
-    InternalFieldType.STATUS_FIELD,
-    InternalFieldType.TREE_NODE_FOREIGN_KEY,
-)
 
-DONT_IMPORT_TYPES: Iterable[InternalFieldType] = (
-    InternalFieldType.DO_NOT_IMPORT_LAST_UPDATED,
-    InternalFieldType.NOT_FOUND,
-    InternalFieldType.PRIVATE_PROPERTY,
-    InternalFieldType.READ_ONLY_PROPERTY,
-)
-
-EMPTY_VALUES = [None, set(), tuple(), {}, [], "", NOT_PROVIDED]
-
-
-# pylint: disable=too-many-return-statements
 def get_nautobot_field_and_type(
     model: NautobotBaseModelType,
     field_name: str,
-) -> Tuple[Optional[NautobotField], InternalFieldType]:
+) -> Tuple[Optional[DjangoField], InternalFieldType]:
     """Get Nautobot field and internal field type."""
     if field_name.startswith("_"):
         return None, InternalFieldType.PRIVATE_PROPERTY
 
     meta = model._meta  # type: ignore
+    if field_name == "custom_field_data":
+        field_name = "_custom_field_data"
     try:
         field = meta.get_field(field_name)
     except DjangoFieldDoesNotExist:
-        if field_name == "custom_field_data":
-            return meta.get_field("_custom_field_data"), InternalFieldType.CUSTOM_FIELD_DATA
-
         prop = getattr(model, field_name, None)
         if not prop:
             return None, InternalFieldType.NOT_FOUND
@@ -164,12 +137,8 @@ def get_nautobot_field_and_type(
             return None, InternalFieldType.READ_ONLY_PROPERTY
         return None, InternalFieldType.PROPERTY
 
-    if field_name == "last_updated":
-        return field, InternalFieldType.DO_NOT_IMPORT_LAST_UPDATED
-
-    if isinstance(field, GenericForeignKey):
-        # GenericForeignKey is not a real field, doesn't have `get_internal_type` method
-        return field, InternalFieldType.GENERIC_FOREIGN_KEY
+    if field_name == "_custom_field_data":
+        return field, InternalFieldType.CUSTOM_FIELD_DATA
 
     try:
         return field, StrToInternalFieldType[field.get_internal_type()]

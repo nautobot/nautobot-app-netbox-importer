@@ -9,7 +9,9 @@
     "name": "X-ray",
     "color": "9e9e9e",
     "description": "",
-    "content_types": []
+    "content_types": [
+      56
+    ]
   }
 },
 {
@@ -22,7 +24,9 @@
     "name": "Zulu",
     "color": "111111",
     "description": "",
-    "content_types": []
+    "content_types": [
+      56
+    ]
   }
 },
 {
@@ -35,7 +39,9 @@
     "name": "Golf",
     "color": "673ab7",
     "description": "",
-    "content_types": []
+    "content_types": [
+      56
+    ]
   }
 }
 ]

@@ -13,7 +13,7 @@ The generic component encompasses the `NautobotAdapter` and `SourceAdapter` capa
 It comprises the following modules, located in the `nautobot_netbox_importer/generator` directory:
 
 - `base.py`: Implements base classes and utilities utilized throughout the application, also establishing constants and shared type definitions.
-- `nautobot.py`: Provides the `NautobotAdapter`, along with `NautobotModelWrapper` and `NautobotFieldWrapper` classes that define the Nautobot structure.
+- `nautobot.py`: Provides the `NautobotAdapter`, along with `NautobotModelWrapper` and `NautobotField` classes that define the Nautobot structure.
 - `source.py`: Offers the `SourceAdapater`, `SourceModelWrapper` and `SourceField` classes that define the source structure.
 - `fields.py`: Contains factories for fields deviation definitions.
 - `summary.py`: Supplies utility functions for summarizing data structures and presenting import statistics.
@@ -113,9 +113,9 @@ erDiagram
     SourceAdapter ||--|| NautobotAdapter : "links to"
     NautobotAdapter ||--o{ NautobotModelWrapper : "creates"
     SourceModelWrapper }o--|| NautobotModelWrapper : "links to"
-    NautobotModelWrapper ||--o{ NautobotFieldWrapper : "creates"
+    NautobotModelWrapper ||--o{ NautobotField : "creates"
     NautobotModelWrapper ||--|| NautobotModel : "links to"
-    SourceField }o--|| NautobotFieldWrapper : "links to"
+    SourceField }o--|| NautobotField : "links to"
     NautobotModelWrapper ||--|| DiffSyncBaseModel : "creates"
     DiffSyncModel ||--o{ DiffSyncBaseModel : "is ancestor"
     SourceAdapter {
@@ -134,7 +134,7 @@ erDiagram
         String disable_reason
         Iterable identifiers
         Mapping fields
-        List[Callable] importers
+        Set[Callable] importers
         SourceModelWrapper extends_wrapper
         int imported_count
         Uid default_reference_uid
@@ -147,7 +147,7 @@ erDiagram
         SourceModelWrapper wrapper
         FieldName name
         SourceFieldDefinition definition
-        NautobotFieldWrapper nautobot
+        NautobotField nautobot
         Callable importer
     }
     NautobotAdapter {
@@ -170,7 +170,7 @@ erDiagram
         int last_id
         Set _clean_failures
     }
-    NautobotFieldWrapper {
+    NautobotField {
         FieldName name
         InternalFieldType internal_type
         DjangoField field
