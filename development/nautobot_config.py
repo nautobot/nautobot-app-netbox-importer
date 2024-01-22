@@ -3,7 +3,8 @@ import os
 import sys
 
 from nautobot.core.settings import *  # noqa: F403  # pylint: disable=wildcard-import,unused-wildcard-import
-from nautobot.core.settings_funcs import is_truthy, parse_redis_connection
+from nautobot.core.settings_funcs import is_truthy
+from nautobot.core.settings_funcs import parse_redis_connection
 
 #
 # Debug
@@ -19,6 +20,8 @@ if DEBUG and not _TESTING:
         INSTALLED_APPS.append("debug_toolbar")  # noqa: F405
     if "debug_toolbar.middleware.DebugToolbarMiddleware" not in MIDDLEWARE:  # noqa: F405
         MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")  # noqa: F405
+    if "better_exceptions.integrations.django.BetterExceptionsMiddleware" not in MIDDLEWARE:  # noqa: F405
+        MIDDLEWARE.insert(0, "better_exceptions.integrations.django.BetterExceptionsMiddleware")  # noqa: F405
 
 #
 # Misc. settings
@@ -88,11 +91,19 @@ CACHEOPS_REDIS = parse_redis_connection(redis_database=1)
 
 LOG_LEVEL = "DEBUG" if DEBUG else "INFO"
 
+from better_exceptions.integrations.django import skip_errors_filter
+
 # Verbose logging during normal development operation, but quiet logging during unit test execution
 if not _TESTING:
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": False,
+        'filters': {
+            'skip_errors': {
+                '()': 'django.utils.log.CallbackFilter',
+                'callback': skip_errors_filter,
+            },
+        },
         "formatters": {
             "normal": {
                 "format": "%(asctime)s.%(msecs)03d %(levelname)-7s %(name)s :\n  %(message)s",
@@ -128,12 +139,32 @@ if not _TESTING:
         LOGGING["loggers"]["nautobot-netbox-importer"] = LOGGING["loggers"]["nautobot"]
 
 #
+# MinIO/S3 settings
+#
+
+if "storages" not in INSTALLED_APPS:  # noqa: F405
+    INSTALLED_APPS.append("storages")  # noqa: F405
+
+AWS_ACCESS_KEY_ID = "minio-access-key"
+AWS_SECRET_ACCESS_KEY = "minio-secret-key"  # nosec
+AWS_STORAGE_BUCKET_NAME = "your-bucket-name"
+AWS_S3_ENDPOINT_URL = "http://localhost:9000"
+AWS_S3_CUSTOM_DOMAIN = "%s.s3.localhost" % AWS_STORAGE_BUCKET_NAME
+AWS_DEFAULT_ACL = None
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_REGION_NAME = "us-east-1"  # or another region where MinIO pretends to reside
+
+# Specify the Django storage backend to use for file storage
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+#
 # Apps
 #
 
 # Enable installed Apps. Add the name of each App to the list.
 PLUGINS = [
     "nautobot_netbox_importer",
+    "nautobot_ssot",
 ]
 
 # Apps configuration settings. These settings are used by various Apps that the user may have installed.

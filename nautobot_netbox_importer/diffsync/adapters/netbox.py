@@ -101,8 +101,14 @@ class NetBoxAdapter(SourceAdapter):
     def _atomic_import(self) -> None:
         self.load()
 
-        diff = self.nautobot.sync_from(self)
+        diff = self.diff_to(self.nautobot)
+        # Workaround to avoid the following error:
+        # error: An exception occurred: `TypeError: Object of type set is not JSON serializable`
+        self.diff = diff
+        self.nautobot.diff = diff  # type: ignore
+
         self.diff_summary = diff.summary()
+        self.sync_to(self.nautobot, diff=diff)
 
         if self.nautobot.validation_issues and not self.options.bypass_data_validation:
             raise _ValidationIssuesDetected("Data validation issues detected, aborting the transaction.")

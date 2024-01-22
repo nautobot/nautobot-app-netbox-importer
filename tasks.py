@@ -50,7 +50,7 @@ namespace = Collection("nautobot_netbox_importer")
 namespace.configure(
     {
         "nautobot_netbox_importer": {
-            "nautobot_ver": "2.0.6",
+            "nautobot_ver": "2.1.0",
             "project_name": "nautobot-netbox-importer",
             "python_ver": "3.11",
             "local": False,
@@ -59,6 +59,7 @@ namespace.configure(
                 "docker-compose.base.yml",
                 "docker-compose.redis.yml",
                 "docker-compose.postgres.yml",
+                "docker-compose.minio.yml",
                 "docker-compose.dev.yml",
             ],
             "compose_http_timeout": "86400",
