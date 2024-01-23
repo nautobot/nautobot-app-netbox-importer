@@ -912,6 +912,7 @@ class SourceField:
 
     def set_relation_and_type_importer(self, type_field: "SourceField") -> None:
         """Set a relation UUID importer based on the type field."""
+
         def relation_and_type_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             source_uid = source.get(self.name, None)
             source_type = source.get(type_field.name, None)

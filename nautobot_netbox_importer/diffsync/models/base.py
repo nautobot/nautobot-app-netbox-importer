@@ -144,6 +144,7 @@ def setup(adapter: SourceAdapter) -> None:
         },
     )
     adapter.configure_model(
+        # pylint: disable=hard-coded-auth-user
         "auth.User",
         nautobot_content_type="users.User",
         identifiers=["username"],

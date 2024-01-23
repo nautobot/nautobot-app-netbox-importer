@@ -51,7 +51,8 @@ def _print_fields_mapping(source: SourceAdapter) -> None:
             yield "Disabled with reason:"
             yield field.disable_reason
             return
-        elif field.importer:
+
+        if field.importer:
             yield field.importer.__name__
         elif field.name == "id":
             yield "uid_from_data"
@@ -146,7 +147,7 @@ def print_summary(source: SourceAdapter, diff_summary: DiffSummary, field_mappin
 def _serialize(value):
     if value is None:
         return None
-    if isinstance(value, str) or isinstance(value, bool) or isinstance(value, int) or isinstance(value, float):
+    if isinstance(value, (str, bool, int, float)):
         return value
     if isinstance(value, Callable):
         return value.__name__
@@ -194,6 +195,7 @@ def _get_wrapper_mapping(wrapper: SourceModelWrapper, content_type_id) -> dict:
 
 
 def get_mapping(source: SourceAdapter) -> list:
+    """Get a JSON serializable mapping of the importer."""
     wrapper_to_id = {value: key for key, value in source.content_type_ids_mapping.items()}
 
     def get_wrappers():
