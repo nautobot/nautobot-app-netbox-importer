@@ -92,6 +92,7 @@ def setup(adapter: SourceAdapter) -> None:
     """Setup locations for NetBox importer."""
 
     def forward_references(wrapper: SourceModelWrapper, references: SourceReferences) -> None:
+        """Forward references to Location, Site and Region instance to their LocationType to fill `content_types`."""
         for uid, wrappers in references.items():
             instance = wrapper.get_or_create(uid, fail_missing=True)
             location_type_uid = getattr(instance, "location_type_id")
