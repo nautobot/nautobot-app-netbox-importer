@@ -15,7 +15,7 @@ from .source import SourceFieldDefinition
 def relation(related_source: SourceContentType, nautobot_field_name: FieldName = "") -> SourceFieldDefinition:
     """Create a relation field definition.
 
-    Use, when there is a different source content type, that should be mapped to Nautobot relation.
+    Use when there is a different source content type that should be mapped to Nautobot relation.
     """
 
     def define_relation(field: SourceField) -> None:
