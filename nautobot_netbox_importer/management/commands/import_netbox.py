@@ -1,5 +1,4 @@
 """Definition of "manage.py import_netbox" Django command for use with Nautobot."""
-import argparse
 import json
 from pathlib import Path
 
