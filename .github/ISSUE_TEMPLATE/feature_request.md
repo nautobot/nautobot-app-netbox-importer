@@ -5,7 +5,7 @@ about: Propose a new feature or enhancement
 ---
 
 ### Environment
-* Nautobot version:  <!-- Example: 1.6.0 -->
+* Nautobot version:  <!-- Example: 2.0.6 -->
 * nautobot-netbox-importer version:  <!-- Example: 1.0.0 -->
 
 <!--

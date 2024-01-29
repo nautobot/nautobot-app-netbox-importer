@@ -5,4 +5,4 @@
 
 | Nautobot NetBox Importer Version | Nautobot First Support Version | Nautobot Last Support Version |
 | ------------- | -------------------- | ------------- |
-| 1.0.X         | 1.6.0                | 2.99.99        |
+| 1.0.X         | 2.0.6                | 2.99.99        |
