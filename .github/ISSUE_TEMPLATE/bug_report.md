@@ -5,7 +5,7 @@ about: Report a reproducible bug in the current release of nautobot-netbox-impor
 
 ### Environment
 * Python version:  <!-- Example: 3.11.4 -->
-* Nautobot version:  <!-- Example: 1.6.0 -->
+* Nautobot version:  <!-- Example: 2.0.6 -->
 * nautobot-netbox-importer version:  <!-- Example: 1.0.0 -->
 
 <!-- What did you expect to happen? -->
