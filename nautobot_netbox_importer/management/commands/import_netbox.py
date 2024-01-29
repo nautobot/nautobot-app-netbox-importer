@@ -20,8 +20,7 @@ class Command(BaseCommand):
         """Add parser arguments to the import_netbox management command."""
         parser.add_argument(
             "json_file",
-            type=argparse.FileType("r"),
-            help="Path to the JSON file to import.",
+            help="URL or path to the JSON file to import.",
         )
         parser.add_argument(
             "--dry-run",
@@ -84,7 +83,7 @@ class Command(BaseCommand):
         keys = NetBoxImporterOptions._fields
         options = NetBoxImporterOptions(**{key: value for key, value in kwargs.items() if key in keys})
 
-        adapter = NetBoxAdapter(json_file.name, options)
+        adapter = NetBoxAdapter(json_file, options)
         adapter.import_to_nautobot()
         if save_mappings_file:
             mapping = get_mapping(adapter)
