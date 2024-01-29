@@ -123,6 +123,7 @@ nav:
       - Architecture Decision Records: "dev/arch_decision.md"
       - Generator Description: "dev/generator.md"
       - Data Flow: "dev/data_flow.md"
+      - Demo Excecution: "dev/demo.md"
       - Frequently Asked Questions: "dev/faq.md"
       - Code Reference:
           - "dev/code_reference/index.md"
