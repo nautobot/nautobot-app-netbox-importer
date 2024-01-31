@@ -12,7 +12,7 @@ Here you will find detailed instructions on how to **install** and **configure**
 
 ### Access Requirements
 
-The plugin does not directly communicate with NetBox, data is imported by first running a Django data dump command from the CLI of the NetBox server then providing the JSON export to a management command on the Nautobot server. Detailed instructions are located on the [Using the App](../user/app_use_cases.md) page.
+The app does not directly communicate with NetBox, data is imported by first running a Django data dump command from the CLI of the NetBox server then providing the JSON export to a management command on the Nautobot server. Detailed instructions are located on the [Using the App](../user/app_use_cases.md) page.
 
 ## Install Guide
 
@@ -59,13 +59,4 @@ sudo systemctl restart nautobot nautobot-worker nautobot-scheduler
 
 ## App Configuration
 
-!!! warning "Developer Note - Remove Me!"
-    Any configuration required to get the App set up. Edit the table below as per the examples provided.
-
-The app behavior can be controlled with the following list of settings:
-
-| Key     | Example | Default | Description                          |
-| ------- | ------ | -------- | ------------------------------------- |
-| `enable_backup` | `True` | `True` | A boolean to represent whether or not to run backup configurations within the app. |
-| `platform_slug_map` | `{"cisco_wlc": "cisco_aireos"}` | `None` | A dictionary in which the key is the platform slug and the value is what netutils uses in any "network_os" parameter. |
-| `per_feature_bar_width` | `0.15` | `0.15` | The width of the table bar within the overview report |
+There is no specific configuration required for the App to work.

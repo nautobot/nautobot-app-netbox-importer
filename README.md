@@ -1,10 +1,10 @@
 # Nautobot NetBox Importer
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/nautobot/nautobot-app-netbox-importer/develop/docs/images/icon-nautobot-netbox-importer.png" class="logo" height="200px">
+  <img src="https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/docs/images/icon-nautobot-netbox-importer.png" class="logo" height="200px">
   <br>
   <a href="https://github.com/nautobot/nautobot-app-netbox-importer/actions"><img src="https://github.com/nautobot/nautobot-app-netbox-importer/actions/workflows/ci.yml/badge.svg?branch=main"></a>
-  <a href="https://docs.nautobot.com/projects/netbox-importer/en/latest"><img src="https://readthedocs.org/projects/nautobot-app-netbox-importer/badge/"></a>
+  <a href="https://docs.nautobot.com/projects/netbox-importer/en/latest/"><img src="https://readthedocs.org/projects/nautobot-plugin-netbox-importer/badge/"></a>
   <a href="https://pypi.org/project/nautobot-netbox-importer/"><img src="https://img.shields.io/pypi/v/nautobot-netbox-importer"></a>
   <a href="https://pypi.org/project/nautobot-netbox-importer/"><img src="https://img.shields.io/pypi/dm/nautobot-netbox-importer"></a>
   <br>
@@ -17,13 +17,9 @@ This application's sole purpose is to facilitate data migration from NetBox to N
 
 ### Screenshots
 
-> Developer Note: Add any representative screenshots of the App in action. These images should also be added to the `docs/user/app_use_cases.md` section.
+More screenshots can be found in the [Using the App](https://docs.nautobot.com/projects/netbox-importer/en/latest/user/app_use_cases/) page in the documentation. Here's a quick overview of some of the plugin's added functionality:
 
-> Developer Note: Place the files in the `docs/images/` folder and link them using only full URLs from GitHub, for example: `![Overview](https://raw.githubusercontent.com/nautobot/nautobot-app-netbox-importer/develop/docs/images/app-overview.png)`. This absolute static linking is required to ensure the README renders properly in GitHub, the docs site, and any other external sites like PyPI.
-
-More screenshots can be found in the [Using the App](https://docs.nautobot.com/projects/netbox-importer/en/latest/user/app_use_cases/) page in the documentation. Here's a quick overview of some of the app's added functionality:
-
-![](https://raw.githubusercontent.com/nautobot/nautobot-app-netbox-importer/develop/docs/images/placeholder.png)
+![Screenshot of the start of synchronization](https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/docs/images/screenshot1.png)
 
 ![Screenshot of the completed process](https://raw.githubusercontent.com/nautobot/nautobot-plugin-netbox-importer/develop/docs/images/screenshot2.png)
 

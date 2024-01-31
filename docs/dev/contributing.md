@@ -1,6 +1,6 @@
 # Contributing to the App
 
-Most of the internal logic of this plugin is based on the [DiffSync](https://github.com/networktocode/diffsync) library, which in turn is built atop [Pydantic](https://github.com/samuelcolvin/pydantic/).
+Most of the internal logic of this app is based on the [DiffSync](https://github.com/networktocode/diffsync) library, which in turn is built atop [Pydantic](https://github.com/samuelcolvin/pydantic/).
 
 A basic understanding of these two libraries will be helpful to those wishing to contribute to this project.
 

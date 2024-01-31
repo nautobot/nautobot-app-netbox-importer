@@ -4,23 +4,11 @@ This document describes all new features and changes in the release `1.0`. The f
 
 ## Release Overview
 
-- Major features or milestones
-- Achieved in this `x.y` release
-- Changes to compatibility with Nautobot and/or other apps, libraries etc.
-
-## [v1.0.1] - 2021-09-08
+## v1.0.1 (2021-03-09)
 
 ### Added
 
-### Changed
-
-### Fixed
-
-- [#123](https://github.com/nautobot/nautobot-app-netbox-importer/issues/123) Fixed Tag filtering not working in job launch form
-
-## [v1.0.0] - 2021-08-03
-
-### Added
+- `#3` - Data exports from NetBox v2.10.5 are now permitted for importing.
 
 ### Changed
 

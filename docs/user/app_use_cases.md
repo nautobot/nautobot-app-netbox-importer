@@ -4,7 +4,7 @@ This document describes common use-cases and scenarios for this App.
 
 ## General Usage
 
-This plugin provides `import_netbox` management command to import data from NetBox with the following options:
+This app provides `import_netbox` management command to import data from NetBox with the following options:
 
 ```bash
 nautobot-server import_netbox --help
