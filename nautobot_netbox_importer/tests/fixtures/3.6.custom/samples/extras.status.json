@@ -1,0 +1,17 @@
+[
+{
+  "model": "extras.status",
+  "pk": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+  "fields": {
+    "created": "2024-01-23T09:32:59.979Z",
+    "last_updated": "2024-01-23T09:32:59.979Z",
+    "_custom_field_data": {},
+    "name": "Unknown",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      33
+    ]
+  }
+}
+]

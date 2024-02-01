@@ -51,7 +51,6 @@
     "description": "",
     "nestable": true,
     "content_types": [
-      56,
       42,
       60
     ]

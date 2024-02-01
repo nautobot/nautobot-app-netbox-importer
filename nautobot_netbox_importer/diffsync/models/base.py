@@ -14,7 +14,7 @@ from nautobot_netbox_importer.generator import fields
 def _define_choices(field: SourceField) -> None:
     choices_wrapper = field.wrapper.adapter.get_or_create_wrapper("extras.customfieldchoice")
 
-    def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+    def choices_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
         choices = source.get(field.name, None)
         if choices in EMPTY_VALUES:
             return
@@ -35,66 +35,36 @@ def _define_choices(field: SourceField) -> None:
                 },
             )
 
-    field.set_importer(importer)
+    field.set_importer(choices_importer)
 
 
 def _define_tagged_object(field: SourceField) -> None:
-    field.set_nautobot_field(field.name)
+    wrapper = field.wrapper
+    adapter = wrapper.adapter
+    tag_wrapper = adapter.get_or_create_wrapper("extras.tag")
 
-    def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-        content_type = source.get("content_type", None)
+    def tagged_object_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
         object_id = source.get(field.name, None)
-        if not object_id or not content_type:
+        if not object_id:
             return
 
-        related_wrapper = field.wrapper.adapter.get_or_create_wrapper(content_type)
+        tag = source.get(tag_field.name, None)
+        content_type = source.get(content_type_field.name, None)
+        if not tag or not content_type:
+            raise ValueError(f"Missing content_type or tag for tagged object {object_id}")
+
+        tag_uuid = tag_wrapper.get_pk_from_uid(tag)
+        related_wrapper = adapter.get_or_create_wrapper(content_type)
         result = related_wrapper.get_pk_from_uid(object_id)
         setattr(target, field.nautobot.name, result)
-        related_wrapper.add_reference(result, field.wrapper)
+        setattr(target, tag_field.nautobot.name, tag_uuid)
+        setattr(target, content_type_field.nautobot.name, related_wrapper.nautobot.content_type_instance.pk)
+        related_wrapper.add_reference(tag_wrapper, tag_uuid)
 
-    field.set_importer(importer)
-
-
-def _setup_object_change(adapter: SourceAdapter) -> None:
-    """Map NetBox object change to Nautobot.
-
-    JSON file with object changes need to have all content types exported first to properly map the content types.
-    """
-
-    def define_changed_object(field: SourceField) -> None:
-        field.set_nautobot_field(field.name)
-        object_field = field.handle_sibling("changed_object_id", nautobot_name="changed_object_id")
-
-        def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-            content_type = source[field.name]
-            object_id = source[object_field.name]
-            related_wrapper = adapter.get_or_create_wrapper(content_type)
-            setattr(target, field.nautobot.name, related_wrapper.nautobot.content_type_instance.pk)
-            setattr(target, object_field.nautobot.name, related_wrapper.get_pk_from_uid(object_id))
-
-        field.set_importer(importer)
-
-    def define_user(field: SourceField) -> None:
-        field.set_nautobot_field(field.name)
-        user_field = field.handle_sibling("user", nautobot_name="user_id")
-        user_wrapper = adapter.get_or_create_wrapper("auth.user")
-
-        def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-            user_name = source[field.name]
-            setattr(target, field.nautobot.name, user_name)
-            setattr(target, user_field.nautobot.name, user_wrapper.get_pk_from_identifiers([user_name]))
-
-        field.set_importer(importer)
-
-    adapter.configure_model(
-        "extras.objectchange",
-        fields={
-            "user_name": define_user,
-            "changed_object_type": define_changed_object,
-            "postchange_data": "object_data",
-            "time": fields.force(),
-        },
-    )
+    field.set_nautobot_field(field.name)
+    field.set_importer(tagged_object_importer)
+    tag_field = field.handle_sibling("tag", "tag")
+    content_type_field = field.handle_sibling("content_type", "content_type")
 
 
 def _setup_content_types(adapter: SourceAdapter) -> None:
@@ -104,10 +74,10 @@ def _setup_content_types(adapter: SourceAdapter) -> None:
     """
     netbox = {"id": 0}
 
-    def cache_content_type(field: SourceField) -> None:
+    def define_app_label(field: SourceField) -> None:
         field.set_nautobot_field(field.name)
 
-        def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+        def content_types_mapper_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             app_label = source["app_label"]
             model = source["model"]
             netbox["id"] += 1
@@ -122,15 +92,15 @@ def _setup_content_types(adapter: SourceAdapter) -> None:
             adapter.content_type_ids_mapping[uid] = wrapper
             setattr(target, field.nautobot.name, app_label)
 
-        field.set_importer(importer)
+        field.set_importer(content_types_mapper_importer)
 
     adapter.configure_model(
-        "contenttypes.contenttype",
+        "contenttypes.ContentType",
         identifiers=["app_label", "model"],
         flags=DiffSyncModelFlags.IGNORE,
         nautobot_flags=DiffSyncModelFlags.IGNORE,
         fields={
-            "app_label": cache_content_type,
+            "app_label": define_app_label,
         },
     )
 
@@ -143,57 +113,70 @@ def setup(adapter: SourceAdapter) -> None:
     adapter.disable_model("auth.permission", "Handled via a Nautobot model and may not be a 1 to 1.")
 
     _setup_content_types(adapter)
-    _setup_object_change(adapter)
 
     adapter.configure_model(
-        "extras.status",
+        "extras.Status",
         identifiers=["name"],
         default_reference={
             "name": "Unknown",
-            "content_types": [],
         },
     )
     adapter.configure_model("extras.role")
     adapter.configure_model(
-        "extras.customfield",
+        "extras.CustomField",
         fields={
             "name": "key",
             "choices": _define_choices,
+            "choice_set": _define_choices,
         },
     )
     adapter.configure_model(
-        "extras.customfieldchoice",
+        "extras.CustomFieldChoice",
         fields={
             "custom_field": "custom_field",
             "value": "value",
         },
     )
     adapter.configure_model(
-        "extras.taggeditem",
+        "extras.TaggedItem",
         fields={
             "object_id": _define_tagged_object,
         },
     )
     adapter.configure_model(
-        "auth.user",
-        nautobot_content_type="users.user",
+        # pylint: disable=hard-coded-auth-user
+        "auth.User",
+        nautobot_content_type="users.User",
         identifiers=["username"],
         fields={
-            "last_login": fields.disable("Should not be attempted to migrated"),
-            "password": fields.disable("Should not be attempted to migrated"),
-            "user_permissions": fields.disable("Permissions import are not implemented yet"),
+            "last_login": fields.disable("Should not be attempted to migrate"),
+            "password": fields.disable("Should not be attempted to migrate"),
+            "user_permissions": fields.disable("Permissions import is not implemented yet"),
         },
     )
     adapter.configure_model(
-        "auth.group",
+        "auth.Group",
         identifiers=["name"],
         fields={
-            "permissions": fields.disable("Permissions import are not implemented yet"),
+            "permissions": fields.disable("Permissions import is not implemented yet"),
         },
     )
     adapter.configure_model(
-        "tenancy.tenant",
+        "tenancy.Tenant",
         fields={
             "group": "tenant_group",
+        },
+    )
+    adapter.configure_model(
+        "extras.JournalEntry",
+        nautobot_content_type="extras.Note",
+    )
+    adapter.configure_model(
+        "extras.ObjectChange",
+        disable_related_reference=True,
+        fields={
+            "postchange_data": "object_data",
+            # TBD: This should be defined on Nautobot side
+            "time": fields.force(),
         },
     )

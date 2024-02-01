@@ -815,3 +815,61 @@ def tests(context, failfast=False, keepdb=False, lint_only=False):
         unittest(context, failfast=failfast, keepdb=keepdb)
         unittest_coverage(context)
     print("All tests have passed!")
+
+
+@task(
+    help={
+        "file": "URL or path to the JSON file to import.",
+        "demo_version": "Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).",
+        "save_mappings_file": "File path to write the JSON mapping to. (default: generated-mappings.json)",
+        "bypass_data_validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
+        "dry_run": "Do not write any data to the database. (default: False)",
+        "fields_mapping": "Show a mapping of NetBox fields to Nautobot fields. Only printed when `--summary` is also specified. (default: True)",
+        "fix_powerfeed_locations": "Fix panel location to match rack location based on powerfeed. (default: False)",
+        "sitegroup_parent_always_region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation issues `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
+        "summary": "Show a summary of the import. (default: True)",
+        "update_paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
+    }
+)
+def import_netbox(
+    context,
+    file="",
+    demo_version="",
+    save_mappings_file="",
+    bypass_data_validation=False,
+    dry_run=True,
+    fields_mapping=True,
+    fix_powerfeed_locations=False,
+    sitegroup_parent_always_region=False,
+    summary=True,
+    update_paths=False,
+):
+    """Import NetBox data into Nautobot."""
+    if demo_version:
+        if file:
+            raise ValueError("Cannot specify both, `file` and `demo` arguments")
+
+        file = (
+            "https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/json/netbox-demo-v"
+            + demo_version
+            + ".json"
+        )
+        bypass_data_validation = True
+        sitegroup_parent_always_region = True
+
+    command = [
+        "nautobot-server",
+        "import_netbox",
+        f"--save-mappings-file={save_mappings_file}" if save_mappings_file else "",
+        "--bypass-data-validation" if bypass_data_validation else "",
+        "--dry-run" if dry_run else "",
+        "--field-mapping" if fields_mapping else "",
+        "--fix-powerfeed-locations" if fix_powerfeed_locations else "",
+        "--sitegroup-parent-always-region" if sitegroup_parent_always_region else "",
+        "--summary" if summary else "",
+        "--update-paths" if update_paths else "",
+        "--no-color",
+        file,
+    ]
+
+    run_command(context, " ".join(command))

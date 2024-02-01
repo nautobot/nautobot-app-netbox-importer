@@ -2,16 +2,30 @@
 from typing import Any
 from typing import Optional
 
-from .base import EMPTY_VALUES
+from .base import ContentTypeStr
 from .nautobot import DiffSyncBaseModel
 from .source import FieldName
 from .source import RecordData
 from .source import SourceAdapter
+from .source import SourceContentType
 from .source import SourceField
 from .source import SourceFieldDefinition
 
 
-def role(adapter: SourceAdapter, source_content_type: str) -> SourceFieldDefinition:
+def relation(related_source: SourceContentType, nautobot_field_name: FieldName = "") -> SourceFieldDefinition:
+    """Create a relation field definition.
+
+    Use when there is a different source content type that should be mapped to Nautobot relation.
+    """
+
+    def define_relation(field: SourceField) -> None:
+        field.set_nautobot_field(nautobot_field_name or field.name)
+        field.set_relation_importer(field.wrapper.adapter.get_or_create_wrapper(related_source))
+
+    return define_relation
+
+
+def role(adapter: SourceAdapter, source_content_type: ContentTypeStr) -> SourceFieldDefinition:
     """Create a role field definition.
 
     Use, when there is a different source role content type, that should be mapped to Nautobot "extras.role".
@@ -23,24 +37,12 @@ def role(adapter: SourceAdapter, source_content_type: str) -> SourceFieldDefinit
         role_wrapper = adapter.configure_model(
             source_content_type,
             nautobot_content_type="extras.role",
-            fields={"color": "color", "content_types": "content_types"},
+            fields={
+                "color": "color",
+            },
         )
 
-    def definition(field: SourceField) -> None:
-        field.set_nautobot_field("role")
-
-        def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-            value = source.get(field.name, None)
-            if value in EMPTY_VALUES:
-                return
-
-            uuid = role_wrapper.get_pk_from_uid(value)  # type: ignore
-            setattr(target, field.nautobot.name, uuid)
-            role_wrapper.add_reference(uuid, field.wrapper)
-
-        field.set_importer(importer)
-
-    return definition
+    return relation(role_wrapper, "role")
 
 
 def source_constant(value: Any, nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
@@ -49,19 +51,19 @@ def source_constant(value: Any, nautobot_name: Optional[FieldName] = None) -> So
     Use, to pre-fill constant value for the field. Calls default importer after setting the value.
     """
 
-    def definition(field: SourceField) -> None:
+    def define_source_constant(field: SourceField) -> None:
         field.set_default_importer(nautobot_name or field.name)
         original_importer = field.importer
         if not original_importer:
             return
 
-        def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+        def source_constant_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             source[field.name] = value
             original_importer(source, target)
 
-        field.set_importer(importer, override=True)
+        field.set_importer(source_constant_importer, override=True)
 
-    return definition
+    return define_source_constant
 
 
 def constant(value: Any, nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
@@ -70,15 +72,15 @@ def constant(value: Any, nautobot_name: Optional[FieldName] = None) -> SourceFie
     Use to fill target constant value for the field.
     """
 
-    def definition(field: SourceField) -> None:
+    def define_constant(field: SourceField) -> None:
         field.set_nautobot_field(nautobot_name or field.name)
 
-        def importer(_: RecordData, target: DiffSyncBaseModel) -> None:
+        def constant_importer(_: RecordData, target: DiffSyncBaseModel) -> None:
             setattr(target, field.nautobot.name, value)
 
-        field.set_importer(importer)
+        field.set_importer(constant_importer)
 
-    return definition
+    return define_constant
 
 
 def pass_through(nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
@@ -87,17 +89,17 @@ def pass_through(nautobot_name: Optional[FieldName] = None) -> SourceFieldDefini
     Use to pass-through the value from source to target without changing it by the default importer.
     """
 
-    def definition(field: SourceField) -> None:
+    def define_passthrough(field: SourceField) -> None:
         field.set_nautobot_field(nautobot_name or field.name)
 
-        def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+        def pass_through_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(field.name, None)
             if value:
                 setattr(target, field.nautobot.name, value)
 
-        field.set_importer(importer)
+        field.set_importer(pass_through_importer)
 
-    return definition
+    return define_passthrough
 
 
 def force(nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
@@ -107,11 +109,11 @@ def force(nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
     default value set by Nautobot.
     """
 
-    def definition(field: SourceField) -> None:
+    def define_force(field: SourceField) -> None:
         field.set_default_importer(nautobot_name or field.name)
         field.nautobot.force = True
 
-    return definition
+    return define_force
 
 
 def disable(reason: str) -> SourceFieldDefinition:
@@ -120,7 +122,7 @@ def disable(reason: str) -> SourceFieldDefinition:
     Use to disable the field import with the given reason.
     """
 
-    def definition(field: SourceField) -> None:
+    def define_disable(field: SourceField) -> None:
         field.disable(reason)
 
-    return definition
+    return define_disable

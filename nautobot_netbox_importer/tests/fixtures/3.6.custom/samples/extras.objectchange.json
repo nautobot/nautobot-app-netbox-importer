@@ -1,58 +1,60 @@
 [
 {
   "model": "extras.objectchange",
-  "pk": "04efae2b-ca9f-5b08-93b9-5564abe91176",
+  "pk": "6d2345c6-6bc3-5e6f-b801-b5f80c5422ca",
   "fields": {
-    "time": "2024-01-05T12:32:23.219Z",
+    "time": "2024-01-22T08:22:44.605Z",
     "user": "b6111f2f-ede6-5a47-b0e5-3842b76f14cd",
     "user_name": "admin",
-    "request_id": "58cc5d3f-7fb7-43a0-b987-65e0056e4690",
-    "action": "update",
-    "changed_object_type": 109,
-    "changed_object_id": "50369baf-2664-5398-ae46-90eba767ddae",
+    "request_id": "41d09078-2f97-4b1c-ad0a-f9b5ad7f3001",
+    "action": "create",
+    "changed_object_type": 103,
+    "changed_object_id": "096ebdc2-2b2a-5714-8556-ab51a169b5d1",
     "change_context": "",
     "change_context_detail": "",
     "related_object_type": null,
     "related_object_id": null,
-    "object_repr": "Cyberdyne Systems",
+    "object_repr": "2024-01-22 08:22 (Info)",
     "object_data": {
-      "name": "Cyberdyne Systems",
-      "slug": "cyberdyne",
+      "kind": "info",
       "tags": [],
-      "group": 1,
-      "created": "2020-12-19T00:00:00Z",
-      "comments": "",
-      "description": "Another test description",
-      "last_updated": "2024-01-05T12:32:23.202Z"
+      "created": "2024-01-22T08:22:44.596Z",
+      "comments": "This is testing info journal entry 1",
+      "created_by": 1,
+      "last_updated": "2024-01-22T08:22:44.596Z",
+      "custom_fields": {},
+      "assigned_object_id": 5,
+      "assigned_object_type": 110
     },
     "object_data_v2": null
   }
 },
 {
   "model": "extras.objectchange",
-  "pk": "d48f1955-d003-5a92-8d5f-5199ed647e67",
+  "pk": "a1890d6e-8c15-5600-a643-f5fef4026caf",
   "fields": {
-    "time": "2024-01-05T12:32:02.703Z",
+    "time": "2024-01-22T08:32:30.391Z",
     "user": "b6111f2f-ede6-5a47-b0e5-3842b76f14cd",
     "user_name": "admin",
-    "request_id": "a6bb56b7-6324-45ae-b80e-f34431e92747",
-    "action": "update",
-    "changed_object_type": 109,
-    "changed_object_id": "50369baf-2664-5398-ae46-90eba767ddae",
+    "request_id": "ffeceb1a-b607-458e-b132-a9b158ae1de4",
+    "action": "create",
+    "changed_object_type": 103,
+    "changed_object_id": "38545e26-db8e-5ae0-af63-99c56bea15e2",
     "change_context": "",
     "change_context_detail": "",
     "related_object_type": null,
     "related_object_id": null,
-    "object_repr": "Cyberdyne Systems",
+    "object_repr": "2024-01-22 08:32 ()",
     "object_data": {
-      "name": "Cyberdyne Systems",
-      "slug": "cyberdyne",
+      "kind": "",
       "tags": [],
-      "group": 1,
-      "created": "2020-12-19T00:00:00Z",
-      "comments": "",
-      "description": "Test description",
-      "last_updated": "2024-01-05T12:32:02.695Z"
+      "created": "2024-01-22T08:32:30.376Z",
+      "comments": "This is testing info journal entry 2\r\n\r\nMulti-line entry.",
+      "created_by": 1,
+      "last_updated": "2024-01-22T08:32:30.376Z",
+      "custom_fields": {},
+      "assigned_object_id": 5,
+      "assigned_object_type": 110
     },
     "object_data_v2": null
   }
@@ -81,7 +83,10 @@
       "created": "2020-12-19T00:00:00Z",
       "comments": "",
       "description": "Test description",
-      "last_updated": "2024-01-05T12:32:42.577Z"
+      "last_updated": "2024-01-05T12:32:42.577Z",
+      "custom_fields": {
+        "cust_id": "DMI01"
+      }
     },
     "object_data_v2": null
   }

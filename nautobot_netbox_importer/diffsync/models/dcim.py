@@ -15,7 +15,7 @@ from .locations import define_location
 def _define_units(field: SourceField) -> None:
     field.set_nautobot_field(field.name)
 
-    def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+    def units_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
         # NetBox 3.4 units is `list[int]`, previous versions are JSON string with list of strings
         units = source.get(field.name, None)
         if units in EMPTY_VALUES:
@@ -28,7 +28,7 @@ def _define_units(field: SourceField) -> None:
 
         setattr(target, field.nautobot.name, units)
 
-    field.set_importer(importer)
+    field.set_importer(units_importer)
 
 
 def _pre_import_cable_termination(source: RecordData) -> None:
@@ -54,26 +54,15 @@ def setup(adapter: SourceAdapter) -> None:
             "role": fields.role(adapter, "dcim.rackrole"),
         },
     )
-    adapter.configure_model(
-        "dcim.cable",
-        fields={
-            "termination_a": "termination_a",
-            "termination_b": "termination_b",
-        },
-    )
+    adapter.configure_model("dcim.cable")
     adapter.configure_model(
         "dcim.cabletermination",
         extend_content_type="dcim.cable",
         pre_import=_pre_import_cable_termination,
-        fields={
-            "termination_a": "termination_a",
-            "termination_b": "termination_b",
-        },
     )
     adapter.configure_model(
         "dcim.interface",
         fields={
-            "status": "status",
             "parent": "parent_interface",
         },
     )
@@ -172,10 +161,10 @@ def fix_power_feed_locations(adapter: SourceAdapter) -> None:
         # Need to update references, to properly update `content_types` fields
         # References can be counted and removed, if needed
         if location_uid in region_wrapper.references:
-            region_wrapper.add_reference(location_uid, target_wrapper)
+            target_wrapper.add_reference(region_wrapper, location_uid)
         elif location_uid in site_wrapper.references:
-            site_wrapper.add_reference(location_uid, target_wrapper)
+            target_wrapper.add_reference(site_wrapper, location_uid)
         elif location_uid in location_wrapper.references:
-            location_wrapper.add_reference(location_uid, target_wrapper)
+            target_wrapper.add_reference(location_wrapper, location_uid)
         else:
             raise ValueError(f"Unknown location type {location_uid}")
