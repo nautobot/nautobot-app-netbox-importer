@@ -1,5 +1,7 @@
 # Demo Execution of NetBox Importer
 
+This document describes the execution of the NetBox Importer against a local instance of Nautobot, using NetBox demo data available at https://github.com/netbox-community/netbox-demo-data/json. The structure of the mappings generator is described in [the generator documentation](./generator.md).
+
 ## Prerequisites
 
 - Docker along with Docker Compose plugin
@@ -299,7 +301,7 @@ The next step is to import the data. The output will look similar to the followi
 
 ### DiffSync
 
-The next step is to perform a DiffSync. The output will look similar to the following:
+The next step is to perform a [DiffSync](https://diffsync.readthedocs.io/en/stable/). The output will look similar to the following:
 
 ```
 2024-01-29 11:01:10 debug     Diff calculation between these two datasets will involve 6068 models dst=<NautobotAdapter "Nautobot"> flags=<DiffSyncFlags.NONE: 0> src=<NetBoxAdapter "NetBox">

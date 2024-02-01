@@ -819,8 +819,8 @@ def tests(context, failfast=False, keepdb=False, lint_only=False):
 
 @task(
     help={
-        "file": "Path to the JSON file to import.",
-        "demo_version": "Version of the demo data to import from public NetBox repository (default: empty).",
+        "file": "URL or path to the JSON file to import.",
+        "demo_version": "Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).",
         "save_mappings_file": "File path to write the JSON mapping to. (default: generated-mappings.json)",
         "bypass_data_validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
         "dry_run": "Do not write any data to the database. (default: False)",
