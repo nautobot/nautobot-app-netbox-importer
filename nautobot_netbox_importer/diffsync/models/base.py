@@ -1,14 +1,15 @@
 """NetBox to Nautobot Base Models Mapping."""
+
 import json
 
 from diffsync.enum import DiffSyncModelFlags
 
 from nautobot_netbox_importer.generator import EMPTY_VALUES
 from nautobot_netbox_importer.generator import DiffSyncBaseModel
-from nautobot_netbox_importer.generator import RecordData
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceField
 from nautobot_netbox_importer.generator import fields
+from nautobot_netbox_importer.base import RecordData
 
 
 def _define_choices(field: SourceField) -> None:

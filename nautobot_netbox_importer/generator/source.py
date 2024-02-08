@@ -1,4 +1,6 @@
+# pylint: disable=too-many-lines
 """Generic DiffSync Source Generator."""
+
 import datetime
 import json
 from typing import Any
@@ -18,19 +20,25 @@ from uuid import UUID
 from diffsync.enum import DiffSyncModelFlags
 from nautobot.core.models.tree_queries import TreeModel
 
+from nautobot_netbox_importer.base import ContentTypeStr
+from nautobot_netbox_importer.base import ContentTypeValue
+from nautobot_netbox_importer.base import FieldName
+from nautobot_netbox_importer.base import RecordData
+from nautobot_netbox_importer.base import Uid
+from nautobot_netbox_importer.base import logger as default_logger
+from nautobot_netbox_importer.summary import DiffSummary
+from nautobot_netbox_importer.summary import FieldSummary
+from nautobot_netbox_importer.summary import ImportSummary
+from nautobot_netbox_importer.summary import ModelSummary
+from nautobot_netbox_importer.summary import serialize_to_summary
+
 from .base import AUTO_ADD_FIELDS
 from .base import EMPTY_VALUES
 from .base import BaseAdapter
-from .base import ContentTypeStr
-from .base import ContentTypeValue
 from .base import DjangoField
-from .base import FieldName
 from .base import InternalFieldType
 from .base import NautobotBaseModel
 from .base import NautobotBaseModelType
-from .base import RecordData
-from .base import Uid
-from .base import logger as default_logger
 from .base import normalize_datetime
 from .base import source_pk_to_uuid
 from .nautobot import IMPORT_ORDER
@@ -81,6 +89,7 @@ class SourceAdapter(BaseAdapter):
         self.nautobot = nautobot or NautobotAdapter()
         self.content_type_ids_mapping: Dict[int, SourceModelWrapper] = {}
         self.logger = logger or default_logger
+        self.summary = ImportSummary()
 
         # From Nautobot to Source content type mapping
         # When multiple source content types are mapped to the single nautobot content type, mapping is set to `None`
@@ -159,6 +168,19 @@ class SourceAdapter(BaseAdapter):
     def disable_model(self, content_type: ContentTypeStr, disable_reason: str) -> None:
         """Disable model importing."""
         self.get_or_create_wrapper(content_type).disable_reason = disable_reason
+
+    def summarize(self, diff_summary: DiffSummary) -> None:
+        """Summarize the import."""
+        self.summary.diff_summary = diff_summary
+
+        wrapper_to_id = {value: key for key, value in self.content_type_ids_mapping.items()}
+
+        for content_type in sorted(self.wrappers):
+            wrapper = self.wrappers.get(content_type)
+            if wrapper:
+                self.summary.add(wrapper.get_summary(wrapper_to_id.get(wrapper, None)))
+
+        self.summary.set_validation_issues(self.nautobot.get_validation_issues())
 
     def get_or_create_wrapper(self, value: Union[None, SourceContentType]) -> "SourceModelWrapper":
         """Get a source Wrapper for a given content type."""
@@ -297,12 +319,7 @@ class SourceAdapter(BaseAdapter):
 class SourceModelWrapper:
     """Definition of a source model mapping to Nautobot model."""
 
-    def __init__(
-        self,
-        adapter: SourceAdapter,
-        content_type: ContentTypeStr,
-        nautobot_wrapper: NautobotModelWrapper,
-    ):
+    def __init__(self, adapter: SourceAdapter, content_type: ContentTypeStr, nautobot_wrapper: NautobotModelWrapper):
         """Initialize the SourceModelWrapper."""
         if content_type in adapter.wrappers:
             raise ValueError(f"Duplicate content type {content_type}")
@@ -360,6 +377,28 @@ class SourceModelWrapper:
     def __str__(self) -> str:
         """Return a string representation of the wrapper."""
         return f"{self.__class__.__name__}<{self.content_type} -> {self.nautobot.content_type}>"
+
+    def get_summary(self, content_type_id) -> ModelSummary:
+        """Get a summary of the model."""
+        fields = [field.get_summary() for field in self.fields.values()]
+
+        return ModelSummary(
+            content_type=self.content_type,
+            content_type_id=content_type_id,
+            extends_content_type=self.extends_wrapper and self.extends_wrapper.content_type,
+            nautobot_content_type=self.nautobot.content_type,
+            nautobot_content_type_id=None if self.nautobot.disabled else self.nautobot.content_type_instance.pk,
+            disable_reason=self.disable_reason,
+            identifiers=self.identifiers,
+            disable_related_reference=self.disable_related_reference,
+            forward_references=self.forward_references and self.forward_references.__name__ or None,
+            pre_import=self.pre_import and self.pre_import.__name__ or None,
+            fields=sorted(fields, key=lambda field: field.name),
+            flags=str(self.flags),
+            nautobot_flags=str(self.nautobot.flags),
+            default_reference_uid=serialize_to_summary(self.default_reference_uid),
+            imported_count=self.imported_count,
+        )
 
     def set_identifiers(self, identifiers: Iterable[FieldName]) -> None:
         """Set identifiers for the model."""
@@ -647,6 +686,21 @@ class SourceField:
         if not self._nautobot:
             raise RuntimeError(f"Missing Nautobot field for {self}")
         return self._nautobot
+
+    def get_summary(self) -> FieldSummary:
+        """Get a summary of the field."""
+        return FieldSummary(
+            name=self.name,
+            nautobot_name=self._nautobot and self._nautobot.name,
+            nautobot_internal_type=self._nautobot and self._nautobot.internal_type.value,
+            nautobot_can_import=self._nautobot and self._nautobot.can_import,
+            importer=self.importer and self.importer.__name__,
+            definition=serialize_to_summary(self.definition),
+            from_data=self.from_data,
+            is_custom=self.is_custom,
+            default_value=serialize_to_summary(self.default_value),
+            disable_reason=self.disable_reason,
+        )
 
     def disable(self, reason: str) -> None:
         """Disable field importing."""

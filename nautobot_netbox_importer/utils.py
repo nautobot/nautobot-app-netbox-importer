@@ -2,17 +2,6 @@
 from tqdm import tqdm
 
 
-GENERATOR_SETUP_MODULES = set()
-
-
-def register_generator_setup(module: str) -> None:
-    """Register adapter setup function.
-
-    This function must be called before the adapter is used and containing module can't import anything from Nautobot.
-    """
-    GENERATOR_SETUP_MODULES.add(module)
-
-
 class ProgressBar(tqdm):
     """Custom subclass of tqdm progress bar implementation."""
 
