@@ -1,16 +1,13 @@
 """Generic DiffSync Importer base module."""
+
 import datetime
 import decimal
-import logging
 from enum import Enum
 from typing import Any
-from typing import List
 from typing import Mapping
-from typing import MutableMapping
 from typing import Optional
 from typing import Tuple
 from typing import Type
-from typing import Union
 from uuid import UUID
 from uuid import uuid5
 
@@ -25,19 +22,13 @@ from django.db.models.options import Options as _DjangoModelMeta
 from nautobot.core.models import BaseModel
 from pydantic import Field as _PydanticField
 
-logger = logging.getLogger("nautobot-netbox-importer")
+from nautobot_netbox_importer.base import ContentTypeStr
+from nautobot_netbox_importer.base import Uid
 
-Uid = Union[str, int, UUID]
-ContentTypeStr = str
-ContentTypeValue = Union[int, ContentTypeStr, List, Tuple[str, str]]
-FieldName = str
-RecordData = MutableMapping[FieldName, Any]
 NautobotBaseModel = BaseModel
 NautobotBaseModelType = Type[NautobotBaseModel]
-GenericForeignValue = Tuple[ContentTypeStr, Uid]
 DjangoModelMeta = _DjangoModelMeta
 PydanticField = _PydanticField
-DiffSummary = Mapping[str, int]
 
 
 class InternalFieldType(Enum):

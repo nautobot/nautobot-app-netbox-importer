@@ -1,10 +1,11 @@
 """Nautobot DiffSync Importer."""
+
 from typing import Any
 from typing import Dict
 from typing import Iterable
+from typing import List
 from typing import Mapping
 from typing import MutableMapping
-from typing import NamedTuple
 from typing import Optional
 from typing import Set
 from typing import Type
@@ -18,6 +19,12 @@ from django.core.exceptions import ValidationError
 from django.db.models import Max
 from nautobot.core.utils.lookup import get_model_from_name
 
+from nautobot_netbox_importer.base import FieldName
+from nautobot_netbox_importer.base import RecordData
+from nautobot_netbox_importer.base import logger
+from nautobot_netbox_importer.summary import ValidationIssue
+from nautobot_netbox_importer.summary import ValidationIssues
+
 from .base import AUTO_ADD_FIELDS
 from .base import EMPTY_VALUES
 from .base import INTERNAL_TYPE_TO_ANNOTATION
@@ -25,16 +32,13 @@ from .base import BaseAdapter
 from .base import ContentTypeStr
 from .base import DjangoField
 from .base import DjangoModelMeta
-from .base import FieldName
 from .base import InternalFieldType
 from .base import NautobotBaseModel
 from .base import NautobotBaseModelType
 from .base import PydanticField
-from .base import RecordData
 from .base import StrToInternalFieldType
 from .base import Uid
 from .base import get_nautobot_field_and_type
-from .base import logger
 from .base import normalize_datetime
 
 _AUTO_INCREMENT_TYPES: Iterable[InternalFieldType] = (
@@ -67,14 +71,6 @@ _DONT_IMPORT_TYPES: Iterable[InternalFieldType] = (
     InternalFieldType.PRIVATE_PROPERTY,
     InternalFieldType.READ_ONLY_PROPERTY,
 )
-
-
-class ValidationIssue(NamedTuple):
-    """Validation issue."""
-
-    uid: Uid
-    name: str
-    error: ValidationError
 
 
 # Helper to determine the import order of models.
@@ -126,22 +122,18 @@ class NautobotAdapter(BaseAdapter):
     def __init__(self, *args, **kwargs):
         """Initialize the adapter."""
         super().__init__("Nautobot", *args, **kwargs)
-        self._validation_issues: Optional[Dict[ContentTypeStr, Set[ValidationIssue]]] = None
         self.wrappers: Dict[ContentTypeStr, NautobotModelWrapper] = {}
 
-    @property
-    def validation_issues(self) -> Dict[ContentTypeStr, Set[ValidationIssue]]:
+    def get_validation_issues(self) -> ValidationIssues:
         """Re-run clean() on all instances that failed validation."""
-        if self._validation_issues is not None:
-            return self._validation_issues
+        result = {}
 
-        self._validation_issues = {}
         for wrapper in self.wrappers.values():
             issues = wrapper.get_validation_issues()
             if issues:
-                self._validation_issues[wrapper.content_type] = issues
+                result[wrapper.content_type] = issues
 
-        return self._validation_issues
+        return result
 
     def get_or_create_wrapper(self, content_type: ContentTypeStr) -> "NautobotModelWrapper":
         """Get or create a Nautobot model wrapper."""
@@ -360,30 +352,30 @@ class NautobotModelWrapper:
 
         return result
 
-    def get_validation_issues(self) -> Set[ValidationIssue]:
+    def get_validation_issues(self) -> List[ValidationIssue]:
         """Get the set of instances that failed to clean."""
-        result = set()
+        result = []
 
         for uid in self._clean_failures:
             try:
                 instance = self.model.objects.get(id=uid)
             except self.model.DoesNotExist as error:  # type: ignore
                 # This can happen with Tree models, some issue is there. Ignore for now, just add the validation issue.
-                result.add(
+                result.append(
                     ValidationIssue(
-                        uid,
+                        str(uid),
                         "",
-                        ValidationError(f"Instance was not found, event it was saved. {error}"),
+                        f"Instance was not found, event it was saved. {error}",
                     )
                 )
             else:
                 try:
                     instance.clean()
                 except ValidationError as error:
-                    result.add(ValidationIssue(uid, str(instance), error))
+                    result.append(ValidationIssue(str(uid), str(instance), str(error)))
                 # pylint: disable-next=broad-exception-caught
                 except Exception as error:
-                    result.add(ValidationIssue(uid, str(instance), ValidationError(f"Unknown error: {error}")))
+                    result.append(ValidationIssue(str(uid), str(instance), f"Unknown error: {error}"))
 
         self._clean_failures = set()
 

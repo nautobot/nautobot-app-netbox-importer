@@ -7,7 +7,7 @@ It's possible to customize the importer by registering a module containing a `se
 The function should be registered in your app's root `my_app/__init__.py` file, as follows:
 
 ```python
-from nautobot_netbox_importer.utils import register_generator_setup
+from nautobot_netbox_importer.base import register_generator_setup
 
 register_generator_setup("my_app.importer")
 ```

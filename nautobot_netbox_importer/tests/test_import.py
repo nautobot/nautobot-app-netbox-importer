@@ -1,4 +1,5 @@
 """Test cases for NetBox adapter."""
+
 import json
 from pathlib import Path
 from unittest.mock import patch
@@ -8,10 +9,10 @@ from django.core.serializers import serialize
 from django.test import TestCase
 from nautobot.ipam.models import Namespace
 
+from nautobot_netbox_importer.base import ContentTypeStr
 from nautobot_netbox_importer.command_utils import enable_logging as mute_diffsync_logging
 from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter
 from nautobot_netbox_importer.diffsync.adapters import NetBoxImporterOptions
-from nautobot_netbox_importer.generator import ContentTypeStr
 
 _DONT_COMPARE_FIELDS = ["created", "last_updated"]
 _FIXTURES_PATH = Path(__file__).parent / "fixtures"
@@ -194,6 +195,8 @@ class TestImport(TestCase):
 
         # Import the file to fresh Nautobot instance
         source, created_models, skipped_count = self._import_file(input_ref, version)
+        source.summary.dump(_FIXTURES_PATH / version / "summary.json")
+        source.summary.dump(_FIXTURES_PATH / version / "summary.txt", output_format="text")
         expected_summary = {
             "create": _EXPECTED_SUMMARY[version],
             "skip": skipped_count,
@@ -201,8 +204,8 @@ class TestImport(TestCase):
             "delete": 0,
             "update": 0,
         }
-        self.assertEqual(source.diff_summary, expected_summary, "Summary mismatch")
-        validation_issues = {key: len(value) for key, value in source.nautobot.validation_issues.items()}
+        self.assertEqual(source.summary.diff_summary, expected_summary, "Summary mismatch")
+        validation_issues = {key: len(value) for key, value in source.summary.validation_issues.items()}
         self.assertEqual(validation_issues, _EXPECTED_VALIDATION_ERRORS[version], "Validation issues mismatch")
 
         # Re-import the same file to verify that nothing has changed
@@ -210,8 +213,8 @@ class TestImport(TestCase):
         expected_summary["create"] = 0
         source, updated_models, skipped_count = self._import_file(input_ref, version)
         self.assertEqual(skipped_count, expected_summary["skip"], "Skipped count mismatch")
-        self.assertEqual(source.diff_summary, expected_summary, "Summary mismatch")
-        self.assertEqual(source.nautobot.validation_issues, {}, "No validation issues expected")
+        self.assertEqual(source.summary.diff_summary, expected_summary, "Summary mismatch")
+        self.assertEqual(source.summary.validation_issues, {}, "No validation issues expected")
         self.assertEqual(updated_models, created_models, "Models counts mismatch")
         total = sum(created_models.values())
         self.assertEqual(total, expected_summary["no-change"], "Total mismatch")

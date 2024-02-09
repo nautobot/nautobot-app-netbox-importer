@@ -1,4 +1,5 @@
 """NetBox to Nautobot Source Importer Definitions."""
+
 from gzip import GzipFile
 from pathlib import Path
 from typing import Callable
@@ -13,15 +14,14 @@ import requests
 from django.core.management import call_command
 from django.db.transaction import atomic
 
+from nautobot_netbox_importer.base import GENERATOR_SETUP_MODULES
+from nautobot_netbox_importer.base import logger
+from nautobot_netbox_importer.base import register_generator_setup
 from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations
-from nautobot_netbox_importer.generator import DiffSummary
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceDataGenerator
 from nautobot_netbox_importer.generator import SourceRecord
-from nautobot_netbox_importer.generator import logger
-from nautobot_netbox_importer.generator import print_summary
-from nautobot_netbox_importer.utils import GENERATOR_SETUP_MODULES
-from nautobot_netbox_importer.utils import register_generator_setup
+from nautobot_netbox_importer.summary import Pathable
 
 _FileRef = Union[str, Path, ParseResult]
 
@@ -41,11 +41,13 @@ class NetBoxImporterOptions(NamedTuple):
 
     dry_run: bool = True
     bypass_data_validation: bool = False
-    summary: bool = False
-    field_mapping: bool = False
+    print_summary: bool = False
+    print_field_mappings: bool = False
     update_paths: bool = False
     fix_powerfeed_locations: bool = False
     sitegroup_parent_always_region: bool = False
+    save_json_summary_path: str = ""
+    save_text_summary_path: str = ""
 
 
 AdapterSetupFunction = Callable[[SourceAdapter], None]
@@ -65,7 +67,6 @@ class NetBoxAdapter(SourceAdapter):
         self.sync = sync
 
         self.options = options
-        self.diff_summary: DiffSummary = {}
 
         for name in GENERATOR_SETUP_MODULES:
             setup = __import__(name, fromlist=["setup"]).setup
@@ -94,17 +95,22 @@ class NetBoxAdapter(SourceAdapter):
             call_command("trace_paths", no_input=True)
             logger.info(" ... Updating paths completed.")
 
-        if self.options.summary:
-            print_summary(self, self.diff_summary, self.options.field_mapping)
+        if self.options.print_summary:
+            self.summary.print(self.options.print_field_mappings)
 
     @atomic
     def _atomic_import(self) -> None:
         self.load()
 
         diff = self.nautobot.sync_from(self)
-        self.diff_summary = diff.summary()
+        self.summarize(diff.summary())
 
-        if self.nautobot.validation_issues and not self.options.bypass_data_validation:
+        if self.options.save_json_summary_path:
+            self.summary.dump(self.options.save_json_summary_path, output_format="json")
+        if self.options.save_text_summary_path:
+            self.summary.dump(self.options.save_text_summary_path, output_format="text")
+
+        if self.summary.validation_issues and not self.options.bypass_data_validation:
             raise _ValidationIssuesDetected("Data validation issues detected, aborting the transaction.")
 
         if self.options.dry_run:
@@ -123,10 +129,10 @@ def _read_stream(stream) -> Generator[SourceRecord, None, None]:
         yield SourceRecord(content_type, source_data)
 
 
-def _get_reader_from_path(file_path: Union[str, Path]) -> SourceDataGenerator:
-    result = Path(file_path)
+def _get_reader_from_path(path: Pathable) -> SourceDataGenerator:
+    result = Path(path)
     if not result.is_file():
-        raise FileNotFoundError(f"File {file_path} does not exist.")
+        raise FileNotFoundError(f"File {path} does not exist.")
 
     def reader():
         with open(result, "rb") as file:

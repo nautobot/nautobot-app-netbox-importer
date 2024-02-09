@@ -1,13 +1,10 @@
 """Definition of "manage.py import_netbox" Django command for use with Nautobot."""
-import json
-from pathlib import Path
 
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter
 from nautobot_netbox_importer.diffsync.adapters import NetBoxImporterOptions
-from nautobot_netbox_importer.generator import get_mapping
 
 
 class Command(BaseCommand):
@@ -26,18 +23,6 @@ class Command(BaseCommand):
             action="store_true",
             dest="dry_run",
             help="Do not write any data to the database.",
-        )
-        parser.add_argument(
-            "--summary",
-            action="store_true",
-            dest="summary",
-            help="Show a summary of the import.",
-        )
-        parser.add_argument(
-            "--field-mapping",
-            action="store_true",
-            dest="field_mapping",
-            help="Show a mapping of NetBox fields to Nautobot fields. Only printed when `--summary` is also specified.",
         )
         parser.add_argument(
             "--update-paths",
@@ -69,12 +54,29 @@ class Command(BaseCommand):
             help="Fix panel location to match rack location based on powerfeed.",
         )
         parser.add_argument(
-            "--save-mappings-file",
-            dest="save_mappings_file",
-            help="File path to write the JSON mapping to.",
+            "--print-summary",
+            action="store_true",
+            dest="print_summary",
+            help="Show a summary of the import.",
+        )
+        parser.add_argument(
+            "--print-field-mappings",
+            action="store_true",
+            dest="print_field_mappings",
+            help="Show a detailed mapping of NetBox fields to Nautobot fields. Only printed when `--print-summary` is also specified.",
+        )
+        parser.add_argument(
+            "--save-json-summary-path",
+            dest="save_json_summary_path",
+            help="File path to write the JSON summary to.",
+        )
+        parser.add_argument(
+            "--save-text-summary-path",
+            dest="save_text_summary_path",
+            help="File path to write the text summary to.",
         )
 
-    def handle(self, json_file, save_mappings_file, **kwargs):  # type: ignore
+    def handle(self, json_file, **kwargs):  # type: ignore
         """Handle execution of the import_netbox management command."""
         call_command("migrate")
 
@@ -84,6 +86,3 @@ class Command(BaseCommand):
 
         adapter = NetBoxAdapter(json_file, options)
         adapter.import_to_nautobot()
-        if save_mappings_file:
-            mapping = get_mapping(adapter)
-            Path(save_mappings_file).write_text(json.dumps(mapping, indent=4))
