@@ -1,5 +1,134 @@
 [
 {
+  "model": "auth.group",
+  "fields": {
+    "name": "Staff",
+    "permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$Q2GGLCelSTFx7I1KlhVayQ$SIsLg8jTvMWFSTUzaTCQFZxrXOS3Hr/flJatpCUxVIM=",
+    "last_login": "2024-02-14T12:19:29.761Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2020-12-18T02:07:15.359Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$gBi1K9FpA2NWj5dSvB6znV$zBALOmUvzUyYDaWRYLzVrRI1zG8h9Ad0gg7Qvg0v/UA=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "alice",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-12-30T15:51:08Z",
+    "groups": [
+      [
+        "Staff"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$JgEVc44FdXaM95n6Be3n7Y$/F2wz5QMuE3N+d7y33pC3T3UAqbM48cJE9kvev+8bbk=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "bob",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-12-30T15:51:16Z",
+    "groups": [
+      [
+        "Staff"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$0p4aoqQjuAqDTT7Bw38a3f$J1MJnsHPyQS5B/qZdiJwWqoVkolzklptsVvHwumSNxY=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "charlie",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-12-30T15:51:22Z",
+    "groups": [
+      [
+        "Staff"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$GBsMoAampVW1SJXxqW2QST$M5K+Kg7Q1YHhvX8aJnlqVqQCoPYAodeVPiHGrD5kpqE=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "danielle",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-12-30T15:51:40Z",
+    "groups": [
+      [
+        "Staff"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$OmfTtdffXUdO8KU20NV2st$SCU3bZf19U8QaovyDS/PY5joXvHllYUK7qULPxuoIsk=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "edward",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-12-30T15:51:50Z",
+    "groups": [
+      [
+        "Staff"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
   "model": "contenttypes.contenttype",
   "fields": {
     "app_label": "admin",
@@ -945,6 +1074,142 @@
   }
 },
 {
+  "model": "dcim.device",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-14T12:22:40.699Z",
+    "last_updated": "2024-02-14T12:23:00.279Z",
+    "custom_field_data": {
+      "device_custom_choices": "Choice 1"
+    },
+    "description": "",
+    "comments": "",
+    "local_context_data": null,
+    "config_template": null,
+    "device_type": 1,
+    "role": 1,
+    "tenant": null,
+    "platform": null,
+    "name": "Device 1",
+    "_name": "Device 00000001",
+    "serial": "",
+    "asset_tag": null,
+    "site": 1,
+    "location": null,
+    "rack": null,
+    "position": null,
+    "face": "",
+    "status": "active",
+    "airflow": "",
+    "primary_ip4": null,
+    "primary_ip6": null,
+    "oob_ip": null,
+    "cluster": null,
+    "virtual_chassis": null,
+    "vc_position": null,
+    "vc_priority": null,
+    "latitude": null,
+    "longitude": null,
+    "console_port_count": 0,
+    "console_server_port_count": 0,
+    "power_port_count": 0,
+    "power_outlet_count": 0,
+    "interface_count": 0,
+    "front_port_count": 0,
+    "rear_port_count": 0,
+    "device_bay_count": 0,
+    "module_bay_count": 0,
+    "inventory_item_count": 0
+  }
+},
+{
+  "model": "dcim.devicerole",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-14T12:20:27.082Z",
+    "last_updated": "2024-02-14T12:20:27.082Z",
+    "custom_field_data": {},
+    "name": "Default Device Role",
+    "slug": "default-device-role",
+    "description": "",
+    "color": "9e9e9e",
+    "vm_role": true,
+    "config_template": null
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-14T12:21:37.922Z",
+    "last_updated": "2024-02-14T12:21:37.922Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "weight": null,
+    "weight_unit": "",
+    "_abs_weight": null,
+    "manufacturer": 1,
+    "model": "Device Model",
+    "slug": "device-model",
+    "default_platform": null,
+    "part_number": "",
+    "u_height": "1.0",
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "airflow": "",
+    "front_image": "",
+    "rear_image": "",
+    "console_port_template_count": 0,
+    "console_server_port_template_count": 0,
+    "power_port_template_count": 0,
+    "power_outlet_template_count": 0,
+    "interface_template_count": 0,
+    "front_port_template_count": 0,
+    "rear_port_template_count": 0,
+    "device_bay_template_count": 0,
+    "module_bay_template_count": 0,
+    "inventory_item_template_count": 0
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-14T12:20:59.505Z",
+    "last_updated": "2024-02-14T12:20:59.505Z",
+    "custom_field_data": {},
+    "name": "Manufacturer",
+    "slug": "manufacturer",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.site",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-14T12:22:26.202Z",
+    "last_updated": "2024-02-14T12:22:26.202Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "Site 1",
+    "_name": "Site 00000001",
+    "slug": "site-1",
+    "status": "active",
+    "region": null,
+    "group": null,
+    "tenant": null,
+    "facility": "",
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "asns": []
+  }
+},
+{
   "model": "extras.customfield",
   "pk": 1,
   "fields": {
@@ -976,341 +1241,85 @@
   }
 },
 {
-  "model": "auth.group",
-  "fields": {
-    "name": "Staff",
-    "permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "fields": {
-    "password": "pbkdf2_sha256$600000$Q2GGLCelSTFx7I1KlhVayQ$SIsLg8jTvMWFSTUzaTCQFZxrXOS3Hr/flJatpCUxVIM=",
-    "last_login": "2024-01-22T08:12:27.190Z",
-    "is_superuser": true,
-    "username": "admin",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2020-12-18T02:07:15.359Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "fields": {
-    "password": "pbkdf2_sha256$260000$gBi1K9FpA2NWj5dSvB6znV$zBALOmUvzUyYDaWRYLzVrRI1zG8h9Ad0gg7Qvg0v/UA=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "alice",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2021-12-30T15:51:08Z",
-    "groups": [
-      [
-        "Staff"
-      ]
-    ],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "fields": {
-    "password": "pbkdf2_sha256$260000$JgEVc44FdXaM95n6Be3n7Y$/F2wz5QMuE3N+d7y33pC3T3UAqbM48cJE9kvev+8bbk=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "bob",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2021-12-30T15:51:16Z",
-    "groups": [
-      [
-        "Staff"
-      ]
-    ],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "fields": {
-    "password": "pbkdf2_sha256$260000$0p4aoqQjuAqDTT7Bw38a3f$J1MJnsHPyQS5B/qZdiJwWqoVkolzklptsVvHwumSNxY=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "charlie",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2021-12-30T15:51:22Z",
-    "groups": [
-      [
-        "Staff"
-      ]
-    ],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "fields": {
-    "password": "pbkdf2_sha256$260000$GBsMoAampVW1SJXxqW2QST$M5K+Kg7Q1YHhvX8aJnlqVqQCoPYAodeVPiHGrD5kpqE=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "danielle",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2021-12-30T15:51:40Z",
-    "groups": [
-      [
-        "Staff"
-      ]
-    ],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "fields": {
-    "password": "pbkdf2_sha256$260000$OmfTtdffXUdO8KU20NV2st$SCU3bZf19U8QaovyDS/PY5joXvHllYUK7qULPxuoIsk=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "edward",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2021-12-30T15:51:50Z",
-    "groups": [
-      [
-        "Staff"
-      ]
-    ],
-    "user_permissions": []
-  }
-},
-{
-  "model": "tenancy.tenantgroup",
-  "pk": 1,
-  "fields": {
-    "created": "2020-12-19T00:00:00Z",
-    "last_updated": "2020-12-19T02:43:53.309Z",
-    "custom_field_data": {},
-    "parent": null,
-    "description": "",
-    "name": "Customers",
-    "slug": "customers",
-    "lft": 1,
-    "rght": 2,
-    "tree_id": 1,
-    "level": 0
-  }
-},
-{
-  "model": "tenancy.tenant",
-  "pk": 1,
-  "fields": {
-    "created": "2020-12-19T00:00:00Z",
-    "last_updated": "2020-12-30T18:43:27.571Z",
-    "custom_field_data": {
-      "cust_id": "INI04"
-    },
-    "description": "",
-    "comments": "",
-    "name": "Initech",
-    "slug": "initech",
-    "group": 1
-  }
-},
-{
-  "model": "tenancy.tenant",
+  "model": "extras.customfield",
   "pk": 2,
   "fields": {
-    "created": "2020-12-19T00:00:00Z",
-    "last_updated": "2020-12-30T18:43:28.013Z",
-    "custom_field_data": {
-      "cust_id": "STR01"
-    },
+    "created": "2024-02-13T11:37:46.980Z",
+    "last_updated": "2024-02-13T11:37:46.980Z",
+    "type": "select",
+    "object_type": null,
+    "name": "device_custom_choices",
+    "label": "Device Custom Choices",
+    "group_name": "",
     "description": "",
-    "comments": "",
-    "name": "Strickland Propane",
-    "slug": "strickland-propane",
-    "group": 1
+    "required": false,
+    "search_weight": 1000,
+    "filter_logic": "loose",
+    "default": null,
+    "weight": 100,
+    "validation_minimum": null,
+    "validation_maximum": null,
+    "validation_regex": "",
+    "choice_set": 1,
+    "ui_visibility": "read-write",
+    "is_cloneable": false,
+    "content_types": [
+      [
+        "dcim",
+        "device"
+      ]
+    ]
   }
 },
 {
-  "model": "tenancy.tenant",
-  "pk": 3,
-  "fields": {
-    "created": "2020-12-19T00:00:00Z",
-    "last_updated": "2020-12-30T18:43:27.776Z",
-    "custom_field_data": {
-      "cust_id": "PPI02"
-    },
-    "description": "",
-    "comments": "",
-    "name": "Pied Piper",
-    "slug": "pied-piper",
-    "group": 1
-  }
-},
-{
-  "model": "tenancy.tenant",
-  "pk": 4,
-  "fields": {
-    "created": "2020-12-19T00:00:00Z",
-    "last_updated": "2020-12-30T18:43:27.927Z",
-    "custom_field_data": {
-      "cust_id": "STA03"
-    },
-    "description": "",
-    "comments": "",
-    "name": "Stark Industries",
-    "slug": "stark-industries",
-    "group": 1
-  }
-},
-{
-  "model": "tenancy.tenant",
-  "pk": 5,
-  "fields": {
-    "created": "2020-12-19T00:00:00Z",
-    "last_updated": "2024-01-05T12:32:42.577Z",
-    "custom_field_data": {
-      "cust_id": "DMI01"
-    },
-    "description": "Test description",
-    "comments": "",
-    "name": "Dunder-Mifflin, Inc.",
-    "slug": "dunder-mifflin",
-    "group": 1
-  }
-},
-{
-  "model": "tenancy.tenant",
-  "pk": 6,
-  "fields": {
-    "created": "2020-12-19T00:00:00Z",
-    "last_updated": "2020-12-30T18:43:28.158Z",
-    "custom_field_data": {
-      "cust_id": "WAY01"
-    },
-    "description": "",
-    "comments": "",
-    "name": "Wayne Enterprises",
-    "slug": "wayne-enterprises",
-    "group": 1
-  }
-},
-{
-  "model": "tenancy.tenant",
-  "pk": 7,
-  "fields": {
-    "created": "2020-12-19T00:00:00Z",
-    "last_updated": "2024-01-05T12:32:23.202Z",
-    "custom_field_data": {
-      "cust_id": "CYB01"
-    },
-    "description": "Another test description",
-    "comments": "",
-    "name": "Cyberdyne Systems",
-    "slug": "cyberdyne",
-    "group": 1
-  }
-},
-{
-  "model": "tenancy.tenant",
-  "pk": 8,
-  "fields": {
-    "created": "2020-12-19T00:00:00Z",
-    "last_updated": "2020-12-30T18:43:28.103Z",
-    "custom_field_data": {
-      "cust_id": "UMB01"
-    },
-    "description": "",
-    "comments": "",
-    "name": "Umbrella Corporation",
-    "slug": "umbrella",
-    "group": 1
-  }
-},
-{
-  "model": "tenancy.tenant",
-  "pk": 9,
-  "fields": {
-    "created": "2020-12-19T00:00:00Z",
-    "last_updated": "2020-12-30T18:43:27.631Z",
-    "custom_field_data": {
-      "cust_id": "YKY01"
-    },
-    "description": "",
-    "comments": "",
-    "name": "Nakatomi Corportation",
-    "slug": "nakatomi",
-    "group": 1
-  }
-},
-{
-  "model": "tenancy.tenant",
-  "pk": 10,
-  "fields": {
-    "created": "2021-03-10T00:00:00Z",
-    "last_updated": "2021-03-10T20:44:16.078Z",
-    "custom_field_data": {
-      "cust_id": ""
-    },
-    "description": "",
-    "comments": "",
-    "name": "Jimbob's Banking & Trust",
-    "slug": "jimbobs-banking-trust",
-    "group": 1
-  }
-},
-{
-  "model": "tenancy.tenant",
-  "pk": 13,
-  "fields": {
-    "created": "2021-04-02T00:00:00Z",
-    "last_updated": "2021-04-02T16:46:50.851Z",
-    "custom_field_data": {
-      "cust_id": ""
-    },
-    "description": "",
-    "comments": "",
-    "name": "NC State University",
-    "slug": "nc-state",
-    "group": 1
-  }
-},
-{
-  "model": "ipam.fhrpgroup",
+  "model": "extras.customfieldchoiceset",
   "pk": 1,
   "fields": {
-    "created": "2024-01-23T08:21:41.353Z",
-    "last_updated": "2024-01-23T08:21:41.353Z",
+    "created": "2024-02-13T11:36:15.523Z",
+    "last_updated": "2024-02-13T11:36:15.523Z",
+    "name": "DeviceChoiceSet",
+    "description": "",
+    "base_choices": "",
+    "extra_choices": "[\"[\\\"Choice 1\\\", \\\"Choice 1\\\"]\", \"[\\\"Choice 2\\\", \\\"Choice 2\\\"]\", \"[\\\"Choice 3\\\", \\\"Choice 3\\\"]\"]",
+    "order_alphabetically": false
+  }
+},
+{
+  "model": "extras.journalentry",
+  "pk": 1,
+  "fields": {
+    "created": "2024-01-22T08:22:44.596Z",
+    "last_updated": "2024-01-22T08:22:44.596Z",
     "custom_field_data": {},
-    "description": "FHR Group Description",
-    "comments": "FHR Group Comments",
-    "group_id": 2,
-    "name": "Test FHR Group",
-    "protocol": "vrrp3",
-    "auth_type": "md5",
-    "auth_key": ""
+    "assigned_object_type": [
+      "tenancy",
+      "tenant"
+    ],
+    "assigned_object_id": 5,
+    "created_by": [
+      "admin"
+    ],
+    "kind": "info",
+    "comments": "This is testing info journal entry 1"
+  }
+},
+{
+  "model": "extras.journalentry",
+  "pk": 2,
+  "fields": {
+    "created": "2024-01-22T08:32:30.376Z",
+    "last_updated": "2024-01-22T08:32:30.376Z",
+    "custom_field_data": {},
+    "assigned_object_type": [
+      "tenancy",
+      "tenant"
+    ],
+    "assigned_object_id": 5,
+    "created_by": [
+      "admin"
+    ],
+    "kind": "",
+    "comments": "This is testing info journal entry 2\r\n\r\nMulti-line entry."
   }
 },
 {
@@ -1665,41 +1674,628 @@
   }
 },
 {
-  "model": "extras.journalentry",
-  "pk": 1,
+  "model": "extras.objectchange",
+  "pk": 8,
   "fields": {
-    "created": "2024-01-22T08:22:44.596Z",
-    "last_updated": "2024-01-22T08:22:44.596Z",
-    "custom_field_data": {},
-    "assigned_object_type": [
-      "tenancy",
-      "tenant"
-    ],
-    "assigned_object_id": 5,
-    "created_by": [
+    "time": "2024-02-13T11:36:15.528Z",
+    "user": [
       "admin"
     ],
-    "kind": "info",
-    "comments": "This is testing info journal entry 1"
+    "user_name": "admin",
+    "request_id": "6c2fd529-f8d5-45e4-ac14-0967b5e94b4d",
+    "action": "create",
+    "changed_object_type": [
+      "extras",
+      "customfieldchoiceset"
+    ],
+    "changed_object_id": 1,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "DeviceChoiceSet",
+    "prechange_data": null,
+    "postchange_data": {
+      "name": "DeviceChoiceSet",
+      "created": "2024-02-13T11:36:15.523Z",
+      "description": "",
+      "base_choices": "",
+      "last_updated": "2024-02-13T11:36:15.523Z",
+      "extra_choices": "[\"[\\\"Choice 1\\\", \\\"Choice 1\\\"]\", \"[\\\"Choice 2\\\", \\\"Choice 2\\\"]\", \"[\\\"Choice 3\\\", \\\"Choice 3\\\"]\"]",
+      "order_alphabetically": false
+    }
   }
 },
 {
-  "model": "extras.journalentry",
-  "pk": 2,
+  "model": "extras.objectchange",
+  "pk": 9,
   "fields": {
-    "created": "2024-01-22T08:32:30.376Z",
-    "last_updated": "2024-01-22T08:32:30.376Z",
-    "custom_field_data": {},
-    "assigned_object_type": [
-      "tenancy",
-      "tenant"
-    ],
-    "assigned_object_id": 5,
-    "created_by": [
+    "time": "2024-02-13T11:37:46.985Z",
+    "user": [
       "admin"
     ],
-    "kind": "",
-    "comments": "This is testing info journal entry 2\r\n\r\nMulti-line entry."
+    "user_name": "admin",
+    "request_id": "2b2ea50d-7b11-47d8-b3ab-6df841029284",
+    "action": "create",
+    "changed_object_type": [
+      "extras",
+      "customfield"
+    ],
+    "changed_object_id": 2,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Device Custom Choices",
+    "prechange_data": null,
+    "postchange_data": {
+      "name": "device_custom_choices",
+      "type": "select",
+      "label": "Device Custom Choices",
+      "weight": 100,
+      "created": "2024-02-13T11:37:46.980Z",
+      "default": null,
+      "required": false,
+      "choice_set": 1,
+      "group_name": "",
+      "description": "",
+      "object_type": null,
+      "filter_logic": "loose",
+      "is_cloneable": false,
+      "last_updated": "2024-02-13T11:37:46.980Z",
+      "content_types": [
+        32
+      ],
+      "search_weight": 1000,
+      "ui_visibility": "read-write",
+      "validation_regex": "",
+      "validation_maximum": null,
+      "validation_minimum": null
+    }
+  }
+},
+{
+  "model": "extras.objectchange",
+  "pk": 10,
+  "fields": {
+    "time": "2024-02-14T12:20:27.089Z",
+    "user": [
+      "admin"
+    ],
+    "user_name": "admin",
+    "request_id": "dad49be5-88ef-4de1-a061-d22e7f3201e3",
+    "action": "create",
+    "changed_object_type": [
+      "dcim",
+      "devicerole"
+    ],
+    "changed_object_id": 1,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Default Device Role",
+    "prechange_data": null,
+    "postchange_data": {
+      "name": "Default Device Role",
+      "slug": "default-device-role",
+      "tags": [],
+      "color": "9e9e9e",
+      "created": "2024-02-14T12:20:27.082Z",
+      "vm_role": true,
+      "description": "",
+      "last_updated": "2024-02-14T12:20:27.082Z",
+      "custom_fields": {},
+      "config_template": null
+    }
+  }
+},
+{
+  "model": "extras.objectchange",
+  "pk": 11,
+  "fields": {
+    "time": "2024-02-14T12:20:59.512Z",
+    "user": [
+      "admin"
+    ],
+    "user_name": "admin",
+    "request_id": "f9d04078-9df0-47b4-b993-3293aac3af82",
+    "action": "create",
+    "changed_object_type": [
+      "dcim",
+      "manufacturer"
+    ],
+    "changed_object_id": 1,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Manufacturer",
+    "prechange_data": null,
+    "postchange_data": {
+      "name": "Manufacturer",
+      "slug": "manufacturer",
+      "tags": [],
+      "created": "2024-02-14T12:20:59.505Z",
+      "description": "",
+      "last_updated": "2024-02-14T12:20:59.505Z",
+      "custom_fields": {}
+    }
+  }
+},
+{
+  "model": "extras.objectchange",
+  "pk": 12,
+  "fields": {
+    "time": "2024-02-14T12:21:37.925Z",
+    "user": [
+      "admin"
+    ],
+    "user_name": "admin",
+    "request_id": "f5047a81-7397-4eed-a293-87cfc38f05f6",
+    "action": "create",
+    "changed_object_type": [
+      "dcim",
+      "devicetype"
+    ],
+    "changed_object_id": 1,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Device Model",
+    "prechange_data": null,
+    "postchange_data": {
+      "slug": "device-model",
+      "tags": [],
+      "model": "Device Model",
+      "weight": null,
+      "airflow": "",
+      "created": "2024-02-14T12:21:37.922Z",
+      "comments": "",
+      "u_height": "1",
+      "rear_image": "",
+      "description": "",
+      "front_image": "",
+      "part_number": "",
+      "weight_unit": "",
+      "last_updated": "2024-02-14T12:21:37.922Z",
+      "manufacturer": 1,
+      "custom_fields": {},
+      "is_full_depth": true,
+      "subdevice_role": "",
+      "default_platform": null,
+      "interface_template_count": 0,
+      "rear_port_template_count": 0,
+      "device_bay_template_count": 0,
+      "front_port_template_count": 0,
+      "module_bay_template_count": 0,
+      "power_port_template_count": 0,
+      "console_port_template_count": 0,
+      "power_outlet_template_count": 0,
+      "inventory_item_template_count": 0,
+      "console_server_port_template_count": 0
+    }
+  }
+},
+{
+  "model": "extras.objectchange",
+  "pk": 13,
+  "fields": {
+    "time": "2024-02-14T12:22:26.208Z",
+    "user": [
+      "admin"
+    ],
+    "user_name": "admin",
+    "request_id": "51ffe8d4-8ad1-4e19-ad2d-4b3ab46a6048",
+    "action": "create",
+    "changed_object_type": [
+      "dcim",
+      "site"
+    ],
+    "changed_object_id": 1,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Site 1",
+    "prechange_data": null,
+    "postchange_data": {
+      "asns": [],
+      "name": "Site 1",
+      "slug": "site-1",
+      "tags": [],
+      "group": null,
+      "region": null,
+      "status": "active",
+      "tenant": null,
+      "created": "2024-02-14T12:22:26.202Z",
+      "comments": "",
+      "facility": "",
+      "latitude": null,
+      "longitude": null,
+      "time_zone": null,
+      "description": "",
+      "last_updated": "2024-02-14T12:22:26.202Z",
+      "custom_fields": {},
+      "physical_address": "",
+      "shipping_address": ""
+    }
+  }
+},
+{
+  "model": "extras.objectchange",
+  "pk": 14,
+  "fields": {
+    "time": "2024-02-14T12:22:40.704Z",
+    "user": [
+      "admin"
+    ],
+    "user_name": "admin",
+    "request_id": "7981ca97-ce3c-4381-88f5-b960e3116e7b",
+    "action": "create",
+    "changed_object_type": [
+      "dcim",
+      "device"
+    ],
+    "changed_object_id": 1,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Device 1",
+    "prechange_data": null,
+    "postchange_data": {
+      "face": "",
+      "name": "Device 1",
+      "rack": null,
+      "role": 1,
+      "site": 1,
+      "tags": [],
+      "oob_ip": null,
+      "serial": "",
+      "status": "active",
+      "tenant": null,
+      "airflow": "",
+      "cluster": null,
+      "created": "2024-02-14T12:22:40.699Z",
+      "comments": "",
+      "latitude": null,
+      "location": null,
+      "platform": null,
+      "position": null,
+      "asset_tag": null,
+      "longitude": null,
+      "description": "",
+      "device_type": 1,
+      "primary_ip4": null,
+      "primary_ip6": null,
+      "vc_position": null,
+      "vc_priority": null,
+      "last_updated": "2024-02-14T12:22:40.699Z",
+      "custom_fields": {
+        "device_custom_choices": null
+      },
+      "config_template": null,
+      "interface_count": 0,
+      "rear_port_count": 0,
+      "virtual_chassis": null,
+      "device_bay_count": 0,
+      "front_port_count": 0,
+      "module_bay_count": 0,
+      "power_port_count": 0,
+      "console_port_count": 0,
+      "local_context_data": null,
+      "power_outlet_count": 0,
+      "inventory_item_count": 0,
+      "console_server_port_count": 0
+    }
+  }
+},
+{
+  "model": "extras.objectchange",
+  "pk": 15,
+  "fields": {
+    "time": "2024-02-14T12:23:00.285Z",
+    "user": [
+      "admin"
+    ],
+    "user_name": "admin",
+    "request_id": "5f62eec4-5501-443d-ba6d-7fdeabc6b00e",
+    "action": "update",
+    "changed_object_type": [
+      "dcim",
+      "device"
+    ],
+    "changed_object_id": 1,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Device 1",
+    "prechange_data": {
+      "face": "",
+      "name": "Device 1",
+      "rack": null,
+      "role": 1,
+      "site": 1,
+      "tags": [],
+      "oob_ip": null,
+      "serial": "",
+      "status": "active",
+      "tenant": null,
+      "airflow": "",
+      "cluster": null,
+      "created": "2024-02-14T12:22:40.699Z",
+      "comments": "",
+      "latitude": null,
+      "location": null,
+      "platform": null,
+      "position": null,
+      "asset_tag": null,
+      "longitude": null,
+      "description": "",
+      "device_type": 1,
+      "primary_ip4": null,
+      "primary_ip6": null,
+      "vc_position": null,
+      "vc_priority": null,
+      "last_updated": "2024-02-14T12:22:40.699Z",
+      "custom_fields": {
+        "device_custom_choices": null
+      },
+      "config_template": null,
+      "interface_count": 0,
+      "rear_port_count": 0,
+      "virtual_chassis": null,
+      "device_bay_count": 0,
+      "front_port_count": 0,
+      "module_bay_count": 0,
+      "power_port_count": 0,
+      "console_port_count": 0,
+      "local_context_data": null,
+      "power_outlet_count": 0,
+      "inventory_item_count": 0,
+      "console_server_port_count": 0
+    },
+    "postchange_data": {
+      "face": "",
+      "name": "Device 1",
+      "rack": null,
+      "role": 1,
+      "site": 1,
+      "tags": [],
+      "oob_ip": null,
+      "serial": "",
+      "status": "active",
+      "tenant": null,
+      "airflow": "",
+      "cluster": null,
+      "created": "2024-02-14T12:22:40.699Z",
+      "comments": "",
+      "latitude": null,
+      "location": null,
+      "platform": null,
+      "position": null,
+      "asset_tag": null,
+      "longitude": null,
+      "description": "",
+      "device_type": 1,
+      "primary_ip4": null,
+      "primary_ip6": null,
+      "vc_position": null,
+      "vc_priority": null,
+      "last_updated": "2024-02-14T12:23:00.279Z",
+      "custom_fields": {
+        "device_custom_choices": "Choice 1"
+      },
+      "config_template": null,
+      "interface_count": 0,
+      "rear_port_count": 0,
+      "virtual_chassis": null,
+      "device_bay_count": 0,
+      "front_port_count": 0,
+      "module_bay_count": 0,
+      "power_port_count": 0,
+      "console_port_count": 0,
+      "local_context_data": null,
+      "power_outlet_count": 0,
+      "inventory_item_count": 0,
+      "console_server_port_count": 0
+    }
+  }
+},
+{
+  "model": "ipam.fhrpgroup",
+  "pk": 1,
+  "fields": {
+    "created": "2024-01-23T08:21:41.353Z",
+    "last_updated": "2024-01-23T08:21:41.353Z",
+    "custom_field_data": {},
+    "description": "FHR Group Description",
+    "comments": "FHR Group Comments",
+    "group_id": 2,
+    "name": "Test FHR Group",
+    "protocol": "vrrp3",
+    "auth_type": "md5",
+    "auth_key": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 1,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:27.571Z",
+    "custom_field_data": {
+      "cust_id": "INI04"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Initech",
+    "slug": "initech",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 2,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:28.013Z",
+    "custom_field_data": {
+      "cust_id": "STR01"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Strickland Propane",
+    "slug": "strickland-propane",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 3,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:27.776Z",
+    "custom_field_data": {
+      "cust_id": "PPI02"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Pied Piper",
+    "slug": "pied-piper",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 4,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:27.927Z",
+    "custom_field_data": {
+      "cust_id": "STA03"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Stark Industries",
+    "slug": "stark-industries",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 5,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-05T12:32:42.577Z",
+    "custom_field_data": {
+      "cust_id": "DMI01"
+    },
+    "description": "Test description",
+    "comments": "",
+    "name": "Dunder-Mifflin, Inc.",
+    "slug": "dunder-mifflin",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 6,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:28.158Z",
+    "custom_field_data": {
+      "cust_id": "WAY01"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Wayne Enterprises",
+    "slug": "wayne-enterprises",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 7,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-05T12:32:23.202Z",
+    "custom_field_data": {
+      "cust_id": "CYB01"
+    },
+    "description": "Another test description",
+    "comments": "",
+    "name": "Cyberdyne Systems",
+    "slug": "cyberdyne",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 8,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:28.103Z",
+    "custom_field_data": {
+      "cust_id": "UMB01"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Umbrella Corporation",
+    "slug": "umbrella",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 9,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-30T18:43:27.631Z",
+    "custom_field_data": {
+      "cust_id": "YKY01"
+    },
+    "description": "",
+    "comments": "",
+    "name": "Nakatomi Corportation",
+    "slug": "nakatomi",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 10,
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2021-03-10T20:44:16.078Z",
+    "custom_field_data": {
+      "cust_id": ""
+    },
+    "description": "",
+    "comments": "",
+    "name": "Jimbob's Banking & Trust",
+    "slug": "jimbobs-banking-trust",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": 13,
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2021-04-02T16:46:50.851Z",
+    "custom_field_data": {
+      "cust_id": ""
+    },
+    "description": "",
+    "comments": "",
+    "name": "NC State University",
+    "slug": "nc-state",
+    "group": 1
+  }
+},
+{
+  "model": "tenancy.tenantgroup",
+  "pk": 1,
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2020-12-19T02:43:53.309Z",
+    "custom_field_data": {},
+    "parent": null,
+    "description": "",
+    "name": "Customers",
+    "slug": "customers",
+    "lft": 1,
+    "rght": 2,
+    "tree_id": 1,
+    "level": 0
   }
 }
 ]

@@ -62,6 +62,7 @@ class ModelSummary(NamedTuple):
     nautobot_flags: str
     default_reference_uid: Union[str, bool, int, float, None]
     imported_count: int
+    skipped_count: int
 
 
 _FILL_UP_LENGTH = 100

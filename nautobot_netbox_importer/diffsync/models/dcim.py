@@ -32,11 +32,13 @@ def _define_units(field: SourceField) -> None:
     field.set_importer(units_importer)
 
 
-def _pre_import_cable_termination(source: RecordData) -> None:
+def _pre_import_cable_termination(source: RecordData, _) -> bool:
     cable_end = source.pop("cable_end").lower()
     source["id"] = source.pop("cable")
     source[f"termination_{cable_end}_type"] = source.pop("termination_type")
     source[f"termination_{cable_end}_id"] = source.pop("termination_id")
+
+    return True
 
 
 def setup(adapter: SourceAdapter) -> None:

@@ -1,42 +1,12 @@
 """NetBox to Nautobot Base Models Mapping."""
 
-import json
-
 from diffsync.enum import DiffSyncModelFlags
 
-from nautobot_netbox_importer.generator import EMPTY_VALUES
+from nautobot_netbox_importer.base import RecordData
 from nautobot_netbox_importer.generator import DiffSyncBaseModel
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceField
 from nautobot_netbox_importer.generator import fields
-from nautobot_netbox_importer.base import RecordData
-
-
-def _define_choices(field: SourceField) -> None:
-    choices_wrapper = field.wrapper.adapter.get_or_create_wrapper("extras.customfieldchoice")
-
-    def choices_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-        choices = source.get(field.name, None)
-        if choices in EMPTY_VALUES:
-            return
-        if isinstance(choices, str):
-            choices = json.loads(choices)
-        if choices in EMPTY_VALUES:
-            return
-
-        if not isinstance(choices, list):
-            raise ValueError(f"Choices must be a list of strings, got {type(choices)}")
-
-        for choice in choices:
-            choices_wrapper.import_record(
-                {
-                    "id": choice,
-                    "custom_field": getattr(target, "id"),
-                    "value": choice,
-                },
-            )
-
-    field.set_importer(choices_importer)
 
 
 def _define_tagged_object(field: SourceField) -> None:
@@ -124,21 +94,6 @@ def setup(adapter: SourceAdapter) -> None:
     )
     adapter.configure_model("extras.role")
     adapter.configure_model(
-        "extras.CustomField",
-        fields={
-            "name": "key",
-            "choices": _define_choices,
-            "choice_set": _define_choices,
-        },
-    )
-    adapter.configure_model(
-        "extras.CustomFieldChoice",
-        fields={
-            "custom_field": "custom_field",
-            "value": "value",
-        },
-    )
-    adapter.configure_model(
         "extras.TaggedItem",
         fields={
             "object_id": _define_tagged_object,
@@ -171,13 +126,4 @@ def setup(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "extras.JournalEntry",
         nautobot_content_type="extras.Note",
-    )
-    adapter.configure_model(
-        "extras.ObjectChange",
-        disable_related_reference=True,
-        fields={
-            "postchange_data": "object_data",
-            # TBD: This should be defined on Nautobot side
-            "time": fields.force(),
-        },
     )

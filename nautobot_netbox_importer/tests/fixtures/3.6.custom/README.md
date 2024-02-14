@@ -12,15 +12,21 @@ To dump and use data from a NetBox instance, run the following command:
     --natural-primary \
     --natural-foreign \
     --output=/tmp/netbox_data.json \
-    contenttypes.ContentType \
-    extras.CustomField \
     auth.Group \
     auth.User \
-    tenancy.TenantGroup \
-    tenancy.Tenant \
-    ipam.FHRPGroup \
+    contenttypes.ContentType \
+    dcim.Device \
+    dcim.DeviceRole \
+    dcim.DeviceType \
+    dcim.Manufacturer \
+    dcim.Site \
+    extras.CustomField \
+    extras.CustomFieldChoiceSet \
     extras.JournalEntry \
     extras.ObjectChange \
+    ipam.FHRPGroup \
+    tenancy.Tenant \
+    tenancy.TenantGroup \
 
 diff -u /tmp/netbox_data.json ./input.json
 mv /tmp/netbox_data.json ./input.json

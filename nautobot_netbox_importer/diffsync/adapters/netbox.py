@@ -23,8 +23,19 @@ from nautobot_netbox_importer.generator import SourceDataGenerator
 from nautobot_netbox_importer.generator import SourceRecord
 from nautobot_netbox_importer.summary import Pathable
 
-_FileRef = Union[str, Path, ParseResult]
+for _name in (
+    "base",
+    "circuits",
+    "custom_fields",
+    "dcim",
+    "ipam",
+    "locations",
+    "object_change",
+    "virtualization",
+):
+    register_generator_setup(f"nautobot_netbox_importer.diffsync.models.{_name}")
 
+_FileRef = Union[str, Path, ParseResult]
 _HTTP_TIMEOUT = 60
 
 
@@ -51,9 +62,6 @@ class NetBoxImporterOptions(NamedTuple):
 
 
 AdapterSetupFunction = Callable[[SourceAdapter], None]
-
-for _name in ("base", "locations", "dcim", "circuits", "ipam", "virtualization"):
-    register_generator_setup(f"nautobot_netbox_importer.diffsync.models.{_name}")
 
 
 class NetBoxAdapter(SourceAdapter):

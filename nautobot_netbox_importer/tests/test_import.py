@@ -39,7 +39,7 @@ _EXPECTED_SUMMARY = {
     "3.4": 5870,
     "3.5": 5870,
     "3.6": 5870,
-    "3.6.custom": 31,
+    "3.6.custom": 50,
 }
 
 _EXPECTED_COUNTS = {}
@@ -137,11 +137,18 @@ _EXPECTED_COUNTS["3.6"] = {
 }
 _EXPECTED_COUNTS["3.6.custom"] = {
     "auth.group": 1,
+    "dcim.device": 1,
+    "dcim.devicetype": 1,
     "dcim.interfaceredundancygroup": 1,
-    "extras.customfield": 1,
+    "dcim.location": 1,
+    "dcim.locationtype": 2,
+    "dcim.manufacturer": 1,
+    "extras.customfield": 2,
+    "extras.customfieldchoice": 3,
     "extras.note": 2,
-    "extras.objectchange": 7,
-    "extras.status": 1,
+    "extras.objectchange": 14,
+    "extras.role": 1,
+    "extras.status": 2,
     "tenancy.tenant": 11,
     "tenancy.tenantgroup": 1,
     "users.user": 6,
@@ -169,7 +176,9 @@ _EXPECTED_VALIDATION_ERRORS["3.5"] = {
 _EXPECTED_VALIDATION_ERRORS["3.6"] = {
     **_EXPECTED_VALIDATION_ERRORS["3.5"],
 }
-_EXPECTED_VALIDATION_ERRORS["3.6.custom"] = {}
+_EXPECTED_VALIDATION_ERRORS["3.6.custom"] = {
+    "dcim.location": 1,
+}
 
 
 # Ensure that SECRET_KEY is set to a known value, to generate the same UUIDs

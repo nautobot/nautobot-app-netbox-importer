@@ -55,6 +55,8 @@ class SourceRecord(NamedTuple):
     data: RecordData
 
 
+# The second argument is a stage number described in the documentation.
+PreImport = Callable[[RecordData, int], bool]
 SourceDataGenerator = Callable[[], Iterable[SourceRecord]]
 SourceFieldImporter = Callable[[RecordData, DiffSyncBaseModel], None]
 SourceFieldImporterFactory = Callable[["SourceField"], None]
@@ -106,7 +108,7 @@ class SourceAdapter(BaseAdapter):
         default_reference: Optional[RecordData] = None,
         flags: Optional[DiffSyncModelFlags] = None,
         nautobot_flags: Optional[DiffSyncModelFlags] = None,
-        pre_import: Optional[Callable[[RecordData], None]] = None,
+        pre_import: Optional[PreImport] = None,
         disable_related_reference: Optional[bool] = None,
         forward_references: Optional[ForwardReferences] = None,
     ) -> "SourceModelWrapper":
@@ -254,11 +256,13 @@ class SourceAdapter(BaseAdapter):
             else:
                 wrapper = self.configure_model(content_type)
 
+            if wrapper.pre_import:
+                if not wrapper.pre_import(data, 1):
+                    continue
+
             if wrapper.disable_reason:
                 continue
 
-            if wrapper.pre_import:
-                wrapper.pre_import(data)
             for field_name in data.keys():
                 wrapper.add_field(field_name, field_name, from_data=True)
 
@@ -277,6 +281,12 @@ class SourceAdapter(BaseAdapter):
         # Second pass to import actual data
         for content_type, data in get_source_data():
             wrapper = self.wrappers[content_type]
+
+            if wrapper.pre_import:
+                if not wrapper.pre_import(data, 2):
+                    wrapper.skipped_count += 1
+                    continue
+
             if not wrapper.disable_reason:
                 wrapper.import_record(data)
 
@@ -354,11 +364,12 @@ class SourceModelWrapper:
         self._cached_data: Dict[Uid, RecordData] = {}
 
         self.imported_count = 0
+        self.skipped_count = 0
         self.flags = DiffSyncModelFlags.NONE
 
         # Source fields defintions
         self.fields: OrderedDict[FieldName, SourceField] = OrderedDict()
-        self.pre_import: Optional[Callable[[RecordData], None]] = None
+        self.pre_import: Optional[PreImport] = None
 
         if self.disable_reason:
             self.adapter.logger.debug("Created disabled %s", self)
@@ -398,6 +409,7 @@ class SourceModelWrapper:
             nautobot_flags=str(self.nautobot.flags),
             default_reference_uid=serialize_to_summary(self.default_reference_uid),
             imported_count=self.imported_count,
+            skipped_count=self.skipped_count,
         )
 
     def set_identifiers(self, identifiers: Iterable[FieldName]) -> None:
@@ -524,9 +536,6 @@ class SourceModelWrapper:
         self.adapter.logger.debug("Importing record %s %s", self, data)
         if self.importers is None:
             raise RuntimeError(f"Importers not created for {self}")
-
-        if self.pre_import:
-            self.pre_import(data)
 
         uid = self.get_pk_from_data(data)
         if not target:
