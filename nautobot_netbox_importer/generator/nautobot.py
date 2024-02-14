@@ -481,7 +481,7 @@ class NautobotModelWrapper:
         try:
             instance.save()
         except Exception:
-            logger.error("Save failed: %r %s", type(instance), instance.__dict__, exc_info=True)
+            logger.error("Save failed: %r %s", type(instance), instance.__dict__)
             raise
 
         if force_fields:
