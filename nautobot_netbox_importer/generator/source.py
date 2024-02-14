@@ -271,7 +271,7 @@ class SourceAdapter(BaseAdapter):
                 wrapper = self.configure_model(content_type)
 
             if wrapper.pre_import:
-                if not wrapper.pre_import(data, ImporterPass.DEFINE_STRUCTURE):
+                if wrapper.pre_import(data, ImporterPass.DEFINE_STRUCTURE) != PreImportResult.USE_RECORD:
                     continue
 
             if wrapper.disable_reason:
@@ -297,7 +297,7 @@ class SourceAdapter(BaseAdapter):
             wrapper = self.wrappers[content_type]
 
             if wrapper.pre_import:
-                if not wrapper.pre_import(data, ImporterPass.IMPORT_DATA):
+                if wrapper.pre_import(data, ImporterPass.IMPORT_DATA) != PreImportResult.USE_RECORD:
                     wrapper.skipped_count += 1
                     continue
 
