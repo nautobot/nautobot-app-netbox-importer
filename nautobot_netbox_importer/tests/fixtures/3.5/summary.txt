@@ -141,6 +141,7 @@ django_rq.queue => django_rq.queue | Disabled with reason: Nautobot content type
 extras.branch => extras.branch | Disabled with reason: Nautobot content type: `extras.branch` not found
 extras.cachedvalue => extras.cachedvalue | Disabled with reason: Nautobot content type: `extras.cachedvalue` not found
 extras.configrevision => extras.configrevision | Disabled with reason: Nautobot content type: `extras.configrevision` not found
+extras.customfieldchoiceset => extras.customfieldchoiceset | Disabled with reason: Nautobot content type: `extras.customfieldchoiceset` not found
 extras.journalentry => extras.note
 extras.report => extras.report | Disabled with reason: Nautobot content type: `extras.report` not found
 extras.savedfilter => extras.savedfilter | Disabled with reason: Nautobot content type: `extras.savedfilter` not found
@@ -846,6 +847,8 @@ weight (DATA) => integer_importer => weight (PositiveSmallIntegerField)
 custom_field (CUSTOM) => relation_importer => custom_field_id (ForeignKey)
 id (CUSTOM) => uid_from_data => id (UUIDField)
 value (CUSTOM) => value_importer => value (CharField)
+* extras.customfieldchoiceset => extras.customfieldchoiceset ***************************************
+    Disable reason: Nautobot content type: `extras.customfieldchoiceset` not found
 * extras.customlink => extras.customlink ***********************************************************
 id (CUSTOM) => uid_from_data => id (UUIDField)
 * extras.exporttemplate => extras.exporttemplate ***************************************************

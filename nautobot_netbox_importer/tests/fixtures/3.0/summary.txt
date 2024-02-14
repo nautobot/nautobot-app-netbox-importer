@@ -119,6 +119,7 @@ dcim.rackrole => extras.role
 dcim.region => dcim.location
 dcim.site => dcim.location
 dcim.sitegroup => dcim.locationtype
+extras.customfieldchoiceset => extras.customfieldchoiceset | Disabled with reason: Nautobot content type: `extras.customfieldchoiceset` not found
 extras.journalentry => extras.note
 extras.report => extras.report | Disabled with reason: Nautobot content type: `extras.report` not found
 extras.script => extras.script | Disabled with reason: Nautobot content type: `extras.script` not found
@@ -710,6 +711,8 @@ weight (DATA) => integer_importer => weight (PositiveSmallIntegerField)
 custom_field (CUSTOM) => relation_importer => custom_field_id (ForeignKey)
 id (CUSTOM) => uid_from_data => id (UUIDField)
 value (CUSTOM) => value_importer => value (CharField)
+* extras.customfieldchoiceset => extras.customfieldchoiceset ***************************************
+    Disable reason: Nautobot content type: `extras.customfieldchoiceset` not found
 * extras.customlink => extras.customlink ***********************************************************
 id (CUSTOM) => uid_from_data => id (UUIDField)
 * extras.exporttemplate => extras.exporttemplate ***************************************************

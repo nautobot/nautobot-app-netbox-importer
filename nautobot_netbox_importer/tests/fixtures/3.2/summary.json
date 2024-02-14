@@ -22,6 +22,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -54,6 +55,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 1,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -108,6 +110,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -140,6 +143,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 6,
+            "skipped_count": 0,
             "fields": {
                 "date_joined": {
                     "name": "date_joined",
@@ -314,6 +318,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 29,
+            "skipped_count": 0,
             "fields": {
                 "cid": {
                     "name": "cid",
@@ -512,6 +517,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 45,
+            "skipped_count": 0,
             "fields": {
                 "_link_peer_id": {
                     "name": "_link_peer_id",
@@ -746,6 +752,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 4,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -848,6 +855,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 9,
+            "skipped_count": 0,
             "fields": {
                 "account": {
                     "name": "account",
@@ -1022,6 +1030,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 1,
+            "skipped_count": 0,
             "fields": {
                 "comments": {
                     "name": "comments",
@@ -1151,6 +1160,7 @@
             "nautobot_flags": "DiffSyncModelFlags.IGNORE",
             "default_reference_uid": null,
             "imported_count": 111,
+            "skipped_count": 0,
             "fields": {
                 "app_label": {
                     "name": "app_label",
@@ -1205,6 +1215,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 108,
+            "skipped_count": 0,
             "fields": {
                 "_abs_length": {
                     "name": "_abs_length",
@@ -1439,6 +1450,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -1469,6 +1481,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -1499,6 +1512,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 41,
+            "skipped_count": 0,
             "fields": {
                 "_link_peer_id": {
                     "name": "_link_peer_id",
@@ -1721,6 +1735,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 11,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -1859,6 +1874,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -1889,6 +1905,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -1919,6 +1936,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 72,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -2285,6 +2303,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 14,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -2423,6 +2442,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 14,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -2537,6 +2557,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 9,
+            "skipped_count": 0,
             "fields": {
                 "color": {
                     "name": "color",
@@ -2675,6 +2696,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": "c40e8fa5-0254-5b8f-97da-19b227497d92",
             "imported_count": 15,
+            "skipped_count": 0,
             "fields": {
                 "airflow": {
                     "name": "airflow",
@@ -2885,6 +2907,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 912,
+            "skipped_count": 0,
             "fields": {
                 "_link_peer_id": {
                     "name": "_link_peer_id",
@@ -3119,6 +3142,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 120,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -3293,6 +3317,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 1586,
+            "skipped_count": 0,
             "fields": {
                 "_link_peer_id": {
                     "name": "_link_peer_id",
@@ -3767,6 +3792,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 300,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -3917,6 +3943,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -3995,6 +4022,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "dcim.inventoryitemtemplate": {
@@ -4012,6 +4040,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "dcim.location": {
@@ -4029,6 +4058,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 4,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -4239,6 +4269,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 3,
+            "skipped_count": 0,
             "fields": {
                 "content_types": {
                     "name": "content_types",
@@ -4365,6 +4396,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": "f5136724-0984-5e3b-b073-ea6d83116997",
             "imported_count": 15,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -4467,6 +4499,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "dcim.modulebay": {
@@ -4484,6 +4517,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "dcim.modulebaytemplate": {
@@ -4501,6 +4535,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "dcim.moduletype": {
@@ -4518,6 +4553,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "dcim.platform": {
@@ -4535,6 +4571,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 3,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -4673,6 +4710,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 48,
+            "skipped_count": 0,
             "fields": {
                 "_link_peer_id": {
                     "name": "_link_peer_id",
@@ -4943,6 +4981,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 104,
+            "skipped_count": 0,
             "fields": {
                 "_link_peer_id": {
                     "name": "_link_peer_id",
@@ -5177,6 +5216,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 8,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -5339,6 +5379,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 4,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -5453,6 +5494,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 75,
+            "skipped_count": 0,
             "fields": {
                 "_link_peer_id": {
                     "name": "_link_peer_id",
@@ -5687,6 +5729,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 26,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -5849,6 +5892,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 42,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -6143,6 +6187,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 2,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -6269,6 +6314,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 4,
+            "skipped_count": 0,
             "fields": {
                 "color": {
                     "name": "color",
@@ -6395,6 +6441,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 630,
+            "skipped_count": 0,
             "fields": {
                 "_link_peer_id": {
                     "name": "_link_peer_id",
@@ -6617,6 +6664,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 73,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -6779,6 +6827,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 67,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -6965,6 +7014,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 24,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -7271,6 +7321,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 3,
+            "skipped_count": 0,
             "fields": {
                 "content_types": {
                     "name": "content_types",
@@ -7457,6 +7508,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 4,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -7559,6 +7611,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "extras.configcontext": {
@@ -7576,6 +7629,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -7606,6 +7660,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "extras.customfield": {
@@ -7623,6 +7678,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 1,
+            "skipped_count": 0,
             "fields": {
                 "choice_set": {
                     "name": "choice_set",
@@ -7630,7 +7686,7 @@
                     "nautobot_internal_type": null,
                     "nautobot_can_import": null,
                     "importer": "choices_importer",
-                    "definition": "_define_choices",
+                    "definition": "define_choice_set",
                     "from_data": false,
                     "is_custom": true,
                     "default_value": null,
@@ -7642,7 +7698,7 @@
                     "nautobot_internal_type": null,
                     "nautobot_can_import": null,
                     "importer": "choices_importer",
-                    "definition": "_define_choices",
+                    "definition": "define_choices",
                     "from_data": true,
                     "is_custom": true,
                     "default_value": null,
@@ -7857,6 +7913,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "custom_field": {
                     "name": "custom_field",
@@ -7896,6 +7953,24 @@
                 }
             }
         },
+        "extras.customfieldchoiceset": {
+            "content_type": "extras.customfieldchoiceset",
+            "content_type_id": null,
+            "extends_content_type": null,
+            "nautobot_content_type": "extras.customfieldchoiceset",
+            "nautobot_content_type_id": null,
+            "disable_reason": "Nautobot content type: `extras.customfieldchoiceset` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": "create_choice_set",
+            "flags": "DiffSyncModelFlags.NONE",
+            "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "default_reference_uid": null,
+            "imported_count": 0,
+            "skipped_count": 0,
+            "fields": {}
+        },
         "extras.customlink": {
             "content_type": "extras.customlink",
             "content_type_id": 85,
@@ -7911,6 +7986,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -7941,6 +8017,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -7971,6 +8048,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -8001,6 +8079,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -8031,6 +8110,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -8056,11 +8136,12 @@
             "identifiers": null,
             "disable_related_reference": true,
             "forward_references": null,
-            "pre_import": null,
+            "pre_import": "skip_disabled_object_types",
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -8115,6 +8196,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "extras.role": {
@@ -8132,6 +8214,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "content_types": {
                     "name": "content_types",
@@ -8174,6 +8257,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "extras.status": {
@@ -8193,6 +8277,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
             "imported_count": 6,
+            "skipped_count": 0,
             "fields": {
                 "content_types": {
                     "name": "content_types",
@@ -8247,6 +8332,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 26,
+            "skipped_count": 0,
             "fields": {
                 "color": {
                     "name": "color",
@@ -8361,6 +8447,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 72,
+            "skipped_count": 0,
             "fields": {
                 "content_type": {
                     "name": "content_type",
@@ -8427,6 +8514,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -8457,6 +8545,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 4,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -8595,6 +8684,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "ipam.fhrpgroup": {
@@ -8612,6 +8702,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -8654,6 +8745,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "ipam.ipaddress": {
@@ -8671,6 +8763,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 180,
+            "skipped_count": 0,
             "fields": {
                 "address": {
                     "name": "address",
@@ -8857,6 +8950,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "ipam.prefix": {
@@ -8874,6 +8968,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 90,
+            "skipped_count": 0,
             "fields": {
                 "_children": {
                     "name": "_children",
@@ -9108,6 +9203,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 8,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -9222,6 +9318,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 5,
+            "skipped_count": 0,
             "fields": {
                 "color": {
                     "name": "color",
@@ -9360,6 +9457,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 12,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -9462,6 +9560,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -9492,6 +9591,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "ipam.vlan": {
@@ -9509,6 +9609,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 63,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -9695,6 +9796,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 7,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -9845,6 +9947,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 6,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -9995,6 +10098,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "secrets.secretrole": {
@@ -10012,6 +10116,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "secrets.sessionkey": {
@@ -10029,6 +10134,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "secrets.userkey": {
@@ -10046,6 +10152,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "sessions.session": {
@@ -10063,6 +10170,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "session_key": {
                     "name": "session_key",
@@ -10093,6 +10201,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -10123,6 +10232,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -10153,6 +10263,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -10183,6 +10294,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -10213,6 +10325,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -10243,6 +10356,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -10273,6 +10387,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -10303,6 +10418,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "tenancy.contactassignment": {
@@ -10320,6 +10436,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "tenancy.contactgroup": {
@@ -10337,6 +10454,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "tenancy.contactrole": {
@@ -10354,6 +10472,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "tenancy.tenant": {
@@ -10371,6 +10490,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 11,
+            "skipped_count": 0,
             "fields": {
                 "comments": {
                     "name": "comments",
@@ -10497,6 +10617,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 1,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -10659,6 +10780,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -10689,6 +10811,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "users.objectpermission": {
@@ -10706,6 +10829,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -10736,6 +10860,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {
                 "id": {
                     "name": "id",
@@ -10766,6 +10891,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "virtualization.cluster": {
@@ -10783,6 +10909,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 32,
+            "skipped_count": 0,
             "fields": {
                 "comments": {
                     "name": "comments",
@@ -10945,6 +11072,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 4,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -11047,6 +11175,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 6,
+            "skipped_count": 0,
             "fields": {
                 "created": {
                     "name": "created",
@@ -11149,6 +11278,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 180,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -11383,6 +11513,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 720,
+            "skipped_count": 0,
             "fields": {
                 "_name": {
                     "name": "_name",
@@ -11617,6 +11748,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "wireless.wirelesslangroup": {
@@ -11634,6 +11766,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         },
         "wireless.wirelesslink": {
@@ -11651,6 +11784,7 @@
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
             "imported_count": 0,
+            "skipped_count": 0,
             "fields": {}
         }
     },
