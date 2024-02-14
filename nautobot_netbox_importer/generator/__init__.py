@@ -4,6 +4,8 @@ from . import fields
 from .base import EMPTY_VALUES
 from .nautobot import NautobotAdapter
 from .source import DiffSyncBaseModel
+from .source import ImporterPass
+from .source import PreImportResult
 from .source import SourceAdapter
 from .source import SourceContentType
 from .source import SourceDataGenerator
@@ -16,7 +18,9 @@ from .source import SourceReferences
 __all__ = (
     "DiffSyncBaseModel",
     "EMPTY_VALUES",
+    "ImporterPass",
     "NautobotAdapter",
+    "PreImportResult",
     "SourceAdapter",
     "SourceContentType",
     "SourceDataGenerator",

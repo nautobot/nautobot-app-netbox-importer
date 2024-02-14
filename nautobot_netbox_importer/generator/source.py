@@ -3,6 +3,7 @@
 
 import datetime
 import json
+from enum import Enum
 from typing import Any
 from typing import Callable
 from typing import Dict
@@ -55,8 +56,21 @@ class SourceRecord(NamedTuple):
     data: RecordData
 
 
-# The second argument is a stage number described in the documentation.
-PreImport = Callable[[RecordData, int], bool]
+class ImporterPass(Enum):
+    """Importer Pass."""
+
+    DEFINE_STRUCTURE = 1
+    IMPORT_DATA = 2
+
+
+class PreImportResult(Enum):
+    """Pre Import Response."""
+
+    SKIP_RECORD = False
+    USE_RECORD = True
+
+
+PreImport = Callable[[RecordData, ImporterPass], PreImportResult]
 SourceDataGenerator = Callable[[], Iterable[SourceRecord]]
 SourceFieldImporter = Callable[[RecordData, DiffSyncBaseModel], None]
 SourceFieldImporterFactory = Callable[["SourceField"], None]
@@ -257,7 +271,7 @@ class SourceAdapter(BaseAdapter):
                 wrapper = self.configure_model(content_type)
 
             if wrapper.pre_import:
-                if not wrapper.pre_import(data, 1):
+                if not wrapper.pre_import(data, ImporterPass.DEFINE_STRUCTURE):
                     continue
 
             if wrapper.disable_reason:
@@ -283,7 +297,7 @@ class SourceAdapter(BaseAdapter):
             wrapper = self.wrappers[content_type]
 
             if wrapper.pre_import:
-                if not wrapper.pre_import(data, 2):
+                if not wrapper.pre_import(data, ImporterPass.IMPORT_DATA):
                     wrapper.skipped_count += 1
                     continue
 

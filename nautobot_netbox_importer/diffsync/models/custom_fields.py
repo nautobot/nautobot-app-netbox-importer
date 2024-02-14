@@ -8,6 +8,8 @@ from nautobot_netbox_importer.base import RecordData
 from nautobot_netbox_importer.base import Uid
 from nautobot_netbox_importer.generator import EMPTY_VALUES
 from nautobot_netbox_importer.generator import DiffSyncBaseModel
+from nautobot_netbox_importer.generator import ImporterPass
+from nautobot_netbox_importer.generator import PreImportResult
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceField
 
@@ -55,16 +57,14 @@ def setup(adapter: SourceAdapter) -> None:
     """Map NetBox custom fields to Nautobot."""
     choice_sets = {}
 
-    def create_choice_set(source: RecordData, stage: int) -> bool:
-        if stage != 1:
-            return True
+    def create_choice_set(source: RecordData, importer_pass: ImporterPass) -> PreImportResult:
+        if importer_pass == ImporterPass.DEFINE_STRUCTURE:
+            choice_sets[source.get("id")] = [
+                *_convert_choices(source.get("base_choices")),
+                *_convert_choices(source.get("extra_choices")),
+            ]
 
-        choice_sets[source.get("id")] = [
-            *_convert_choices(source.get("base_choices")),
-            *_convert_choices(source.get("extra_choices")),
-        ]
-
-        return True
+        return PreImportResult.USE_RECORD
 
     def define_choice_set(field: SourceField) -> None:
         def choices_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
@@ -103,18 +103,23 @@ def setup(adapter: SourceAdapter) -> None:
                 },
             )
 
+    # Defined in NetBox but not in Nautobot
     adapter.configure_model(
         "extras.CustomFieldChoiceSet",
         pre_import=create_choice_set,
     )
+
     adapter.configure_model(
         "extras.CustomField",
         fields={
             "name": "key",
+            # NetBox<3.6
             "choices": define_choices,
+            # NetBox>=3.6
             "choice_set": define_choice_set,
         },
     )
+
     choices_wrapper = adapter.configure_model(
         "extras.CustomFieldChoice",
         fields={

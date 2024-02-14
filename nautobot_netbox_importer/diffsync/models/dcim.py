@@ -6,6 +6,7 @@ from uuid import UUID
 from nautobot_netbox_importer.base import RecordData
 from nautobot_netbox_importer.generator import EMPTY_VALUES
 from nautobot_netbox_importer.generator import DiffSyncBaseModel
+from nautobot_netbox_importer.generator import PreImportResult
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceField
 from nautobot_netbox_importer.generator import fields
@@ -32,13 +33,13 @@ def _define_units(field: SourceField) -> None:
     field.set_importer(units_importer)
 
 
-def _pre_import_cable_termination(source: RecordData, _) -> bool:
+def _pre_import_cable_termination(source: RecordData, _) -> PreImportResult:
     cable_end = source.pop("cable_end").lower()
     source["id"] = source.pop("cable")
     source[f"termination_{cable_end}_type"] = source.pop("termination_type")
     source[f"termination_{cable_end}_id"] = source.pop("termination_id")
 
-    return True
+    return PreImportResult.USE_RECORD
 
 
 def setup(adapter: SourceAdapter) -> None:
