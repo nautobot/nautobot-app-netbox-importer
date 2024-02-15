@@ -1,6 +1,6 @@
 = Import Summary: ==================================================================================
 - DiffSync Summary: --------------------------------------------------------------------------------
-create: 31
+create: 50
 update: 0
 delete: 0
 no-change: 0
@@ -9,15 +9,25 @@ skip: 135
 auth.group: 1
 auth.user: 6
 contenttypes.contenttype: 135
-extras.customfield: 1
+dcim.device: 1
+dcim.devicerole: 1
+dcim.devicetype: 1
+dcim.locationtype: 2
+dcim.manufacturer: 1
+dcim.site: 1
+extras.customfield: 2
+extras.customfieldchoice: 3
 extras.journalentry: 2
-extras.objectchange: 7
-extras.status: 1
+extras.objectchange: 14
+extras.status: 2
 ipam.fhrpgroup: 1
 tenancy.tenant: 11
 tenancy.tenantgroup: 1
 - Validation issues: -------------------------------------------------------------------------------
-  No validation issues found.
+. dcim.location: 1  ................................................................................
+c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 Site 1 | {'parent': ['A Location of type Site must have a parent Location.']}
+. ..................................................................................................
+Total validation issues: 1
 - Content Types Mapping Deviations: ----------------------------------------------------------------
   Mapping deviations from source content type to Nautobot content type
 account.usertoken => account.usertoken | Disabled with reason: Nautobot content type: `account.usertoken` not found
@@ -169,28 +179,98 @@ id (CUSTOM) => uid_from_data => id (UUIDField)
 * dcim.consoleserverporttemplate => dcim.consoleserverporttemplate *********************************
 id (CUSTOM) => uid_from_data => id (UUIDField)
 * dcim.device => dcim.device ***********************************************************************
+_name (DATA) => NO IMPORTER => NO TARGET
+airflow (DATA) => NO IMPORTER => NO TARGET
+asset_tag (DATA) => value_importer => asset_tag (CharField)
+cluster (DATA) => relation_importer => cluster_id (ForeignKey)
+comments (DATA) => value_importer => comments (TextField)
+config_template (DATA) => NO IMPORTER => NO TARGET
+console_port_count (DATA) => NO IMPORTER => NO TARGET
+console_server_port_count (DATA) => NO IMPORTER => NO TARGET
+created (DATA) => datetime_importer => created (DateTimeField)
+custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
+description (DATA) => NO IMPORTER => NO TARGET
+device_bay_count (DATA) => NO IMPORTER => NO TARGET
 device_role (CUSTOM) => relation_importer => role_id (RoleField)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-location (CUSTOM) => location_importer => location_id (ForeignKey)
+device_type (DATA) => relation_importer => device_type_id (ForeignKey)
+face (DATA) => value_importer => face (CharField)
+front_port_count (DATA) => NO IMPORTER => NO TARGET
+id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
+interface_count (DATA) => NO IMPORTER => NO TARGET
+inventory_item_count (DATA) => NO IMPORTER => NO TARGET
+last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
+latitude (DATA) => NO IMPORTER => NO TARGET
+local_context_data (DATA) => NO IMPORTER => NO TARGET
+location (DATA) (CUSTOM) => location_importer => location_id (ForeignKey)
+longitude (DATA) => NO IMPORTER => NO TARGET
+module_bay_count (DATA) => NO IMPORTER => NO TARGET
+name (DATA) => value_importer => name (CharField)
+oob_ip (DATA) => NO IMPORTER => NO TARGET
+platform (DATA) => relation_importer => platform_id (ForeignKey)
+position (DATA) => integer_importer => position (PositiveSmallIntegerField)
+power_outlet_count (DATA) => NO IMPORTER => NO TARGET
+power_port_count (DATA) => NO IMPORTER => NO TARGET
+primary_ip4 (DATA) => relation_importer => primary_ip4_id (ForeignKey)
+primary_ip6 (DATA) => relation_importer => primary_ip6_id (ForeignKey)
+rack (DATA) => relation_importer => rack_id (ForeignKey)
+rear_port_count (DATA) => NO IMPORTER => NO TARGET
 region (CUSTOM) => location_importer => location_id (ForeignKey)
-role (CUSTOM) => relation_importer => role_id (RoleField)
-site (CUSTOM) => location_importer => location_id (ForeignKey)
-status (CUSTOM) => status_importer => status_id (StatusField)
+role (DATA) (CUSTOM) => relation_importer => role_id (RoleField)
+serial (DATA) => value_importer => serial (CharField)
+site (DATA) => location_importer => location_id (ForeignKey)
+status (DATA) => status_importer => status_id (StatusField)
+tenant (DATA) => relation_importer => tenant_id (ForeignKey)
+vc_position (DATA) => integer_importer => vc_position (PositiveSmallIntegerField)
+vc_priority (DATA) => integer_importer => vc_priority (PositiveSmallIntegerField)
+virtual_chassis (DATA) => relation_importer => virtual_chassis_id (ForeignKey)
 * dcim.devicebay => dcim.devicebay *****************************************************************
 id (CUSTOM) => uid_from_data => id (UUIDField)
 * dcim.devicebaytemplate => dcim.devicebaytemplate *************************************************
 id (CUSTOM) => uid_from_data => id (UUIDField)
 * dcim.devicerole => extras.role *******************************************************************
-color (CUSTOM) => value_importer => color (CharField)
+color (DATA) (CUSTOM) => value_importer => color (CharField)
+config_template (DATA) => NO IMPORTER => NO TARGET
 content_types (CUSTOM) => content_types_importer => content_types (ManyToManyField)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.devicetype => dcim.devicetype ***************************************************************
-color (CUSTOM) => NO IMPORTER => NO TARGET
-front_image (CUSTOM) => Disabled with reason: Import does not contain images
+created (DATA) => datetime_importer => created (DateTimeField)
+custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
+description (DATA) => value_importer => description (CharField)
 id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
+last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
+name (DATA) => value_importer => name (CharField)
+slug (DATA) => NO IMPORTER => NO TARGET
+vm_role (DATA) => NO IMPORTER => NO TARGET
+* dcim.devicetype => dcim.devicetype ***************************************************************
+_abs_weight (DATA) => NO IMPORTER => NO TARGET
+airflow (DATA) => NO IMPORTER => NO TARGET
+color (CUSTOM) => NO IMPORTER => NO TARGET
+comments (DATA) => value_importer => comments (TextField)
+console_port_template_count (DATA) => NO IMPORTER => NO TARGET
+console_server_port_template_count (DATA) => NO IMPORTER => NO TARGET
+created (DATA) => datetime_importer => created (DateTimeField)
+custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
+default_platform (DATA) => NO IMPORTER => NO TARGET
+description (DATA) => NO IMPORTER => NO TARGET
+device_bay_template_count (DATA) => NO IMPORTER => NO TARGET
+front_image (DATA) (CUSTOM) => Disabled with reason: Import does not contain images
+front_port_template_count (DATA) => NO IMPORTER => NO TARGET
+id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
+interface_template_count (DATA) => NO IMPORTER => NO TARGET
+inventory_item_template_count (DATA) => NO IMPORTER => NO TARGET
+is_full_depth (DATA) => value_importer => is_full_depth (BooleanField)
+last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
 manufacturer (DATA) => relation_importer => manufacturer_id (ForeignKey)
 model (DATA) => value_importer => model (CharField)
-rear_image (CUSTOM) => Disabled with reason: Import does not contain images
+module_bay_template_count (DATA) => NO IMPORTER => NO TARGET
+part_number (DATA) => value_importer => part_number (CharField)
+power_outlet_template_count (DATA) => NO IMPORTER => NO TARGET
+power_port_template_count (DATA) => NO IMPORTER => NO TARGET
+rear_image (DATA) (CUSTOM) => Disabled with reason: Import does not contain images
+rear_port_template_count (DATA) => NO IMPORTER => NO TARGET
+slug (DATA) => NO IMPORTER => NO TARGET
+subdevice_role (DATA) => value_importer => subdevice_role (CharField)
+u_height (DATA) => integer_importer => u_height (PositiveSmallIntegerField)
+weight (DATA) => NO IMPORTER => NO TARGET
+weight_unit (DATA) => NO IMPORTER => NO TARGET
 * dcim.frontport => dcim.frontport *****************************************************************
 id (CUSTOM) => uid_from_data => id (UUIDField)
 * dcim.frontporttemplate => dcim.frontporttemplate *************************************************
@@ -233,8 +313,13 @@ parent (DATA) => relation_importer => parent_id (TreeNodeForeignKey)
 rght (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
 tree_id (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
 * dcim.manufacturer => dcim.manufacturer ***********************************************************
+created (DATA) => datetime_importer => created (DateTimeField)
+custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
+description (DATA) => value_importer => description (CharField)
 id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
+last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
 name (DATA) => value_importer => name (CharField)
+slug (DATA) => NO IMPORTER => NO TARGET
 * dcim.module => dcim.module ***********************************************************************
     Disable reason: Nautobot content type: `dcim.module` not found
 * dcim.modulebay => dcim.modulebay *****************************************************************
@@ -288,13 +373,29 @@ rght (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
 status (CUSTOM) => status_importer => status_id (StatusField)
 tree_id (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
 * dcim.site => dcim.location ***********************************************************************
-group (CUSTOM) => site_group_importer => location_type_id (ForeignKey)
-id (CUSTOM) => uid_from_data => id (UUIDField)
+_name (DATA) => NO IMPORTER => NO TARGET
+asns (DATA) => NO IMPORTER => NO TARGET
+comments (DATA) => value_importer => comments (TextField)
+created (DATA) => datetime_importer => created (DateTimeField)
+custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
+description (DATA) => value_importer => description (CharField)
+facility (DATA) => value_importer => facility (CharField)
+group (DATA) (CUSTOM) => site_group_importer => location_type_id (ForeignKey)
+id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
+last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
+latitude (DATA) => value_importer => latitude (DecimalField)
 level (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
 lft (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-region (CUSTOM) => relation_importer => parent_id (TreeNodeForeignKey)
+longitude (DATA) => value_importer => longitude (DecimalField)
+name (DATA) => value_importer => name (CharField)
+physical_address (DATA) => value_importer => physical_address (TextField)
+region (DATA) (CUSTOM) => relation_importer => parent_id (TreeNodeForeignKey)
 rght (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-status (CUSTOM) => status_importer => status_id (StatusField)
+shipping_address (DATA) => value_importer => shipping_address (TextField)
+slug (DATA) => NO IMPORTER => NO TARGET
+status (DATA) => status_importer => status_id (StatusField)
+tenant (DATA) => relation_importer => tenant_id (ForeignKey)
+time_zone (DATA) => value_importer => time_zone (CharField)
 tree_id (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
 * dcim.sitegroup => dcim.locationtype **************************************************************
 content_types (CUSTOM) => content_types_importer => content_types (ManyToManyField)
