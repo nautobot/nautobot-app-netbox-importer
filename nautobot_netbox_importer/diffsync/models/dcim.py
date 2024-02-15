@@ -83,6 +83,7 @@ def setup(adapter: SourceAdapter) -> None:
             "front_image": fields.disable("Import does not contain images"),
             "rear_image": fields.disable("Import does not contain images"),
             "color": "color",
+            "u_height": fields.truncate_to_integer(),
         },
         default_reference={
             "id": "Unknown",

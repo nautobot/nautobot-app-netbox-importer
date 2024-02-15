@@ -1,7 +1,9 @@
 """Generic Field Importers definitions for Nautobot Importer."""
+
 from typing import Any
 from typing import Optional
 
+from .base import EMPTY_VALUES
 from .base import ContentTypeStr
 from .nautobot import DiffSyncBaseModel
 from .source import FieldName
@@ -10,6 +12,30 @@ from .source import SourceAdapter
 from .source import SourceContentType
 from .source import SourceField
 from .source import SourceFieldDefinition
+
+
+def truncate_to_integer(nautobot_name: FieldName = "") -> SourceFieldDefinition:
+    """Create a truncate integer field definition.
+
+    Use to truncate the value to an integer before importing it to Nautobot.
+    """
+
+    def define_truncate_to_integer(field: SourceField) -> None:
+        field.set_nautobot_field(nautobot_name or field.name)
+
+        def truncate_to_integer_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+            value = field.get_source_value(source)
+            if value in EMPTY_VALUES:
+                return
+
+            if not isinstance(value, int):
+                value = int(float(value))
+
+            setattr(target, field.nautobot.name, value)
+
+        field.set_importer(truncate_to_integer_importer)
+
+    return define_truncate_to_integer
 
 
 def relation(related_source: SourceContentType, nautobot_field_name: FieldName = "") -> SourceFieldDefinition:
