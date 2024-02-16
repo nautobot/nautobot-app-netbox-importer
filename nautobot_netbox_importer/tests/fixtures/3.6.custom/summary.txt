@@ -1,6 +1,6 @@
 = Import Summary: ==================================================================================
 - DiffSync Summary: --------------------------------------------------------------------------------
-create: 50
+create: 54
 update: 0
 delete: 0
 no-change: 0
@@ -9,16 +9,16 @@ skip: 135
 auth.group: 1
 auth.user: 6
 contenttypes.contenttype: 135
-dcim.device: 1
+dcim.device: 2
 dcim.devicerole: 1
-dcim.devicetype: 1
+dcim.devicetype: 2
 dcim.locationtype: 2
 dcim.manufacturer: 1
 dcim.site: 1
 extras.customfield: 2
 extras.customfieldchoice: 3
 extras.journalentry: 2
-extras.objectchange: 14
+extras.objectchange: 16
 extras.status: 2
 ipam.fhrpgroup: 1
 tenancy.tenant: 11
@@ -144,7 +144,7 @@ rear_image => Disabled with reason: Import does not contain images
 rear_port_template_count => NO IMPORTER => NO TARGET
 slug => NO IMPORTER => NO TARGET
 subdevice_role => value_importer => subdevice_role (CharField)
-u_height => integer_importer => u_height (PositiveSmallIntegerField)
+u_height => truncate_to_integer_importer => u_height (PositiveSmallIntegerField)
 weight => NO IMPORTER => NO TARGET
 weight_unit => NO IMPORTER => NO TARGET
 * dcim.manufacturer => dcim.manufacturer ***********************************************************

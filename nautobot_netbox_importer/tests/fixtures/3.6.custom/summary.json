@@ -1,6 +1,6 @@
 {
     "diff_summary": {
-        "create": 50,
+        "create": 54,
         "update": 0,
         "delete": 0,
         "no-change": 0,
@@ -1015,7 +1015,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 1,
+            "imported_count": 2,
             "skipped_count": 0,
             "fields": {
                 "_name": {
@@ -1839,7 +1839,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": "c40e8fa5-0254-5b8f-97da-19b227497d92",
-            "imported_count": 1,
+            "imported_count": 2,
             "skipped_count": 0,
             "fields": {
                 "_abs_weight": {
@@ -2204,9 +2204,10 @@
                     "nautobot_name": "u_height",
                     "nautobot_internal_type": "PositiveSmallIntegerField",
                     "nautobot_can_import": true,
-                    "importer": "integer_importer",
-                    "definition": "u_height",
+                    "importer": "truncate_to_integer_importer",
+                    "definition": "define_truncate_to_integer",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": 1,
@@ -4965,7 +4966,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 14,
+            "imported_count": 16,
             "skipped_count": 1,
             "fields": {
                 "action": {

@@ -39,7 +39,7 @@ _EXPECTED_SUMMARY = {
     "3.4": 5870,
     "3.5": 5870,
     "3.6": 5870,
-    "3.6.custom": 50,
+    "3.6.custom": 54,
 }
 
 _EXPECTED_COUNTS = {}
@@ -137,8 +137,8 @@ _EXPECTED_COUNTS["3.6"] = {
 }
 _EXPECTED_COUNTS["3.6.custom"] = {
     "auth.group": 1,
-    "dcim.device": 1,
-    "dcim.devicetype": 1,
+    "dcim.device": 2,
+    "dcim.devicetype": 2,
     "dcim.interfaceredundancygroup": 1,
     "dcim.location": 1,
     "dcim.locationtype": 2,
@@ -146,7 +146,7 @@ _EXPECTED_COUNTS["3.6.custom"] = {
     "extras.customfield": 2,
     "extras.customfieldchoice": 3,
     "extras.note": 2,
-    "extras.objectchange": 14,
+    "extras.objectchange": 16,
     "extras.role": 1,
     "extras.status": 2,
     "tenancy.tenant": 11,

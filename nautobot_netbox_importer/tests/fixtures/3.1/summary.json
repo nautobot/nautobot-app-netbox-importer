@@ -3056,9 +3056,10 @@
                     "nautobot_name": "u_height",
                     "nautobot_internal_type": "PositiveSmallIntegerField",
                     "nautobot_can_import": true,
-                    "importer": "integer_importer",
-                    "definition": "u_height",
+                    "importer": "truncate_to_integer_importer",
+                    "definition": "define_truncate_to_integer",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": 1,

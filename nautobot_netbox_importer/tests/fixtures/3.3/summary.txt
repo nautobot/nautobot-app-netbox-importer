@@ -347,7 +347,7 @@ part_number => value_importer => part_number (CharField)
 rear_image => Disabled with reason: Import does not contain images
 slug => NO IMPORTER => NO TARGET
 subdevice_role => value_importer => subdevice_role (CharField)
-u_height => integer_importer => u_height (PositiveSmallIntegerField)
+u_height => truncate_to_integer_importer => u_height (PositiveSmallIntegerField)
 * dcim.frontport => dcim.frontport *****************************************************************
 _name => NO IMPORTER => NO TARGET
 cable => relation_importer => cable_id (ForeignKey)
