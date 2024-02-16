@@ -57,16 +57,14 @@ def role(adapter: SourceAdapter, source_content_type: ContentTypeStr) -> SourceF
     Use, when there is a different source role content type, that should be mapped to Nautobot "extras.role".
     Creates a new wrapper for the `source_content_type`, if it does not exist.
     """
-    if source_content_type in adapter.wrappers:
-        role_wrapper = adapter.wrappers[source_content_type]
-    else:
-        role_wrapper = adapter.configure_model(
-            source_content_type,
-            nautobot_content_type="extras.role",
-            fields={
-                "color": "color",
-            },
-        )
+    role_wrapper = adapter.configure_model(
+        source_content_type,
+        nautobot_content_type="extras.role",
+        fields={
+            # Include color to allow setting the default Nautobot value, import fails without it.
+            "color": "color",
+        },
+    )
 
     return relation(role_wrapper, "role")
 

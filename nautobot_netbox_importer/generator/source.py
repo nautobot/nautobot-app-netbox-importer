@@ -4,6 +4,7 @@
 import datetime
 import json
 from enum import Enum
+from enum import auto
 from typing import Any
 from typing import Callable
 from typing import Dict
@@ -70,6 +71,16 @@ class PreImportResult(Enum):
     USE_RECORD = True
 
 
+class SourceFieldSource(Enum):
+    """Defines the source of the SourceField."""
+
+    AUTO = auto()  # Automatically added fields like primary keys and AUTO_ADD_FIELDS
+    CACHE = auto()  # Fields added by caching data during customization
+    DATA = auto()  # Fields added from input data
+    CUSTOM = auto()  # Fields added by customizing the importer
+    SIBLING = auto()  # Fields defined as siblings of other fields, imported by other field importer
+
+
 PreImport = Callable[[RecordData, ImporterPass], PreImportResult]
 SourceDataGenerator = Callable[[], Iterable[SourceRecord]]
 SourceFieldImporter = Callable[[RecordData, DiffSyncBaseModel], None]
@@ -111,7 +122,7 @@ class SourceAdapter(BaseAdapter):
         # When multiple source content types are mapped to the single nautobot content type, mapping is set to `None`
         self._content_types_back_mapping: Dict[ContentTypeStr, Optional[ContentTypeStr]] = {}
 
-    # pylint: disable=too-many-arguments,too-many-branches
+    # pylint: disable=too-many-arguments,too-many-branches,too-many-locals
     def configure_model(
         self,
         content_type: ContentTypeStr,
@@ -164,8 +175,8 @@ class SourceAdapter(BaseAdapter):
 
         if identifiers:
             wrapper.set_identifiers(identifiers)
-        if fields:
-            wrapper.set_fields(**fields)
+        for field_name, definition in (fields or {}).items():
+            wrapper.add_field(field_name, SourceFieldSource.CUSTOM).set_definition(definition)
         if default_reference:
             wrapper.set_default_reference(default_reference)
         if flags is not None:
@@ -278,7 +289,7 @@ class SourceAdapter(BaseAdapter):
                 continue
 
             for field_name in data.keys():
-                wrapper.add_field(field_name, field_name, from_data=True)
+                wrapper.add_field(field_name, SourceFieldSource.DATA)
 
         # Create importers, wrappers structure is updated as needed
         while True:
@@ -389,7 +400,7 @@ class SourceModelWrapper:
             self.adapter.logger.debug("Created disabled %s", self)
             return
 
-        pk_field = self.add_field(nautobot_wrapper.pk_field.name, nautobot_wrapper.pk_field.name)
+        pk_field = self.add_field(nautobot_wrapper.pk_field.name, SourceFieldSource.AUTO)
         pk_field.set_nautobot_field(pk_field.name)
         pk_field.processed = True
 
@@ -436,36 +447,24 @@ class SourceModelWrapper:
 
     def disable_field(self, field_name: FieldName, reason: str) -> "SourceField":
         """Disable field importing."""
-        field = self.add_field(field_name, None)
+        field = self.add_field(field_name, SourceFieldSource.CUSTOM)
         field.disable(reason)
         return field
-
-    def set_fields(self, *field_names: FieldName, **fields: SourceFieldDefinition) -> None:
-        """Set fields definitions."""
-        for field_name in field_names:
-            self.add_field(field_name, field_name)
-        for field_name, definition in fields.items():
-            self.add_field(field_name, definition)
 
     def format_field_name(self, name: FieldName) -> str:
         """Format a field name for logging."""
         return f"{self.content_type}->{name}"
 
-    def add_field(self, name: FieldName, definition: SourceFieldDefinition, from_data: bool = False) -> "SourceField":
+    def add_field(self, name: FieldName, source: SourceFieldSource) -> "SourceField":
         """Add a field definition for a source field."""
         if self.importers is not None:
             raise ValueError(f"Can't add field {self.format_field_name(name)}, model's importers already created.")
 
-        if name in self.fields:
-            field = self.fields[name]
-            if from_data:
-                # Do not update the definition from data when already defined
-                field.from_data = True
-            else:
-                field.reset_definition(definition)
-        else:
-            field = SourceField(self, name, definition, from_data)
+        if name not in self.fields:
+            return SourceField(self, name, source)
 
+        field = self.fields[name]
+        field.sources.add(source)
         return field
 
     def create_importers(self) -> None:
@@ -475,8 +474,8 @@ class SourceModelWrapper:
 
         if not self.extends_wrapper:
             for field_name in AUTO_ADD_FIELDS:
-                if field_name not in self.fields and hasattr(self.nautobot.model, field_name):
-                    self.add_field(field_name, field_name)
+                if hasattr(self.nautobot.model, field_name):
+                    self.add_field(field_name, SourceFieldSource.AUTO)
 
         while True:
             fields = [field for field in self.fields.values() if not field.processed]
@@ -616,7 +615,7 @@ class SourceModelWrapper:
 
         if self.importers is None:
             for field_name in data.keys():
-                self.add_field(field_name, field_name, from_data=True)
+                self.add_field(field_name, SourceFieldSource.CACHE)
 
         self._cached_data[uid] = data
 
@@ -678,21 +677,13 @@ class SourceModelWrapper:
 class SourceField:
     """Source Field."""
 
-    def __init__(
-        self,
-        wrapper: SourceModelWrapper,
-        name: FieldName,
-        definition: SourceFieldDefinition,
-        from_data=False,
-    ):
+    def __init__(self, wrapper: SourceModelWrapper, name: FieldName, source: SourceFieldSource):
         """Initialize the SourceField."""
         self.wrapper = wrapper
         wrapper.fields[name] = self
-
         self.name = name
-        self.from_data = from_data
-        self.is_custom = not from_data
-        self.definition = definition
+        self.definition: SourceFieldDefinition = name
+        self.sources = set((source,))
         self.processed = False
         self._nautobot: Optional[NautobotField] = None
         self.importer: Optional[SourceFieldImporter] = None
@@ -719,8 +710,7 @@ class SourceField:
             nautobot_can_import=self._nautobot and self._nautobot.can_import,
             importer=self.importer and self.importer.__name__,
             definition=serialize_to_summary(self.definition),
-            from_data=self.from_data,
-            is_custom=self.is_custom,
+            sources=sorted(source.name for source in self.sources),
             default_value=serialize_to_summary(self.default_value),
             disable_reason=self.disable_reason,
         )
@@ -738,10 +728,7 @@ class SourceField:
             raise RuntimeError(f"Call `handle sibling` after setting importer for {self}")
 
         if isinstance(sibling, FieldName):
-            if sibling in self.wrapper.fields:
-                sibling = self.wrapper.fields[sibling]
-            else:
-                sibling = self.wrapper.add_field(sibling, nautobot_name or self.nautobot.name)
+            sibling = self.wrapper.add_field(sibling, SourceFieldSource.SIBLING)
 
         sibling.set_nautobot_field(nautobot_name or self.nautobot.name)
         sibling.importer = self.importer
@@ -752,16 +739,17 @@ class SourceField:
 
         return sibling
 
-    def reset_definition(self, definition: SourceFieldDefinition) -> None:
-        """Set a custom definition for the field."""
+    def set_definition(self, definition: SourceFieldDefinition) -> None:
+        """Customize field definition."""
         if self.processed:
-            raise RuntimeError(f"Field already processed. {self.wrapper.format_field_name(self.name)}")
-        if self.is_custom:
-            raise RuntimeError(
-                f"Can't reset custom definition for a non-custom field {self.wrapper.format_field_name(self.name)}"
-            )
-        self.is_custom = True
-        self.definition = definition
+            raise RuntimeError(f"Field already processed. {self}")
+
+        if self.definition != definition:
+            if self.definition != self.name:
+                self.wrapper.adapter.logger.warning(
+                    "Overriding custom field definition %s %s -> %s", self, self.definition, definition
+                )
+            self.definition = definition
 
     def create_importer(self) -> None:
         """Create importer for the field."""

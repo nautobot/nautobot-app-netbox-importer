@@ -5,7 +5,6 @@ from os import PathLike
 from typing import Any
 from typing import List
 from typing import MutableMapping
-from typing import Set
 from typing import Tuple
 from typing import Union
 from uuid import UUID
@@ -20,7 +19,7 @@ RecordData = MutableMapping[FieldName, Any]
 GenericForeignValue = Tuple[ContentTypeStr, Uid]
 Pathable = Union[str, PathLike]
 
-GENERATOR_SETUP_MODULES: Set[str] = set()
+GENERATOR_SETUP_MODULES: List[str] = []
 
 
 def register_generator_setup(module: str) -> None:
@@ -28,4 +27,5 @@ def register_generator_setup(module: str) -> None:
 
     This function must be called before the adapter is used and containing module can't import anything from Nautobot.
     """
-    GENERATOR_SETUP_MODULES.add(module)
+    if module not in GENERATOR_SETUP_MODULES:
+        GENERATOR_SETUP_MODULES.append(module)
