@@ -38,8 +38,7 @@ class FieldSummary(NamedTuple):
     nautobot_can_import: Optional[bool]
     importer: Optional[str]
     definition: Union[str, bool, int, float, None]
-    from_data: Optional[bool]
-    is_custom: Optional[bool]
+    sources: List[str]
     default_value: Union[str, bool, int, float, None]
     disable_reason: str
 
@@ -93,6 +92,13 @@ class ImportSummary:
         self.models: List[ModelSummary] = []
         self.diff_summary: DiffSummary = {}
         self.validation_issues: ValidationIssues = OrderedDict()
+
+    @property
+    def data_models(self) -> Generator[ModelSummary, None, None]:
+        """Get models originating from data."""
+        for model_summary in self.models:
+            if any(field for field in model_summary.fields if "DATA" in field.sources):
+                yield model_summary
 
     def add(self, model_summary: ModelSummary):
         """Add a model summary to the import summary."""
@@ -186,7 +192,7 @@ class ImportSummary:
 
     def get_content_types_deviations(self) -> Generator[str, None, None]:
         """Get formatted content types deviations."""
-        for model_summary in self.models:
+        for model_summary in self.data_models:
             if model_summary.disable_reason:
                 yield f"{model_summary.content_type} => {model_summary.nautobot_content_type} | Disabled with reason: {model_summary.disable_reason}"
             elif model_summary.extends_content_type:
@@ -198,7 +204,7 @@ class ImportSummary:
         """Get formatted back mapping."""
         back_mapping = {}
 
-        for model_summary in self.models:
+        for model_summary in self.data_models:
             if model_summary.nautobot_content_type != model_summary.content_type:
                 if model_summary.nautobot_content_type in back_mapping:
                     if back_mapping[model_summary.nautobot_content_type] != model_summary.content_type:
@@ -230,11 +236,6 @@ class ImportSummary:
 
         def get_field(field: FieldSummary):
             yield field.name
-            if field.from_data:
-                yield "(DATA)"
-            if field.is_custom:
-                yield "(CUSTOM)"
-
             yield "=>"
 
             if field.disable_reason:
@@ -260,7 +261,7 @@ class ImportSummary:
             else:
                 yield "NO TARGET"
 
-        for model_summary in self.models:
+        for model_summary in self.data_models:
             yield _fill_up(
                 "*",
                 model_summary.content_type,
@@ -272,4 +273,5 @@ class ImportSummary:
                 yield f"    Disable reason: {model_summary.disable_reason}"
             else:
                 for field in model_summary.fields:
-                    yield " ".join(get_field(field))
+                    if "DATA" in field.sources:
+                        yield " ".join(get_field(field))
