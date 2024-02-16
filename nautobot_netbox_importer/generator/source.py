@@ -74,11 +74,11 @@ class PreImportResult(Enum):
 class SourceFieldSource(Enum):
     """Source Field Source."""
 
-    AUTO = auto()
-    CACHE = auto()
-    DATA = auto()
-    CUSTOM = auto()
-    SIBLING = auto()
+    AUTO = auto()  # Automatically added fields like primary keys and AUTO_ADD_FIELDS
+    CACHE = auto()  # Fields added by caching data during customization
+    DATA = auto()  # Fields added from input data
+    CUSTOM = auto()  # Fields added by customizing the importer
+    SIBLING = auto()  # Fields defined as siblings of other fields, imported by other field importer
 
 
 PreImport = Callable[[RecordData, ImporterPass], PreImportResult]
