@@ -30,647 +30,231 @@ c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 Site 1 | {'parent': ['A Location of type Si
 Total validation issues: 1
 - Content Types Mapping Deviations: ----------------------------------------------------------------
   Mapping deviations from source content type to Nautobot content type
-account.usertoken => account.usertoken | Disabled with reason: Nautobot content type: `account.usertoken` not found
-admin.logentry => admin.logentry | Disabled with reason: Not directly used in Nautobot.
-auth.permission => auth.permission | Disabled with reason: Handled via a Nautobot model and may not be a 1 to 1.
 auth.user => users.user
-circuits.provideraccount => circuits.provideraccount | Disabled with reason: Nautobot content type: `circuits.provideraccount` not found
-core.autosyncrecord => core.autosyncrecord | Disabled with reason: Nautobot content type: `core.autosyncrecord` not found
-core.datafile => core.datafile | Disabled with reason: Nautobot content type: `core.datafile` not found
-core.datasource => core.datasource | Disabled with reason: Nautobot content type: `core.datasource` not found
-core.job => core.job | Disabled with reason: Nautobot content type: `core.job` not found
-core.managedfile => core.managedfile | Disabled with reason: Nautobot content type: `core.managedfile` not found
-dcim.cablepath => dcim.cablepath | Disabled with reason: Recreated in Nautobot on signal when circuit termination is created
-dcim.cabletermination EXTENDS dcim.cable => dcim.cable
 dcim.devicerole => extras.role
-dcim.inventoryitemrole => dcim.inventoryitemrole | Disabled with reason: Nautobot content type: `dcim.inventoryitemrole` not found
-dcim.inventoryitemtemplate => dcim.inventoryitemtemplate | Disabled with reason: Nautobot content type: `dcim.inventoryitemtemplate` not found
-dcim.module => dcim.module | Disabled with reason: Nautobot content type: `dcim.module` not found
-dcim.modulebay => dcim.modulebay | Disabled with reason: Nautobot content type: `dcim.modulebay` not found
-dcim.modulebaytemplate => dcim.modulebaytemplate | Disabled with reason: Nautobot content type: `dcim.modulebaytemplate` not found
-dcim.moduletype => dcim.moduletype | Disabled with reason: Nautobot content type: `dcim.moduletype` not found
-dcim.rackrole => extras.role
-dcim.region => dcim.location
 dcim.site => dcim.location
-dcim.sitegroup => dcim.locationtype
-dcim.virtualdevicecontext => dcim.virtualdevicecontext | Disabled with reason: Nautobot content type: `dcim.virtualdevicecontext` not found
-django_rq.queue => django_rq.queue | Disabled with reason: Nautobot content type: `django_rq.queue` not found
-extras.bookmark => extras.bookmark | Disabled with reason: Nautobot content type: `extras.bookmark` not found
-extras.branch => extras.branch | Disabled with reason: Nautobot content type: `extras.branch` not found
-extras.cachedvalue => extras.cachedvalue | Disabled with reason: Nautobot content type: `extras.cachedvalue` not found
-extras.configrevision => extras.configrevision | Disabled with reason: Nautobot content type: `extras.configrevision` not found
-extras.configtemplate => extras.configtemplate | Disabled with reason: Nautobot content type: `extras.configtemplate` not found
-extras.customfieldchoiceset => extras.customfieldchoiceset | Disabled with reason: Nautobot content type: `extras.customfieldchoiceset` not found
-extras.dashboard => extras.dashboard | Disabled with reason: Nautobot content type: `extras.dashboard` not found
 extras.journalentry => extras.note
-extras.report => extras.report | Disabled with reason: Nautobot content type: `extras.report` not found
-extras.reportmodule => extras.reportmodule | Disabled with reason: Nautobot content type: `extras.reportmodule` not found
-extras.savedfilter => extras.savedfilter | Disabled with reason: Nautobot content type: `extras.savedfilter` not found
-extras.script => extras.script | Disabled with reason: Nautobot content type: `extras.script` not found
-extras.scriptmodule => extras.scriptmodule | Disabled with reason: Nautobot content type: `extras.scriptmodule` not found
-extras.stagedchange => extras.stagedchange | Disabled with reason: Nautobot content type: `extras.stagedchange` not found
-ipam.aggregate => ipam.prefix
-ipam.asn => ipam.asn | Disabled with reason: Nautobot content type: `ipam.asn` not found
-ipam.asnrange => ipam.asnrange | Disabled with reason: Nautobot content type: `ipam.asnrange` not found
 ipam.fhrpgroup => dcim.interfaceredundancygroup
-ipam.fhrpgroupassignment => ipam.fhrpgroupassignment | Disabled with reason: Nautobot content type: `ipam.fhrpgroupassignment` not found
-ipam.iprange => ipam.iprange | Disabled with reason: Nautobot content type: `ipam.iprange` not found
-ipam.l2vpn => ipam.l2vpn | Disabled with reason: Nautobot content type: `ipam.l2vpn` not found
-ipam.l2vpntermination => ipam.l2vpntermination | Disabled with reason: Nautobot content type: `ipam.l2vpntermination` not found
-ipam.role => extras.role
-ipam.servicetemplate => ipam.servicetemplate | Disabled with reason: Nautobot content type: `ipam.servicetemplate` not found
-secrets.secret => secrets.secret | Disabled with reason: Nautobot content type: `secrets.secret` not found
-secrets.secretrole => secrets.secretrole | Disabled with reason: Nautobot content type: `secrets.secretrole` not found
-secrets.sessionkey => secrets.sessionkey | Disabled with reason: Nautobot content type: `secrets.sessionkey` not found
-secrets.userkey => secrets.userkey | Disabled with reason: Nautobot content type: `secrets.userkey` not found
-sessions.session => sessions.session | Disabled with reason: Nautobot has own sessions, sessions should never cross apps.
-tenancy.contact => tenancy.contact | Disabled with reason: Nautobot content type: `tenancy.contact` not found
-tenancy.contactassignment => tenancy.contactassignment | Disabled with reason: Nautobot content type: `tenancy.contactassignment` not found
-tenancy.contactgroup => tenancy.contactgroup | Disabled with reason: Nautobot content type: `tenancy.contactgroup` not found
-tenancy.contactrole => tenancy.contactrole | Disabled with reason: Nautobot content type: `tenancy.contactrole` not found
-users.adminuser => users.adminuser | Disabled with reason: Nautobot content type: `users.adminuser` not found
-users.netboxgroup => users.netboxgroup | Disabled with reason: Nautobot content type: `users.netboxgroup` not found
-users.netboxuser => users.netboxuser | Disabled with reason: Nautobot content type: `users.netboxuser` not found
-users.userconfig => users.userconfig | Disabled with reason: May not have a 1 to 1 translation to Nautobot.
-wireless.wirelesslan => wireless.wirelesslan | Disabled with reason: Nautobot content type: `wireless.wirelesslan` not found
-wireless.wirelesslangroup => wireless.wirelesslangroup | Disabled with reason: Nautobot content type: `wireless.wirelesslangroup` not found
-wireless.wirelesslink => wireless.wirelesslink | Disabled with reason: Nautobot content type: `wireless.wirelesslink` not found
 - Content Types Back Mapping: ----------------------------------------------------------------------
   Back mapping deviations from Nautobot content type to the source content type
 users.user => auth.user
-dcim.cable => dcim.cabletermination
-extras.role => Ambiguous
-dcim.location => Ambiguous
-dcim.locationtype => dcim.sitegroup
+extras.role => dcim.devicerole
+dcim.location => dcim.site
 extras.note => extras.journalentry
-ipam.prefix => ipam.aggregate
 dcim.interfaceredundancygroup => ipam.fhrpgroup
 - Detailed Fields Mapping: -------------------------------------------------------------------------
-* account.usertoken => account.usertoken ***********************************************************
-    Disable reason: Nautobot content type: `account.usertoken` not found
-* admin.logentry => admin.logentry *****************************************************************
-    Disable reason: Not directly used in Nautobot.
 * auth.group => auth.group *************************************************************************
-id (CUSTOM) => uid_from_data => id (AutoField)
-name (DATA) => value_importer => name (CharField)
-permissions (DATA) (CUSTOM) => Disabled with reason: Permissions import is not implemented yet
-* auth.permission => auth.permission ***************************************************************
-    Disable reason: Handled via a Nautobot model and may not be a 1 to 1.
+name => value_importer => name (CharField)
+permissions => Disabled with reason: Permissions import is not implemented yet
 * auth.user => users.user **************************************************************************
-date_joined (DATA) => datetime_importer => date_joined (DateTimeField)
-email (DATA) => value_importer => email (CharField)
-first_name (DATA) => value_importer => first_name (CharField)
-groups (DATA) => identifiers_importer => groups (ManyToManyField)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-is_active (DATA) => value_importer => is_active (BooleanField)
-is_staff (DATA) => value_importer => is_staff (BooleanField)
-is_superuser (DATA) => value_importer => is_superuser (BooleanField)
-last_login (DATA) (CUSTOM) => Disabled with reason: Should not be attempted to migrate
-last_name (DATA) => value_importer => last_name (CharField)
-password (DATA) (CUSTOM) => Disabled with reason: Should not be attempted to migrate
-user_permissions (DATA) (CUSTOM) => Disabled with reason: Permissions import is not implemented yet
-username (DATA) => value_importer => username (CharField)
-* circuits.circuit => circuits.circuit *************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-status (CUSTOM) => status_importer => status_id (StatusField)
-termination_a (CUSTOM) => relation_importer => circuit_termination_a_id (ForeignKey)
-termination_z (CUSTOM) => relation_importer => circuit_termination_z_id (ForeignKey)
-type (CUSTOM) => relation_importer => circuit_type_id (ForeignKey)
-* circuits.circuittermination => circuits.circuittermination ***************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-location (CUSTOM) => location_importer => location_id (ForeignKey)
-region (CUSTOM) => location_importer => location_id (ForeignKey)
-site (CUSTOM) => location_importer => location_id (ForeignKey)
-* circuits.circuittype => circuits.circuittype *****************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* circuits.provider => circuits.provider ***********************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* circuits.provideraccount => circuits.provideraccount *********************************************
-    Disable reason: Nautobot content type: `circuits.provideraccount` not found
-* circuits.providernetwork => circuits.providernetwork *********************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
+date_joined => datetime_importer => date_joined (DateTimeField)
+email => value_importer => email (CharField)
+first_name => value_importer => first_name (CharField)
+groups => identifiers_importer => groups (ManyToManyField)
+is_active => value_importer => is_active (BooleanField)
+is_staff => value_importer => is_staff (BooleanField)
+is_superuser => value_importer => is_superuser (BooleanField)
+last_login => Disabled with reason: Should not be attempted to migrate
+last_name => value_importer => last_name (CharField)
+password => Disabled with reason: Should not be attempted to migrate
+user_permissions => Disabled with reason: Permissions import is not implemented yet
+username => value_importer => username (CharField)
 * contenttypes.contenttype => contenttypes.contenttype *********************************************
-app_label (DATA) (CUSTOM) => content_types_mapper_importer => app_label (CharField)
-id (CUSTOM) => uid_from_data => id (AutoField)
-model (DATA) => value_importer => model (CharField)
-* core.autosyncrecord => core.autosyncrecord *******************************************************
-    Disable reason: Nautobot content type: `core.autosyncrecord` not found
-* core.datafile => core.datafile *******************************************************************
-    Disable reason: Nautobot content type: `core.datafile` not found
-* core.datasource => core.datasource ***************************************************************
-    Disable reason: Nautobot content type: `core.datasource` not found
-* core.job => core.job *****************************************************************************
-    Disable reason: Nautobot content type: `core.job` not found
-* core.managedfile => core.managedfile *************************************************************
-    Disable reason: Nautobot content type: `core.managedfile` not found
-* dcim.cable => dcim.cable *************************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-status (CUSTOM) => status_importer => status_id (StatusField)
-* dcim.cablepath => dcim.cablepath *****************************************************************
-    Disable reason: Recreated in Nautobot on signal when circuit termination is created
-* dcim.cabletermination => dcim.cable **************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.consoleport => dcim.consoleport *************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.consoleporttemplate => dcim.consoleporttemplate *********************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.consoleserverport => dcim.consoleserverport *************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.consoleserverporttemplate => dcim.consoleserverporttemplate *********************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
+app_label => content_types_mapper_importer => app_label (CharField)
+model => value_importer => model (CharField)
 * dcim.device => dcim.device ***********************************************************************
-_name (DATA) => NO IMPORTER => NO TARGET
-airflow (DATA) => NO IMPORTER => NO TARGET
-asset_tag (DATA) => value_importer => asset_tag (CharField)
-cluster (DATA) => relation_importer => cluster_id (ForeignKey)
-comments (DATA) => value_importer => comments (TextField)
-config_template (DATA) => NO IMPORTER => NO TARGET
-console_port_count (DATA) => NO IMPORTER => NO TARGET
-console_server_port_count (DATA) => NO IMPORTER => NO TARGET
-created (DATA) => datetime_importer => created (DateTimeField)
-custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
-description (DATA) => NO IMPORTER => NO TARGET
-device_bay_count (DATA) => NO IMPORTER => NO TARGET
-device_role (CUSTOM) => relation_importer => role_id (RoleField)
-device_type (DATA) => relation_importer => device_type_id (ForeignKey)
-face (DATA) => value_importer => face (CharField)
-front_port_count (DATA) => NO IMPORTER => NO TARGET
-id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
-interface_count (DATA) => NO IMPORTER => NO TARGET
-inventory_item_count (DATA) => NO IMPORTER => NO TARGET
-last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
-latitude (DATA) => NO IMPORTER => NO TARGET
-local_context_data (DATA) => NO IMPORTER => NO TARGET
-location (DATA) (CUSTOM) => location_importer => location_id (ForeignKey)
-longitude (DATA) => NO IMPORTER => NO TARGET
-module_bay_count (DATA) => NO IMPORTER => NO TARGET
-name (DATA) => value_importer => name (CharField)
-oob_ip (DATA) => NO IMPORTER => NO TARGET
-platform (DATA) => relation_importer => platform_id (ForeignKey)
-position (DATA) => integer_importer => position (PositiveSmallIntegerField)
-power_outlet_count (DATA) => NO IMPORTER => NO TARGET
-power_port_count (DATA) => NO IMPORTER => NO TARGET
-primary_ip4 (DATA) => relation_importer => primary_ip4_id (ForeignKey)
-primary_ip6 (DATA) => relation_importer => primary_ip6_id (ForeignKey)
-rack (DATA) => relation_importer => rack_id (ForeignKey)
-rear_port_count (DATA) => NO IMPORTER => NO TARGET
-region (CUSTOM) => location_importer => location_id (ForeignKey)
-role (DATA) (CUSTOM) => relation_importer => role_id (RoleField)
-serial (DATA) => value_importer => serial (CharField)
-site (DATA) => location_importer => location_id (ForeignKey)
-status (DATA) => status_importer => status_id (StatusField)
-tenant (DATA) => relation_importer => tenant_id (ForeignKey)
-vc_position (DATA) => integer_importer => vc_position (PositiveSmallIntegerField)
-vc_priority (DATA) => integer_importer => vc_priority (PositiveSmallIntegerField)
-virtual_chassis (DATA) => relation_importer => virtual_chassis_id (ForeignKey)
-* dcim.devicebay => dcim.devicebay *****************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.devicebaytemplate => dcim.devicebaytemplate *************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
+_name => NO IMPORTER => NO TARGET
+airflow => NO IMPORTER => NO TARGET
+asset_tag => value_importer => asset_tag (CharField)
+cluster => relation_importer => cluster_id (ForeignKey)
+comments => value_importer => comments (TextField)
+config_template => NO IMPORTER => NO TARGET
+console_port_count => NO IMPORTER => NO TARGET
+console_server_port_count => NO IMPORTER => NO TARGET
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => NO TARGET
+device_bay_count => NO IMPORTER => NO TARGET
+device_type => relation_importer => device_type_id (ForeignKey)
+face => value_importer => face (CharField)
+front_port_count => NO IMPORTER => NO TARGET
+id => uid_from_data => id (UUIDField)
+interface_count => NO IMPORTER => NO TARGET
+inventory_item_count => NO IMPORTER => NO TARGET
+last_updated => Disabled with reason: Last updated field is updated with each write
+latitude => NO IMPORTER => NO TARGET
+local_context_data => NO IMPORTER => NO TARGET
+location => location_importer => location_id (ForeignKey)
+longitude => NO IMPORTER => NO TARGET
+module_bay_count => NO IMPORTER => NO TARGET
+name => value_importer => name (CharField)
+oob_ip => NO IMPORTER => NO TARGET
+platform => relation_importer => platform_id (ForeignKey)
+position => integer_importer => position (PositiveSmallIntegerField)
+power_outlet_count => NO IMPORTER => NO TARGET
+power_port_count => NO IMPORTER => NO TARGET
+primary_ip4 => relation_importer => primary_ip4_id (ForeignKey)
+primary_ip6 => relation_importer => primary_ip6_id (ForeignKey)
+rack => relation_importer => rack_id (ForeignKey)
+rear_port_count => NO IMPORTER => NO TARGET
+role => relation_importer => role_id (RoleField)
+serial => value_importer => serial (CharField)
+site => location_importer => location_id (ForeignKey)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+vc_position => integer_importer => vc_position (PositiveSmallIntegerField)
+vc_priority => integer_importer => vc_priority (PositiveSmallIntegerField)
+virtual_chassis => relation_importer => virtual_chassis_id (ForeignKey)
 * dcim.devicerole => extras.role *******************************************************************
-color (DATA) (CUSTOM) => value_importer => color (CharField)
-config_template (DATA) => NO IMPORTER => NO TARGET
-content_types (CUSTOM) => content_types_importer => content_types (ManyToManyField)
-created (DATA) => datetime_importer => created (DateTimeField)
-custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
-description (DATA) => value_importer => description (CharField)
-id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
-last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
-name (DATA) => value_importer => name (CharField)
-slug (DATA) => NO IMPORTER => NO TARGET
-vm_role (DATA) => NO IMPORTER => NO TARGET
+color => value_importer => color (CharField)
+config_template => NO IMPORTER => NO TARGET
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => NO TARGET
+vm_role => NO IMPORTER => NO TARGET
 * dcim.devicetype => dcim.devicetype ***************************************************************
-_abs_weight (DATA) => NO IMPORTER => NO TARGET
-airflow (DATA) => NO IMPORTER => NO TARGET
-color (CUSTOM) => NO IMPORTER => NO TARGET
-comments (DATA) => value_importer => comments (TextField)
-console_port_template_count (DATA) => NO IMPORTER => NO TARGET
-console_server_port_template_count (DATA) => NO IMPORTER => NO TARGET
-created (DATA) => datetime_importer => created (DateTimeField)
-custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
-default_platform (DATA) => NO IMPORTER => NO TARGET
-description (DATA) => NO IMPORTER => NO TARGET
-device_bay_template_count (DATA) => NO IMPORTER => NO TARGET
-front_image (DATA) (CUSTOM) => Disabled with reason: Import does not contain images
-front_port_template_count (DATA) => NO IMPORTER => NO TARGET
-id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
-interface_template_count (DATA) => NO IMPORTER => NO TARGET
-inventory_item_template_count (DATA) => NO IMPORTER => NO TARGET
-is_full_depth (DATA) => value_importer => is_full_depth (BooleanField)
-last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
-manufacturer (DATA) => relation_importer => manufacturer_id (ForeignKey)
-model (DATA) => value_importer => model (CharField)
-module_bay_template_count (DATA) => NO IMPORTER => NO TARGET
-part_number (DATA) => value_importer => part_number (CharField)
-power_outlet_template_count (DATA) => NO IMPORTER => NO TARGET
-power_port_template_count (DATA) => NO IMPORTER => NO TARGET
-rear_image (DATA) (CUSTOM) => Disabled with reason: Import does not contain images
-rear_port_template_count (DATA) => NO IMPORTER => NO TARGET
-slug (DATA) => NO IMPORTER => NO TARGET
-subdevice_role (DATA) => value_importer => subdevice_role (CharField)
-u_height (DATA) => integer_importer => u_height (PositiveSmallIntegerField)
-weight (DATA) => NO IMPORTER => NO TARGET
-weight_unit (DATA) => NO IMPORTER => NO TARGET
-* dcim.frontport => dcim.frontport *****************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.frontporttemplate => dcim.frontporttemplate *************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-rear_port (CUSTOM) => relation_importer => rear_port_template_id (ForeignKey)
-* dcim.interface => dcim.interface *****************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-parent (CUSTOM) => relation_importer => parent_interface_id (ForeignKey)
-status (CUSTOM) => status_importer => status_id (StatusField)
-* dcim.interfacetemplate => dcim.interfacetemplate *************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.inventoryitem => dcim.inventoryitem *********************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-level (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-lft (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-rght (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-tree_id (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-* dcim.inventoryitemrole => dcim.inventoryitemrole *************************************************
-    Disable reason: Nautobot content type: `dcim.inventoryitemrole` not found
-* dcim.inventoryitemtemplate => dcim.inventoryitemtemplate *****************************************
-    Disable reason: Nautobot content type: `dcim.inventoryitemtemplate` not found
-* dcim.location => dcim.location *******************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-level (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-lft (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-location_type (CUSTOM) => constant_importer => location_type_id (ForeignKey)
-parent (CUSTOM) => location_parent_importer => parent_id (TreeNodeForeignKey)
-rght (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-site (CUSTOM) => location_parent_importer => parent_id (TreeNodeForeignKey)
-status (CUSTOM) => status_importer => status_id (StatusField)
-tree_id (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-* dcim.locationtype => dcim.locationtype ***********************************************************
-content_types (CUSTOM) => content_types_importer => content_types (ManyToManyField)
-id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
-level (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-lft (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-name (DATA) => value_importer => name (CharField)
-nestable (DATA) => value_importer => nestable (BooleanField)
-parent (DATA) => relation_importer => parent_id (TreeNodeForeignKey)
-rght (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-tree_id (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+_abs_weight => NO IMPORTER => NO TARGET
+airflow => NO IMPORTER => NO TARGET
+comments => value_importer => comments (TextField)
+console_port_template_count => NO IMPORTER => NO TARGET
+console_server_port_template_count => NO IMPORTER => NO TARGET
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+default_platform => NO IMPORTER => NO TARGET
+description => NO IMPORTER => NO TARGET
+device_bay_template_count => NO IMPORTER => NO TARGET
+front_image => Disabled with reason: Import does not contain images
+front_port_template_count => NO IMPORTER => NO TARGET
+id => uid_from_data => id (UUIDField)
+interface_template_count => NO IMPORTER => NO TARGET
+inventory_item_template_count => NO IMPORTER => NO TARGET
+is_full_depth => value_importer => is_full_depth (BooleanField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+manufacturer => relation_importer => manufacturer_id (ForeignKey)
+model => value_importer => model (CharField)
+module_bay_template_count => NO IMPORTER => NO TARGET
+part_number => value_importer => part_number (CharField)
+power_outlet_template_count => NO IMPORTER => NO TARGET
+power_port_template_count => NO IMPORTER => NO TARGET
+rear_image => Disabled with reason: Import does not contain images
+rear_port_template_count => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => NO TARGET
+subdevice_role => value_importer => subdevice_role (CharField)
+u_height => integer_importer => u_height (PositiveSmallIntegerField)
+weight => NO IMPORTER => NO TARGET
+weight_unit => NO IMPORTER => NO TARGET
 * dcim.manufacturer => dcim.manufacturer ***********************************************************
-created (DATA) => datetime_importer => created (DateTimeField)
-custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
-description (DATA) => value_importer => description (CharField)
-id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
-last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
-name (DATA) => value_importer => name (CharField)
-slug (DATA) => NO IMPORTER => NO TARGET
-* dcim.module => dcim.module ***********************************************************************
-    Disable reason: Nautobot content type: `dcim.module` not found
-* dcim.modulebay => dcim.modulebay *****************************************************************
-    Disable reason: Nautobot content type: `dcim.modulebay` not found
-* dcim.modulebaytemplate => dcim.modulebaytemplate *************************************************
-    Disable reason: Nautobot content type: `dcim.modulebaytemplate` not found
-* dcim.moduletype => dcim.moduletype ***************************************************************
-    Disable reason: Nautobot content type: `dcim.moduletype` not found
-* dcim.platform => dcim.platform *******************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.powerfeed => dcim.powerfeed *****************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.poweroutlet => dcim.poweroutlet *************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.poweroutlettemplate => dcim.poweroutlettemplate *********************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-power_port (CUSTOM) => relation_importer => power_port_template_id (ForeignKey)
-* dcim.powerpanel => dcim.powerpanel ***************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-location (CUSTOM) => location_importer => location_id (ForeignKey)
-region (CUSTOM) => location_importer => location_id (ForeignKey)
-site (CUSTOM) => location_importer => location_id (ForeignKey)
-* dcim.powerport => dcim.powerport *****************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.powerporttemplate => dcim.powerporttemplate *************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.rack => dcim.rack ***************************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-location (CUSTOM) => location_importer => location_id (ForeignKey)
-region (CUSTOM) => location_importer => location_id (ForeignKey)
-role (CUSTOM) => relation_importer => role_id (RoleField)
-site (CUSTOM) => location_importer => location_id (ForeignKey)
-status (CUSTOM) => status_importer => status_id (StatusField)
-* dcim.rackreservation => dcim.rackreservation *****************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-units (CUSTOM) => units_importer => units (JSONField)
-* dcim.rackrole => extras.role *********************************************************************
-color (CUSTOM) => value_importer => color (CharField)
-content_types (CUSTOM) => content_types_importer => content_types (ManyToManyField)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.rearport => dcim.rearport *******************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.rearporttemplate => dcim.rearporttemplate ***************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.region => dcim.location *********************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-level (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-lft (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-location_type (CUSTOM) => constant_importer => location_type_id (ForeignKey)
-rght (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-status (CUSTOM) => status_importer => status_id (StatusField)
-tree_id (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => NO TARGET
 * dcim.site => dcim.location ***********************************************************************
-_name (DATA) => NO IMPORTER => NO TARGET
-asns (DATA) => NO IMPORTER => NO TARGET
-comments (DATA) => value_importer => comments (TextField)
-created (DATA) => datetime_importer => created (DateTimeField)
-custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
-description (DATA) => value_importer => description (CharField)
-facility (DATA) => value_importer => facility (CharField)
-group (DATA) (CUSTOM) => site_group_importer => location_type_id (ForeignKey)
-id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
-last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
-latitude (DATA) => value_importer => latitude (DecimalField)
-level (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-lft (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-longitude (DATA) => value_importer => longitude (DecimalField)
-name (DATA) => value_importer => name (CharField)
-physical_address (DATA) => value_importer => physical_address (TextField)
-region (DATA) (CUSTOM) => relation_importer => parent_id (TreeNodeForeignKey)
-rght (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-shipping_address (DATA) => value_importer => shipping_address (TextField)
-slug (DATA) => NO IMPORTER => NO TARGET
-status (DATA) => status_importer => status_id (StatusField)
-tenant (DATA) => relation_importer => tenant_id (ForeignKey)
-time_zone (DATA) => value_importer => time_zone (CharField)
-tree_id (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-* dcim.sitegroup => dcim.locationtype **************************************************************
-content_types (CUSTOM) => content_types_importer => content_types (ManyToManyField)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-level (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-lft (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-nestable (CUSTOM) => constant_importer => nestable (BooleanField)
-parent (CUSTOM) => constant_importer => parent_id (TreeNodeForeignKey)
-rght (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-tree_id (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-* dcim.virtualchassis => dcim.virtualchassis *******************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* dcim.virtualdevicecontext => dcim.virtualdevicecontext *******************************************
-    Disable reason: Nautobot content type: `dcim.virtualdevicecontext` not found
-* django_rq.queue => django_rq.queue ***************************************************************
-    Disable reason: Nautobot content type: `django_rq.queue` not found
-* extras.bookmark => extras.bookmark ***************************************************************
-    Disable reason: Nautobot content type: `extras.bookmark` not found
-* extras.branch => extras.branch *******************************************************************
-    Disable reason: Nautobot content type: `extras.branch` not found
-* extras.cachedvalue => extras.cachedvalue *********************************************************
-    Disable reason: Nautobot content type: `extras.cachedvalue` not found
-* extras.configcontext => extras.configcontext *****************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* extras.configrevision => extras.configrevision ***************************************************
-    Disable reason: Nautobot content type: `extras.configrevision` not found
-* extras.configtemplate => extras.configtemplate ***************************************************
-    Disable reason: Nautobot content type: `extras.configtemplate` not found
+_name => NO IMPORTER => NO TARGET
+asns => NO IMPORTER => NO TARGET
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+facility => value_importer => facility (CharField)
+group => site_group_importer => location_type_id (ForeignKey)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+latitude => value_importer => latitude (DecimalField)
+longitude => value_importer => longitude (DecimalField)
+name => value_importer => name (CharField)
+physical_address => value_importer => physical_address (TextField)
+region => relation_importer => parent_id (TreeNodeForeignKey)
+shipping_address => value_importer => shipping_address (TextField)
+slug => NO IMPORTER => NO TARGET
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+time_zone => value_importer => time_zone (CharField)
 * extras.customfield => extras.customfield *********************************************************
-choice_set (DATA) (CUSTOM) => choices_importer => Custom Target
-choices (CUSTOM) => choices_importer => Custom Target
-content_types (DATA) => content_types_importer => content_types (ManyToManyField)
-created (DATA) => datetime_importer => created (DateTimeField)
-default (DATA) => json_importer => default (JSONField)
-description (DATA) => value_importer => description (CharField)
-filter_logic (DATA) => value_importer => filter_logic (CharField)
-group_name (DATA) => NO IMPORTER => NO TARGET
-id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
-is_cloneable (DATA) => NO IMPORTER => NO TARGET
-label (DATA) => value_importer => label (CharField)
-last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
-name (DATA) (CUSTOM) => value_importer => key (SlugField)
-object_type (DATA) => NO IMPORTER => NO TARGET
-required (DATA) => value_importer => required (BooleanField)
-search_weight (DATA) => NO IMPORTER => NO TARGET
-type (DATA) => value_importer => type (CharField)
-ui_visibility (DATA) => NO IMPORTER => NO TARGET
-validation_maximum (DATA) => integer_importer => validation_maximum (BigIntegerField)
-validation_minimum (DATA) => integer_importer => validation_minimum (BigIntegerField)
-validation_regex (DATA) => value_importer => validation_regex (CharField)
-weight (DATA) => integer_importer => weight (PositiveSmallIntegerField)
-* extras.customfieldchoice => extras.customfieldchoice *********************************************
-custom_field (CUSTOM) => relation_importer => custom_field_id (ForeignKey)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-value (CUSTOM) => value_importer => value (CharField)
-* extras.customfieldchoiceset => extras.customfieldchoiceset ***************************************
-    Disable reason: Nautobot content type: `extras.customfieldchoiceset` not found
-* extras.customlink => extras.customlink ***********************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* extras.dashboard => extras.dashboard *************************************************************
-    Disable reason: Nautobot content type: `extras.dashboard` not found
-* extras.exporttemplate => extras.exporttemplate ***************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* extras.imageattachment => extras.imageattachment *************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* extras.jobresult => extras.jobresult *************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
+choice_set => choices_importer => Custom Target
+content_types => content_types_importer => content_types (ManyToManyField)
+created => datetime_importer => created (DateTimeField)
+default => json_importer => default (JSONField)
+description => value_importer => description (CharField)
+filter_logic => value_importer => filter_logic (CharField)
+group_name => NO IMPORTER => NO TARGET
+id => uid_from_data => id (UUIDField)
+is_cloneable => NO IMPORTER => NO TARGET
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => key (SlugField)
+object_type => NO IMPORTER => NO TARGET
+required => value_importer => required (BooleanField)
+search_weight => NO IMPORTER => NO TARGET
+type => value_importer => type (CharField)
+ui_visibility => NO IMPORTER => NO TARGET
+validation_maximum => integer_importer => validation_maximum (BigIntegerField)
+validation_minimum => integer_importer => validation_minimum (BigIntegerField)
+validation_regex => value_importer => validation_regex (CharField)
+weight => integer_importer => weight (PositiveSmallIntegerField)
 * extras.journalentry => extras.note ***************************************************************
-assigned_object_id (DATA) => relation_and_type_importer => assigned_object_id (UUIDField)
-assigned_object_type (DATA) => relation_and_type_importer => assigned_object_type_id (ForeignKey)
-comments (DATA) => NO IMPORTER => NO TARGET
-created (DATA) => datetime_importer => created (DateTimeField)
-created_by (DATA) => NO IMPORTER => NO TARGET
-custom_field_data (DATA) => NO IMPORTER => NO TARGET
-id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
-kind (DATA) => NO IMPORTER => NO TARGET
-last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
+assigned_object_id => relation_and_type_importer => assigned_object_id (UUIDField)
+assigned_object_type => relation_and_type_importer => assigned_object_type_id (ForeignKey)
+comments => NO IMPORTER => NO TARGET
+created => datetime_importer => created (DateTimeField)
+created_by => NO IMPORTER => NO TARGET
+custom_field_data => NO IMPORTER => NO TARGET
+id => uid_from_data => id (UUIDField)
+kind => NO IMPORTER => NO TARGET
+last_updated => Disabled with reason: Last updated field is updated with each write
 * extras.objectchange => extras.objectchange *******************************************************
-action (DATA) => value_importer => action (CharField)
-changed_object_id (DATA) => relation_and_type_importer => changed_object_id (UUIDField)
-changed_object_type (DATA) => relation_and_type_importer => changed_object_type_id (ForeignKey)
-id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
-object_repr (DATA) => value_importer => object_repr (CharField)
-postchange_data (DATA) (CUSTOM) => json_importer => object_data (JSONField)
-prechange_data (DATA) => NO IMPORTER => NO TARGET
-related_object_id (DATA) => relation_and_type_importer => related_object_id (UUIDField)
-related_object_type (DATA) => relation_and_type_importer => related_object_type_id (ForeignKey)
-request_id (DATA) => uuid_importer => request_id (UUIDField)
-time (DATA) (CUSTOM) => datetime_importer => time (DateTimeField)
-user (DATA) => relation_importer => user_id (ForeignKey)
-user_name (DATA) => value_importer => user_name (CharField)
-* extras.report => extras.report *******************************************************************
-    Disable reason: Nautobot content type: `extras.report` not found
-* extras.reportmodule => extras.reportmodule *******************************************************
-    Disable reason: Nautobot content type: `extras.reportmodule` not found
-* extras.role => extras.role ***********************************************************************
-content_types (CUSTOM) => content_types_importer => content_types (ManyToManyField)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* extras.savedfilter => extras.savedfilter *********************************************************
-    Disable reason: Nautobot content type: `extras.savedfilter` not found
-* extras.script => extras.script *******************************************************************
-    Disable reason: Nautobot content type: `extras.script` not found
-* extras.scriptmodule => extras.scriptmodule *******************************************************
-    Disable reason: Nautobot content type: `extras.scriptmodule` not found
-* extras.stagedchange => extras.stagedchange *******************************************************
-    Disable reason: Nautobot content type: `extras.stagedchange` not found
-* extras.status => extras.status *******************************************************************
-content_types (CUSTOM) => content_types_importer => content_types (ManyToManyField)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-name (DATA) => value_importer => name (CharField)
-* extras.tag => extras.tag *************************************************************************
-content_types (CUSTOM) => content_types_importer => content_types (ManyToManyField)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* extras.taggeditem => extras.taggeditem ***********************************************************
-content_type (CUSTOM) => tagged_object_importer => content_type_id (ForeignKey)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-object_id (CUSTOM) => tagged_object_importer => object_id (UUIDField)
-tag (CUSTOM) => tagged_object_importer => tag_id (ForeignKey)
-* extras.webhook => extras.webhook *****************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* ipam.aggregate => ipam.prefix ********************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-status (CUSTOM) => status_importer => status_id (StatusField)
-* ipam.asn => ipam.asn *****************************************************************************
-    Disable reason: Nautobot content type: `ipam.asn` not found
-* ipam.asnrange => ipam.asnrange *******************************************************************
-    Disable reason: Nautobot content type: `ipam.asnrange` not found
+action => value_importer => action (CharField)
+changed_object_id => relation_and_type_importer => changed_object_id (UUIDField)
+changed_object_type => relation_and_type_importer => changed_object_type_id (ForeignKey)
+id => uid_from_data => id (UUIDField)
+object_repr => value_importer => object_repr (CharField)
+postchange_data => json_importer => object_data (JSONField)
+prechange_data => NO IMPORTER => NO TARGET
+related_object_id => relation_and_type_importer => related_object_id (UUIDField)
+related_object_type => relation_and_type_importer => related_object_type_id (ForeignKey)
+request_id => uuid_importer => request_id (UUIDField)
+time => datetime_importer => time (DateTimeField)
+user => relation_importer => user_id (ForeignKey)
+user_name => value_importer => user_name (CharField)
 * ipam.fhrpgroup => dcim.interfaceredundancygroup **************************************************
-auth_key (DATA) => NO IMPORTER => NO TARGET
-auth_type (DATA) => NO IMPORTER => NO TARGET
-comments (DATA) => NO IMPORTER => NO TARGET
-created (DATA) => datetime_importer => created (DateTimeField)
-custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
-description (DATA) => value_importer => description (CharField)
-group_id (DATA) => NO IMPORTER => NO TARGET
-id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
-last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
-name (DATA) => value_importer => name (CharField)
-protocol (DATA) => value_importer => protocol (CharField)
-status (CUSTOM) => status_importer => status_id (StatusField)
-* ipam.fhrpgroupassignment => ipam.fhrpgroupassignment *********************************************
-    Disable reason: Nautobot content type: `ipam.fhrpgroupassignment` not found
-* ipam.ipaddress => ipam.ipaddress *****************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-role (CUSTOM) => relation_importer => role_id (RoleField)
-status (CUSTOM) => status_importer => status_id (StatusField)
-* ipam.iprange => ipam.iprange *********************************************************************
-    Disable reason: Nautobot content type: `ipam.iprange` not found
-* ipam.l2vpn => ipam.l2vpn *************************************************************************
-    Disable reason: Nautobot content type: `ipam.l2vpn` not found
-* ipam.l2vpntermination => ipam.l2vpntermination ***************************************************
-    Disable reason: Nautobot content type: `ipam.l2vpntermination` not found
-* ipam.prefix => ipam.prefix ***********************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-location (CUSTOM) => location_importer => location_id (ForeignKey)
-region (CUSTOM) => location_importer => location_id (ForeignKey)
-role (CUSTOM) => relation_importer => role_id (RoleField)
-site (CUSTOM) => location_importer => location_id (ForeignKey)
-status (CUSTOM) => status_importer => status_id (StatusField)
-* ipam.rir => ipam.rir *****************************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* ipam.role => extras.role *************************************************************************
-color (CUSTOM) => value_importer => color (CharField)
-content_types (CUSTOM) => content_types_importer => content_types (ManyToManyField)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* ipam.routetarget => ipam.routetarget *************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* ipam.service => ipam.service *********************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* ipam.servicetemplate => ipam.servicetemplate *****************************************************
-    Disable reason: Nautobot content type: `ipam.servicetemplate` not found
-* ipam.vlan => ipam.vlan ***************************************************************************
-group (CUSTOM) => relation_importer => vlan_group_id (ForeignKey)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-location (CUSTOM) => location_importer => location_id (ForeignKey)
-region (CUSTOM) => location_importer => location_id (ForeignKey)
-role (CUSTOM) => relation_importer => role_id (RoleField)
-site (CUSTOM) => location_importer => location_id (ForeignKey)
-status (CUSTOM) => status_importer => status_id (StatusField)
-* ipam.vlangroup => ipam.vlangroup *****************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* ipam.vrf => ipam.vrf *****************************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* secrets.secret => secrets.secret *****************************************************************
-    Disable reason: Nautobot content type: `secrets.secret` not found
-* secrets.secretrole => secrets.secretrole *********************************************************
-    Disable reason: Nautobot content type: `secrets.secretrole` not found
-* secrets.sessionkey => secrets.sessionkey *********************************************************
-    Disable reason: Nautobot content type: `secrets.sessionkey` not found
-* secrets.userkey => secrets.userkey ***************************************************************
-    Disable reason: Nautobot content type: `secrets.userkey` not found
-* sessions.session => sessions.session *************************************************************
-    Disable reason: Nautobot has own sessions, sessions should never cross apps.
-* social_django.association => social_django.association *******************************************
-id (CUSTOM) => uid_from_data => id (BigAutoField)
-* social_django.code => social_django.code *********************************************************
-id (CUSTOM) => uid_from_data => id (BigAutoField)
-* social_django.nonce => social_django.nonce *******************************************************
-id (CUSTOM) => uid_from_data => id (BigAutoField)
-* social_django.partial => social_django.partial ***************************************************
-id (CUSTOM) => uid_from_data => id (BigAutoField)
-* social_django.usersocialauth => social_django.usersocialauth *************************************
-id (CUSTOM) => uid_from_data => id (BigAutoField)
-* taggit.tag => taggit.tag *************************************************************************
-id (CUSTOM) => uid_from_data => id (AutoField)
-* taggit.taggeditem => taggit.taggeditem ***********************************************************
-id (CUSTOM) => uid_from_data => id (AutoField)
-* tenancy.contact => tenancy.contact ***************************************************************
-    Disable reason: Nautobot content type: `tenancy.contact` not found
-* tenancy.contactassignment => tenancy.contactassignment *******************************************
-    Disable reason: Nautobot content type: `tenancy.contactassignment` not found
-* tenancy.contactgroup => tenancy.contactgroup *****************************************************
-    Disable reason: Nautobot content type: `tenancy.contactgroup` not found
-* tenancy.contactrole => tenancy.contactrole *******************************************************
-    Disable reason: Nautobot content type: `tenancy.contactrole` not found
+auth_key => NO IMPORTER => NO TARGET
+auth_type => NO IMPORTER => NO TARGET
+comments => NO IMPORTER => NO TARGET
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+group_id => NO IMPORTER => NO TARGET
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+protocol => value_importer => protocol (CharField)
 * tenancy.tenant => tenancy.tenant *****************************************************************
-comments (DATA) => value_importer => comments (TextField)
-created (DATA) => datetime_importer => created (DateTimeField)
-custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
-description (DATA) => value_importer => description (CharField)
-group (DATA) (CUSTOM) => relation_importer => tenant_group_id (ForeignKey)
-id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
-last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
-name (DATA) => value_importer => name (CharField)
-slug (DATA) => NO IMPORTER => NO TARGET
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+group => relation_importer => tenant_group_id (ForeignKey)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => NO TARGET
 * tenancy.tenantgroup => tenancy.tenantgroup *******************************************************
-created (DATA) => datetime_importer => created (DateTimeField)
-custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
-description (DATA) => value_importer => description (CharField)
-id (DATA) (CUSTOM) => uid_from_data => id (UUIDField)
-last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
-level (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-lft (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-name (DATA) => value_importer => name (CharField)
-parent (DATA) => relation_importer => parent_id (TreeNodeForeignKey)
-rght (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-slug (DATA) => NO IMPORTER => NO TARGET
-tree_id (DATA) (CUSTOM) => Disabled with reason: Tree fields doesn't need to be imported
-* users.admingroup => users.admingroup *************************************************************
-id (CUSTOM) => uid_from_data => id (AutoField)
-* users.adminuser => users.adminuser ***************************************************************
-    Disable reason: Nautobot content type: `users.adminuser` not found
-* users.netboxgroup => users.netboxgroup ***********************************************************
-    Disable reason: Nautobot content type: `users.netboxgroup` not found
-* users.netboxuser => users.netboxuser *************************************************************
-    Disable reason: Nautobot content type: `users.netboxuser` not found
-* users.objectpermission => users.objectpermission *************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* users.token => users.token ***********************************************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* users.userconfig => users.userconfig *************************************************************
-    Disable reason: May not have a 1 to 1 translation to Nautobot.
-* virtualization.cluster => virtualization.cluster *************************************************
-group (CUSTOM) => relation_importer => cluster_group_id (ForeignKey)
-id (CUSTOM) => uid_from_data => id (UUIDField)
-location (CUSTOM) => location_importer => location_id (ForeignKey)
-region (CUSTOM) => location_importer => location_id (ForeignKey)
-site (CUSTOM) => location_importer => location_id (ForeignKey)
-type (CUSTOM) => relation_importer => cluster_type_id (ForeignKey)
-* virtualization.clustergroup => virtualization.clustergroup ***************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* virtualization.clustertype => virtualization.clustertype *****************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-* virtualization.virtualmachine => virtualization.virtualmachine ***********************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-role (CUSTOM) => relation_importer => role_id (RoleField)
-status (CUSTOM) => status_importer => status_id (StatusField)
-* virtualization.vminterface => virtualization.vminterface *****************************************
-id (CUSTOM) => uid_from_data => id (UUIDField)
-parent (CUSTOM) => relation_importer => parent_interface_id (ForeignKey)
-status (CUSTOM) => status_importer => status_id (StatusField)
-* wireless.wirelesslan => wireless.wirelesslan *****************************************************
-    Disable reason: Nautobot content type: `wireless.wirelesslan` not found
-* wireless.wirelesslangroup => wireless.wirelesslangroup *******************************************
-    Disable reason: Nautobot content type: `wireless.wirelesslangroup` not found
-* wireless.wirelesslink => wireless.wirelesslink ***************************************************
-    Disable reason: Nautobot content type: `wireless.wirelesslink` not found
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+level => Disabled with reason: Tree fields doesn't need to be imported
+lft => Disabled with reason: Tree fields doesn't need to be imported
+name => value_importer => name (CharField)
+parent => relation_importer => parent_id (TreeNodeForeignKey)
+rght => Disabled with reason: Tree fields doesn't need to be imported
+slug => NO IMPORTER => NO TARGET
+tree_id => Disabled with reason: Tree fields doesn't need to be imported
 = End of Import Summary. ===========================================================================
