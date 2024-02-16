@@ -72,7 +72,7 @@ class PreImportResult(Enum):
 
 
 class SourceFieldSource(Enum):
-    """Source Field Source."""
+    """Defines the source of the SourceField."""
 
     AUTO = auto()  # Automatically added fields like primary keys and AUTO_ADD_FIELDS
     CACHE = auto()  # Fields added by caching data during customization
