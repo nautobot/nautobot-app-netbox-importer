@@ -383,7 +383,7 @@ label (DATA) => value_importer => label (CharField)
 last_updated (DATA) => Disabled with reason: Last updated field is updated with each write
 name (DATA) => value_importer => name (CharField)
 * dcim.devicerole => extras.role *******************************************************************
-color (DATA) (CUSTOM) => value_importer => color (CharField)
+color (DATA) => value_importer => color (CharField)
 content_types (CUSTOM) => content_types_importer => content_types (ManyToManyField)
 created (DATA) => datetime_importer => created (DateTimeField)
 custom_field_data (DATA) => value_importer => custom_field_data (CustomFieldData)
@@ -411,7 +411,7 @@ part_number (DATA) => value_importer => part_number (CharField)
 rear_image (DATA) (CUSTOM) => Disabled with reason: Import does not contain images
 slug (DATA) => NO IMPORTER => NO TARGET
 subdevice_role (DATA) => value_importer => subdevice_role (CharField)
-u_height (DATA) => integer_importer => u_height (PositiveSmallIntegerField)
+u_height (DATA) (CUSTOM) => truncate_to_integer_importer => u_height (PositiveSmallIntegerField)
 weight (DATA) => NO IMPORTER => NO TARGET
 weight_unit (DATA) => NO IMPORTER => NO TARGET
 * dcim.frontport => dcim.frontport *****************************************************************

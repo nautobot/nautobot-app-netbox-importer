@@ -1,6 +1,6 @@
 = Import Summary: ==================================================================================
 - DiffSync Summary: --------------------------------------------------------------------------------
-create: 50
+create: 54
 update: 0
 delete: 0
 no-change: 0
@@ -9,16 +9,16 @@ skip: 135
 auth.group: 1
 auth.user: 6
 contenttypes.contenttype: 135
-dcim.device: 1
+dcim.device: 2
 dcim.devicerole: 1
-dcim.devicetype: 1
+dcim.devicetype: 2
 dcim.locationtype: 2
 dcim.manufacturer: 1
 dcim.site: 1
 extras.customfield: 2
 extras.customfieldchoice: 3
 extras.journalentry: 2
-extras.objectchange: 14
+extras.objectchange: 16
 extras.status: 2
 ipam.fhrpgroup: 1
 tenancy.tenant: 11
@@ -228,7 +228,7 @@ id (CUSTOM) => uid_from_data => id (UUIDField)
 * dcim.devicebaytemplate => dcim.devicebaytemplate *************************************************
 id (CUSTOM) => uid_from_data => id (UUIDField)
 * dcim.devicerole => extras.role *******************************************************************
-color (DATA) (CUSTOM) => value_importer => color (CharField)
+color (DATA) => value_importer => color (CharField)
 config_template (DATA) => NO IMPORTER => NO TARGET
 content_types (CUSTOM) => content_types_importer => content_types (ManyToManyField)
 created (DATA) => datetime_importer => created (DateTimeField)
@@ -268,7 +268,7 @@ rear_image (DATA) (CUSTOM) => Disabled with reason: Import does not contain imag
 rear_port_template_count (DATA) => NO IMPORTER => NO TARGET
 slug (DATA) => NO IMPORTER => NO TARGET
 subdevice_role (DATA) => value_importer => subdevice_role (CharField)
-u_height (DATA) => integer_importer => u_height (PositiveSmallIntegerField)
+u_height (DATA) (CUSTOM) => truncate_to_integer_importer => u_height (PositiveSmallIntegerField)
 weight (DATA) => NO IMPORTER => NO TARGET
 weight_unit (DATA) => NO IMPORTER => NO TARGET
 * dcim.frontport => dcim.frontport *****************************************************************

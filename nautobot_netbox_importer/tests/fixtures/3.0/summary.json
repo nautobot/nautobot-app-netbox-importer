@@ -2399,7 +2399,7 @@
                     "importer": "value_importer",
                     "definition": "color",
                     "from_data": true,
-                    "is_custom": true,
+                    "is_custom": false,
                     "default_value": "9e9e9e",
                     "disable_reason": ""
                 },
@@ -2703,10 +2703,10 @@
                     "nautobot_name": "u_height",
                     "nautobot_internal_type": "PositiveSmallIntegerField",
                     "nautobot_can_import": true,
-                    "importer": "integer_importer",
-                    "definition": "u_height",
+                    "importer": "truncate_to_integer_importer",
+                    "definition": "define_truncate_to_integer",
                     "from_data": true,
-                    "is_custom": false,
+                    "is_custom": true,
                     "default_value": 1,
                     "disable_reason": ""
                 }
