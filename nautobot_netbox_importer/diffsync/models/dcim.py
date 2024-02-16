@@ -82,17 +82,12 @@ def setup(adapter: SourceAdapter) -> None:
         fields={
             "front_image": fields.disable("Import does not contain images"),
             "rear_image": fields.disable("Import does not contain images"),
-            "color": "color",
         },
         default_reference={
             "id": "Unknown",
             "manufacturer": manufacturer.get_default_reference_uid(),
             "model": "Unknown",
         },
-    )
-    adapter.configure_model(
-        "dcim.devicerole",
-        nautobot_content_type="extras.role",
     )
     adapter.configure_model(
         "dcim.device",
