@@ -27,6 +27,7 @@ To dump and use data from a NetBox instance, run the following command:
     ipam.FHRPGroup \
     tenancy.Tenant \
     tenancy.TenantGroup \
+    users.ObjectPermission \
 
 diff -u /tmp/netbox_data.json ./input.json
 mv /tmp/netbox_data.json ./input.json

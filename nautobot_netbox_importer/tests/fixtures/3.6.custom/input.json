@@ -2501,5 +2501,28 @@
     "tree_id": 1,
     "level": 0
   }
+},
+{
+  "model": "users.objectpermission",
+  "pk": 1,
+  "fields": {
+    "name": "Test Permission",
+    "description": "",
+    "enabled": true,
+    "actions": "[\"view\"]",
+    "constraints": null,
+    "object_types": [
+      [
+        "extras",
+        "script"
+      ]
+    ],
+    "groups": [],
+    "users": [
+      [
+        "admin"
+      ]
+    ]
+  }
 }
 ]

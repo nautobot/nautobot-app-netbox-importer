@@ -39,7 +39,7 @@ _EXPECTED_SUMMARY = {
     "3.4": 5870,
     "3.5": 5870,
     "3.6": 5870,
-    "3.6.custom": 54,
+    "3.6.custom": 55,
 }
 
 _EXPECTED_COUNTS = {}
@@ -152,6 +152,7 @@ _EXPECTED_COUNTS["3.6.custom"] = {
     "tenancy.tenant": 11,
     "tenancy.tenantgroup": 1,
     "users.user": 6,
+    "users.objectpermission": 1,
 }
 
 _EXPECTED_VALIDATION_ERRORS = {}
