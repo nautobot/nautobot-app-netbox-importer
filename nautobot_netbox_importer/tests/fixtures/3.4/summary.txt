@@ -719,7 +719,7 @@ name => value_importer => key (SlugField)
 object_type => NO IMPORTER => NO TARGET
 required => value_importer => required (BooleanField)
 search_weight => NO IMPORTER => NO TARGET
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 ui_visibility => NO IMPORTER => NO TARGET
 validation_maximum => integer_importer => validation_maximum (BigIntegerField)
 validation_minimum => integer_importer => validation_minimum (BigIntegerField)
