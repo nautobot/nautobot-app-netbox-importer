@@ -43,6 +43,7 @@ from .base import NautobotBaseModel
 from .base import NautobotBaseModelType
 from .base import normalize_datetime
 from .base import source_pk_to_uuid
+from .exceptions import NautobotModelNotFound
 from .nautobot import IMPORT_ORDER
 from .nautobot import DiffSyncBaseModel
 from .nautobot import NautobotAdapter
@@ -944,7 +945,17 @@ class SourceField:
             if not isinstance(values, (list, set)):
                 raise ValueError(f"Invalid value {values} for field {self.name}")
 
-            setattr(target, self.nautobot.name, set(adapter.get_nautobot_content_type_uid(item) for item in values))
+            nautobot_values = set()
+            for item in values:
+                try:
+                    nautobot_values.add(adapter.get_nautobot_content_type_uid(item))
+                except NautobotModelNotFound:
+                    self.wrapper.adapter.logger.warning(
+                        "Can't convert content type %s for field %s, skipping", item, self
+                    )
+
+            if nautobot_values:
+                setattr(target, self.nautobot.name, nautobot_values)
 
         self.set_importer(content_types_importer)
 
