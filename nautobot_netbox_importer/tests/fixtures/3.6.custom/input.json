@@ -1080,6 +1080,7 @@
     "created": "2024-02-14T12:22:40.699Z",
     "last_updated": "2024-02-14T12:23:00.279Z",
     "custom_field_data": {
+      "device_custom_object": 2,
       "device_custom_choices": "Choice 1"
     },
     "description": "",
@@ -1129,6 +1130,7 @@
     "created": "2024-02-15T09:19:04.514Z",
     "last_updated": "2024-02-15T09:19:04.514Z",
     "custom_field_data": {
+      "device_custom_object": null,
       "device_custom_choices": null
     },
     "description": "",
@@ -1345,6 +1347,40 @@
     "validation_maximum": null,
     "validation_regex": "",
     "choice_set": 1,
+    "ui_visibility": "read-write",
+    "is_cloneable": false,
+    "content_types": [
+      [
+        "dcim",
+        "device"
+      ]
+    ]
+  }
+},
+{
+  "model": "extras.customfield",
+  "pk": 3,
+  "fields": {
+    "created": "2024-02-15T11:19:42.197Z",
+    "last_updated": "2024-02-15T11:19:42.197Z",
+    "type": "object",
+    "object_type": [
+      "dcim",
+      "device"
+    ],
+    "name": "device_custom_object",
+    "label": "Device Custom Object",
+    "group_name": "",
+    "description": "",
+    "required": false,
+    "search_weight": 1000,
+    "filter_logic": "loose",
+    "default": null,
+    "weight": 100,
+    "validation_minimum": null,
+    "validation_maximum": null,
+    "validation_regex": "",
+    "choice_set": null,
     "ui_visibility": "read-write",
     "is_cloneable": false,
     "content_types": [
@@ -2276,6 +2312,165 @@
       "last_updated": "2024-02-15T09:19:04.514Z",
       "custom_fields": {
         "device_custom_choices": null
+      },
+      "config_template": null,
+      "interface_count": 0,
+      "rear_port_count": 0,
+      "virtual_chassis": null,
+      "device_bay_count": 0,
+      "front_port_count": 0,
+      "module_bay_count": 0,
+      "power_port_count": 0,
+      "console_port_count": 0,
+      "local_context_data": null,
+      "power_outlet_count": 0,
+      "inventory_item_count": 0,
+      "console_server_port_count": 0
+    }
+  }
+},
+{
+  "model": "extras.objectchange",
+  "pk": 18,
+  "fields": {
+    "time": "2024-02-15T11:19:42.203Z",
+    "user": [
+      "admin"
+    ],
+    "user_name": "admin",
+    "request_id": "1421b953-f011-4bc0-9783-8951cc5d6779",
+    "action": "create",
+    "changed_object_type": [
+      "extras",
+      "customfield"
+    ],
+    "changed_object_id": 3,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Device Custom Object",
+    "prechange_data": null,
+    "postchange_data": {
+      "name": "device_custom_object",
+      "type": "object",
+      "label": "Device Custom Object",
+      "weight": 100,
+      "created": "2024-02-15T11:19:42.197Z",
+      "default": null,
+      "required": false,
+      "choice_set": null,
+      "group_name": "",
+      "description": "",
+      "object_type": 32,
+      "filter_logic": "loose",
+      "is_cloneable": false,
+      "last_updated": "2024-02-15T11:19:42.197Z",
+      "content_types": [
+        32
+      ],
+      "search_weight": 1000,
+      "ui_visibility": "read-write",
+      "validation_regex": "",
+      "validation_maximum": null,
+      "validation_minimum": null
+    }
+  }
+},
+{
+  "model": "extras.objectchange",
+  "pk": 19,
+  "fields": {
+    "time": "2024-02-15T11:45:02.196Z",
+    "user": [
+      "admin"
+    ],
+    "user_name": "admin",
+    "request_id": "0b51593b-629e-4eca-a203-8bf82c1ffc1d",
+    "action": "update",
+    "changed_object_type": [
+      "dcim",
+      "device"
+    ],
+    "changed_object_id": 1,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Device 1",
+    "prechange_data": {
+      "face": "",
+      "name": "Device 1",
+      "rack": null,
+      "role": 1,
+      "site": 1,
+      "tags": [],
+      "oob_ip": null,
+      "serial": "",
+      "status": "active",
+      "tenant": null,
+      "airflow": "",
+      "cluster": null,
+      "created": "2024-02-14T12:22:40.699Z",
+      "comments": "",
+      "latitude": null,
+      "location": null,
+      "platform": null,
+      "position": null,
+      "asset_tag": null,
+      "longitude": null,
+      "description": "",
+      "device_type": 1,
+      "primary_ip4": null,
+      "primary_ip6": null,
+      "vc_position": null,
+      "vc_priority": null,
+      "last_updated": "2024-02-14T12:23:00.279Z",
+      "custom_fields": {
+        "device_custom_object": null,
+        "device_custom_choices": "Choice 1"
+      },
+      "config_template": null,
+      "interface_count": 0,
+      "rear_port_count": 0,
+      "virtual_chassis": null,
+      "device_bay_count": 0,
+      "front_port_count": 0,
+      "module_bay_count": 0,
+      "power_port_count": 0,
+      "console_port_count": 0,
+      "local_context_data": null,
+      "power_outlet_count": 0,
+      "inventory_item_count": 0,
+      "console_server_port_count": 0
+    },
+    "postchange_data": {
+      "face": "",
+      "name": "Device 1",
+      "rack": null,
+      "role": 1,
+      "site": 1,
+      "tags": [],
+      "oob_ip": null,
+      "serial": "",
+      "status": "active",
+      "tenant": null,
+      "airflow": "",
+      "cluster": null,
+      "created": "2024-02-14T12:22:40.699Z",
+      "comments": "",
+      "latitude": null,
+      "location": null,
+      "platform": null,
+      "position": null,
+      "asset_tag": null,
+      "longitude": null,
+      "description": "",
+      "device_type": 1,
+      "primary_ip4": null,
+      "primary_ip6": null,
+      "vc_position": null,
+      "vc_priority": null,
+      "last_updated": "2024-02-15T11:45:02.188Z",
+      "custom_fields": {
+        "device_custom_object": 2,
+        "device_custom_choices": "Choice 1"
       },
       "config_template": null,
       "interface_count": 0,
