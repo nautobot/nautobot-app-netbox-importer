@@ -20,6 +20,7 @@ from typing import Union
 from uuid import UUID
 
 from diffsync.enum import DiffSyncModelFlags
+from nautobot.core.choices import ChoiceSet
 from nautobot.core.models.tree_queries import TreeModel
 
 from nautobot_netbox_importer.base import ContentTypeStr
@@ -83,6 +84,7 @@ class SourceFieldSource(Enum):
 
 
 PreImport = Callable[[RecordData, ImporterPass], PreImportResult]
+FieldImporterFallback = Callable[["SourceField", RecordData, DiffSyncBaseModel], None]
 SourceDataGenerator = Callable[[], Iterable[SourceRecord]]
 SourceFieldImporter = Callable[[RecordData, DiffSyncBaseModel], None]
 SourceFieldImporterFactory = Callable[["SourceField"], None]
@@ -814,6 +816,8 @@ class SourceField:
             self.set_status_importer()
         elif nautobot.is_reference:
             self.set_relation_importer()
+        elif getattr(nautobot, "choices", None):
+            self.set_choice_importer()
         elif nautobot.is_integer:
             self.set_integer_importer()
         else:
@@ -843,6 +847,28 @@ class SourceField:
             setattr(target, self.nautobot.name, value)
 
         self.set_importer(json_importer)
+
+    def set_choice_importer(self, fallback: Optional[FieldImporterFallback] = None) -> None:
+        """Set a choice field importer."""
+        choices_class = getattr(self.nautobot.field, "choices", None)
+        if not choices_class or not issubclass(choices_class, ChoiceSet):
+            raise ValueError(f"Invalid choices_class for {self}")
+
+        choices = dict(choices_class.CHOICES)
+
+        def choice_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+            value = self.get_source_value(source)
+            if value in EMPTY_VALUES:
+                return
+
+            if value in choices:
+                setattr(target, self.nautobot.name, value)
+            elif fallback:
+                fallback(self, source, target)
+            else:
+                raise ValueError(f"Invalid value {value} for field {self}")
+
+        self.set_importer(choice_importer)
 
     def set_integer_importer(self) -> None:
         """Set an integer field importer."""

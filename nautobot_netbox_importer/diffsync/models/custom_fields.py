@@ -12,6 +12,7 @@ from nautobot_netbox_importer.generator import ImporterPass
 from nautobot_netbox_importer.generator import PreImportResult
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceField
+from nautobot_netbox_importer.generator import fields
 
 
 def _convert_choices(choices: Any) -> list:
@@ -51,6 +52,22 @@ def _convert_choices(choices: Any) -> list:
         choices[index] = choice[0]
 
     return choices
+
+
+def _custom_field_type_fallback(field: SourceField, source: RecordData, target: DiffSyncBaseModel) -> None:
+    """Fallback for custom field type.
+
+    Nautobot 2.1 doesn't support custom field types:
+
+    - `object`
+    - `multi-object`
+
+    These custom fields are going to be imported as `text` type.
+    """
+    field.wrapper.adapter.logger.warning(
+        f"Custom field type `{field.get_source_value(source)}` is not supported, using `text` type instead"
+    )
+    setattr(target, field.nautobot.name, "text")
 
 
 def setup(adapter: SourceAdapter) -> None:
@@ -113,6 +130,7 @@ def setup(adapter: SourceAdapter) -> None:
         "extras.CustomField",
         fields={
             "name": "key",
+            "type": fields.choice(fallback=_custom_field_type_fallback),
             # NetBox<3.6
             "choices": define_choices,
             # NetBox>=3.6

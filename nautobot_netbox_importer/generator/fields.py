@@ -6,12 +6,26 @@ from typing import Optional
 from .base import EMPTY_VALUES
 from .base import ContentTypeStr
 from .nautobot import DiffSyncBaseModel
+from .source import FieldImporterFallback
 from .source import FieldName
 from .source import RecordData
 from .source import SourceAdapter
 from .source import SourceContentType
 from .source import SourceField
 from .source import SourceFieldDefinition
+
+
+def choice(nautobot_name: FieldName = "", fallback: Optional[FieldImporterFallback] = None) -> SourceFieldDefinition:
+    """Create a choices field definition.
+
+    Use to map the choices from the source to the Nautobot choices field.
+    """
+
+    def define_choices(field: SourceField) -> None:
+        field.set_nautobot_field(nautobot_name or field.name)
+        field.set_choice_importer(fallback)
+
+    return define_choices
 
 
 def truncate_to_integer(nautobot_name: FieldName = "") -> SourceFieldDefinition:
