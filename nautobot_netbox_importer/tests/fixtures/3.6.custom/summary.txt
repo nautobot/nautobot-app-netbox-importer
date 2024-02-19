@@ -1,6 +1,6 @@
 = Import Summary: ==================================================================================
 - DiffSync Summary: --------------------------------------------------------------------------------
-create: 54
+create: 55
 update: 0
 delete: 0
 no-change: 0
@@ -23,6 +23,7 @@ extras.status: 2
 ipam.fhrpgroup: 1
 tenancy.tenant: 11
 tenancy.tenantgroup: 1
+users.objectpermission: 1
 - Validation issues: -------------------------------------------------------------------------------
 . dcim.location: 1  ................................................................................
 c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 Site 1 | {'parent': ['A Location of type Site must have a parent Location.']}
@@ -257,4 +258,14 @@ parent => relation_importer => parent_id (TreeNodeForeignKey)
 rght => Disabled with reason: Tree fields doesn't need to be imported
 slug => NO IMPORTER => NO TARGET
 tree_id => Disabled with reason: Tree fields doesn't need to be imported
+* users.objectpermission => users.objectpermission *************************************************
+actions => json_importer => actions (JSONField)
+constraints => json_importer => constraints (JSONField)
+description => value_importer => description (CharField)
+enabled => value_importer => enabled (BooleanField)
+groups => identifiers_importer => groups (ManyToManyField)
+id => uid_from_data => id (UUIDField)
+name => value_importer => name (CharField)
+object_types => content_types_importer => object_types (ManyToManyField)
+users => identifiers_importer => users (ManyToManyField)
 = End of Import Summary. ===========================================================================
