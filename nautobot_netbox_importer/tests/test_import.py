@@ -39,7 +39,7 @@ _EXPECTED_SUMMARY = {
     "3.4": 5870,
     "3.5": 5870,
     "3.6": 5870,
-    "3.6.custom": 57,
+    "3.6.custom": 58,
 }
 
 _EXPECTED_COUNTS = {}
