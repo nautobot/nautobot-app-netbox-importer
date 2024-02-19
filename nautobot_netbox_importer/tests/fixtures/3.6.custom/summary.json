@@ -1,6 +1,6 @@
 {
     "diff_summary": {
-        "create": 54,
+        "create": 55,
         "update": 0,
         "delete": 0,
         "no-change": 0,
@@ -7152,9 +7152,74 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 0,
+            "imported_count": 1,
             "skipped_count": 0,
             "fields": {
+                "actions": {
+                    "name": "actions",
+                    "nautobot_name": "actions",
+                    "nautobot_internal_type": "JSONField",
+                    "nautobot_can_import": true,
+                    "importer": "json_importer",
+                    "definition": "actions",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "constraints": {
+                    "name": "constraints",
+                    "nautobot_name": "constraints",
+                    "nautobot_internal_type": "JSONField",
+                    "nautobot_can_import": true,
+                    "importer": "json_importer",
+                    "definition": "constraints",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "description": {
+                    "name": "description",
+                    "nautobot_name": "description",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "enabled": {
+                    "name": "enabled",
+                    "nautobot_name": "enabled",
+                    "nautobot_internal_type": "BooleanField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "enabled",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": true,
+                    "disable_reason": ""
+                },
+                "groups": {
+                    "name": "groups",
+                    "nautobot_name": "groups",
+                    "nautobot_internal_type": "ManyToManyField",
+                    "nautobot_can_import": true,
+                    "importer": "identifiers_importer",
+                    "definition": "groups",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -7163,7 +7228,47 @@
                     "importer": null,
                     "definition": "id",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "name": {
+                    "name": "name",
+                    "nautobot_name": "name",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "name",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "object_types": {
+                    "name": "object_types",
+                    "nautobot_name": "object_types",
+                    "nautobot_internal_type": "ManyToManyField",
+                    "nautobot_can_import": true,
+                    "importer": "content_types_importer",
+                    "definition": "object_types",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "users": {
+                    "name": "users",
+                    "nautobot_name": "users",
+                    "nautobot_internal_type": "ManyToManyField",
+                    "nautobot_can_import": true,
+                    "importer": "identifiers_importer",
+                    "definition": "users",
+                    "sources": [
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": ""
