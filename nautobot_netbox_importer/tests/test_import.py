@@ -152,6 +152,7 @@ _EXPECTED_COUNTS["3.6.custom"] = {
     "tenancy.tenant": 11,
     "tenancy.tenantgroup": 1,
     "users.user": 6,
+    "users.objectpermission": 1,
 }
 
 _EXPECTED_VALIDATION_ERRORS = {}

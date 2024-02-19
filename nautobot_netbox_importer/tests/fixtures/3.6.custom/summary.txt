@@ -23,6 +23,7 @@ extras.status: 2
 ipam.fhrpgroup: 1
 tenancy.tenant: 11
 tenancy.tenantgroup: 1
+users.objectpermission: 1
 - Validation issues: -------------------------------------------------------------------------------
 . dcim.device: 1  ..................................................................................
 f510c5ff-e1f8-5adc-9fb5-30bc5791b42e Device 1 | ["Invalid value for custom field 'device_custom_object': Value must be a string"]
@@ -259,4 +260,14 @@ parent => relation_importer => parent_id (TreeNodeForeignKey)
 rght => Disabled with reason: Tree fields doesn't need to be imported
 slug => NO IMPORTER => NO TARGET
 tree_id => Disabled with reason: Tree fields doesn't need to be imported
+* users.objectpermission => users.objectpermission *************************************************
+actions => json_importer => actions (JSONField)
+constraints => json_importer => constraints (JSONField)
+description => value_importer => description (CharField)
+enabled => value_importer => enabled (BooleanField)
+groups => identifiers_importer => groups (ManyToManyField)
+id => uid_from_data => id (UUIDField)
+name => value_importer => name (CharField)
+object_types => content_types_importer => object_types (ManyToManyField)
+users => identifiers_importer => users (ManyToManyField)
 = End of Import Summary. ===========================================================================
