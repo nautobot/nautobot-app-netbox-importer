@@ -1080,6 +1080,7 @@
     "created": "2024-02-14T12:22:40.699Z",
     "last_updated": "2024-02-14T12:23:00.279Z",
     "custom_field_data": {
+      "device_custom_object": 2,
       "device_custom_choices": "Choice 1"
     },
     "description": "",
@@ -1129,6 +1130,7 @@
     "created": "2024-02-15T09:19:04.514Z",
     "last_updated": "2024-02-15T09:19:04.514Z",
     "custom_field_data": {
+      "device_custom_object": null,
       "device_custom_choices": null
     },
     "description": "",
@@ -1380,6 +1382,40 @@
     "validation_maximum": null,
     "validation_regex": "",
     "choice_set": 1,
+    "ui_visibility": "read-write",
+    "is_cloneable": false,
+    "content_types": [
+      [
+        "dcim",
+        "device"
+      ]
+    ]
+  }
+},
+{
+  "model": "extras.customfield",
+  "pk": 3,
+  "fields": {
+    "created": "2024-02-15T11:19:42.197Z",
+    "last_updated": "2024-02-15T11:19:42.197Z",
+    "type": "object",
+    "object_type": [
+      "dcim",
+      "device"
+    ],
+    "name": "device_custom_object",
+    "label": "Device Custom Object",
+    "group_name": "",
+    "description": "",
+    "required": false,
+    "search_weight": 1000,
+    "filter_logic": "loose",
+    "default": null,
+    "weight": 100,
+    "validation_minimum": null,
+    "validation_maximum": null,
+    "validation_regex": "",
+    "choice_set": null,
     "ui_visibility": "read-write",
     "is_cloneable": false,
     "content_types": [
@@ -2330,6 +2366,52 @@
 },
 {
   "model": "extras.objectchange",
+  "pk": 18,
+  "fields": {
+    "time": "2024-02-15T11:19:42.203Z",
+    "user": [
+      "admin"
+    ],
+    "user_name": "admin",
+    "request_id": "1421b953-f011-4bc0-9783-8951cc5d6779",
+    "action": "create",
+    "changed_object_type": [
+      "extras",
+      "customfield"
+    ],
+    "changed_object_id": 3,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Device Custom Object",
+    "prechange_data": null,
+    "postchange_data": {
+      "name": "device_custom_object",
+      "type": "object",
+      "label": "Device Custom Object",
+      "weight": 100,
+      "created": "2024-02-15T11:19:42.197Z",
+      "default": null,
+      "required": false,
+      "choice_set": null,
+      "group_name": "",
+      "description": "",
+      "object_type": 32,
+      "filter_logic": "loose",
+      "is_cloneable": false,
+      "last_updated": "2024-02-15T11:19:42.197Z",
+      "content_types": [
+        32
+      ],
+      "search_weight": 1000,
+      "ui_visibility": "read-write",
+      "validation_regex": "",
+      "validation_maximum": null,
+      "validation_minimum": null
+    }
+  }
+},
+{
+  "model": "extras.objectchange",
   "pk": 19,
   "fields": {
     "time": "2024-02-15T11:45:02.196Z",
@@ -2376,6 +2458,7 @@
       "vc_priority": null,
       "last_updated": "2024-02-14T12:23:00.279Z",
       "custom_fields": {
+        "device_custom_object": null,
         "device_custom_choices": "Choice 1"
       },
       "config_template": null,
@@ -2421,6 +2504,7 @@
       "vc_priority": null,
       "last_updated": "2024-02-15T11:45:02.188Z",
       "custom_fields": {
+        "device_custom_object": 2,
         "device_custom_choices": "Choice 1"
       },
       "config_template": null,
@@ -2919,6 +3003,29 @@
     "rght": 2,
     "tree_id": 1,
     "level": 0
+  }
+},
+{
+  "model": "users.objectpermission",
+  "pk": 1,
+  "fields": {
+    "name": "Test Permission",
+    "description": "",
+    "enabled": true,
+    "actions": "[\"view\"]",
+    "constraints": null,
+    "object_types": [
+      [
+        "extras",
+        "script"
+      ]
+    ],
+    "groups": [],
+    "users": [
+      [
+        "admin"
+      ]
+    ]
   }
 }
 ]

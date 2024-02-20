@@ -39,7 +39,7 @@ _EXPECTED_SUMMARY = {
     "3.4": 5870,
     "3.5": 5870,
     "3.6": 5870,
-    "3.6.custom": 59,
+    "3.6.custom": 62,
 }
 
 _EXPECTED_COUNTS = {}
@@ -144,14 +144,15 @@ _EXPECTED_COUNTS["3.6.custom"] = {
     "dcim.locationtype": 2,
     "dcim.manufacturer": 1,
     "dcim.rack": 1,
-    "extras.customfield": 2,
+    "extras.customfield": 3,
     "extras.customfieldchoice": 3,
     "extras.note": 2,
-    "extras.objectchange": 20,
+    "extras.objectchange": 21,
     "extras.role": 1,
     "extras.status": 2,
     "tenancy.tenant": 11,
     "tenancy.tenantgroup": 1,
+    "users.objectpermission": 1,
     "users.user": 6,
 }
 
@@ -178,7 +179,7 @@ _EXPECTED_VALIDATION_ERRORS["3.6"] = {
     **_EXPECTED_VALIDATION_ERRORS["3.5"],
 }
 _EXPECTED_VALIDATION_ERRORS["3.6.custom"] = {
-    "dcim.device": 1,
+    "dcim.device": 2,
     "dcim.location": 1,
 }
 

@@ -7616,9 +7616,10 @@
                     "nautobot_name": "type",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
-                    "definition": "type",
+                    "importer": "choice_importer",
+                    "definition": "define_choices",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": "text",

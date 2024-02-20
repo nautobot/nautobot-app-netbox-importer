@@ -1,6 +1,6 @@
 = Import Summary: ==================================================================================
 - DiffSync Summary: --------------------------------------------------------------------------------
-create: 59
+create: 62
 update: 0
 delete: 0
 no-change: 0
@@ -16,21 +16,23 @@ dcim.locationtype: 2
 dcim.manufacturer: 1
 dcim.rack: 1
 dcim.site: 1
-extras.customfield: 2
+extras.customfield: 3
 extras.customfieldchoice: 3
 extras.journalentry: 2
-extras.objectchange: 20
+extras.objectchange: 21
 extras.status: 2
 ipam.fhrpgroup: 1
 tenancy.tenant: 11
 tenancy.tenantgroup: 1
+users.objectpermission: 1
 - Validation issues: -------------------------------------------------------------------------------
-. dcim.device: 1  ..................................................................................
+. dcim.device: 2  ..................................................................................
 4f3495b5-00e6-5917-a148-77e109f96b0f Half U Device | {'position': ['A U0 device type (Half U Device Type) cannot be assigned to a rack position.']}
+f510c5ff-e1f8-5adc-9fb5-30bc5791b42e Device 1 | ["Invalid value for custom field 'device_custom_object': Value must be a string"]
 . dcim.location: 1  ................................................................................
 c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 Site 1 | {'parent': ['A Location of type Site must have a parent Location.']}
 . ..................................................................................................
-Total validation issues: 2
+Total validation issues: 3
 - Content Types Mapping Deviations: ----------------------------------------------------------------
   Mapping deviations from source content type to Nautobot content type
 auth.user => users.user
@@ -226,7 +228,7 @@ name => value_importer => key (SlugField)
 object_type => NO IMPORTER => NO TARGET
 required => value_importer => required (BooleanField)
 search_weight => NO IMPORTER => NO TARGET
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 ui_visibility => NO IMPORTER => NO TARGET
 validation_maximum => integer_importer => validation_maximum (BigIntegerField)
 validation_minimum => integer_importer => validation_minimum (BigIntegerField)
@@ -291,4 +293,14 @@ parent => relation_importer => parent_id (TreeNodeForeignKey)
 rght => Disabled with reason: Tree fields doesn't need to be imported
 slug => NO IMPORTER => NO TARGET
 tree_id => Disabled with reason: Tree fields doesn't need to be imported
+* users.objectpermission => users.objectpermission *************************************************
+actions => json_importer => actions (JSONField)
+constraints => json_importer => constraints (JSONField)
+description => value_importer => description (CharField)
+enabled => value_importer => enabled (BooleanField)
+groups => identifiers_importer => groups (ManyToManyField)
+id => uid_from_data => id (UUIDField)
+name => value_importer => name (CharField)
+object_types => content_types_importer => object_types (ManyToManyField)
+users => identifiers_importer => users (ManyToManyField)
 = End of Import Summary. ===========================================================================

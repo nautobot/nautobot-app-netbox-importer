@@ -610,7 +610,7 @@ label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => key (SlugField)
 required => value_importer => required (BooleanField)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 validation_maximum => integer_importer => validation_maximum (BigIntegerField)
 validation_minimum => integer_importer => validation_minimum (BigIntegerField)
 validation_regex => value_importer => validation_regex (CharField)

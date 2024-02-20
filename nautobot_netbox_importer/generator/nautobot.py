@@ -40,6 +40,7 @@ from .base import StrToInternalFieldType
 from .base import Uid
 from .base import get_nautobot_field_and_type
 from .base import normalize_datetime
+from .exceptions import NautobotModelNotFound
 
 _AUTO_INCREMENT_TYPES: Iterable[InternalFieldType] = (
     InternalFieldType.AUTO_FIELD,
@@ -267,7 +268,7 @@ class NautobotModelWrapper:
         """Get the Nautobot model."""
         if self._model:
             return self._model
-        raise NotImplementedError("Cannot use disabled model")
+        raise NautobotModelNotFound(self.content_type)
 
     @property
     def model_meta(self) -> DjangoModelMeta:
