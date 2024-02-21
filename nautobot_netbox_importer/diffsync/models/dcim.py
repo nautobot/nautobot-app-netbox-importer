@@ -118,6 +118,31 @@ def setup(adapter: SourceAdapter) -> None:
     )
 
 
+def unrack_failing_devices(adapter: SourceAdapter) -> None:
+    device_wrapper = adapter.wrappers["dcim.device"]
+    device_type_wrapper = adapter.wrappers["dcim.devicetype"]
+
+    # Find all device types with 0U height
+    device_type_ids = set(
+        getattr(item, "id")
+        for item in adapter.get_all(device_type_wrapper.nautobot.diffsync_class)
+        if getattr(item, "u_height", 0) == 0
+    )
+
+    print(100 * "A")
+    print(device_type_ids)
+
+    if not device_type_ids:
+        return
+
+    # Update all devices with matching device type, clean `rack_id` field.
+    for item in adapter.get_all(device_wrapper.nautobot.diffsync_class):
+        if getattr(item, "position", None) and getattr(item, "device_type_id") in device_type_ids:
+            item.position = None
+            adapter.update(item)
+            # TBD: Raise validation issue
+
+
 # pylint: disable=too-many-locals
 def fix_power_feed_locations(adapter: SourceAdapter) -> None:
     """Fix panel location to match rack location based on powerfeed."""
