@@ -559,8 +559,10 @@ class SourceModelWrapper:
         if self.importers is None:
             raise RuntimeError(f"Importers not created for {self}")
 
-        uid = self.get_pk_from_data(data)
-        if not target:
+        if target:
+            uid = getattr(target, self.nautobot.pk_field.name)
+        else:
+            uid = self.get_pk_from_data(data)
             target = self.get_or_create(uid)
 
         for importer in self.importers:
