@@ -418,6 +418,19 @@ class SourceModelWrapper:
         """Return a string representation of the wrapper."""
         return f"{self.__class__.__name__}<{self.content_type} -> {self.nautobot.content_type}>"
 
+    def cache_record_ids(self, source: RecordData) -> None:
+        """Cache record identifier mappings."""
+        uid = self.get_pk_from_data(source)
+
+        pk_uid = source.get(self.nautobot.pk_field.name, None)
+        if pk_uid:
+            self._uid_to_pk_cache[pk_uid] = uid
+
+        if self.identifiers and len(self.identifiers) == 1:
+            identifier_uid = source.get(self.identifiers[0], None)
+            if identifier_uid:
+                self._uid_to_pk_cache[identifier_uid] = uid
+
     def get_summary(self, content_type_id) -> ModelSummary:
         """Get a summary of the model."""
         fields = [field.get_summary() for field in self.fields.values()]

@@ -2,12 +2,15 @@
 
 from typing import Any
 from typing import Optional
+from uuid import UUID
 
 from .base import EMPTY_VALUES
 from .base import ContentTypeStr
 from .nautobot import DiffSyncBaseModel
 from .source import FieldImporterFallback
 from .source import FieldName
+from .source import ImporterPass
+from .source import PreImportResult
 from .source import RecordData
 from .source import SourceAdapter
 from .source import SourceContentType
@@ -65,22 +68,58 @@ def relation(related_source: SourceContentType, nautobot_field_name: FieldName =
     return define_relation
 
 
-def role(adapter: SourceAdapter, source_content_type: ContentTypeStr) -> SourceFieldDefinition:
+def role(
+    adapter: SourceAdapter,
+    source_content_type: ContentTypeStr,
+    nautobot_name: FieldName = "role",
+) -> SourceFieldDefinition:
     """Create a role field definition.
 
     Use, when there is a different source role content type, that should be mapped to Nautobot "extras.role".
     Creates a new wrapper for the `source_content_type`, if it does not exist.
     """
+
+    def cache_roles(source: RecordData, importer_pass: ImporterPass) -> PreImportResult:
+        if importer_pass == ImporterPass.DEFINE_STRUCTURE:
+            role_wrapper.cache_record_ids(source)
+
+        return PreImportResult.USE_RECORD
+
     role_wrapper = adapter.configure_model(
         source_content_type,
         nautobot_content_type="extras.role",
+        pre_import=cache_roles,
+        identifiers=("name",),
         fields={
             # Include color to allow setting the default Nautobot value, import fails without it.
             "color": "color",
         },
     )
 
-    return relation(role_wrapper, "role")
+    def define_role(field: SourceField) -> None:
+        def role_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+            value = field.get_source_value(source)
+            if value in EMPTY_VALUES:
+                return
+
+            if isinstance(value, int):
+                uid = role_wrapper.get_pk_from_uid(value)
+            elif isinstance(value, str):
+                value = value.capitalize()
+                uid = role_wrapper.get_pk_from_identifiers([value])
+                role_wrapper.import_record({"id": uid, "name": value})
+            elif isinstance(value, UUID):
+                uid = value
+            else:
+                raise ValueError(f"Invalid role value {value}")
+
+            setattr(target, field.nautobot.name, uid)
+            field.wrapper.add_reference(role_wrapper, uid)
+
+        field.set_nautobot_field(nautobot_name or field.name)
+        field.set_importer(role_importer)
+
+    return define_role
 
 
 def source_constant(value: Any, nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
