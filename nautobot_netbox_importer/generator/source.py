@@ -81,6 +81,7 @@ class SourceFieldSource(Enum):
     DATA = auto()  # Fields added from input data
     CUSTOM = auto()  # Fields added by customizing the importer
     SIBLING = auto()  # Fields defined as siblings of other fields, imported by other field importer
+    IDENTIFIER = auto()  # Fields used as identifiers
 
 
 PreImport = Callable[[RecordData, ImporterPass], PreImportResult]
@@ -443,10 +444,15 @@ class SourceModelWrapper:
     def set_identifiers(self, identifiers: Iterable[FieldName]) -> None:
         """Set identifiers for the model."""
         if self.identifiers:
-            raise ValueError(f"Duplicate identifiers {identifiers} for {self.identifiers}")
+            if list(identifiers) != self.identifiers:
+                raise ValueError(f"Duplicate identifiers {identifiers} for {self.identifiers}")
 
-        if list(identifiers) != [self.nautobot.pk_field.name]:
-            self.identifiers = list(identifiers)
+        if list(identifiers) == [self.nautobot.pk_field.name]:
+            return
+
+        self.identifiers = list(identifiers)
+        for identifier in self.identifiers:
+            self.add_field(identifier, SourceFieldSource.IDENTIFIER)
 
     def disable_field(self, field_name: FieldName, reason: str) -> "SourceField":
         """Disable field importing."""
