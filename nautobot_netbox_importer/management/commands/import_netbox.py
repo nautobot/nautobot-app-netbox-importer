@@ -66,9 +66,9 @@ class Command(BaseCommand):
             help="Show a detailed mapping of NetBox fields to Nautobot fields. Only printed when `--print-summary` is also specified.",
         )
         parser.add_argument(
-            "--no-unrack-failing-devices",
+            "--no-unrack-zero-uheight-devices",
             action="store_false",
-            dest="unrack_failing_devices",
+            dest="unrack_zero_uheight_devices",
             default=True,
             help="Prevents cleaning the `position` field in `dcim.device` instances that fail validation if the device is in a rack.",
         )

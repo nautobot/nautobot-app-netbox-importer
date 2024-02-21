@@ -118,7 +118,8 @@ def setup(adapter: SourceAdapter) -> None:
     )
 
 
-def unrack_failing_devices(adapter: SourceAdapter) -> None:
+def unrack_zero_uheight_devices(adapter: SourceAdapter) -> None:
+    """Unrack devices with 0U height."""
     device_wrapper = adapter.wrappers["dcim.device"]
     device_type_wrapper = adapter.wrappers["dcim.devicetype"]
 
