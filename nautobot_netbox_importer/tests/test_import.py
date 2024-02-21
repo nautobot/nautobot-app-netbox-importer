@@ -179,7 +179,7 @@ _EXPECTED_VALIDATION_ERRORS["3.6"] = {
     **_EXPECTED_VALIDATION_ERRORS["3.5"],
 }
 _EXPECTED_VALIDATION_ERRORS["3.6.custom"] = {
-    "dcim.device": 2,
+    "dcim.device": 1,
     "dcim.location": 1,
 }
 

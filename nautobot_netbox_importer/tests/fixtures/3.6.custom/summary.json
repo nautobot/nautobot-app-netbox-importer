@@ -7991,11 +7991,6 @@
     "validation_issues": {
         "dcim.device": [
             [
-                "4f3495b5-00e6-5917-a148-77e109f96b0f",
-                "Half U Device",
-                "{'position': ['A U0 device type (Half U Device Type) cannot be assigned to a rack position.']}"
-            ],
-            [
                 "f510c5ff-e1f8-5adc-9fb5-30bc5791b42e",
                 "Device 1",
                 "[\"Invalid value for custom field 'device_custom_object': Value must be a string\"]"

@@ -26,13 +26,12 @@ tenancy.tenant: 11
 tenancy.tenantgroup: 1
 users.objectpermission: 1
 - Validation issues: -------------------------------------------------------------------------------
-. dcim.device: 2  ..................................................................................
-4f3495b5-00e6-5917-a148-77e109f96b0f Half U Device | {'position': ['A U0 device type (Half U Device Type) cannot be assigned to a rack position.']}
+. dcim.device: 1  ..................................................................................
 f510c5ff-e1f8-5adc-9fb5-30bc5791b42e Device 1 | ["Invalid value for custom field 'device_custom_object': Value must be a string"]
 . dcim.location: 1  ................................................................................
 c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 Site 1 | {'parent': ['A Location of type Site must have a parent Location.']}
 . ..................................................................................................
-Total validation issues: 3
+Total validation issues: 2
 - Content Types Mapping Deviations: ----------------------------------------------------------------
   Mapping deviations from source content type to Nautobot content type
 auth.user => users.user
