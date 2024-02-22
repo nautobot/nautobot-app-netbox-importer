@@ -1,6 +1,6 @@
 = Import Summary: ==================================================================================
 - DiffSync Summary: --------------------------------------------------------------------------------
-create: 58
+create: 63
 update: 0
 delete: 0
 no-change: 0
@@ -18,9 +18,12 @@ dcim.site: 1
 extras.customfield: 3
 extras.customfieldchoice: 3
 extras.journalentry: 2
-extras.objectchange: 18
+extras.objectchange: 20
 extras.status: 2
 ipam.fhrpgroup: 1
+ipam.ipaddress: 1
+ipam.prefix: 1
+ipam.role: 1
 tenancy.tenant: 11
 tenancy.tenantgroup: 1
 users.objectpermission: 1
@@ -100,7 +103,7 @@ primary_ip4 => relation_importer => primary_ip4_id (ForeignKey)
 primary_ip6 => relation_importer => primary_ip6_id (ForeignKey)
 rack => relation_importer => rack_id (ForeignKey)
 rear_port_count => NO IMPORTER => NO TARGET
-role => relation_importer => role_id (RoleField)
+role => role_importer => role_id (RoleField)
 serial => value_importer => serial (CharField)
 site => location_importer => location_id (ForeignKey)
 status => status_importer => status_id (StatusField)
@@ -237,6 +240,40 @@ id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
 protocol => value_importer => protocol (CharField)
+* ipam.ipaddress => ipam.ipaddress *****************************************************************
+address => value_importer => address (Property)
+assigned_object_id => NO IMPORTER => NO TARGET
+assigned_object_type => NO IMPORTER => NO TARGET
+comments => NO IMPORTER => NO TARGET
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+dns_name => value_importer => dns_name (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+nat_inside => relation_importer => nat_inside_id (ForeignKey)
+role => role_importer => role_id (RoleField)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+vrf => NO IMPORTER => NO TARGET
+* ipam.prefix => ipam.prefix ***********************************************************************
+_children => NO IMPORTER => NO TARGET
+_depth => NO IMPORTER => NO TARGET
+comments => NO IMPORTER => NO TARGET
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+is_pool => NO IMPORTER => NO TARGET
+last_updated => Disabled with reason: Last updated field is updated with each write
+mark_utilized => NO IMPORTER => NO TARGET
+prefix => value_importer => prefix (Property)
+role => role_importer => role_id (RoleField)
+site => location_importer => location_id (ForeignKey)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+vlan => relation_importer => vlan_id (ForeignKey)
+vrf => NO IMPORTER => NO TARGET
 * tenancy.tenant => tenancy.tenant *****************************************************************
 comments => value_importer => comments (TextField)
 created => datetime_importer => created (DateTimeField)

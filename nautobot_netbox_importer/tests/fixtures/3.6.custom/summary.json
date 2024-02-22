@@ -1,6 +1,6 @@
 {
     "diff_summary": {
-        "create": 58,
+        "create": 63,
         "update": 0,
         "delete": 0,
         "no-change": 0,
@@ -97,7 +97,8 @@
                     "importer": "value_importer",
                     "definition": "name",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -336,7 +337,8 @@
                     "importer": "value_importer",
                     "definition": "username",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -641,7 +643,8 @@
                     "definition": "define_app_label",
                     "sources": [
                         "CUSTOM",
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -667,7 +670,8 @@
                     "importer": "value_importer",
                     "definition": "model",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -1179,8 +1183,8 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM"
                     ],
@@ -1493,8 +1497,8 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM",
                         "DATA"
@@ -1668,10 +1672,12 @@
             "nautobot_content_type": "extras.role",
             "nautobot_content_type_id": 80,
             "disable_reason": "",
-            "identifiers": null,
+            "identifiers": [
+                "name"
+            ],
             "disable_related_reference": false,
             "forward_references": null,
-            "pre_import": null,
+            "pre_import": "cache_roles",
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
@@ -1792,7 +1798,8 @@
                     "importer": "value_importer",
                     "definition": "name",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -3323,8 +3330,8 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM"
                     ],
@@ -3411,10 +3418,12 @@
             "nautobot_content_type": "extras.role",
             "nautobot_content_type_id": 80,
             "disable_reason": "",
-            "identifiers": null,
+            "identifiers": [
+                "name"
+            ],
             "disable_related_reference": false,
             "forward_references": null,
-            "pre_import": null,
+            "pre_import": "cache_roles",
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
@@ -3456,6 +3465,19 @@
                     "definition": "id",
                     "sources": [
                         "AUTO"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "name": {
+                    "name": "name",
+                    "nautobot_name": "name",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "name",
+                    "sources": [
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -4967,7 +4989,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 18,
+            "imported_count": 20,
             "skipped_count": 1,
             "fields": {
                 "action": {
@@ -5350,7 +5372,8 @@
                     "importer": "value_importer",
                     "definition": "name",
                     "sources": [
-                        "CACHE"
+                        "CACHE",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -5794,9 +5817,113 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 0,
+            "imported_count": 1,
             "skipped_count": 0,
             "fields": {
+                "address": {
+                    "name": "address",
+                    "nautobot_name": "address",
+                    "nautobot_internal_type": "Property",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "address",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "assigned_object_id": {
+                    "name": "assigned_object_id",
+                    "nautobot_name": "assigned_object_id",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "assigned_object_id",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "assigned_object_type": {
+                    "name": "assigned_object_type",
+                    "nautobot_name": "assigned_object_type",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "assigned_object_type",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "comments": {
+                    "name": "comments",
+                    "nautobot_name": "comments",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "comments",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "created": {
+                    "name": "created",
+                    "nautobot_name": "created",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": "datetime_importer",
+                    "definition": "created",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "custom_field_data": {
+                    "name": "custom_field_data",
+                    "nautobot_name": "custom_field_data",
+                    "nautobot_internal_type": "CustomFieldData",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "custom_field_data",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "description": {
+                    "name": "description",
+                    "nautobot_name": "description",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "dns_name": {
+                    "name": "dns_name",
+                    "nautobot_name": "dns_name",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "dns_name",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -5805,7 +5932,34 @@
                     "importer": null,
                     "definition": "id",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "last_updated": {
+                    "name": "last_updated",
+                    "nautobot_name": "last_updated",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Last updated field is updated with each write"
+                },
+                "nat_inside": {
+                    "name": "nat_inside",
+                    "nautobot_name": "nat_inside_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "nat_inside",
+                    "sources": [
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -5815,10 +5969,11 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
-                        "CUSTOM"
+                        "CUSTOM",
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -5831,9 +5986,36 @@
                     "importer": "status_importer",
                     "definition": "status",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+                    "disable_reason": ""
+                },
+                "tenant": {
+                    "name": "tenant",
+                    "nautobot_name": "tenant_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "tenant",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "vrf": {
+                    "name": "vrf",
+                    "nautobot_name": "vrf",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "vrf",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
                     "disable_reason": ""
                 }
             }
@@ -5906,9 +6088,87 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 0,
+            "imported_count": 1,
             "skipped_count": 0,
             "fields": {
+                "_children": {
+                    "name": "_children",
+                    "nautobot_name": "_children",
+                    "nautobot_internal_type": "PrivateProperty",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "_children",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "_depth": {
+                    "name": "_depth",
+                    "nautobot_name": "_depth",
+                    "nautobot_internal_type": "PrivateProperty",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "_depth",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "comments": {
+                    "name": "comments",
+                    "nautobot_name": "comments",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "comments",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "created": {
+                    "name": "created",
+                    "nautobot_name": "created",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": "datetime_importer",
+                    "definition": "created",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "custom_field_data": {
+                    "name": "custom_field_data",
+                    "nautobot_name": "custom_field_data",
+                    "nautobot_internal_type": "CustomFieldData",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "custom_field_data",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "description": {
+                    "name": "description",
+                    "nautobot_name": "description",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -5917,10 +6177,37 @@
                     "importer": null,
                     "definition": "id",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": ""
+                },
+                "is_pool": {
+                    "name": "is_pool",
+                    "nautobot_name": "is_pool",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "is_pool",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "last_updated": {
+                    "name": "last_updated",
+                    "nautobot_name": "last_updated",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Last updated field is updated with each write"
                 },
                 "location": {
                     "name": "location",
@@ -5931,6 +6218,32 @@
                     "definition": "define_location",
                     "sources": [
                         "CUSTOM"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "mark_utilized": {
+                    "name": "mark_utilized",
+                    "nautobot_name": "mark_utilized",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "mark_utilized",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "prefix": {
+                    "name": "prefix",
+                    "nautobot_name": "prefix",
+                    "nautobot_internal_type": "Property",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "prefix",
+                    "sources": [
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -5953,10 +6266,11 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
-                        "CUSTOM"
+                        "CUSTOM",
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -5969,6 +6283,7 @@
                     "importer": "location_importer",
                     "definition": "site",
                     "sources": [
+                        "DATA",
                         "SIBLING"
                     ],
                     "default_value": null,
@@ -5982,9 +6297,49 @@
                     "importer": "status_importer",
                     "definition": "status",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+                    "disable_reason": ""
+                },
+                "tenant": {
+                    "name": "tenant",
+                    "nautobot_name": "tenant_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "tenant",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "vlan": {
+                    "name": "vlan",
+                    "nautobot_name": "vlan_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "vlan",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "vrf": {
+                    "name": "vrf",
+                    "nautobot_name": "vrf",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "vrf",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
                     "disable_reason": ""
                 }
             }
@@ -6028,14 +6383,16 @@
             "nautobot_content_type": "extras.role",
             "nautobot_content_type_id": 80,
             "disable_reason": "",
-            "identifiers": null,
+            "identifiers": [
+                "name"
+            ],
             "disable_related_reference": false,
             "forward_references": null,
-            "pre_import": null,
+            "pre_import": "cache_roles",
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 0,
+            "imported_count": 1,
             "skipped_count": 0,
             "fields": {
                 "color": {
@@ -6073,6 +6430,19 @@
                     "definition": "id",
                     "sources": [
                         "AUTO"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "name": {
+                    "name": "name",
+                    "nautobot_name": "name",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "name",
+                    "sources": [
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -6235,8 +6605,8 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM"
                     ],
@@ -7522,8 +7892,8 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM"
                     ],
