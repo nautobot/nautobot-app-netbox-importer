@@ -418,18 +418,22 @@ class SourceModelWrapper:
         """Return a string representation of the wrapper."""
         return f"{self.__class__.__name__}<{self.content_type} -> {self.nautobot.content_type}>"
 
-    def cache_record_ids(self, source: RecordData) -> None:
+    def cache_record_uids(self, source: RecordData, uid: Optional[Uid] = None) -> Uid:
         """Cache record identifier mappings."""
-        uid = self.get_pk_from_data(source)
+        if not uid:
+            return self.get_pk_from_data(source)
 
-        pk_uid = source.get(self.nautobot.pk_field.name, None)
-        if pk_uid:
-            self._uid_to_pk_cache[pk_uid] = uid
+        if self.identifiers:
+            identifiers_data = [source[field_name] for field_name in self.identifiers]
+            self._uid_to_pk_cache[json.dumps(identifiers_data)] = uid
 
-        if self.identifiers and len(self.identifiers) == 1:
-            identifier_uid = source.get(self.identifiers[0], None)
-            if identifier_uid:
-                self._uid_to_pk_cache[identifier_uid] = uid
+        source_uid = source.get(self.nautobot.pk_field.name, None)
+        if source_uid and source_uid not in self._uid_to_pk_cache:
+            self._uid_to_pk_cache[source_uid] = uid
+
+        self._uid_to_pk_cache[uid] = uid
+
+        return uid
 
     def get_summary(self, content_type_id) -> ModelSummary:
         """Get a summary of the model."""
@@ -457,13 +461,16 @@ class SourceModelWrapper:
     def set_identifiers(self, identifiers: Iterable[FieldName]) -> None:
         """Set identifiers for the model."""
         if self.identifiers:
-            if list(identifiers) != self.identifiers:
-                raise ValueError(f"Duplicate identifiers {identifiers} for {self.identifiers}")
+            if sorted(list(identifiers)) == self.identifiers:
+                return
+            raise ValueError(
+                f"Different identifiers were already set up | original: `{self.identifiers}` | new: `{identifiers}`"
+            )
 
         if list(identifiers) == [self.nautobot.pk_field.name]:
             return
 
-        self.identifiers = list(identifiers)
+        self.identifiers = sorted(list(identifiers))
         for identifier in self.identifiers:
             self.add_field(identifier, SourceFieldSource.IDENTIFIER)
 
@@ -530,6 +537,8 @@ class SourceModelWrapper:
             raise ValueError(f"Unsupported pk_type {self.nautobot.pk_field.internal_type}")
 
         self._uid_to_pk_cache[uid] = result
+        self._uid_to_pk_cache[result] = result
+
         return result
 
     def get_pk_from_identifiers(self, data: Union[Uid, Iterable[Uid]]) -> Uid:
@@ -545,26 +554,37 @@ class SourceModelWrapper:
         if len(self.identifiers) != len(data):
             raise ValueError(f"Invalid identifiers {data} for {self.identifiers}")
 
-        uid = json.dumps(data)
-        if uid in self._uid_to_pk_cache:
-            return self._uid_to_pk_cache[uid]
+        identifiers_uid = json.dumps(data)
+        if identifiers_uid in self._uid_to_pk_cache:
+            return self._uid_to_pk_cache[identifiers_uid]
 
         filter_kwargs = {self.identifiers[index]: value for index, value in enumerate(data)}
         try:
             nautobot_instance = self.nautobot.model.objects.get(**filter_kwargs)
-            uid = getattr(nautobot_instance, self.nautobot.pk_field.name)
-            if not uid:
-                raise ValueError(f"Invalid uid {uid} for {nautobot_instance}")
-            self._uid_to_pk_cache[uid] = uid
-            return uid
+            nautobot_uid = getattr(nautobot_instance, self.nautobot.pk_field.name)
+            if not nautobot_uid:
+                raise ValueError(f"Invalid args {filter_kwargs} for {nautobot_instance}")
+            self._uid_to_pk_cache[identifiers_uid] = nautobot_uid
+            self._uid_to_pk_cache[nautobot_uid] = nautobot_uid
+            return nautobot_uid
         except self.nautobot.model.DoesNotExist:  # type: ignore
-            return self.get_pk_from_uid(uid)
+            return self.get_pk_from_uid(identifiers_uid)
 
     def get_pk_from_data(self, data: RecordData) -> Uid:
         """Get a source primary key for a given source data."""
         if not self.identifiers:
             return self.get_pk_from_uid(data[self.nautobot.pk_field.name])
-        return self.get_pk_from_identifiers(data[field_name] for field_name in self.identifiers)
+
+        data_uid = data.get(self.nautobot.pk_field.name, None)
+        if data_uid and data_uid in self._uid_to_pk_cache:
+            return self._uid_to_pk_cache[data_uid]
+
+        result = self.get_pk_from_identifiers(data[field_name] for field_name in self.identifiers)
+
+        if data_uid:
+            self._uid_to_pk_cache[data_uid] = result
+
+        return result
 
     def import_record(self, data: RecordData, target: Optional[DiffSyncBaseModel] = None) -> DiffSyncBaseModel:
         """Import a single item from the source."""

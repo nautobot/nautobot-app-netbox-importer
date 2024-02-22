@@ -68,6 +68,10 @@ def relation(related_source: SourceContentType, nautobot_field_name: FieldName =
     return define_relation
 
 
+# To ensure all role models will share the same UID for the same role name.
+_ROLES_CACHE = {}
+
+
 def role(
     adapter: SourceAdapter,
     source_content_type: ContentTypeStr,
@@ -81,7 +85,13 @@ def role(
 
     def cache_roles(source: RecordData, importer_pass: ImporterPass) -> PreImportResult:
         if importer_pass == ImporterPass.DEFINE_STRUCTURE:
-            role_wrapper.cache_record_ids(source)
+            name = source.get("name", "").capitalize()
+            if not name:
+                raise ValueError("Role name is required")
+            uid = _ROLES_CACHE.get(name, None)
+            nautobot_uid = role_wrapper.cache_record_uids(source, uid)
+            if not uid:
+                _ROLES_CACHE[name] = nautobot_uid
 
         return PreImportResult.USE_RECORD
 
@@ -106,7 +116,7 @@ def role(
                 uid = role_wrapper.get_pk_from_uid(value)
             elif isinstance(value, str):
                 value = value.capitalize()
-                uid = role_wrapper.get_pk_from_identifiers([value])
+                uid = _ROLES_CACHE[value] if value in _ROLES_CACHE else role_wrapper.get_pk_from_identifiers([value])
                 role_wrapper.import_record({"id": uid, "name": value})
             elif isinstance(value, UUID):
                 uid = value
