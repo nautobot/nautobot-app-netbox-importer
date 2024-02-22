@@ -28,7 +28,8 @@
     "nestable": false,
     "content_types": [
       56,
-      42
+      42,
+      60
     ]
   }
 }

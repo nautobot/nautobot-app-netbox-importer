@@ -1,6 +1,6 @@
 = Import Summary: ==================================================================================
 - DiffSync Summary: --------------------------------------------------------------------------------
-create: 63
+create: 65
 update: 0
 delete: 0
 no-change: 0
@@ -10,10 +10,12 @@ auth.group: 1
 auth.user: 6
 contenttypes.contenttype: 135
 dcim.device: 2
-dcim.devicerole: 1
+dcim.devicerole: 2
 dcim.devicetype: 2
 dcim.locationtype: 2
 dcim.manufacturer: 1
+dcim.rack: 1
+dcim.rackrole: 1
 dcim.site: 1
 extras.customfield: 3
 extras.customfieldchoice: 3
@@ -38,13 +40,14 @@ Total validation issues: 2
   Mapping deviations from source content type to Nautobot content type
 auth.user => users.user
 dcim.devicerole => extras.role
+dcim.rackrole => extras.role
 dcim.site => dcim.location
 extras.journalentry => extras.note
 ipam.fhrpgroup => dcim.interfaceredundancygroup
 - Content Types Back Mapping: ----------------------------------------------------------------------
   Back mapping deviations from Nautobot content type to the source content type
 users.user => auth.user
-extras.role => dcim.devicerole
+extras.role => Ambiguous
 dcim.location => dcim.site
 extras.note => extras.journalentry
 dcim.interfaceredundancygroup => ipam.fhrpgroup
@@ -154,6 +157,46 @@ u_height => truncate_to_integer_importer => u_height (PositiveSmallIntegerField)
 weight => NO IMPORTER => NO TARGET
 weight_unit => NO IMPORTER => NO TARGET
 * dcim.manufacturer => dcim.manufacturer ***********************************************************
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => NO TARGET
+* dcim.rack => dcim.rack ***************************************************************************
+_abs_max_weight => NO IMPORTER => NO TARGET
+_abs_weight => NO IMPORTER => NO TARGET
+_name => NO IMPORTER => NO TARGET
+asset_tag => value_importer => asset_tag (CharField)
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+desc_units => value_importer => desc_units (BooleanField)
+description => NO IMPORTER => NO TARGET
+facility_id => value_importer => facility_id (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+location => location_importer => location_id (ForeignKey)
+max_weight => NO IMPORTER => NO TARGET
+mounting_depth => NO IMPORTER => NO TARGET
+name => value_importer => name (CharField)
+outer_depth => integer_importer => outer_depth (PositiveSmallIntegerField)
+outer_unit => value_importer => outer_unit (CharField)
+outer_width => integer_importer => outer_width (PositiveSmallIntegerField)
+role => role_importer => role_id (RoleField)
+serial => value_importer => serial (CharField)
+site => location_importer => location_id (ForeignKey)
+starting_unit => NO IMPORTER => NO TARGET
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+type => value_importer => type (CharField)
+u_height => integer_importer => u_height (PositiveSmallIntegerField)
+weight => NO IMPORTER => NO TARGET
+weight_unit => NO IMPORTER => NO TARGET
+width => integer_importer => width (PositiveSmallIntegerField)
+* dcim.rackrole => extras.role *********************************************************************
+color => value_importer => color (CharField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)

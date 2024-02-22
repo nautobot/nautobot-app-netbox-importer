@@ -1,6 +1,6 @@
 {
     "diff_summary": {
-        "create": 63,
+        "create": 65,
         "update": 0,
         "delete": 0,
         "no-change": 0,
@@ -1681,7 +1681,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 1,
+            "imported_count": 2,
             "skipped_count": 0,
             "fields": {
                 "color": {
@@ -3283,9 +3283,139 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 0,
+            "imported_count": 1,
             "skipped_count": 0,
             "fields": {
+                "_abs_max_weight": {
+                    "name": "_abs_max_weight",
+                    "nautobot_name": "_abs_max_weight",
+                    "nautobot_internal_type": "PrivateProperty",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "_abs_max_weight",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "_abs_weight": {
+                    "name": "_abs_weight",
+                    "nautobot_name": "_abs_weight",
+                    "nautobot_internal_type": "PrivateProperty",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "_abs_weight",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "_name": {
+                    "name": "_name",
+                    "nautobot_name": "_name",
+                    "nautobot_internal_type": "PrivateProperty",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "_name",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "asset_tag": {
+                    "name": "asset_tag",
+                    "nautobot_name": "asset_tag",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "asset_tag",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "comments": {
+                    "name": "comments",
+                    "nautobot_name": "comments",
+                    "nautobot_internal_type": "TextField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "comments",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "created": {
+                    "name": "created",
+                    "nautobot_name": "created",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": "datetime_importer",
+                    "definition": "created",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "custom_field_data": {
+                    "name": "custom_field_data",
+                    "nautobot_name": "custom_field_data",
+                    "nautobot_internal_type": "CustomFieldData",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "custom_field_data",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "desc_units": {
+                    "name": "desc_units",
+                    "nautobot_name": "desc_units",
+                    "nautobot_internal_type": "BooleanField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "desc_units",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": false,
+                    "disable_reason": ""
+                },
+                "description": {
+                    "name": "description",
+                    "nautobot_name": "description",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "facility_id": {
+                    "name": "facility_id",
+                    "nautobot_name": "facility_id",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "facility_id",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -3294,10 +3424,24 @@
                     "importer": null,
                     "definition": "id",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": ""
+                },
+                "last_updated": {
+                    "name": "last_updated",
+                    "nautobot_name": "last_updated",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Last updated field is updated with each write"
                 },
                 "location": {
                     "name": "location",
@@ -3307,7 +3451,86 @@
                     "importer": "location_importer",
                     "definition": "define_location",
                     "sources": [
-                        "CUSTOM"
+                        "CUSTOM",
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "max_weight": {
+                    "name": "max_weight",
+                    "nautobot_name": "max_weight",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "max_weight",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "mounting_depth": {
+                    "name": "mounting_depth",
+                    "nautobot_name": "mounting_depth",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "mounting_depth",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "name": {
+                    "name": "name",
+                    "nautobot_name": "name",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "name",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "outer_depth": {
+                    "name": "outer_depth",
+                    "nautobot_name": "outer_depth",
+                    "nautobot_internal_type": "PositiveSmallIntegerField",
+                    "nautobot_can_import": true,
+                    "importer": "integer_importer",
+                    "definition": "outer_depth",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "outer_unit": {
+                    "name": "outer_unit",
+                    "nautobot_name": "outer_unit",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "outer_unit",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "outer_width": {
+                    "name": "outer_width",
+                    "nautobot_name": "outer_width",
+                    "nautobot_internal_type": "PositiveSmallIntegerField",
+                    "nautobot_can_import": true,
+                    "importer": "integer_importer",
+                    "definition": "outer_width",
+                    "sources": [
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -3333,7 +3556,21 @@
                     "importer": "role_importer",
                     "definition": "define_role",
                     "sources": [
-                        "CUSTOM"
+                        "CUSTOM",
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "serial": {
+                    "name": "serial",
+                    "nautobot_name": "serial",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "serial",
+                    "sources": [
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -3346,7 +3583,21 @@
                     "importer": "location_importer",
                     "definition": "site",
                     "sources": [
+                        "DATA",
                         "SIBLING"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "starting_unit": {
+                    "name": "starting_unit",
+                    "nautobot_name": "starting_unit",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "starting_unit",
+                    "sources": [
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": ""
@@ -3359,9 +3610,88 @@
                     "importer": "status_importer",
                     "definition": "status",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+                    "disable_reason": ""
+                },
+                "tenant": {
+                    "name": "tenant",
+                    "nautobot_name": "tenant_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "tenant",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "type": {
+                    "name": "type",
+                    "nautobot_name": "type",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "type",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "u_height": {
+                    "name": "u_height",
+                    "nautobot_name": "u_height",
+                    "nautobot_internal_type": "PositiveSmallIntegerField",
+                    "nautobot_can_import": true,
+                    "importer": "integer_importer",
+                    "definition": "u_height",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": 42,
+                    "disable_reason": ""
+                },
+                "weight": {
+                    "name": "weight",
+                    "nautobot_name": "weight",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "weight",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "weight_unit": {
+                    "name": "weight_unit",
+                    "nautobot_name": "weight_unit",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "weight_unit",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "width": {
+                    "name": "width",
+                    "nautobot_name": "width",
+                    "nautobot_internal_type": "PositiveSmallIntegerField",
+                    "nautobot_can_import": true,
+                    "importer": "integer_importer",
+                    "definition": "width",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": 19,
                     "disable_reason": ""
                 }
             }
@@ -3427,7 +3757,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 0,
+            "imported_count": 1,
             "skipped_count": 0,
             "fields": {
                 "color": {
@@ -3438,7 +3768,8 @@
                     "importer": "value_importer",
                     "definition": "color",
                     "sources": [
-                        "CUSTOM"
+                        "CUSTOM",
+                        "DATA"
                     ],
                     "default_value": "9e9e9e",
                     "disable_reason": ""
@@ -3456,6 +3787,45 @@
                     "default_value": null,
                     "disable_reason": ""
                 },
+                "created": {
+                    "name": "created",
+                    "nautobot_name": "created",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": "datetime_importer",
+                    "definition": "created",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "custom_field_data": {
+                    "name": "custom_field_data",
+                    "nautobot_name": "custom_field_data",
+                    "nautobot_internal_type": "CustomFieldData",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "custom_field_data",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "description": {
+                    "name": "description",
+                    "nautobot_name": "description",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -3464,10 +3834,24 @@
                     "importer": null,
                     "definition": "id",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": ""
+                },
+                "last_updated": {
+                    "name": "last_updated",
+                    "nautobot_name": "last_updated",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Last updated field is updated with each write"
                 },
                 "name": {
                     "name": "name",
@@ -3477,7 +3861,21 @@
                     "importer": "value_importer",
                     "definition": "name",
                     "sources": [
+                        "DATA",
                         "IDENTIFIER"
+                    ],
+                    "default_value": null,
+                    "disable_reason": ""
+                },
+                "slug": {
+                    "name": "slug",
+                    "nautobot_name": "slug",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "slug",
+                    "sources": [
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": ""

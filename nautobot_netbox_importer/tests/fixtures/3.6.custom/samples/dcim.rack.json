@@ -1,0 +1,29 @@
+[
+{
+  "model": "dcim.rack",
+  "pk": "87cd3a0d-c203-5af5-8e51-f402bb23bc00",
+  "fields": {
+    "created": "2024-02-19T07:42:49.405Z",
+    "last_updated": "2024-02-22T15:38:25.349Z",
+    "_custom_field_data": {},
+    "name": "Rack 1",
+    "_name": "Rack 00000001",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "cdec8e7a-3a27-5c46-b9a3-06c5b38d7b1e",
+    "facility_id": null,
+    "location": "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
+    "rack_group": null,
+    "tenant": null,
+    "serial": "",
+    "asset_tag": null,
+    "type": "",
+    "width": 19,
+    "u_height": 42,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+}
+]
