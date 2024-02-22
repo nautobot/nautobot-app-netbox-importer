@@ -201,6 +201,7 @@ class TestImport(TestCase):
         )
 
         mute_diffsync_logging()
+        # pylint: disable=invalid-name
         self.maxDiff = None
 
     def _import(self, version: str):
