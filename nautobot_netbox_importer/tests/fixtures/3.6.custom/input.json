@@ -2489,6 +2489,84 @@
   }
 },
 {
+  "model": "extras.objectchange",
+  "pk": 20,
+  "fields": {
+    "time": "2024-02-21T12:42:11.600Z",
+    "user": [
+      "admin"
+    ],
+    "user_name": "admin",
+    "request_id": "817e9493-eb01-4d05-98f8-a184ef768635",
+    "action": "create",
+    "changed_object_type": [
+      "ipam",
+      "prefix"
+    ],
+    "changed_object_id": 1,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "127.0.0.0/8",
+    "prechange_data": null,
+    "postchange_data": {
+      "vrf": null,
+      "role": null,
+      "site": null,
+      "tags": [],
+      "vlan": null,
+      "prefix": "127.0.0.0/8",
+      "status": "active",
+      "tenant": null,
+      "created": "2024-02-21T12:42:11.589Z",
+      "is_pool": false,
+      "comments": "",
+      "description": "",
+      "last_updated": "2024-02-21T12:42:11.589Z",
+      "custom_fields": {},
+      "mark_utilized": false
+    }
+  }
+},
+{
+  "model": "extras.objectchange",
+  "pk": 21,
+  "fields": {
+    "time": "2024-02-21T12:20:21.977Z",
+    "user": [
+      "admin"
+    ],
+    "user_name": "admin",
+    "request_id": "b2840f34-f97c-467a-9846-4f64ff83a37a",
+    "action": "create",
+    "changed_object_type": [
+      "ipam",
+      "ipaddress"
+    ],
+    "changed_object_id": 1,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "127.0.0.1/8",
+    "prechange_data": null,
+    "postchange_data": {
+      "vrf": null,
+      "role": "loopback",
+      "tags": [],
+      "status": "active",
+      "tenant": null,
+      "address": "127.0.0.1/8",
+      "created": "2024-02-21T12:20:21.970Z",
+      "comments": "",
+      "dns_name": "",
+      "nat_inside": null,
+      "description": "",
+      "last_updated": "2024-02-21T12:20:21.970Z",
+      "custom_fields": {},
+      "assigned_object_id": null,
+      "assigned_object_type": null
+    }
+  }
+},
+{
   "model": "ipam.fhrpgroup",
   "pk": 1,
   "fields": {
@@ -2502,6 +2580,48 @@
     "protocol": "vrrp3",
     "auth_type": "md5",
     "auth_key": ""
+  }
+},
+{
+  "model": "ipam.ipaddress",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-21T12:20:21.970Z",
+    "last_updated": "2024-02-21T12:41:44.081Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "address": "127.0.0.1/8",
+    "vrf": null,
+    "tenant": null,
+    "status": "active",
+    "role": "loopback",
+    "assigned_object_type": null,
+    "assigned_object_id": null,
+    "nat_inside": null,
+    "dns_name": ""
+  }
+},
+{
+  "model": "ipam.prefix",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-21T12:42:11.589Z",
+    "last_updated": "2024-02-21T12:42:11.589Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "prefix": "127.0.0.0/8",
+    "site": null,
+    "vrf": null,
+    "tenant": null,
+    "vlan": null,
+    "status": "active",
+    "role": null,
+    "is_pool": false,
+    "mark_utilized": false,
+    "_depth": 0,
+    "_children": 0
   }
 },
 {

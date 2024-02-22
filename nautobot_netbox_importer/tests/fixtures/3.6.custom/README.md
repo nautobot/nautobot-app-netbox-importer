@@ -25,6 +25,9 @@ To dump and use data from a NetBox instance, run the following command:
     extras.JournalEntry \
     extras.ObjectChange \
     ipam.FHRPGroup \
+    ipam.IPAddress \
+    ipam.Role \
+    ipam.Prefix \
     tenancy.Tenant \
     tenancy.TenantGroup \
     users.ObjectPermission \

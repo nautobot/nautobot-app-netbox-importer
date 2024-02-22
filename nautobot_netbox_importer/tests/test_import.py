@@ -39,7 +39,7 @@ _EXPECTED_SUMMARY = {
     "3.4": 5870,
     "3.5": 5870,
     "3.6": 5870,
-    "3.6.custom": 58,
+    "3.6.custom": 63,
 }
 
 _EXPECTED_COUNTS = {}
@@ -146,13 +146,15 @@ _EXPECTED_COUNTS["3.6.custom"] = {
     "extras.customfield": 3,
     "extras.customfieldchoice": 3,
     "extras.note": 2,
-    "extras.objectchange": 18,
-    "extras.role": 1,
+    "extras.objectchange": 20,
+    "extras.role": 2,
     "extras.status": 2,
+    "ipam.ipaddress": 1,
+    "ipam.prefix": 1,
     "tenancy.tenant": 11,
     "tenancy.tenantgroup": 1,
-    "users.user": 6,
     "users.objectpermission": 1,
+    "users.user": 6,
 }
 
 _EXPECTED_VALIDATION_ERRORS = {}
@@ -199,6 +201,7 @@ class TestImport(TestCase):
         )
 
         mute_diffsync_logging()
+        self.maxDiff = None
 
     def _import(self, version: str):
         """Test import."""
