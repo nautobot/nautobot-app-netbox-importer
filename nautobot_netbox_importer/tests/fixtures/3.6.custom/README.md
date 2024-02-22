@@ -19,6 +19,8 @@ To dump and use data from a NetBox instance, run the following command:
     dcim.DeviceRole \
     dcim.DeviceType \
     dcim.Manufacturer \
+    dcim.RackRole \
+    dcim.Rack \
     dcim.Site \
     extras.CustomField \
     extras.CustomFieldChoiceSet \

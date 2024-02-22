@@ -39,7 +39,7 @@ _EXPECTED_SUMMARY = {
     "3.4": 5870,
     "3.5": 5870,
     "3.6": 5870,
-    "3.6.custom": 63,
+    "3.6.custom": 65,
 }
 
 _EXPECTED_COUNTS = {}
@@ -143,11 +143,12 @@ _EXPECTED_COUNTS["3.6.custom"] = {
     "dcim.location": 1,
     "dcim.locationtype": 2,
     "dcim.manufacturer": 1,
+    "dcim.rack": 1,
     "extras.customfield": 3,
     "extras.customfieldchoice": 3,
     "extras.note": 2,
     "extras.objectchange": 20,
-    "extras.role": 2,
+    "extras.role": 3,
     "extras.status": 2,
     "ipam.ipaddress": 1,
     "ipam.prefix": 1,

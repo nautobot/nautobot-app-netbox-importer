@@ -1074,6 +1074,19 @@
   }
 },
 {
+  "model": "dcim.rackrole",
+  "pk": 1,
+  "fields": {
+    "created": "2020-05-28T00:00:00Z",
+    "last_updated": "2020-05-28T08:28:04.662Z",
+    "custom_field_data": {},
+    "name": "Network",
+    "slug": "network",
+    "description": "Dedicated to network",
+    "color": "00ff00"
+  }
+},
+{
   "model": "dcim.device",
   "pk": 1,
   "fields": {
@@ -1138,7 +1151,7 @@
     "local_context_data": null,
     "config_template": null,
     "device_type": 2,
-    "role": 1,
+    "role": 2,
     "tenant": null,
     "platform": null,
     "name": "Half U Device",
@@ -1185,6 +1198,21 @@
     "description": "",
     "color": "9e9e9e",
     "vm_role": true,
+    "config_template": null
+  }
+},
+{
+  "model": "dcim.devicerole",
+  "pk": 2,
+  "fields": {
+    "created": "2020-05-26T00:00:00Z",
+    "last_updated": "2020-05-28T09:09:08.533Z",
+    "custom_field_data": {},
+    "name": "Network",
+    "slug": "network",
+    "description": "",
+    "color": "2196f3",
+    "vm_role": false,
     "config_template": null
   }
 },
@@ -1268,6 +1296,41 @@
     "name": "Manufacturer",
     "slug": "manufacturer",
     "description": ""
+  }
+},
+{
+  "model": "dcim.rack",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-19T07:42:49.405Z",
+    "last_updated": "2024-02-19T07:42:49.405Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "weight": null,
+    "weight_unit": "",
+    "_abs_weight": null,
+    "name": "Rack 1",
+    "_name": "Rack 00000001",
+    "facility_id": null,
+    "site": 1,
+    "location": null,
+    "tenant": null,
+    "status": "active",
+    "role": 1,
+    "serial": "",
+    "asset_tag": null,
+    "type": "",
+    "width": 19,
+    "u_height": 42,
+    "starting_unit": 1,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "max_weight": null,
+    "_abs_max_weight": null,
+    "mounting_depth": null
   }
 },
 {
