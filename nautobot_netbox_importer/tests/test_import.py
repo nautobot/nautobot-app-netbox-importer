@@ -39,7 +39,7 @@ _EXPECTED_SUMMARY = {
     "3.4": 5870,
     "3.5": 5870,
     "3.6": 5870,
-    "3.6.custom": 58,
+    "3.6.custom": 59,
 }
 
 _EXPECTED_COUNTS = {}
@@ -139,7 +139,7 @@ _EXPECTED_COUNTS["3.6.custom"] = {
     "auth.group": 1,
     "dcim.device": 2,
     "dcim.devicetype": 2,
-    "dcim.interfaceredundancygroup": 1,
+    "dcim.interfaceredundancygroup": 2,
     "dcim.location": 1,
     "dcim.locationtype": 2,
     "dcim.manufacturer": 1,
@@ -179,7 +179,9 @@ _EXPECTED_IMPORTER_ISSUES["3.6"] = {
 }
 _EXPECTED_IMPORTER_ISSUES["3.6.custom"] = {
     "dcim.device": 1,
+    "dcim.interfaceredundancygroup": 2,
     "dcim.location": 1,
+    "extras.customfield": 1,
 }
 
 
