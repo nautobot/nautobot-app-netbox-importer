@@ -70,7 +70,7 @@ def relation(related_source: SourceContentType, nautobot_field_name: FieldName =
     return define_relation
 
 
-_ROLES_CACHE: Dict[str, Uid] = {}
+_ROLE_NAME_TO_UID_CACHE: Dict[str, Uid] = {}
 
 
 def role(
@@ -96,10 +96,10 @@ def role(
             name = source.get("name", "").capitalize()
             if not name:
                 raise ValueError("Role name is required")
-            uid = _ROLES_CACHE.get(name, None)
+            uid = _ROLE_NAME_TO_UID_CACHE.get(name, None)
             nautobot_uid = role_wrapper.cache_record_uids(source, uid)
             if not uid:
-                _ROLES_CACHE[name] = nautobot_uid
+                _ROLE_NAME_TO_UID_CACHE[name] = nautobot_uid
 
         return PreImportResult.USE_RECORD
 
@@ -126,7 +126,11 @@ def role(
             elif isinstance(value, str):
                 # Role is referenced by name
                 value = value.capitalize()
-                uid = _ROLES_CACHE[value] if value in _ROLES_CACHE else role_wrapper.get_pk_from_identifiers([value])
+                if value in _ROLE_NAME_TO_UID_CACHE:
+                    uid = _ROLE_NAME_TO_UID_CACHE[value]
+                else:
+                    uid = role_wrapper.get_pk_from_identifiers([value])
+                    _ROLE_NAME_TO_UID_CACHE[value] = uid
                 role_wrapper.import_record({"id": uid, "name": value})
             else:
                 raise ValueError(f"Invalid role value {value}")
