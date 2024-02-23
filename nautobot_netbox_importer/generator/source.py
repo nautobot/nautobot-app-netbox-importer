@@ -16,13 +16,14 @@ from typing import NamedTuple
 from typing import Optional
 from typing import OrderedDict
 from typing import Set
+from typing import Tuple
 from typing import Union
 from uuid import UUID
 
 from diffsync.enum import DiffSyncModelFlags
-from nautobot.core.choices import ChoiceSet
 from nautobot.core.models.tree_queries import TreeModel
 
+from nautobot_netbox_importer.base import NOTHING
 from nautobot_netbox_importer.base import ContentTypeStr
 from nautobot_netbox_importer.base import ContentTypeValue
 from nautobot_netbox_importer.base import FieldName
@@ -65,6 +66,17 @@ class SourceFieldImporterIssue(NetBoxImporterException):
         self.field = field
 
 
+class InvalidChoiceValueIssue(SourceFieldImporterIssue):
+    """Raised when an invalid choice value is encountered."""
+
+    def __init__(self, field: "SourceField", value: Any, replacement: Any = NOTHING):
+        """Initialize the exception."""
+        message = f"Invalid choice value: `{value}`"
+        if replacement is not NOTHING:
+            message += f", replaced with `{replacement}`"
+        super().__init__(message, field)
+
+
 class SourceRecord(NamedTuple):
     """Source Data Item."""
 
@@ -97,9 +109,9 @@ class SourceFieldSource(Enum):
 
 
 PreImport = Callable[[RecordData, ImporterPass], PreImportResult]
-FieldImporterFallback = Callable[["SourceField", RecordData, DiffSyncBaseModel], None]
 SourceDataGenerator = Callable[[], Iterable[SourceRecord]]
 SourceFieldImporter = Callable[[RecordData, DiffSyncBaseModel], None]
+SourceFieldImporterFallback = Callable[["SourceField", RecordData, DiffSyncBaseModel, Exception], None]
 SourceFieldImporterFactory = Callable[["SourceField"], None]
 SourceFieldDefinition = Union[
     None,  # Ignore field
@@ -890,13 +902,20 @@ class SourceField:
 
         self.set_importer(json_importer)
 
-    def set_choice_importer(self, fallback: Optional[FieldImporterFallback] = None) -> None:
+    def set_choice_importer(self) -> None:
         """Set a choice field importer."""
-        choices_class = getattr(self.nautobot.field, "choices", None)
-        if not choices_class or not issubclass(choices_class, ChoiceSet):
-            raise ValueError(f"Invalid choices_class for {self}")
+        field_choices = getattr(self.nautobot.field, "choices", None)
+        if not field_choices:
+            raise ValueError(f"Invalid field_choices for {self}")
 
-        choices = dict(choices_class.CHOICES)
+        def get_choices(items: Iterable) -> Generator[Tuple[Any, Any], None, None]:
+            for key, value in items:
+                if isinstance(value, (list, tuple)):
+                    yield from get_choices(value)
+                else:
+                    yield key, value
+
+        choices = dict(get_choices(field_choices))
 
         def choice_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = self.get_source_value(source)
@@ -905,10 +924,12 @@ class SourceField:
 
             if value in choices:
                 setattr(target, self.nautobot.name, value)
-            elif fallback:
-                fallback(self, source, target)
+            elif self.nautobot.required:
+                # Set the choice value even it's not valid in Nautobot as it's required
+                setattr(target, self.nautobot.name, value)
+                raise InvalidChoiceValueIssue(self, value)
             else:
-                raise ValueError(f"Invalid value {value} for field {self}")
+                raise InvalidChoiceValueIssue(self, value, None)
 
         self.set_importer(choice_importer)
 

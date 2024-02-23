@@ -5,6 +5,7 @@ from .base import EMPTY_VALUES
 from .nautobot import NautobotAdapter
 from .source import DiffSyncBaseModel
 from .source import ImporterPass
+from .source import InvalidChoiceValueIssue
 from .source import PreImportResult
 from .source import SourceAdapter
 from .source import SourceContentType
@@ -20,6 +21,7 @@ __all__ = (
     "DiffSyncBaseModel",
     "EMPTY_VALUES",
     "ImporterPass",
+    "InvalidChoiceValueIssue",
     "NautobotAdapter",
     "PreImportResult",
     "SourceAdapter",

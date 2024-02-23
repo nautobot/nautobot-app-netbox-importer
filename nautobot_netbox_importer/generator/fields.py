@@ -6,26 +6,53 @@ from typing import Optional
 from .base import EMPTY_VALUES
 from .base import ContentTypeStr
 from .nautobot import DiffSyncBaseModel
-from .source import FieldImporterFallback
 from .source import FieldName
+from .source import InvalidChoiceValueIssue
 from .source import RecordData
 from .source import SourceAdapter
 from .source import SourceContentType
 from .source import SourceField
 from .source import SourceFieldDefinition
+from .source import SourceFieldImporterFallback
+from .source import SourceFieldImporterIssue
 
 
-def choice(nautobot_name: FieldName = "", fallback: Optional[FieldImporterFallback] = None) -> SourceFieldDefinition:
-    """Create a choices field definition.
+def fallback(
+    value: Any = None,
+    callback: Optional[SourceFieldImporterFallback] = None,
+    nautobot_name: FieldName = "",
+) -> SourceFieldDefinition:
+    """Create a fallback field definition.
 
-    Use to map the choices from the source to the Nautobot choices field.
+    Use to set a fallback value or callback for the field, if there is an error during the default importer.
     """
+    if (value is None) == (callback is None):
+        raise ValueError("Exactly one of `value` or `callback` must be set.")
 
-    def define_choices(field: SourceField) -> None:
-        field.set_nautobot_field(nautobot_name or field.name)
-        field.set_choice_importer(fallback)
+    def define_fallback(field: SourceField) -> None:
+        original_importer = field.set_importer(nautobot_name=nautobot_name)
+        if not original_importer:
+            return
 
-    return define_choices
+        def fallback_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+            try:
+                original_importer(source, target)
+            except Exception as error:
+                if callback:
+                    callback(field, source, target, error)
+                if value:
+                    setattr(target, field.nautobot.name, value)
+                    if isinstance(error, InvalidChoiceValueIssue):
+                        raise InvalidChoiceValueIssue(field, field.get_source_value(source), value) from error
+                    raise SourceFieldImporterIssue(
+                        f"Failed to import field: {error} | Fallback value: {value}",
+                        field,
+                    ) from error
+                raise
+
+        field.set_importer(fallback_importer, override=True)
+
+    return define_fallback
 
 
 def truncate_to_integer(nautobot_name: FieldName = "") -> SourceFieldDefinition:
