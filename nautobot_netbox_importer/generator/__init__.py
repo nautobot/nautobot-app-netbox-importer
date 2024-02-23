@@ -11,6 +11,7 @@ from .source import SourceContentType
 from .source import SourceDataGenerator
 from .source import SourceField
 from .source import SourceFieldImporterFactory
+from .source import SourceFieldImporterIssue
 from .source import SourceModelWrapper
 from .source import SourceRecord
 from .source import SourceReferences
@@ -26,6 +27,7 @@ __all__ = (
     "SourceDataGenerator",
     "SourceField",
     "SourceFieldImporterFactory",
+    "SourceFieldImporterIssue",
     "SourceModelWrapper",
     "SourceRecord",
     "SourceReferences",

@@ -22,7 +22,8 @@ class ImporterIssue(NamedTuple):
 
     uid: str
     name: str
-    error: str
+    issue_type: str
+    message: str
 
 
 ImporterIssues = MutableMapping[ContentTypeStr, List[ImporterIssue]]
@@ -227,7 +228,7 @@ class ImportSummary:
             total += len(issues)
             yield _fill_up(f". {content_type}: {len(issues)} ")
             for issue in issues:
-                yield f"{issue.uid} {issue.name} | {issue.error}"
+                yield f"{issue.uid} {issue.name} | {issue.issue_type} | {issue.message}"
 
         yield _fill_up(".", "Total importer issues:", total)
 

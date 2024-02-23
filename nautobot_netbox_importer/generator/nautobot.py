@@ -214,6 +214,7 @@ class NautobotModelWrapper:
         """Initialize the wrapper."""
         self._diffsync_class: Optional[Type[DiffSyncBaseModel]] = None
         self._clean_failures: Set[Uid] = set()
+        self._issues: Set[ImporterIssue] = set()
         self._content_type_instance = None
         self.flags = DiffSyncModelFlags.SKIP_UNMATCHED_DST
 
@@ -329,6 +330,23 @@ class NautobotModelWrapper:
 
         return self._diffsync_class
 
+    def add_issue(
+        self,
+        issue_type: str,
+        message: str,
+        target: Optional["DiffSyncBaseModel"] = None,
+        field: Optional[NautobotField] = None,
+    ) -> None:
+        """Add an issue to the importer."""
+        issue = ImporterIssue(
+            str(getattr(target, self.pk_field.name)) if target else "",
+            "",
+            issue_type,
+            f"{{'{field.name}': '{message}'}}" if field else message,
+        )
+        self._issues.add(issue)
+        logger.warning(str(issue))
+
     def find_or_create(self, identifiers_kwargs: dict) -> Optional[DiffSyncModel]:
         """Find a DiffSync instance based on filter kwargs or create a new instance from Nautobot if possible."""
         result = self.adapter.get_or_none(self.diffsync_class, identifiers_kwargs)
@@ -360,28 +378,43 @@ class NautobotModelWrapper:
         """Get the set of instances that failed to clean."""
         result = []
 
-        for uid in self._clean_failures:
+        def find_instance(uid: Uid) -> Optional[NautobotBaseModel]:
             try:
-                instance = self.model.objects.get(id=uid)
+                return self.model.objects.get(id=uid)
             except self.model.DoesNotExist as error:  # type: ignore
                 # This can happen with Tree models, some issue is there. Ignore for now, just add the importer issue.
                 result.append(
                     ImporterIssue(
                         str(uid),
                         "",
+                        error.__class__.__name__,
                         f"Instance was not found, event it was saved. {error}",
                     )
                 )
-            else:
-                try:
-                    instance.clean()
-                except ValidationError as error:
-                    result.append(ImporterIssue(str(uid), str(instance), str(error)))
-                # pylint: disable-next=broad-exception-caught
-                except Exception as error:
-                    result.append(ImporterIssue(str(uid), str(instance), f"Unknown error: {error}"))
+            return None
+
+        for uid in self._clean_failures:
+            instance = find_instance(uid)
+            if not instance:
+                continue
+            try:
+                instance.clean()
+            except ValidationError as error:
+                result.append(ImporterIssue(str(uid), str(instance), error.__class__.__name__, str(error)))
+            # pylint: disable-next=broad-exception-caught
+            except Exception as error:
+                result.append(ImporterIssue(str(uid), str(instance), error.__class__.__name__, str(error)))
 
         self._clean_failures = set()
+
+        for issue in self._issues:
+            instance = find_instance(issue.uid) if issue.uid else None
+            if instance:
+                result.append(ImporterIssue(issue.uid, str(instance), issue.issue_type, issue.message))
+            else:
+                result.append(issue)
+
+        self._issues = set()
 
         return result
 

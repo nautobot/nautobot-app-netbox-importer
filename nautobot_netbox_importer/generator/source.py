@@ -45,11 +45,24 @@ from .base import NautobotBaseModelType
 from .base import normalize_datetime
 from .base import source_pk_to_uuid
 from .exceptions import NautobotModelNotFound
+from .exceptions import NetBoxImporterException
 from .nautobot import IMPORT_ORDER
 from .nautobot import DiffSyncBaseModel
 from .nautobot import NautobotAdapter
 from .nautobot import NautobotField
 from .nautobot import NautobotModelWrapper
+
+
+class SourceFieldImporterIssue(NetBoxImporterException):
+    """Raised when an error occurs during field import.
+
+    Raising this exception gathers the issue and continues with the next importer.
+    """
+
+    def __init__(self, message: str, field: "SourceField"):
+        """Initialize the exception."""
+        super().__init__(message)
+        self.field = field
 
 
 class SourceRecord(NamedTuple):
@@ -558,7 +571,16 @@ class SourceModelWrapper:
             target = self.get_or_create(uid)
 
         for importer in self.importers:
-            importer(data, target)
+            try:
+                importer(data, target)
+            # pylint: disable=broad-exception-caught
+            except Exception as error:
+                self.nautobot.add_issue(
+                    error.__class__.__name__,
+                    getattr(error, "message", "") or str(error),
+                    target=target,
+                    field=error.field.nautobot if isinstance(error, SourceFieldImporterIssue) else None,
+                )
 
         self.adapter.logger.debug("Imported %s %s", uid, target.get_attrs())
 
