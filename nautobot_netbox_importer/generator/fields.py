@@ -1,11 +1,13 @@
 """Generic Field Importers definitions for Nautobot Importer."""
 
 from typing import Any
+from typing import Dict
 from typing import Optional
 from uuid import UUID
 
 from .base import EMPTY_VALUES
 from .base import ContentTypeStr
+from .base import Uid
 from .nautobot import DiffSyncBaseModel
 from .source import FieldImporterFallback
 from .source import FieldName
@@ -68,8 +70,7 @@ def relation(related_source: SourceContentType, nautobot_field_name: FieldName =
     return define_relation
 
 
-# To ensure all role models will share the same UID for the same role name.
-_ROLES_CACHE = {}
+_ROLES_CACHE: Dict[str, Uid] = {}
 
 
 def role(
@@ -79,8 +80,15 @@ def role(
 ) -> SourceFieldDefinition:
     """Create a role field definition.
 
-    Use, when there is a different source role content type, that should be mapped to Nautobot "extras.role".
-    Creates a new wrapper for the `source_content_type`, if it does not exist.
+    Use, when there is a different source role content type that should be mapped to the Nautobot "extras.Role".
+    It creates a new wrapper for the `source_content_type` if it does not already exist.
+
+    It covers multiple options for how roles can be referenced in the source data:
+        - by primary key
+        - by role name
+
+    It also handles the scenario where the same role names are used in different role models,
+    e.g., RackRole with `name = "Network"` and DeviceRole with `name = "Network"` to avoid duplicates.
     """
 
     def cache_roles(source: RecordData, importer_pass: ImporterPass) -> PreImportResult:
@@ -112,14 +120,14 @@ def role(
             if value in EMPTY_VALUES:
                 return
 
-            if isinstance(value, int):
+            if isinstance(value, (int, UUID)):
+                # Role is referenced by primary key
                 uid = role_wrapper.get_pk_from_uid(value)
             elif isinstance(value, str):
+                # Role is referenced by name
                 value = value.capitalize()
                 uid = _ROLES_CACHE[value] if value in _ROLES_CACHE else role_wrapper.get_pk_from_identifiers([value])
                 role_wrapper.import_record({"id": uid, "name": value})
-            elif isinstance(value, UUID):
-                uid = value
             else:
                 raise ValueError(f"Invalid role value {value}")
 

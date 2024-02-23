@@ -418,22 +418,25 @@ class SourceModelWrapper:
         """Return a string representation of the wrapper."""
         return f"{self.__class__.__name__}<{self.content_type} -> {self.nautobot.content_type}>"
 
-    def cache_record_uids(self, source: RecordData, uid: Optional[Uid] = None) -> Uid:
-        """Cache record identifier mappings."""
-        if not uid:
+    def cache_record_uids(self, source: RecordData, nautobot_uid: Optional[Uid] = None) -> Uid:
+        """Cache record identifier mappings.
+
+        When `nautobot_uid` is not provided, it is generated from the source data and caching is processed there.
+        """
+        if not nautobot_uid:
             return self.get_pk_from_data(source)
 
         if self.identifiers:
             identifiers_data = [source[field_name] for field_name in self.identifiers]
-            self._uid_to_pk_cache[json.dumps(identifiers_data)] = uid
+            self._uid_to_pk_cache[json.dumps(identifiers_data)] = nautobot_uid
 
         source_uid = source.get(self.nautobot.pk_field.name, None)
         if source_uid and source_uid not in self._uid_to_pk_cache:
-            self._uid_to_pk_cache[source_uid] = uid
+            self._uid_to_pk_cache[source_uid] = nautobot_uid
 
-        self._uid_to_pk_cache[uid] = uid
+        self._uid_to_pk_cache[nautobot_uid] = nautobot_uid
 
-        return uid
+        return nautobot_uid
 
     def get_summary(self, content_type_id) -> ModelSummary:
         """Get a summary of the model."""
