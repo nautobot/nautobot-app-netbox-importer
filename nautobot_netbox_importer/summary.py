@@ -41,6 +41,7 @@ class FieldSummary(NamedTuple):
     sources: List[str]
     default_value: Union[str, bool, int, float, None]
     disable_reason: str
+    required: bool
 
 
 class ModelSummary(NamedTuple):

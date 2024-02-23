@@ -716,6 +716,7 @@ class SourceField:
             sources=sorted(source.name for source in self.sources),
             default_value=serialize_to_summary(self.default_value),
             disable_reason=self.disable_reason,
+            required=self._nautobot.required if self._nautobot else False,
         )
 
     def disable(self, reason: str) -> None:

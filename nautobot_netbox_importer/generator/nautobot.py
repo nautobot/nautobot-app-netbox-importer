@@ -152,6 +152,7 @@ class NautobotField:
         self.name = name
         self.internal_type = internal_type
         self.field = field
+        self.required = not (getattr(field, "null", False) or getattr(field, "blank", False)) if field else False
 
         # Forced fields needs to be saved in a separate step after the initial save.
         self.force = self.name == "created"
@@ -313,7 +314,9 @@ class NautobotModelWrapper:
                 annotation = INTERNAL_TYPE_TO_ANNOTATION[field.internal_type]
 
             attributes.append(field.name)
-            annotations[field.name] = Optional[annotation]
+            if not field.required:
+                annotation = Optional[annotation]
+            annotations[field.name] = annotation
             class_definition[field.name] = PydanticField(default=None)
 
         try:
