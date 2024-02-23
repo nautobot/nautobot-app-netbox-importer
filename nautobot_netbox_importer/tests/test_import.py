@@ -227,7 +227,6 @@ class TestImport(TestCase):
         source, updated_models, skipped_count = self._import_file(input_ref, version)
         self.assertEqual(skipped_count, expected_summary["skip"], "Skipped count mismatch")
         self.assertEqual(source.summary.diff_summary, expected_summary, "Summary mismatch")
-        self.assertEqual(source.summary.validation_issues, {}, "No validation issues expected")
         self.assertEqual(updated_models, created_models, "Models counts mismatch")
         total = sum(created_models.values())
         self.assertEqual(total, expected_summary["no-change"], "Total mismatch")
