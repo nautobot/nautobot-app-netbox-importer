@@ -71,7 +71,7 @@ A database transaction begins, encompassing the steps below:
 - The `NetBoxAdapter` employs `get_source_data()` to retrieve and iterate over NetBox data:
     - Each piece of data is represented as a `SourceRecord` containing a `content_type` string and a `data` dictionary.
     - The importer constructs its internal hierarchy by establishing `SourceModelWrapper` instances for each content type, which include `SourceField` instances for each key found in the `data` dictionary.
-- The importer generates field importers for each `SourceModelWrapper`, mapping each field to a corresponding `NautobotField` using `field.set_nautobot_field(<nautobot field name>)`.
+- The importer generates field importers for each `SourceModelWrapper`, mapping each field to a corresponding `NautobotField` using `field.set_importer(<source importer>, <nautobot field name>)`.
     - It may disable field import based on specific conditions, such as defining a field as `None` or in case of absent Nautobot fields.
     - Then it establishes an importer according to the Nautobot field type or using a custom field definition.
 - The importer goes through the JSON file a second time, processing each `SourceRecord` to enact the relevant import actions for each content type.

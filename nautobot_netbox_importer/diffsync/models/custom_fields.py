@@ -95,7 +95,7 @@ def setup(adapter: SourceAdapter) -> None:
 
             create_choices(choices, getattr(target, "id"))
 
-        field.set_importer(choices_importer)
+        field.set_importer(choices_importer, nautobot_name=None)
 
     def define_choices(field: SourceField) -> None:
         def choices_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
@@ -108,7 +108,7 @@ def setup(adapter: SourceAdapter) -> None:
 
             create_choices(choices, getattr(target, "id"))
 
-        field.set_importer(choices_importer)
+        field.set_importer(choices_importer, nautobot_name=None)
 
     def create_choices(choices: list, custom_field_uid: Uid) -> None:
         for choice in choices:

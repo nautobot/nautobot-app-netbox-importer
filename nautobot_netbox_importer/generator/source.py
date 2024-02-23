@@ -404,7 +404,7 @@ class SourceModelWrapper:
             return
 
         pk_field = self.add_field(nautobot_wrapper.pk_field.name, SourceFieldSource.AUTO)
-        pk_field.set_nautobot_field(pk_field.name)
+        pk_field.set_nautobot_field()
         pk_field.processed = True
 
         if issubclass(nautobot_wrapper.model, TreeModel):
@@ -726,7 +726,7 @@ class SourceField:
         self.processed = True
         self.disable_reason = reason
 
-    def handle_sibling(self, sibling: Union["SourceField", FieldName], nautobot_name: FieldName) -> "SourceField":
+    def handle_sibling(self, sibling: Union["SourceField", FieldName], nautobot_name: FieldName = "") -> "SourceField":
         """Specify, that this field importer handles other field."""
         if not self.importer:
             raise RuntimeError(f"Call `handle sibling` after setting importer for {self}")
@@ -765,7 +765,7 @@ class SourceField:
             return
 
         if isinstance(self.definition, FieldName):
-            self.set_default_importer(self.definition)
+            self.set_importer(nautobot_name=self.definition)
         elif callable(self.definition):
             self.definition(self)
         else:
@@ -779,9 +779,9 @@ class SourceField:
         result = source[self.name]
         return self.default_value if result in EMPTY_VALUES else result
 
-    def set_nautobot_field(self, nautobot_name: FieldName) -> NautobotField:
+    def set_nautobot_field(self, nautobot_name: FieldName = "") -> NautobotField:
         """Set a Nautobot field name for the field."""
-        result = self.wrapper.nautobot.add_field(nautobot_name)
+        result = self.wrapper.nautobot.add_field(nautobot_name or self.name)
         if result.field:
             default_value = getattr(result.field, "default", None)
             if default_value not in EMPTY_VALUES and not isinstance(default_value, Callable):
@@ -791,38 +791,57 @@ class SourceField:
             self.disable("Last updated field is updated with each write")
         return result
 
-    def set_importer(self, importer: Optional[SourceFieldImporter], override=False) -> None:
-        """Set field importer."""
+    # pylint: disable=too-many-branches
+    def set_importer(
+        self,
+        importer: Optional[SourceFieldImporter] = None,
+        nautobot_name: Optional[FieldName] = "",
+        override=False,
+    ) -> Optional[SourceFieldImporter]:
+        """Sets the importer and Nautobot field if not already specified.
+
+        If `nautobot_name` is not provided, the field name is used.
+
+        Passing None to `nautobot_name` indicates that there is custom mapping without a direct relationship to a Nautobot field.
+        """
+        if self.disable_reason:
+            raise RuntimeError(f"Can't set importer for disabled {self}")
         if self.importer and not override:
             raise RuntimeError(f"Importer already set for {self}")
-        self.importer = importer
+        if not self._nautobot and nautobot_name is not None:
+            self.set_nautobot_field(nautobot_name)
 
-    def set_default_importer(self, nautobot_name: FieldName) -> None:
-        """Set default field importer."""
-        nautobot = self.set_nautobot_field(nautobot_name)
-        if self.disable_reason or not nautobot.can_import:
-            return
+        if importer:
+            self.importer = importer
+            return importer
 
-        if nautobot.internal_type == InternalFieldType.JSON_FIELD:
+        if self.disable_reason or not self.nautobot.can_import:
+            return None
+
+        internal_type = self.nautobot.internal_type
+
+        if internal_type == InternalFieldType.JSON_FIELD:
             self.set_json_importer()
-        elif nautobot.internal_type == InternalFieldType.DATE_FIELD:
+        elif internal_type == InternalFieldType.DATE_FIELD:
             self.set_date_importer()
-        elif nautobot.internal_type == InternalFieldType.DATE_TIME_FIELD:
+        elif internal_type == InternalFieldType.DATE_TIME_FIELD:
             self.set_datetime_importer()
-        elif nautobot.internal_type == InternalFieldType.UUID_FIELD:
+        elif internal_type == InternalFieldType.UUID_FIELD:
             self.set_uuid_importer()
-        elif nautobot.internal_type == InternalFieldType.MANY_TO_MANY_FIELD:
+        elif internal_type == InternalFieldType.MANY_TO_MANY_FIELD:
             self.set_m2m_importer()
-        elif nautobot.internal_type == InternalFieldType.STATUS_FIELD:
+        elif internal_type == InternalFieldType.STATUS_FIELD:
             self.set_status_importer()
-        elif nautobot.is_reference:
+        elif self.nautobot.is_reference:
             self.set_relation_importer()
-        elif getattr(nautobot, "choices", None):
+        elif getattr(self.nautobot.field, "choices", None):
             self.set_choice_importer()
-        elif nautobot.is_integer:
+        elif self.nautobot.is_integer:
             self.set_integer_importer()
         else:
             self.set_value_importer()
+
+        return self.importer
 
     def set_value_importer(self) -> None:
         """Set a value importer."""
@@ -1041,14 +1060,15 @@ class SourceField:
             type_field = self.wrapper.fields.get(self.name[:-3] + "_type", None)
             if type_field and type_field.nautobot.is_content_type:
                 # Handles `<field name>_id` and `<field name>_type` fields combination
-                return self.set_relation_and_type_importer(type_field)
+                self.set_relation_and_type_importer(type_field)
+                return
 
         def uuid_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
             if value not in EMPTY_VALUES:
                 setattr(target, self.nautobot.name, UUID(value))
 
-        return self.set_importer(uuid_importer)
+        self.set_importer(uuid_importer)
 
     def set_date_importer(self) -> None:
         """Set a date importer."""
