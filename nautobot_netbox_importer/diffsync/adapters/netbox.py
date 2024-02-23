@@ -43,8 +43,8 @@ class _DryRunException(Exception):
     """Exception raised when a dry-run is requested."""
 
 
-class _ValidationIssuesDetected(Exception):
-    """Exception raised when validation issues are detected."""
+class _ImporterIssuesDetected(Exception):
+    """Exception raised when importer issues are detected."""
 
 
 class NetBoxImporterOptions(NamedTuple):
@@ -95,8 +95,8 @@ class NetBoxAdapter(SourceAdapter):
             commited = True
         except _DryRunException:
             logger.warning("Dry-run mode, no data has been imported.")
-        except _ValidationIssuesDetected:
-            logger.warning("Data validation issues detected, no data has been imported.")
+        except _ImporterIssuesDetected:
+            logger.warning("Importer issues detected, no data has been imported.")
 
         if commited and self.options.update_paths:
             logger.info("Updating paths ...")
@@ -118,8 +118,8 @@ class NetBoxAdapter(SourceAdapter):
         if self.options.save_text_summary_path:
             self.summary.dump(self.options.save_text_summary_path, output_format="text")
 
-        if self.summary.validation_issues and not self.options.bypass_data_validation:
-            raise _ValidationIssuesDetected("Data validation issues detected, aborting the transaction.")
+        if self.summary.importer_issues and not self.options.bypass_data_validation:
+            raise _ImporterIssuesDetected("Importer issues detected, aborting the transaction.")
 
         if self.options.dry_run:
             raise _DryRunException("Aborting the transaction due to the dry-run mode.")

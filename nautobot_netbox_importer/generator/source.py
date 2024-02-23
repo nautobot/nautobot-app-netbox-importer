@@ -210,7 +210,7 @@ class SourceAdapter(BaseAdapter):
             if wrapper:
                 self.summary.add(wrapper.get_summary(wrapper_to_id.get(wrapper, None)))
 
-        self.summary.set_validation_issues(self.nautobot.get_validation_issues())
+        self.summary.set_importer_issues(self.nautobot.get_importer_issues())
 
     def get_or_create_wrapper(self, value: Union[None, SourceContentType]) -> "SourceModelWrapper":
         """Get a source Wrapper for a given content type."""

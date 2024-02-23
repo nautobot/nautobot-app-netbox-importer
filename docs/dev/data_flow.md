@@ -80,7 +80,7 @@ A database transaction begins, encompassing the steps below:
 - Post-import actions are invoked for each `SourceModelWrapper`, where `content_types` fields values are assigned based on the references cached during data import.
 - The importer evaluates the differences (a "diff") between NetBox and Nautobot data sets.
 - DiffSync, an internal mechanism, is used to synchronize data into Nautobot's database following the comparison.
-- Any Nautobot objects that faced validation issues during synchronization are checked using `clean()`, which captures the issues within `ValidationIssue` instances.
+- Any Nautobot objects that faced validation issues during synchronization are checked using `clean()`, which captures the issues within `ImporterIssue` instances.
 
 ## Finalization
 

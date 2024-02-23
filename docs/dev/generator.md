@@ -152,7 +152,7 @@ erDiagram
     }
     NautobotAdapter {
         Mapping wrappers
-        Set validation_issues
+        Set importer_issues
         DiffSyncBaseModel diffsync_model_1
         DiffSyncBaseModel diffsync_model_2
         DiffSyncBaseModel diffsync_model_x

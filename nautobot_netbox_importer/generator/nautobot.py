@@ -22,8 +22,8 @@ from nautobot.core.utils.lookup import get_model_from_name
 from nautobot_netbox_importer.base import FieldName
 from nautobot_netbox_importer.base import RecordData
 from nautobot_netbox_importer.base import logger
-from nautobot_netbox_importer.summary import ValidationIssue
-from nautobot_netbox_importer.summary import ValidationIssues
+from nautobot_netbox_importer.summary import ImporterIssue
+from nautobot_netbox_importer.summary import ImporterIssues
 
 from .base import AUTO_ADD_FIELDS
 from .base import EMPTY_VALUES
@@ -125,12 +125,12 @@ class NautobotAdapter(BaseAdapter):
         super().__init__("Nautobot", *args, **kwargs)
         self.wrappers: Dict[ContentTypeStr, NautobotModelWrapper] = {}
 
-    def get_validation_issues(self) -> ValidationIssues:
-        """Re-run clean() on all instances that failed validation."""
+    def get_importer_issues(self) -> ImporterIssues:
+        """Get all importer issues."""
         result = {}
 
         for wrapper in self.wrappers.values():
-            issues = wrapper.get_validation_issues()
+            issues = wrapper.get_importer_issues()
             if issues:
                 result[wrapper.content_type] = issues
 
@@ -356,7 +356,7 @@ class NautobotModelWrapper:
 
         return result
 
-    def get_validation_issues(self) -> List[ValidationIssue]:
+    def get_importer_issues(self) -> List[ImporterIssue]:
         """Get the set of instances that failed to clean."""
         result = []
 
@@ -364,9 +364,9 @@ class NautobotModelWrapper:
             try:
                 instance = self.model.objects.get(id=uid)
             except self.model.DoesNotExist as error:  # type: ignore
-                # This can happen with Tree models, some issue is there. Ignore for now, just add the validation issue.
+                # This can happen with Tree models, some issue is there. Ignore for now, just add the importer issue.
                 result.append(
-                    ValidationIssue(
+                    ImporterIssue(
                         str(uid),
                         "",
                         f"Instance was not found, event it was saved. {error}",
@@ -376,10 +376,10 @@ class NautobotModelWrapper:
                 try:
                     instance.clean()
                 except ValidationError as error:
-                    result.append(ValidationIssue(str(uid), str(instance), str(error)))
+                    result.append(ImporterIssue(str(uid), str(instance), str(error)))
                 # pylint: disable-next=broad-exception-caught
                 except Exception as error:
-                    result.append(ValidationIssue(str(uid), str(instance), f"Unknown error: {error}"))
+                    result.append(ImporterIssue(str(uid), str(instance), f"Unknown error: {error}"))
 
         self._clean_failures = set()
 
@@ -506,7 +506,7 @@ class NautobotModelWrapper:
             instance.clean()
         # pylint: disable=broad-exception-caught
         except Exception as exc:
-            # `clean()` can be called again by getting `validation_issues` property after importing all data
+            # `clean()` can be called again by getting `importer_issues` property after importing all data
             uid = getattr(instance, self.pk_field.name, None)
             if not isinstance(uid, (UUID, str, int)):
                 raise TypeError(f"Invalid uid {uid}") from exc

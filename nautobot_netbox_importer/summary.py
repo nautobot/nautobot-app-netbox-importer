@@ -17,15 +17,15 @@ from .base import FieldName
 from .base import Pathable
 
 
-class ValidationIssue(NamedTuple):
-    """Validation issue."""
+class ImporterIssue(NamedTuple):
+    """Importer issue."""
 
     uid: str
     name: str
     error: str
 
 
-ValidationIssues = MutableMapping[ContentTypeStr, List[ValidationIssue]]
+ImporterIssues = MutableMapping[ContentTypeStr, List[ImporterIssue]]
 DiffSummary = Mapping[str, int]
 
 
@@ -92,7 +92,7 @@ class ImportSummary:
         """Initialize the import summary."""
         self.models: List[ModelSummary] = []
         self.diff_summary: DiffSummary = {}
-        self.validation_issues: ValidationIssues = OrderedDict()
+        self.importer_issues: ImporterIssues = OrderedDict()
 
     @property
     def data_models(self) -> Generator[ModelSummary, None, None]:
@@ -105,16 +105,16 @@ class ImportSummary:
         """Add a model summary to the import summary."""
         self.models.append(model_summary)
 
-    def set_validation_issues(self, validation_issues: ValidationIssues):
-        """Set the validation issues."""
-        for content_type in sorted(validation_issues):
-            self.validation_issues[content_type] = sorted(validation_issues[content_type], key=lambda issue: issue.uid)
+    def set_importer_issues(self, importer_issues: ImporterIssues):
+        """Set the importer issues."""
+        for content_type in sorted(importer_issues):
+            self.importer_issues[content_type] = sorted(importer_issues[content_type], key=lambda issue: issue.uid)
 
     def load(self, path: Pathable):
         """Load the summary from a file."""
         content = json.loads(Path(path).read_text(encoding="utf-8"))
         self.diff_summary = content["diff_summary"]
-        self.set_validation_issues(content["validation_issues"])
+        self.set_importer_issues(content["importer_issues"])
         for model in content["models"].values():
             self.add(
                 ModelSummary(
@@ -140,7 +140,7 @@ class ImportSummary:
                             }
                             for model_summary in self.models
                         },
-                        "validation_issues": {key: list(value) for key, value in self.validation_issues.items()},
+                        "importer_issues": {key: list(value) for key, value in self.importer_issues.items()},
                     },
                     indent=indent,
                 ),
@@ -171,11 +171,11 @@ class ImportSummary:
             if model_summary.imported_count > 0:
                 yield f"{model_summary.content_type}: {model_summary.imported_count}"
 
-        yield _fill_up("- Validation issues:")
-        if self.validation_issues:
-            yield from self.get_validation_issues()
+        yield _fill_up("- Importer issues:")
+        if self.importer_issues:
+            yield from self.get_importer_issues()
         else:
-            yield "  No validation issues found."
+            yield "  No importer issues found."
 
         yield _fill_up("- Content Types Mapping Deviations:")
         yield "  Mapping deviations from source content type to Nautobot content type"
@@ -219,18 +219,17 @@ class ImportSummary:
             else:
                 yield f"{nautobot_content_type} => Ambiguous"
 
-    def get_validation_issues(self) -> Generator[str, None, None]:
-        """Get formatted validation issues."""
+    def get_importer_issues(self) -> Generator[str, None, None]:
+        """Get formatted importer issues."""
         total = 0
 
-        for content_type, issues in self.validation_issues.items():
+        for content_type, issues in self.importer_issues.items():
             total += len(issues)
             yield _fill_up(f". {content_type}: {len(issues)} ")
             for issue in issues:
                 yield f"{issue.uid} {issue.name} | {issue.error}"
-        yield _fill_up(".")
 
-        yield f"Total validation issues: {total}"
+        yield _fill_up(".", "Total importer issues:", total)
 
     def get_detailed_mapping(self) -> Generator[str, None, None]:
         """Get formatted detailed mappings."""
