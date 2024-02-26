@@ -36,10 +36,6 @@ The field definition should map the NetBox field to Nautobot and register an imp
 
 ```python
 def _define_units(field: SourceField) -> None:
-  # Map the field from NetBox to Nautobot.
-  # The Nautobot field name is the same as the NetBox field name in this case.
-  field.set_nautobot_field(field.name)
-
   def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
       # In NetBox 3.4, units is a `list[int]`; previous versions use a JSON string with a list of strings.
       units = source.get(field.name, None)
@@ -57,7 +53,8 @@ def _define_units(field: SourceField) -> None:
       # Store the value in the target DiffSyncModel instance.
       setattr(target, field.nautobot.name, units)
 
-  # Register the importer.
+  # Map the field from NetBox to Nautobot and register the importer.
+  # The Nautobot field name is the same as the NetBox field name in this case.
   field.set_importer(importer)
 ```
 

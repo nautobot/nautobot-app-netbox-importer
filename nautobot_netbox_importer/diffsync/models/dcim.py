@@ -15,8 +15,6 @@ from .locations import define_location
 
 
 def _define_units(field: SourceField) -> None:
-    field.set_nautobot_field(field.name)
-
     def units_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
         # NetBox 3.4 units is `list[int]`, previous versions are JSON string with list of strings
         units = source.get(field.name, None)
@@ -129,9 +127,6 @@ def unrack_zero_uheight_devices(adapter: SourceAdapter) -> None:
         for item in adapter.get_all(device_type_wrapper.nautobot.diffsync_class)
         if getattr(item, "u_height", 0) == 0
     )
-
-    print(100 * "A")
-    print(device_type_ids)
 
     if not device_type_ids:
         return

@@ -44,7 +44,7 @@ class Command(BaseCommand):
             action="store_true",
             dest="sitegroup_parent_always_region",
             help="When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, "
-            "to be a `Region` location type. This is a workaround to fix validation issues "
+            "to be a `Region` location type. This is a workaround to fix validation errors "
             "`'A Location of type Location may only have a Location of the same type as its parent.'`.",
         )
         parser.add_argument(

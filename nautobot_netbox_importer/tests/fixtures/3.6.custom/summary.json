@@ -1,6 +1,6 @@
 {
     "diff_summary": {
-        "create": 62,
+        "create": 67,
         "update": 0,
         "delete": 0,
         "no-change": 0,
@@ -53,7 +53,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -87,7 +88,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -97,10 +99,12 @@
                     "importer": "value_importer",
                     "definition": "name",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "permissions": {
                     "name": "permissions",
@@ -114,7 +118,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Permissions import is not implemented yet"
+                    "disable_reason": "Permissions import is not implemented yet",
+                    "required": false
                 }
             }
         },
@@ -146,7 +151,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -180,7 +186,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "email": {
                     "name": "email",
@@ -193,7 +200,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "first_name": {
                     "name": "first_name",
@@ -206,7 +214,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "groups": {
                     "name": "groups",
@@ -219,7 +228,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -232,7 +242,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "is_active": {
                     "name": "is_active",
@@ -245,7 +256,8 @@
                         "DATA"
                     ],
                     "default_value": true,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "is_staff": {
                     "name": "is_staff",
@@ -258,7 +270,8 @@
                         "DATA"
                     ],
                     "default_value": false,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "is_superuser": {
                     "name": "is_superuser",
@@ -271,7 +284,8 @@
                         "DATA"
                     ],
                     "default_value": false,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_login": {
                     "name": "last_login",
@@ -285,7 +299,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Should not be attempted to migrate"
+                    "disable_reason": "Should not be attempted to migrate",
+                    "required": false
                 },
                 "last_name": {
                     "name": "last_name",
@@ -298,7 +313,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "password": {
                     "name": "password",
@@ -312,7 +328,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Should not be attempted to migrate"
+                    "disable_reason": "Should not be attempted to migrate",
+                    "required": false
                 },
                 "user_permissions": {
                     "name": "user_permissions",
@@ -326,7 +343,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Permissions import is not implemented yet"
+                    "disable_reason": "Permissions import is not implemented yet",
+                    "required": false
                 },
                 "username": {
                     "name": "username",
@@ -336,10 +354,12 @@
                     "importer": "value_importer",
                     "definition": "username",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -371,7 +391,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "status": {
                     "name": "status",
@@ -384,7 +405,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "termination_a": {
                     "name": "termination_a",
@@ -397,7 +419,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "termination_z": {
                     "name": "termination_z",
@@ -410,7 +433,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "type": {
                     "name": "type",
@@ -423,7 +447,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -455,7 +480,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "location": {
                     "name": "location",
@@ -468,7 +494,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -481,7 +508,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -494,7 +522,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -526,7 +555,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -558,7 +588,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -608,7 +639,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -641,10 +673,12 @@
                     "definition": "define_app_label",
                     "sources": [
                         "CUSTOM",
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -657,7 +691,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "model": {
                     "name": "model",
@@ -667,10 +702,12 @@
                     "importer": "value_importer",
                     "definition": "model",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -792,7 +829,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "status": {
                     "name": "status",
@@ -805,7 +843,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -837,7 +876,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -869,7 +909,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -901,7 +942,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -933,7 +975,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -965,7 +1008,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -997,7 +1041,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -1029,7 +1074,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "airflow": {
                     "name": "airflow",
@@ -1042,7 +1088,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "asset_tag": {
                     "name": "asset_tag",
@@ -1055,7 +1102,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "cluster": {
                     "name": "cluster",
@@ -1068,7 +1116,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "comments": {
                     "name": "comments",
@@ -1081,7 +1130,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "config_template": {
                     "name": "config_template",
@@ -1094,7 +1144,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "console_port_count": {
                     "name": "console_port_count",
@@ -1107,7 +1158,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "console_server_port_count": {
                     "name": "console_server_port_count",
@@ -1120,7 +1172,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -1133,7 +1186,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -1146,7 +1200,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -1159,7 +1214,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "device_bay_count": {
                     "name": "device_bay_count",
@@ -1172,20 +1228,22 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "device_role": {
                     "name": "device_role",
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "device_type": {
                     "name": "device_type",
@@ -1198,20 +1256,22 @@
                         "DATA"
                     ],
                     "default_value": "c40e8fa5-0254-5b8f-97da-19b227497d92",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "face": {
                     "name": "face",
                     "nautobot_name": "face",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
+                    "importer": "choice_importer",
                     "definition": "face",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "front_port_count": {
                     "name": "front_port_count",
@@ -1224,7 +1284,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -1238,7 +1299,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "interface_count": {
                     "name": "interface_count",
@@ -1251,7 +1313,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "inventory_item_count": {
                     "name": "inventory_item_count",
@@ -1264,7 +1327,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -1277,7 +1341,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "latitude": {
                     "name": "latitude",
@@ -1290,7 +1355,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "local_context_data": {
                     "name": "local_context_data",
@@ -1303,7 +1369,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "location": {
                     "name": "location",
@@ -1317,7 +1384,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "longitude": {
                     "name": "longitude",
@@ -1330,7 +1398,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "module_bay_count": {
                     "name": "module_bay_count",
@@ -1343,7 +1412,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -1356,7 +1426,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "oob_ip": {
                     "name": "oob_ip",
@@ -1369,7 +1440,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "platform": {
                     "name": "platform",
@@ -1382,7 +1454,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "position": {
                     "name": "position",
@@ -1395,7 +1468,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "power_outlet_count": {
                     "name": "power_outlet_count",
@@ -1408,7 +1482,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "power_port_count": {
                     "name": "power_port_count",
@@ -1421,7 +1496,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "primary_ip4": {
                     "name": "primary_ip4",
@@ -1434,7 +1510,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "primary_ip6": {
                     "name": "primary_ip6",
@@ -1447,7 +1524,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rack": {
                     "name": "rack",
@@ -1460,7 +1538,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rear_port_count": {
                     "name": "rear_port_count",
@@ -1473,7 +1552,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -1486,21 +1566,23 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "role": {
                     "name": "role",
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM",
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "serial": {
                     "name": "serial",
@@ -1513,7 +1595,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -1527,7 +1610,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "status": {
                     "name": "status",
@@ -1541,7 +1625,8 @@
                         "DATA"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "tenant": {
                     "name": "tenant",
@@ -1554,7 +1639,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "vc_position": {
                     "name": "vc_position",
@@ -1567,7 +1653,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "vc_priority": {
                     "name": "vc_priority",
@@ -1580,7 +1667,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "virtual_chassis": {
                     "name": "virtual_chassis",
@@ -1593,7 +1681,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -1625,7 +1714,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -1657,7 +1747,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -1668,14 +1759,16 @@
             "nautobot_content_type": "extras.role",
             "nautobot_content_type_id": 80,
             "disable_reason": "",
-            "identifiers": null,
+            "identifiers": [
+                "name"
+            ],
             "disable_related_reference": false,
             "forward_references": null,
-            "pre_import": null,
+            "pre_import": "cache_roles",
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 1,
+            "imported_count": 2,
             "skipped_count": 0,
             "fields": {
                 "color": {
@@ -1690,7 +1783,8 @@
                         "DATA"
                     ],
                     "default_value": "9e9e9e",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "config_template": {
                     "name": "config_template",
@@ -1703,7 +1797,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "content_types": {
                     "name": "content_types",
@@ -1716,7 +1811,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "created": {
                     "name": "created",
@@ -1729,7 +1825,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -1742,7 +1839,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -1755,7 +1853,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -1769,7 +1868,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -1782,7 +1882,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -1792,10 +1893,12 @@
                     "importer": "value_importer",
                     "definition": "name",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "slug": {
                     "name": "slug",
@@ -1808,7 +1911,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "vm_role": {
                     "name": "vm_role",
@@ -1821,7 +1925,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -1853,7 +1958,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "airflow": {
                     "name": "airflow",
@@ -1866,7 +1972,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "comments": {
                     "name": "comments",
@@ -1879,7 +1986,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "console_port_template_count": {
                     "name": "console_port_template_count",
@@ -1892,7 +2000,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "console_server_port_template_count": {
                     "name": "console_server_port_template_count",
@@ -1905,7 +2014,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -1918,7 +2028,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -1931,7 +2042,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "default_platform": {
                     "name": "default_platform",
@@ -1944,7 +2056,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -1957,7 +2070,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "device_bay_template_count": {
                     "name": "device_bay_template_count",
@@ -1970,7 +2084,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "front_image": {
                     "name": "front_image",
@@ -1984,7 +2099,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Import does not contain images"
+                    "disable_reason": "Import does not contain images",
+                    "required": false
                 },
                 "front_port_template_count": {
                     "name": "front_port_template_count",
@@ -1997,7 +2113,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -2012,7 +2129,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "interface_template_count": {
                     "name": "interface_template_count",
@@ -2025,7 +2143,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "inventory_item_template_count": {
                     "name": "inventory_item_template_count",
@@ -2038,7 +2157,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "is_full_depth": {
                     "name": "is_full_depth",
@@ -2051,7 +2171,8 @@
                         "DATA"
                     ],
                     "default_value": true,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -2064,7 +2185,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "manufacturer": {
                     "name": "manufacturer",
@@ -2078,7 +2200,8 @@
                         "DATA"
                     ],
                     "default_value": "f5136724-0984-5e3b-b073-ea6d83116997",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "model": {
                     "name": "model",
@@ -2092,7 +2215,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "module_bay_template_count": {
                     "name": "module_bay_template_count",
@@ -2105,7 +2229,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "part_number": {
                     "name": "part_number",
@@ -2118,7 +2243,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "power_outlet_template_count": {
                     "name": "power_outlet_template_count",
@@ -2131,7 +2257,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "power_port_template_count": {
                     "name": "power_port_template_count",
@@ -2144,7 +2271,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rear_image": {
                     "name": "rear_image",
@@ -2158,7 +2286,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Import does not contain images"
+                    "disable_reason": "Import does not contain images",
+                    "required": false
                 },
                 "rear_port_template_count": {
                     "name": "rear_port_template_count",
@@ -2171,7 +2300,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "slug": {
                     "name": "slug",
@@ -2184,20 +2314,22 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "subdevice_role": {
                     "name": "subdevice_role",
                     "nautobot_name": "subdevice_role",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
+                    "importer": "choice_importer",
                     "definition": "subdevice_role",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "u_height": {
                     "name": "u_height",
@@ -2211,7 +2343,8 @@
                         "DATA"
                     ],
                     "default_value": 1,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "weight": {
                     "name": "weight",
@@ -2224,7 +2357,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "weight_unit": {
                     "name": "weight_unit",
@@ -2237,7 +2371,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -2269,7 +2404,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -2301,7 +2437,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "rear_port": {
                     "name": "rear_port",
@@ -2314,7 +2451,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -2346,7 +2484,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "parent": {
                     "name": "parent",
@@ -2359,7 +2498,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -2372,7 +2512,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -2404,7 +2545,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -2436,7 +2578,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "level": {
                     "name": "level",
@@ -2449,7 +2592,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -2462,7 +2606,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "rght": {
                     "name": "rght",
@@ -2475,7 +2620,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -2488,7 +2634,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -2556,7 +2703,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "level": {
                     "name": "level",
@@ -2569,7 +2717,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -2582,7 +2731,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "location_type": {
                     "name": "location_type",
@@ -2595,7 +2745,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "parent": {
                     "name": "parent",
@@ -2608,7 +2759,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rght": {
                     "name": "rght",
@@ -2621,7 +2773,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -2634,7 +2787,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -2647,7 +2801,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -2660,7 +2815,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -2692,7 +2848,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -2706,7 +2863,8 @@
                         "CACHE"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "level": {
                     "name": "level",
@@ -2719,7 +2877,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -2732,7 +2891,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -2745,7 +2905,8 @@
                         "CACHE"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "nestable": {
                     "name": "nestable",
@@ -2758,7 +2919,8 @@
                         "CACHE"
                     ],
                     "default_value": false,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "parent": {
                     "name": "parent",
@@ -2771,7 +2933,8 @@
                         "CACHE"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rght": {
                     "name": "rght",
@@ -2784,7 +2947,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -2797,7 +2961,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -2829,7 +2994,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -2842,7 +3008,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -2855,7 +3022,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -2870,7 +3038,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -2883,7 +3052,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -2897,7 +3067,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "slug": {
                     "name": "slug",
@@ -2910,7 +3081,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -3014,7 +3186,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3046,7 +3219,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3078,7 +3252,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3110,7 +3285,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "power_port": {
                     "name": "power_port",
@@ -3123,7 +3299,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -3155,7 +3332,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "location": {
                     "name": "location",
@@ -3168,7 +3346,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "region": {
                     "name": "region",
@@ -3181,7 +3360,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "site": {
                     "name": "site",
@@ -3194,7 +3374,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3226,7 +3407,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3258,7 +3440,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3290,7 +3473,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "_abs_weight": {
                     "name": "_abs_weight",
@@ -3303,7 +3487,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "_name": {
                     "name": "_name",
@@ -3316,7 +3501,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "asset_tag": {
                     "name": "asset_tag",
@@ -3329,7 +3515,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "comments": {
                     "name": "comments",
@@ -3342,7 +3529,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -3355,7 +3543,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -3368,7 +3557,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "desc_units": {
                     "name": "desc_units",
@@ -3381,7 +3571,8 @@
                         "DATA"
                     ],
                     "default_value": false,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "description": {
                     "name": "description",
@@ -3394,7 +3585,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "facility_id": {
                     "name": "facility_id",
@@ -3407,7 +3599,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -3421,7 +3614,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -3434,7 +3628,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "location": {
                     "name": "location",
@@ -3448,7 +3643,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "max_weight": {
                     "name": "max_weight",
@@ -3461,7 +3657,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "mounting_depth": {
                     "name": "mounting_depth",
@@ -3474,7 +3671,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -3487,7 +3685,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "outer_depth": {
                     "name": "outer_depth",
@@ -3500,20 +3699,22 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "outer_unit": {
                     "name": "outer_unit",
                     "nautobot_name": "outer_unit",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
+                    "importer": "choice_importer",
                     "definition": "outer_unit",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "outer_width": {
                     "name": "outer_width",
@@ -3526,7 +3727,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -3539,21 +3741,23 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "role": {
                     "name": "role",
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM",
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "serial": {
                     "name": "serial",
@@ -3566,7 +3770,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -3580,7 +3785,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "starting_unit": {
                     "name": "starting_unit",
@@ -3593,7 +3799,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -3607,7 +3814,8 @@
                         "DATA"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "tenant": {
                     "name": "tenant",
@@ -3620,20 +3828,22 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "type": {
                     "name": "type",
                     "nautobot_name": "type",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
+                    "importer": "choice_importer",
                     "definition": "type",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "u_height": {
                     "name": "u_height",
@@ -3646,7 +3856,8 @@
                         "DATA"
                     ],
                     "default_value": 42,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "weight": {
                     "name": "weight",
@@ -3659,7 +3870,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "weight_unit": {
                     "name": "weight_unit",
@@ -3672,20 +3884,22 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "width": {
                     "name": "width",
                     "nautobot_name": "width",
                     "nautobot_internal_type": "PositiveSmallIntegerField",
                     "nautobot_can_import": true,
-                    "importer": "integer_importer",
+                    "importer": "choice_importer",
                     "definition": "width",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": 19,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3717,7 +3931,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "units": {
                     "name": "units",
@@ -3730,7 +3945,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3741,14 +3957,16 @@
             "nautobot_content_type": "extras.role",
             "nautobot_content_type_id": 80,
             "disable_reason": "",
-            "identifiers": null,
+            "identifiers": [
+                "name"
+            ],
             "disable_related_reference": false,
             "forward_references": null,
-            "pre_import": null,
+            "pre_import": "cache_roles",
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 0,
+            "imported_count": 1,
             "skipped_count": 0,
             "fields": {
                 "color": {
@@ -3759,10 +3977,12 @@
                     "importer": "value_importer",
                     "definition": "color",
                     "sources": [
-                        "CUSTOM"
+                        "CUSTOM",
+                        "DATA"
                     ],
                     "default_value": "9e9e9e",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "content_types": {
                     "name": "content_types",
@@ -3775,7 +3995,50 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
+                },
+                "created": {
+                    "name": "created",
+                    "nautobot_name": "created",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": "datetime_importer",
+                    "definition": "created",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "custom_field_data": {
+                    "name": "custom_field_data",
+                    "nautobot_name": "custom_field_data",
+                    "nautobot_internal_type": "CustomFieldData",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "custom_field_data",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "description": {
+                    "name": "description",
+                    "nautobot_name": "description",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -3785,10 +4048,55 @@
                     "importer": null,
                     "definition": "id",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
+                },
+                "last_updated": {
+                    "name": "last_updated",
+                    "nautobot_name": "last_updated",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
+                },
+                "name": {
+                    "name": "name",
+                    "nautobot_name": "name",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "name",
+                    "sources": [
+                        "DATA",
+                        "IDENTIFIER"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "slug": {
+                    "name": "slug",
+                    "nautobot_name": "slug",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "slug",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -3820,7 +4128,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3852,7 +4161,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3884,7 +4194,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "level": {
                     "name": "level",
@@ -3897,7 +4208,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -3910,7 +4222,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "location_type": {
                     "name": "location_type",
@@ -3923,7 +4236,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "rght": {
                     "name": "rght",
@@ -3936,7 +4250,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -3949,7 +4264,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -3962,7 +4278,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -3994,7 +4311,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "asns": {
                     "name": "asns",
@@ -4007,7 +4325,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "comments": {
                     "name": "comments",
@@ -4020,7 +4339,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -4033,7 +4353,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -4046,7 +4367,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -4059,7 +4381,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "facility": {
                     "name": "facility",
@@ -4072,7 +4395,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "group": {
                     "name": "group",
@@ -4086,7 +4410,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -4100,7 +4425,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -4113,7 +4439,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "latitude": {
                     "name": "latitude",
@@ -4126,7 +4453,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "level": {
                     "name": "level",
@@ -4139,7 +4467,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -4152,7 +4481,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "longitude": {
                     "name": "longitude",
@@ -4165,7 +4495,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -4178,7 +4509,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "physical_address": {
                     "name": "physical_address",
@@ -4191,7 +4523,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -4205,7 +4538,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rght": {
                     "name": "rght",
@@ -4218,7 +4552,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "shipping_address": {
                     "name": "shipping_address",
@@ -4231,7 +4566,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "slug": {
                     "name": "slug",
@@ -4244,7 +4580,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -4258,7 +4595,8 @@
                         "DATA"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "tenant": {
                     "name": "tenant",
@@ -4271,20 +4609,22 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "time_zone": {
                     "name": "time_zone",
                     "nautobot_name": "time_zone",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
+                    "importer": "choice_importer",
                     "definition": "time_zone",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -4297,7 +4637,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -4329,7 +4670,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -4342,7 +4684,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "level": {
                     "name": "level",
@@ -4355,7 +4698,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -4368,7 +4712,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "nestable": {
                     "name": "nestable",
@@ -4381,7 +4726,8 @@
                         "CUSTOM"
                     ],
                     "default_value": false,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "parent": {
                     "name": "parent",
@@ -4394,7 +4740,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rght": {
                     "name": "rght",
@@ -4407,7 +4754,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -4420,7 +4768,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -4452,7 +4801,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -4574,7 +4924,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -4643,7 +4994,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "choices": {
                     "name": "choices",
@@ -4656,7 +5008,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "content_types": {
                     "name": "content_types",
@@ -4670,7 +5023,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "created": {
                     "name": "created",
@@ -4683,7 +5037,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "default": {
                     "name": "default",
@@ -4696,7 +5051,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -4709,20 +5065,22 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "filter_logic": {
                     "name": "filter_logic",
                     "nautobot_name": "filter_logic",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
+                    "importer": "choice_importer",
                     "definition": "filter_logic",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": "loose",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "group_name": {
                     "name": "group_name",
@@ -4735,7 +5093,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -4749,7 +5108,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "is_cloneable": {
                     "name": "is_cloneable",
@@ -4762,7 +5122,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "label": {
                     "name": "label",
@@ -4775,7 +5136,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -4788,7 +5150,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -4802,7 +5165,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "object_type": {
                     "name": "object_type",
@@ -4815,7 +5179,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "required": {
                     "name": "required",
@@ -4828,7 +5193,8 @@
                         "DATA"
                     ],
                     "default_value": false,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "search_weight": {
                     "name": "search_weight",
@@ -4841,21 +5207,23 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "type": {
                     "name": "type",
                     "nautobot_name": "type",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "choice_importer",
-                    "definition": "define_choices",
+                    "importer": "fallback_importer",
+                    "definition": "define_fallback",
                     "sources": [
                         "CUSTOM",
                         "DATA"
                     ],
                     "default_value": "text",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "ui_visibility": {
                     "name": "ui_visibility",
@@ -4868,7 +5236,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "validation_maximum": {
                     "name": "validation_maximum",
@@ -4881,7 +5250,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "validation_minimum": {
                     "name": "validation_minimum",
@@ -4894,7 +5264,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "validation_regex": {
                     "name": "validation_regex",
@@ -4907,7 +5278,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "weight": {
                     "name": "weight",
@@ -4920,7 +5292,8 @@
                         "DATA"
                     ],
                     "default_value": 100,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -4952,7 +5325,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -4965,7 +5339,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "value": {
                     "name": "value",
@@ -4978,7 +5353,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5028,7 +5404,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5078,7 +5455,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5110,7 +5488,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5142,7 +5521,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5174,7 +5554,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "assigned_object_type": {
                     "name": "assigned_object_type",
@@ -5187,7 +5568,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "comments": {
                     "name": "comments",
@@ -5200,7 +5582,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -5213,7 +5596,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created_by": {
                     "name": "created_by",
@@ -5226,7 +5610,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -5239,7 +5624,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -5253,7 +5639,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "kind": {
                     "name": "kind",
@@ -5266,7 +5653,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -5279,7 +5667,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 }
             }
         },
@@ -5305,13 +5694,14 @@
                     "nautobot_name": "action",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
+                    "importer": "choice_importer",
                     "definition": "action",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "changed_object_id": {
                     "name": "changed_object_id",
@@ -5324,7 +5714,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "changed_object_type": {
                     "name": "changed_object_type",
@@ -5337,7 +5728,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -5351,7 +5743,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "object_repr": {
                     "name": "object_repr",
@@ -5364,7 +5757,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "postchange_data": {
                     "name": "postchange_data",
@@ -5378,7 +5772,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "prechange_data": {
                     "name": "prechange_data",
@@ -5391,7 +5786,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "related_object_id": {
                     "name": "related_object_id",
@@ -5404,7 +5800,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "related_object_type": {
                     "name": "related_object_type",
@@ -5417,7 +5814,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "request_id": {
                     "name": "request_id",
@@ -5430,7 +5828,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "time": {
                     "name": "time",
@@ -5444,7 +5843,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "user": {
                     "name": "user",
@@ -5457,7 +5857,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "user_name": {
                     "name": "user_name",
@@ -5470,7 +5871,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5538,7 +5940,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -5551,7 +5954,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5657,7 +6061,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -5670,7 +6075,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "name": {
                     "name": "name",
@@ -5680,10 +6086,12 @@
                     "importer": "value_importer",
                     "definition": "name",
                     "sources": [
-                        "CACHE"
+                        "CACHE",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5715,7 +6123,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -5728,7 +6137,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5760,7 +6170,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -5773,7 +6184,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "object_id": {
                     "name": "object_id",
@@ -5786,7 +6198,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "tag": {
                     "name": "tag",
@@ -5799,7 +6212,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5831,7 +6245,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5863,7 +6278,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "status": {
                     "name": "status",
@@ -5876,7 +6292,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5930,7 +6347,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 1,
+            "imported_count": 2,
             "skipped_count": 0,
             "fields": {
                 "auth_key": {
@@ -5944,7 +6361,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "auth_type": {
                     "name": "auth_type",
@@ -5957,7 +6375,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "comments": {
                     "name": "comments",
@@ -5970,7 +6389,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -5983,7 +6403,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -5996,7 +6417,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -6009,7 +6431,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "group_id": {
                     "name": "group_id",
@@ -6022,7 +6445,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -6036,7 +6460,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -6049,7 +6474,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -6062,20 +6488,23 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "protocol": {
                     "name": "protocol",
                     "nautobot_name": "protocol",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
-                    "definition": "protocol",
+                    "importer": "fallback_importer",
+                    "definition": "define_fallback",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -6088,7 +6517,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6124,9 +6554,121 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 0,
+            "imported_count": 1,
             "skipped_count": 0,
             "fields": {
+                "address": {
+                    "name": "address",
+                    "nautobot_name": "address",
+                    "nautobot_internal_type": "Property",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "address",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "assigned_object_id": {
+                    "name": "assigned_object_id",
+                    "nautobot_name": "assigned_object_id",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "assigned_object_id",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "assigned_object_type": {
+                    "name": "assigned_object_type",
+                    "nautobot_name": "assigned_object_type",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "assigned_object_type",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "comments": {
+                    "name": "comments",
+                    "nautobot_name": "comments",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "comments",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "created": {
+                    "name": "created",
+                    "nautobot_name": "created",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": "datetime_importer",
+                    "definition": "created",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "custom_field_data": {
+                    "name": "custom_field_data",
+                    "nautobot_name": "custom_field_data",
+                    "nautobot_internal_type": "CustomFieldData",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "custom_field_data",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "description": {
+                    "name": "description",
+                    "nautobot_name": "description",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "dns_name": {
+                    "name": "dns_name",
+                    "nautobot_name": "dns_name",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "dns_name",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -6135,23 +6677,55 @@
                     "importer": null,
                     "definition": "id",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
+                },
+                "last_updated": {
+                    "name": "last_updated",
+                    "nautobot_name": "last_updated",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
+                },
+                "nat_inside": {
+                    "name": "nat_inside",
+                    "nautobot_name": "nat_inside_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "nat_inside",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 },
                 "role": {
                     "name": "role",
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
-                        "CUSTOM"
+                        "CUSTOM",
+                        "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -6161,10 +6735,40 @@
                     "importer": "status_importer",
                     "definition": "status",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
+                },
+                "tenant": {
+                    "name": "tenant",
+                    "nautobot_name": "tenant_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "tenant",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "vrf": {
+                    "name": "vrf",
+                    "nautobot_name": "vrf",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "vrf",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6236,9 +6840,93 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 0,
+            "imported_count": 1,
             "skipped_count": 0,
             "fields": {
+                "_children": {
+                    "name": "_children",
+                    "nautobot_name": "_children",
+                    "nautobot_internal_type": "PrivateProperty",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "_children",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "_depth": {
+                    "name": "_depth",
+                    "nautobot_name": "_depth",
+                    "nautobot_internal_type": "PrivateProperty",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "_depth",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "comments": {
+                    "name": "comments",
+                    "nautobot_name": "comments",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "comments",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "created": {
+                    "name": "created",
+                    "nautobot_name": "created",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": "datetime_importer",
+                    "definition": "created",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "custom_field_data": {
+                    "name": "custom_field_data",
+                    "nautobot_name": "custom_field_data",
+                    "nautobot_internal_type": "CustomFieldData",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "custom_field_data",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "description": {
+                    "name": "description",
+                    "nautobot_name": "description",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -6247,10 +6935,40 @@
                     "importer": null,
                     "definition": "id",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
+                },
+                "is_pool": {
+                    "name": "is_pool",
+                    "nautobot_name": "is_pool",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "is_pool",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "last_updated": {
+                    "name": "last_updated",
+                    "nautobot_name": "last_updated",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "location": {
                     "name": "location",
@@ -6263,7 +6981,36 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
+                },
+                "mark_utilized": {
+                    "name": "mark_utilized",
+                    "nautobot_name": "mark_utilized",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "mark_utilized",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "prefix": {
+                    "name": "prefix",
+                    "nautobot_name": "prefix",
+                    "nautobot_internal_type": "Property",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "prefix",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -6276,20 +7023,23 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "role": {
                     "name": "role",
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
-                        "CUSTOM"
+                        "CUSTOM",
+                        "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -6299,10 +7049,12 @@
                     "importer": "location_importer",
                     "definition": "site",
                     "sources": [
+                        "DATA",
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -6312,10 +7064,54 @@
                     "importer": "status_importer",
                     "definition": "status",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
+                },
+                "tenant": {
+                    "name": "tenant",
+                    "nautobot_name": "tenant_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "tenant",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "vlan": {
+                    "name": "vlan",
+                    "nautobot_name": "vlan_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "vlan",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "vrf": {
+                    "name": "vrf",
+                    "nautobot_name": "vrf",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "vrf",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6347,7 +7143,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6358,14 +7155,16 @@
             "nautobot_content_type": "extras.role",
             "nautobot_content_type_id": 80,
             "disable_reason": "",
-            "identifiers": null,
+            "identifiers": [
+                "name"
+            ],
             "disable_related_reference": false,
             "forward_references": null,
-            "pre_import": null,
+            "pre_import": "cache_roles",
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 0,
+            "imported_count": 1,
             "skipped_count": 0,
             "fields": {
                 "color": {
@@ -6379,7 +7178,8 @@
                         "CUSTOM"
                     ],
                     "default_value": "9e9e9e",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "content_types": {
                     "name": "content_types",
@@ -6392,7 +7192,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -6405,7 +7206,22 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
+                },
+                "name": {
+                    "name": "name",
+                    "nautobot_name": "name",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "name",
+                    "sources": [
+                        "IDENTIFIER"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6437,7 +7253,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6469,7 +7286,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6519,7 +7337,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -6532,7 +7351,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "location": {
                     "name": "location",
@@ -6545,7 +7365,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -6558,20 +7379,22 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "role": {
                     "name": "role",
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -6584,7 +7407,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -6597,7 +7421,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6629,7 +7454,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6661,7 +7487,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6765,7 +7592,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6797,7 +7625,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6829,7 +7658,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6861,7 +7691,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6893,7 +7724,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6925,7 +7757,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6957,7 +7790,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6989,7 +7823,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -7093,7 +7928,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -7106,7 +7942,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -7119,7 +7956,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -7132,7 +7970,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "group": {
                     "name": "group",
@@ -7146,7 +7985,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -7160,7 +8000,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -7173,7 +8014,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -7186,7 +8028,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "slug": {
                     "name": "slug",
@@ -7199,7 +8042,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -7231,7 +8075,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -7244,7 +8089,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -7257,7 +8103,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -7271,7 +8118,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -7284,7 +8132,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "level": {
                     "name": "level",
@@ -7298,7 +8147,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -7312,7 +8162,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -7325,7 +8176,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "parent": {
                     "name": "parent",
@@ -7338,7 +8190,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rght": {
                     "name": "rght",
@@ -7352,7 +8205,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "slug": {
                     "name": "slug",
@@ -7365,7 +8219,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -7379,7 +8234,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -7411,7 +8267,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -7497,7 +8354,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "constraints": {
                     "name": "constraints",
@@ -7510,7 +8368,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -7523,7 +8382,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "enabled": {
                     "name": "enabled",
@@ -7536,7 +8396,8 @@
                         "DATA"
                     ],
                     "default_value": true,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "groups": {
                     "name": "groups",
@@ -7549,7 +8410,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -7563,7 +8425,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "name": {
                     "name": "name",
@@ -7576,7 +8439,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "object_types": {
                     "name": "object_types",
@@ -7589,7 +8453,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "users": {
                     "name": "users",
@@ -7602,7 +8467,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -7634,7 +8500,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -7684,7 +8551,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -7697,7 +8565,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "location": {
                     "name": "location",
@@ -7710,7 +8579,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -7723,7 +8593,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -7736,7 +8607,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "type": {
                     "name": "type",
@@ -7749,7 +8621,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -7781,7 +8654,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -7813,7 +8687,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -7845,20 +8720,22 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "role": {
                     "name": "role",
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -7871,7 +8748,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -7903,7 +8781,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "parent": {
                     "name": "parent",
@@ -7916,7 +8795,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -7929,7 +8809,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -7988,19 +8869,43 @@
             "fields": {}
         }
     },
-    "validation_issues": {
+    "importer_issues": {
         "dcim.device": [
             [
                 "f510c5ff-e1f8-5adc-9fb5-30bc5791b42e",
                 "Device 1",
+                "ValidationError",
                 "[\"Invalid value for custom field 'device_custom_object': Value must be a string\"]"
+            ]
+        ],
+        "dcim.interfaceredundancygroup": [
+            [
+                "2586a272-455a-5e92-85d7-f41c0784630a",
+                "FHR Group clusterxl",
+                "InvalidChoiceValueIssue",
+                "{'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}"
+            ],
+            [
+                "f91623ed-a389-53a4-a4a2-943588c21446",
+                "Test FHR Group",
+                "InvalidChoiceValueIssue",
+                "{'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}"
             ]
         ],
         "dcim.location": [
             [
                 "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
                 "Site 1",
+                "ValidationError",
                 "{'parent': ['A Location of type Site must have a parent Location.']}"
+            ]
+        ],
+        "extras.customfield": [
+            [
+                "149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5",
+                "Device Custom Object",
+                "InvalidChoiceValueIssue",
+                "{'type': 'Invalid choice value: `object`, replaced with `text`'}"
             ]
         ]
     }

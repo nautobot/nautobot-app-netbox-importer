@@ -828,7 +828,7 @@ def tests(context, failfast=False, keepdb=False, lint_only=False):
         "print_summary": "Show a summary of the import. (default: True)",
         "save_json_summary_path": "File path to write the JSON mapping to. (default: generated-mappings.json)",
         "save_text_summary_path": "File path to write the text mapping to. (default: generated-mappings.txt)",
-        "sitegroup_parent_always_region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation issues `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
+        "sitegroup_parent_always_region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
         "update_paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
         "unrack_zero_uheight_devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
     }

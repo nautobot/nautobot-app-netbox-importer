@@ -16,13 +16,14 @@ from typing import NamedTuple
 from typing import Optional
 from typing import OrderedDict
 from typing import Set
+from typing import Tuple
 from typing import Union
 from uuid import UUID
 
 from diffsync.enum import DiffSyncModelFlags
-from nautobot.core.choices import ChoiceSet
 from nautobot.core.models.tree_queries import TreeModel
 
+from nautobot_netbox_importer.base import NOTHING
 from nautobot_netbox_importer.base import ContentTypeStr
 from nautobot_netbox_importer.base import ContentTypeValue
 from nautobot_netbox_importer.base import FieldName
@@ -45,11 +46,35 @@ from .base import NautobotBaseModelType
 from .base import normalize_datetime
 from .base import source_pk_to_uuid
 from .exceptions import NautobotModelNotFound
+from .exceptions import NetBoxImporterException
 from .nautobot import IMPORT_ORDER
 from .nautobot import DiffSyncBaseModel
 from .nautobot import NautobotAdapter
 from .nautobot import NautobotField
 from .nautobot import NautobotModelWrapper
+
+
+class SourceFieldImporterIssue(NetBoxImporterException):
+    """Raised when an error occurs during field import.
+
+    Raising this exception gathers the issue and continues with the next importer.
+    """
+
+    def __init__(self, message: str, field: "SourceField"):
+        """Initialize the exception."""
+        super().__init__(message)
+        self.field = field
+
+
+class InvalidChoiceValueIssue(SourceFieldImporterIssue):
+    """Raised when an invalid choice value is encountered."""
+
+    def __init__(self, field: "SourceField", value: Any, replacement: Any = NOTHING):
+        """Initialize the exception."""
+        message = f"Invalid choice value: `{value}`"
+        if replacement is not NOTHING:
+            message += f", replaced with `{replacement}`"
+        super().__init__(message, field)
 
 
 class SourceRecord(NamedTuple):
@@ -81,12 +106,13 @@ class SourceFieldSource(Enum):
     DATA = auto()  # Fields added from input data
     CUSTOM = auto()  # Fields added by customizing the importer
     SIBLING = auto()  # Fields defined as siblings of other fields, imported by other field importer
+    IDENTIFIER = auto()  # Fields used as identifiers
 
 
 PreImport = Callable[[RecordData, ImporterPass], PreImportResult]
-FieldImporterFallback = Callable[["SourceField", RecordData, DiffSyncBaseModel], None]
 SourceDataGenerator = Callable[[], Iterable[SourceRecord]]
 SourceFieldImporter = Callable[[RecordData, DiffSyncBaseModel], None]
+SourceFieldImporterFallback = Callable[["SourceField", RecordData, DiffSyncBaseModel, Exception], None]
 SourceFieldImporterFactory = Callable[["SourceField"], None]
 SourceFieldDefinition = Union[
     None,  # Ignore field
@@ -210,7 +236,7 @@ class SourceAdapter(BaseAdapter):
             if wrapper:
                 self.summary.add(wrapper.get_summary(wrapper_to_id.get(wrapper, None)))
 
-        self.summary.set_validation_issues(self.nautobot.get_validation_issues())
+        self.summary.set_importer_issues(self.nautobot.get_importer_issues())
 
     def get_or_create_wrapper(self, value: Union[None, SourceContentType]) -> "SourceModelWrapper":
         """Get a source Wrapper for a given content type."""
@@ -404,7 +430,7 @@ class SourceModelWrapper:
             return
 
         pk_field = self.add_field(nautobot_wrapper.pk_field.name, SourceFieldSource.AUTO)
-        pk_field.set_nautobot_field(pk_field.name)
+        pk_field.set_nautobot_field()
         pk_field.processed = True
 
         if issubclass(nautobot_wrapper.model, TreeModel):
@@ -416,6 +442,26 @@ class SourceModelWrapper:
     def __str__(self) -> str:
         """Return a string representation of the wrapper."""
         return f"{self.__class__.__name__}<{self.content_type} -> {self.nautobot.content_type}>"
+
+    def cache_record_uids(self, source: RecordData, nautobot_uid: Optional[Uid] = None) -> Uid:
+        """Cache record identifier mappings.
+
+        When `nautobot_uid` is not provided, it is generated from the source data and caching is processed there.
+        """
+        if not nautobot_uid:
+            return self.get_pk_from_data(source)
+
+        if self.identifiers:
+            identifiers_data = [source[field_name] for field_name in self.identifiers]
+            self._uid_to_pk_cache[json.dumps(identifiers_data)] = nautobot_uid
+
+        source_uid = source.get(self.nautobot.pk_field.name, None)
+        if source_uid and source_uid not in self._uid_to_pk_cache:
+            self._uid_to_pk_cache[source_uid] = nautobot_uid
+
+        self._uid_to_pk_cache[nautobot_uid] = nautobot_uid
+
+        return nautobot_uid
 
     def get_summary(self, content_type_id) -> ModelSummary:
         """Get a summary of the model."""
@@ -443,10 +489,18 @@ class SourceModelWrapper:
     def set_identifiers(self, identifiers: Iterable[FieldName]) -> None:
         """Set identifiers for the model."""
         if self.identifiers:
-            raise ValueError(f"Duplicate identifiers {identifiers} for {self.identifiers}")
+            if sorted(list(identifiers)) == self.identifiers:
+                return
+            raise ValueError(
+                f"Different identifiers were already set up | original: `{self.identifiers}` | new: `{identifiers}`"
+            )
 
-        if list(identifiers) != [self.nautobot.pk_field.name]:
-            self.identifiers = list(identifiers)
+        if list(identifiers) == [self.nautobot.pk_field.name]:
+            return
+
+        self.identifiers = sorted(list(identifiers))
+        for identifier in self.identifiers:
+            self.add_field(identifier, SourceFieldSource.IDENTIFIER)
 
     def disable_field(self, field_name: FieldName, reason: str) -> "SourceField":
         """Disable field importing."""
@@ -511,6 +565,8 @@ class SourceModelWrapper:
             raise ValueError(f"Unsupported pk_type {self.nautobot.pk_field.internal_type}")
 
         self._uid_to_pk_cache[uid] = result
+        self._uid_to_pk_cache[result] = result
+
         return result
 
     def get_pk_from_identifiers(self, data: Union[Uid, Iterable[Uid]]) -> Uid:
@@ -526,26 +582,37 @@ class SourceModelWrapper:
         if len(self.identifiers) != len(data):
             raise ValueError(f"Invalid identifiers {data} for {self.identifiers}")
 
-        uid = json.dumps(data)
-        if uid in self._uid_to_pk_cache:
-            return self._uid_to_pk_cache[uid]
+        identifiers_uid = json.dumps(data)
+        if identifiers_uid in self._uid_to_pk_cache:
+            return self._uid_to_pk_cache[identifiers_uid]
 
         filter_kwargs = {self.identifiers[index]: value for index, value in enumerate(data)}
         try:
             nautobot_instance = self.nautobot.model.objects.get(**filter_kwargs)
-            uid = getattr(nautobot_instance, self.nautobot.pk_field.name)
-            if not uid:
-                raise ValueError(f"Invalid uid {uid} for {nautobot_instance}")
-            self._uid_to_pk_cache[uid] = uid
-            return uid
+            nautobot_uid = getattr(nautobot_instance, self.nautobot.pk_field.name)
+            if not nautobot_uid:
+                raise ValueError(f"Invalid args {filter_kwargs} for {nautobot_instance}")
+            self._uid_to_pk_cache[identifiers_uid] = nautobot_uid
+            self._uid_to_pk_cache[nautobot_uid] = nautobot_uid
+            return nautobot_uid
         except self.nautobot.model.DoesNotExist:  # type: ignore
-            return self.get_pk_from_uid(uid)
+            return self.get_pk_from_uid(identifiers_uid)
 
     def get_pk_from_data(self, data: RecordData) -> Uid:
         """Get a source primary key for a given source data."""
         if not self.identifiers:
             return self.get_pk_from_uid(data[self.nautobot.pk_field.name])
-        return self.get_pk_from_identifiers(data[field_name] for field_name in self.identifiers)
+
+        data_uid = data.get(self.nautobot.pk_field.name, None)
+        if data_uid and data_uid in self._uid_to_pk_cache:
+            return self._uid_to_pk_cache[data_uid]
+
+        result = self.get_pk_from_identifiers(data[field_name] for field_name in self.identifiers)
+
+        if data_uid:
+            self._uid_to_pk_cache[data_uid] = result
+
+        return result
 
     def import_record(self, data: RecordData, target: Optional[DiffSyncBaseModel] = None) -> DiffSyncBaseModel:
         """Import a single item from the source."""
@@ -553,12 +620,23 @@ class SourceModelWrapper:
         if self.importers is None:
             raise RuntimeError(f"Importers not created for {self}")
 
-        uid = self.get_pk_from_data(data)
-        if not target:
+        if target:
+            uid = getattr(target, self.nautobot.pk_field.name)
+        else:
+            uid = self.get_pk_from_data(data)
             target = self.get_or_create(uid)
 
         for importer in self.importers:
-            importer(data, target)
+            try:
+                importer(data, target)
+            # pylint: disable=broad-exception-caught
+            except Exception as error:
+                self.nautobot.add_issue(
+                    error.__class__.__name__,
+                    getattr(error, "message", "") or str(error),
+                    target=target,
+                    field=error.field.nautobot if isinstance(error, SourceFieldImporterIssue) else None,
+                )
 
         self.adapter.logger.debug("Imported %s %s", uid, target.get_attrs())
 
@@ -716,6 +794,7 @@ class SourceField:
             sources=sorted(source.name for source in self.sources),
             default_value=serialize_to_summary(self.default_value),
             disable_reason=self.disable_reason,
+            required=self._nautobot.required if self._nautobot else False,
         )
 
     def disable(self, reason: str) -> None:
@@ -725,7 +804,7 @@ class SourceField:
         self.processed = True
         self.disable_reason = reason
 
-    def handle_sibling(self, sibling: Union["SourceField", FieldName], nautobot_name: FieldName) -> "SourceField":
+    def handle_sibling(self, sibling: Union["SourceField", FieldName], nautobot_name: FieldName = "") -> "SourceField":
         """Specify, that this field importer handles other field."""
         if not self.importer:
             raise RuntimeError(f"Call `handle sibling` after setting importer for {self}")
@@ -764,7 +843,7 @@ class SourceField:
             return
 
         if isinstance(self.definition, FieldName):
-            self.set_default_importer(self.definition)
+            self.set_importer(nautobot_name=self.definition)
         elif callable(self.definition):
             self.definition(self)
         else:
@@ -778,9 +857,9 @@ class SourceField:
         result = source[self.name]
         return self.default_value if result in EMPTY_VALUES else result
 
-    def set_nautobot_field(self, nautobot_name: FieldName) -> NautobotField:
+    def set_nautobot_field(self, nautobot_name: FieldName = "") -> NautobotField:
         """Set a Nautobot field name for the field."""
-        result = self.wrapper.nautobot.add_field(nautobot_name)
+        result = self.wrapper.nautobot.add_field(nautobot_name or self.name)
         if result.field:
             default_value = getattr(result.field, "default", None)
             if default_value not in EMPTY_VALUES and not isinstance(default_value, Callable):
@@ -790,38 +869,57 @@ class SourceField:
             self.disable("Last updated field is updated with each write")
         return result
 
-    def set_importer(self, importer: Optional[SourceFieldImporter], override=False) -> None:
-        """Set field importer."""
+    # pylint: disable=too-many-branches
+    def set_importer(
+        self,
+        importer: Optional[SourceFieldImporter] = None,
+        nautobot_name: Optional[FieldName] = "",
+        override=False,
+    ) -> Optional[SourceFieldImporter]:
+        """Sets the importer and Nautobot field if not already specified.
+
+        If `nautobot_name` is not provided, the field name is used.
+
+        Passing None to `nautobot_name` indicates that there is custom mapping without a direct relationship to a Nautobot field.
+        """
+        if self.disable_reason:
+            raise RuntimeError(f"Can't set importer for disabled {self}")
         if self.importer and not override:
             raise RuntimeError(f"Importer already set for {self}")
-        self.importer = importer
+        if not self._nautobot and nautobot_name is not None:
+            self.set_nautobot_field(nautobot_name)
 
-    def set_default_importer(self, nautobot_name: FieldName) -> None:
-        """Set default field importer."""
-        nautobot = self.set_nautobot_field(nautobot_name)
-        if self.disable_reason or not nautobot.can_import:
-            return
+        if importer:
+            self.importer = importer
+            return importer
 
-        if nautobot.internal_type == InternalFieldType.JSON_FIELD:
+        if self.disable_reason or not self.nautobot.can_import:
+            return None
+
+        internal_type = self.nautobot.internal_type
+
+        if internal_type == InternalFieldType.JSON_FIELD:
             self.set_json_importer()
-        elif nautobot.internal_type == InternalFieldType.DATE_FIELD:
+        elif internal_type == InternalFieldType.DATE_FIELD:
             self.set_date_importer()
-        elif nautobot.internal_type == InternalFieldType.DATE_TIME_FIELD:
+        elif internal_type == InternalFieldType.DATE_TIME_FIELD:
             self.set_datetime_importer()
-        elif nautobot.internal_type == InternalFieldType.UUID_FIELD:
+        elif internal_type == InternalFieldType.UUID_FIELD:
             self.set_uuid_importer()
-        elif nautobot.internal_type == InternalFieldType.MANY_TO_MANY_FIELD:
+        elif internal_type == InternalFieldType.MANY_TO_MANY_FIELD:
             self.set_m2m_importer()
-        elif nautobot.internal_type == InternalFieldType.STATUS_FIELD:
+        elif internal_type == InternalFieldType.STATUS_FIELD:
             self.set_status_importer()
-        elif nautobot.is_reference:
+        elif self.nautobot.is_reference:
             self.set_relation_importer()
-        elif getattr(nautobot, "choices", None):
+        elif getattr(self.nautobot.field, "choices", None):
             self.set_choice_importer()
-        elif nautobot.is_integer:
+        elif self.nautobot.is_integer:
             self.set_integer_importer()
         else:
             self.set_value_importer()
+
+        return self.importer
 
     def set_value_importer(self) -> None:
         """Set a value importer."""
@@ -848,13 +946,20 @@ class SourceField:
 
         self.set_importer(json_importer)
 
-    def set_choice_importer(self, fallback: Optional[FieldImporterFallback] = None) -> None:
+    def set_choice_importer(self) -> None:
         """Set a choice field importer."""
-        choices_class = getattr(self.nautobot.field, "choices", None)
-        if not choices_class or not issubclass(choices_class, ChoiceSet):
-            raise ValueError(f"Invalid choices_class for {self}")
+        field_choices = getattr(self.nautobot.field, "choices", None)
+        if not field_choices:
+            raise ValueError(f"Invalid field_choices for {self}")
 
-        choices = dict(choices_class.CHOICES)
+        def get_choices(items: Iterable) -> Generator[Tuple[Any, Any], None, None]:
+            for key, value in items:
+                if isinstance(value, (list, tuple)):
+                    yield from get_choices(value)
+                else:
+                    yield key, value
+
+        choices = dict(get_choices(field_choices))
 
         def choice_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = self.get_source_value(source)
@@ -863,10 +968,12 @@ class SourceField:
 
             if value in choices:
                 setattr(target, self.nautobot.name, value)
-            elif fallback:
-                fallback(self, source, target)
+            elif self.nautobot.required:
+                # Set the choice value even it's not valid in Nautobot as it's required
+                setattr(target, self.nautobot.name, value)
+                raise InvalidChoiceValueIssue(self, value)
             else:
-                raise ValueError(f"Invalid value {value} for field {self}")
+                raise InvalidChoiceValueIssue(self, value, None)
 
         self.set_importer(choice_importer)
 
@@ -1040,14 +1147,15 @@ class SourceField:
             type_field = self.wrapper.fields.get(self.name[:-3] + "_type", None)
             if type_field and type_field.nautobot.is_content_type:
                 # Handles `<field name>_id` and `<field name>_type` fields combination
-                return self.set_relation_and_type_importer(type_field)
+                self.set_relation_and_type_importer(type_field)
+                return
 
         def uuid_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
             if value not in EMPTY_VALUES:
                 setattr(target, self.nautobot.name, UUID(value))
 
-        return self.set_importer(uuid_importer)
+        self.set_importer(uuid_importer)
 
     def set_date_importer(self) -> None:
         """Set a date importer."""

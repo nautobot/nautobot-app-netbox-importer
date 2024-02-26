@@ -37,7 +37,6 @@ def define_location(field: SourceField) -> None:
 
         setattr(target, field.nautobot.name, result)
 
-    field.set_nautobot_field(field.name)
     field.set_importer(location_importer)
     field.handle_sibling("site", field.nautobot.name)
     field.handle_sibling("region", field.nautobot.name)
@@ -62,7 +61,6 @@ def _define_location_parent(field: SourceField) -> None:
 
         setattr(target, field.nautobot.name, result)
 
-    field.set_nautobot_field(field.name)
     field.set_importer(location_parent_importer)
     field.handle_sibling("site", field.nautobot.name)
 
@@ -72,8 +70,6 @@ def _define_site_group(field: SourceField) -> None:
     site_group_wrapper = wrapper.adapter.wrappers["dcim.sitegroup"]
     location_type_wrapper = wrapper.adapter.wrappers["dcim.locationtype"]
     site_type_uid = location_type_wrapper.get_pk_from_uid("Site")
-
-    field.set_nautobot_field("location_type")
 
     def site_group_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
         group = source.get(field.name, None)
@@ -86,7 +82,7 @@ def _define_site_group(field: SourceField) -> None:
 
         setattr(target, field.nautobot.name, result)
 
-    field.set_importer(site_group_importer)
+    field.set_importer(site_group_importer, "location_type")
 
 
 def setup(adapter: SourceAdapter) -> None:

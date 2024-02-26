@@ -32,7 +32,6 @@ def _define_tagged_object(field: SourceField) -> None:
         setattr(target, content_type_field.nautobot.name, related_wrapper.nautobot.content_type_instance.pk)
         related_wrapper.add_reference(tag_wrapper, tag_uuid)
 
-    field.set_nautobot_field(field.name)
     field.set_importer(tagged_object_importer)
     tag_field = field.handle_sibling("tag", "tag")
     content_type_field = field.handle_sibling("content_type", "content_type")
@@ -46,8 +45,6 @@ def _setup_content_types(adapter: SourceAdapter) -> None:
     netbox = {"id": 0}
 
     def define_app_label(field: SourceField) -> None:
-        field.set_nautobot_field(field.name)
-
         def content_types_mapper_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             app_label = source["app_label"]
             model = source["model"]

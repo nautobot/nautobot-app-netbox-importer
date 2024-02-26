@@ -1074,6 +1074,19 @@
   }
 },
 {
+  "model": "dcim.rackrole",
+  "pk": 1,
+  "fields": {
+    "created": "2020-05-28T00:00:00Z",
+    "last_updated": "2020-05-28T08:28:04.662Z",
+    "custom_field_data": {},
+    "name": "Network",
+    "slug": "network",
+    "description": "Dedicated to network",
+    "color": "00ff00"
+  }
+},
+{
   "model": "dcim.device",
   "pk": 1,
   "fields": {
@@ -1138,7 +1151,7 @@
     "local_context_data": null,
     "config_template": null,
     "device_type": 2,
-    "role": 1,
+    "role": 2,
     "tenant": null,
     "platform": null,
     "name": "Half U Device",
@@ -1185,6 +1198,21 @@
     "description": "",
     "color": "9e9e9e",
     "vm_role": true,
+    "config_template": null
+  }
+},
+{
+  "model": "dcim.devicerole",
+  "pk": 2,
+  "fields": {
+    "created": "2020-05-26T00:00:00Z",
+    "last_updated": "2020-05-28T09:09:08.533Z",
+    "custom_field_data": {},
+    "name": "Network",
+    "slug": "network",
+    "description": "",
+    "color": "2196f3",
+    "vm_role": false,
     "config_template": null
   }
 },
@@ -1289,7 +1317,7 @@
     "location": null,
     "tenant": null,
     "status": "active",
-    "role": null,
+    "role": 1,
     "serial": "",
     "asset_tag": null,
     "type": "",
@@ -2527,50 +2555,38 @@
   "model": "extras.objectchange",
   "pk": 20,
   "fields": {
-    "time": "2024-02-19T07:42:49.412Z",
+    "time": "2024-02-21T12:42:11.600Z",
     "user": [
       "admin"
     ],
     "user_name": "admin",
-    "request_id": "89d62fb5-12e9-4ad8-851e-e069ddad235f",
+    "request_id": "817e9493-eb01-4d05-98f8-a184ef768635",
     "action": "create",
     "changed_object_type": [
-      "dcim",
-      "rack"
+      "ipam",
+      "prefix"
     ],
     "changed_object_id": 1,
     "related_object_type": null,
     "related_object_id": null,
-    "object_repr": "Rack 1",
+    "object_repr": "127.0.0.0/8",
     "prechange_data": null,
     "postchange_data": {
-      "name": "Rack 1",
+      "vrf": null,
       "role": null,
-      "site": 1,
+      "site": null,
       "tags": [],
-      "type": "",
-      "width": 19,
-      "serial": "",
+      "vlan": null,
+      "prefix": "127.0.0.0/8",
       "status": "active",
       "tenant": null,
-      "weight": null,
-      "created": "2024-02-19T07:42:49.405Z",
+      "created": "2024-02-21T12:42:11.589Z",
+      "is_pool": false,
       "comments": "",
-      "location": null,
-      "u_height": 42,
-      "asset_tag": null,
-      "desc_units": false,
-      "max_weight": null,
-      "outer_unit": "",
       "description": "",
-      "facility_id": null,
-      "outer_depth": null,
-      "outer_width": null,
-      "weight_unit": "",
-      "last_updated": "2024-02-19T07:42:49.405Z",
+      "last_updated": "2024-02-21T12:42:11.589Z",
       "custom_fields": {},
-      "starting_unit": 1,
-      "mounting_depth": null
+      "mark_utilized": false
     }
   }
 },
@@ -2578,110 +2594,38 @@
   "model": "extras.objectchange",
   "pk": 21,
   "fields": {
-    "time": "2024-02-19T07:43:21.432Z",
+    "time": "2024-02-21T12:20:21.977Z",
     "user": [
       "admin"
     ],
     "user_name": "admin",
-    "request_id": "906d4351-7c56-4dbb-8984-60be9bf46598",
-    "action": "update",
+    "request_id": "b2840f34-f97c-467a-9846-4f64ff83a37a",
+    "action": "create",
     "changed_object_type": [
-      "dcim",
-      "device"
+      "ipam",
+      "ipaddress"
     ],
     "changed_object_id": 1,
     "related_object_type": null,
     "related_object_id": null,
-    "object_repr": "Device 1",
-    "prechange_data": {
-      "face": "",
-      "name": "Device 1",
-      "rack": null,
-      "role": 1,
-      "site": 1,
-      "tags": [],
-      "oob_ip": null,
-      "serial": "",
-      "status": "active",
-      "tenant": null,
-      "airflow": "",
-      "cluster": null,
-      "created": "2024-02-14T12:22:40.699Z",
-      "comments": "",
-      "latitude": null,
-      "location": null,
-      "platform": null,
-      "position": null,
-      "asset_tag": null,
-      "longitude": null,
-      "description": "",
-      "device_type": 1,
-      "primary_ip4": null,
-      "primary_ip6": null,
-      "vc_position": null,
-      "vc_priority": null,
-      "last_updated": "2024-02-15T11:45:02.188Z",
-      "custom_fields": {
-        "device_custom_choices": "Choice 1"
-      },
-      "config_template": null,
-      "interface_count": 0,
-      "rear_port_count": 0,
-      "virtual_chassis": null,
-      "device_bay_count": 0,
-      "front_port_count": 0,
-      "module_bay_count": 0,
-      "power_port_count": 0,
-      "console_port_count": 0,
-      "local_context_data": null,
-      "power_outlet_count": 0,
-      "inventory_item_count": 0,
-      "console_server_port_count": 0
-    },
+    "object_repr": "127.0.0.1/8",
+    "prechange_data": null,
     "postchange_data": {
-      "face": "",
-      "name": "Device 1",
-      "rack": 1,
-      "role": 1,
-      "site": 1,
+      "vrf": null,
+      "role": "loopback",
       "tags": [],
-      "oob_ip": null,
-      "serial": "",
       "status": "active",
       "tenant": null,
-      "airflow": "",
-      "cluster": null,
-      "created": "2024-02-14T12:22:40.699Z",
+      "address": "127.0.0.1/8",
+      "created": "2024-02-21T12:20:21.970Z",
       "comments": "",
-      "latitude": null,
-      "location": null,
-      "platform": null,
-      "position": null,
-      "asset_tag": null,
-      "longitude": null,
+      "dns_name": "",
+      "nat_inside": null,
       "description": "",
-      "device_type": 1,
-      "primary_ip4": null,
-      "primary_ip6": null,
-      "vc_position": null,
-      "vc_priority": null,
-      "last_updated": "2024-02-19T07:43:21.424Z",
-      "custom_fields": {
-        "device_custom_choices": "Choice 1"
-      },
-      "config_template": null,
-      "interface_count": 0,
-      "rear_port_count": 0,
-      "virtual_chassis": null,
-      "device_bay_count": 0,
-      "front_port_count": 0,
-      "module_bay_count": 0,
-      "power_port_count": 0,
-      "console_port_count": 0,
-      "local_context_data": null,
-      "power_outlet_count": 0,
-      "inventory_item_count": 0,
-      "console_server_port_count": 0
+      "last_updated": "2024-02-21T12:20:21.970Z",
+      "custom_fields": {},
+      "assigned_object_id": null,
+      "assigned_object_type": null
     }
   }
 },
@@ -2810,6 +2754,64 @@
     "protocol": "vrrp3",
     "auth_type": "md5",
     "auth_key": ""
+  }
+},
+{
+  "model": "ipam.fhrpgroup",
+  "pk": 2,
+  "fields": {
+    "created": "2024-01-23T08:21:41.353Z",
+    "last_updated": "2024-01-23T08:21:41.353Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "group_id": 3,
+    "name": "FHR Group clusterxl",
+    "protocol": "clusterxl",
+    "auth_type": "md5",
+    "auth_key": ""
+  }
+},
+{
+  "model": "ipam.ipaddress",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-21T12:20:21.970Z",
+    "last_updated": "2024-02-21T12:41:44.081Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "address": "127.0.0.1/8",
+    "vrf": null,
+    "tenant": null,
+    "status": "active",
+    "role": "loopback",
+    "assigned_object_type": null,
+    "assigned_object_id": null,
+    "nat_inside": null,
+    "dns_name": ""
+  }
+},
+{
+  "model": "ipam.prefix",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-21T12:42:11.589Z",
+    "last_updated": "2024-02-21T12:42:11.589Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "prefix": "127.0.0.0/8",
+    "site": null,
+    "vrf": null,
+    "tenant": null,
+    "vlan": null,
+    "status": "active",
+    "role": null,
+    "is_pool": false,
+    "mark_utilized": false,
+    "_depth": 0,
+    "_children": 0
   }
 },
 {

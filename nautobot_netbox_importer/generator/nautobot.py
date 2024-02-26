@@ -22,8 +22,8 @@ from nautobot.core.utils.lookup import get_model_from_name
 from nautobot_netbox_importer.base import FieldName
 from nautobot_netbox_importer.base import RecordData
 from nautobot_netbox_importer.base import logger
-from nautobot_netbox_importer.summary import ValidationIssue
-from nautobot_netbox_importer.summary import ValidationIssues
+from nautobot_netbox_importer.summary import ImporterIssue
+from nautobot_netbox_importer.summary import ImporterIssues
 
 from .base import AUTO_ADD_FIELDS
 from .base import EMPTY_VALUES
@@ -125,12 +125,12 @@ class NautobotAdapter(BaseAdapter):
         super().__init__("Nautobot", *args, **kwargs)
         self.wrappers: Dict[ContentTypeStr, NautobotModelWrapper] = {}
 
-    def get_validation_issues(self) -> ValidationIssues:
-        """Re-run clean() on all instances that failed validation."""
+    def get_importer_issues(self) -> ImporterIssues:
+        """Get all importer issues."""
         result = {}
 
         for wrapper in self.wrappers.values():
-            issues = wrapper.get_validation_issues()
+            issues = wrapper.get_importer_issues()
             if issues:
                 result[wrapper.content_type] = issues
 
@@ -152,6 +152,7 @@ class NautobotField:
         self.name = name
         self.internal_type = internal_type
         self.field = field
+        self.required = not (getattr(field, "null", False) or getattr(field, "blank", False)) if field else False
 
         # Forced fields needs to be saved in a separate step after the initial save.
         self.force = self.name == "created"
@@ -213,6 +214,7 @@ class NautobotModelWrapper:
         """Initialize the wrapper."""
         self._diffsync_class: Optional[Type[DiffSyncBaseModel]] = None
         self._clean_failures: Set[Uid] = set()
+        self._issues: Set[ImporterIssue] = set()
         self._content_type_instance = None
         self.flags = DiffSyncModelFlags.SKIP_UNMATCHED_DST
 
@@ -313,7 +315,9 @@ class NautobotModelWrapper:
                 annotation = INTERNAL_TYPE_TO_ANNOTATION[field.internal_type]
 
             attributes.append(field.name)
-            annotations[field.name] = Optional[annotation]
+            if not field.required:
+                annotation = Optional[annotation]
+            annotations[field.name] = annotation
             class_definition[field.name] = PydanticField(default=None)
 
         try:
@@ -325,6 +329,23 @@ class NautobotModelWrapper:
         logger.debug("Created DiffSync Model %s", class_definition)
 
         return self._diffsync_class
+
+    def add_issue(
+        self,
+        issue_type: str,
+        message: str,
+        target: Optional["DiffSyncBaseModel"] = None,
+        field: Optional[NautobotField] = None,
+    ) -> None:
+        """Add an issue to the importer."""
+        issue = ImporterIssue(
+            str(getattr(target, self.pk_field.name)) if target else "",
+            "",
+            issue_type,
+            f"{{'{field.name}': '{message}'}}" if field else message,
+        )
+        self._issues.add(issue)
+        logger.warning(str(issue))
 
     def find_or_create(self, identifiers_kwargs: dict) -> Optional[DiffSyncModel]:
         """Find a DiffSync instance based on filter kwargs or create a new instance from Nautobot if possible."""
@@ -353,32 +374,47 @@ class NautobotModelWrapper:
 
         return result
 
-    def get_validation_issues(self) -> List[ValidationIssue]:
+    def get_importer_issues(self) -> List[ImporterIssue]:
         """Get the set of instances that failed to clean."""
         result = []
 
-        for uid in self._clean_failures:
+        def find_instance(uid: Uid) -> Optional[NautobotBaseModel]:
             try:
-                instance = self.model.objects.get(id=uid)
+                return self.model.objects.get(id=uid)
             except self.model.DoesNotExist as error:  # type: ignore
-                # This can happen with Tree models, some issue is there. Ignore for now, just add the validation issue.
+                # This can happen with Tree models, some issue is there. Ignore for now, just add the importer issue.
                 result.append(
-                    ValidationIssue(
+                    ImporterIssue(
                         str(uid),
                         "",
+                        error.__class__.__name__,
                         f"Instance was not found, event it was saved. {error}",
                     )
                 )
-            else:
-                try:
-                    instance.clean()
-                except ValidationError as error:
-                    result.append(ValidationIssue(str(uid), str(instance), str(error)))
-                # pylint: disable-next=broad-exception-caught
-                except Exception as error:
-                    result.append(ValidationIssue(str(uid), str(instance), f"Unknown error: {error}"))
+            return None
+
+        for uid in self._clean_failures:
+            instance = find_instance(uid)
+            if not instance:
+                continue
+            try:
+                instance.clean()
+            except ValidationError as error:
+                result.append(ImporterIssue(str(uid), str(instance), error.__class__.__name__, str(error)))
+            # pylint: disable-next=broad-exception-caught
+            except Exception as error:
+                result.append(ImporterIssue(str(uid), str(instance), error.__class__.__name__, str(error)))
 
         self._clean_failures = set()
+
+        for issue in self._issues:
+            instance = find_instance(issue.uid) if issue.uid else None
+            if instance:
+                result.append(ImporterIssue(issue.uid, str(instance), issue.issue_type, issue.message))
+            else:
+                result.append(issue)
+
+        self._issues = set()
 
         return result
 
@@ -503,7 +539,7 @@ class NautobotModelWrapper:
             instance.clean()
         # pylint: disable=broad-exception-caught
         except Exception as exc:
-            # `clean()` can be called again by getting `validation_issues` property after importing all data
+            # `clean()` can be called again by getting `importer_issues` property after importing all data
             uid = getattr(instance, self.pk_field.name, None)
             if not isinstance(uid, (UUID, str, int)):
                 raise TypeError(f"Invalid uid {uid}") from exc
