@@ -28,7 +28,7 @@
     "vid": 300,
     "name": "Wireless",
     "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
-    "role": "aeb42967-678b-5d83-b25f-de46ae18875b",
+    "role": "2a53f46b-41e1-5f02-865a-163c8edd429a",
     "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
     "description": ""
   }
@@ -45,7 +45,7 @@
     "vid": 200,
     "name": "Voice",
     "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
-    "role": "a8dc5278-d550-5d36-abd7-47f6d1a8b0b1",
+    "role": "cfe1ee60-d4a6-5c9f-b35c-0d92aa3fade1",
     "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
     "description": ""
   }

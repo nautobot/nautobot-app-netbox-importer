@@ -81,7 +81,8 @@
                     "importer": "value_importer",
                     "definition": "name",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -335,7 +336,8 @@
                     "importer": "value_importer",
                     "definition": "username",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -1317,7 +1319,8 @@
                     "definition": "define_app_label",
                     "sources": [
                         "CUSTOM",
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -1345,7 +1348,8 @@
                     "importer": "value_importer",
                     "definition": "model",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -2353,8 +2357,8 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM",
                         "DATA"
@@ -2552,8 +2556,8 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM"
                     ],
@@ -2962,10 +2966,12 @@
             "nautobot_content_type": "extras.role",
             "nautobot_content_type_id": 80,
             "disable_reason": "",
-            "identifiers": null,
+            "identifiers": [
+                "name"
+            ],
             "disable_related_reference": false,
             "forward_references": null,
-            "pre_import": null,
+            "pre_import": "cache_roles",
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
@@ -3080,7 +3086,8 @@
                     "importer": "value_importer",
                     "definition": "name",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -7200,8 +7207,8 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM",
                         "DATA"
@@ -7508,10 +7515,12 @@
             "nautobot_content_type": "extras.role",
             "nautobot_content_type_id": 80,
             "disable_reason": "",
-            "identifiers": null,
+            "identifiers": [
+                "name"
+            ],
             "disable_related_reference": false,
             "forward_references": null,
-            "pre_import": null,
+            "pre_import": "cache_roles",
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
@@ -7626,7 +7635,8 @@
                     "importer": "value_importer",
                     "definition": "name",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -9946,7 +9956,8 @@
                     "importer": "value_importer",
                     "definition": "name",
                     "sources": [
-                        "CACHE"
+                        "CACHE",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -10646,8 +10657,8 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM",
                         "DATA"
@@ -10960,8 +10971,8 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM",
                         "DATA"
@@ -11183,10 +11194,12 @@
             "nautobot_content_type": "extras.role",
             "nautobot_content_type_id": 80,
             "disable_reason": "",
-            "identifiers": null,
+            "identifiers": [
+                "name"
+            ],
             "disable_related_reference": false,
             "forward_references": null,
-            "pre_import": null,
+            "pre_import": "cache_roles",
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
@@ -11300,7 +11313,8 @@
                     "importer": "value_importer",
                     "definition": "name",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "IDENTIFIER"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -11683,8 +11697,8 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM",
                         "DATA"
@@ -13699,8 +13713,8 @@
                     "nautobot_name": "role_id",
                     "nautobot_internal_type": "RoleField",
                     "nautobot_can_import": true,
-                    "importer": "relation_importer",
-                    "definition": "define_relation",
+                    "importer": "role_importer",
+                    "definition": "define_role",
                     "sources": [
                         "CUSTOM",
                         "DATA"

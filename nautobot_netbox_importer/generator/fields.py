@@ -1,13 +1,18 @@
 """Generic Field Importers definitions for Nautobot Importer."""
 
 from typing import Any
+from typing import Dict
 from typing import Optional
+from uuid import UUID
 
 from .base import EMPTY_VALUES
 from .base import ContentTypeStr
+from .base import Uid
 from .nautobot import DiffSyncBaseModel
 from .source import FieldName
+from .source import ImporterPass
 from .source import InvalidChoiceValueIssue
+from .source import PreImportResult
 from .source import RecordData
 from .source import SourceAdapter
 from .source import SourceContentType
@@ -90,22 +95,77 @@ def relation(related_source: SourceContentType, nautobot_name: FieldName = "") -
     return define_relation
 
 
-def role(adapter: SourceAdapter, source_content_type: ContentTypeStr) -> SourceFieldDefinition:
+_ROLE_NAME_TO_UID_CACHE: Dict[str, Uid] = {}
+
+
+def role(
+    adapter: SourceAdapter,
+    source_content_type: ContentTypeStr,
+    nautobot_name: FieldName = "role",
+) -> SourceFieldDefinition:
     """Create a role field definition.
 
-    Use, when there is a different source role content type, that should be mapped to Nautobot "extras.role".
-    Creates a new wrapper for the `source_content_type`, if it does not exist.
+    Use, when there is a different source role content type that should be mapped to the Nautobot "extras.Role".
+    It creates a new wrapper for the `source_content_type` if it does not already exist.
+
+    It covers multiple options for how roles can be referenced in the source data:
+        - by primary key
+        - by role name
+
+    It also handles the scenario where the same role names are used in different role models,
+    e.g., RackRole with `name = "Network"` and DeviceRole with `name = "Network"` to avoid duplicates.
     """
+
+    def cache_roles(source: RecordData, importer_pass: ImporterPass) -> PreImportResult:
+        if importer_pass == ImporterPass.DEFINE_STRUCTURE:
+            name = source.get("name", "").capitalize()
+            if not name:
+                raise ValueError("Role name is required")
+            uid = _ROLE_NAME_TO_UID_CACHE.get(name, None)
+            nautobot_uid = role_wrapper.cache_record_uids(source, uid)
+            if not uid:
+                _ROLE_NAME_TO_UID_CACHE[name] = nautobot_uid
+
+        return PreImportResult.USE_RECORD
+
     role_wrapper = adapter.configure_model(
         source_content_type,
         nautobot_content_type="extras.role",
+        pre_import=cache_roles,
+        identifiers=("name",),
         fields={
             # Include color to allow setting the default Nautobot value, import fails without it.
             "color": "color",
         },
     )
 
-    return relation(role_wrapper, "role")
+    def define_role(field: SourceField) -> None:
+        def role_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+            value = field.get_source_value(source)
+            if value in EMPTY_VALUES:
+                return
+
+            if isinstance(value, (int, UUID)):
+                # Role is referenced by primary key
+                uid = role_wrapper.get_pk_from_uid(value)
+            elif isinstance(value, str):
+                # Role is referenced by name
+                value = value.capitalize()
+                if value in _ROLE_NAME_TO_UID_CACHE:
+                    uid = _ROLE_NAME_TO_UID_CACHE[value]
+                else:
+                    uid = role_wrapper.get_pk_from_identifiers([value])
+                    _ROLE_NAME_TO_UID_CACHE[value] = uid
+                role_wrapper.import_record({"id": uid, "name": value})
+            else:
+                raise ValueError(f"Invalid role value {value}")
+
+            setattr(target, field.nautobot.name, uid)
+            field.wrapper.add_reference(role_wrapper, uid)
+
+        field.set_importer(role_importer, nautobot_name)
+
+    return define_role
 
 
 def source_constant(value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition:
