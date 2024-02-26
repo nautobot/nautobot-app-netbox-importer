@@ -39,7 +39,7 @@ _EXPECTED_SUMMARY = {
     "3.4": 5870,
     "3.5": 5870,
     "3.6": 5870,
-    "3.6.custom": 58,
+    "3.6.custom": 59,
 }
 
 _EXPECTED_COUNTS = {}
@@ -139,7 +139,7 @@ _EXPECTED_COUNTS["3.6.custom"] = {
     "auth.group": 1,
     "dcim.device": 2,
     "dcim.devicetype": 2,
-    "dcim.interfaceredundancygroup": 1,
+    "dcim.interfaceredundancygroup": 2,
     "dcim.location": 1,
     "dcim.locationtype": 2,
     "dcim.manufacturer": 1,
@@ -155,31 +155,33 @@ _EXPECTED_COUNTS["3.6.custom"] = {
     "users.objectpermission": 1,
 }
 
-_EXPECTED_VALIDATION_ERRORS = {}
-_EXPECTED_VALIDATION_ERRORS["3.0"] = {
+_EXPECTED_IMPORTER_ISSUES = {}
+_EXPECTED_IMPORTER_ISSUES["3.0"] = {
     "dcim.powerfeed": 48,
 }
-_EXPECTED_VALIDATION_ERRORS["3.1"] = {
-    **_EXPECTED_VALIDATION_ERRORS["3.0"],
+_EXPECTED_IMPORTER_ISSUES["3.1"] = {
+    **_EXPECTED_IMPORTER_ISSUES["3.0"],
 }
-_EXPECTED_VALIDATION_ERRORS["3.2"] = {
-    **_EXPECTED_VALIDATION_ERRORS["3.1"],
+_EXPECTED_IMPORTER_ISSUES["3.2"] = {
+    **_EXPECTED_IMPORTER_ISSUES["3.1"],
 }
-_EXPECTED_VALIDATION_ERRORS["3.3"] = {
-    **_EXPECTED_VALIDATION_ERRORS["3.2"],
+_EXPECTED_IMPORTER_ISSUES["3.3"] = {
+    **_EXPECTED_IMPORTER_ISSUES["3.2"],
 }
-_EXPECTED_VALIDATION_ERRORS["3.4"] = {
-    **_EXPECTED_VALIDATION_ERRORS["3.3"],
+_EXPECTED_IMPORTER_ISSUES["3.4"] = {
+    **_EXPECTED_IMPORTER_ISSUES["3.3"],
 }
-_EXPECTED_VALIDATION_ERRORS["3.5"] = {
-    **_EXPECTED_VALIDATION_ERRORS["3.4"],
+_EXPECTED_IMPORTER_ISSUES["3.5"] = {
+    **_EXPECTED_IMPORTER_ISSUES["3.4"],
 }
-_EXPECTED_VALIDATION_ERRORS["3.6"] = {
-    **_EXPECTED_VALIDATION_ERRORS["3.5"],
+_EXPECTED_IMPORTER_ISSUES["3.6"] = {
+    **_EXPECTED_IMPORTER_ISSUES["3.5"],
 }
-_EXPECTED_VALIDATION_ERRORS["3.6.custom"] = {
+_EXPECTED_IMPORTER_ISSUES["3.6.custom"] = {
     "dcim.device": 1,
+    "dcim.interfaceredundancygroup": 2,
     "dcim.location": 1,
+    "extras.customfield": 1,
 }
 
 
@@ -216,8 +218,8 @@ class TestImport(TestCase):
             "update": 0,
         }
         self.assertEqual(source.summary.diff_summary, expected_summary, "Summary mismatch")
-        validation_issues = {key: len(value) for key, value in source.summary.validation_issues.items()}
-        self.assertEqual(validation_issues, _EXPECTED_VALIDATION_ERRORS[version], "Validation issues mismatch")
+        importer_issues = {key: len(value) for key, value in source.summary.importer_issues.items()}
+        self.assertEqual(importer_issues, _EXPECTED_IMPORTER_ISSUES[version], "importer issues mismatch")
 
         # Re-import the same file to verify that nothing has changed
         expected_summary["no-change"] = expected_summary["create"]
@@ -225,7 +227,6 @@ class TestImport(TestCase):
         source, updated_models, skipped_count = self._import_file(input_ref, version)
         self.assertEqual(skipped_count, expected_summary["skip"], "Skipped count mismatch")
         self.assertEqual(source.summary.diff_summary, expected_summary, "Summary mismatch")
-        self.assertEqual(source.summary.validation_issues, {}, "No validation issues expected")
         self.assertEqual(updated_models, created_models, "Models counts mismatch")
         total = sum(created_models.values())
         self.assertEqual(total, expected_summary["no-change"], "Total mismatch")

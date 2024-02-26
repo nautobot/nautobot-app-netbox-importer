@@ -1,6 +1,6 @@
 {
     "diff_summary": {
-        "create": 58,
+        "create": 59,
         "update": 0,
         "delete": 0,
         "no-change": 0,
@@ -53,7 +53,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -87,7 +88,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -100,7 +102,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "permissions": {
                     "name": "permissions",
@@ -114,7 +117,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Permissions import is not implemented yet"
+                    "disable_reason": "Permissions import is not implemented yet",
+                    "required": false
                 }
             }
         },
@@ -146,7 +150,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -180,7 +185,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "email": {
                     "name": "email",
@@ -193,7 +199,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "first_name": {
                     "name": "first_name",
@@ -206,7 +213,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "groups": {
                     "name": "groups",
@@ -219,7 +227,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -232,7 +241,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "is_active": {
                     "name": "is_active",
@@ -245,7 +255,8 @@
                         "DATA"
                     ],
                     "default_value": true,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "is_staff": {
                     "name": "is_staff",
@@ -258,7 +269,8 @@
                         "DATA"
                     ],
                     "default_value": false,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "is_superuser": {
                     "name": "is_superuser",
@@ -271,7 +283,8 @@
                         "DATA"
                     ],
                     "default_value": false,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_login": {
                     "name": "last_login",
@@ -285,7 +298,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Should not be attempted to migrate"
+                    "disable_reason": "Should not be attempted to migrate",
+                    "required": false
                 },
                 "last_name": {
                     "name": "last_name",
@@ -298,7 +312,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "password": {
                     "name": "password",
@@ -312,7 +327,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Should not be attempted to migrate"
+                    "disable_reason": "Should not be attempted to migrate",
+                    "required": false
                 },
                 "user_permissions": {
                     "name": "user_permissions",
@@ -326,7 +342,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Permissions import is not implemented yet"
+                    "disable_reason": "Permissions import is not implemented yet",
+                    "required": false
                 },
                 "username": {
                     "name": "username",
@@ -339,7 +356,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -371,7 +389,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "status": {
                     "name": "status",
@@ -384,7 +403,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "termination_a": {
                     "name": "termination_a",
@@ -397,7 +417,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "termination_z": {
                     "name": "termination_z",
@@ -410,7 +431,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "type": {
                     "name": "type",
@@ -423,7 +445,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -455,7 +478,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "location": {
                     "name": "location",
@@ -468,7 +492,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -481,7 +506,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -494,7 +520,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -526,7 +553,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -558,7 +586,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -608,7 +637,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -644,7 +674,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -657,7 +688,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "model": {
                     "name": "model",
@@ -670,7 +702,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -792,7 +825,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "status": {
                     "name": "status",
@@ -805,7 +839,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -837,7 +872,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -869,7 +905,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -901,7 +938,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -933,7 +971,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -965,7 +1004,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -997,7 +1037,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -1029,7 +1070,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "airflow": {
                     "name": "airflow",
@@ -1042,7 +1084,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "asset_tag": {
                     "name": "asset_tag",
@@ -1055,7 +1098,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "cluster": {
                     "name": "cluster",
@@ -1068,7 +1112,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "comments": {
                     "name": "comments",
@@ -1081,7 +1126,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "config_template": {
                     "name": "config_template",
@@ -1094,7 +1140,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "console_port_count": {
                     "name": "console_port_count",
@@ -1107,7 +1154,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "console_server_port_count": {
                     "name": "console_server_port_count",
@@ -1120,7 +1168,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -1133,7 +1182,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -1146,7 +1196,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -1159,7 +1210,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "device_bay_count": {
                     "name": "device_bay_count",
@@ -1172,7 +1224,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "device_role": {
                     "name": "device_role",
@@ -1185,7 +1238,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "device_type": {
                     "name": "device_type",
@@ -1198,20 +1252,22 @@
                         "DATA"
                     ],
                     "default_value": "c40e8fa5-0254-5b8f-97da-19b227497d92",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "face": {
                     "name": "face",
                     "nautobot_name": "face",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
+                    "importer": "choice_importer",
                     "definition": "face",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "front_port_count": {
                     "name": "front_port_count",
@@ -1224,7 +1280,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -1238,7 +1295,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "interface_count": {
                     "name": "interface_count",
@@ -1251,7 +1309,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "inventory_item_count": {
                     "name": "inventory_item_count",
@@ -1264,7 +1323,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -1277,7 +1337,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "latitude": {
                     "name": "latitude",
@@ -1290,7 +1351,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "local_context_data": {
                     "name": "local_context_data",
@@ -1303,7 +1365,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "location": {
                     "name": "location",
@@ -1317,7 +1380,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "longitude": {
                     "name": "longitude",
@@ -1330,7 +1394,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "module_bay_count": {
                     "name": "module_bay_count",
@@ -1343,7 +1408,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -1356,7 +1422,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "oob_ip": {
                     "name": "oob_ip",
@@ -1369,7 +1436,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "platform": {
                     "name": "platform",
@@ -1382,7 +1450,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "position": {
                     "name": "position",
@@ -1395,7 +1464,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "power_outlet_count": {
                     "name": "power_outlet_count",
@@ -1408,7 +1478,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "power_port_count": {
                     "name": "power_port_count",
@@ -1421,7 +1492,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "primary_ip4": {
                     "name": "primary_ip4",
@@ -1434,7 +1506,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "primary_ip6": {
                     "name": "primary_ip6",
@@ -1447,7 +1520,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rack": {
                     "name": "rack",
@@ -1460,7 +1534,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rear_port_count": {
                     "name": "rear_port_count",
@@ -1473,7 +1548,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -1486,7 +1562,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "role": {
                     "name": "role",
@@ -1500,7 +1577,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "serial": {
                     "name": "serial",
@@ -1513,7 +1591,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -1527,7 +1606,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "status": {
                     "name": "status",
@@ -1541,7 +1621,8 @@
                         "DATA"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "tenant": {
                     "name": "tenant",
@@ -1554,7 +1635,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "vc_position": {
                     "name": "vc_position",
@@ -1567,7 +1649,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "vc_priority": {
                     "name": "vc_priority",
@@ -1580,7 +1663,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "virtual_chassis": {
                     "name": "virtual_chassis",
@@ -1593,7 +1677,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -1625,7 +1710,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -1657,7 +1743,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -1690,7 +1777,8 @@
                         "DATA"
                     ],
                     "default_value": "9e9e9e",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "config_template": {
                     "name": "config_template",
@@ -1703,7 +1791,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "content_types": {
                     "name": "content_types",
@@ -1716,7 +1805,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "created": {
                     "name": "created",
@@ -1729,7 +1819,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -1742,7 +1833,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -1755,7 +1847,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -1769,7 +1862,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -1782,7 +1876,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -1795,7 +1890,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "slug": {
                     "name": "slug",
@@ -1808,7 +1904,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "vm_role": {
                     "name": "vm_role",
@@ -1821,7 +1918,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -1853,7 +1951,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "airflow": {
                     "name": "airflow",
@@ -1866,7 +1965,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "comments": {
                     "name": "comments",
@@ -1879,7 +1979,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "console_port_template_count": {
                     "name": "console_port_template_count",
@@ -1892,7 +1993,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "console_server_port_template_count": {
                     "name": "console_server_port_template_count",
@@ -1905,7 +2007,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -1918,7 +2021,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -1931,7 +2035,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "default_platform": {
                     "name": "default_platform",
@@ -1944,7 +2049,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -1957,7 +2063,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "device_bay_template_count": {
                     "name": "device_bay_template_count",
@@ -1970,7 +2077,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "front_image": {
                     "name": "front_image",
@@ -1984,7 +2092,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Import does not contain images"
+                    "disable_reason": "Import does not contain images",
+                    "required": false
                 },
                 "front_port_template_count": {
                     "name": "front_port_template_count",
@@ -1997,7 +2106,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -2012,7 +2122,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "interface_template_count": {
                     "name": "interface_template_count",
@@ -2025,7 +2136,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "inventory_item_template_count": {
                     "name": "inventory_item_template_count",
@@ -2038,7 +2150,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "is_full_depth": {
                     "name": "is_full_depth",
@@ -2051,7 +2164,8 @@
                         "DATA"
                     ],
                     "default_value": true,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -2064,7 +2178,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "manufacturer": {
                     "name": "manufacturer",
@@ -2078,7 +2193,8 @@
                         "DATA"
                     ],
                     "default_value": "f5136724-0984-5e3b-b073-ea6d83116997",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "model": {
                     "name": "model",
@@ -2092,7 +2208,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "module_bay_template_count": {
                     "name": "module_bay_template_count",
@@ -2105,7 +2222,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "part_number": {
                     "name": "part_number",
@@ -2118,7 +2236,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "power_outlet_template_count": {
                     "name": "power_outlet_template_count",
@@ -2131,7 +2250,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "power_port_template_count": {
                     "name": "power_port_template_count",
@@ -2144,7 +2264,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rear_image": {
                     "name": "rear_image",
@@ -2158,7 +2279,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Import does not contain images"
+                    "disable_reason": "Import does not contain images",
+                    "required": false
                 },
                 "rear_port_template_count": {
                     "name": "rear_port_template_count",
@@ -2171,7 +2293,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "slug": {
                     "name": "slug",
@@ -2184,20 +2307,22 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "subdevice_role": {
                     "name": "subdevice_role",
                     "nautobot_name": "subdevice_role",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
+                    "importer": "choice_importer",
                     "definition": "subdevice_role",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "u_height": {
                     "name": "u_height",
@@ -2211,7 +2336,8 @@
                         "DATA"
                     ],
                     "default_value": 1,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "weight": {
                     "name": "weight",
@@ -2224,7 +2350,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "weight_unit": {
                     "name": "weight_unit",
@@ -2237,7 +2364,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -2269,7 +2397,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -2301,7 +2430,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "rear_port": {
                     "name": "rear_port",
@@ -2314,7 +2444,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -2346,7 +2477,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "parent": {
                     "name": "parent",
@@ -2359,7 +2491,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -2372,7 +2505,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -2404,7 +2538,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -2436,7 +2571,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "level": {
                     "name": "level",
@@ -2449,7 +2585,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -2462,7 +2599,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "rght": {
                     "name": "rght",
@@ -2475,7 +2613,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -2488,7 +2627,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -2556,7 +2696,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "level": {
                     "name": "level",
@@ -2569,7 +2710,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -2582,7 +2724,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "location_type": {
                     "name": "location_type",
@@ -2595,7 +2738,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "parent": {
                     "name": "parent",
@@ -2608,7 +2752,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rght": {
                     "name": "rght",
@@ -2621,7 +2766,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -2634,7 +2780,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -2647,7 +2794,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -2660,7 +2808,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -2692,7 +2841,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -2706,7 +2856,8 @@
                         "CACHE"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "level": {
                     "name": "level",
@@ -2719,7 +2870,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -2732,7 +2884,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -2745,7 +2898,8 @@
                         "CACHE"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "nestable": {
                     "name": "nestable",
@@ -2758,7 +2912,8 @@
                         "CACHE"
                     ],
                     "default_value": false,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "parent": {
                     "name": "parent",
@@ -2771,7 +2926,8 @@
                         "CACHE"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rght": {
                     "name": "rght",
@@ -2784,7 +2940,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -2797,7 +2954,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -2829,7 +2987,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -2842,7 +3001,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -2855,7 +3015,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -2870,7 +3031,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -2883,7 +3045,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -2897,7 +3060,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "slug": {
                     "name": "slug",
@@ -2910,7 +3074,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -3014,7 +3179,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3046,7 +3212,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3078,7 +3245,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3110,7 +3278,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "power_port": {
                     "name": "power_port",
@@ -3123,7 +3292,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -3155,7 +3325,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "location": {
                     "name": "location",
@@ -3168,7 +3339,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "region": {
                     "name": "region",
@@ -3181,7 +3353,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "site": {
                     "name": "site",
@@ -3194,7 +3367,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3226,7 +3400,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3258,7 +3433,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3290,7 +3466,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "location": {
                     "name": "location",
@@ -3303,7 +3480,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "region": {
                     "name": "region",
@@ -3316,7 +3494,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "role": {
                     "name": "role",
@@ -3329,7 +3508,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -3342,7 +3522,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "status": {
                     "name": "status",
@@ -3355,7 +3536,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3387,7 +3569,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "units": {
                     "name": "units",
@@ -3400,7 +3583,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3432,7 +3616,8 @@
                         "CUSTOM"
                     ],
                     "default_value": "9e9e9e",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "content_types": {
                     "name": "content_types",
@@ -3445,7 +3630,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -3458,7 +3644,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3490,7 +3677,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3522,7 +3710,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -3554,7 +3743,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "level": {
                     "name": "level",
@@ -3567,7 +3757,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -3580,7 +3771,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "location_type": {
                     "name": "location_type",
@@ -3593,7 +3785,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "rght": {
                     "name": "rght",
@@ -3606,7 +3799,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -3619,7 +3813,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -3632,7 +3827,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -3664,7 +3860,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "asns": {
                     "name": "asns",
@@ -3677,7 +3874,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "comments": {
                     "name": "comments",
@@ -3690,7 +3888,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -3703,7 +3902,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -3716,7 +3916,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -3729,7 +3930,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "facility": {
                     "name": "facility",
@@ -3742,7 +3944,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "group": {
                     "name": "group",
@@ -3756,7 +3959,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -3770,7 +3974,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -3783,7 +3988,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "latitude": {
                     "name": "latitude",
@@ -3796,7 +4002,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "level": {
                     "name": "level",
@@ -3809,7 +4016,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -3822,7 +4030,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "longitude": {
                     "name": "longitude",
@@ -3835,7 +4044,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -3848,7 +4058,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "physical_address": {
                     "name": "physical_address",
@@ -3861,7 +4072,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -3875,7 +4087,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rght": {
                     "name": "rght",
@@ -3888,7 +4101,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "shipping_address": {
                     "name": "shipping_address",
@@ -3901,7 +4115,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "slug": {
                     "name": "slug",
@@ -3914,7 +4129,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -3928,7 +4144,8 @@
                         "DATA"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "tenant": {
                     "name": "tenant",
@@ -3941,20 +4158,22 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "time_zone": {
                     "name": "time_zone",
                     "nautobot_name": "time_zone",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
+                    "importer": "choice_importer",
                     "definition": "time_zone",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -3967,7 +4186,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -3999,7 +4219,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -4012,7 +4233,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "level": {
                     "name": "level",
@@ -4025,7 +4247,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -4038,7 +4261,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "nestable": {
                     "name": "nestable",
@@ -4051,7 +4275,8 @@
                         "CUSTOM"
                     ],
                     "default_value": false,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "parent": {
                     "name": "parent",
@@ -4064,7 +4289,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rght": {
                     "name": "rght",
@@ -4077,7 +4303,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -4090,7 +4317,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -4122,7 +4350,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -4244,7 +4473,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -4313,7 +4543,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "choices": {
                     "name": "choices",
@@ -4326,7 +4557,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "content_types": {
                     "name": "content_types",
@@ -4340,7 +4572,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "created": {
                     "name": "created",
@@ -4353,7 +4586,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "default": {
                     "name": "default",
@@ -4366,7 +4600,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -4379,20 +4614,22 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "filter_logic": {
                     "name": "filter_logic",
                     "nautobot_name": "filter_logic",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
+                    "importer": "choice_importer",
                     "definition": "filter_logic",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": "loose",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "group_name": {
                     "name": "group_name",
@@ -4405,7 +4642,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -4419,7 +4657,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "is_cloneable": {
                     "name": "is_cloneable",
@@ -4432,7 +4671,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "label": {
                     "name": "label",
@@ -4445,7 +4685,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -4458,7 +4699,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -4472,7 +4714,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "object_type": {
                     "name": "object_type",
@@ -4485,7 +4728,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "required": {
                     "name": "required",
@@ -4498,7 +4742,8 @@
                         "DATA"
                     ],
                     "default_value": false,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "search_weight": {
                     "name": "search_weight",
@@ -4511,21 +4756,23 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "type": {
                     "name": "type",
                     "nautobot_name": "type",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "choice_importer",
-                    "definition": "define_choices",
+                    "importer": "fallback_importer",
+                    "definition": "define_fallback",
                     "sources": [
                         "CUSTOM",
                         "DATA"
                     ],
                     "default_value": "text",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "ui_visibility": {
                     "name": "ui_visibility",
@@ -4538,7 +4785,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "validation_maximum": {
                     "name": "validation_maximum",
@@ -4551,7 +4799,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "validation_minimum": {
                     "name": "validation_minimum",
@@ -4564,7 +4813,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "validation_regex": {
                     "name": "validation_regex",
@@ -4577,7 +4827,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "weight": {
                     "name": "weight",
@@ -4590,7 +4841,8 @@
                         "DATA"
                     ],
                     "default_value": 100,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -4622,7 +4874,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -4635,7 +4888,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "value": {
                     "name": "value",
@@ -4648,7 +4902,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -4698,7 +4953,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -4748,7 +5004,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -4780,7 +5037,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -4812,7 +5070,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -4844,7 +5103,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "assigned_object_type": {
                     "name": "assigned_object_type",
@@ -4857,7 +5117,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "comments": {
                     "name": "comments",
@@ -4870,7 +5131,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -4883,7 +5145,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created_by": {
                     "name": "created_by",
@@ -4896,7 +5159,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -4909,7 +5173,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -4923,7 +5188,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "kind": {
                     "name": "kind",
@@ -4936,7 +5202,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -4949,7 +5216,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 }
             }
         },
@@ -4975,13 +5243,14 @@
                     "nautobot_name": "action",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
+                    "importer": "choice_importer",
                     "definition": "action",
                     "sources": [
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "changed_object_id": {
                     "name": "changed_object_id",
@@ -4994,7 +5263,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "changed_object_type": {
                     "name": "changed_object_type",
@@ -5007,7 +5277,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -5021,7 +5292,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "object_repr": {
                     "name": "object_repr",
@@ -5034,7 +5306,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "postchange_data": {
                     "name": "postchange_data",
@@ -5048,7 +5321,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "prechange_data": {
                     "name": "prechange_data",
@@ -5061,7 +5335,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "related_object_id": {
                     "name": "related_object_id",
@@ -5074,7 +5349,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "related_object_type": {
                     "name": "related_object_type",
@@ -5087,7 +5363,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "request_id": {
                     "name": "request_id",
@@ -5100,7 +5377,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "time": {
                     "name": "time",
@@ -5114,7 +5392,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "user": {
                     "name": "user",
@@ -5127,7 +5406,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "user_name": {
                     "name": "user_name",
@@ -5140,7 +5420,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5208,7 +5489,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -5221,7 +5503,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5327,7 +5610,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -5340,7 +5624,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "name": {
                     "name": "name",
@@ -5353,7 +5638,8 @@
                         "CACHE"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5385,7 +5671,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -5398,7 +5685,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5430,7 +5718,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -5443,7 +5732,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "object_id": {
                     "name": "object_id",
@@ -5456,7 +5746,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "tag": {
                     "name": "tag",
@@ -5469,7 +5760,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5501,7 +5793,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5533,7 +5826,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "status": {
                     "name": "status",
@@ -5546,7 +5840,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5600,7 +5895,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 1,
+            "imported_count": 2,
             "skipped_count": 0,
             "fields": {
                 "auth_key": {
@@ -5614,7 +5909,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "auth_type": {
                     "name": "auth_type",
@@ -5627,7 +5923,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "comments": {
                     "name": "comments",
@@ -5640,7 +5937,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -5653,7 +5951,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -5666,7 +5965,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -5679,7 +5979,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "group_id": {
                     "name": "group_id",
@@ -5692,7 +5993,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -5706,7 +6008,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -5719,7 +6022,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -5732,20 +6036,23 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "protocol": {
                     "name": "protocol",
                     "nautobot_name": "protocol",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
-                    "definition": "protocol",
+                    "importer": "fallback_importer",
+                    "definition": "define_fallback",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -5758,7 +6065,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5808,7 +6116,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "role": {
                     "name": "role",
@@ -5821,7 +6130,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -5834,7 +6144,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -5920,7 +6231,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "location": {
                     "name": "location",
@@ -5933,7 +6245,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -5946,7 +6259,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "role": {
                     "name": "role",
@@ -5959,7 +6273,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -5972,7 +6287,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -5985,7 +6301,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6017,7 +6334,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6049,7 +6367,8 @@
                         "CUSTOM"
                     ],
                     "default_value": "9e9e9e",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "content_types": {
                     "name": "content_types",
@@ -6062,7 +6381,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -6075,7 +6395,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6107,7 +6428,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6139,7 +6461,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6189,7 +6512,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -6202,7 +6526,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "location": {
                     "name": "location",
@@ -6215,7 +6540,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -6228,7 +6554,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "role": {
                     "name": "role",
@@ -6241,7 +6568,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -6254,7 +6582,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -6267,7 +6596,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6299,7 +6629,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6331,7 +6662,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6435,7 +6767,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -6467,7 +6800,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6499,7 +6833,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6531,7 +6866,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6563,7 +6899,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6595,7 +6932,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6627,7 +6965,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6659,7 +6998,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6763,7 +7103,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "created": {
                     "name": "created",
@@ -6776,7 +7117,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -6789,7 +7131,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -6802,7 +7145,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "group": {
                     "name": "group",
@@ -6816,7 +7160,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -6830,7 +7175,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -6843,7 +7189,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -6856,7 +7203,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "slug": {
                     "name": "slug",
@@ -6869,7 +7217,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -6901,7 +7250,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "custom_field_data": {
                     "name": "custom_field_data",
@@ -6914,7 +7264,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -6927,7 +7278,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -6941,7 +7293,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -6954,7 +7307,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Last updated field is updated with each write"
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "level": {
                     "name": "level",
@@ -6968,7 +7322,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "lft": {
                     "name": "lft",
@@ -6982,7 +7337,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "name": {
                     "name": "name",
@@ -6995,7 +7351,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "parent": {
                     "name": "parent",
@@ -7008,7 +7365,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "rght": {
                     "name": "rght",
@@ -7022,7 +7380,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 },
                 "slug": {
                     "name": "slug",
@@ -7035,7 +7394,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "tree_id": {
                     "name": "tree_id",
@@ -7049,7 +7409,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": "Tree fields doesn't need to be imported"
+                    "disable_reason": "Tree fields doesn't need to be imported",
+                    "required": false
                 }
             }
         },
@@ -7081,7 +7442,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -7167,7 +7529,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "constraints": {
                     "name": "constraints",
@@ -7180,7 +7543,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "description": {
                     "name": "description",
@@ -7193,7 +7557,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "enabled": {
                     "name": "enabled",
@@ -7206,7 +7571,8 @@
                         "DATA"
                     ],
                     "default_value": true,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "groups": {
                     "name": "groups",
@@ -7219,7 +7585,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -7233,7 +7600,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "name": {
                     "name": "name",
@@ -7246,7 +7614,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "object_types": {
                     "name": "object_types",
@@ -7259,7 +7628,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "users": {
                     "name": "users",
@@ -7272,7 +7642,8 @@
                         "DATA"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 }
             }
         },
@@ -7304,7 +7675,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -7354,7 +7726,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -7367,7 +7740,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "location": {
                     "name": "location",
@@ -7380,7 +7754,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "region": {
                     "name": "region",
@@ -7393,7 +7768,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "site": {
                     "name": "site",
@@ -7406,7 +7782,8 @@
                         "SIBLING"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "type": {
                     "name": "type",
@@ -7419,7 +7796,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -7451,7 +7829,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -7483,7 +7862,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -7515,7 +7895,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "role": {
                     "name": "role",
@@ -7528,7 +7909,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -7541,7 +7923,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -7573,7 +7956,8 @@
                         "AUTO"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 },
                 "parent": {
                     "name": "parent",
@@ -7586,7 +7970,8 @@
                         "CUSTOM"
                     ],
                     "default_value": null,
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -7599,7 +7984,8 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
-                    "disable_reason": ""
+                    "disable_reason": "",
+                    "required": true
                 }
             }
         },
@@ -7658,19 +8044,43 @@
             "fields": {}
         }
     },
-    "validation_issues": {
+    "importer_issues": {
         "dcim.device": [
             [
                 "f510c5ff-e1f8-5adc-9fb5-30bc5791b42e",
                 "Device 1",
+                "ValidationError",
                 "[\"Invalid value for custom field 'device_custom_object': Value must be a string\"]"
+            ]
+        ],
+        "dcim.interfaceredundancygroup": [
+            [
+                "2586a272-455a-5e92-85d7-f41c0784630a",
+                "FHR Group clusterxl",
+                "InvalidChoiceValueIssue",
+                "{'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}"
+            ],
+            [
+                "f91623ed-a389-53a4-a4a2-943588c21446",
+                "Test FHR Group",
+                "InvalidChoiceValueIssue",
+                "{'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}"
             ]
         ],
         "dcim.location": [
             [
                 "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
                 "Site 1",
+                "ValidationError",
                 "{'parent': ['A Location of type Site must have a parent Location.']}"
+            ]
+        ],
+        "extras.customfield": [
+            [
+                "149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5",
+                "Device Custom Object",
+                "InvalidChoiceValueIssue",
+                "{'type': 'Invalid choice value: `object`, replaced with `text`'}"
             ]
         ]
     }

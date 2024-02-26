@@ -19,6 +19,7 @@ RecordData = MutableMapping[FieldName, Any]
 GenericForeignValue = Tuple[ContentTypeStr, Uid]
 Pathable = Union[str, PathLike]
 
+NOTHING = object()
 GENERATOR_SETUP_MODULES: List[str] = []
 
 

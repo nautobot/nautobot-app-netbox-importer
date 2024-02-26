@@ -6,26 +6,53 @@ from typing import Optional
 from .base import EMPTY_VALUES
 from .base import ContentTypeStr
 from .nautobot import DiffSyncBaseModel
-from .source import FieldImporterFallback
 from .source import FieldName
+from .source import InvalidChoiceValueIssue
 from .source import RecordData
 from .source import SourceAdapter
 from .source import SourceContentType
 from .source import SourceField
 from .source import SourceFieldDefinition
+from .source import SourceFieldImporterFallback
+from .source import SourceFieldImporterIssue
 
 
-def choice(nautobot_name: FieldName = "", fallback: Optional[FieldImporterFallback] = None) -> SourceFieldDefinition:
-    """Create a choices field definition.
+def fallback(
+    value: Any = None,
+    callback: Optional[SourceFieldImporterFallback] = None,
+    nautobot_name: FieldName = "",
+) -> SourceFieldDefinition:
+    """Create a fallback field definition.
 
-    Use to map the choices from the source to the Nautobot choices field.
+    Use to set a fallback value or callback for the field, if there is an error during the default importer.
     """
+    if (value is None) == (callback is None):
+        raise ValueError("Exactly one of `value` or `callback` must be set.")
 
-    def define_choices(field: SourceField) -> None:
-        field.set_nautobot_field(nautobot_name or field.name)
-        field.set_choice_importer(fallback)
+    def define_fallback(field: SourceField) -> None:
+        original_importer = field.set_importer(nautobot_name=nautobot_name)
+        if not original_importer:
+            return
 
-    return define_choices
+        def fallback_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+            try:
+                original_importer(source, target)
+            except Exception as error:
+                if callback:
+                    callback(field, source, target, error)
+                if value:
+                    setattr(target, field.nautobot.name, value)
+                    if isinstance(error, InvalidChoiceValueIssue):
+                        raise InvalidChoiceValueIssue(field, field.get_source_value(source), value) from error
+                    raise SourceFieldImporterIssue(
+                        f"Failed to import field: {error} | Fallback value: {value}",
+                        field,
+                    ) from error
+                raise
+
+        field.set_importer(fallback_importer, override=True)
+
+    return define_fallback
 
 
 def truncate_to_integer(nautobot_name: FieldName = "") -> SourceFieldDefinition:
@@ -35,8 +62,6 @@ def truncate_to_integer(nautobot_name: FieldName = "") -> SourceFieldDefinition:
     """
 
     def define_truncate_to_integer(field: SourceField) -> None:
-        field.set_nautobot_field(nautobot_name or field.name)
-
         def truncate_to_integer_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = field.get_source_value(source)
             if value in EMPTY_VALUES:
@@ -47,19 +72,19 @@ def truncate_to_integer(nautobot_name: FieldName = "") -> SourceFieldDefinition:
 
             setattr(target, field.nautobot.name, value)
 
-        field.set_importer(truncate_to_integer_importer)
+        field.set_importer(truncate_to_integer_importer, nautobot_name)
 
     return define_truncate_to_integer
 
 
-def relation(related_source: SourceContentType, nautobot_field_name: FieldName = "") -> SourceFieldDefinition:
+def relation(related_source: SourceContentType, nautobot_name: FieldName = "") -> SourceFieldDefinition:
     """Create a relation field definition.
 
     Use when there is a different source content type that should be mapped to Nautobot relation.
     """
 
     def define_relation(field: SourceField) -> None:
-        field.set_nautobot_field(nautobot_field_name or field.name)
+        field.set_nautobot_field(nautobot_name)
         field.set_relation_importer(field.wrapper.adapter.get_or_create_wrapper(related_source))
 
     return define_relation
@@ -83,15 +108,14 @@ def role(adapter: SourceAdapter, source_content_type: ContentTypeStr) -> SourceF
     return relation(role_wrapper, "role")
 
 
-def source_constant(value: Any, nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
+def source_constant(value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition:
     """Create a source constant field definition.
 
     Use, to pre-fill constant value for the field. Calls default importer after setting the value.
     """
 
     def define_source_constant(field: SourceField) -> None:
-        field.set_default_importer(nautobot_name or field.name)
-        original_importer = field.importer
+        original_importer = field.set_importer(nautobot_name=nautobot_name)
         if not original_importer:
             return
 
@@ -104,43 +128,39 @@ def source_constant(value: Any, nautobot_name: Optional[FieldName] = None) -> So
     return define_source_constant
 
 
-def constant(value: Any, nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
+def constant(value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition:
     """Create a constant field definition.
 
     Use to fill target constant value for the field.
     """
 
     def define_constant(field: SourceField) -> None:
-        field.set_nautobot_field(nautobot_name or field.name)
-
         def constant_importer(_: RecordData, target: DiffSyncBaseModel) -> None:
             setattr(target, field.nautobot.name, value)
 
-        field.set_importer(constant_importer)
+        field.set_importer(constant_importer, nautobot_name)
 
     return define_constant
 
 
-def pass_through(nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
+def pass_through(nautobot_name: FieldName = "") -> SourceFieldDefinition:
     """Create a pass-through field definition.
 
     Use to pass-through the value from source to target without changing it by the default importer.
     """
 
     def define_passthrough(field: SourceField) -> None:
-        field.set_nautobot_field(nautobot_name or field.name)
-
         def pass_through_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(field.name, None)
             if value:
                 setattr(target, field.nautobot.name, value)
 
-        field.set_importer(pass_through_importer)
+        field.set_importer(pass_through_importer, nautobot_name)
 
     return define_passthrough
 
 
-def force(nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
+def force(nautobot_name: FieldName = "") -> SourceFieldDefinition:
     """Mark Nautobot field as forced.
 
     Use to force the field to be saved in Nautobot in the second save attempt after the initial save to override the
@@ -148,7 +168,7 @@ def force(nautobot_name: Optional[FieldName] = None) -> SourceFieldDefinition:
     """
 
     def define_force(field: SourceField) -> None:
-        field.set_default_importer(nautobot_name or field.name)
+        field.set_importer(nautobot_name=nautobot_name)
         field.nautobot.force = True
 
     return define_force

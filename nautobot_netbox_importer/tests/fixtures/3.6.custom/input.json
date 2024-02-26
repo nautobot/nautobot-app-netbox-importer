@@ -2505,6 +2505,22 @@
   }
 },
 {
+  "model": "ipam.fhrpgroup",
+  "pk": 2,
+  "fields": {
+    "created": "2024-01-23T08:21:41.353Z",
+    "last_updated": "2024-01-23T08:21:41.353Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "group_id": 3,
+    "name": "FHR Group clusterxl",
+    "protocol": "clusterxl",
+    "auth_type": "md5",
+    "auth_key": ""
+  }
+},
+{
   "model": "tenancy.tenant",
   "pk": 1,
   "fields": {

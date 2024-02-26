@@ -28,7 +28,7 @@ options:
                         Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or
                         REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data!
   --sitegroup-parent-always-region
-                        When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation issues `'A
+                        When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A
                         Location of type Location may only have a Location of the same type as its parent.'`.
   --fix-powerfeed-locations
                         Fix panel location to match rack location based on powerfeed.

@@ -124,7 +124,7 @@ Options:
   -p, --update-paths                       Call management command `trace_paths` to update paths after the import. (default: False)
   -r, --[no-]dry-run                       Do not write any data to the database. (default: False)
   -s STRING, --save-mappings-file=STRING   File path to write the JSON mapping to. (default: generated-mappings.json)
-  -t, --sitegroup-parent-always-region     When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation issues `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)
+  -t, --sitegroup-parent-always-region     When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)
   -u, --[no-]summary                       Show a summary of the import. (default: True)
   -x, --fix-powerfeed-locations            Fix panel location to match rack location based on powerfeed. (default: False)
 ```
