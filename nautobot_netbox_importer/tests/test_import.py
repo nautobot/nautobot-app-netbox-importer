@@ -39,7 +39,7 @@ _EXPECTED_SUMMARY = {
     "3.4": 5870,
     "3.5": 5870,
     "3.6": 5870,
-    "3.6.custom": 66,
+    "3.6.custom": 67,
 }
 
 _EXPECTED_COUNTS = {}
@@ -147,7 +147,7 @@ _EXPECTED_COUNTS["3.6.custom"] = {
     "extras.customfield": 3,
     "extras.customfieldchoice": 3,
     "extras.note": 2,
-    "extras.objectchange": 20,
+    "extras.objectchange": 21,
     "extras.role": 3,
     "extras.status": 2,
     "ipam.ipaddress": 1,

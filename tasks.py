@@ -830,6 +830,7 @@ def tests(context, failfast=False, keepdb=False, lint_only=False):
         "save_text_summary_path": "File path to write the text mapping to. (default: generated-mappings.txt)",
         "sitegroup_parent_always_region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
         "update_paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
+        "unrack_zero_uheight_devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
     }
 )
 def import_netbox(
@@ -845,6 +846,7 @@ def import_netbox(
     sitegroup_parent_always_region=False,
     print_summary=True,
     update_paths=False,
+    unrack_zero_uheight_devices=True,
 ):
     """Import NetBox data into Nautobot."""
     if demo_version:
@@ -872,6 +874,7 @@ def import_netbox(
         "--print-summary" if print_summary else "",
         "--update-paths" if update_paths else "",
         "--no-color",
+        "" if unrack_zero_uheight_devices else "--no-unrack-zero-uheight-devices",
         file,
     ]
 

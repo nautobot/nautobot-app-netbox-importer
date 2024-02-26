@@ -1,6 +1,6 @@
 {
     "diff_summary": {
-        "create": 66,
+        "create": 67,
         "update": 0,
         "delete": 0,
         "no-change": 0,
@@ -5686,7 +5686,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "nautobot_flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "default_reference_uid": null,
-            "imported_count": 20,
+            "imported_count": 21,
             "skipped_count": 1,
             "fields": {
                 "action": {

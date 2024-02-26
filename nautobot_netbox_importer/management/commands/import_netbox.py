@@ -66,6 +66,13 @@ class Command(BaseCommand):
             help="Show a detailed mapping of NetBox fields to Nautobot fields. Only printed when `--print-summary` is also specified.",
         )
         parser.add_argument(
+            "--no-unrack-zero-uheight-devices",
+            action="store_false",
+            dest="unrack_zero_uheight_devices",
+            default=True,
+            help="Prevents cleaning the `position` field in `dcim.device` instances that fail validation if the device is in a rack.",
+        )
+        parser.add_argument(
             "--save-json-summary-path",
             dest="save_json_summary_path",
             help="File path to write the JSON summary to.",

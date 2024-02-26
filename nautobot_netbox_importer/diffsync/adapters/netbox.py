@@ -18,6 +18,7 @@ from nautobot_netbox_importer.base import GENERATOR_SETUP_MODULES
 from nautobot_netbox_importer.base import logger
 from nautobot_netbox_importer.base import register_generator_setup
 from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations
+from nautobot_netbox_importer.diffsync.models.dcim import unrack_zero_uheight_devices
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceDataGenerator
 from nautobot_netbox_importer.generator import SourceRecord
@@ -57,6 +58,7 @@ class NetBoxImporterOptions(NamedTuple):
     update_paths: bool = False
     fix_powerfeed_locations: bool = False
     sitegroup_parent_always_region: bool = False
+    unrack_zero_uheight_devices: bool = True
     save_json_summary_path: str = ""
     save_text_summary_path: str = ""
 
@@ -85,6 +87,8 @@ class NetBoxAdapter(SourceAdapter):
         self.import_data()
         if self.options.fix_powerfeed_locations:
             fix_power_feed_locations(self)
+        if self.options.unrack_zero_uheight_devices:
+            unrack_zero_uheight_devices(self)
         self.post_import()
 
     def import_to_nautobot(self) -> None:
