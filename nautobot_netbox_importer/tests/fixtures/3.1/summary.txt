@@ -63,58 +63,57 @@ virtualization.clustergroup: 4
 virtualization.clustertype: 6
 virtualization.virtualmachine: 180
 virtualization.vminterface: 720
-- Validation issues: -------------------------------------------------------------------------------
+- Importer issues: ---------------------------------------------------------------------------------
 . dcim.powerfeed: 48  ..............................................................................
-0434ed4d-cc76-5051-a38c-b84ed32de2c1 P2-6B | ['Rack R106 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-05541f06-08c9-5d84-a8b6-13ce3cd45938 P3-8A | ['Rack R308 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-05f5bb91-e84c-5908-8d9a-8256959bfcab P2-11B | ['Rack R203 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-06ebb1db-aaa0-5b24-a832-8ca1671f8b0a P2-4B | ['Rack R104 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-07316815-d36d-552d-8859-03e7fe09354a P2-13B | ['Rack R205 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-0e23ee26-033e-5cfd-8bce-b5ef5909e13c P2-10B | ['Rack R202 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-10da56b6-09b1-5da6-9505-d9253863e062 P3-1A | ['Rack R301 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-17a0b412-4187-51a2-a238-901b3a275bcd P1-14A | ['Rack R206 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-194e2d64-c904-59bc-af2c-e040beb3aeac P2-14B | ['Rack R206 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-1f4b42df-43ce-52aa-8a61-4a19ce1af962 P4-3B | ['Rack R303 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-20b3c4c0-eb30-5f8b-adcf-20e4fa5d0061 P2-15B | ['Rack R207 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-29b6b9f0-f50a-592c-8e3f-e415a0bf4cd4 P4-1B | ['Rack R301 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-314fead6-ffae-51f7-abb0-2edcf7d6da49 P3-2A | ['Rack R302 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-31f1abb3-660f-5a57-9256-42be3d5b75cf P2-3B | ['Rack R103 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-3213730d-18bd-5a3a-9828-4ab023ed4652 P1-6A | ['Rack R106 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-3338c701-47fd-513e-945a-78a98b84d7f0 P4-8B | ['Rack R308 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-38f5aa36-561b-5cd8-8362-9d093ff7b89a P1-15A | ['Rack R207 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-3f702c58-7dea-5b78-a007-17f40b465810 P1-10A | ['Rack R202 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-416a01e5-fbf9-522e-b9e9-4037cf8c984f P1-4A | ['Rack R104 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-451c4aad-d892-5114-8724-be2f8148c322 P2-2B | ['Rack R102 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-47f69d3d-8fcd-5b63-8695-21aa51fb4fbf P2-9B | ['Rack R201 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-53ed215b-9003-522d-9cb1-d48dbb18fdc2 P3-7A | ['Rack R307 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-5a2f51ea-7a05-53d2-8a47-cd383629a343 P1-13A | ['Rack R205 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-5fa35cf7-5d55-5533-99ee-7d1ecaa69856 P2-1B | ['Rack R101 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-6203a499-6777-5cd0-841b-fa6339c48890 P1-9A | ['Rack R201 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-6a1a4ac2-e77b-526b-9aa6-8c7903e5f572 P2-8B | ['Rack R108 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-7257a622-3ca0-5163-8b6e-5e88c573b17e P2-16B | ['Rack R208 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-7c07894e-9772-5e1c-a418-bdf3fd58e7c3 P1-7A | ['Rack R107 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-7eae2a15-d2d0-52ab-bfcf-3cf6823078cf P2-7B | ['Rack R107 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-872d498b-e156-57b9-8f1d-f595c31ef703 P3-5A | ['Rack R305 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-87cf96f1-95fa-546c-9665-977f42764f8b P4-4B | ['Rack R304 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-8cf662de-a918-5648-b152-d71da75a7392 P3-4A | ['Rack R304 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-a5511926-c977-593b-9bf1-57c8175be85d P2-5B | ['Rack R105 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-a7c6bcef-dbe4-51cd-a6d0-14ab5facbe5e P1-3A | ['Rack R103 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-b3bfb863-c40a-5c49-b82e-1095037d3578 P3-3A | ['Rack R303 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-b4031fa2-14a6-5d06-a3a2-3a3376b10d72 P1-11A | ['Rack R203 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-b9c591cd-fdc0-5cf2-83c4-400554b811cd P1-16A | ['Rack R208 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-bb4485d0-144b-506f-a8ab-faf523304cf8 P4-7B | ['Rack R307 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-c0e96716-af7f-5b78-8210-d51b55fa53d2 P1-1A | ['Rack R101 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-c2893189-8044-5d85-8e91-7832c201474d P1-8A | ['Rack R108 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-c6b3c62b-5f0d-51d1-95d9-761914979d47 P3-6A | ['Rack R306 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-cd4f8f27-620f-59fe-aa9a-4c13ff4a7274 P1-12A | ['Rack R204 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-d951d5fc-81be-51ae-98a1-7759c859d904 P4-5B | ['Rack R305 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-e04582bd-f2cb-5deb-b374-be9260cd5b27 P4-6B | ['Rack R306 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-e1672072-7885-5330-a7dd-52f3769d4863 P1-5A | ['Rack R105 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-e1b4bb92-803c-59f4-90a7-4f5deb95abc2 P4-2B | ['Rack R302 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-f2ee9737-42d8-5093-a349-be97765a39e0 P1-2A | ['Rack R102 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-fcb61481-0da8-5412-b68b-2463016a017d P2-12B | ['Rack R204 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-. ..................................................................................................
-Total validation issues: 48
+0434ed4d-cc76-5051-a38c-b84ed32de2c1 P2-6B | ValidationError | ['Rack R106 (Row 1) and power panel Panel 2 (MDF) are in different locations']
+05541f06-08c9-5d84-a8b6-13ce3cd45938 P3-8A | ValidationError | ['Rack R308 (Row 3) and power panel Panel 3 (MDF) are in different locations']
+05f5bb91-e84c-5908-8d9a-8256959bfcab P2-11B | ValidationError | ['Rack R203 (Row 2) and power panel Panel 2 (MDF) are in different locations']
+06ebb1db-aaa0-5b24-a832-8ca1671f8b0a P2-4B | ValidationError | ['Rack R104 (Row 1) and power panel Panel 2 (MDF) are in different locations']
+07316815-d36d-552d-8859-03e7fe09354a P2-13B | ValidationError | ['Rack R205 (Row 2) and power panel Panel 2 (MDF) are in different locations']
+0e23ee26-033e-5cfd-8bce-b5ef5909e13c P2-10B | ValidationError | ['Rack R202 (Row 2) and power panel Panel 2 (MDF) are in different locations']
+10da56b6-09b1-5da6-9505-d9253863e062 P3-1A | ValidationError | ['Rack R301 (Row 3) and power panel Panel 3 (MDF) are in different locations']
+17a0b412-4187-51a2-a238-901b3a275bcd P1-14A | ValidationError | ['Rack R206 (Row 2) and power panel Panel 1 (MDF) are in different locations']
+194e2d64-c904-59bc-af2c-e040beb3aeac P2-14B | ValidationError | ['Rack R206 (Row 2) and power panel Panel 2 (MDF) are in different locations']
+1f4b42df-43ce-52aa-8a61-4a19ce1af962 P4-3B | ValidationError | ['Rack R303 (Row 3) and power panel Panel 4 (MDF) are in different locations']
+20b3c4c0-eb30-5f8b-adcf-20e4fa5d0061 P2-15B | ValidationError | ['Rack R207 (Row 2) and power panel Panel 2 (MDF) are in different locations']
+29b6b9f0-f50a-592c-8e3f-e415a0bf4cd4 P4-1B | ValidationError | ['Rack R301 (Row 3) and power panel Panel 4 (MDF) are in different locations']
+314fead6-ffae-51f7-abb0-2edcf7d6da49 P3-2A | ValidationError | ['Rack R302 (Row 3) and power panel Panel 3 (MDF) are in different locations']
+31f1abb3-660f-5a57-9256-42be3d5b75cf P2-3B | ValidationError | ['Rack R103 (Row 1) and power panel Panel 2 (MDF) are in different locations']
+3213730d-18bd-5a3a-9828-4ab023ed4652 P1-6A | ValidationError | ['Rack R106 (Row 1) and power panel Panel 1 (MDF) are in different locations']
+3338c701-47fd-513e-945a-78a98b84d7f0 P4-8B | ValidationError | ['Rack R308 (Row 3) and power panel Panel 4 (MDF) are in different locations']
+38f5aa36-561b-5cd8-8362-9d093ff7b89a P1-15A | ValidationError | ['Rack R207 (Row 2) and power panel Panel 1 (MDF) are in different locations']
+3f702c58-7dea-5b78-a007-17f40b465810 P1-10A | ValidationError | ['Rack R202 (Row 2) and power panel Panel 1 (MDF) are in different locations']
+416a01e5-fbf9-522e-b9e9-4037cf8c984f P1-4A | ValidationError | ['Rack R104 (Row 1) and power panel Panel 1 (MDF) are in different locations']
+451c4aad-d892-5114-8724-be2f8148c322 P2-2B | ValidationError | ['Rack R102 (Row 1) and power panel Panel 2 (MDF) are in different locations']
+47f69d3d-8fcd-5b63-8695-21aa51fb4fbf P2-9B | ValidationError | ['Rack R201 (Row 2) and power panel Panel 2 (MDF) are in different locations']
+53ed215b-9003-522d-9cb1-d48dbb18fdc2 P3-7A | ValidationError | ['Rack R307 (Row 3) and power panel Panel 3 (MDF) are in different locations']
+5a2f51ea-7a05-53d2-8a47-cd383629a343 P1-13A | ValidationError | ['Rack R205 (Row 2) and power panel Panel 1 (MDF) are in different locations']
+5fa35cf7-5d55-5533-99ee-7d1ecaa69856 P2-1B | ValidationError | ['Rack R101 (Row 1) and power panel Panel 2 (MDF) are in different locations']
+6203a499-6777-5cd0-841b-fa6339c48890 P1-9A | ValidationError | ['Rack R201 (Row 2) and power panel Panel 1 (MDF) are in different locations']
+6a1a4ac2-e77b-526b-9aa6-8c7903e5f572 P2-8B | ValidationError | ['Rack R108 (Row 1) and power panel Panel 2 (MDF) are in different locations']
+7257a622-3ca0-5163-8b6e-5e88c573b17e P2-16B | ValidationError | ['Rack R208 (Row 2) and power panel Panel 2 (MDF) are in different locations']
+7c07894e-9772-5e1c-a418-bdf3fd58e7c3 P1-7A | ValidationError | ['Rack R107 (Row 1) and power panel Panel 1 (MDF) are in different locations']
+7eae2a15-d2d0-52ab-bfcf-3cf6823078cf P2-7B | ValidationError | ['Rack R107 (Row 1) and power panel Panel 2 (MDF) are in different locations']
+872d498b-e156-57b9-8f1d-f595c31ef703 P3-5A | ValidationError | ['Rack R305 (Row 3) and power panel Panel 3 (MDF) are in different locations']
+87cf96f1-95fa-546c-9665-977f42764f8b P4-4B | ValidationError | ['Rack R304 (Row 3) and power panel Panel 4 (MDF) are in different locations']
+8cf662de-a918-5648-b152-d71da75a7392 P3-4A | ValidationError | ['Rack R304 (Row 3) and power panel Panel 3 (MDF) are in different locations']
+a5511926-c977-593b-9bf1-57c8175be85d P2-5B | ValidationError | ['Rack R105 (Row 1) and power panel Panel 2 (MDF) are in different locations']
+a7c6bcef-dbe4-51cd-a6d0-14ab5facbe5e P1-3A | ValidationError | ['Rack R103 (Row 1) and power panel Panel 1 (MDF) are in different locations']
+b3bfb863-c40a-5c49-b82e-1095037d3578 P3-3A | ValidationError | ['Rack R303 (Row 3) and power panel Panel 3 (MDF) are in different locations']
+b4031fa2-14a6-5d06-a3a2-3a3376b10d72 P1-11A | ValidationError | ['Rack R203 (Row 2) and power panel Panel 1 (MDF) are in different locations']
+b9c591cd-fdc0-5cf2-83c4-400554b811cd P1-16A | ValidationError | ['Rack R208 (Row 2) and power panel Panel 1 (MDF) are in different locations']
+bb4485d0-144b-506f-a8ab-faf523304cf8 P4-7B | ValidationError | ['Rack R307 (Row 3) and power panel Panel 4 (MDF) are in different locations']
+c0e96716-af7f-5b78-8210-d51b55fa53d2 P1-1A | ValidationError | ['Rack R101 (Row 1) and power panel Panel 1 (MDF) are in different locations']
+c2893189-8044-5d85-8e91-7832c201474d P1-8A | ValidationError | ['Rack R108 (Row 1) and power panel Panel 1 (MDF) are in different locations']
+c6b3c62b-5f0d-51d1-95d9-761914979d47 P3-6A | ValidationError | ['Rack R306 (Row 3) and power panel Panel 3 (MDF) are in different locations']
+cd4f8f27-620f-59fe-aa9a-4c13ff4a7274 P1-12A | ValidationError | ['Rack R204 (Row 2) and power panel Panel 1 (MDF) are in different locations']
+d951d5fc-81be-51ae-98a1-7759c859d904 P4-5B | ValidationError | ['Rack R305 (Row 3) and power panel Panel 4 (MDF) are in different locations']
+e04582bd-f2cb-5deb-b374-be9260cd5b27 P4-6B | ValidationError | ['Rack R306 (Row 3) and power panel Panel 4 (MDF) are in different locations']
+e1672072-7885-5330-a7dd-52f3769d4863 P1-5A | ValidationError | ['Rack R105 (Row 1) and power panel Panel 1 (MDF) are in different locations']
+e1b4bb92-803c-59f4-90a7-4f5deb95abc2 P4-2B | ValidationError | ['Rack R302 (Row 3) and power panel Panel 4 (MDF) are in different locations']
+f2ee9737-42d8-5093-a349-be97765a39e0 P1-2A | ValidationError | ['Rack R102 (Row 1) and power panel Panel 1 (MDF) are in different locations']
+fcb61481-0da8-5412-b68b-2463016a017d P2-12B | ValidationError | ['Rack R204 (Row 2) and power panel Panel 2 (MDF) are in different locations']
+. Total importer issues: 48 ........................................................................
 - Content Types Mapping Deviations: ----------------------------------------------------------------
   Mapping deviations from source content type to Nautobot content type
 auth.user => users.user
@@ -179,7 +178,7 @@ port_speed => integer_importer => port_speed (PositiveIntegerField)
 pp_info => value_importer => pp_info (CharField)
 provider_network => relation_importer => provider_network_id (ForeignKey)
 site => location_importer => location_id (ForeignKey)
-term_side => value_importer => term_side (CharField)
+term_side => choice_importer => term_side (CharField)
 upstream_speed => integer_importer => upstream_speed (PositiveIntegerField)
 xconnect_id => value_importer => xconnect_id (CharField)
 * circuits.circuittype => circuits.circuittype *****************************************************
@@ -226,14 +225,14 @@ id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 length => integer_importer => length (PositiveSmallIntegerField)
-length_unit => value_importer => length_unit (CharField)
+length_unit => choice_importer => length_unit (CharField)
 status => status_importer => status_id (StatusField)
 tenant => NO IMPORTER => NO TARGET
 termination_a_id => relation_and_type_importer => termination_a_id (UUIDField)
 termination_a_type => relation_and_type_importer => termination_a_type_id (ForeignKey)
 termination_b_id => relation_and_type_importer => termination_b_id (UUIDField)
 termination_b_type => relation_and_type_importer => termination_b_type_id (ForeignKey)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 * dcim.consoleport => dcim.consoleport *************************************************************
 _link_peer_id => NO IMPORTER => NO TARGET
 _link_peer_type => NO IMPORTER => NO TARGET
@@ -250,7 +249,7 @@ last_updated => Disabled with reason: Last updated field is updated with each wr
 mark_connected => NO IMPORTER => NO TARGET
 name => value_importer => name (CharField)
 speed => NO IMPORTER => NO TARGET
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 * dcim.consoleporttemplate => dcim.consoleporttemplate *********************************************
 _name => NO IMPORTER => NO TARGET
 created => datetime_importer => created (DateTimeField)
@@ -260,7 +259,7 @@ id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 * dcim.device => dcim.device ***********************************************************************
 _name => NO IMPORTER => NO TARGET
 airflow => NO IMPORTER => NO TARGET
@@ -271,7 +270,7 @@ created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 device_role => role_importer => role_id (RoleField)
 device_type => relation_importer => device_type_id (ForeignKey)
-face => value_importer => face (CharField)
+face => choice_importer => face (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 local_context_data => NO IMPORTER => NO TARGET
@@ -333,7 +332,7 @@ model => value_importer => model (CharField)
 part_number => value_importer => part_number (CharField)
 rear_image => Disabled with reason: Import does not contain images
 slug => NO IMPORTER => NO TARGET
-subdevice_role => value_importer => subdevice_role (CharField)
+subdevice_role => choice_importer => subdevice_role (CharField)
 u_height => truncate_to_integer_importer => u_height (PositiveSmallIntegerField)
 * dcim.frontport => dcim.frontport *****************************************************************
 _link_peer_id => NO IMPORTER => NO TARGET
@@ -352,7 +351,7 @@ mark_connected => NO IMPORTER => NO TARGET
 name => value_importer => name (CharField)
 rear_port => relation_importer => rear_port_id (ForeignKey)
 rear_port_position => integer_importer => rear_port_position (PositiveSmallIntegerField)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 * dcim.frontporttemplate => dcim.frontporttemplate *************************************************
 _name => NO IMPORTER => NO TARGET
 color => NO IMPORTER => NO TARGET
@@ -365,7 +364,7 @@ last_updated => Disabled with reason: Last updated field is updated with each wr
 name => value_importer => name (CharField)
 rear_port => relation_importer => rear_port_template_id (ForeignKey)
 rear_port_position => integer_importer => rear_port_position (PositiveSmallIntegerField)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 * dcim.interface => dcim.interface *****************************************************************
 _link_peer_id => NO IMPORTER => NO TARGET
 _link_peer_type => NO IMPORTER => NO TARGET
@@ -385,7 +384,7 @@ last_updated => Disabled with reason: Last updated field is updated with each wr
 mac_address => value_importer => mac_address (CharField)
 mark_connected => NO IMPORTER => NO TARGET
 mgmt_only => value_importer => mgmt_only (BooleanField)
-mode => value_importer => mode (CharField)
+mode => choice_importer => mode (CharField)
 mtu => integer_importer => mtu (PositiveIntegerField)
 name => value_importer => name (CharField)
 parent => relation_importer => parent_interface_id (ForeignKey)
@@ -395,7 +394,7 @@ rf_channel_width => NO IMPORTER => NO TARGET
 rf_role => NO IMPORTER => NO TARGET
 tagged_vlans => uuids_importer => tagged_vlans (ManyToManyField)
 tx_power => NO IMPORTER => NO TARGET
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 untagged_vlan => relation_importer => untagged_vlan_id (ForeignKey)
 wireless_lans => NO IMPORTER => NO TARGET
 wireless_link => NO IMPORTER => NO TARGET
@@ -410,7 +409,7 @@ label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 mgmt_only => value_importer => mgmt_only (BooleanField)
 name => value_importer => name (CharField)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 * dcim.location => dcim.location *******************************************************************
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
@@ -460,12 +459,12 @@ last_updated => Disabled with reason: Last updated field is updated with each wr
 mark_connected => NO IMPORTER => NO TARGET
 max_utilization => integer_importer => max_utilization (PositiveSmallIntegerField)
 name => value_importer => name (CharField)
-phase => value_importer => phase (CharField)
+phase => choice_importer => phase (CharField)
 power_panel => relation_importer => power_panel_id (ForeignKey)
 rack => relation_importer => rack_id (ForeignKey)
 status => status_importer => status_id (StatusField)
-supply => value_importer => supply (CharField)
-type => value_importer => type (CharField)
+supply => choice_importer => supply (CharField)
+type => choice_importer => type (CharField)
 voltage => integer_importer => voltage (SmallIntegerField)
 * dcim.poweroutlet => dcim.poweroutlet *************************************************************
 _link_peer_id => NO IMPORTER => NO TARGET
@@ -477,26 +476,26 @@ created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
 device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
-feed_leg => value_importer => feed_leg (CharField)
+feed_leg => choice_importer => feed_leg (CharField)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 mark_connected => NO IMPORTER => NO TARGET
 name => value_importer => name (CharField)
 power_port => relation_importer => power_port_id (ForeignKey)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 * dcim.poweroutlettemplate => dcim.poweroutlettemplate *********************************************
 _name => NO IMPORTER => NO TARGET
 created => datetime_importer => created (DateTimeField)
 description => value_importer => description (CharField)
 device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
-feed_leg => value_importer => feed_leg (CharField)
+feed_leg => choice_importer => feed_leg (CharField)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
 power_port => relation_importer => power_port_template_id (ForeignKey)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 * dcim.powerpanel => dcim.powerpanel ***************************************************************
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
@@ -522,7 +521,7 @@ last_updated => Disabled with reason: Last updated field is updated with each wr
 mark_connected => NO IMPORTER => NO TARGET
 maximum_draw => integer_importer => maximum_draw (PositiveSmallIntegerField)
 name => value_importer => name (CharField)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 * dcim.powerporttemplate => dcim.powerporttemplate *************************************************
 _name => NO IMPORTER => NO TARGET
 allocated_draw => integer_importer => allocated_draw (PositiveSmallIntegerField)
@@ -534,7 +533,7 @@ label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 maximum_draw => integer_importer => maximum_draw (PositiveSmallIntegerField)
 name => value_importer => name (CharField)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 * dcim.rack => dcim.rack ***************************************************************************
 _name => NO IMPORTER => NO TARGET
 asset_tag => value_importer => asset_tag (CharField)
@@ -548,16 +547,16 @@ last_updated => Disabled with reason: Last updated field is updated with each wr
 location => location_importer => location_id (ForeignKey)
 name => value_importer => name (CharField)
 outer_depth => integer_importer => outer_depth (PositiveSmallIntegerField)
-outer_unit => value_importer => outer_unit (CharField)
+outer_unit => choice_importer => outer_unit (CharField)
 outer_width => integer_importer => outer_width (PositiveSmallIntegerField)
 role => role_importer => role_id (RoleField)
 serial => value_importer => serial (CharField)
 site => location_importer => location_id (ForeignKey)
 status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 u_height => integer_importer => u_height (PositiveSmallIntegerField)
-width => integer_importer => width (PositiveSmallIntegerField)
+width => choice_importer => width (PositiveSmallIntegerField)
 * dcim.rackreservation => dcim.rackreservation *****************************************************
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
@@ -593,7 +592,7 @@ last_updated => Disabled with reason: Last updated field is updated with each wr
 mark_connected => NO IMPORTER => NO TARGET
 name => value_importer => name (CharField)
 positions => integer_importer => positions (PositiveSmallIntegerField)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 * dcim.rearporttemplate => dcim.rearporttemplate ***************************************************
 _name => NO IMPORTER => NO TARGET
 color => NO IMPORTER => NO TARGET
@@ -605,7 +604,7 @@ label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
 positions => integer_importer => positions (PositiveSmallIntegerField)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 * dcim.region => dcim.location *********************************************************************
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
@@ -643,7 +642,7 @@ shipping_address => value_importer => shipping_address (TextField)
 slug => NO IMPORTER => NO TARGET
 status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
-time_zone => value_importer => time_zone (CharField)
+time_zone => choice_importer => time_zone (CharField)
 * dcim.sitegroup => dcim.locationtype **************************************************************
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
@@ -671,13 +670,13 @@ content_types => content_types_importer => content_types (ManyToManyField)
 created => datetime_importer => created (DateTimeField)
 default => json_importer => default (JSONField)
 description => value_importer => description (CharField)
-filter_logic => value_importer => filter_logic (CharField)
+filter_logic => choice_importer => filter_logic (CharField)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => key (SlugField)
 required => value_importer => required (BooleanField)
-type => choice_importer => type (CharField)
+type => fallback_importer => type (CharField)
 validation_maximum => integer_importer => validation_maximum (BigIntegerField)
 validation_minimum => integer_importer => validation_minimum (BigIntegerField)
 validation_regex => value_importer => validation_regex (CharField)
@@ -857,7 +856,7 @@ enabled => value_importer => enabled (BooleanField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 mac_address => value_importer => mac_address (CharField)
-mode => value_importer => mode (CharField)
+mode => choice_importer => mode (CharField)
 mtu => integer_importer => mtu (PositiveIntegerField)
 name => value_importer => name (CharField)
 parent => relation_importer => parent_interface_id (ForeignKey)

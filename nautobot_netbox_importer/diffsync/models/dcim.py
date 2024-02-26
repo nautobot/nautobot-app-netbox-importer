@@ -15,8 +15,6 @@ from .locations import define_location
 
 
 def _define_units(field: SourceField) -> None:
-    field.set_nautobot_field(field.name)
-
     def units_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
         # NetBox 3.4 units is `list[int]`, previous versions are JSON string with list of strings
         units = source.get(field.name, None)

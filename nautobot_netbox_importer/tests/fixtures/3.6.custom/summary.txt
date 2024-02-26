@@ -1,6 +1,6 @@
 = Import Summary: ==================================================================================
 - DiffSync Summary: --------------------------------------------------------------------------------
-create: 65
+create: 66
 update: 0
 delete: 0
 no-change: 0
@@ -22,20 +22,24 @@ extras.customfieldchoice: 3
 extras.journalentry: 2
 extras.objectchange: 20
 extras.status: 2
-ipam.fhrpgroup: 1
+ipam.fhrpgroup: 2
 ipam.ipaddress: 1
 ipam.prefix: 1
 ipam.role: 1
 tenancy.tenant: 11
 tenancy.tenantgroup: 1
 users.objectpermission: 1
-- Validation issues: -------------------------------------------------------------------------------
+- Importer issues: ---------------------------------------------------------------------------------
 . dcim.device: 1  ..................................................................................
-f510c5ff-e1f8-5adc-9fb5-30bc5791b42e Device 1 | ["Invalid value for custom field 'device_custom_object': Value must be a string"]
+f510c5ff-e1f8-5adc-9fb5-30bc5791b42e Device 1 | ValidationError | ["Invalid value for custom field 'device_custom_object': Value must be a string"]
+. dcim.interfaceredundancygroup: 2  ................................................................
+2586a272-455a-5e92-85d7-f41c0784630a FHR Group clusterxl | InvalidChoiceValueIssue | {'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}
+f91623ed-a389-53a4-a4a2-943588c21446 Test FHR Group | InvalidChoiceValueIssue | {'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}
 . dcim.location: 1  ................................................................................
-c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 Site 1 | {'parent': ['A Location of type Site must have a parent Location.']}
-. ..................................................................................................
-Total validation issues: 2
+c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 Site 1 | ValidationError | {'parent': ['A Location of type Site must have a parent Location.']}
+. extras.customfield: 1  ...........................................................................
+149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 Device Custom Object | InvalidChoiceValueIssue | {'type': 'Invalid choice value: `object`, replaced with `text`'}
+. Total importer issues: 5 .........................................................................
 - Content Types Mapping Deviations: ----------------------------------------------------------------
   Mapping deviations from source content type to Nautobot content type
 auth.user => users.user
@@ -85,7 +89,7 @@ custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => NO IMPORTER => NO TARGET
 device_bay_count => NO IMPORTER => NO TARGET
 device_type => relation_importer => device_type_id (ForeignKey)
-face => value_importer => face (CharField)
+face => choice_importer => face (CharField)
 front_port_count => NO IMPORTER => NO TARGET
 id => uid_from_data => id (UUIDField)
 interface_count => NO IMPORTER => NO TARGET
@@ -152,7 +156,7 @@ power_port_template_count => NO IMPORTER => NO TARGET
 rear_image => Disabled with reason: Import does not contain images
 rear_port_template_count => NO IMPORTER => NO TARGET
 slug => NO IMPORTER => NO TARGET
-subdevice_role => value_importer => subdevice_role (CharField)
+subdevice_role => choice_importer => subdevice_role (CharField)
 u_height => truncate_to_integer_importer => u_height (PositiveSmallIntegerField)
 weight => NO IMPORTER => NO TARGET
 weight_unit => NO IMPORTER => NO TARGET
@@ -182,7 +186,7 @@ max_weight => NO IMPORTER => NO TARGET
 mounting_depth => NO IMPORTER => NO TARGET
 name => value_importer => name (CharField)
 outer_depth => integer_importer => outer_depth (PositiveSmallIntegerField)
-outer_unit => value_importer => outer_unit (CharField)
+outer_unit => choice_importer => outer_unit (CharField)
 outer_width => integer_importer => outer_width (PositiveSmallIntegerField)
 role => role_importer => role_id (RoleField)
 serial => value_importer => serial (CharField)
@@ -190,11 +194,11 @@ site => location_importer => location_id (ForeignKey)
 starting_unit => NO IMPORTER => NO TARGET
 status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
-type => value_importer => type (CharField)
+type => choice_importer => type (CharField)
 u_height => integer_importer => u_height (PositiveSmallIntegerField)
 weight => NO IMPORTER => NO TARGET
 weight_unit => NO IMPORTER => NO TARGET
-width => integer_importer => width (PositiveSmallIntegerField)
+width => choice_importer => width (PositiveSmallIntegerField)
 * dcim.rackrole => extras.role *********************************************************************
 color => value_importer => color (CharField)
 created => datetime_importer => created (DateTimeField)
@@ -224,14 +228,14 @@ shipping_address => value_importer => shipping_address (TextField)
 slug => NO IMPORTER => NO TARGET
 status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
-time_zone => value_importer => time_zone (CharField)
+time_zone => choice_importer => time_zone (CharField)
 * extras.customfield => extras.customfield *********************************************************
 choice_set => choices_importer => Custom Target
 content_types => content_types_importer => content_types (ManyToManyField)
 created => datetime_importer => created (DateTimeField)
 default => json_importer => default (JSONField)
 description => value_importer => description (CharField)
-filter_logic => value_importer => filter_logic (CharField)
+filter_logic => choice_importer => filter_logic (CharField)
 group_name => NO IMPORTER => NO TARGET
 id => uid_from_data => id (UUIDField)
 is_cloneable => NO IMPORTER => NO TARGET
@@ -241,7 +245,7 @@ name => value_importer => key (SlugField)
 object_type => NO IMPORTER => NO TARGET
 required => value_importer => required (BooleanField)
 search_weight => NO IMPORTER => NO TARGET
-type => choice_importer => type (CharField)
+type => fallback_importer => type (CharField)
 ui_visibility => NO IMPORTER => NO TARGET
 validation_maximum => integer_importer => validation_maximum (BigIntegerField)
 validation_minimum => integer_importer => validation_minimum (BigIntegerField)
@@ -258,7 +262,7 @@ id => uid_from_data => id (UUIDField)
 kind => NO IMPORTER => NO TARGET
 last_updated => Disabled with reason: Last updated field is updated with each write
 * extras.objectchange => extras.objectchange *******************************************************
-action => value_importer => action (CharField)
+action => choice_importer => action (CharField)
 changed_object_id => relation_and_type_importer => changed_object_id (UUIDField)
 changed_object_type => relation_and_type_importer => changed_object_type_id (ForeignKey)
 id => uid_from_data => id (UUIDField)
@@ -282,7 +286,7 @@ group_id => NO IMPORTER => NO TARGET
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-protocol => value_importer => protocol (CharField)
+protocol => fallback_importer => protocol (CharField)
 * ipam.ipaddress => ipam.ipaddress *****************************************************************
 address => value_importer => address (Property)
 assigned_object_id => NO IMPORTER => NO TARGET
