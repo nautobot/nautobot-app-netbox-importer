@@ -9,8 +9,10 @@ class NautobotAdapter(_NautobotAdapter):
         """Initialize Nautobot.
 
         Args:
+            *args (tuple): Arguments to be passed to the parent class.
             job (object, optional): Nautobot job. Defaults to None.
             sync (object, optional): Nautobot DiffSync. Defaults to None.
+            **kwargs (dict): Additional arguments to be passed to the parent class.
         """
         super().__init__(*args, **kwargs)
         self.job = job

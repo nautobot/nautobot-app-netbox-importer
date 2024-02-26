@@ -1,10 +1,10 @@
 ---
 dev_addr: "127.0.0.1:8001"
-edit_uri: "edit/main/nautobot-plugin-netbox-importer/docs"
+edit_uri: "edit/main/nautobot-app-netbox-importer/docs"
 site_dir: "nautobot_netbox_importer/static/nautobot_netbox_importer/docs"
 site_name: "Nautobot NetBox Importer Documentation"
 site_url: "https://docs.nautobot.com/projects/netbox-importer/en/latest/"
-repo_url: "https://github.com/nautobot/nautobot-plugin-netbox-importer"
+repo_url: "https://github.com/nautobot/nautobot-app-netbox-importer"
 copyright: "Copyright &copy; The Authors"
 theme:
   name: "material"
