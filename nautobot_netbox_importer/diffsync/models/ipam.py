@@ -20,7 +20,7 @@ def _fhrp_protocol_fallback(field: SourceField, source: RecordData, target: Diff
     else:
         return
 
-    setattr(target, field.nautobot.name, target_value)
+    field.set_nautobot_value(target, target_value)
     raise InvalidChoiceValueIssue(field, value, target_value)
 
 

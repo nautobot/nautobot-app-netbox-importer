@@ -46,7 +46,7 @@ def fallback(
                 if callback:
                     callback(field, source, target, error)
                 if value:
-                    setattr(target, field.nautobot.name, value)
+                    field.set_nautobot_value(target, value)
                     if isinstance(error, InvalidChoiceValueIssue):
                         raise InvalidChoiceValueIssue(field, field.get_source_value(source), value) from error
                     raise SourceFieldImporterIssue(
@@ -160,7 +160,7 @@ def role(
             else:
                 raise ValueError(f"Invalid role value {value}")
 
-            setattr(target, field.nautobot.name, uid)
+            field.set_nautobot_value(target, uid)
             field.wrapper.add_reference(role_wrapper, uid)
 
         field.set_importer(role_importer, nautobot_name)
@@ -196,7 +196,7 @@ def constant(value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition
 
     def define_constant(field: SourceField) -> None:
         def constant_importer(_: RecordData, target: DiffSyncBaseModel) -> None:
-            setattr(target, field.nautobot.name, value)
+            field.set_nautobot_value(target, value)
 
         field.set_importer(constant_importer, nautobot_name)
 
@@ -212,8 +212,7 @@ def pass_through(nautobot_name: FieldName = "") -> SourceFieldDefinition:
     def define_passthrough(field: SourceField) -> None:
         def pass_through_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(field.name, None)
-            if value:
-                setattr(target, field.nautobot.name, value)
+            field.set_nautobot_value(target, value)
 
         field.set_importer(pass_through_importer, nautobot_name)
 

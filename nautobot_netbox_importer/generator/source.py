@@ -857,6 +857,14 @@ class SourceField:
         result = source[self.name]
         return self.default_value if result in EMPTY_VALUES else result
 
+    def set_nautobot_value(self, target: DiffSyncModel, value: Any) -> None:
+        """Set a value to the Nautobot model."""
+        if value in EMPTY_VALUES:
+            if hasattr(target, self.nautobot.name):
+                delattr(target, self.nautobot.name)
+        else:
+            setattr(target, self.nautobot.name, value)
+
     def set_nautobot_field(self, nautobot_name: FieldName = "") -> NautobotField:
         """Set a Nautobot field name for the field."""
         result = self.wrapper.nautobot.add_field(nautobot_name or self.name)
@@ -926,8 +934,7 @@ class SourceField:
 
         def value_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = self.get_source_value(source)
-            if value not in EMPTY_VALUES:
-                setattr(target, self.nautobot.name, value)
+            self.set_nautobot_value(target, value)
 
         self.set_importer(value_importer)
 
@@ -936,13 +943,9 @@ class SourceField:
 
         def json_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
-            if value in EMPTY_VALUES:
-                return
-
-            if isinstance(value, str):
+            if isinstance(value, str) and value:
                 value = json.loads(value)
-
-            setattr(target, self.nautobot.name, value)
+            self.set_nautobot_value(target, value)
 
         self.set_importer(json_importer)
 
@@ -963,15 +966,14 @@ class SourceField:
 
         def choice_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = self.get_source_value(source)
-            if value in EMPTY_VALUES:
-                return
-
             if value in choices:
-                setattr(target, self.nautobot.name, value)
+                self.set_nautobot_value(target, value)
             elif self.nautobot.required:
                 # Set the choice value even it's not valid in Nautobot as it's required
-                setattr(target, self.nautobot.name, value)
+                self.set_nautobot_value(target, value)
                 raise InvalidChoiceValueIssue(self, value)
+            elif value in EMPTY_VALUES:
+                self.set_nautobot_value(target, value)
             else:
                 raise InvalidChoiceValueIssue(self, value, None)
 
@@ -981,15 +983,15 @@ class SourceField:
         """Set an integer field importer."""
 
         def integer_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-            value = self.get_source_value(source)
-            if value in EMPTY_VALUES:
-                return
-
-            float_value = float(value)
-            if not float_value.is_integer():
-                raise ValueError(f"Invalid value {value} for field {self}")
-
-            setattr(target, self.nautobot.name, int(float_value))
+            source_value = self.get_source_value(source)
+            if source_value in EMPTY_VALUES:
+                self.set_nautobot_value(target, source_value)
+            else:
+                source_value = float(source_value)
+                value = int(source_value)
+                self.set_nautobot_value(target, value)
+                if value != source_value:
+                    raise SourceFieldImporterIssue(f"Invalid source value {source_value}, truncated to {value}", self)
 
         self.set_importer(integer_importer)
 
@@ -1015,14 +1017,14 @@ class SourceField:
         def relation_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = self.get_source_value(source)
             if value in EMPTY_VALUES:
-                return
-
-            if isinstance(value, (UUID, str, int)):
-                result = related_wrapper.get_pk_from_uid(value)
+                self.set_nautobot_value(target, value)
             else:
-                result = related_wrapper.get_pk_from_identifiers(value)
-            setattr(target, self.nautobot.name, result)
-            wrapper.add_reference(related_wrapper, result)
+                if isinstance(value, (UUID, str, int)):
+                    result = related_wrapper.get_pk_from_uid(value)
+                else:
+                    result = related_wrapper.get_pk_from_identifiers(value)
+                self.set_nautobot_value(target, result)
+                wrapper.add_reference(related_wrapper, result)
 
         self.set_importer(relation_importer)
 
@@ -1032,8 +1034,9 @@ class SourceField:
 
         def content_type_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             content_type = source.get(self.name, None)
-            if content_type:
-                setattr(target, self.nautobot.name, adapter.get_nautobot_content_type_uid(content_type))
+            if content_type not in EMPTY_VALUES:
+                content_type = adapter.get_nautobot_content_type_uid(content_type)
+            self.set_nautobot_value(target, content_type)
 
         self.set_importer(content_type_importer)
 
@@ -1056,13 +1059,12 @@ class SourceField:
 
         def identifiers_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             values = source.get(self.name, None)
-            if values in EMPTY_VALUES:
-                return
+            if values not in EMPTY_VALUES:
+                if not isinstance(values, (list, set)):
+                    raise ValueError(f"Invalid value {values} for field {self.name}")
+                values = set(related_wrapper.get_pk_from_identifiers(item) for item in values)
 
-            if not isinstance(values, (list, set)):
-                raise ValueError(f"Invalid value {values} for field {self.name}")
-
-            setattr(target, self.nautobot.name, set(related_wrapper.get_pk_from_identifiers(item) for item in values))
+            self.set_nautobot_value(target, values)
 
         self.set_importer(identifiers_importer)
 
@@ -1087,8 +1089,7 @@ class SourceField:
                         "Can't convert content type %s for field %s, skipping", item, self
                     )
 
-            if nautobot_values:
-                setattr(target, self.nautobot.name, nautobot_values)
+            self.set_nautobot_value(target, nautobot_values)
 
         self.set_importer(content_types_importer)
 
@@ -1098,14 +1099,13 @@ class SourceField:
         def uuids_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
             if value in EMPTY_VALUES:
-                return
-
+                self.set_nautobot_value(target, value)
             if isinstance(value, (UUID, str, int)):
-                setattr(target, self.nautobot.name, {related_wrapper.get_pk_from_uid(value)})
+                self.set_nautobot_value(target, {related_wrapper.get_pk_from_uid(value)})
             elif isinstance(value, (list, set, tuple)):
-                setattr(target, self.nautobot.name, set(related_wrapper.get_pk_from_uid(item) for item in value))
+                self.set_nautobot_value(target, set(related_wrapper.get_pk_from_uid(item) for item in value))
             else:
-                raise ValueError(f"Invalid value {value} for field {self.name}")
+                raise SourceFieldImporterIssue(f"Invalid value {value} for field {self.name}", self)
 
         self.set_importer(uuids_importer)
 
@@ -1115,7 +1115,8 @@ class SourceField:
         def datetime_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
             if value not in EMPTY_VALUES:
-                setattr(target, self.nautobot.name, normalize_datetime(value))
+                value = normalize_datetime(value)
+            self.set_nautobot_value(target, value)
 
         self.set_importer(datetime_importer)
 
@@ -1134,8 +1135,8 @@ class SourceField:
 
             type_wrapper = self.wrapper.adapter.get_or_create_wrapper(source_type)
             uid = type_wrapper.get_pk_from_uid(source_uid)
-            setattr(target, self.nautobot.name, uid)
-            setattr(target, type_field.nautobot.name, type_wrapper.nautobot.content_type_instance.pk)
+            self.set_nautobot_value(target, uid)
+            type_field.set_nautobot_value(target, type_wrapper.nautobot.content_type_instance.pk)
             self.wrapper.add_reference(type_wrapper, uid)
 
         self.set_importer(relation_and_type_importer)
@@ -1153,7 +1154,8 @@ class SourceField:
         def uuid_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
             if value not in EMPTY_VALUES:
-                setattr(target, self.nautobot.name, UUID(value))
+                value = UUID(value)
+            self.set_nautobot_value(target, value)
 
         self.set_importer(uuid_importer)
 
@@ -1162,13 +1164,9 @@ class SourceField:
 
         def date_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
-            if value in EMPTY_VALUES:
-                return
-
-            if not isinstance(value, datetime.date):
+            if value not in EMPTY_VALUES and not isinstance(value, datetime.date):
                 value = datetime.date.fromisoformat(str(value))
-
-            setattr(target, self.nautobot.name, value)
+            self.set_nautobot_value(target, value)
 
         self.set_importer(date_importer)
 
@@ -1187,10 +1185,9 @@ class SourceField:
                 value = status_wrapper.cache_record({"name": status[0].upper() + status[1:]})
             else:
                 value = self.default_value
-                if not value:
-                    return
 
-            setattr(target, self.nautobot.name, value)
-            self.wrapper.add_reference(status_wrapper, value)
+            self.set_nautobot_value(target, value)
+            if value:
+                self.wrapper.add_reference(status_wrapper, value)
 
         self.set_importer(status_importer)

@@ -131,10 +131,11 @@ def unrack_zero_uheight_devices(adapter: SourceAdapter) -> None:
     if not device_type_ids:
         return
 
-    # Update all devices with matching device type, clean `rack_id` field.
+    # Update all devices with matching device type, clean `position` field.
+    position = device_wrapper.fields["position"]
     for item in adapter.get_all(device_wrapper.nautobot.diffsync_class):
         if getattr(item, "position", None) and getattr(item, "device_type_id") in device_type_ids:
-            item.position = None
+            position.set_nautobot_value(item, None)
             adapter.update(item)
             # TBD: Raise validation issue
 

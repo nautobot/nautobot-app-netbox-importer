@@ -35,7 +35,7 @@ def define_location(field: SourceField) -> None:
         else:
             return
 
-        setattr(target, field.nautobot.name, result)
+        field.set_nautobot_value(target, result)
 
     field.set_importer(location_importer)
     field.handle_sibling("site", field.nautobot.name)
@@ -59,7 +59,7 @@ def _define_location_parent(field: SourceField) -> None:
         else:
             return
 
-        setattr(target, field.nautobot.name, result)
+        field.set_nautobot_value(target, result)
 
     field.set_importer(location_parent_importer)
     field.handle_sibling("site", field.nautobot.name)
@@ -80,7 +80,7 @@ def _define_site_group(field: SourceField) -> None:
             result = site_type_uid
             wrapper.add_reference(location_type_wrapper, result)
 
-        setattr(target, field.nautobot.name, result)
+        field.set_nautobot_value(target, result)
 
     field.set_importer(site_group_importer, "location_type")
 
