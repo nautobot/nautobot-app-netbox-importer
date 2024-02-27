@@ -7,7 +7,7 @@ When NetBox adds new fields and models that deviate from Nautobot, the following
 1. Define the deviations accordingly in `nautobot_netbox_importer/diffsync/models/<appropriate>.py` file.
 
 - For examples, check other files in that directory.
-- When adding a new file, remember to register it in `nautobot_netbox_importer/adapter/netbox.py` file using `register_adapter_setup()`.
+- When adding a new file, remember to register it in `nautobot_netbox_importer/adapter/netbox.py` file using `register_generator_setup()`.
 
 2. Add appropriate `version` key to `_INPUTS`, `_EXPECTED_SUMMARY`, and other `_EXPECTED_<name>` dictionaries in the `nautobot_netbox_importer/tests/test_import.py` file.
 
@@ -24,38 +24,48 @@ Field conversions are handled by the default importers most of the time, with th
 The following code snippet shows how to specify the definition function for the `units` field:
 
 ```python
-adapter.configure_model(
-  "dcim.rackreservation",
-  fields={
-      "units": _define_units,
-  },
-)
+def setup(adapter: SourceAdapter) -> None:
+    """Customize the mapping from source to Nautobot"""
+    adapter.configure_model(
+        "dcim.rackreservation",
+        fields={
+            # Set the definition of the `units` field
+            "units": _define_units,
+        },
+    )
 ```
 
 The field definition should map the NetBox field to Nautobot and register an importer for the field:
 
 ```python
 def _define_units(field: SourceField) -> None:
-  def importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-      # In NetBox 3.4, units is a `list[int]`; previous versions use a JSON string with a list of strings.
-      units = source.get(field.name, None)
+    """Define the units field importer.
 
-      # Empty values can be ignored.
-      if units in EMPTY_VALUES:
-          return
+    This function is called between the first and second pass of input data, when creating importers.
+    """
 
-      # Convert from NetBox format to Nautobot format.
-      if isinstance(units, str):
-          units = json.loads(units)
-          if units:
-              units = [int(unit) for unit in units]
+    def units_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+        """Import the `units` field from NetBox to Nautobot.
 
-      # Store the value in the target DiffSyncModel instance.
-      setattr(target, field.nautobot.name, units)
+        This function is called for each input source data record of `dcim.rackreservation` model.
 
-  # Map the field from NetBox to Nautobot and register the importer.
-  # The Nautobot field name is the same as the NetBox field name in this case.
-  field.set_importer(importer)
+        NetBox 3.4 units is `list[int]`, previous versions are JSON string with list of strings.
+        """
+        # Read value from input data
+        value = field.get_source_value(source)
+
+        # Process the conversion from NetBox to Nautobot format
+        if isinstance(value, str) and value:
+            value = json.loads(value)
+        if value:
+            value = [int(unit) for unit in value]
+
+        # Store the value in the target DiffSyncModel instance.
+        field.set_nautobot_value(target, value)
+
+    # Register the importer and map the field from NetBox to Nautobot.
+    # The Nautobot field name is the same as the NetBox field name: `units` in this case.
+    field.set_importer(units_importer)
 ```
 
 2. Conversion between different field types is supported; however, it can fail depending on the data content. For instance, converting `str` to `int` will fail if the string contains non-numeric characters.
@@ -70,7 +80,7 @@ Relation field conversions are handled by the default importers in most cases, w
 
 If the model has the same content type and fields as the Nautobot model, then no action is required; the importer will handle it automatically.
 
-Otherwise, it's necessary to define the deviations between the NetBox and Nautobot models in the `nautobot_netbox_importer/diffsync/adapters/<appropriate>.py` file and register the setup function in the `nautobot_netbox_importer/adapter/netbox.py` file using `register_adapter_setup()` as described above.
+Otherwise, it's necessary to define the deviations between the NetBox and Nautobot models in the `nautobot_netbox_importer/diffsync/adapters/<appropriate>.py` file and register the setup function in the `nautobot_netbox_importer/adapter/netbox.py` file using `register_generator_setup()` as described above.
 
 ## What has to be done to support a minor Nautobot version?
 

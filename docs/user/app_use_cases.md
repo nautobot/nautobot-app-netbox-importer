@@ -9,20 +9,19 @@ This app provides `import_netbox` management command to import data from NetBox 
 ```bash
 nautobot-server import_netbox --help
 
-usage: nautobot-server import_netbox [-h] [--dry-run] [--summary] [--field-mapping] [--update-paths] [--bypass-data-validation] [--sitegroup-parent-always-region] [--fix-powerfeed-locations] [--version]
-                                     [-v {0,1,2,3}] [--settings SETTINGS] [--pythonpath PYTHONPATH] [--traceback] [--no-color] [--force-color] [--skip-checks]
+usage: nautobot-server import_netbox [-h] [--dry-run] [--update-paths] [--bypass-data-validation] [--sitegroup-parent-always-region] [--fix-powerfeed-locations] [--print-summary]
+                                     [--no-unrack-zero-uheight-devices] [--save-json-summary-path SAVE_JSON_SUMMARY_PATH] [--save-text-summary-path SAVE_TEXT_SUMMARY_PATH] [--version] [-v {0,1,2,3}]
+                                     [--settings SETTINGS] [--pythonpath PYTHONPATH] [--traceback] [--no-color] [--force-color] [--skip-checks]
                                      json_file
 
 Import a NetBox JSON data dump into Nautobot's database
 
 positional arguments:
-  json_file             Path to the JSON file to import.
+  json_file             URL or path to the JSON file to import.
 
 options:
   -h, --help            show this help message and exit
   --dry-run             Do not write any data to the database.
-  --summary             Show a summary of the import.
-  --field-mapping       Show a mapping of NetBox fields to Nautobot fields. Only printed when `--summary` is also specified.
   --update-paths        Call management command `trace_paths` to update paths after the import.
   --bypass-data-validation
                         Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or
@@ -32,7 +31,23 @@ options:
                         Location of type Location may only have a Location of the same type as its parent.'`.
   --fix-powerfeed-locations
                         Fix panel location to match rack location based on powerfeed.
-...
+  --print-summary       Show a summary of the import.
+  --no-unrack-zero-uheight-devices
+                        Prevents cleaning the `position` field in `dcim.device` instances that fail validation if the device is in a rack.
+  --save-json-summary-path SAVE_JSON_SUMMARY_PATH
+                        File path to write the JSON summary to.
+  --save-text-summary-path SAVE_TEXT_SUMMARY_PATH
+                        File path to write the text summary to.
+  --version             show program's version number and exit
+  -v {0,1,2,3}, --verbosity {0,1,2,3}
+                        Verbosity level; 0=minimal output, 1=normal output, 2=verbose output, 3=very verbose output
+  --settings SETTINGS   The Python path to a settings module, e.g. "myproject.settings.main". If this isn't provided, the DJANGO_SETTINGS_MODULE environment variable will be used.
+  --pythonpath PYTHONPATH
+                        A directory to add to the Python path, e.g. "/home/djangoprojects/myproject".
+  --traceback           Raise on CommandError exceptions
+  --no-color            Don't colorize the command output.
+  --force-color         Force colorization of the command output.
+  --skip-checks         Skip system checks.
 ```
 
 ### Importing Data Into Nautobot
@@ -47,6 +62,8 @@ Run the following command from the NetBox root directory to create a JSON file (
 ./manage.py dumpdata \
     --traceback \
     --format=json \
+    --natural-primary \
+    --natural-foreign \
     --exclude extras.ObjectChange \
     --output=/tmp/netbox_data.json
 ```
@@ -63,13 +80,12 @@ Before importing data into Nautobot, it's a good idea to process a dry run to se
 ```shell
 nautobot-server import_netbox \
     --dry-run \
-    --summary \
-    --field-mapping \
     --bypass-data-validation \
+    --print-summary \
     /tmp/netbox_data.json
 ```
 
-The following document describes [summary with mapping from NetBox 3.6 to Nautobot 2.1.0](./summary.md). Other versions mappings can vary.
+The following document describes [summary with mapping from NetBox 3.6 to Nautobot 2.1.5](./summary.md). Other versions mappings can vary.
 
 #### Importing Data into Nautobot
 
@@ -82,7 +98,7 @@ Consider using the above-mentioned command options based on a dry run.
 Note that the importer *does* apply Nautobot's data validation standards to the data records as it imports them. If any data records fail to meet data validation, you will see detailed error messages. For example, the following error might be generated if your NetBox data contains a rack that is assigned to a different location than the power panel.
 
 ```
-  ValidationIssue(uid=UUID(0434ed4d-cc76-5051-a38c-b84ed32de2c1), name=P2-6B, error=ValidationError(['Rack R106 (Row 1)' and 'Power Panel Panel 2 (MDF)' are in different locations]))
+0434ed4d-cc76-5051-a38c-b84ed32de2c1 P2-6B | ValidationError | ['Rack R106 (Row 1) and power panel Panel 2 (MDF) are in different locations']
 ```
 
 In this case, the import of this Rack into Nautobot will fail, and you may encounter a series of cascading errors as other objects dependent on this Rack (e.g., Devices) also fail due to the absence of the Rack.
@@ -109,6 +125,8 @@ From within the NetBox root directory, run the following command to create a JSO
 ./manage.py dumpdata \
     --traceback \
     --format=json \
+    --natural-primary \
+    --natural-foreign \
     --output=/tmp/netbox_objectchange.json \
     contenttypes.ContentType \
     extras.ObjectChange
