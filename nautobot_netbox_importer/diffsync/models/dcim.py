@@ -4,7 +4,6 @@ import json
 from uuid import UUID
 
 from nautobot_netbox_importer.base import RecordData
-from nautobot_netbox_importer.generator import EMPTY_VALUES
 from nautobot_netbox_importer.generator import DiffSyncBaseModel
 from nautobot_netbox_importer.generator import PreImportResult
 from nautobot_netbox_importer.generator import SourceAdapter
@@ -15,19 +14,32 @@ from .locations import define_location
 
 
 def _define_units(field: SourceField) -> None:
+    """Define the units field importer.
+
+    This function is called between the first and second pass of input data, when creating importers.
+    """
+
     def units_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-        # NetBox 3.4 units is `list[int]`, previous versions are JSON string with list of strings
-        units = source.get(field.name, None)
-        if units in EMPTY_VALUES:
-            return
+        """Import the `units` field from NetBox to Nautobot.
 
-        if isinstance(units, str):
-            units = json.loads(units)
-            if units:
-                units = [int(unit) for unit in units]
+        This function is called for each input source data record of `dcim.rackreservation` model.
 
-        setattr(target, field.nautobot.name, units)
+        NetBox 3.4 units is `list[int]`, previous versions are JSON string with list of strings.
+        """
+        # Read value from input data
+        value = field.get_source_value(source)
 
+        # Process the conversion from NetBox to Nautobot format
+        if isinstance(value, str) and value:
+            value = json.loads(value)
+        if value:
+            value = [int(unit) for unit in value]
+
+        # Store the value in the target DiffSyncModel instance.
+        field.set_nautobot_value(target, value)
+
+    # Register the importer and map the field from NetBox to Nautobot.
+    # The Nautobot field name is the same as the NetBox field name: `units` in this case.
     field.set_importer(units_importer)
 
 
@@ -46,6 +58,7 @@ def setup(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "dcim.rackreservation",
         fields={
+            # Set the definition of the `units` field
             "units": _define_units,
         },
     )
