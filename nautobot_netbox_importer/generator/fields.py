@@ -73,28 +73,6 @@ def fallback(
     return define_fallback
 
 
-def truncate_to_integer(nautobot_name: FieldName = "") -> SourceFieldDefinition:
-    """Create a truncate integer field definition.
-
-    Use to truncate the value to an integer before importing it to Nautobot.
-    """
-
-    def define_truncate_to_integer(field: SourceField) -> None:
-        def truncate_to_integer_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-            value = field.get_source_value(source)
-            if value in EMPTY_VALUES:
-                return
-
-            if not isinstance(value, int):
-                value = int(float(value))
-
-            setattr(target, field.nautobot.name, value)
-
-        field.set_importer(truncate_to_integer_importer, nautobot_name)
-
-    return define_truncate_to_integer
-
-
 def relation(related_source: SourceContentType, nautobot_name: FieldName = "") -> SourceFieldDefinition:
     """Create a relation field definition.
 
