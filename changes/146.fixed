@@ -1,0 +1,5 @@
+Fixed `units` field importer.
+Fixed importer for `u_height` field to use default importer.
+Fixed failing import when `CustomField.label` field is empty.
+Fixed to use `add_issue()` instead of `logger.warning()`.
+Fixed tests to use stats.
