@@ -334,7 +334,7 @@ class NautobotModelWrapper:
         self,
         issue_type: str,
         message: str,
-        target: Optional["DiffSyncBaseModel"] = None,
+        target: Optional[DiffSyncModel] = None,
         field: Optional[NautobotField] = None,
     ) -> None:
         """Add an issue to the importer."""

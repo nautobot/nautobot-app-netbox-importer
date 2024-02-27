@@ -20,6 +20,7 @@ from typing import Tuple
 from typing import Union
 from uuid import UUID
 
+from diffsync import DiffSyncModel
 from diffsync.enum import DiffSyncModelFlags
 from nautobot.core.models.tree_queries import TreeModel
 
@@ -821,6 +822,10 @@ class SourceField:
 
         return sibling
 
+    def add_issue(self, issue_type: str, message: str, target: Optional[DiffSyncModel] = None) -> None:
+        """Add an importer issue to the Nautobot Model Wrapper."""
+        self.wrapper.nautobot.add_issue(issue_type, message, target=target, field=self.nautobot)
+
     def set_definition(self, definition: SourceFieldDefinition) -> None:
         """Customize field definition."""
         if self.processed:
@@ -828,8 +833,9 @@ class SourceField:
 
         if self.definition != definition:
             if self.definition != self.name:
-                self.wrapper.adapter.logger.warning(
-                    "Overriding custom field definition %s %s -> %s", self, self.definition, definition
+                self.add_issue(
+                    "OverrideDefinition",
+                    f"Overriding field definition | Original: `{self.definition}` | New: `{definition}`",
                 )
             self.definition = definition
 
@@ -1085,9 +1091,7 @@ class SourceField:
                 try:
                     nautobot_values.add(adapter.get_nautobot_content_type_uid(item))
                 except NautobotModelNotFound:
-                    self.wrapper.adapter.logger.warning(
-                        "Can't convert content type %s for field %s, skipping", item, self
-                    )
+                    self.add_issue("InvalidContentType", f"Invalid content type {item}, skipping", target)
 
             self.set_nautobot_value(target, nautobot_values)
 

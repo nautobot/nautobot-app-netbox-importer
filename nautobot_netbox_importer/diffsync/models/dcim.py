@@ -137,7 +137,7 @@ def unrack_zero_uheight_devices(adapter: SourceAdapter) -> None:
         if getattr(item, "position", None) and getattr(item, "device_type_id") in device_type_ids:
             position.set_nautobot_value(item, None)
             adapter.update(item)
-            # TBD: Raise validation issue
+            position.add_issue("Unracked", "Device unracked due to 0U height", item)
 
 
 # pylint: disable=too-many-locals
