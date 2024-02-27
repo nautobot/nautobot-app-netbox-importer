@@ -4,12 +4,11 @@ import json
 from pathlib import Path
 from typing import Callable
 from typing import Generator
+from typing import Iterable
 from typing import List
 from typing import Mapping
-from typing import MutableMapping
 from typing import NamedTuple
 from typing import Optional
-from typing import OrderedDict
 from typing import Union
 
 from .base import ContentTypeStr
@@ -26,8 +25,7 @@ class ImporterIssue(NamedTuple):
     message: str
 
 
-ImporterIssues = MutableMapping[ContentTypeStr, List[ImporterIssue]]
-DiffSummary = Mapping[str, int]
+DiffSyncSummary = Mapping[str, int]
 
 
 class FieldSummary(NamedTuple):
@@ -45,14 +43,40 @@ class FieldSummary(NamedTuple):
     required: bool
 
 
-class ModelSummary(NamedTuple):
-    """Model summary."""
+# pylint: disable=too-few-public-methods,too-many-instance-attributes
+class SourceModelStats:
+    """Source Model Statistics."""
+
+    first_pass_skipped = 0
+    first_pass_used = 0
+    second_pass_skipped = 0
+    second_pass_used = 0
+    pre_cached = 0
+    imported_from_cache = 0
+    # Imported using `wrapper.import_data()` including cache and custom importers
+    imported = 0
+    # DiffSyncModels created
+    created = 0
+
+
+# pylint: disable=too-few-public-methods
+class NautobotModelStats:
+    """Nautobot Model Statistics."""
+
+    # Source DiffSyncModels created but ignored by DiffSync
+    source_ignored = 0
+    # Source DiffSyncModels created and synced by DiffSync
+    source_created = 0
+    issues = 0
+
+
+class SourceModelSummary(NamedTuple):
+    """Source Model Summary."""
 
     content_type: ContentTypeStr
     content_type_id: int
     extends_content_type: Optional[ContentTypeStr]
     nautobot_content_type: ContentTypeStr
-    nautobot_content_type_id: Optional[int]
     disable_reason: str
     identifiers: Optional[List[FieldName]]
     disable_related_reference: bool
@@ -60,10 +84,19 @@ class ModelSummary(NamedTuple):
     pre_import: Optional[str]
     fields: List[FieldSummary]
     flags: str
-    nautobot_flags: str
     default_reference_uid: Union[str, bool, int, float, None]
-    imported_count: int
-    skipped_count: int
+    stats: SourceModelStats
+
+
+class NautobotModelSummary(NamedTuple):
+    """Nautobot Model Summary."""
+
+    content_type: ContentTypeStr
+    content_type_id: Optional[int]
+    flags: str
+    disabled: bool
+    stats: NautobotModelStats
+    issues: List[ImporterIssue]
 
 
 _FILL_UP_LENGTH = 100
@@ -91,39 +124,55 @@ class ImportSummary:
 
     def __init__(self):
         """Initialize the import summary."""
-        self.models: List[ModelSummary] = []
-        self.diff_summary: DiffSummary = {}
-        self.importer_issues: ImporterIssues = OrderedDict()
+        self.source: List[SourceModelSummary] = []
+        self.nautobot: List[NautobotModelSummary] = []
+        self.diffsync: DiffSyncSummary = {}
 
     @property
-    def data_models(self) -> Generator[ModelSummary, None, None]:
-        """Get models originating from data."""
-        for model_summary in self.models:
-            if any(field for field in model_summary.fields if "DATA" in field.sources):
-                yield model_summary
+    def data_sources(self) -> Generator[SourceModelSummary, None, None]:
+        """Get source originating from data."""
+        for summary in self.source:
+            if any(field for field in summary.fields if "DATA" in field.sources):
+                yield summary
 
-    def add(self, model_summary: ModelSummary):
-        """Add a model summary to the import summary."""
-        self.models.append(model_summary)
+    @property
+    def data_nautobot_models(self) -> Generator[NautobotModelSummary, None, None]:
+        """Get Nautobot models originating from data."""
+        content_types = set(item.content_type for item in self.data_sources)
 
-    def set_importer_issues(self, importer_issues: ImporterIssues):
-        """Set the importer issues."""
-        for content_type in sorted(importer_issues):
-            self.importer_issues[content_type] = sorted(importer_issues[content_type], key=lambda issue: issue.uid)
+        for item in self.nautobot:
+            if item.content_type in content_types:
+                yield item
 
     def load(self, path: Pathable):
         """Load the summary from a file."""
         content = json.loads(Path(path).read_text(encoding="utf-8"))
-        self.diff_summary = content["diff_summary"]
-        self.set_importer_issues(content["importer_issues"])
-        for model in content["models"].values():
-            self.add(
-                ModelSummary(
-                    **{key.replace(".", "_"): value for key, value in model.items() if key not in ["fields"]},
-                    fields=[
-                        FieldSummary(**{key.replace(".", "_"): value for key, value in field.items()})
-                        for field in model["fields"].values()
-                    ],
+
+        self.diffsync = content["diffsync"]
+
+        for model in content["source"].values():
+            stats = SourceModelStats()
+            for key, value in model.pop("stats", {}).items():
+                setattr(stats, key, value)
+            fields = model.pop("fields", [])
+            self.source.append(
+                SourceModelSummary(
+                    **model,
+                    fields=[FieldSummary(**field) for field in fields.values()],
+                    stats=stats,
+                )
+            )
+
+        for model in content["nautobot"].values():
+            stats = NautobotModelStats()
+            for key, value in model.pop("stats", {}).items():
+                setattr(stats, key, value)
+            issues = model.pop("issues", {})
+            self.nautobot.append(
+                NautobotModelSummary(
+                    **model,
+                    stats=stats,
+                    issues=[ImporterIssue(**issue) for issue in issues],
                 )
             )
 
@@ -133,15 +182,23 @@ class ImportSummary:
             Path(path).write_text(
                 json.dumps(
                     {
-                        "diff_summary": self.diff_summary,
-                        "models": {
-                            model_summary.content_type: {
-                                **{key: value for key, value in model_summary._asdict().items() if key != "fields"},
-                                "fields": {field.name: field._asdict() for field in model_summary.fields},
+                        "diffsync": self.diffsync,
+                        "source": {
+                            summary.content_type: {
+                                **summary._asdict(),
+                                "fields": {field.name: field._asdict() for field in summary.fields},
+                                "stats": summary.stats.__dict__,
                             }
-                            for model_summary in self.models
+                            for summary in self.source
                         },
-                        "importer_issues": {key: list(value) for key, value in self.importer_issues.items()},
+                        "nautobot": {
+                            summary.content_type: {
+                                **summary._asdict(),
+                                "issues": [issue._asdict() for issue in summary.issues],
+                                "stats": summary.stats.__dict__,
+                            }
+                            for summary in self.nautobot
+                        },
                     },
                     indent=indent,
                 ),
@@ -161,56 +218,58 @@ class ImportSummary:
 
     def get_summary(self) -> Generator[str, None, None]:
         """Get a summary of the import."""
-        yield _fill_up("= Import Summary:")
+        yield _fill_up("* Import Summary:")
 
-        yield _fill_up("- DiffSync Summary:")
-        for key, value in self.diff_summary.items():
+        yield _fill_up("= DiffSync Summary:")
+        for key, value in self.diffsync.items():
             yield f"{key}: {value}"
 
-        yield _fill_up("- Nautobot Models Summary:")
-        for model_summary in self.models:
-            if model_summary.imported_count > 0:
-                yield f"{model_summary.content_type}: {model_summary.imported_count}"
-
-        yield _fill_up("- Importer issues:")
-        if self.importer_issues:
-            yield from self.get_importer_issues()
-        else:
-            yield "  No importer issues found."
-
-        yield _fill_up("- Content Types Mapping Deviations:")
-        yield "  Mapping deviations from source content type to Nautobot content type"
+        yield from self.get_stats("Source", self.source)
+        yield from self.get_stats("Nautobot", self.nautobot)
         yield from self.get_content_types_deviations()
-
-        yield _fill_up("- Content Types Back Mapping:")
-        yield "  Back mapping deviations from Nautobot content type to the source content type"
         yield from self.get_back_mapping()
+        yield from self.get_issues()
         yield from self.get_fields_mapping()
 
+        yield _fill_up("* End of Import Summary")
 
-        yield _fill_up("= End of Import Summary.")
+    def get_stats(self, caption: str, objects: Iterable[object]) -> Generator[str, None, None]:
+        """Get formatted stats."""
+        yield _fill_up("=", caption, "Stats:")
+        for summary in objects:
+            stats = getattr(summary, "stats", {}).__dict__
+            if stats:
+                yield _fill_up("-", getattr(summary, "content_type"))
+                for key, value in stats.items():
+                    yield f"{key}: {value}"
 
     def get_content_types_deviations(self) -> Generator[str, None, None]:
         """Get formatted content types deviations."""
-        for model_summary in self.data_models:
-            if model_summary.disable_reason:
-                yield f"{model_summary.content_type} => {model_summary.nautobot_content_type} | Disabled with reason: {model_summary.disable_reason}"
-            elif model_summary.extends_content_type:
-                yield f"{model_summary.content_type} EXTENDS {model_summary.extends_content_type} => {model_summary.nautobot_content_type}"
-            elif model_summary.content_type != model_summary.nautobot_content_type:
-                yield f"{model_summary.content_type} => {model_summary.nautobot_content_type}"
+        yield _fill_up("= Content Types Mapping Deviations:")
+        yield "  Mapping deviations from source content type to Nautobot content type"
+
+        for summary in self.data_sources:
+            if summary.disable_reason:
+                yield f"{summary.content_type} => {summary.nautobot_content_type} | Disabled with reason: {summary.disable_reason}"
+            elif summary.extends_content_type:
+                yield f"{summary.content_type} EXTENDS {summary.extends_content_type} => {summary.nautobot_content_type}"
+            elif summary.content_type != summary.nautobot_content_type:
+                yield f"{summary.content_type} => {summary.nautobot_content_type}"
 
     def get_back_mapping(self) -> Generator[str, None, None]:
         """Get formatted back mapping."""
+        yield _fill_up("= Content Types Back Mapping:")
+        yield "  Back mapping deviations from Nautobot content type to the source content type"
+
         back_mapping = {}
 
-        for model_summary in self.data_models:
-            if model_summary.nautobot_content_type != model_summary.content_type:
-                if model_summary.nautobot_content_type in back_mapping:
-                    if back_mapping[model_summary.nautobot_content_type] != model_summary.content_type:
-                        back_mapping[model_summary.nautobot_content_type] = None
+        for summary in self.data_sources:
+            if summary.nautobot_content_type != summary.content_type:
+                if summary.nautobot_content_type in back_mapping:
+                    if back_mapping[summary.nautobot_content_type] != summary.content_type:
+                        back_mapping[summary.nautobot_content_type] = None
                 else:
-                    back_mapping[model_summary.nautobot_content_type] = model_summary.content_type
+                    back_mapping[summary.nautobot_content_type] = summary.content_type
 
         for nautobot_content_type, content_type in back_mapping.items():
             if content_type:
@@ -218,20 +277,18 @@ class ImportSummary:
             else:
                 yield f"{nautobot_content_type} => Ambiguous"
 
-    def get_importer_issues(self) -> Generator[str, None, None]:
-        """Get formatted importer issues."""
-        total = 0
-
-        for content_type, issues in self.importer_issues.items():
-            total += len(issues)
-            yield _fill_up(f". {content_type}: {len(issues)} ")
-            for issue in issues:
-                yield f"{issue.uid} {issue.name} | {issue.issue_type} | {issue.message}"
-
-        yield _fill_up(".", "Total importer issues:", total)
+    def get_issues(self) -> Generator[str, None, None]:
+        """Get formatted issues."""
+        yield _fill_up("= Importer issues:")
+        for summary in self.nautobot:
+            if summary.issues:
+                yield _fill_up("-", summary.content_type)
+                for issue in summary.issues:
+                    yield f"{issue.uid} {issue.name} | {issue.issue_type} | {issue.message}"
 
     def get_fields_mapping(self) -> Generator[str, None, None]:
         """Get formatted field mappings."""
+        yield _fill_up("= Field Mappings:")
 
         def get_field(field: FieldSummary):
             yield field.name
@@ -251,26 +308,23 @@ class ImportSummary:
 
             yield "=>"
 
-            if field.importer or field.nautobot_name == "id":
-                if field.nautobot_name:
-                    yield field.nautobot_name
-                    yield f"({field.nautobot_internal_type})"
-                else:
-                    yield "Custom Target"
+            if field.nautobot_name:
+                yield field.nautobot_name
+                yield f"({field.nautobot_internal_type})"
             else:
-                yield "NO TARGET"
+                yield "CUSTOM TARGET"
 
-        for model_summary in self.data_models:
+        for summary in self.data_sources:
             yield _fill_up(
-                "*",
-                model_summary.content_type,
+                "-",
+                summary.content_type,
                 "=>",
-                model_summary.nautobot_content_type,
+                summary.nautobot_content_type,
             )
 
-            if model_summary.disable_reason:
-                yield f"    Disable reason: {model_summary.disable_reason}"
+            if summary.disable_reason:
+                yield f"    Disable reason: {summary.disable_reason}"
             else:
-                for field in model_summary.fields:
+                for field in summary.fields:
                     if "DATA" in field.sources:
                         yield " ".join(get_field(field))
