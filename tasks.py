@@ -151,19 +151,31 @@ def docker_compose(context, command, **kwargs):
 def run_command(context, command, **kwargs):
     """Wrapper to run a command locally or inside the nautobot container."""
     if is_truthy(context.nautobot_netbox_importer.local):
-        context.run(command, **kwargs)
+        if "command_env" in kwargs:
+            kwargs["env"] = {
+                **kwargs.get("env", {}),
+                **kwargs.pop("command_env"),
+            }
+        return context.run(command, **kwargs)
     else:
         # Check if nautobot is running, no need to start another nautobot container to run a command
         docker_compose_status = "ps --services --filter status=running"
         results = docker_compose(context, docker_compose_status, hide="out")
         if "nautobot" in results.stdout:
-            compose_command = f"exec nautobot {command}"
+            compose_command = "exec"
         else:
-            compose_command = f"run --rm --entrypoint '{command}' nautobot"
+            compose_command = "run --rm --entrypoint=''"
+
+        if "command_env" in kwargs:
+            command_env = kwargs.pop("command_env")
+            for key, value in command_env.items():
+                compose_command += f' --env="{key}={value}"'
+
+        compose_command += f" -- nautobot {command}"
 
         pty = kwargs.pop("pty", True)
 
-        docker_compose(context, compose_command, pty=pty, **kwargs)
+        return docker_compose(context, compose_command, pty=pty, **kwargs)
 
 
 # ------------------------------------------------------------------------------
@@ -822,6 +834,7 @@ def load_test_environment(context, db_name="test_nautobot", keepdb=False):
         "buffer": "Discard output from passing tests",
         "pattern": "Run specific test methods, classes, or modules instead of all tests",
         "verbose": "Enable verbose test output.",
+        "build-fixtures": "Build fixtures before running tests.",
     }
 )
 def unittest(
@@ -832,6 +845,7 @@ def unittest(
     buffer=True,
     pattern="",
     verbose=False,
+    build_fixtures=False,
 ):
     """Run Nautobot unit tests."""
     load_test_environment(context, keepdb=keepdb)
@@ -851,7 +865,10 @@ def unittest(
     if verbose:
         command += " --verbosity 2"
 
-    run_command(context, command)
+    env = {"BUILD_FIXTURES": "True" if build_fixtures else "False"}
+    result = run_command(context, command, command_env=env)
+    if result.return_code != 0 and not build_fixtures:
+        print("Tests failed! To rebuild fixtures and re-run tests, run `invoke unittest --build-fixtures`")
 
 
 @task
