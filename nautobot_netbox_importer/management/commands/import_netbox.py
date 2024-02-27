@@ -60,12 +60,6 @@ class Command(BaseCommand):
             help="Show a summary of the import.",
         )
         parser.add_argument(
-            "--print-field-mappings",
-            action="store_true",
-            dest="print_field_mappings",
-            help="Show a detailed mapping of NetBox fields to Nautobot fields. Only printed when `--print-summary` is also specified.",
-        )
-        parser.add_argument(
             "--no-unrack-zero-uheight-devices",
             action="store_false",
             dest="unrack_zero_uheight_devices",

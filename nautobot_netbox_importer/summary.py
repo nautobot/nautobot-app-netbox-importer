@@ -149,17 +149,17 @@ class ImportSummary:
             )
         elif output_format == "text":
             with open(path, "w", encoding="utf-8") as file:
-                for line in self.get_summary(detailed=True):
+                for line in self.get_summary():
                     file.write(line + "\n")
         else:
             raise ValueError(f"Unsupported format {output_format}")
 
-    def print(self, detailed=False):
+    def print(self):
         """Print a summary of the import."""
-        for line in self.get_summary(detailed):
+        for line in self.get_summary():
             print(line)
 
-    def get_summary(self, detailed: bool) -> Generator[str, None, None]:
+    def get_summary(self) -> Generator[str, None, None]:
         """Get a summary of the import."""
         yield _fill_up("= Import Summary:")
 
@@ -185,10 +185,8 @@ class ImportSummary:
         yield _fill_up("- Content Types Back Mapping:")
         yield "  Back mapping deviations from Nautobot content type to the source content type"
         yield from self.get_back_mapping()
+        yield from self.get_fields_mapping()
 
-        if detailed:
-            yield _fill_up("- Detailed Fields Mapping:")
-            yield from self.get_detailed_mapping()
 
         yield _fill_up("= End of Import Summary.")
 
@@ -232,8 +230,8 @@ class ImportSummary:
 
         yield _fill_up(".", "Total importer issues:", total)
 
-    def get_detailed_mapping(self) -> Generator[str, None, None]:
-        """Get formatted detailed mappings."""
+    def get_fields_mapping(self) -> Generator[str, None, None]:
+        """Get formatted field mappings."""
 
         def get_field(field: FieldSummary):
             yield field.name

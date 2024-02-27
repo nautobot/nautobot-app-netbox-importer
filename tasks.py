@@ -904,17 +904,16 @@ def tests(context, failfast=False, keepdb=False, lint_only=False):
 @task(
     help={
         "file": "URL or path to the JSON file to import.",
-        "bypass_data_validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
-        "demo_version": "Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).",
-        "dry_run": "Do not write any data to the database. (default: False)",
-        "fix_powerfeed_locations": "Fix panel location to match rack location based on powerfeed. (default: False)",
-        "print_fields_mapping": "Show a mapping of NetBox fields to Nautobot fields. Only printed when `--summary` is also specified. (default: True)",
-        "print_summary": "Show a summary of the import. (default: True)",
-        "save_json_summary_path": "File path to write the JSON mapping to. (default: generated-mappings.json)",
-        "save_text_summary_path": "File path to write the text mapping to. (default: generated-mappings.txt)",
-        "sitegroup_parent_always_region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
-        "update_paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
-        "unrack_zero_uheight_devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
+        "bypass-data-validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
+        "demo-version": "Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).",
+        "dry-run": "Do not write any data to the database. (default: False)",
+        "fix-powerfeed-locations": "Fix panel location to match rack location based on powerfeed. (default: False)",
+        "print-summary": "Show a summary of the import. (default: True)",
+        "save-json-summary-path": "File path to write the JSON mapping to. (default: generated-mappings.json)",
+        "save-text-summary-path": "File path to write the text mapping to. (default: generated-mappings.txt)",
+        "sitegroup-parent-always-region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
+        "update-paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
+        "unrack-zero-uheight-devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
     }
 )
 def import_netbox(
@@ -925,7 +924,6 @@ def import_netbox(
     save_text_summary_path="",
     bypass_data_validation=False,
     dry_run=True,
-    print_fields_mapping=True,
     fix_powerfeed_locations=False,
     sitegroup_parent_always_region=False,
     print_summary=True,
@@ -942,8 +940,6 @@ def import_netbox(
             + demo_version
             + ".json"
         )
-        bypass_data_validation = True
-        sitegroup_parent_always_region = True
 
     command = [
         "nautobot-server",
@@ -952,7 +948,6 @@ def import_netbox(
         f"--save-text-summary-path={save_text_summary_path}" if save_text_summary_path else "",
         "--bypass-data-validation" if bypass_data_validation else "",
         "--dry-run" if dry_run else "",
-        "--print-field-mapping" if print_fields_mapping else "",
         "--fix-powerfeed-locations" if fix_powerfeed_locations else "",
         "--sitegroup-parent-always-region" if sitegroup_parent_always_region else "",
         "--print-summary" if print_summary else "",

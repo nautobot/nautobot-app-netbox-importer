@@ -54,7 +54,6 @@ class NetBoxImporterOptions(NamedTuple):
     dry_run: bool = True
     bypass_data_validation: bool = False
     print_summary: bool = False
-    print_field_mappings: bool = False
     update_paths: bool = False
     fix_powerfeed_locations: bool = False
     sitegroup_parent_always_region: bool = False
@@ -108,7 +107,7 @@ class NetBoxAdapter(SourceAdapter):
             logger.info(" ... Updating paths completed.")
 
         if self.options.print_summary:
-            self.summary.print(self.options.print_field_mappings)
+            self.summary.print()
 
     @atomic
     def _atomic_import(self) -> None:
