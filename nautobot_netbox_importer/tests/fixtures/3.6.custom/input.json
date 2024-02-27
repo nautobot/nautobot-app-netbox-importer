@@ -1455,6 +1455,37 @@
   }
 },
 {
+  "model": "extras.customfield",
+  "pk": 4,
+  "fields": {
+    "created": "2022-05-30T00:00:00Z",
+    "last_updated": "2023-04-21T16:15:24.630Z",
+    "type": "boolean",
+    "object_type": null,
+    "name": "empty_label",
+    "label": "",
+    "group_name": "",
+    "description": "",
+    "required": true,
+    "search_weight": 1000,
+    "filter_logic": "loose",
+    "default": 0,
+    "weight": 100,
+    "validation_minimum": null,
+    "validation_maximum": null,
+    "validation_regex": "",
+    "choice_set": null,
+    "ui_visibility": "read-write",
+    "is_cloneable": false,
+    "content_types": [
+      [
+        "dcim",
+        "device"
+      ]
+    ]
+  }
+},
+{
   "model": "extras.customfieldchoiceset",
   "pk": 1,
   "fields": {

@@ -22,6 +22,19 @@ from .source import SourceFieldImporterFallback
 from .source import SourceFieldImporterIssue
 
 
+def default(default_value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition:
+    """Create a default field definition.
+
+    Use to set a default value for the field, if there is no value in the source data.
+    """
+
+    def define_default(field: SourceField) -> None:
+        field.set_importer(nautobot_name=nautobot_name)
+        field.default_value = default_value
+
+    return define_default
+
+
 def fallback(
     value: Any = None,
     callback: Optional[SourceFieldImporterFallback] = None,
