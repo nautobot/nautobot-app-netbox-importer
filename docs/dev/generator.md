@@ -47,8 +47,8 @@ This is achieved through `adapter.configure_model(content_type: ContentTypeStr)`
 - `default_reference`: A `RecordData` dictionary of default values to reference this model. This is useful when the source data does not provide a reference that is required in Nautobot.
 - `extend_content_type`: Define this when a source model extends another source model to merge into a single Nautobot model.
 - `forward_references`: Define to forward references to another content type. This is useful when the source data references a content type that is not directly related to the Nautobot content type. For example, a source data references a `dcim.location` content type, but the Nautobot content type is `dcim.locationtype`.
-- `disable_related_reference`: Define, to disable storing references to this content type from other content types. This is useful for e.g. `ObjectChange` model.
-- `pre_import`: Define a callable to be executed before importing the source data. Can be used to alter or cache the source data before importing.
+- `disable_related_reference`: Define, to disable storing references to this content type to other content types. This is useful for e.g. `ObjectChange` model.
+- `pre_import`: Define a callable to be executed before importing the source data. Can be used to alter or cache the source data before importing. `pre_import(source: RecordData, importer_pass: ImporterPass) -> PreImportResult` is called twice for each source record: on first and second input data iteration.
 - `fields`: Define the source fields and how they should be imported. This argument is a dictionary mapping `FieldName` to `SourceFieldDefinition` instances.
     - `SourceFieldDefinition` can be one of:
         - `None`: to ignore the field.
