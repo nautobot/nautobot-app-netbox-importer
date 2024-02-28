@@ -1,6 +1,6 @@
 * Import Summary: **********************************************************************************
 = DiffSync Summary: ================================================================================
-create: 68
+create: 70
 update: 0
 delete: 0
 no-change: 0
@@ -21,6 +21,11 @@ first_pass_used: 135
 second_pass_used: 135
 created: 135
 imported: 135
+- dcim.cable ---------------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
 - dcim.device --------------------------------------------------------------------------------------
 first_pass_used: 2
 second_pass_used: 2
@@ -85,10 +90,10 @@ created: 21
 imported: 21
 second_pass_skipped: 1
 - extras.status ------------------------------------------------------------------------------------
-pre_cached: 2
-imported: 2
-imported_from_cache: 2
-created: 2
+pre_cached: 3
+imported: 3
+imported_from_cache: 3
+created: 3
 - ipam.fhrpgroup -----------------------------------------------------------------------------------
 first_pass_used: 2
 second_pass_used: 2
@@ -127,6 +132,10 @@ imported: 1
 source_created: 1
 - contenttypes.contenttype -------------------------------------------------------------------------
 source_ignored: 135
+- dcim.cable ---------------------------------------------------------------------------------------
+source_created: 1
+save_failed: 1
+issues: 1
 - dcim.device --------------------------------------------------------------------------------------
 source_created: 2
 issues: 2
@@ -157,7 +166,7 @@ source_created: 21
 - extras.role --------------------------------------------------------------------------------------
 source_created: 3
 - extras.status ------------------------------------------------------------------------------------
-source_created: 2
+source_created: 3
 - ipam.ipaddress -----------------------------------------------------------------------------------
 source_created: 1
 - ipam.prefix --------------------------------------------------------------------------------------
@@ -187,20 +196,22 @@ dcim.location => dcim.site
 extras.note => extras.journalentry
 dcim.interfaceredundancygroup => ipam.fhrpgroup
 = Importer issues: =================================================================================
+- dcim.cable ---------------------------------------------------------------------------------------
+6df947b3-9159-5b42-8367-c0d7edb3986c | SaveFailed | "{'_state': <django.db.models.base.ModelState object at 0x7f471a350b50>, 'id': UUID('6df947b3-9159-5b42-8367-c0d7edb3986c'), 'created': datetime.datetime(2024, 2, 28, 13, 39, 52, 903205, tzinfo=<UTC>), 'last_updated': datetime.datetime(2024, 2, 28, 13, 39, 52, 903213, tzinfo=<UTC>), '_custom_field_data': {}, 'termination_a_type_id': None, 'termination_a_id': None, 'termination_b_type_id': None, 'termination_b_id': None, 'type': 'smf', 'status_id': UUID('e81c76fa-2fb5-54e3-acbd-f0b817639af5'), 'label': '', 'color': 'ffeb3b', 'length': None, 'length_unit': '', '_abs_length': None, '_termination_a_device_id': None, '_termination_b_device_id': None, '_pk': UUID('6df947b3-9159-5b42-8367-c0d7edb3986c'), '_orig_status': None}" | "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-02-28 13:39:52.903205+00, 2024-02-28 13:39:52.903213+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n"
 - dcim.device --------------------------------------------------------------------------------------
-4f3495b5-00e6-5917-a148-77e109f96b0f Half U Device | Unracked | {'position': 'Device unracked due to 0U height'}
-f510c5ff-e1f8-5adc-9fb5-30bc5791b42e Device 1 | ValidationError | ["Invalid value for custom field 'device_custom_object': Value must be a string"]
+4f3495b5-00e6-5917-a148-77e109f96b0f | Unracked | "Half U Device" | "{'position': 'Device unracked due to 0U height'}"
+f510c5ff-e1f8-5adc-9fb5-30bc5791b42e | ValidationError | "Device 1" | "[\"Invalid value for custom field 'device_custom_object': Value must be a string\"]"
 - dcim.devicetype ----------------------------------------------------------------------------------
-03d4a2c5-e08b-5cc1-924d-c401194d393c Half U Device Type | SourceFieldImporterIssue | {'u_height': 'Invalid source value 0.5, truncated to 0'}
+03d4a2c5-e08b-5cc1-924d-c401194d393c | SourceFieldImporterIssue | "Half U Device Type" | "{'u_height': 'Invalid source value 0.5, truncated to 0'}"
 - dcim.interfaceredundancygroup --------------------------------------------------------------------
-2586a272-455a-5e92-85d7-f41c0784630a FHR Group clusterxl | InvalidChoiceValueIssue | {'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}
-f91623ed-a389-53a4-a4a2-943588c21446 Test FHR Group | InvalidChoiceValueIssue | {'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}
+2586a272-455a-5e92-85d7-f41c0784630a | InvalidChoiceValueIssue | "FHR Group clusterxl" | "{'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}"
+f91623ed-a389-53a4-a4a2-943588c21446 | InvalidChoiceValueIssue | "Test FHR Group" | "{'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}"
 - dcim.location ------------------------------------------------------------------------------------
-c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 Site 1 | ValidationError | {'parent': ['A Location of type Site must have a parent Location.']}
+c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 | ValidationError | "Site 1" | "{'parent': ['A Location of type Site must have a parent Location.']}"
 - extras.customfield -------------------------------------------------------------------------------
-149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 Device Custom Object | InvalidChoiceValueIssue | {'type': 'Invalid choice value: `object`, replaced with `text`'}
+149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 | InvalidChoiceValueIssue | "Device Custom Object" | "{'type': 'Invalid choice value: `object`, replaced with `text`'}"
 - users.objectpermission ---------------------------------------------------------------------------
-c650165f-9a05-55c0-bbb1-c9527d41160c Test Permission | InvalidContentType | {'object_types': 'Invalid content type ['extras', 'script'], skipping'}
+c650165f-9a05-55c0-bbb1-c9527d41160c | InvalidContentType | "Test Permission" | "{'object_types': 'Invalid content type ['extras', 'script'], skipping'}"
 = Field Mappings: ==================================================================================
 - auth.group => auth.group -------------------------------------------------------------------------
 name => value_importer => name (CharField)
@@ -221,6 +232,21 @@ username => value_importer => username (CharField)
 - contenttypes.contenttype => contenttypes.contenttype ---------------------------------------------
 app_label => content_types_mapper_importer => app_label (CharField)
 model => value_importer => model (CharField)
+- dcim.cable => dcim.cable -------------------------------------------------------------------------
+_abs_length => NO IMPORTER => _abs_length (PrivateProperty)
+color => value_importer => color (CharField)
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+length => integer_importer => length (PositiveSmallIntegerField)
+length_unit => choice_importer => length_unit (CharField)
+status => status_importer => status_id (StatusField)
+tenant => NO IMPORTER => tenant (NotFound)
+type => choice_importer => type (CharField)
 - dcim.device => dcim.device -----------------------------------------------------------------------
 _name => NO IMPORTER => _name (PrivateProperty)
 airflow => NO IMPORTER => airflow (NotFound)

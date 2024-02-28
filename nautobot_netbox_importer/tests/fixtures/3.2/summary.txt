@@ -462,54 +462,54 @@ dcim.locationtype => dcim.sitegroup
 ipam.prefix => ipam.aggregate
 = Importer issues: =================================================================================
 - dcim.powerfeed -----------------------------------------------------------------------------------
-0434ed4d-cc76-5051-a38c-b84ed32de2c1 P2-6B | ValidationError | ['Rack R106 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-05541f06-08c9-5d84-a8b6-13ce3cd45938 P3-8A | ValidationError | ['Rack R308 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-05f5bb91-e84c-5908-8d9a-8256959bfcab P2-11B | ValidationError | ['Rack R203 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-06ebb1db-aaa0-5b24-a832-8ca1671f8b0a P2-4B | ValidationError | ['Rack R104 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-07316815-d36d-552d-8859-03e7fe09354a P2-13B | ValidationError | ['Rack R205 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-0e23ee26-033e-5cfd-8bce-b5ef5909e13c P2-10B | ValidationError | ['Rack R202 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-10da56b6-09b1-5da6-9505-d9253863e062 P3-1A | ValidationError | ['Rack R301 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-17a0b412-4187-51a2-a238-901b3a275bcd P1-14A | ValidationError | ['Rack R206 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-194e2d64-c904-59bc-af2c-e040beb3aeac P2-14B | ValidationError | ['Rack R206 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-1f4b42df-43ce-52aa-8a61-4a19ce1af962 P4-3B | ValidationError | ['Rack R303 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-20b3c4c0-eb30-5f8b-adcf-20e4fa5d0061 P2-15B | ValidationError | ['Rack R207 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-29b6b9f0-f50a-592c-8e3f-e415a0bf4cd4 P4-1B | ValidationError | ['Rack R301 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-314fead6-ffae-51f7-abb0-2edcf7d6da49 P3-2A | ValidationError | ['Rack R302 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-31f1abb3-660f-5a57-9256-42be3d5b75cf P2-3B | ValidationError | ['Rack R103 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-3213730d-18bd-5a3a-9828-4ab023ed4652 P1-6A | ValidationError | ['Rack R106 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-3338c701-47fd-513e-945a-78a98b84d7f0 P4-8B | ValidationError | ['Rack R308 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-38f5aa36-561b-5cd8-8362-9d093ff7b89a P1-15A | ValidationError | ['Rack R207 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-3f702c58-7dea-5b78-a007-17f40b465810 P1-10A | ValidationError | ['Rack R202 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-416a01e5-fbf9-522e-b9e9-4037cf8c984f P1-4A | ValidationError | ['Rack R104 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-451c4aad-d892-5114-8724-be2f8148c322 P2-2B | ValidationError | ['Rack R102 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-47f69d3d-8fcd-5b63-8695-21aa51fb4fbf P2-9B | ValidationError | ['Rack R201 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-53ed215b-9003-522d-9cb1-d48dbb18fdc2 P3-7A | ValidationError | ['Rack R307 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-5a2f51ea-7a05-53d2-8a47-cd383629a343 P1-13A | ValidationError | ['Rack R205 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-5fa35cf7-5d55-5533-99ee-7d1ecaa69856 P2-1B | ValidationError | ['Rack R101 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-6203a499-6777-5cd0-841b-fa6339c48890 P1-9A | ValidationError | ['Rack R201 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-6a1a4ac2-e77b-526b-9aa6-8c7903e5f572 P2-8B | ValidationError | ['Rack R108 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-7257a622-3ca0-5163-8b6e-5e88c573b17e P2-16B | ValidationError | ['Rack R208 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-7c07894e-9772-5e1c-a418-bdf3fd58e7c3 P1-7A | ValidationError | ['Rack R107 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-7eae2a15-d2d0-52ab-bfcf-3cf6823078cf P2-7B | ValidationError | ['Rack R107 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-872d498b-e156-57b9-8f1d-f595c31ef703 P3-5A | ValidationError | ['Rack R305 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-87cf96f1-95fa-546c-9665-977f42764f8b P4-4B | ValidationError | ['Rack R304 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-8cf662de-a918-5648-b152-d71da75a7392 P3-4A | ValidationError | ['Rack R304 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-a5511926-c977-593b-9bf1-57c8175be85d P2-5B | ValidationError | ['Rack R105 (Row 1) and power panel Panel 2 (MDF) are in different locations']
-a7c6bcef-dbe4-51cd-a6d0-14ab5facbe5e P1-3A | ValidationError | ['Rack R103 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-b3bfb863-c40a-5c49-b82e-1095037d3578 P3-3A | ValidationError | ['Rack R303 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-b4031fa2-14a6-5d06-a3a2-3a3376b10d72 P1-11A | ValidationError | ['Rack R203 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-b9c591cd-fdc0-5cf2-83c4-400554b811cd P1-16A | ValidationError | ['Rack R208 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-bb4485d0-144b-506f-a8ab-faf523304cf8 P4-7B | ValidationError | ['Rack R307 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-c0e96716-af7f-5b78-8210-d51b55fa53d2 P1-1A | ValidationError | ['Rack R101 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-c2893189-8044-5d85-8e91-7832c201474d P1-8A | ValidationError | ['Rack R108 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-c6b3c62b-5f0d-51d1-95d9-761914979d47 P3-6A | ValidationError | ['Rack R306 (Row 3) and power panel Panel 3 (MDF) are in different locations']
-cd4f8f27-620f-59fe-aa9a-4c13ff4a7274 P1-12A | ValidationError | ['Rack R204 (Row 2) and power panel Panel 1 (MDF) are in different locations']
-d951d5fc-81be-51ae-98a1-7759c859d904 P4-5B | ValidationError | ['Rack R305 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-e04582bd-f2cb-5deb-b374-be9260cd5b27 P4-6B | ValidationError | ['Rack R306 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-e1672072-7885-5330-a7dd-52f3769d4863 P1-5A | ValidationError | ['Rack R105 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-e1b4bb92-803c-59f4-90a7-4f5deb95abc2 P4-2B | ValidationError | ['Rack R302 (Row 3) and power panel Panel 4 (MDF) are in different locations']
-f2ee9737-42d8-5093-a349-be97765a39e0 P1-2A | ValidationError | ['Rack R102 (Row 1) and power panel Panel 1 (MDF) are in different locations']
-fcb61481-0da8-5412-b68b-2463016a017d P2-12B | ValidationError | ['Rack R204 (Row 2) and power panel Panel 2 (MDF) are in different locations']
+0434ed4d-cc76-5051-a38c-b84ed32de2c1 | ValidationError | "P2-6B" | "['Rack R106 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+05541f06-08c9-5d84-a8b6-13ce3cd45938 | ValidationError | "P3-8A" | "['Rack R308 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+05f5bb91-e84c-5908-8d9a-8256959bfcab | ValidationError | "P2-11B" | "['Rack R203 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+06ebb1db-aaa0-5b24-a832-8ca1671f8b0a | ValidationError | "P2-4B" | "['Rack R104 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+07316815-d36d-552d-8859-03e7fe09354a | ValidationError | "P2-13B" | "['Rack R205 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+0e23ee26-033e-5cfd-8bce-b5ef5909e13c | ValidationError | "P2-10B" | "['Rack R202 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+10da56b6-09b1-5da6-9505-d9253863e062 | ValidationError | "P3-1A" | "['Rack R301 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+17a0b412-4187-51a2-a238-901b3a275bcd | ValidationError | "P1-14A" | "['Rack R206 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+194e2d64-c904-59bc-af2c-e040beb3aeac | ValidationError | "P2-14B" | "['Rack R206 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+1f4b42df-43ce-52aa-8a61-4a19ce1af962 | ValidationError | "P4-3B" | "['Rack R303 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+20b3c4c0-eb30-5f8b-adcf-20e4fa5d0061 | ValidationError | "P2-15B" | "['Rack R207 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+29b6b9f0-f50a-592c-8e3f-e415a0bf4cd4 | ValidationError | "P4-1B" | "['Rack R301 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+314fead6-ffae-51f7-abb0-2edcf7d6da49 | ValidationError | "P3-2A" | "['Rack R302 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+31f1abb3-660f-5a57-9256-42be3d5b75cf | ValidationError | "P2-3B" | "['Rack R103 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+3213730d-18bd-5a3a-9828-4ab023ed4652 | ValidationError | "P1-6A" | "['Rack R106 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+3338c701-47fd-513e-945a-78a98b84d7f0 | ValidationError | "P4-8B" | "['Rack R308 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+38f5aa36-561b-5cd8-8362-9d093ff7b89a | ValidationError | "P1-15A" | "['Rack R207 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+3f702c58-7dea-5b78-a007-17f40b465810 | ValidationError | "P1-10A" | "['Rack R202 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+416a01e5-fbf9-522e-b9e9-4037cf8c984f | ValidationError | "P1-4A" | "['Rack R104 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+451c4aad-d892-5114-8724-be2f8148c322 | ValidationError | "P2-2B" | "['Rack R102 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+47f69d3d-8fcd-5b63-8695-21aa51fb4fbf | ValidationError | "P2-9B" | "['Rack R201 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+53ed215b-9003-522d-9cb1-d48dbb18fdc2 | ValidationError | "P3-7A" | "['Rack R307 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+5a2f51ea-7a05-53d2-8a47-cd383629a343 | ValidationError | "P1-13A" | "['Rack R205 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+5fa35cf7-5d55-5533-99ee-7d1ecaa69856 | ValidationError | "P2-1B" | "['Rack R101 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+6203a499-6777-5cd0-841b-fa6339c48890 | ValidationError | "P1-9A" | "['Rack R201 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+6a1a4ac2-e77b-526b-9aa6-8c7903e5f572 | ValidationError | "P2-8B" | "['Rack R108 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+7257a622-3ca0-5163-8b6e-5e88c573b17e | ValidationError | "P2-16B" | "['Rack R208 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+7c07894e-9772-5e1c-a418-bdf3fd58e7c3 | ValidationError | "P1-7A" | "['Rack R107 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+7eae2a15-d2d0-52ab-bfcf-3cf6823078cf | ValidationError | "P2-7B" | "['Rack R107 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+872d498b-e156-57b9-8f1d-f595c31ef703 | ValidationError | "P3-5A" | "['Rack R305 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+87cf96f1-95fa-546c-9665-977f42764f8b | ValidationError | "P4-4B" | "['Rack R304 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+8cf662de-a918-5648-b152-d71da75a7392 | ValidationError | "P3-4A" | "['Rack R304 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+a5511926-c977-593b-9bf1-57c8175be85d | ValidationError | "P2-5B" | "['Rack R105 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+a7c6bcef-dbe4-51cd-a6d0-14ab5facbe5e | ValidationError | "P1-3A" | "['Rack R103 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+b3bfb863-c40a-5c49-b82e-1095037d3578 | ValidationError | "P3-3A" | "['Rack R303 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+b4031fa2-14a6-5d06-a3a2-3a3376b10d72 | ValidationError | "P1-11A" | "['Rack R203 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+b9c591cd-fdc0-5cf2-83c4-400554b811cd | ValidationError | "P1-16A" | "['Rack R208 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+bb4485d0-144b-506f-a8ab-faf523304cf8 | ValidationError | "P4-7B" | "['Rack R307 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+c0e96716-af7f-5b78-8210-d51b55fa53d2 | ValidationError | "P1-1A" | "['Rack R101 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+c2893189-8044-5d85-8e91-7832c201474d | ValidationError | "P1-8A" | "['Rack R108 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+c6b3c62b-5f0d-51d1-95d9-761914979d47 | ValidationError | "P3-6A" | "['Rack R306 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+cd4f8f27-620f-59fe-aa9a-4c13ff4a7274 | ValidationError | "P1-12A" | "['Rack R204 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+d951d5fc-81be-51ae-98a1-7759c859d904 | ValidationError | "P4-5B" | "['Rack R305 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+e04582bd-f2cb-5deb-b374-be9260cd5b27 | ValidationError | "P4-6B" | "['Rack R306 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+e1672072-7885-5330-a7dd-52f3769d4863 | ValidationError | "P1-5A" | "['Rack R105 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+e1b4bb92-803c-59f4-90a7-4f5deb95abc2 | ValidationError | "P4-2B" | "['Rack R302 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+f2ee9737-42d8-5093-a349-be97765a39e0 | ValidationError | "P1-2A" | "['Rack R102 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+fcb61481-0da8-5412-b68b-2463016a017d | ValidationError | "P2-12B" | "['Rack R204 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
 = Field Mappings: ==================================================================================
 - auth.group => auth.group -------------------------------------------------------------------------
 name => value_importer => name (CharField)
