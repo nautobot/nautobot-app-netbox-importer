@@ -151,19 +151,31 @@ def docker_compose(context, command, **kwargs):
 def run_command(context, command, **kwargs):
     """Wrapper to run a command locally or inside the nautobot container."""
     if is_truthy(context.nautobot_netbox_importer.local):
-        context.run(command, **kwargs)
+        if "command_env" in kwargs:
+            kwargs["env"] = {
+                **kwargs.get("env", {}),
+                **kwargs.pop("command_env"),
+            }
+        return context.run(command, **kwargs)
     else:
         # Check if nautobot is running, no need to start another nautobot container to run a command
         docker_compose_status = "ps --services --filter status=running"
         results = docker_compose(context, docker_compose_status, hide="out")
         if "nautobot" in results.stdout:
-            compose_command = f"exec nautobot {command}"
+            compose_command = "exec"
         else:
-            compose_command = f"run --rm --entrypoint '{command}' nautobot"
+            compose_command = "run --rm --entrypoint=''"
+
+        if "command_env" in kwargs:
+            command_env = kwargs.pop("command_env")
+            for key, value in command_env.items():
+                compose_command += f' --env="{key}={value}"'
+
+        compose_command += f" -- nautobot {command}"
 
         pty = kwargs.pop("pty", True)
 
-        docker_compose(context, compose_command, pty=pty, **kwargs)
+        return docker_compose(context, compose_command, pty=pty, **kwargs)
 
 
 # ------------------------------------------------------------------------------
@@ -822,6 +834,7 @@ def load_test_environment(context, db_name="test_nautobot", keepdb=False):
         "buffer": "Discard output from passing tests",
         "pattern": "Run specific test methods, classes, or modules instead of all tests",
         "verbose": "Enable verbose test output.",
+        "build-fixtures": "Build fixtures before running tests.",
     }
 )
 def unittest(
@@ -832,6 +845,7 @@ def unittest(
     buffer=True,
     pattern="",
     verbose=False,
+    build_fixtures=False,
 ):
     """Run Nautobot unit tests."""
     load_test_environment(context, keepdb=keepdb)
@@ -851,7 +865,10 @@ def unittest(
     if verbose:
         command += " --verbosity 2"
 
-    run_command(context, command)
+    env = {"BUILD_FIXTURES": "True" if build_fixtures else "False"}
+    result = run_command(context, command, command_env=env)
+    if result.return_code != 0 and not build_fixtures:
+        print("Tests failed! To rebuild fixtures and re-run tests, run `invoke unittest --build-fixtures`")
 
 
 @task
@@ -904,17 +921,16 @@ def tests(context, failfast=False, keepdb=False, lint_only=False):
 @task(
     help={
         "file": "URL or path to the JSON file to import.",
-        "bypass_data_validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
-        "demo_version": "Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).",
-        "dry_run": "Do not write any data to the database. (default: False)",
-        "fix_powerfeed_locations": "Fix panel location to match rack location based on powerfeed. (default: False)",
-        "print_fields_mapping": "Show a mapping of NetBox fields to Nautobot fields. Only printed when `--summary` is also specified. (default: True)",
-        "print_summary": "Show a summary of the import. (default: True)",
-        "save_json_summary_path": "File path to write the JSON mapping to. (default: generated-mappings.json)",
-        "save_text_summary_path": "File path to write the text mapping to. (default: generated-mappings.txt)",
-        "sitegroup_parent_always_region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
-        "update_paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
-        "unrack_zero_uheight_devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
+        "bypass-data-validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
+        "demo-version": "Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).",
+        "dry-run": "Do not write any data to the database. (default: False)",
+        "fix-powerfeed-locations": "Fix panel location to match rack location based on powerfeed. (default: False)",
+        "print-summary": "Show a summary of the import. (default: True)",
+        "save-json-summary-path": "File path to write the JSON mapping to. (default: generated-mappings.json)",
+        "save-text-summary-path": "File path to write the text mapping to. (default: generated-mappings.txt)",
+        "sitegroup-parent-always-region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
+        "update-paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
+        "unrack-zero-uheight-devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
     }
 )
 def import_netbox(
@@ -925,7 +941,6 @@ def import_netbox(
     save_text_summary_path="",
     bypass_data_validation=False,
     dry_run=True,
-    print_fields_mapping=True,
     fix_powerfeed_locations=False,
     sitegroup_parent_always_region=False,
     print_summary=True,
@@ -942,8 +957,6 @@ def import_netbox(
             + demo_version
             + ".json"
         )
-        bypass_data_validation = True
-        sitegroup_parent_always_region = True
 
     command = [
         "nautobot-server",
@@ -952,7 +965,6 @@ def import_netbox(
         f"--save-text-summary-path={save_text_summary_path}" if save_text_summary_path else "",
         "--bypass-data-validation" if bypass_data_validation else "",
         "--dry-run" if dry_run else "",
-        "--print-field-mapping" if print_fields_mapping else "",
         "--fix-powerfeed-locations" if fix_powerfeed_locations else "",
         "--sitegroup-parent-always-region" if sitegroup_parent_always_region else "",
         "--print-summary" if print_summary else "",

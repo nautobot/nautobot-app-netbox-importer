@@ -22,6 +22,19 @@ from .source import SourceFieldImporterFallback
 from .source import SourceFieldImporterIssue
 
 
+def default(default_value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition:
+    """Create a default field definition.
+
+    Use to set a default value for the field, if there is no value in the source data.
+    """
+
+    def define_default(field: SourceField) -> None:
+        field.set_importer(nautobot_name=nautobot_name)
+        field.default_value = default_value
+
+    return define_default
+
+
 def fallback(
     value: Any = None,
     callback: Optional[SourceFieldImporterFallback] = None,
@@ -46,7 +59,7 @@ def fallback(
                 if callback:
                     callback(field, source, target, error)
                 if value:
-                    setattr(target, field.nautobot.name, value)
+                    field.set_nautobot_value(target, value)
                     if isinstance(error, InvalidChoiceValueIssue):
                         raise InvalidChoiceValueIssue(field, field.get_source_value(source), value) from error
                     raise SourceFieldImporterIssue(
@@ -58,28 +71,6 @@ def fallback(
         field.set_importer(fallback_importer, override=True)
 
     return define_fallback
-
-
-def truncate_to_integer(nautobot_name: FieldName = "") -> SourceFieldDefinition:
-    """Create a truncate integer field definition.
-
-    Use to truncate the value to an integer before importing it to Nautobot.
-    """
-
-    def define_truncate_to_integer(field: SourceField) -> None:
-        def truncate_to_integer_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-            value = field.get_source_value(source)
-            if value in EMPTY_VALUES:
-                return
-
-            if not isinstance(value, int):
-                value = int(float(value))
-
-            setattr(target, field.nautobot.name, value)
-
-        field.set_importer(truncate_to_integer_importer, nautobot_name)
-
-    return define_truncate_to_integer
 
 
 def relation(related_source: SourceContentType, nautobot_name: FieldName = "") -> SourceFieldDefinition:
@@ -160,7 +151,7 @@ def role(
             else:
                 raise ValueError(f"Invalid role value {value}")
 
-            setattr(target, field.nautobot.name, uid)
+            field.set_nautobot_value(target, uid)
             field.wrapper.add_reference(role_wrapper, uid)
 
         field.set_importer(role_importer, nautobot_name)
@@ -196,7 +187,7 @@ def constant(value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition
 
     def define_constant(field: SourceField) -> None:
         def constant_importer(_: RecordData, target: DiffSyncBaseModel) -> None:
-            setattr(target, field.nautobot.name, value)
+            field.set_nautobot_value(target, value)
 
         field.set_importer(constant_importer, nautobot_name)
 
@@ -212,8 +203,7 @@ def pass_through(nautobot_name: FieldName = "") -> SourceFieldDefinition:
     def define_passthrough(field: SourceField) -> None:
         def pass_through_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(field.name, None)
-            if value:
-                setattr(target, field.nautobot.name, value)
+            field.set_nautobot_value(target, value)
 
         field.set_importer(pass_through_importer, nautobot_name)
 

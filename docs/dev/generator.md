@@ -46,11 +46,14 @@ This is achieved through `adapter.configure_model(content_type: ContentTypeStr)`
 - `identifiers`: A list of fields identifiable as unique references in the source data.
 - `default_reference`: A `RecordData` dictionary of default values to reference this model. This is useful when the source data does not provide a reference that is required in Nautobot.
 - `extend_content_type`: Define this when a source model extends another source model to merge into a single Nautobot model.
+- `forward_references`: Define to forward references to another content type. This is useful when the source data references a content type that is not directly related to the Nautobot content type. For example, a source data references a `dcim.location` content type, but the Nautobot content type is `dcim.locationtype`.
+- `disable_related_reference`: Define, to disable storing references to this content type to other content types. This is useful for e.g. `ObjectChange` model.
+- `pre_import`: Define a callable to be executed before importing the source data. Can be used to alter or cache the source data before importing. `pre_import(source: RecordData, importer_pass: ImporterPass) -> PreImportResult` is called twice for each source record: on first and second input data iteration.
 - `fields`: Define the source fields and how they should be imported. This argument is a dictionary mapping `FieldName` to `SourceFieldDefinition` instances.
     - `SourceFieldDefinition` can be one of:
         - `None`: to ignore the field.
-        - A Nautobot `FieldName` to rename the field.
-        - A `Callable` for specialized field handling, for example, `_role_definition_factory(adapter, "dcim.rackrole")`, which maps the `role` field to the `dcim.rackrole` content type.
+        - A Nautobot `FieldName` to map the source field to a Nautobot field.
+        - A `Callable` for specialized field handling.
 
 To disable specific content types, use `adapter.disable_model(content_type: ContentTypeStr, reason: str)`.
 
@@ -121,8 +124,7 @@ erDiagram
     SourceAdapter {
         Mapping wrappers
         NautobotAdapter nautobot
-        Set ignored_fields
-        Set ignored_models
+        ImportSummary summary
         DiffSyncBaseModel diffsync_model_1
         DiffSyncBaseModel diffsync_model_2
         DiffSyncBaseModel diffsync_model_x
@@ -136,10 +138,8 @@ erDiagram
         Mapping fields
         Set[Callable] importers
         SourceModelWrapper extends_wrapper
-        int imported_count
+        SourceModelStats stats
         Uid default_reference_uid
-        Mapping _references
-        ContentTypeStr _references_forwarding
         Mapping _uid_to_pk_cache
         Mapping _cached_data
     }
@@ -149,10 +149,10 @@ erDiagram
         SourceFieldDefinition definition
         NautobotField nautobot
         Callable importer
+        String disable_reason
     }
     NautobotAdapter {
         Mapping wrappers
-        Set importer_issues
         DiffSyncBaseModel diffsync_model_1
         DiffSyncBaseModel diffsync_model_2
         DiffSyncBaseModel diffsync_model_x
@@ -161,19 +161,21 @@ erDiagram
         ContentTypeStr content_type
         bool disabled
         NautobotBaseModelType model
+        NautobotModelStats stats
         Mapping fields
         Type[DiffSyncBaseModel] diffsync_class
         InternalFieldType pk_type
         FieldName pk_name
         Mapping constructor_kwargs
-        int imported_count
-        int last_id
-        Set _clean_failures
+        Int last_id
+        Set importer_issues
     }
     NautobotField {
         FieldName name
         InternalFieldType internal_type
         DjangoField field
+        Bool disabled
+        Bool required
     }
     DiffSyncBaseModel {
         NautobotModelWrapper _wrapper

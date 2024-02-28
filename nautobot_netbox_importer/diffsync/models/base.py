@@ -27,9 +27,9 @@ def _define_tagged_object(field: SourceField) -> None:
         tag_uuid = tag_wrapper.get_pk_from_uid(tag)
         related_wrapper = adapter.get_or_create_wrapper(content_type)
         result = related_wrapper.get_pk_from_uid(object_id)
-        setattr(target, field.nautobot.name, result)
-        setattr(target, tag_field.nautobot.name, tag_uuid)
-        setattr(target, content_type_field.nautobot.name, related_wrapper.nautobot.content_type_instance.pk)
+        field.set_nautobot_value(target, result)
+        tag_field.set_nautobot_value(target, tag_uuid)
+        content_type_field.set_nautobot_value(target, related_wrapper.nautobot.content_type_instance.pk)
         related_wrapper.add_reference(tag_wrapper, tag_uuid)
 
     field.set_importer(tagged_object_importer)
@@ -58,7 +58,7 @@ def _setup_content_types(adapter: SourceAdapter) -> None:
 
             wrapper = adapter.get_or_create_wrapper(f"{app_label}.{model}")
             adapter.content_type_ids_mapping[uid] = wrapper
-            setattr(target, field.nautobot.name, app_label)
+            field.set_nautobot_value(target, app_label)
 
         field.set_importer(content_types_mapper_importer)
 

@@ -114,6 +114,7 @@ def setup(adapter: SourceAdapter) -> None:
         "extras.CustomField",
         fields={
             "name": "key",
+            "label": fields.default("Empty Label"),
             "type": fields.fallback(value="text"),
             # NetBox<3.6
             "choices": define_choices,

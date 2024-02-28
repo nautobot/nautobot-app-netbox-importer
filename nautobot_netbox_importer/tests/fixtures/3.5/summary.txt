@@ -1,73 +1,473 @@
-= Import Summary: ==================================================================================
-- DiffSync Summary: --------------------------------------------------------------------------------
+* Import Summary: **********************************************************************************
+= DiffSync Summary: ================================================================================
 create: 5870
 update: 0
 delete: 0
 no-change: 0
 skip: 119
-- Nautobot Models Summary: -------------------------------------------------------------------------
-auth.group: 1
-auth.user: 6
-circuits.circuit: 29
-circuits.circuittermination: 45
-circuits.circuittype: 4
-circuits.provider: 9
-circuits.providernetwork: 1
-contenttypes.contenttype: 119
-dcim.cable: 108
-dcim.cabletermination: 216
-dcim.consoleport: 41
-dcim.consoleporttemplate: 11
-dcim.device: 72
-dcim.devicebay: 14
-dcim.devicebaytemplate: 14
-dcim.devicerole: 9
-dcim.devicetype: 15
-dcim.frontport: 912
-dcim.frontporttemplate: 120
-dcim.interface: 1586
-dcim.interfacetemplate: 300
-dcim.location: 4
-dcim.locationtype: 3
-dcim.manufacturer: 15
-dcim.platform: 3
-dcim.powerfeed: 48
-dcim.poweroutlet: 104
-dcim.poweroutlettemplate: 8
-dcim.powerpanel: 4
-dcim.powerport: 75
-dcim.powerporttemplate: 26
-dcim.rack: 42
-dcim.rackreservation: 2
-dcim.rackrole: 4
-dcim.rearport: 630
-dcim.rearporttemplate: 73
-dcim.region: 67
-dcim.site: 24
-dcim.sitegroup: 3
-dcim.virtualchassis: 4
-extras.customfield: 1
-extras.status: 6
-extras.tag: 26
-extras.taggeditem: 72
-ipam.aggregate: 4
-ipam.ipaddress: 180
-ipam.prefix: 90
-ipam.rir: 8
-ipam.role: 5
-ipam.routetarget: 12
-ipam.vlan: 63
-ipam.vlangroup: 7
-ipam.vrf: 6
-tenancy.tenant: 11
-tenancy.tenantgroup: 1
-virtualization.cluster: 32
-virtualization.clustergroup: 4
-virtualization.clustertype: 6
-virtualization.virtualmachine: 180
-virtualization.vminterface: 720
-- Importer issues: ---------------------------------------------------------------------------------
-. dcim.powerfeed: 48  ..............................................................................
+= Source Stats: ====================================================================================
+- admin.logentry -----------------------------------------------------------------------------------
+first_pass_used: 12
+- auth.group ---------------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- auth.permission ----------------------------------------------------------------------------------
+first_pass_used: 473
+- auth.user ----------------------------------------------------------------------------------------
+first_pass_used: 6
+second_pass_used: 6
+created: 6
+imported: 6
+- circuits.circuit ---------------------------------------------------------------------------------
+first_pass_used: 29
+second_pass_used: 29
+created: 29
+imported: 29
+- circuits.circuittermination ----------------------------------------------------------------------
+first_pass_used: 45
+second_pass_used: 45
+created: 45
+imported: 45
+- circuits.circuittype -----------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- circuits.provider --------------------------------------------------------------------------------
+first_pass_used: 9
+second_pass_used: 9
+created: 9
+imported: 9
+- circuits.providernetwork -------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- contenttypes.contenttype -------------------------------------------------------------------------
+first_pass_used: 119
+second_pass_used: 119
+created: 119
+imported: 119
+- dcim.cable ---------------------------------------------------------------------------------------
+first_pass_used: 108
+second_pass_used: 108
+created: 108
+imported: 108
+- dcim.cablepath -----------------------------------------------------------------------------------
+first_pass_used: 154
+- dcim.cabletermination ----------------------------------------------------------------------------
+first_pass_used: 216
+second_pass_used: 216
+imported: 216
+- dcim.consoleport ---------------------------------------------------------------------------------
+first_pass_used: 41
+second_pass_used: 41
+created: 41
+imported: 41
+- dcim.consoleporttemplate -------------------------------------------------------------------------
+first_pass_used: 11
+second_pass_used: 11
+created: 11
+imported: 11
+- dcim.device --------------------------------------------------------------------------------------
+first_pass_used: 72
+second_pass_used: 72
+created: 72
+imported: 72
+- dcim.devicebay -----------------------------------------------------------------------------------
+first_pass_used: 14
+second_pass_used: 14
+created: 14
+imported: 14
+- dcim.devicebaytemplate ---------------------------------------------------------------------------
+first_pass_used: 14
+second_pass_used: 14
+created: 14
+imported: 14
+- dcim.devicerole ----------------------------------------------------------------------------------
+first_pass_used: 9
+second_pass_used: 9
+created: 9
+imported: 9
+- dcim.devicetype ----------------------------------------------------------------------------------
+pre_cached: 1
+first_pass_used: 14
+second_pass_used: 14
+created: 15
+imported: 15
+imported_from_cache: 1
+- dcim.frontport -----------------------------------------------------------------------------------
+first_pass_used: 912
+second_pass_used: 912
+created: 912
+imported: 912
+- dcim.frontporttemplate ---------------------------------------------------------------------------
+first_pass_used: 120
+second_pass_used: 120
+created: 120
+imported: 120
+- dcim.interface -----------------------------------------------------------------------------------
+first_pass_used: 1586
+second_pass_used: 1586
+created: 1586
+imported: 1586
+- dcim.interfacetemplate ---------------------------------------------------------------------------
+first_pass_used: 300
+second_pass_used: 300
+created: 300
+imported: 300
+- dcim.location ------------------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- dcim.locationtype --------------------------------------------------------------------------------
+pre_cached: 3
+imported: 3
+imported_from_cache: 3
+created: 3
+- dcim.manufacturer --------------------------------------------------------------------------------
+pre_cached: 1
+first_pass_used: 14
+second_pass_used: 14
+created: 15
+imported: 15
+imported_from_cache: 1
+- dcim.module --------------------------------------------------------------------------------------
+first_pass_used: 4
+- dcim.modulebay -----------------------------------------------------------------------------------
+first_pass_used: 28
+- dcim.modulebaytemplate ---------------------------------------------------------------------------
+first_pass_used: 14
+- dcim.moduletype ----------------------------------------------------------------------------------
+first_pass_used: 1
+- dcim.platform ------------------------------------------------------------------------------------
+first_pass_used: 3
+second_pass_used: 3
+created: 3
+imported: 3
+- dcim.powerfeed -----------------------------------------------------------------------------------
+first_pass_used: 48
+second_pass_used: 48
+created: 48
+imported: 48
+- dcim.poweroutlet ---------------------------------------------------------------------------------
+first_pass_used: 104
+second_pass_used: 104
+created: 104
+imported: 104
+- dcim.poweroutlettemplate -------------------------------------------------------------------------
+first_pass_used: 8
+second_pass_used: 8
+created: 8
+imported: 8
+- dcim.powerpanel ----------------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- dcim.powerport -----------------------------------------------------------------------------------
+first_pass_used: 75
+second_pass_used: 75
+created: 75
+imported: 75
+- dcim.powerporttemplate ---------------------------------------------------------------------------
+first_pass_used: 26
+second_pass_used: 26
+created: 26
+imported: 26
+- dcim.rack ----------------------------------------------------------------------------------------
+first_pass_used: 42
+second_pass_used: 42
+created: 42
+imported: 42
+- dcim.rackreservation -----------------------------------------------------------------------------
+first_pass_used: 2
+second_pass_used: 2
+created: 2
+imported: 2
+- dcim.rackrole ------------------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- dcim.rearport ------------------------------------------------------------------------------------
+first_pass_used: 630
+second_pass_used: 630
+created: 630
+imported: 630
+- dcim.rearporttemplate ----------------------------------------------------------------------------
+first_pass_used: 73
+second_pass_used: 73
+created: 73
+imported: 73
+- dcim.region --------------------------------------------------------------------------------------
+first_pass_used: 67
+second_pass_used: 67
+created: 67
+imported: 67
+- dcim.site ----------------------------------------------------------------------------------------
+first_pass_used: 24
+second_pass_used: 24
+created: 24
+imported: 24
+- dcim.sitegroup -----------------------------------------------------------------------------------
+first_pass_used: 3
+second_pass_used: 3
+created: 3
+imported: 3
+- dcim.virtualchassis ------------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- extras.customfield -------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- extras.status ------------------------------------------------------------------------------------
+pre_cached: 6
+imported: 6
+imported_from_cache: 6
+created: 6
+- extras.tag ---------------------------------------------------------------------------------------
+first_pass_used: 26
+second_pass_used: 26
+created: 26
+imported: 26
+- extras.taggeditem --------------------------------------------------------------------------------
+first_pass_used: 72
+second_pass_used: 72
+created: 72
+imported: 72
+- ipam.aggregate -----------------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- ipam.asn -----------------------------------------------------------------------------------------
+first_pass_used: 5
+- ipam.ipaddress -----------------------------------------------------------------------------------
+first_pass_used: 180
+second_pass_used: 180
+created: 180
+imported: 180
+- ipam.iprange -------------------------------------------------------------------------------------
+first_pass_used: 4
+- ipam.prefix --------------------------------------------------------------------------------------
+first_pass_used: 90
+second_pass_used: 90
+created: 90
+imported: 90
+- ipam.rir -----------------------------------------------------------------------------------------
+first_pass_used: 8
+second_pass_used: 8
+created: 8
+imported: 8
+- ipam.role ----------------------------------------------------------------------------------------
+first_pass_used: 5
+second_pass_used: 5
+created: 5
+imported: 5
+- ipam.routetarget ---------------------------------------------------------------------------------
+first_pass_used: 12
+second_pass_used: 12
+created: 12
+imported: 12
+- ipam.vlan ----------------------------------------------------------------------------------------
+first_pass_used: 63
+second_pass_used: 63
+created: 63
+imported: 63
+- ipam.vlangroup -----------------------------------------------------------------------------------
+first_pass_used: 7
+second_pass_used: 7
+created: 7
+imported: 7
+- ipam.vrf -----------------------------------------------------------------------------------------
+first_pass_used: 6
+second_pass_used: 6
+created: 6
+imported: 6
+- sessions.session ---------------------------------------------------------------------------------
+first_pass_used: 9
+- tenancy.contact ----------------------------------------------------------------------------------
+first_pass_used: 3
+- tenancy.contactassignment ------------------------------------------------------------------------
+first_pass_used: 3
+- tenancy.contactgroup -----------------------------------------------------------------------------
+first_pass_used: 2
+- tenancy.contactrole ------------------------------------------------------------------------------
+first_pass_used: 3
+- tenancy.tenant -----------------------------------------------------------------------------------
+first_pass_used: 11
+second_pass_used: 11
+created: 11
+imported: 11
+- tenancy.tenantgroup ------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- users.userconfig ---------------------------------------------------------------------------------
+first_pass_used: 6
+- virtualization.cluster ---------------------------------------------------------------------------
+first_pass_used: 32
+second_pass_used: 32
+created: 32
+imported: 32
+- virtualization.clustergroup ----------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- virtualization.clustertype -----------------------------------------------------------------------
+first_pass_used: 6
+second_pass_used: 6
+created: 6
+imported: 6
+- virtualization.virtualmachine --------------------------------------------------------------------
+first_pass_used: 180
+second_pass_used: 180
+created: 180
+imported: 180
+- virtualization.vminterface -----------------------------------------------------------------------
+first_pass_used: 720
+second_pass_used: 720
+created: 720
+imported: 720
+= Nautobot Stats: ==================================================================================
+- auth.group ---------------------------------------------------------------------------------------
+source_created: 1
+- circuits.circuit ---------------------------------------------------------------------------------
+source_created: 29
+- circuits.circuittermination ----------------------------------------------------------------------
+source_created: 45
+- circuits.circuittype -----------------------------------------------------------------------------
+source_created: 4
+- circuits.provider --------------------------------------------------------------------------------
+source_created: 9
+- circuits.providernetwork -------------------------------------------------------------------------
+source_created: 1
+- contenttypes.contenttype -------------------------------------------------------------------------
+source_ignored: 119
+- dcim.cable ---------------------------------------------------------------------------------------
+source_created: 108
+- dcim.consoleport ---------------------------------------------------------------------------------
+source_created: 41
+- dcim.consoleporttemplate -------------------------------------------------------------------------
+source_created: 11
+- dcim.device --------------------------------------------------------------------------------------
+source_created: 72
+- dcim.devicebay -----------------------------------------------------------------------------------
+source_created: 14
+- dcim.devicebaytemplate ---------------------------------------------------------------------------
+source_created: 14
+- dcim.devicetype ----------------------------------------------------------------------------------
+source_created: 15
+- dcim.frontport -----------------------------------------------------------------------------------
+source_created: 912
+- dcim.frontporttemplate ---------------------------------------------------------------------------
+source_created: 120
+- dcim.interface -----------------------------------------------------------------------------------
+source_created: 1586
+- dcim.interfacetemplate ---------------------------------------------------------------------------
+source_created: 300
+- dcim.location ------------------------------------------------------------------------------------
+source_created: 95
+- dcim.locationtype --------------------------------------------------------------------------------
+source_created: 6
+- dcim.manufacturer --------------------------------------------------------------------------------
+source_created: 15
+- dcim.platform ------------------------------------------------------------------------------------
+source_created: 3
+- dcim.powerfeed -----------------------------------------------------------------------------------
+source_created: 48
+issues: 48
+- dcim.poweroutlet ---------------------------------------------------------------------------------
+source_created: 104
+- dcim.poweroutlettemplate -------------------------------------------------------------------------
+source_created: 8
+- dcim.powerpanel ----------------------------------------------------------------------------------
+source_created: 4
+- dcim.powerport -----------------------------------------------------------------------------------
+source_created: 75
+- dcim.powerporttemplate ---------------------------------------------------------------------------
+source_created: 26
+- dcim.rack ----------------------------------------------------------------------------------------
+source_created: 42
+- dcim.rackreservation -----------------------------------------------------------------------------
+source_created: 2
+- dcim.rearport ------------------------------------------------------------------------------------
+source_created: 630
+- dcim.rearporttemplate ----------------------------------------------------------------------------
+source_created: 73
+- dcim.virtualchassis ------------------------------------------------------------------------------
+source_created: 4
+- extras.customfield -------------------------------------------------------------------------------
+source_created: 1
+- extras.role --------------------------------------------------------------------------------------
+source_created: 18
+- extras.status ------------------------------------------------------------------------------------
+source_created: 6
+- extras.tag ---------------------------------------------------------------------------------------
+source_created: 26
+- extras.taggeditem --------------------------------------------------------------------------------
+source_created: 72
+- ipam.ipaddress -----------------------------------------------------------------------------------
+source_created: 180
+- ipam.prefix --------------------------------------------------------------------------------------
+source_created: 94
+- ipam.rir -----------------------------------------------------------------------------------------
+source_created: 8
+- ipam.routetarget ---------------------------------------------------------------------------------
+source_created: 12
+- ipam.vlan ----------------------------------------------------------------------------------------
+source_created: 63
+- ipam.vlangroup -----------------------------------------------------------------------------------
+source_created: 7
+- ipam.vrf -----------------------------------------------------------------------------------------
+source_created: 6
+- tenancy.tenant -----------------------------------------------------------------------------------
+source_created: 11
+- tenancy.tenantgroup ------------------------------------------------------------------------------
+source_created: 1
+- users.user ---------------------------------------------------------------------------------------
+source_created: 6
+- virtualization.cluster ---------------------------------------------------------------------------
+source_created: 32
+- virtualization.clustergroup ----------------------------------------------------------------------
+source_created: 4
+- virtualization.clustertype -----------------------------------------------------------------------
+source_created: 6
+- virtualization.virtualmachine --------------------------------------------------------------------
+source_created: 180
+- virtualization.vminterface -----------------------------------------------------------------------
+source_created: 720
+= Content Types Mapping Deviations: ================================================================
+  Mapping deviations from source content type to Nautobot content type
+auth.user => users.user
+dcim.cabletermination EXTENDS dcim.cable => dcim.cable
+dcim.devicerole => extras.role
+dcim.rackrole => extras.role
+dcim.region => dcim.location
+dcim.site => dcim.location
+dcim.sitegroup => dcim.locationtype
+ipam.aggregate => ipam.prefix
+ipam.role => extras.role
+= Content Types Back Mapping: ======================================================================
+  Back mapping deviations from Nautobot content type to the source content type
+users.user => auth.user
+dcim.cable => dcim.cabletermination
+extras.role => Ambiguous
+dcim.location => Ambiguous
+dcim.locationtype => dcim.sitegroup
+ipam.prefix => ipam.aggregate
+= Importer issues: =================================================================================
+- dcim.powerfeed -----------------------------------------------------------------------------------
 0434ed4d-cc76-5051-a38c-b84ed32de2c1 P2-6B | ValidationError | ['Rack R106 (Row 1) and power panel Panel 2 (MDF) are in different locations']
 05541f06-08c9-5d84-a8b6-13ce3cd45938 P3-8A | ValidationError | ['Rack R308 (Row 3) and power panel Panel 3 (MDF) are in different locations']
 05f5bb91-e84c-5908-8d9a-8256959bfcab P2-11B | ValidationError | ['Rack R203 (Row 2) and power panel Panel 2 (MDF) are in different locations']
@@ -116,31 +516,11 @@ e1672072-7885-5330-a7dd-52f3769d4863 P1-5A | ValidationError | ['Rack R105 (Row 
 e1b4bb92-803c-59f4-90a7-4f5deb95abc2 P4-2B | ValidationError | ['Rack R302 (Row 3) and power panel Panel 4 (MDF) are in different locations']
 f2ee9737-42d8-5093-a349-be97765a39e0 P1-2A | ValidationError | ['Rack R102 (Row 1) and power panel Panel 1 (MDF) are in different locations']
 fcb61481-0da8-5412-b68b-2463016a017d P2-12B | ValidationError | ['Rack R204 (Row 2) and power panel Panel 2 (MDF) are in different locations']
-. Total importer issues: 48 ........................................................................
-- Content Types Mapping Deviations: ----------------------------------------------------------------
-  Mapping deviations from source content type to Nautobot content type
-auth.user => users.user
-dcim.cabletermination EXTENDS dcim.cable => dcim.cable
-dcim.devicerole => extras.role
-dcim.rackrole => extras.role
-dcim.region => dcim.location
-dcim.site => dcim.location
-dcim.sitegroup => dcim.locationtype
-ipam.aggregate => ipam.prefix
-ipam.role => extras.role
-- Content Types Back Mapping: ----------------------------------------------------------------------
-  Back mapping deviations from Nautobot content type to the source content type
-users.user => auth.user
-dcim.cable => dcim.cabletermination
-extras.role => Ambiguous
-dcim.location => Ambiguous
-dcim.locationtype => dcim.sitegroup
-ipam.prefix => ipam.aggregate
-- Detailed Fields Mapping: -------------------------------------------------------------------------
-* auth.group => auth.group *************************************************************************
+= Field Mappings: ==================================================================================
+- auth.group => auth.group -------------------------------------------------------------------------
 name => value_importer => name (CharField)
 permissions => Disabled with reason: Permissions import is not implemented yet
-* auth.user => users.user **************************************************************************
+- auth.user => users.user --------------------------------------------------------------------------
 date_joined => datetime_importer => date_joined (DateTimeField)
 email => value_importer => email (CharField)
 first_name => value_importer => first_name (CharField)
@@ -153,7 +533,7 @@ last_name => value_importer => last_name (CharField)
 password => Disabled with reason: Should not be attempted to migrate
 user_permissions => Disabled with reason: Permissions import is not implemented yet
 username => value_importer => username (CharField)
-* circuits.circuit => circuits.circuit *************************************************************
+- circuits.circuit => circuits.circuit -------------------------------------------------------------
 cid => value_importer => cid (CharField)
 comments => value_importer => comments (TextField)
 commit_rate => integer_importer => commit_rate (PositiveIntegerField)
@@ -164,23 +544,23 @@ id => uid_from_data => id (UUIDField)
 install_date => date_importer => install_date (DateField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 provider => relation_importer => provider_id (ForeignKey)
-provider_account => NO IMPORTER => NO TARGET
+provider_account => NO IMPORTER => provider_account (NotFound)
 status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
 termination_a => relation_importer => circuit_termination_a_id (ForeignKey)
-termination_date => NO IMPORTER => NO TARGET
+termination_date => NO IMPORTER => termination_date (NotFound)
 termination_z => relation_importer => circuit_termination_z_id (ForeignKey)
 type => relation_importer => circuit_type_id (ForeignKey)
-* circuits.circuittermination => circuits.circuittermination ***************************************
+- circuits.circuittermination => circuits.circuittermination ---------------------------------------
 cable => relation_importer => cable_id (ForeignKey)
-cable_end => NO IMPORTER => NO TARGET
+cable_end => NO IMPORTER => cable_end (NotFound)
 circuit => relation_importer => circuit_id (ForeignKey)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-mark_connected => NO IMPORTER => NO TARGET
+mark_connected => NO IMPORTER => mark_connected (NotFound)
 port_speed => integer_importer => port_speed (PositiveIntegerField)
 pp_info => value_importer => pp_info (CharField)
 provider_network => relation_importer => provider_network_id (ForeignKey)
@@ -188,25 +568,25 @@ site => location_importer => location_id (ForeignKey)
 term_side => choice_importer => term_side (CharField)
 upstream_speed => integer_importer => upstream_speed (PositiveIntegerField)
 xconnect_id => value_importer => xconnect_id (CharField)
-* circuits.circuittype => circuits.circuittype *****************************************************
+- circuits.circuittype => circuits.circuittype -----------------------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-slug => NO IMPORTER => NO TARGET
-* circuits.provider => circuits.provider ***********************************************************
-asns => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => slug (NotFound)
+- circuits.provider => circuits.provider -----------------------------------------------------------
+asns => NO IMPORTER => asns (NotFound)
 comments => value_importer => comments (TextField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
-description => NO IMPORTER => NO TARGET
+description => NO IMPORTER => description (NotFound)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-slug => NO IMPORTER => NO TARGET
-* circuits.providernetwork => circuits.providernetwork *********************************************
+slug => NO IMPORTER => slug (NotFound)
+- circuits.providernetwork => circuits.providernetwork ---------------------------------------------
 comments => value_importer => comments (TextField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
@@ -215,40 +595,40 @@ id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
 provider => relation_importer => provider_id (ForeignKey)
-service_id => NO IMPORTER => NO TARGET
-* contenttypes.contenttype => contenttypes.contenttype *********************************************
+service_id => NO IMPORTER => service_id (NotFound)
+- contenttypes.contenttype => contenttypes.contenttype ---------------------------------------------
 app_label => content_types_mapper_importer => app_label (CharField)
 model => value_importer => model (CharField)
-* dcim.cable => dcim.cable *************************************************************************
-_abs_length => NO IMPORTER => NO TARGET
+- dcim.cable => dcim.cable -------------------------------------------------------------------------
+_abs_length => NO IMPORTER => _abs_length (PrivateProperty)
 color => value_importer => color (CharField)
-comments => NO IMPORTER => NO TARGET
+comments => NO IMPORTER => comments (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
-description => NO IMPORTER => NO TARGET
+description => NO IMPORTER => description (NotFound)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 length => integer_importer => length (PositiveSmallIntegerField)
 length_unit => choice_importer => length_unit (CharField)
 status => status_importer => status_id (StatusField)
-tenant => NO IMPORTER => NO TARGET
+tenant => NO IMPORTER => tenant (NotFound)
 type => choice_importer => type (CharField)
-* dcim.cabletermination => dcim.cable **************************************************************
-_device => NO IMPORTER => NO TARGET
-_location => NO IMPORTER => NO TARGET
-_rack => NO IMPORTER => NO TARGET
-_site => NO IMPORTER => NO TARGET
+- dcim.cabletermination => dcim.cable --------------------------------------------------------------
+_device => NO IMPORTER => _device (PrivateProperty)
+_location => NO IMPORTER => _location (PrivateProperty)
+_rack => NO IMPORTER => _rack (PrivateProperty)
+_site => NO IMPORTER => _site (PrivateProperty)
 id => uid_from_data => id (UUIDField)
 termination_a_id => relation_and_type_importer => termination_a_id (UUIDField)
 termination_a_type => relation_and_type_importer => termination_a_type_id (ForeignKey)
 termination_b_id => relation_and_type_importer => termination_b_id (UUIDField)
 termination_b_type => relation_and_type_importer => termination_b_type_id (ForeignKey)
-* dcim.consoleport => dcim.consoleport *************************************************************
-_name => NO IMPORTER => NO TARGET
-_path => NO IMPORTER => NO TARGET
+- dcim.consoleport => dcim.consoleport -------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+_path => NO IMPORTER => _path (PrivateProperty)
 cable => relation_importer => cable_id (ForeignKey)
-cable_end => NO IMPORTER => NO TARGET
+cable_end => NO IMPORTER => cable_end (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -256,37 +636,37 @@ device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-mark_connected => NO IMPORTER => NO TARGET
-module => NO IMPORTER => NO TARGET
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+module => NO IMPORTER => module (NotFound)
 name => value_importer => name (CharField)
-speed => NO IMPORTER => NO TARGET
+speed => NO IMPORTER => speed (NotFound)
 type => choice_importer => type (CharField)
-* dcim.consoleporttemplate => dcim.consoleporttemplate *********************************************
-_name => NO IMPORTER => NO TARGET
+- dcim.consoleporttemplate => dcim.consoleporttemplate ---------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
 created => datetime_importer => created (DateTimeField)
 description => value_importer => description (CharField)
 device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-module_type => NO IMPORTER => NO TARGET
+module_type => NO IMPORTER => module_type (NotFound)
 name => value_importer => name (CharField)
 type => choice_importer => type (CharField)
-* dcim.device => dcim.device ***********************************************************************
-_name => NO IMPORTER => NO TARGET
-airflow => NO IMPORTER => NO TARGET
+- dcim.device => dcim.device -----------------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+airflow => NO IMPORTER => airflow (NotFound)
 asset_tag => value_importer => asset_tag (CharField)
 cluster => relation_importer => cluster_id (ForeignKey)
 comments => value_importer => comments (TextField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
-description => NO IMPORTER => NO TARGET
+description => NO IMPORTER => description (NotFound)
 device_role => role_importer => role_id (RoleField)
 device_type => relation_importer => device_type_id (ForeignKey)
 face => choice_importer => face (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-local_context_data => NO IMPORTER => NO TARGET
+local_context_data => NO IMPORTER => local_context_data (NotFound)
 location => location_importer => location_id (ForeignKey)
 name => value_importer => name (CharField)
 platform => relation_importer => platform_id (ForeignKey)
@@ -301,8 +681,8 @@ tenant => relation_importer => tenant_id (ForeignKey)
 vc_position => integer_importer => vc_position (PositiveSmallIntegerField)
 vc_priority => integer_importer => vc_priority (PositiveSmallIntegerField)
 virtual_chassis => relation_importer => virtual_chassis_id (ForeignKey)
-* dcim.devicebay => dcim.devicebay *****************************************************************
-_name => NO IMPORTER => NO TARGET
+- dcim.devicebay => dcim.devicebay -----------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -312,8 +692,8 @@ installed_device => relation_importer => installed_device_id (OneToOneField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-* dcim.devicebaytemplate => dcim.devicebaytemplate *************************************************
-_name => NO IMPORTER => NO TARGET
+- dcim.devicebaytemplate => dcim.devicebaytemplate -------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
 created => datetime_importer => created (DateTimeField)
 description => value_importer => description (CharField)
 device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
@@ -321,7 +701,7 @@ id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-* dcim.devicerole => extras.role *******************************************************************
+- dcim.devicerole => extras.role -------------------------------------------------------------------
 color => value_importer => color (CharField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
@@ -329,15 +709,15 @@ description => value_importer => description (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-slug => NO IMPORTER => NO TARGET
-vm_role => NO IMPORTER => NO TARGET
-* dcim.devicetype => dcim.devicetype ***************************************************************
-_abs_weight => NO IMPORTER => NO TARGET
-airflow => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => slug (NotFound)
+vm_role => NO IMPORTER => vm_role (NotFound)
+- dcim.devicetype => dcim.devicetype ---------------------------------------------------------------
+_abs_weight => NO IMPORTER => _abs_weight (PrivateProperty)
+airflow => NO IMPORTER => airflow (NotFound)
 comments => value_importer => comments (TextField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
-description => NO IMPORTER => NO TARGET
+description => NO IMPORTER => description (NotFound)
 front_image => Disabled with reason: Import does not contain images
 id => uid_from_data => id (UUIDField)
 is_full_depth => value_importer => is_full_depth (BooleanField)
@@ -346,16 +726,16 @@ manufacturer => relation_importer => manufacturer_id (ForeignKey)
 model => value_importer => model (CharField)
 part_number => value_importer => part_number (CharField)
 rear_image => Disabled with reason: Import does not contain images
-slug => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => slug (NotFound)
 subdevice_role => choice_importer => subdevice_role (CharField)
-u_height => truncate_to_integer_importer => u_height (PositiveSmallIntegerField)
-weight => NO IMPORTER => NO TARGET
-weight_unit => NO IMPORTER => NO TARGET
-* dcim.frontport => dcim.frontport *****************************************************************
-_name => NO IMPORTER => NO TARGET
+u_height => integer_importer => u_height (PositiveSmallIntegerField)
+weight => NO IMPORTER => weight (NotFound)
+weight_unit => NO IMPORTER => weight_unit (NotFound)
+- dcim.frontport => dcim.frontport -----------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
 cable => relation_importer => cable_id (ForeignKey)
-cable_end => NO IMPORTER => NO TARGET
-color => NO IMPORTER => NO TARGET
+cable_end => NO IMPORTER => cable_end (NotFound)
+color => NO IMPORTER => color (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -363,83 +743,83 @@ device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-mark_connected => NO IMPORTER => NO TARGET
-module => NO IMPORTER => NO TARGET
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+module => NO IMPORTER => module (NotFound)
 name => value_importer => name (CharField)
 rear_port => relation_importer => rear_port_id (ForeignKey)
 rear_port_position => integer_importer => rear_port_position (PositiveSmallIntegerField)
 type => choice_importer => type (CharField)
-* dcim.frontporttemplate => dcim.frontporttemplate *************************************************
-_name => NO IMPORTER => NO TARGET
-color => NO IMPORTER => NO TARGET
+- dcim.frontporttemplate => dcim.frontporttemplate -------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+color => NO IMPORTER => color (NotFound)
 created => datetime_importer => created (DateTimeField)
 description => value_importer => description (CharField)
 device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-module_type => NO IMPORTER => NO TARGET
+module_type => NO IMPORTER => module_type (NotFound)
 name => value_importer => name (CharField)
 rear_port => relation_importer => rear_port_template_id (ForeignKey)
 rear_port_position => integer_importer => rear_port_position (PositiveSmallIntegerField)
 type => choice_importer => type (CharField)
-* dcim.interface => dcim.interface *****************************************************************
-_name => NO IMPORTER => NO TARGET
-_path => NO IMPORTER => NO TARGET
+- dcim.interface => dcim.interface -----------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+_path => NO IMPORTER => _path (PrivateProperty)
 bridge => relation_importer => bridge_id (ForeignKey)
 cable => relation_importer => cable_id (ForeignKey)
-cable_end => NO IMPORTER => NO TARGET
+cable_end => NO IMPORTER => cable_end (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
 device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
-duplex => NO IMPORTER => NO TARGET
+duplex => NO IMPORTER => duplex (NotFound)
 enabled => value_importer => enabled (BooleanField)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 lag => relation_importer => lag_id (ForeignKey)
 last_updated => Disabled with reason: Last updated field is updated with each write
 mac_address => value_importer => mac_address (CharField)
-mark_connected => NO IMPORTER => NO TARGET
+mark_connected => NO IMPORTER => mark_connected (NotFound)
 mgmt_only => value_importer => mgmt_only (BooleanField)
 mode => choice_importer => mode (CharField)
-module => NO IMPORTER => NO TARGET
+module => NO IMPORTER => module (NotFound)
 mtu => integer_importer => mtu (PositiveIntegerField)
 name => value_importer => name (CharField)
 parent => relation_importer => parent_interface_id (ForeignKey)
-poe_mode => NO IMPORTER => NO TARGET
-poe_type => NO IMPORTER => NO TARGET
-rf_channel => NO IMPORTER => NO TARGET
-rf_channel_frequency => NO IMPORTER => NO TARGET
-rf_channel_width => NO IMPORTER => NO TARGET
-rf_role => NO IMPORTER => NO TARGET
-speed => NO IMPORTER => NO TARGET
+poe_mode => NO IMPORTER => poe_mode (NotFound)
+poe_type => NO IMPORTER => poe_type (NotFound)
+rf_channel => NO IMPORTER => rf_channel (NotFound)
+rf_channel_frequency => NO IMPORTER => rf_channel_frequency (NotFound)
+rf_channel_width => NO IMPORTER => rf_channel_width (NotFound)
+rf_role => NO IMPORTER => rf_role (NotFound)
+speed => NO IMPORTER => speed (NotFound)
 tagged_vlans => uuids_importer => tagged_vlans (ManyToManyField)
-tx_power => NO IMPORTER => NO TARGET
+tx_power => NO IMPORTER => tx_power (NotFound)
 type => choice_importer => type (CharField)
 untagged_vlan => relation_importer => untagged_vlan_id (ForeignKey)
-vdcs => NO IMPORTER => NO TARGET
+vdcs => NO IMPORTER => vdcs (NotFound)
 vrf => relation_importer => vrf_id (ForeignKey)
-wireless_lans => NO IMPORTER => NO TARGET
-wireless_link => NO IMPORTER => NO TARGET
-wwn => NO IMPORTER => NO TARGET
-* dcim.interfacetemplate => dcim.interfacetemplate *************************************************
-_name => NO IMPORTER => NO TARGET
-bridge => NO IMPORTER => NO TARGET
+wireless_lans => NO IMPORTER => wireless_lans (NotFound)
+wireless_link => NO IMPORTER => wireless_link (NotFound)
+wwn => NO IMPORTER => wwn (NotFound)
+- dcim.interfacetemplate => dcim.interfacetemplate -------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+bridge => NO IMPORTER => bridge (NotFound)
 created => datetime_importer => created (DateTimeField)
 description => value_importer => description (CharField)
 device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
-enabled => NO IMPORTER => NO TARGET
+enabled => NO IMPORTER => enabled (NotFound)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 mgmt_only => value_importer => mgmt_only (BooleanField)
-module_type => NO IMPORTER => NO TARGET
+module_type => NO IMPORTER => module_type (NotFound)
 name => value_importer => name (CharField)
-poe_mode => NO IMPORTER => NO TARGET
-poe_type => NO IMPORTER => NO TARGET
+poe_mode => NO IMPORTER => poe_mode (NotFound)
+poe_type => NO IMPORTER => poe_type (NotFound)
 type => choice_importer => type (CharField)
-* dcim.location => dcim.location *******************************************************************
+- dcim.location => dcim.location -------------------------------------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -451,19 +831,19 @@ name => value_importer => name (CharField)
 parent => location_parent_importer => parent_id (TreeNodeForeignKey)
 rght => Disabled with reason: Tree fields doesn't need to be imported
 site => location_parent_importer => parent_id (TreeNodeForeignKey)
-slug => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => slug (NotFound)
 status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
 tree_id => Disabled with reason: Tree fields doesn't need to be imported
-* dcim.manufacturer => dcim.manufacturer ***********************************************************
+- dcim.manufacturer => dcim.manufacturer -----------------------------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-slug => NO IMPORTER => NO TARGET
-* dcim.platform => dcim.platform *******************************************************************
+slug => NO IMPORTER => slug (NotFound)
+- dcim.platform => dcim.platform -------------------------------------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -473,20 +853,20 @@ manufacturer => relation_importer => manufacturer_id (ForeignKey)
 name => value_importer => name (CharField)
 napalm_args => json_importer => napalm_args (JSONField)
 napalm_driver => value_importer => napalm_driver (CharField)
-slug => NO IMPORTER => NO TARGET
-* dcim.powerfeed => dcim.powerfeed *****************************************************************
-_path => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => slug (NotFound)
+- dcim.powerfeed => dcim.powerfeed -----------------------------------------------------------------
+_path => NO IMPORTER => _path (PrivateProperty)
 amperage => integer_importer => amperage (PositiveSmallIntegerField)
 available_power => integer_importer => available_power (PositiveIntegerField)
 cable => relation_importer => cable_id (ForeignKey)
-cable_end => NO IMPORTER => NO TARGET
+cable_end => NO IMPORTER => cable_end (NotFound)
 comments => value_importer => comments (TextField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
-description => NO IMPORTER => NO TARGET
+description => NO IMPORTER => description (NotFound)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-mark_connected => NO IMPORTER => NO TARGET
+mark_connected => NO IMPORTER => mark_connected (NotFound)
 max_utilization => integer_importer => max_utilization (PositiveSmallIntegerField)
 name => value_importer => name (CharField)
 phase => choice_importer => phase (CharField)
@@ -496,11 +876,11 @@ status => status_importer => status_id (StatusField)
 supply => choice_importer => supply (CharField)
 type => choice_importer => type (CharField)
 voltage => integer_importer => voltage (SmallIntegerField)
-* dcim.poweroutlet => dcim.poweroutlet *************************************************************
-_name => NO IMPORTER => NO TARGET
-_path => NO IMPORTER => NO TARGET
+- dcim.poweroutlet => dcim.poweroutlet -------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+_path => NO IMPORTER => _path (PrivateProperty)
 cable => relation_importer => cable_id (ForeignKey)
-cable_end => NO IMPORTER => NO TARGET
+cable_end => NO IMPORTER => cable_end (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -509,13 +889,13 @@ feed_leg => choice_importer => feed_leg (CharField)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-mark_connected => NO IMPORTER => NO TARGET
-module => NO IMPORTER => NO TARGET
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+module => NO IMPORTER => module (NotFound)
 name => value_importer => name (CharField)
 power_port => relation_importer => power_port_id (ForeignKey)
 type => choice_importer => type (CharField)
-* dcim.poweroutlettemplate => dcim.poweroutlettemplate *********************************************
-_name => NO IMPORTER => NO TARGET
+- dcim.poweroutlettemplate => dcim.poweroutlettemplate ---------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
 created => datetime_importer => created (DateTimeField)
 description => value_importer => description (CharField)
 device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
@@ -523,26 +903,26 @@ feed_leg => choice_importer => feed_leg (CharField)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-module_type => NO IMPORTER => NO TARGET
+module_type => NO IMPORTER => module_type (NotFound)
 name => value_importer => name (CharField)
 power_port => relation_importer => power_port_template_id (ForeignKey)
 type => choice_importer => type (CharField)
-* dcim.powerpanel => dcim.powerpanel ***************************************************************
-comments => NO IMPORTER => NO TARGET
+- dcim.powerpanel => dcim.powerpanel ---------------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
-description => NO IMPORTER => NO TARGET
+description => NO IMPORTER => description (NotFound)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 location => location_importer => location_id (ForeignKey)
 name => value_importer => name (CharField)
 site => location_importer => location_id (ForeignKey)
-* dcim.powerport => dcim.powerport *****************************************************************
-_name => NO IMPORTER => NO TARGET
-_path => NO IMPORTER => NO TARGET
+- dcim.powerport => dcim.powerport -----------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+_path => NO IMPORTER => _path (PrivateProperty)
 allocated_draw => integer_importer => allocated_draw (PositiveSmallIntegerField)
 cable => relation_importer => cable_id (ForeignKey)
-cable_end => NO IMPORTER => NO TARGET
+cable_end => NO IMPORTER => cable_end (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -550,13 +930,13 @@ device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-mark_connected => NO IMPORTER => NO TARGET
+mark_connected => NO IMPORTER => mark_connected (NotFound)
 maximum_draw => integer_importer => maximum_draw (PositiveSmallIntegerField)
-module => NO IMPORTER => NO TARGET
+module => NO IMPORTER => module (NotFound)
 name => value_importer => name (CharField)
 type => choice_importer => type (CharField)
-* dcim.powerporttemplate => dcim.powerporttemplate *************************************************
-_name => NO IMPORTER => NO TARGET
+- dcim.powerporttemplate => dcim.powerporttemplate -------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
 allocated_draw => integer_importer => allocated_draw (PositiveSmallIntegerField)
 created => datetime_importer => created (DateTimeField)
 description => value_importer => description (CharField)
@@ -565,25 +945,25 @@ id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 maximum_draw => integer_importer => maximum_draw (PositiveSmallIntegerField)
-module_type => NO IMPORTER => NO TARGET
+module_type => NO IMPORTER => module_type (NotFound)
 name => value_importer => name (CharField)
 type => choice_importer => type (CharField)
-* dcim.rack => dcim.rack ***************************************************************************
-_abs_max_weight => NO IMPORTER => NO TARGET
-_abs_weight => NO IMPORTER => NO TARGET
-_name => NO IMPORTER => NO TARGET
+- dcim.rack => dcim.rack ---------------------------------------------------------------------------
+_abs_max_weight => NO IMPORTER => _abs_max_weight (PrivateProperty)
+_abs_weight => NO IMPORTER => _abs_weight (PrivateProperty)
+_name => NO IMPORTER => _name (PrivateProperty)
 asset_tag => value_importer => asset_tag (CharField)
 comments => value_importer => comments (TextField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 desc_units => value_importer => desc_units (BooleanField)
-description => NO IMPORTER => NO TARGET
+description => NO IMPORTER => description (NotFound)
 facility_id => value_importer => facility_id (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 location => location_importer => location_id (ForeignKey)
-max_weight => NO IMPORTER => NO TARGET
-mounting_depth => NO IMPORTER => NO TARGET
+max_weight => NO IMPORTER => max_weight (NotFound)
+mounting_depth => NO IMPORTER => mounting_depth (NotFound)
 name => value_importer => name (CharField)
 outer_depth => integer_importer => outer_depth (PositiveSmallIntegerField)
 outer_unit => choice_importer => outer_unit (CharField)
@@ -595,11 +975,11 @@ status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
 type => choice_importer => type (CharField)
 u_height => integer_importer => u_height (PositiveSmallIntegerField)
-weight => NO IMPORTER => NO TARGET
-weight_unit => NO IMPORTER => NO TARGET
+weight => NO IMPORTER => weight (NotFound)
+weight_unit => NO IMPORTER => weight_unit (NotFound)
 width => choice_importer => width (PositiveSmallIntegerField)
-* dcim.rackreservation => dcim.rackreservation *****************************************************
-comments => NO IMPORTER => NO TARGET
+- dcim.rackreservation => dcim.rackreservation -----------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -609,7 +989,7 @@ rack => relation_importer => rack_id (ForeignKey)
 tenant => relation_importer => tenant_id (ForeignKey)
 units => units_importer => units (JSONField)
 user => relation_importer => user_id (ForeignKey)
-* dcim.rackrole => extras.role *********************************************************************
+- dcim.rackrole => extras.role ---------------------------------------------------------------------
 color => value_importer => color (CharField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
@@ -617,12 +997,12 @@ description => value_importer => description (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-slug => NO IMPORTER => NO TARGET
-* dcim.rearport => dcim.rearport *******************************************************************
-_name => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => slug (NotFound)
+- dcim.rearport => dcim.rearport -------------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
 cable => relation_importer => cable_id (ForeignKey)
-cable_end => NO IMPORTER => NO TARGET
-color => NO IMPORTER => NO TARGET
+cable_end => NO IMPORTER => cable_end (NotFound)
+color => NO IMPORTER => color (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -630,25 +1010,25 @@ device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-mark_connected => NO IMPORTER => NO TARGET
-module => NO IMPORTER => NO TARGET
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+module => NO IMPORTER => module (NotFound)
 name => value_importer => name (CharField)
 positions => integer_importer => positions (PositiveSmallIntegerField)
 type => choice_importer => type (CharField)
-* dcim.rearporttemplate => dcim.rearporttemplate ***************************************************
-_name => NO IMPORTER => NO TARGET
-color => NO IMPORTER => NO TARGET
+- dcim.rearporttemplate => dcim.rearporttemplate ---------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+color => NO IMPORTER => color (NotFound)
 created => datetime_importer => created (DateTimeField)
 description => value_importer => description (CharField)
 device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-module_type => NO IMPORTER => NO TARGET
+module_type => NO IMPORTER => module_type (NotFound)
 name => value_importer => name (CharField)
 positions => integer_importer => positions (PositiveSmallIntegerField)
 type => choice_importer => type (CharField)
-* dcim.region => dcim.location *********************************************************************
+- dcim.region => dcim.location ---------------------------------------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -659,11 +1039,11 @@ lft => Disabled with reason: Tree fields doesn't need to be imported
 name => value_importer => name (CharField)
 parent => relation_importer => parent_id (TreeNodeForeignKey)
 rght => Disabled with reason: Tree fields doesn't need to be imported
-slug => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => slug (NotFound)
 tree_id => Disabled with reason: Tree fields doesn't need to be imported
-* dcim.site => dcim.location ***********************************************************************
-_name => NO IMPORTER => NO TARGET
-asns => NO IMPORTER => NO TARGET
+- dcim.site => dcim.location -----------------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+asns => NO IMPORTER => asns (NotFound)
 comments => value_importer => comments (TextField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
@@ -678,11 +1058,11 @@ name => value_importer => name (CharField)
 physical_address => value_importer => physical_address (TextField)
 region => relation_importer => parent_id (TreeNodeForeignKey)
 shipping_address => value_importer => shipping_address (TextField)
-slug => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => slug (NotFound)
 status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
 time_zone => choice_importer => time_zone (CharField)
-* dcim.sitegroup => dcim.locationtype **************************************************************
+- dcim.sitegroup => dcim.locationtype --------------------------------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -693,68 +1073,68 @@ lft => Disabled with reason: Tree fields doesn't need to be imported
 name => value_importer => name (CharField)
 parent => constant_importer => parent_id (TreeNodeForeignKey)
 rght => Disabled with reason: Tree fields doesn't need to be imported
-slug => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => slug (NotFound)
 tree_id => Disabled with reason: Tree fields doesn't need to be imported
-* dcim.virtualchassis => dcim.virtualchassis *******************************************************
-comments => NO IMPORTER => NO TARGET
+- dcim.virtualchassis => dcim.virtualchassis -------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
-description => NO IMPORTER => NO TARGET
+description => NO IMPORTER => description (NotFound)
 domain => value_importer => domain (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 master => relation_importer => master_id (OneToOneField)
 name => value_importer => name (CharField)
-* extras.customfield => extras.customfield *********************************************************
-choices => choices_importer => Custom Target
+- extras.customfield => extras.customfield ---------------------------------------------------------
+choices => choices_importer => CUSTOM TARGET
 content_types => content_types_importer => content_types (ManyToManyField)
 created => datetime_importer => created (DateTimeField)
 default => json_importer => default (JSONField)
 description => value_importer => description (CharField)
 filter_logic => choice_importer => filter_logic (CharField)
-group_name => NO IMPORTER => NO TARGET
+group_name => NO IMPORTER => group_name (NotFound)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => key (SlugField)
-object_type => NO IMPORTER => NO TARGET
+object_type => NO IMPORTER => object_type (NotFound)
 required => value_importer => required (BooleanField)
-search_weight => NO IMPORTER => NO TARGET
+search_weight => NO IMPORTER => search_weight (NotFound)
 type => fallback_importer => type (CharField)
-ui_visibility => NO IMPORTER => NO TARGET
+ui_visibility => NO IMPORTER => ui_visibility (NotFound)
 validation_maximum => integer_importer => validation_maximum (BigIntegerField)
 validation_minimum => integer_importer => validation_minimum (BigIntegerField)
 validation_regex => value_importer => validation_regex (CharField)
 weight => integer_importer => weight (PositiveSmallIntegerField)
-* extras.tag => extras.tag *************************************************************************
+- extras.tag => extras.tag -------------------------------------------------------------------------
 color => value_importer => color (CharField)
 created => datetime_importer => created (DateTimeField)
 description => value_importer => description (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-slug => NO IMPORTER => NO TARGET
-* extras.taggeditem => extras.taggeditem ***********************************************************
+slug => NO IMPORTER => slug (NotFound)
+- extras.taggeditem => extras.taggeditem -----------------------------------------------------------
 content_type => tagged_object_importer => content_type_id (ForeignKey)
 id => uid_from_data => id (UUIDField)
 object_id => tagged_object_importer => object_id (UUIDField)
 tag => tagged_object_importer => tag_id (ForeignKey)
-* ipam.aggregate => ipam.prefix ********************************************************************
-comments => NO IMPORTER => NO TARGET
+- ipam.aggregate => ipam.prefix --------------------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
-date_added => NO IMPORTER => NO TARGET
+date_added => NO IMPORTER => date_added (NotFound)
 description => value_importer => description (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 prefix => value_importer => prefix (Property)
 rir => relation_importer => rir_id (ForeignKey)
 tenant => relation_importer => tenant_id (ForeignKey)
-* ipam.ipaddress => ipam.ipaddress *****************************************************************
+- ipam.ipaddress => ipam.ipaddress -----------------------------------------------------------------
 address => value_importer => address (Property)
-assigned_object_id => NO IMPORTER => NO TARGET
-assigned_object_type => NO IMPORTER => NO TARGET
-comments => NO IMPORTER => NO TARGET
+assigned_object_id => NO IMPORTER => assigned_object_id (NotFound)
+assigned_object_type => NO IMPORTER => assigned_object_type (NotFound)
+comments => NO IMPORTER => comments (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -765,26 +1145,26 @@ nat_inside => relation_importer => nat_inside_id (ForeignKey)
 role => role_importer => role_id (RoleField)
 status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
-vrf => NO IMPORTER => NO TARGET
-* ipam.prefix => ipam.prefix ***********************************************************************
-_children => NO IMPORTER => NO TARGET
-_depth => NO IMPORTER => NO TARGET
-comments => NO IMPORTER => NO TARGET
+vrf => NO IMPORTER => vrf (NotFound)
+- ipam.prefix => ipam.prefix -----------------------------------------------------------------------
+_children => NO IMPORTER => _children (PrivateProperty)
+_depth => NO IMPORTER => _depth (PrivateProperty)
+comments => NO IMPORTER => comments (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
 id => uid_from_data => id (UUIDField)
-is_pool => NO IMPORTER => NO TARGET
+is_pool => NO IMPORTER => is_pool (NotFound)
 last_updated => Disabled with reason: Last updated field is updated with each write
-mark_utilized => NO IMPORTER => NO TARGET
+mark_utilized => NO IMPORTER => mark_utilized (NotFound)
 prefix => value_importer => prefix (Property)
 role => role_importer => role_id (RoleField)
 site => location_importer => location_id (ForeignKey)
 status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
 vlan => relation_importer => vlan_id (ForeignKey)
-vrf => NO IMPORTER => NO TARGET
-* ipam.rir => ipam.rir *****************************************************************************
+vrf => NO IMPORTER => vrf (NotFound)
+- ipam.rir => ipam.rir -----------------------------------------------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -792,18 +1172,18 @@ id => uid_from_data => id (UUIDField)
 is_private => value_importer => is_private (BooleanField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-slug => NO IMPORTER => NO TARGET
-* ipam.role => extras.role *************************************************************************
+slug => NO IMPORTER => slug (NotFound)
+- ipam.role => extras.role -------------------------------------------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-slug => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => slug (NotFound)
 weight => integer_importer => weight (PositiveSmallIntegerField)
-* ipam.routetarget => ipam.routetarget *************************************************************
-comments => NO IMPORTER => NO TARGET
+- ipam.routetarget => ipam.routetarget -------------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -811,8 +1191,8 @@ id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
 tenant => relation_importer => tenant_id (ForeignKey)
-* ipam.vlan => ipam.vlan ***************************************************************************
-comments => NO IMPORTER => NO TARGET
+- ipam.vlan => ipam.vlan ---------------------------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -825,24 +1205,24 @@ site => location_importer => location_id (ForeignKey)
 status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
 vid => integer_importer => vid (PositiveSmallIntegerField)
-* ipam.vlangroup => ipam.vlangroup *****************************************************************
+- ipam.vlangroup => ipam.vlangroup -----------------------------------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-max_vid => NO IMPORTER => NO TARGET
-min_vid => NO IMPORTER => NO TARGET
+max_vid => NO IMPORTER => max_vid (NotFound)
+min_vid => NO IMPORTER => min_vid (NotFound)
 name => value_importer => name (CharField)
-scope_id => NO IMPORTER => NO TARGET
-scope_type => NO IMPORTER => NO TARGET
-slug => NO IMPORTER => NO TARGET
-* ipam.vrf => ipam.vrf *****************************************************************************
-comments => NO IMPORTER => NO TARGET
+scope_id => NO IMPORTER => scope_id (NotFound)
+scope_type => NO IMPORTER => scope_type (NotFound)
+slug => NO IMPORTER => slug (NotFound)
+- ipam.vrf => ipam.vrf -----------------------------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
-enforce_unique => NO IMPORTER => NO TARGET
+enforce_unique => NO IMPORTER => enforce_unique (NotFound)
 export_targets => uuids_importer => export_targets (ManyToManyField)
 id => uid_from_data => id (UUIDField)
 import_targets => uuids_importer => import_targets (ManyToManyField)
@@ -850,7 +1230,7 @@ last_updated => Disabled with reason: Last updated field is updated with each wr
 name => value_importer => name (CharField)
 rd => value_importer => rd (CharField)
 tenant => relation_importer => tenant_id (ForeignKey)
-* tenancy.tenant => tenancy.tenant *****************************************************************
+- tenancy.tenant => tenancy.tenant -----------------------------------------------------------------
 comments => value_importer => comments (TextField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
@@ -859,8 +1239,8 @@ group => relation_importer => tenant_group_id (ForeignKey)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-slug => NO IMPORTER => NO TARGET
-* tenancy.tenantgroup => tenancy.tenantgroup *******************************************************
+slug => NO IMPORTER => slug (NotFound)
+- tenancy.tenantgroup => tenancy.tenantgroup -------------------------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
@@ -871,61 +1251,61 @@ lft => Disabled with reason: Tree fields doesn't need to be imported
 name => value_importer => name (CharField)
 parent => relation_importer => parent_id (TreeNodeForeignKey)
 rght => Disabled with reason: Tree fields doesn't need to be imported
-slug => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => slug (NotFound)
 tree_id => Disabled with reason: Tree fields doesn't need to be imported
-* virtualization.cluster => virtualization.cluster *************************************************
+- virtualization.cluster => virtualization.cluster -------------------------------------------------
 comments => value_importer => comments (TextField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
-description => NO IMPORTER => NO TARGET
+description => NO IMPORTER => description (NotFound)
 group => relation_importer => cluster_group_id (ForeignKey)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
 site => location_importer => location_id (ForeignKey)
-status => NO IMPORTER => NO TARGET
+status => NO IMPORTER => status (NotFound)
 tenant => relation_importer => tenant_id (ForeignKey)
 type => relation_importer => cluster_type_id (ForeignKey)
-* virtualization.clustergroup => virtualization.clustergroup ***************************************
+- virtualization.clustergroup => virtualization.clustergroup ---------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-slug => NO IMPORTER => NO TARGET
-* virtualization.clustertype => virtualization.clustertype *****************************************
+slug => NO IMPORTER => slug (NotFound)
+- virtualization.clustertype => virtualization.clustertype -----------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 name => value_importer => name (CharField)
-slug => NO IMPORTER => NO TARGET
-* virtualization.virtualmachine => virtualization.virtualmachine ***********************************
-_name => NO IMPORTER => NO TARGET
+slug => NO IMPORTER => slug (NotFound)
+- virtualization.virtualmachine => virtualization.virtualmachine -----------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
 cluster => relation_importer => cluster_id (ForeignKey)
 comments => value_importer => comments (TextField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
-description => NO IMPORTER => NO TARGET
-device => NO IMPORTER => NO TARGET
+description => NO IMPORTER => description (NotFound)
+device => NO IMPORTER => device (NotFound)
 disk => integer_importer => disk (PositiveIntegerField)
 id => uid_from_data => id (UUIDField)
 last_updated => Disabled with reason: Last updated field is updated with each write
-local_context_data => NO IMPORTER => NO TARGET
+local_context_data => NO IMPORTER => local_context_data (NotFound)
 memory => integer_importer => memory (PositiveIntegerField)
 name => value_importer => name (CharField)
 platform => relation_importer => platform_id (ForeignKey)
 primary_ip4 => relation_importer => primary_ip4_id (ForeignKey)
 primary_ip6 => relation_importer => primary_ip6_id (ForeignKey)
 role => role_importer => role_id (RoleField)
-site => NO IMPORTER => NO TARGET
+site => NO IMPORTER => site (NotFound)
 status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
 vcpus => integer_importer => vcpus (PositiveSmallIntegerField)
-* virtualization.vminterface => virtualization.vminterface *****************************************
-_name => NO IMPORTER => NO TARGET
+- virtualization.vminterface => virtualization.vminterface -----------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
 bridge => relation_importer => bridge_id (ForeignKey)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
@@ -942,4 +1322,4 @@ tagged_vlans => uuids_importer => tagged_vlans (ManyToManyField)
 untagged_vlan => relation_importer => untagged_vlan_id (ForeignKey)
 virtual_machine => relation_importer => virtual_machine_id (ForeignKey)
 vrf => relation_importer => vrf_id (ForeignKey)
-= End of Import Summary. ===========================================================================
+* End of Import Summary ****************************************************************************

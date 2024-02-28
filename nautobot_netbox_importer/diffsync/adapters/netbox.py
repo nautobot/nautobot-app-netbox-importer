@@ -54,7 +54,6 @@ class NetBoxImporterOptions(NamedTuple):
     dry_run: bool = True
     bypass_data_validation: bool = False
     print_summary: bool = False
-    print_field_mappings: bool = False
     update_paths: bool = False
     fix_powerfeed_locations: bool = False
     sitegroup_parent_always_region: bool = False
@@ -108,7 +107,7 @@ class NetBoxAdapter(SourceAdapter):
             logger.info(" ... Updating paths completed.")
 
         if self.options.print_summary:
-            self.summary.print(self.options.print_field_mappings)
+            self.summary.print()
 
     @atomic
     def _atomic_import(self) -> None:
@@ -122,7 +121,8 @@ class NetBoxAdapter(SourceAdapter):
         if self.options.save_text_summary_path:
             self.summary.dump(self.options.save_text_summary_path, output_format="text")
 
-        if self.summary.importer_issues and not self.options.bypass_data_validation:
+        has_issues = any(True for item in self.summary.nautobot if item.issues)
+        if has_issues and not self.options.bypass_data_validation:
             raise _ImporterIssuesDetected("Importer issues detected, aborting the transaction.")
 
         if self.options.dry_run:

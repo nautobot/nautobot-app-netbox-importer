@@ -81,7 +81,11 @@ markdown_extensions:
       anchor_linenums: true
   - "pymdownx.inlinehilite"
   - "pymdownx.snippets"
-  - "pymdownx.superfences"
+  - "pymdownx.superfences":
+      custom_fences:
+        - name: "mermaid"
+          class: "mermaid"
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - "footnotes"
 plugins:
   - "search"
@@ -128,5 +132,4 @@ nav:
       - Code Reference:
           - "dev/code_reference/index.md"
           - Package: "dev/code_reference/package.md"
-          - Diffsync: "dev/code_reference/diffsync.md"
   - Nautobot Docs Home ↗︎: "https://docs.nautobot.com"

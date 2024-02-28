@@ -23,7 +23,8 @@ from nautobot_netbox_importer.base import FieldName
 from nautobot_netbox_importer.base import RecordData
 from nautobot_netbox_importer.base import logger
 from nautobot_netbox_importer.summary import ImporterIssue
-from nautobot_netbox_importer.summary import ImporterIssues
+from nautobot_netbox_importer.summary import NautobotModelStats
+from nautobot_netbox_importer.summary import NautobotModelSummary
 
 from .base import AUTO_ADD_FIELDS
 from .base import EMPTY_VALUES
@@ -124,17 +125,6 @@ class NautobotAdapter(BaseAdapter):
         """Initialize the adapter."""
         super().__init__("Nautobot", *args, **kwargs)
         self.wrappers: Dict[ContentTypeStr, NautobotModelWrapper] = {}
-
-    def get_importer_issues(self) -> ImporterIssues:
-        """Get all importer issues."""
-        result = {}
-
-        for wrapper in self.wrappers.values():
-            issues = wrapper.get_importer_issues()
-            if issues:
-                result[wrapper.content_type] = issues
-
-        return result
 
     def get_or_create_wrapper(self, content_type: ContentTypeStr) -> "NautobotModelWrapper":
         """Get or create a Nautobot model wrapper."""
@@ -250,7 +240,7 @@ class NautobotModelWrapper:
                     self.add_field(field_name)
 
         self.constructor_kwargs: Dict[FieldName, Any] = {}
-        self.imported_count = 0
+        self.stats = NautobotModelStats()
 
         logger.debug("Created %s", self)
 
@@ -330,11 +320,26 @@ class NautobotModelWrapper:
 
         return self._diffsync_class
 
+    def get_summary(self) -> NautobotModelSummary:
+        """Get the summary."""
+        issues = sorted(self.get_importer_issues())
+        if issues:
+            self.stats.issues = len(issues)
+
+        return NautobotModelSummary(
+            content_type=self.content_type,
+            content_type_id=None if self.disabled else self.content_type_instance.pk,
+            stats=self.stats,
+            issues=issues,
+            flags=str(self.flags),
+            disabled=self.disabled,
+        )
+
     def add_issue(
         self,
         issue_type: str,
         message: str,
-        target: Optional["DiffSyncBaseModel"] = None,
+        target: Optional[DiffSyncModel] = None,
         field: Optional[NautobotField] = None,
     ) -> None:
         """Add an issue to the importer."""

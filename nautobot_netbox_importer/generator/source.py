@@ -20,6 +20,7 @@ from typing import Tuple
 from typing import Union
 from uuid import UUID
 
+from diffsync import DiffSyncModel
 from diffsync.enum import DiffSyncModelFlags
 from nautobot.core.models.tree_queries import TreeModel
 
@@ -30,10 +31,11 @@ from nautobot_netbox_importer.base import FieldName
 from nautobot_netbox_importer.base import RecordData
 from nautobot_netbox_importer.base import Uid
 from nautobot_netbox_importer.base import logger as default_logger
-from nautobot_netbox_importer.summary import DiffSummary
+from nautobot_netbox_importer.summary import DiffSyncSummary
 from nautobot_netbox_importer.summary import FieldSummary
 from nautobot_netbox_importer.summary import ImportSummary
-from nautobot_netbox_importer.summary import ModelSummary
+from nautobot_netbox_importer.summary import SourceModelStats
+from nautobot_netbox_importer.summary import SourceModelSummary
 from nautobot_netbox_importer.summary import serialize_to_summary
 
 from .base import AUTO_ADD_FIELDS
@@ -225,18 +227,21 @@ class SourceAdapter(BaseAdapter):
         """Disable model importing."""
         self.get_or_create_wrapper(content_type).disable_reason = disable_reason
 
-    def summarize(self, diff_summary: DiffSummary) -> None:
+    def summarize(self, diffsync_summary: DiffSyncSummary) -> None:
         """Summarize the import."""
-        self.summary.diff_summary = diff_summary
+        self.summary.diffsync = diffsync_summary
 
         wrapper_to_id = {value: key for key, value in self.content_type_ids_mapping.items()}
 
         for content_type in sorted(self.wrappers):
             wrapper = self.wrappers.get(content_type)
             if wrapper:
-                self.summary.add(wrapper.get_summary(wrapper_to_id.get(wrapper, None)))
+                self.summary.source.append(wrapper.get_summary(wrapper_to_id.get(wrapper, None)))
 
-        self.summary.set_importer_issues(self.nautobot.get_importer_issues())
+        for content_type in sorted(self.nautobot.wrappers):
+            wrapper = self.nautobot.wrappers.get(content_type)
+            if wrapper:
+                self.summary.nautobot.append(wrapper.get_summary())
 
     def get_or_create_wrapper(self, value: Union[None, SourceContentType]) -> "SourceModelWrapper":
         """Get a source Wrapper for a given content type."""
@@ -309,16 +314,7 @@ class SourceAdapter(BaseAdapter):
                 wrapper = self.wrappers[content_type]
             else:
                 wrapper = self.configure_model(content_type)
-
-            if wrapper.pre_import:
-                if wrapper.pre_import(data, ImporterPass.DEFINE_STRUCTURE) != PreImportResult.USE_RECORD:
-                    continue
-
-            if wrapper.disable_reason:
-                continue
-
-            for field_name in data.keys():
-                wrapper.add_field(field_name, SourceFieldSource.DATA)
+            wrapper.first_pass(data)
 
         # Create importers, wrappers structure is updated as needed
         while True:
@@ -334,15 +330,7 @@ class SourceAdapter(BaseAdapter):
 
         # Second pass to import actual data
         for content_type, data in get_source_data():
-            wrapper = self.wrappers[content_type]
-
-            if wrapper.pre_import:
-                if wrapper.pre_import(data, ImporterPass.IMPORT_DATA) != PreImportResult.USE_RECORD:
-                    wrapper.skipped_count += 1
-                    continue
-
-            if not wrapper.disable_reason:
-                wrapper.import_record(data)
+            self.wrappers[content_type].second_pass(data)
 
     def post_import(self) -> None:
         """Post import processing."""
@@ -356,7 +344,6 @@ class SourceAdapter(BaseAdapter):
             self.top_level.append(model_name)
             setattr(self, model_name, diffsync_class)
             setattr(self.nautobot, model_name, getattr(self, model_name))
-            self.logger.info(f"Imported {nautobot_wrapper.imported_count} {model_name}")
 
     def get_imported_nautobot_wrappers(self) -> Generator[NautobotModelWrapper, None, None]:
         """Get a list of Nautobot model wrappers in the order of import."""
@@ -366,7 +353,7 @@ class SourceAdapter(BaseAdapter):
             if (
                 wrapper
                 and not wrapper.disable_reason
-                and wrapper.imported_count > 0
+                and wrapper.stats.created > 0
                 and wrapper.nautobot.content_type not in result
             ):
                 result[wrapper.nautobot.content_type] = wrapper.nautobot
@@ -417,8 +404,7 @@ class SourceModelWrapper:
         self._uid_to_pk_cache: Dict[Uid, Uid] = {}
         self._cached_data: Dict[Uid, RecordData] = {}
 
-        self.imported_count = 0
-        self.skipped_count = 0
+        self.stats = SourceModelStats()
         self.flags = DiffSyncModelFlags.NONE
 
         # Source fields defintions
@@ -463,16 +449,44 @@ class SourceModelWrapper:
 
         return nautobot_uid
 
-    def get_summary(self, content_type_id) -> ModelSummary:
+    def first_pass(self, data: RecordData) -> None:
+        """Firts pass of data import."""
+        if self.pre_import:
+            if self.pre_import(data, ImporterPass.DEFINE_STRUCTURE) != PreImportResult.USE_RECORD:
+                self.stats.first_pass_skipped += 1
+                return
+
+        self.stats.first_pass_used += 1
+
+        if self.disable_reason:
+            return
+
+        for field_name in data.keys():
+            self.add_field(field_name, SourceFieldSource.DATA)
+
+    def second_pass(self, data: RecordData) -> None:
+        """Second pass of data import."""
+        if self.disable_reason:
+            return
+
+        if self.pre_import:
+            if self.pre_import(data, ImporterPass.IMPORT_DATA) != PreImportResult.USE_RECORD:
+                self.stats.second_pass_skipped += 1
+                return
+
+        self.stats.second_pass_used += 1
+
+        self.import_record(data)
+
+    def get_summary(self, content_type_id) -> SourceModelSummary:
         """Get a summary of the model."""
         fields = [field.get_summary() for field in self.fields.values()]
 
-        return ModelSummary(
+        return SourceModelSummary(
             content_type=self.content_type,
             content_type_id=content_type_id,
             extends_content_type=self.extends_wrapper and self.extends_wrapper.content_type,
             nautobot_content_type=self.nautobot.content_type,
-            nautobot_content_type_id=None if self.nautobot.disabled else self.nautobot.content_type_instance.pk,
             disable_reason=self.disable_reason,
             identifiers=self.identifiers,
             disable_related_reference=self.disable_related_reference,
@@ -480,10 +494,8 @@ class SourceModelWrapper:
             pre_import=self.pre_import and self.pre_import.__name__ or None,
             fields=sorted(fields, key=lambda field: field.name),
             flags=str(self.flags),
-            nautobot_flags=str(self.nautobot.flags),
             default_reference_uid=serialize_to_summary(self.default_reference_uid),
-            imported_count=self.imported_count,
-            skipped_count=self.skipped_count,
+            stats=self.stats,
         )
 
     def set_identifiers(self, identifiers: Iterable[FieldName]) -> None:
@@ -638,9 +650,9 @@ class SourceModelWrapper:
                     field=error.field.nautobot if isinstance(error, SourceFieldImporterIssue) else None,
                 )
 
+        self.stats.imported += 1
         self.adapter.logger.debug("Imported %s %s", uid, target.get_attrs())
 
-        self.imported_count += 1
         return target
 
     def get_or_create(self, uid: Uid, fail_missing=False) -> DiffSyncBaseModel:
@@ -663,6 +675,7 @@ class SourceModelWrapper:
         if cached_data:
             fail_missing = False
             self.import_record(cached_data, result)
+            self.stats.imported_from_cache += 1
 
         nautobot_diffsync_instance = self.nautobot.find_or_create(filter_kwargs)
         if nautobot_diffsync_instance:
@@ -675,7 +688,11 @@ class SourceModelWrapper:
             raise ValueError(f"Missing {self} {uid} in Nautobot or cached data")
 
         self.adapter.add(result)
-        self.nautobot.imported_count += 1
+        self.stats.created += 1
+        if self.flags == DiffSyncModelFlags.IGNORE:
+            self.nautobot.stats.source_ignored += 1
+        else:
+            self.nautobot.stats.source_created += 1
 
         return result
 
@@ -699,6 +716,7 @@ class SourceModelWrapper:
                 self.add_field(field_name, SourceFieldSource.CACHE)
 
         self._cached_data[uid] = data
+        self.stats.pre_cached += 1
 
         self.adapter.logger.debug("Cached %s %s %s", self, uid, data)
 
@@ -821,6 +839,10 @@ class SourceField:
 
         return sibling
 
+    def add_issue(self, issue_type: str, message: str, target: Optional[DiffSyncModel] = None) -> None:
+        """Add an importer issue to the Nautobot Model Wrapper."""
+        self.wrapper.nautobot.add_issue(issue_type, message, target=target, field=self.nautobot)
+
     def set_definition(self, definition: SourceFieldDefinition) -> None:
         """Customize field definition."""
         if self.processed:
@@ -828,8 +850,9 @@ class SourceField:
 
         if self.definition != definition:
             if self.definition != self.name:
-                self.wrapper.adapter.logger.warning(
-                    "Overriding custom field definition %s %s -> %s", self, self.definition, definition
+                self.add_issue(
+                    "OverrideDefinition",
+                    f"Overriding field definition | Original: `{self.definition}` | New: `{definition}`",
                 )
             self.definition = definition
 
@@ -856,6 +879,14 @@ class SourceField:
 
         result = source[self.name]
         return self.default_value if result in EMPTY_VALUES else result
+
+    def set_nautobot_value(self, target: DiffSyncModel, value: Any) -> None:
+        """Set a value to the Nautobot model."""
+        if value in EMPTY_VALUES:
+            if hasattr(target, self.nautobot.name):
+                delattr(target, self.nautobot.name)
+        else:
+            setattr(target, self.nautobot.name, value)
 
     def set_nautobot_field(self, nautobot_name: FieldName = "") -> NautobotField:
         """Set a Nautobot field name for the field."""
@@ -926,8 +957,7 @@ class SourceField:
 
         def value_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = self.get_source_value(source)
-            if value not in EMPTY_VALUES:
-                setattr(target, self.nautobot.name, value)
+            self.set_nautobot_value(target, value)
 
         self.set_importer(value_importer)
 
@@ -936,13 +966,9 @@ class SourceField:
 
         def json_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
-            if value in EMPTY_VALUES:
-                return
-
-            if isinstance(value, str):
+            if isinstance(value, str) and value:
                 value = json.loads(value)
-
-            setattr(target, self.nautobot.name, value)
+            self.set_nautobot_value(target, value)
 
         self.set_importer(json_importer)
 
@@ -963,15 +989,14 @@ class SourceField:
 
         def choice_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = self.get_source_value(source)
-            if value in EMPTY_VALUES:
-                return
-
             if value in choices:
-                setattr(target, self.nautobot.name, value)
+                self.set_nautobot_value(target, value)
             elif self.nautobot.required:
                 # Set the choice value even it's not valid in Nautobot as it's required
-                setattr(target, self.nautobot.name, value)
+                self.set_nautobot_value(target, value)
                 raise InvalidChoiceValueIssue(self, value)
+            elif value in EMPTY_VALUES:
+                self.set_nautobot_value(target, value)
             else:
                 raise InvalidChoiceValueIssue(self, value, None)
 
@@ -981,15 +1006,15 @@ class SourceField:
         """Set an integer field importer."""
 
         def integer_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-            value = self.get_source_value(source)
-            if value in EMPTY_VALUES:
-                return
-
-            float_value = float(value)
-            if not float_value.is_integer():
-                raise ValueError(f"Invalid value {value} for field {self}")
-
-            setattr(target, self.nautobot.name, int(float_value))
+            source_value = self.get_source_value(source)
+            if source_value in EMPTY_VALUES:
+                self.set_nautobot_value(target, source_value)
+            else:
+                source_value = float(source_value)
+                value = int(source_value)
+                self.set_nautobot_value(target, value)
+                if value != source_value:
+                    raise SourceFieldImporterIssue(f"Invalid source value {source_value}, truncated to {value}", self)
 
         self.set_importer(integer_importer)
 
@@ -1015,14 +1040,14 @@ class SourceField:
         def relation_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = self.get_source_value(source)
             if value in EMPTY_VALUES:
-                return
-
-            if isinstance(value, (UUID, str, int)):
-                result = related_wrapper.get_pk_from_uid(value)
+                self.set_nautobot_value(target, value)
             else:
-                result = related_wrapper.get_pk_from_identifiers(value)
-            setattr(target, self.nautobot.name, result)
-            wrapper.add_reference(related_wrapper, result)
+                if isinstance(value, (UUID, str, int)):
+                    result = related_wrapper.get_pk_from_uid(value)
+                else:
+                    result = related_wrapper.get_pk_from_identifiers(value)
+                self.set_nautobot_value(target, result)
+                wrapper.add_reference(related_wrapper, result)
 
         self.set_importer(relation_importer)
 
@@ -1032,8 +1057,9 @@ class SourceField:
 
         def content_type_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             content_type = source.get(self.name, None)
-            if content_type:
-                setattr(target, self.nautobot.name, adapter.get_nautobot_content_type_uid(content_type))
+            if content_type not in EMPTY_VALUES:
+                content_type = adapter.get_nautobot_content_type_uid(content_type)
+            self.set_nautobot_value(target, content_type)
 
         self.set_importer(content_type_importer)
 
@@ -1056,13 +1082,12 @@ class SourceField:
 
         def identifiers_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             values = source.get(self.name, None)
-            if values in EMPTY_VALUES:
-                return
+            if values not in EMPTY_VALUES:
+                if not isinstance(values, (list, set)):
+                    raise ValueError(f"Invalid value {values} for field {self.name}")
+                values = set(related_wrapper.get_pk_from_identifiers(item) for item in values)
 
-            if not isinstance(values, (list, set)):
-                raise ValueError(f"Invalid value {values} for field {self.name}")
-
-            setattr(target, self.nautobot.name, set(related_wrapper.get_pk_from_identifiers(item) for item in values))
+            self.set_nautobot_value(target, values)
 
         self.set_importer(identifiers_importer)
 
@@ -1083,12 +1108,9 @@ class SourceField:
                 try:
                     nautobot_values.add(adapter.get_nautobot_content_type_uid(item))
                 except NautobotModelNotFound:
-                    self.wrapper.adapter.logger.warning(
-                        "Can't convert content type %s for field %s, skipping", item, self
-                    )
+                    self.add_issue("InvalidContentType", f"Invalid content type {item}, skipping", target)
 
-            if nautobot_values:
-                setattr(target, self.nautobot.name, nautobot_values)
+            self.set_nautobot_value(target, nautobot_values)
 
         self.set_importer(content_types_importer)
 
@@ -1098,14 +1120,13 @@ class SourceField:
         def uuids_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
             if value in EMPTY_VALUES:
-                return
-
+                self.set_nautobot_value(target, value)
             if isinstance(value, (UUID, str, int)):
-                setattr(target, self.nautobot.name, {related_wrapper.get_pk_from_uid(value)})
+                self.set_nautobot_value(target, {related_wrapper.get_pk_from_uid(value)})
             elif isinstance(value, (list, set, tuple)):
-                setattr(target, self.nautobot.name, set(related_wrapper.get_pk_from_uid(item) for item in value))
+                self.set_nautobot_value(target, set(related_wrapper.get_pk_from_uid(item) for item in value))
             else:
-                raise ValueError(f"Invalid value {value} for field {self.name}")
+                raise SourceFieldImporterIssue(f"Invalid value {value} for field {self.name}", self)
 
         self.set_importer(uuids_importer)
 
@@ -1115,7 +1136,8 @@ class SourceField:
         def datetime_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
             if value not in EMPTY_VALUES:
-                setattr(target, self.nautobot.name, normalize_datetime(value))
+                value = normalize_datetime(value)
+            self.set_nautobot_value(target, value)
 
         self.set_importer(datetime_importer)
 
@@ -1134,8 +1156,8 @@ class SourceField:
 
             type_wrapper = self.wrapper.adapter.get_or_create_wrapper(source_type)
             uid = type_wrapper.get_pk_from_uid(source_uid)
-            setattr(target, self.nautobot.name, uid)
-            setattr(target, type_field.nautobot.name, type_wrapper.nautobot.content_type_instance.pk)
+            self.set_nautobot_value(target, uid)
+            type_field.set_nautobot_value(target, type_wrapper.nautobot.content_type_instance.pk)
             self.wrapper.add_reference(type_wrapper, uid)
 
         self.set_importer(relation_and_type_importer)
@@ -1153,7 +1175,8 @@ class SourceField:
         def uuid_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
             if value not in EMPTY_VALUES:
-                setattr(target, self.nautobot.name, UUID(value))
+                value = UUID(value)
+            self.set_nautobot_value(target, value)
 
         self.set_importer(uuid_importer)
 
@@ -1162,13 +1185,9 @@ class SourceField:
 
         def date_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
-            if value in EMPTY_VALUES:
-                return
-
-            if not isinstance(value, datetime.date):
+            if value not in EMPTY_VALUES and not isinstance(value, datetime.date):
                 value = datetime.date.fromisoformat(str(value))
-
-            setattr(target, self.nautobot.name, value)
+            self.set_nautobot_value(target, value)
 
         self.set_importer(date_importer)
 
@@ -1187,10 +1206,9 @@ class SourceField:
                 value = status_wrapper.cache_record({"name": status[0].upper() + status[1:]})
             else:
                 value = self.default_value
-                if not value:
-                    return
 
-            setattr(target, self.nautobot.name, value)
-            self.wrapper.add_reference(status_wrapper, value)
+            self.set_nautobot_value(target, value)
+            if value:
+                self.wrapper.add_reference(status_wrapper, value)
 
         self.set_importer(status_importer)

@@ -117,16 +117,20 @@ Docstring:
   Import NetBox data into Nautobot.
 
 Options:
-  -b, --bypass-data-validation             Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)
-  -d STRING, --demo-version=STRING         Version of the demo data to import from public NetBox repository (default: empty).
-  -f STRING, --file=STRING                 Path to the JSON file to import.
-  -i, --[no-]fields-mapping                Show a mapping of NetBox fields to Nautobot fields. Only printed when `--summary` is also specified. (default: True)
-  -p, --update-paths                       Call management command `trace_paths` to update paths after the import. (default: False)
-  -r, --[no-]dry-run                       Do not write any data to the database. (default: False)
-  -s STRING, --save-mappings-file=STRING   File path to write the JSON mapping to. (default: generated-mappings.json)
-  -t, --sitegroup-parent-always-region     When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)
-  -u, --[no-]summary                       Show a summary of the import. (default: True)
-  -x, --fix-powerfeed-locations            Fix panel location to match rack location based on powerfeed. (default: False)
+  -a STRING, --save-text-summary-path=STRING   File path to write the text mapping to. (default: generated-mappings.txt)
+  -b, --bypass-data-validation                 Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-
+                                               is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in
+                                               NetBox, and *re-import* with the corrected data! (default: False)
+  -d STRING, --demo-version=STRING             Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).
+  -f STRING, --file=STRING                     URL or path to the JSON file to import.
+  -i, --fix-powerfeed-locations                Fix panel location to match rack location based on powerfeed. (default: False)
+  -n, --[no-]unrack-zero-uheight-devices       Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)
+  -p, --[no-]print-summary                     Show a summary of the import. (default: True)
+  -r, --[no-]dry-run                           Do not write any data to the database. (default: False)
+  -s STRING, --save-json-summary-path=STRING   File path to write the JSON mapping to. (default: generated-mappings.json)
+  -t, --sitegroup-parent-always-region         When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix
+                                               validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)
+  -u, --update-paths                           Call management command `trace_paths` to update paths after the import. (default: False)
 ```
 
 This command displays usage information, a brief description, and a list of command-line options for the `import-netbox` invoke task.
@@ -137,9 +141,12 @@ To import public NetBox demo data into your local Nautobot instance, run the fol
 
 ```bash
 invoke import-netbox \
-  --demo-version 3.6 \
-  --save-mappings-file=generated-mappings.json \
-  --no-dry-run
+    --no-dry-run \
+    --bypass-data-validation \
+    --sitegroup-parent-always-region \
+    --save-json-summary-path=generated-mappings.json \
+    --save-text-summary-path=generated-mappings.txt \
+    --demo-version=3.6
 ```
 
 This command initiates the import of the specified version of NetBox demo data into Nautobot without a dry run, meaning changes will be saved to the database.
@@ -154,7 +161,7 @@ The initial output of the import process will resemble the following:
 
 ```
 Running docker compose command "ps --services --filter status=running"
-Running docker compose command "exec nautobot nautobot-server import_netbox --save-mappings-file=generated-mappings.json --bypass-data-validation --dry-run --field-mapping  --sitegroup-parent-always-region --summary  --no-color https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/json/netbox-demo-v3.6.json"
+Running docker compose command "exec nautobot nautobot-server import_netbox --save-json-summary-path=generated-mappings.json --bypass-data-validation --dry-run --field-mapping  --sitegroup-parent-always-region --summary  --no-color https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/json/netbox-demo-v3.6.json"
 11:01:05.550 DEBUG   nautobot.core.celery __init__.py        import_jobs_as_celery_tasks() :
   Importing system Jobs
 11:01:05.552 DEBUG   nautobot.core.celery __init__.py                      register_jobs() :
@@ -328,278 +335,386 @@ The next step is to perform a [DiffSync](https://diffsync.readthedocs.io/en/stab
 
 ### Summary
 
-The last part of the import process is to display a summary of the import [described in the user documentation](../user/summary.md).
+The last part of the import process is to display a summary of the import [described in the user documentation](../user/summary.md). This summary is also saved to the file specified in the `--save-text-summary-path` option. This file can be used to compare mapping changes between different NetBox versions or during the development of the importer.
 
-## Generated Mappings
+## JSON Mappings
 
-To examine the mappings generated by the importer, check the `generated-mappings.json` file in the current directory. This file describes the mapping of NetBox data to Nautobot data. It can be used to compare mapping changes between different NetBox versions or during the development of the importer.
+To examine the mappings generated by the importer, check the `generated-mappings.json` file in the current directory. This file describes the detailed mapping from NetBox to Nautobot.
 
-```bash
-[
-    {
-        "content_type": "auth.group",
-        "content_type_id": 3,
-        "extends_content_type": null,
-        "nautobot.content_type": "auth.group",
-        "nautobot.content_type_id": 24,
-        "disable_reason": "",
-        "identifiers": [
-            "name"
-        ],
-        "disable_related_reference": false,
-        "forward_references": null,
-        "pre_import": null,
-        "fields": [
-            {
-                "name": "id",
-                "nautobot.name": "id",
-                "nautobot.internal_type": "AutoField",
-                "nautobot.can_import": true,
-                "importer": null,
-                "definition": "id",
-                "from_data": false,
-                "is_custom": true,
-                "default_value": null,
-                "disable_reason": ""
-            },
-            {
-                "name": "permissions",
-                "nautobot.name": null,
-                "nautobot.internal_type": null,
-                "nautobot.can_import": null,
-                "importer": null,
-                "definition": null,
-                "from_data": true,
-                "is_custom": true,
-                "default_value": null,
-                "disable_reason": "Permissions import is not implemented yet"
-            },
-            {
-                "name": "name",
-                "nautobot.name": "name",
-                "nautobot.internal_type": "CharField",
-                "nautobot.can_import": true,
-                "importer": "value_importer",
-                "definition": "name",
-                "from_data": true,
-                "is_custom": false,
-                "default_value": null,
-                "disable_reason": ""
-            }
-        ],
-        "flags": "DiffSyncModelFlags.NONE",
-        "nautobot.flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
-        "default_reference_uid": null,
-        "imported_count": 1
+JSON mappings file content example:
+
+```json
+{
+    "diffsync": {
+        "create": 5865,
+        "update": 1,
+        "delete": 0,
+        "no-change": 4,
+        "skip": 119
     },
-    {
-        "content_type": "auth.permission",
-        "content_type_id": 2,
-        "extends_content_type": null,
-        "nautobot.content_type": "auth.permission",
-        "nautobot.content_type_id": 23,
-        "disable_reason": "Handled via a Nautobot model and may not be a 1 to 1.",
-        "identifiers": null,
-        "disable_related_reference": false,
-        "forward_references": null,
-        "pre_import": null,
-        "fields": [
-            {
-                "name": "id",
-                "nautobot.name": "id",
-                "nautobot.internal_type": "AutoField",
-                "nautobot.can_import": true,
-                "importer": null,
-                "definition": "id",
-                "from_data": false,
-                "is_custom": true,
-                "default_value": null,
-                "disable_reason": ""
+    "source": {
+        "admin.logentry": {
+            "content_type": "admin.logentry",
+            "content_type_id": 1,
+            "extends_content_type": null,
+            "nautobot_content_type": "admin.logentry",
+            "disable_reason": "Not directly used in Nautobot.",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "nautobot_name": "id",
+                    "nautobot_internal_type": "AutoField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": "id",
+                    "sources": [
+                        "AUTO"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                }
+            },
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {
+                "first_pass_used": 12
             }
-        ],
-        "flags": "DiffSyncModelFlags.NONE",
-        "nautobot.flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
-        "default_reference_uid": null,
-        "imported_count": 0
-    },
-    {
-        "content_type": "auth.user",
-        "content_type_id": 4,
-        "extends_content_type": null,
-        "nautobot.content_type": "users.user",
-        "nautobot.content_type_id": 117,
-        "disable_reason": "",
-        "identifiers": [
-            "username"
-        ],
-        "disable_related_reference": false,
-        "forward_references": null,
-        "pre_import": null,
-        "fields": [
-            {
-                "name": "id",
-                "nautobot.name": "id",
-                "nautobot.internal_type": "UUIDField",
-                "nautobot.can_import": true,
-                "importer": null,
-                "definition": "id",
-                "from_data": false,
-                "is_custom": true,
-                "default_value": null,
-                "disable_reason": ""
+        },
+        "auth.group": {
+            "content_type": "auth.group",
+            "content_type_id": 3,
+            "extends_content_type": null,
+            "nautobot_content_type": "auth.group",
+            "disable_reason": "",
+            "identifiers": [
+                "name"
+            ],
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "nautobot_name": "id",
+                    "nautobot_internal_type": "AutoField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": "id",
+                    "sources": [
+                        "AUTO"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "name": {
+                    "name": "name",
+                    "nautobot_name": "name",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "name",
+                    "sources": [
+                        "DATA",
+                        "IDENTIFIER"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "permissions": {
+                    "name": "permissions",
+                    "nautobot_name": null,
+                    "nautobot_internal_type": null,
+                    "nautobot_can_import": null,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "CUSTOM",
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Permissions import is not implemented yet",
+                    "required": false
+                }
             },
-            {
-                "name": "last_login",
-                "nautobot.name": null,
-                "nautobot.internal_type": null,
-                "nautobot.can_import": null,
-                "importer": null,
-                "definition": null,
-                "from_data": true,
-                "is_custom": true,
-                "default_value": null,
-                "disable_reason": "Should not be attempted to migrate"
-            },
-            {
-                "name": "password",
-                "nautobot.name": null,
-                "nautobot.internal_type": null,
-                "nautobot.can_import": null,
-                "importer": null,
-                "definition": null,
-                "from_data": true,
-                "is_custom": true,
-                "default_value": null,
-                "disable_reason": "Should not be attempted to migrate"
-            },
-            {
-                "name": "user_permissions",
-                "nautobot.name": null,
-                "nautobot.internal_type": null,
-                "nautobot.can_import": null,
-                "importer": null,
-                "definition": null,
-                "from_data": true,
-                "is_custom": true,
-                "default_value": null,
-                "disable_reason": "Permissions import is not implemented yet"
-            },
-            {
-                "name": "is_superuser",
-                "nautobot.name": "is_superuser",
-                "nautobot.internal_type": "BooleanField",
-                "nautobot.can_import": true,
-                "importer": "value_importer",
-                "definition": "is_superuser",
-                "from_data": true,
-                "is_custom": false,
-                "default_value": false,
-                "disable_reason": ""
-            },
-            {
-                "name": "username",
-                "nautobot.name": "username",
-                "nautobot.internal_type": "CharField",
-                "nautobot.can_import": true,
-                "importer": "value_importer",
-                "definition": "username",
-                "from_data": true,
-                "is_custom": false,
-                "default_value": null,
-                "disable_reason": ""
-            },
-            {
-                "name": "first_name",
-                "nautobot.name": "first_name",
-                "nautobot.internal_type": "CharField",
-                "nautobot.can_import": true,
-                "importer": "value_importer",
-                "definition": "first_name",
-                "from_data": true,
-                "is_custom": false,
-                "default_value": null,
-                "disable_reason": ""
-            },
-            {
-                "name": "last_name",
-                "nautobot.name": "last_name",
-                "nautobot.internal_type": "CharField",
-                "nautobot.can_import": true,
-                "importer": "value_importer",
-                "definition": "last_name",
-                "from_data": true,
-                "is_custom": false,
-                "default_value": null,
-                "disable_reason": ""
-            },
-            {
-                "name": "email",
-                "nautobot.name": "email",
-                "nautobot.internal_type": "CharField",
-                "nautobot.can_import": true,
-                "importer": "value_importer",
-                "definition": "email",
-                "from_data": true,
-                "is_custom": false,
-                "default_value": null,
-                "disable_reason": ""
-            },
-            {
-                "name": "is_staff",
-                "nautobot.name": "is_staff",
-                "nautobot.internal_type": "BooleanField",
-                "nautobot.can_import": true,
-                "importer": "value_importer",
-                "definition": "is_staff",
-                "from_data": true,
-                "is_custom": false,
-                "default_value": false,
-                "disable_reason": ""
-            },
-            {
-                "name": "is_active",
-                "nautobot.name": "is_active",
-                "nautobot.internal_type": "BooleanField",
-                "nautobot.can_import": true,
-                "importer": "value_importer",
-                "definition": "is_active",
-                "from_data": true,
-                "is_custom": false,
-                "default_value": true,
-                "disable_reason": ""
-            },
-            {
-                "name": "date_joined",
-                "nautobot.name": "date_joined",
-                "nautobot.internal_type": "DateTimeField",
-                "nautobot.can_import": true,
-                "importer": "datetime_importer",
-                "definition": "date_joined",
-                "from_data": true,
-                "is_custom": false,
-                "default_value": null,
-                "disable_reason": ""
-            },
-            {
-                "name": "groups",
-                "nautobot.name": "groups",
-                "nautobot.internal_type": "ManyToManyField",
-                "nautobot.can_import": true,
-                "importer": "identifiers_importer",
-                "definition": "groups",
-                "from_data": true,
-                "is_custom": false,
-                "default_value": null,
-                "disable_reason": ""
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {
+                "first_pass_used": 1,
+                "second_pass_used": 1,
+                "created": 1,
+                "imported": 1
             }
-        ],
-        "flags": "DiffSyncModelFlags.NONE",
-        "nautobot.flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
-        "default_reference_uid": null,
-        "imported_count": 6
-    },
-
+        },
+        "auth.permission": {
+            "content_type": "auth.permission",
+            "content_type_id": 2,
+            "extends_content_type": null,
+            "nautobot_content_type": "auth.permission",
+            "disable_reason": "Handled via a Nautobot model and may not be a 1 to 1.",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "nautobot_name": "id",
+                    "nautobot_internal_type": "AutoField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": "id",
+                    "sources": [
+                        "AUTO"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                }
+            },
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {
+                "first_pass_used": 473
+            }
+        },
+        "auth.user": {
+            "content_type": "auth.user",
+            "content_type_id": 4,
+            "extends_content_type": null,
+            "nautobot_content_type": "users.user",
+            "disable_reason": "",
+            "identifiers": [
+                "username"
+            ],
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {
+                "date_joined": {
+                    "name": "date_joined",
+                    "nautobot_name": "date_joined",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": "datetime_importer",
+                    "definition": "date_joined",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "email": {
+                    "name": "email",
+                    "nautobot_name": "email",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "email",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "first_name": {
+                    "name": "first_name",
+                    "nautobot_name": "first_name",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "first_name",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "groups": {
+                    "name": "groups",
+                    "nautobot_name": "groups",
+                    "nautobot_internal_type": "ManyToManyField",
+                    "nautobot_can_import": true,
+                    "importer": "identifiers_importer",
+                    "definition": "groups",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "id": {
+                    "name": "id",
+                    "nautobot_name": "id",
+                    "nautobot_internal_type": "UUIDField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": "id",
+                    "sources": [
+                        "AUTO"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "is_active": {
+                    "name": "is_active",
+                    "nautobot_name": "is_active",
+                    "nautobot_internal_type": "BooleanField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "is_active",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": true,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "is_staff": {
+                    "name": "is_staff",
+                    "nautobot_name": "is_staff",
+                    "nautobot_internal_type": "BooleanField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "is_staff",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": false,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "is_superuser": {
+                    "name": "is_superuser",
+                    "nautobot_name": "is_superuser",
+                    "nautobot_internal_type": "BooleanField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "is_superuser",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": false,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "last_login": {
+                    "name": "last_login",
+                    "nautobot_name": null,
+                    "nautobot_internal_type": null,
+                    "nautobot_can_import": null,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "CUSTOM",
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Should not be attempted to migrate",
+                    "required": false
+                },
+                "last_name": {
+                    "name": "last_name",
+                    "nautobot_name": "last_name",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "last_name",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "password": {
+                    "name": "password",
+                    "nautobot_name": null,
+                    "nautobot_internal_type": null,
+                    "nautobot_can_import": null,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "CUSTOM",
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Should not be attempted to migrate",
+                    "required": false
+                },
+                "user_permissions": {
+                    "name": "user_permissions",
+                    "nautobot_name": null,
+                    "nautobot_internal_type": null,
+                    "nautobot_can_import": null,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "CUSTOM",
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Permissions import is not implemented yet",
+                    "required": false
+                },
+                "username": {
+                    "name": "username",
+                    "nautobot_name": "username",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "username",
+                    "sources": [
+                        "DATA",
+                        "IDENTIFIER"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
+                }
+            },
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {
+                "first_pass_used": 6,
+                "second_pass_used": 6,
+                "created": 6,
+                "imported": 6
+            }
+        },
 ...
-
-]
+    }
+    "nautobot": {
+        "admin.logentry": {
+            "content_type": "admin.logentry",
+            "content_type_id": 35,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": false,
+            "stats": {},
+            "issues": []
+        },
+        "auth.group": {
+            "content_type": "auth.group",
+            "content_type_id": 24,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": false,
+            "stats": {
+                "source_created": 1
+            },
+            "issues": []
+        },
+...
+    }
+}
 ```
