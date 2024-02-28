@@ -8714,6 +8714,20 @@
                     "default_value": null,
                     "disable_reason": "",
                     "required": true
+                },
+                "object_types": {
+                    "name": "object_types",
+                    "nautobot_name": "content_types",
+                    "nautobot_internal_type": "ManyToManyField",
+                    "nautobot_can_import": true,
+                    "importer": "content_types_importer",
+                    "definition": "content_types",
+                    "sources": [
+                        "CUSTOM"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
                 }
             },
             "flags": "DiffSyncModelFlags.NONE",

@@ -4,9 +4,24 @@
         "update": 0,
         "delete": 0,
         "no-change": 0,
-        "skip": 119
+        "skip": 143
     },
     "source": {
+        "account.usertoken": {
+            "content_type": "account.usertoken",
+            "content_type_id": 19,
+            "extends_content_type": null,
+            "nautobot_content_type": "account.usertoken",
+            "disable_reason": "Nautobot content type: `account.usertoken` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
         "admin.logentry": {
             "content_type": "admin.logentry",
             "content_type_id": 1,
@@ -135,7 +150,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": null,
             "stats": {
-                "first_pass_used": 473
+                "first_pass_used": 569
             }
         },
         "auth.user": {
@@ -349,7 +364,7 @@
         },
         "circuits.circuit": {
             "content_type": "circuits.circuit",
-            "content_type_id": 14,
+            "content_type_id": 20,
             "extends_content_type": null,
             "nautobot_content_type": "circuits.circuit",
             "disable_reason": "",
@@ -613,7 +628,7 @@
         },
         "circuits.circuittermination": {
             "content_type": "circuits.circuittermination",
-            "content_type_id": 15,
+            "content_type_id": 21,
             "extends_content_type": null,
             "nautobot_content_type": "circuits.circuittermination",
             "disable_reason": "",
@@ -888,7 +903,7 @@
         },
         "circuits.circuittype": {
             "content_type": "circuits.circuittype",
-            "content_type_id": 16,
+            "content_type_id": 22,
             "extends_content_type": null,
             "nautobot_content_type": "circuits.circuittype",
             "disable_reason": "",
@@ -897,6 +912,20 @@
             "forward_references": null,
             "pre_import": null,
             "fields": {
+                "color": {
+                    "name": "color",
+                    "nautobot_name": "color",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "color",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "created": {
                     "name": "created",
                     "nautobot_name": "created",
@@ -1008,7 +1037,7 @@
         },
         "circuits.provider": {
             "content_type": "circuits.provider",
-            "content_type_id": 17,
+            "content_type_id": 23,
             "extends_content_type": null,
             "nautobot_content_type": "circuits.provider",
             "disable_reason": "",
@@ -1154,9 +1183,24 @@
                 "imported": 9
             }
         },
+        "circuits.provideraccount": {
+            "content_type": "circuits.provideraccount",
+            "content_type_id": 25,
+            "extends_content_type": null,
+            "nautobot_content_type": "circuits.provideraccount",
+            "disable_reason": "Nautobot content type: `circuits.provideraccount` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
         "circuits.providernetwork": {
             "content_type": "circuits.providernetwork",
-            "content_type_id": 18,
+            "content_type_id": 24,
             "extends_content_type": null,
             "nautobot_content_type": "circuits.providernetwork",
             "disable_reason": "",
@@ -1365,15 +1409,122 @@
             "flags": "DiffSyncModelFlags.IGNORE",
             "default_reference_uid": null,
             "stats": {
-                "first_pass_used": 119,
-                "second_pass_used": 119,
-                "created": 119,
-                "imported": 119
+                "first_pass_used": 143,
+                "second_pass_used": 143,
+                "created": 143,
+                "imported": 143
+            }
+        },
+        "core.autosyncrecord": {
+            "content_type": "core.autosyncrecord",
+            "content_type_id": 16,
+            "extends_content_type": null,
+            "nautobot_content_type": "core.autosyncrecord",
+            "disable_reason": "Nautobot content type: `core.autosyncrecord` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "core.configrevision": {
+            "content_type": "core.configrevision",
+            "content_type_id": 98,
+            "extends_content_type": null,
+            "nautobot_content_type": "core.configrevision",
+            "disable_reason": "Nautobot content type: `core.configrevision` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "core.contenttype": {
+            "content_type": "core.contenttype",
+            "content_type_id": 143,
+            "extends_content_type": null,
+            "nautobot_content_type": "core.contenttype",
+            "disable_reason": "Nautobot content type: `core.contenttype` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "core.datafile": {
+            "content_type": "core.datafile",
+            "content_type_id": 15,
+            "extends_content_type": null,
+            "nautobot_content_type": "core.datafile",
+            "disable_reason": "Nautobot content type: `core.datafile` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "core.datasource": {
+            "content_type": "core.datasource",
+            "content_type_id": 14,
+            "extends_content_type": null,
+            "nautobot_content_type": "core.datasource",
+            "disable_reason": "Nautobot content type: `core.datasource` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "core.job": {
+            "content_type": "core.job",
+            "content_type_id": 18,
+            "extends_content_type": null,
+            "nautobot_content_type": "core.job",
+            "disable_reason": "Nautobot content type: `core.job` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "core.managedfile": {
+            "content_type": "core.managedfile",
+            "content_type_id": 17,
+            "extends_content_type": null,
+            "nautobot_content_type": "core.managedfile",
+            "disable_reason": "Nautobot content type: `core.managedfile` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {
+                "first_pass_used": 3
             }
         },
         "dcim.cable": {
             "content_type": "dcim.cable",
-            "content_type_id": 19,
+            "content_type_id": 26,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.cable",
             "disable_reason": "",
@@ -1592,7 +1743,7 @@
         },
         "dcim.cablepath": {
             "content_type": "dcim.cablepath",
-            "content_type_id": 20,
+            "content_type_id": 27,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.cablepath",
             "disable_reason": "Recreated in Nautobot on signal when circuit termination is created",
@@ -1624,7 +1775,7 @@
         },
         "dcim.cabletermination": {
             "content_type": "dcim.cabletermination",
-            "content_type_id": 59,
+            "content_type_id": 66,
             "extends_content_type": "dcim.cable",
             "nautobot_content_type": "dcim.cable",
             "disable_reason": "",
@@ -1689,6 +1840,20 @@
                     "disable_reason": "",
                     "required": false
                 },
+                "created": {
+                    "name": "created",
+                    "nautobot_name": "created",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": "datetime_importer",
+                    "definition": "created",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -1703,6 +1868,20 @@
                     "default_value": null,
                     "disable_reason": "",
                     "required": true
+                },
+                "last_updated": {
+                    "name": "last_updated",
+                    "nautobot_name": "last_updated",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
                 },
                 "termination_a_id": {
                     "name": "termination_a_id",
@@ -1771,7 +1950,7 @@
         },
         "dcim.consoleport": {
             "content_type": "dcim.consoleport",
-            "content_type_id": 21,
+            "content_type_id": 28,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.consoleport",
             "disable_reason": "",
@@ -2017,7 +2196,7 @@
         },
         "dcim.consoleporttemplate": {
             "content_type": "dcim.consoleporttemplate",
-            "content_type_id": 22,
+            "content_type_id": 29,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.consoleporttemplate",
             "disable_reason": "",
@@ -2179,7 +2358,7 @@
         },
         "dcim.consoleserverport": {
             "content_type": "dcim.consoleserverport",
-            "content_type_id": 23,
+            "content_type_id": 30,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.consoleserverport",
             "disable_reason": "",
@@ -2209,7 +2388,7 @@
         },
         "dcim.consoleserverporttemplate": {
             "content_type": "dcim.consoleserverporttemplate",
-            "content_type_id": 24,
+            "content_type_id": 31,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.consoleserverporttemplate",
             "disable_reason": "",
@@ -2239,7 +2418,7 @@
         },
         "dcim.device": {
             "content_type": "dcim.device",
-            "content_type_id": 25,
+            "content_type_id": 32,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.device",
             "disable_reason": "",
@@ -2318,6 +2497,48 @@
                     "disable_reason": "",
                     "required": false
                 },
+                "config_template": {
+                    "name": "config_template",
+                    "nautobot_name": "config_template",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "config_template",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "console_port_count": {
+                    "name": "console_port_count",
+                    "nautobot_name": "console_port_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "console_port_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "console_server_port_count": {
+                    "name": "console_server_port_count",
+                    "nautobot_name": "console_server_port_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "console_server_port_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "created": {
                     "name": "created",
                     "nautobot_name": "created",
@@ -2353,6 +2574,20 @@
                     "nautobot_can_import": false,
                     "importer": null,
                     "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "device_bay_count": {
+                    "name": "device_bay_count",
+                    "nautobot_name": "device_bay_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "device_bay_count",
                     "sources": [
                         "DATA"
                     ],
@@ -2402,6 +2637,20 @@
                     "disable_reason": "",
                     "required": false
                 },
+                "front_port_count": {
+                    "name": "front_port_count",
+                    "nautobot_name": "front_port_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "front_port_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -2417,6 +2666,34 @@
                     "disable_reason": "",
                     "required": true
                 },
+                "interface_count": {
+                    "name": "interface_count",
+                    "nautobot_name": "interface_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "interface_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "inventory_item_count": {
+                    "name": "inventory_item_count",
+                    "nautobot_name": "inventory_item_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "inventory_item_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "last_updated": {
                     "name": "last_updated",
                     "nautobot_name": "last_updated",
@@ -2429,6 +2706,20 @@
                     ],
                     "default_value": null,
                     "disable_reason": "Last updated field is updated with each write",
+                    "required": false
+                },
+                "latitude": {
+                    "name": "latitude",
+                    "nautobot_name": "latitude",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "latitude",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
                     "required": false
                 },
                 "local_context_data": {
@@ -2460,6 +2751,34 @@
                     "disable_reason": "",
                     "required": true
                 },
+                "longitude": {
+                    "name": "longitude",
+                    "nautobot_name": "longitude",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "longitude",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "module_bay_count": {
+                    "name": "module_bay_count",
+                    "nautobot_name": "module_bay_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "module_bay_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "name": {
                     "name": "name",
                     "nautobot_name": "name",
@@ -2467,6 +2786,20 @@
                     "nautobot_can_import": true,
                     "importer": "value_importer",
                     "definition": "name",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "oob_ip": {
+                    "name": "oob_ip",
+                    "nautobot_name": "oob_ip",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "oob_ip",
                     "sources": [
                         "DATA"
                     ],
@@ -2495,6 +2828,34 @@
                     "nautobot_can_import": true,
                     "importer": "integer_importer",
                     "definition": "position",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "power_outlet_count": {
+                    "name": "power_outlet_count",
+                    "nautobot_name": "power_outlet_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "power_outlet_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "power_port_count": {
+                    "name": "power_port_count",
+                    "nautobot_name": "power_port_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "power_port_count",
                     "sources": [
                         "DATA"
                     ],
@@ -2537,6 +2898,20 @@
                     "nautobot_can_import": true,
                     "importer": "relation_importer",
                     "definition": "rack",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "rear_port_count": {
+                    "name": "rear_port_count",
+                    "nautobot_name": "rear_port_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "rear_port_count",
                     "sources": [
                         "DATA"
                     ],
@@ -2685,7 +3060,7 @@
         },
         "dcim.devicebay": {
             "content_type": "dcim.devicebay",
-            "content_type_id": 26,
+            "content_type_id": 33,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.devicebay",
             "disable_reason": "",
@@ -2847,7 +3222,7 @@
         },
         "dcim.devicebaytemplate": {
             "content_type": "dcim.devicebaytemplate",
-            "content_type_id": 27,
+            "content_type_id": 34,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.devicebaytemplate",
             "disable_reason": "",
@@ -2981,7 +3356,7 @@
         },
         "dcim.devicerole": {
             "content_type": "dcim.devicerole",
-            "content_type_id": 28,
+            "content_type_id": 35,
             "extends_content_type": null,
             "nautobot_content_type": "extras.role",
             "disable_reason": "",
@@ -3006,6 +3381,20 @@
                     "default_value": "9e9e9e",
                     "disable_reason": "",
                     "required": true
+                },
+                "config_template": {
+                    "name": "config_template",
+                    "nautobot_name": "config_template",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "config_template",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 },
                 "content_types": {
                     "name": "content_types",
@@ -3147,7 +3536,7 @@
         },
         "dcim.devicetype": {
             "content_type": "dcim.devicetype",
-            "content_type_id": 29,
+            "content_type_id": 36,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.devicetype",
             "disable_reason": "",
@@ -3198,6 +3587,34 @@
                     "disable_reason": "",
                     "required": false
                 },
+                "console_port_template_count": {
+                    "name": "console_port_template_count",
+                    "nautobot_name": "console_port_template_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "console_port_template_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "console_server_port_template_count": {
+                    "name": "console_server_port_template_count",
+                    "nautobot_name": "console_server_port_template_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "console_server_port_template_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "created": {
                     "name": "created",
                     "nautobot_name": "created",
@@ -3226,6 +3643,20 @@
                     "disable_reason": "",
                     "required": false
                 },
+                "default_platform": {
+                    "name": "default_platform",
+                    "nautobot_name": "default_platform",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "default_platform",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "description": {
                     "name": "description",
                     "nautobot_name": "description",
@@ -3233,6 +3664,34 @@
                     "nautobot_can_import": false,
                     "importer": null,
                     "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "device_bay_template_count": {
+                    "name": "device_bay_template_count",
+                    "nautobot_name": "device_bay_template_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "device_bay_template_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "exclude_from_utilization": {
+                    "name": "exclude_from_utilization",
+                    "nautobot_name": "exclude_from_utilization",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "exclude_from_utilization",
                     "sources": [
                         "DATA"
                     ],
@@ -3255,6 +3714,20 @@
                     "disable_reason": "Import does not contain images",
                     "required": false
                 },
+                "front_port_template_count": {
+                    "name": "front_port_template_count",
+                    "nautobot_name": "front_port_template_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "front_port_template_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -3270,6 +3743,34 @@
                     "default_value": null,
                     "disable_reason": "",
                     "required": true
+                },
+                "interface_template_count": {
+                    "name": "interface_template_count",
+                    "nautobot_name": "interface_template_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "interface_template_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "inventory_item_template_count": {
+                    "name": "inventory_item_template_count",
+                    "nautobot_name": "inventory_item_template_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "inventory_item_template_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 },
                 "is_full_depth": {
                     "name": "is_full_depth",
@@ -3329,6 +3830,20 @@
                     "disable_reason": "",
                     "required": true
                 },
+                "module_bay_template_count": {
+                    "name": "module_bay_template_count",
+                    "nautobot_name": "module_bay_template_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "module_bay_template_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "part_number": {
                     "name": "part_number",
                     "nautobot_name": "part_number",
@@ -3336,6 +3851,34 @@
                     "nautobot_can_import": true,
                     "importer": "value_importer",
                     "definition": "part_number",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "power_outlet_template_count": {
+                    "name": "power_outlet_template_count",
+                    "nautobot_name": "power_outlet_template_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "power_outlet_template_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "power_port_template_count": {
+                    "name": "power_port_template_count",
+                    "nautobot_name": "power_port_template_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "power_port_template_count",
                     "sources": [
                         "DATA"
                     ],
@@ -3356,6 +3899,20 @@
                     ],
                     "default_value": null,
                     "disable_reason": "Import does not contain images",
+                    "required": false
+                },
+                "rear_port_template_count": {
+                    "name": "rear_port_template_count",
+                    "nautobot_name": "rear_port_template_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "rear_port_template_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
                     "required": false
                 },
                 "slug": {
@@ -3442,7 +3999,7 @@
         },
         "dcim.frontport": {
             "content_type": "dcim.frontport",
-            "content_type_id": 30,
+            "content_type_id": 37,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.frontport",
             "disable_reason": "",
@@ -3702,7 +4259,7 @@
         },
         "dcim.frontporttemplate": {
             "content_type": "dcim.frontporttemplate",
-            "content_type_id": 31,
+            "content_type_id": 38,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.frontporttemplate",
             "disable_reason": "",
@@ -3907,7 +4464,7 @@
         },
         "dcim.interface": {
             "content_type": "dcim.interface",
-            "content_type_id": 32,
+            "content_type_id": 39,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.interface",
             "disable_reason": "",
@@ -4490,7 +5047,7 @@
         },
         "dcim.interfacetemplate": {
             "content_type": "dcim.interfacetemplate",
-            "content_type_id": 33,
+            "content_type_id": 40,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.interfacetemplate",
             "disable_reason": "",
@@ -4696,6 +5253,20 @@
                     "disable_reason": "",
                     "required": false
                 },
+                "rf_role": {
+                    "name": "rf_role",
+                    "nautobot_name": "rf_role",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "rf_role",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "type": {
                     "name": "type",
                     "nautobot_name": "type",
@@ -4722,7 +5293,7 @@
         },
         "dcim.inventoryitem": {
             "content_type": "dcim.inventoryitem",
-            "content_type_id": 34,
+            "content_type_id": 41,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.inventoryitem",
             "disable_reason": "",
@@ -4808,7 +5379,7 @@
         },
         "dcim.inventoryitemrole": {
             "content_type": "dcim.inventoryitemrole",
-            "content_type_id": 57,
+            "content_type_id": 64,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.inventoryitemrole",
             "disable_reason": "Nautobot content type: `dcim.inventoryitemrole` not found",
@@ -4823,7 +5394,7 @@
         },
         "dcim.inventoryitemtemplate": {
             "content_type": "dcim.inventoryitemtemplate",
-            "content_type_id": 58,
+            "content_type_id": 65,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.inventoryitemtemplate",
             "disable_reason": "Nautobot content type: `dcim.inventoryitemtemplate` not found",
@@ -4838,7 +5409,7 @@
         },
         "dcim.location": {
             "content_type": "dcim.location",
-            "content_type_id": 35,
+            "content_type_id": 42,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.location",
             "disable_reason": "",
@@ -5239,7 +5810,7 @@
         },
         "dcim.manufacturer": {
             "content_type": "dcim.manufacturer",
-            "content_type_id": 36,
+            "content_type_id": 43,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.manufacturer",
             "disable_reason": "",
@@ -5363,7 +5934,7 @@
         },
         "dcim.module": {
             "content_type": "dcim.module",
-            "content_type_id": 55,
+            "content_type_id": 62,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.module",
             "disable_reason": "Nautobot content type: `dcim.module` not found",
@@ -5380,7 +5951,7 @@
         },
         "dcim.modulebay": {
             "content_type": "dcim.modulebay",
-            "content_type_id": 54,
+            "content_type_id": 61,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.modulebay",
             "disable_reason": "Nautobot content type: `dcim.modulebay` not found",
@@ -5397,7 +5968,7 @@
         },
         "dcim.modulebaytemplate": {
             "content_type": "dcim.modulebaytemplate",
-            "content_type_id": 56,
+            "content_type_id": 63,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.modulebaytemplate",
             "disable_reason": "Nautobot content type: `dcim.modulebaytemplate` not found",
@@ -5414,7 +5985,7 @@
         },
         "dcim.moduletype": {
             "content_type": "dcim.moduletype",
-            "content_type_id": 53,
+            "content_type_id": 60,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.moduletype",
             "disable_reason": "Nautobot content type: `dcim.moduletype` not found",
@@ -5431,7 +6002,7 @@
         },
         "dcim.platform": {
             "content_type": "dcim.platform",
-            "content_type_id": 37,
+            "content_type_id": 44,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.platform",
             "disable_reason": "",
@@ -5440,6 +6011,20 @@
             "forward_references": null,
             "pre_import": null,
             "fields": {
+                "config_template": {
+                    "name": "config_template",
+                    "nautobot_name": "config_template",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "config_template",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "created": {
                     "name": "created",
                     "nautobot_name": "created",
@@ -5565,7 +6150,7 @@
         },
         "dcim.powerfeed": {
             "content_type": "dcim.powerfeed",
-            "content_type_id": 38,
+            "content_type_id": 45,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.powerfeed",
             "disable_reason": "",
@@ -5842,6 +6427,20 @@
                     "disable_reason": "",
                     "required": true
                 },
+                "tenant": {
+                    "name": "tenant",
+                    "nautobot_name": "tenant",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "tenant",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "type": {
                     "name": "type",
                     "nautobot_name": "type",
@@ -5882,7 +6481,7 @@
         },
         "dcim.poweroutlet": {
             "content_type": "dcim.poweroutlet",
-            "content_type_id": 39,
+            "content_type_id": 46,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.poweroutlet",
             "disable_reason": "",
@@ -6142,7 +6741,7 @@
         },
         "dcim.poweroutlettemplate": {
             "content_type": "dcim.poweroutlettemplate",
-            "content_type_id": 40,
+            "content_type_id": 47,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.poweroutlettemplate",
             "disable_reason": "",
@@ -6333,7 +6932,7 @@
         },
         "dcim.powerpanel": {
             "content_type": "dcim.powerpanel",
-            "content_type_id": 41,
+            "content_type_id": 48,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.powerpanel",
             "disable_reason": "",
@@ -6497,7 +7096,7 @@
         },
         "dcim.powerport": {
             "content_type": "dcim.powerport",
-            "content_type_id": 42,
+            "content_type_id": 49,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.powerport",
             "disable_reason": "",
@@ -6757,7 +7356,7 @@
         },
         "dcim.powerporttemplate": {
             "content_type": "dcim.powerporttemplate",
-            "content_type_id": 43,
+            "content_type_id": 50,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.powerporttemplate",
             "disable_reason": "",
@@ -6947,7 +7546,7 @@
         },
         "dcim.rack": {
             "content_type": "dcim.rack",
-            "content_type_id": 44,
+            "content_type_id": 51,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.rack",
             "disable_reason": "",
@@ -7282,6 +7881,20 @@
                     "disable_reason": "",
                     "required": true
                 },
+                "starting_unit": {
+                    "name": "starting_unit",
+                    "nautobot_name": "starting_unit",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "starting_unit",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "status": {
                     "name": "status",
                     "nautobot_name": "status_id",
@@ -7393,7 +8006,7 @@
         },
         "dcim.rackreservation": {
             "content_type": "dcim.rackreservation",
-            "content_type_id": 45,
+            "content_type_id": 52,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.rackreservation",
             "disable_reason": "",
@@ -7556,7 +8169,7 @@
         },
         "dcim.rackrole": {
             "content_type": "dcim.rackrole",
-            "content_type_id": 46,
+            "content_type_id": 53,
             "extends_content_type": null,
             "nautobot_content_type": "extras.role",
             "disable_reason": "",
@@ -7708,7 +8321,7 @@
         },
         "dcim.rearport": {
             "content_type": "dcim.rearport",
-            "content_type_id": 47,
+            "content_type_id": 54,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.rearport",
             "disable_reason": "",
@@ -7954,7 +8567,7 @@
         },
         "dcim.rearporttemplate": {
             "content_type": "dcim.rearporttemplate",
-            "content_type_id": 48,
+            "content_type_id": 55,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.rearporttemplate",
             "disable_reason": "",
@@ -8144,7 +8757,7 @@
         },
         "dcim.region": {
             "content_type": "dcim.region",
-            "content_type_id": 49,
+            "content_type_id": 56,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.location",
             "disable_reason": "",
@@ -8366,7 +8979,7 @@
         },
         "dcim.site": {
             "content_type": "dcim.site",
-            "content_type_id": 50,
+            "content_type_id": 57,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.location",
             "disable_reason": "",
@@ -8727,7 +9340,7 @@
         },
         "dcim.sitegroup": {
             "content_type": "dcim.sitegroup",
-            "content_type_id": 51,
+            "content_type_id": 58,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.locationtype",
             "disable_reason": "",
@@ -8950,7 +9563,7 @@
         },
         "dcim.virtualchassis": {
             "content_type": "dcim.virtualchassis",
-            "content_type_id": 52,
+            "content_type_id": 59,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.virtualchassis",
             "disable_reason": "",
@@ -9072,6 +9685,20 @@
                     "disable_reason": "",
                     "required": false
                 },
+                "member_count": {
+                    "name": "member_count",
+                    "nautobot_name": "member_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "member_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "name": {
                     "name": "name",
                     "nautobot_name": "name",
@@ -9098,7 +9725,7 @@
         },
         "dcim.virtualdevicecontext": {
             "content_type": "dcim.virtualdevicecontext",
-            "content_type_id": 60,
+            "content_type_id": 67,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.virtualdevicecontext",
             "disable_reason": "Nautobot content type: `dcim.virtualdevicecontext` not found",
@@ -9113,7 +9740,7 @@
         },
         "django_rq.queue": {
             "content_type": "django_rq.queue",
-            "content_type_id": 115,
+            "content_type_id": 128,
             "extends_content_type": null,
             "nautobot_content_type": "django_rq.queue",
             "disable_reason": "Nautobot content type: `django_rq.queue` not found",
@@ -9126,9 +9753,24 @@
             "default_reference_uid": null,
             "stats": {}
         },
+        "extras.bookmark": {
+            "content_type": "extras.bookmark",
+            "content_type_id": 107,
+            "extends_content_type": null,
+            "nautobot_content_type": "extras.bookmark",
+            "disable_reason": "Nautobot content type: `extras.bookmark` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
         "extras.branch": {
             "content_type": "extras.branch",
-            "content_type_id": 94,
+            "content_type_id": 101,
             "extends_content_type": null,
             "nautobot_content_type": "extras.branch",
             "disable_reason": "Nautobot content type: `extras.branch` not found",
@@ -9143,7 +9785,7 @@
         },
         "extras.cachedvalue": {
             "content_type": "extras.cachedvalue",
-            "content_type_id": 93,
+            "content_type_id": 100,
             "extends_content_type": null,
             "nautobot_content_type": "extras.cachedvalue",
             "disable_reason": "Nautobot content type: `extras.cachedvalue` not found",
@@ -9154,11 +9796,13 @@
             "fields": {},
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": null,
-            "stats": {}
+            "stats": {
+                "first_pass_used": 13652
+            }
         },
         "extras.configcontext": {
             "content_type": "extras.configcontext",
-            "content_type_id": 80,
+            "content_type_id": 88,
             "extends_content_type": null,
             "nautobot_content_type": "extras.configcontext",
             "disable_reason": "",
@@ -9186,12 +9830,12 @@
             "default_reference_uid": null,
             "stats": {}
         },
-        "extras.configrevision": {
-            "content_type": "extras.configrevision",
-            "content_type_id": 91,
+        "extras.configtemplate": {
+            "content_type": "extras.configtemplate",
+            "content_type_id": 103,
             "extends_content_type": null,
-            "nautobot_content_type": "extras.configrevision",
-            "disable_reason": "Nautobot content type: `extras.configrevision` not found",
+            "nautobot_content_type": "extras.configtemplate",
+            "disable_reason": "Nautobot content type: `extras.configtemplate` not found",
             "identifiers": null,
             "disable_related_reference": false,
             "forward_references": null,
@@ -9203,7 +9847,7 @@
         },
         "extras.customfield": {
             "content_type": "extras.customfield",
-            "content_type_id": 90,
+            "content_type_id": 97,
             "extends_content_type": null,
             "nautobot_content_type": "extras.customfield",
             "disable_reason": "",
@@ -9341,6 +9985,20 @@
                     "disable_reason": "",
                     "required": true
                 },
+                "is_cloneable": {
+                    "name": "is_cloneable",
+                    "nautobot_name": "is_cloneable",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "is_cloneable",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "label": {
                     "name": "label",
                     "nautobot_name": "label",
@@ -9442,13 +10100,27 @@
                     "disable_reason": "",
                     "required": true
                 },
-                "ui_visibility": {
-                    "name": "ui_visibility",
-                    "nautobot_name": "ui_visibility",
+                "ui_editable": {
+                    "name": "ui_editable",
+                    "nautobot_name": "ui_editable",
                     "nautobot_internal_type": "NotFound",
                     "nautobot_can_import": false,
                     "importer": null,
-                    "definition": "ui_visibility",
+                    "definition": "ui_editable",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "ui_visible": {
+                    "name": "ui_visible",
+                    "nautobot_name": "ui_visible",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "ui_visible",
                     "sources": [
                         "DATA"
                     ],
@@ -9582,7 +10254,7 @@
         },
         "extras.customfieldchoiceset": {
             "content_type": "extras.customfieldchoiceset",
-            "content_type_id": null,
+            "content_type_id": 108,
             "extends_content_type": null,
             "nautobot_content_type": "extras.customfieldchoiceset",
             "disable_reason": "Nautobot content type: `extras.customfieldchoiceset` not found",
@@ -9597,7 +10269,7 @@
         },
         "extras.customlink": {
             "content_type": "extras.customlink",
-            "content_type_id": 89,
+            "content_type_id": 96,
             "extends_content_type": null,
             "nautobot_content_type": "extras.customlink",
             "disable_reason": "",
@@ -9625,9 +10297,41 @@
             "default_reference_uid": null,
             "stats": {}
         },
+        "extras.dashboard": {
+            "content_type": "extras.dashboard",
+            "content_type_id": 104,
+            "extends_content_type": null,
+            "nautobot_content_type": "extras.dashboard",
+            "disable_reason": "Nautobot content type: `extras.dashboard` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {
+                "first_pass_used": 1
+            }
+        },
+        "extras.eventrule": {
+            "content_type": "extras.eventrule",
+            "content_type_id": 133,
+            "extends_content_type": null,
+            "nautobot_content_type": "extras.eventrule",
+            "disable_reason": "Nautobot content type: `extras.eventrule` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
         "extras.exporttemplate": {
             "content_type": "extras.exporttemplate",
-            "content_type_id": 88,
+            "content_type_id": 95,
             "extends_content_type": null,
             "nautobot_content_type": "extras.exporttemplate",
             "disable_reason": "",
@@ -9657,7 +10361,7 @@
         },
         "extras.imageattachment": {
             "content_type": "extras.imageattachment",
-            "content_type_id": 87,
+            "content_type_id": 94,
             "extends_content_type": null,
             "nautobot_content_type": "extras.imageattachment",
             "disable_reason": "",
@@ -9685,39 +10389,9 @@
             "default_reference_uid": null,
             "stats": {}
         },
-        "extras.jobresult": {
-            "content_type": "extras.jobresult",
-            "content_type_id": 86,
-            "extends_content_type": null,
-            "nautobot_content_type": "extras.jobresult",
-            "disable_reason": "",
-            "identifiers": null,
-            "disable_related_reference": false,
-            "forward_references": null,
-            "pre_import": null,
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "nautobot_name": "id",
-                    "nautobot_internal_type": "UUIDField",
-                    "nautobot_can_import": true,
-                    "importer": null,
-                    "definition": "id",
-                    "sources": [
-                        "AUTO"
-                    ],
-                    "default_value": null,
-                    "disable_reason": "",
-                    "required": true
-                }
-            },
-            "flags": "DiffSyncModelFlags.NONE",
-            "default_reference_uid": null,
-            "stats": {}
-        },
         "extras.journalentry": {
             "content_type": "extras.journalentry",
-            "content_type_id": 85,
+            "content_type_id": 93,
             "extends_content_type": null,
             "nautobot_content_type": "extras.note",
             "disable_reason": "",
@@ -9747,7 +10421,7 @@
         },
         "extras.objectchange": {
             "content_type": "extras.objectchange",
-            "content_type_id": 84,
+            "content_type_id": 92,
             "extends_content_type": null,
             "nautobot_content_type": "extras.objectchange",
             "disable_reason": "",
@@ -9805,10 +10479,25 @@
         },
         "extras.report": {
             "content_type": "extras.report",
-            "content_type_id": 78,
+            "content_type_id": 86,
             "extends_content_type": null,
             "nautobot_content_type": "extras.report",
             "disable_reason": "Nautobot content type: `extras.report` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "extras.reportmodule": {
+            "content_type": "extras.reportmodule",
+            "content_type_id": 105,
+            "extends_content_type": null,
+            "nautobot_content_type": "extras.reportmodule",
+            "disable_reason": "Nautobot content type: `extras.reportmodule` not found",
             "identifiers": null,
             "disable_related_reference": false,
             "forward_references": null,
@@ -9864,7 +10553,7 @@
         },
         "extras.savedfilter": {
             "content_type": "extras.savedfilter",
-            "content_type_id": 92,
+            "content_type_id": 99,
             "extends_content_type": null,
             "nautobot_content_type": "extras.savedfilter",
             "disable_reason": "Nautobot content type: `extras.savedfilter` not found",
@@ -9879,7 +10568,7 @@
         },
         "extras.script": {
             "content_type": "extras.script",
-            "content_type_id": 79,
+            "content_type_id": 87,
             "extends_content_type": null,
             "nautobot_content_type": "extras.script",
             "disable_reason": "Nautobot content type: `extras.script` not found",
@@ -9892,9 +10581,24 @@
             "default_reference_uid": null,
             "stats": {}
         },
+        "extras.scriptmodule": {
+            "content_type": "extras.scriptmodule",
+            "content_type_id": 106,
+            "extends_content_type": null,
+            "nautobot_content_type": "extras.scriptmodule",
+            "disable_reason": "Nautobot content type: `extras.scriptmodule` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
         "extras.stagedchange": {
             "content_type": "extras.stagedchange",
-            "content_type_id": 95,
+            "content_type_id": 102,
             "extends_content_type": null,
             "nautobot_content_type": "extras.stagedchange",
             "disable_reason": "Nautobot content type: `extras.stagedchange` not found",
@@ -9975,7 +10679,7 @@
         },
         "extras.tag": {
             "content_type": "extras.tag",
-            "content_type_id": 81,
+            "content_type_id": 89,
             "extends_content_type": null,
             "nautobot_content_type": "extras.tag",
             "disable_reason": "",
@@ -10091,7 +10795,8 @@
                     "importer": "content_types_importer",
                     "definition": "content_types",
                     "sources": [
-                        "CUSTOM"
+                        "CUSTOM",
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -10123,7 +10828,7 @@
         },
         "extras.taggeditem": {
             "content_type": "extras.taggeditem",
-            "content_type_id": 83,
+            "content_type_id": 91,
             "extends_content_type": null,
             "nautobot_content_type": "extras.taggeditem",
             "disable_reason": "",
@@ -10204,7 +10909,7 @@
         },
         "extras.webhook": {
             "content_type": "extras.webhook",
-            "content_type_id": 82,
+            "content_type_id": 90,
             "extends_content_type": null,
             "nautobot_content_type": "extras.webhook",
             "disable_reason": "",
@@ -10234,7 +10939,7 @@
         },
         "ipam.aggregate": {
             "content_type": "ipam.aggregate",
-            "content_type_id": 61,
+            "content_type_id": 68,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.prefix",
             "disable_reason": "",
@@ -10410,7 +11115,7 @@
         },
         "ipam.asn": {
             "content_type": "ipam.asn",
-            "content_type_id": 74,
+            "content_type_id": 81,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.asn",
             "disable_reason": "Nautobot content type: `ipam.asn` not found",
@@ -10425,9 +11130,24 @@
                 "first_pass_used": 5
             }
         },
+        "ipam.asnrange": {
+            "content_type": "ipam.asnrange",
+            "content_type_id": 85,
+            "extends_content_type": null,
+            "nautobot_content_type": "ipam.asnrange",
+            "disable_reason": "Nautobot content type: `ipam.asnrange` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
         "ipam.fhrpgroup": {
             "content_type": "ipam.fhrpgroup",
-            "content_type_id": 72,
+            "content_type_id": 79,
             "extends_content_type": null,
             "nautobot_content_type": "dcim.interfaceredundancygroup",
             "disable_reason": "",
@@ -10485,7 +11205,7 @@
         },
         "ipam.fhrpgroupassignment": {
             "content_type": "ipam.fhrpgroupassignment",
-            "content_type_id": 73,
+            "content_type_id": 80,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.fhrpgroupassignment",
             "disable_reason": "Nautobot content type: `ipam.fhrpgroupassignment` not found",
@@ -10500,7 +11220,7 @@
         },
         "ipam.ipaddress": {
             "content_type": "ipam.ipaddress",
-            "content_type_id": 62,
+            "content_type_id": 69,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.ipaddress",
             "disable_reason": "",
@@ -10734,7 +11454,7 @@
         },
         "ipam.iprange": {
             "content_type": "ipam.iprange",
-            "content_type_id": 71,
+            "content_type_id": 78,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.iprange",
             "disable_reason": "Nautobot content type: `ipam.iprange` not found",
@@ -10749,39 +11469,9 @@
                 "first_pass_used": 4
             }
         },
-        "ipam.l2vpn": {
-            "content_type": "ipam.l2vpn",
-            "content_type_id": 76,
-            "extends_content_type": null,
-            "nautobot_content_type": "ipam.l2vpn",
-            "disable_reason": "Nautobot content type: `ipam.l2vpn` not found",
-            "identifiers": null,
-            "disable_related_reference": false,
-            "forward_references": null,
-            "pre_import": null,
-            "fields": {},
-            "flags": "DiffSyncModelFlags.NONE",
-            "default_reference_uid": null,
-            "stats": {}
-        },
-        "ipam.l2vpntermination": {
-            "content_type": "ipam.l2vpntermination",
-            "content_type_id": 77,
-            "extends_content_type": null,
-            "nautobot_content_type": "ipam.l2vpntermination",
-            "disable_reason": "Nautobot content type: `ipam.l2vpntermination` not found",
-            "identifiers": null,
-            "disable_related_reference": false,
-            "forward_references": null,
-            "pre_import": null,
-            "fields": {},
-            "flags": "DiffSyncModelFlags.NONE",
-            "default_reference_uid": null,
-            "stats": {}
-        },
         "ipam.prefix": {
             "content_type": "ipam.prefix",
-            "content_type_id": 63,
+            "content_type_id": 70,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.prefix",
             "disable_reason": "",
@@ -11072,7 +11762,7 @@
         },
         "ipam.rir": {
             "content_type": "ipam.rir",
-            "content_type_id": 64,
+            "content_type_id": 71,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.rir",
             "disable_reason": "",
@@ -11206,7 +11896,7 @@
         },
         "ipam.role": {
             "content_type": "ipam.role",
-            "content_type_id": 65,
+            "content_type_id": 72,
             "extends_content_type": null,
             "nautobot_content_type": "extras.role",
             "disable_reason": "",
@@ -11371,7 +12061,7 @@
         },
         "ipam.routetarget": {
             "content_type": "ipam.routetarget",
-            "content_type_id": 66,
+            "content_type_id": 73,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.routetarget",
             "disable_reason": "",
@@ -11505,7 +12195,7 @@
         },
         "ipam.service": {
             "content_type": "ipam.service",
-            "content_type_id": 70,
+            "content_type_id": 77,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.service",
             "disable_reason": "",
@@ -11535,7 +12225,7 @@
         },
         "ipam.servicetemplate": {
             "content_type": "ipam.servicetemplate",
-            "content_type_id": 75,
+            "content_type_id": 82,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.servicetemplate",
             "disable_reason": "Nautobot content type: `ipam.servicetemplate` not found",
@@ -11550,7 +12240,7 @@
         },
         "ipam.vlan": {
             "content_type": "ipam.vlan",
-            "content_type_id": 69,
+            "content_type_id": 76,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.vlan",
             "disable_reason": "",
@@ -11786,7 +12476,7 @@
         },
         "ipam.vlangroup": {
             "content_type": "ipam.vlangroup",
-            "content_type_id": 68,
+            "content_type_id": 75,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.vlangroup",
             "disable_reason": "",
@@ -11962,7 +12652,7 @@
         },
         "ipam.vrf": {
             "content_type": "ipam.vrf",
-            "content_type_id": 67,
+            "content_type_id": 74,
             "extends_content_type": null,
             "nautobot_content_type": "ipam.vrf",
             "disable_reason": "",
@@ -12152,7 +12842,7 @@
         },
         "secrets.secret": {
             "content_type": "secrets.secret",
-            "content_type_id": 116,
+            "content_type_id": 129,
             "extends_content_type": null,
             "nautobot_content_type": "secrets.secret",
             "disable_reason": "Nautobot content type: `secrets.secret` not found",
@@ -12167,7 +12857,7 @@
         },
         "secrets.secretrole": {
             "content_type": "secrets.secretrole",
-            "content_type_id": 117,
+            "content_type_id": 130,
             "extends_content_type": null,
             "nautobot_content_type": "secrets.secretrole",
             "disable_reason": "Nautobot content type: `secrets.secretrole` not found",
@@ -12182,7 +12872,7 @@
         },
         "secrets.sessionkey": {
             "content_type": "secrets.sessionkey",
-            "content_type_id": 119,
+            "content_type_id": 132,
             "extends_content_type": null,
             "nautobot_content_type": "secrets.sessionkey",
             "disable_reason": "Nautobot content type: `secrets.sessionkey` not found",
@@ -12197,7 +12887,7 @@
         },
         "secrets.userkey": {
             "content_type": "secrets.userkey",
-            "content_type_id": 118,
+            "content_type_id": 131,
             "extends_content_type": null,
             "nautobot_content_type": "secrets.userkey",
             "disable_reason": "Nautobot content type: `secrets.userkey` not found",
@@ -12239,7 +12929,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": null,
             "stats": {
-                "first_pass_used": 9
+                "first_pass_used": 1
             }
         },
         "social_django.association": {
@@ -12454,7 +13144,7 @@
         },
         "tenancy.contact": {
             "content_type": "tenancy.contact",
-            "content_type_id": 100,
+            "content_type_id": 113,
             "extends_content_type": null,
             "nautobot_content_type": "tenancy.contact",
             "disable_reason": "Nautobot content type: `tenancy.contact` not found",
@@ -12471,7 +13161,7 @@
         },
         "tenancy.contactassignment": {
             "content_type": "tenancy.contactassignment",
-            "content_type_id": 101,
+            "content_type_id": 114,
             "extends_content_type": null,
             "nautobot_content_type": "tenancy.contactassignment",
             "disable_reason": "Nautobot content type: `tenancy.contactassignment` not found",
@@ -12488,7 +13178,7 @@
         },
         "tenancy.contactgroup": {
             "content_type": "tenancy.contactgroup",
-            "content_type_id": 99,
+            "content_type_id": 112,
             "extends_content_type": null,
             "nautobot_content_type": "tenancy.contactgroup",
             "disable_reason": "Nautobot content type: `tenancy.contactgroup` not found",
@@ -12505,7 +13195,7 @@
         },
         "tenancy.contactrole": {
             "content_type": "tenancy.contactrole",
-            "content_type_id": 98,
+            "content_type_id": 111,
             "extends_content_type": null,
             "nautobot_content_type": "tenancy.contactrole",
             "disable_reason": "Nautobot content type: `tenancy.contactrole` not found",
@@ -12522,7 +13212,7 @@
         },
         "tenancy.tenant": {
             "content_type": "tenancy.tenant",
-            "content_type_id": 97,
+            "content_type_id": 110,
             "extends_content_type": null,
             "nautobot_content_type": "tenancy.tenant",
             "disable_reason": "",
@@ -12671,7 +13361,7 @@
         },
         "tenancy.tenantgroup": {
             "content_type": "tenancy.tenantgroup",
-            "content_type_id": 96,
+            "content_type_id": 109,
             "extends_content_type": null,
             "nautobot_content_type": "tenancy.tenantgroup",
             "disable_reason": "",
@@ -12863,42 +13553,27 @@
                 "imported": 1
             }
         },
-        "users.admingroup": {
-            "content_type": "users.admingroup",
-            "content_type_id": 102,
+        "users.netboxgroup": {
+            "content_type": "users.netboxgroup",
+            "content_type_id": 118,
             "extends_content_type": null,
-            "nautobot_content_type": "users.admingroup",
-            "disable_reason": "",
+            "nautobot_content_type": "users.netboxgroup",
+            "disable_reason": "Nautobot content type: `users.netboxgroup` not found",
             "identifiers": null,
             "disable_related_reference": false,
             "forward_references": null,
             "pre_import": null,
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "nautobot_name": "id",
-                    "nautobot_internal_type": "AutoField",
-                    "nautobot_can_import": true,
-                    "importer": null,
-                    "definition": "id",
-                    "sources": [
-                        "AUTO"
-                    ],
-                    "default_value": null,
-                    "disable_reason": "",
-                    "required": false
-                }
-            },
+            "fields": {},
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": null,
             "stats": {}
         },
-        "users.adminuser": {
-            "content_type": "users.adminuser",
-            "content_type_id": 103,
+        "users.netboxuser": {
+            "content_type": "users.netboxuser",
+            "content_type_id": 119,
             "extends_content_type": null,
-            "nautobot_content_type": "users.adminuser",
-            "disable_reason": "Nautobot content type: `users.adminuser` not found",
+            "nautobot_content_type": "users.netboxuser",
+            "disable_reason": "Nautobot content type: `users.netboxuser` not found",
             "identifiers": null,
             "disable_related_reference": false,
             "forward_references": null,
@@ -12910,7 +13585,7 @@
         },
         "users.objectpermission": {
             "content_type": "users.objectpermission",
-            "content_type_id": 106,
+            "content_type_id": 117,
             "extends_content_type": null,
             "nautobot_content_type": "users.objectpermission",
             "disable_reason": "",
@@ -12940,7 +13615,7 @@
         },
         "users.token": {
             "content_type": "users.token",
-            "content_type_id": 105,
+            "content_type_id": 116,
             "extends_content_type": null,
             "nautobot_content_type": "users.token",
             "disable_reason": "",
@@ -12970,7 +13645,7 @@
         },
         "users.userconfig": {
             "content_type": "users.userconfig",
-            "content_type_id": 104,
+            "content_type_id": 115,
             "extends_content_type": null,
             "nautobot_content_type": "users.userconfig",
             "disable_reason": "May not have a 1 to 1 translation to Nautobot.",
@@ -12987,7 +13662,7 @@
         },
         "virtualization.cluster": {
             "content_type": "virtualization.cluster",
-            "content_type_id": 107,
+            "content_type_id": 120,
             "extends_content_type": null,
             "nautobot_content_type": "virtualization.cluster",
             "disable_reason": "",
@@ -13208,7 +13883,7 @@
         },
         "virtualization.clustergroup": {
             "content_type": "virtualization.clustergroup",
-            "content_type_id": 108,
+            "content_type_id": 121,
             "extends_content_type": null,
             "nautobot_content_type": "virtualization.clustergroup",
             "disable_reason": "",
@@ -13328,7 +14003,7 @@
         },
         "virtualization.clustertype": {
             "content_type": "virtualization.clustertype",
-            "content_type_id": 109,
+            "content_type_id": 122,
             "extends_content_type": null,
             "nautobot_content_type": "virtualization.clustertype",
             "disable_reason": "",
@@ -13446,9 +14121,24 @@
                 "imported": 6
             }
         },
+        "virtualization.virtualdisk": {
+            "content_type": "virtualization.virtualdisk",
+            "content_type_id": 134,
+            "extends_content_type": null,
+            "nautobot_content_type": "virtualization.virtualdisk",
+            "disable_reason": "Nautobot content type: `virtualization.virtualdisk` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
         "virtualization.virtualmachine": {
             "content_type": "virtualization.virtualmachine",
-            "content_type_id": 110,
+            "content_type_id": 123,
             "extends_content_type": null,
             "nautobot_content_type": "virtualization.virtualmachine",
             "disable_reason": "",
@@ -13492,6 +14182,20 @@
                     "nautobot_can_import": true,
                     "importer": "value_importer",
                     "definition": "comments",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "config_template": {
+                    "name": "config_template",
+                    "nautobot_name": "config_template",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "config_template",
                     "sources": [
                         "DATA"
                     ],
@@ -13583,6 +14287,20 @@
                     "default_value": null,
                     "disable_reason": "",
                     "required": true
+                },
+                "interface_count": {
+                    "name": "interface_count",
+                    "nautobot_name": "interface_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "interface_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 },
                 "last_updated": {
                     "name": "last_updated",
@@ -13753,6 +14471,20 @@
                     "default_value": null,
                     "disable_reason": "",
                     "required": false
+                },
+                "virtual_disk_count": {
+                    "name": "virtual_disk_count",
+                    "nautobot_name": "virtual_disk_count",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "virtual_disk_count",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 }
             },
             "flags": "DiffSyncModelFlags.NONE",
@@ -13766,7 +14498,7 @@
         },
         "virtualization.vminterface": {
             "content_type": "virtualization.vminterface",
-            "content_type_id": 111,
+            "content_type_id": 124,
             "extends_content_type": null,
             "nautobot_content_type": "virtualization.vminterface",
             "disable_reason": "",
@@ -14039,9 +14771,159 @@
                 "imported": 720
             }
         },
+        "vpn.ikepolicy": {
+            "content_type": "vpn.ikepolicy",
+            "content_type_id": 136,
+            "extends_content_type": null,
+            "nautobot_content_type": "vpn.ikepolicy",
+            "disable_reason": "Nautobot content type: `vpn.ikepolicy` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "vpn.ikeproposal": {
+            "content_type": "vpn.ikeproposal",
+            "content_type_id": 135,
+            "extends_content_type": null,
+            "nautobot_content_type": "vpn.ikeproposal",
+            "disable_reason": "Nautobot content type: `vpn.ikeproposal` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "vpn.ipsecpolicy": {
+            "content_type": "vpn.ipsecpolicy",
+            "content_type_id": 138,
+            "extends_content_type": null,
+            "nautobot_content_type": "vpn.ipsecpolicy",
+            "disable_reason": "Nautobot content type: `vpn.ipsecpolicy` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "vpn.ipsecprofile": {
+            "content_type": "vpn.ipsecprofile",
+            "content_type_id": 139,
+            "extends_content_type": null,
+            "nautobot_content_type": "vpn.ipsecprofile",
+            "disable_reason": "Nautobot content type: `vpn.ipsecprofile` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "vpn.ipsecproposal": {
+            "content_type": "vpn.ipsecproposal",
+            "content_type_id": 137,
+            "extends_content_type": null,
+            "nautobot_content_type": "vpn.ipsecproposal",
+            "disable_reason": "Nautobot content type: `vpn.ipsecproposal` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "vpn.l2vpn": {
+            "content_type": "vpn.l2vpn",
+            "content_type_id": 83,
+            "extends_content_type": null,
+            "nautobot_content_type": "vpn.l2vpn",
+            "disable_reason": "Nautobot content type: `vpn.l2vpn` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "vpn.l2vpntermination": {
+            "content_type": "vpn.l2vpntermination",
+            "content_type_id": 84,
+            "extends_content_type": null,
+            "nautobot_content_type": "vpn.l2vpntermination",
+            "disable_reason": "Nautobot content type: `vpn.l2vpntermination` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "vpn.tunnel": {
+            "content_type": "vpn.tunnel",
+            "content_type_id": 141,
+            "extends_content_type": null,
+            "nautobot_content_type": "vpn.tunnel",
+            "disable_reason": "Nautobot content type: `vpn.tunnel` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "vpn.tunnelgroup": {
+            "content_type": "vpn.tunnelgroup",
+            "content_type_id": 140,
+            "extends_content_type": null,
+            "nautobot_content_type": "vpn.tunnelgroup",
+            "disable_reason": "Nautobot content type: `vpn.tunnelgroup` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
+        "vpn.tunneltermination": {
+            "content_type": "vpn.tunneltermination",
+            "content_type_id": 142,
+            "extends_content_type": null,
+            "nautobot_content_type": "vpn.tunneltermination",
+            "disable_reason": "Nautobot content type: `vpn.tunneltermination` not found",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "pre_import": null,
+            "fields": {},
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": null,
+            "stats": {}
+        },
         "wireless.wirelesslan": {
             "content_type": "wireless.wirelesslan",
-            "content_type_id": 113,
+            "content_type_id": 126,
             "extends_content_type": null,
             "nautobot_content_type": "wireless.wirelesslan",
             "disable_reason": "Nautobot content type: `wireless.wirelesslan` not found",
@@ -14056,7 +14938,7 @@
         },
         "wireless.wirelesslangroup": {
             "content_type": "wireless.wirelesslangroup",
-            "content_type_id": 112,
+            "content_type_id": 125,
             "extends_content_type": null,
             "nautobot_content_type": "wireless.wirelesslangroup",
             "disable_reason": "Nautobot content type: `wireless.wirelesslangroup` not found",
@@ -14071,7 +14953,7 @@
         },
         "wireless.wirelesslink": {
             "content_type": "wireless.wirelesslink",
-            "content_type_id": 114,
+            "content_type_id": 127,
             "extends_content_type": null,
             "nautobot_content_type": "wireless.wirelesslink",
             "disable_reason": "Nautobot content type: `wireless.wirelesslink` not found",
@@ -14086,6 +14968,14 @@
         }
     },
     "nautobot": {
+        "account.usertoken": {
+            "content_type": "account.usertoken",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
         "admin.logentry": {
             "content_type": "admin.logentry",
             "content_type_id": 13,
@@ -14152,6 +15042,14 @@
             },
             "issues": []
         },
+        "circuits.provideraccount": {
+            "content_type": "circuits.provideraccount",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
         "circuits.providernetwork": {
             "content_type": "circuits.providernetwork",
             "content_type_id": 23,
@@ -14168,8 +15066,64 @@
             "flags": "DiffSyncModelFlags.IGNORE",
             "disabled": false,
             "stats": {
-                "source_ignored": 119
+                "source_ignored": 143
             },
+            "issues": []
+        },
+        "core.autosyncrecord": {
+            "content_type": "core.autosyncrecord",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "core.configrevision": {
+            "content_type": "core.configrevision",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "core.contenttype": {
+            "content_type": "core.contenttype",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "core.datafile": {
+            "content_type": "core.datafile",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "core.datasource": {
+            "content_type": "core.datasource",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "core.job": {
+            "content_type": "core.job",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "core.managedfile": {
+            "content_type": "core.managedfile",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
             "issues": []
         },
         "dcim.cable": {
@@ -14826,6 +15780,14 @@
             "stats": {},
             "issues": []
         },
+        "extras.bookmark": {
+            "content_type": "extras.bookmark",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
         "extras.branch": {
             "content_type": "extras.branch",
             "content_type_id": null,
@@ -14850,8 +15812,8 @@
             "stats": {},
             "issues": []
         },
-        "extras.configrevision": {
-            "content_type": "extras.configrevision",
+        "extras.configtemplate": {
+            "content_type": "extras.configtemplate",
             "content_type_id": null,
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": true,
@@ -14892,6 +15854,22 @@
             "stats": {},
             "issues": []
         },
+        "extras.dashboard": {
+            "content_type": "extras.dashboard",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "extras.eventrule": {
+            "content_type": "extras.eventrule",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
         "extras.exporttemplate": {
             "content_type": "extras.exporttemplate",
             "content_type_id": 97,
@@ -14903,14 +15881,6 @@
         "extras.imageattachment": {
             "content_type": "extras.imageattachment",
             "content_type_id": 102,
-            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
-            "disabled": false,
-            "stats": {},
-            "issues": []
-        },
-        "extras.jobresult": {
-            "content_type": "extras.jobresult",
-            "content_type_id": 90,
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {},
@@ -14940,6 +15910,14 @@
             "stats": {},
             "issues": []
         },
+        "extras.reportmodule": {
+            "content_type": "extras.reportmodule",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
         "extras.role": {
             "content_type": "extras.role",
             "content_type_id": 80,
@@ -14960,6 +15938,14 @@
         },
         "extras.script": {
             "content_type": "extras.script",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "extras.scriptmodule": {
+            "content_type": "extras.scriptmodule",
             "content_type_id": null,
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": true,
@@ -15020,6 +16006,14 @@
             "stats": {},
             "issues": []
         },
+        "ipam.asnrange": {
+            "content_type": "ipam.asnrange",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
         "ipam.fhrpgroupassignment": {
             "content_type": "ipam.fhrpgroupassignment",
             "content_type_id": null,
@@ -15040,22 +16034,6 @@
         },
         "ipam.iprange": {
             "content_type": "ipam.iprange",
-            "content_type_id": null,
-            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
-            "disabled": true,
-            "stats": {},
-            "issues": []
-        },
-        "ipam.l2vpn": {
-            "content_type": "ipam.l2vpn",
-            "content_type_id": null,
-            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
-            "disabled": true,
-            "stats": {},
-            "issues": []
-        },
-        "ipam.l2vpntermination": {
-            "content_type": "ipam.l2vpntermination",
             "content_type_id": null,
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": true,
@@ -15286,16 +16264,16 @@
             },
             "issues": []
         },
-        "users.admingroup": {
-            "content_type": "users.admingroup",
-            "content_type_id": 2,
+        "users.netboxgroup": {
+            "content_type": "users.netboxgroup",
+            "content_type_id": null,
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
-            "disabled": false,
+            "disabled": true,
             "stats": {},
             "issues": []
         },
-        "users.adminuser": {
-            "content_type": "users.adminuser",
+        "users.netboxuser": {
+            "content_type": "users.netboxuser",
             "content_type_id": null,
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": true,
@@ -15366,6 +16344,14 @@
             },
             "issues": []
         },
+        "virtualization.virtualdisk": {
+            "content_type": "virtualization.virtualdisk",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
         "virtualization.virtualmachine": {
             "content_type": "virtualization.virtualmachine",
             "content_type_id": 117,
@@ -15384,6 +16370,86 @@
             "stats": {
                 "source_created": 720
             },
+            "issues": []
+        },
+        "vpn.ikepolicy": {
+            "content_type": "vpn.ikepolicy",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "vpn.ikeproposal": {
+            "content_type": "vpn.ikeproposal",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "vpn.ipsecpolicy": {
+            "content_type": "vpn.ipsecpolicy",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "vpn.ipsecprofile": {
+            "content_type": "vpn.ipsecprofile",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "vpn.ipsecproposal": {
+            "content_type": "vpn.ipsecproposal",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "vpn.l2vpn": {
+            "content_type": "vpn.l2vpn",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "vpn.l2vpntermination": {
+            "content_type": "vpn.l2vpntermination",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "vpn.tunnel": {
+            "content_type": "vpn.tunnel",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "vpn.tunnelgroup": {
+            "content_type": "vpn.tunnelgroup",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
+            "issues": []
+        },
+        "vpn.tunneltermination": {
+            "content_type": "vpn.tunneltermination",
+            "content_type_id": null,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": true,
+            "stats": {},
             "issues": []
         },
         "wireless.wirelesslan": {

@@ -1,0 +1,83 @@
+[
+{
+  "model": "dcim.rack",
+  "pk": "0ed813a0-26e3-570e-b3d2-34b2c96036fd",
+  "fields": {
+    "created": "2020-12-20T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:12.666Z",
+    "_custom_field_data": {},
+    "name": "Comms closet",
+    "_name": "Comms closet",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": null,
+    "facility_id": null,
+    "location": "920970b7-44b2-5c1d-862d-d9f568553e53",
+    "rack_group": null,
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "serial": "",
+    "asset_tag": null,
+    "type": "wall-cabinet",
+    "width": 19,
+    "u_height": 12,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.rack",
+  "pk": "368dfeb1-eb21-528f-a9f8-827ce66bdeb3",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:12.871Z",
+    "_custom_field_data": {},
+    "name": "R307",
+    "_name": "R00000307",
+    "status": "9172bac4-6144-54e5-b44d-f530905f8d05",
+    "role": null,
+    "facility_id": null,
+    "location": "a7f18fd3-b68a-5304-903a-6996f5ac9731",
+    "rack_group": null,
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "serial": "",
+    "asset_tag": null,
+    "type": "4-post-cabinet",
+    "width": 19,
+    "u_height": 48,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.rack",
+  "pk": "82b8b341-86cb-5760-a942-01f866935056",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:12.860Z",
+    "_custom_field_data": {},
+    "name": "R305",
+    "_name": "R00000305",
+    "status": "9172bac4-6144-54e5-b44d-f530905f8d05",
+    "role": null,
+    "facility_id": null,
+    "location": "a7f18fd3-b68a-5304-903a-6996f5ac9731",
+    "rack_group": null,
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "serial": "",
+    "asset_tag": null,
+    "type": "4-post-cabinet",
+    "width": 19,
+    "u_height": 48,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+}
+]
