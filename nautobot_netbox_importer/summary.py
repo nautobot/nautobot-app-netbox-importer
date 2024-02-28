@@ -68,6 +68,8 @@ class NautobotModelStats:
     # Source DiffSyncModels created and synced by DiffSync
     source_created = 0
     issues = 0
+    # Number of Nautobot instances that failed `save()` method
+    save_failed = 0
 
 
 class SourceModelSummary(NamedTuple):
@@ -284,7 +286,7 @@ class ImportSummary:
             if summary.issues:
                 yield _fill_up("-", summary.content_type)
                 for issue in summary.issues:
-                    yield f"{issue.uid} {issue.name} | {issue.issue_type} | {issue.message}"
+                    yield f"{issue.uid} | {issue.issue_type} | {json.dumps(issue.name)} | {json.dumps(issue.message)}"
 
     def get_fields_mapping(self) -> Generator[str, None, None]:
         """Get formatted field mappings."""

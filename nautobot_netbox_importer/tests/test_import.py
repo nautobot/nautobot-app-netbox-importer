@@ -143,6 +143,7 @@ class TestImport(TestCase):
 
         self.assertEqual(len(expected_summary.nautobot), len(source.summary.nautobot), "Nautobot model counts mismatch")
 
+        save_failed_sum = 0
         for expected_item in expected_summary.nautobot:
             nautobot_item = next(
                 item for item in source.summary.nautobot if item.content_type == expected_item.content_type
@@ -154,14 +155,15 @@ class TestImport(TestCase):
             )
             expected_diffsync_summary["create"] += expected_item.stats.source_created
             expected_diffsync_summary["skip"] += expected_item.stats.source_ignored
+            save_failed_sum += nautobot_item.stats.save_failed
 
         self.assertEqual(expected_summary.diffsync, source.summary.diffsync, "DiffSync summary mismatch")
         self.assertEqual(expected_diffsync_summary, source.summary.diffsync, "Expected DiffSync summary mismatch")
 
         # Re-import the same file to verify that nothing has changed
         second_source = self._import_file(input_ref)
-        expected_diffsync_summary["no-change"] = expected_diffsync_summary["create"]
-        expected_diffsync_summary["create"] = 0
+        expected_diffsync_summary["no-change"] = expected_diffsync_summary["create"] - save_failed_sum
+        expected_diffsync_summary["create"] = save_failed_sum
         self.assertEqual(
             expected_diffsync_summary, second_source.summary.diffsync, "Expected DiffSync 2 summary mismatch"
         )
@@ -195,7 +197,7 @@ class TestImport(TestCase):
     def _verify_model(self, samples_path: Path, wrapper: NautobotModelWrapper):
         """Verify data."""
         self.assertLessEqual(
-            wrapper.stats.source_created,
+            wrapper.stats.source_created - wrapper.stats.save_failed,
             wrapper.model.objects.count(),
             f"Nautobot instances count mismatch for {wrapper.content_type}",
         )

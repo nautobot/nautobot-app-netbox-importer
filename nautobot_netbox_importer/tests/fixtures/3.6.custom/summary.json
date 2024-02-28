@@ -1,6 +1,6 @@
 {
     "diffsync": {
-        "create": 68,
+        "create": 70,
         "update": 0,
         "delete": 0,
         "no-change": 0,
@@ -807,7 +807,12 @@
             },
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": null,
-            "stats": {}
+            "stats": {
+                "first_pass_used": 1,
+                "second_pass_used": 1,
+                "created": 1,
+                "imported": 1
+            }
         },
         "dcim.cablepath": {
             "content_type": "dcim.cablepath",
@@ -5917,10 +5922,10 @@
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
             "stats": {
-                "pre_cached": 2,
-                "imported": 2,
-                "imported_from_cache": 2,
-                "created": 2
+                "pre_cached": 3,
+                "imported": 3,
+                "imported_from_cache": 3,
+                "created": 3
             }
         },
         "extras.tag": {
@@ -8720,8 +8725,19 @@
             "content_type_id": 45,
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
-            "stats": {},
-            "issues": []
+            "stats": {
+                "source_created": 1,
+                "save_failed": 1,
+                "issues": 1
+            },
+            "issues": [
+                {
+                    "uid": "6df947b3-9159-5b42-8367-c0d7edb3986c",
+                    "name": "\"{'_state': <django.db.models.base.ModelState object at 0x7f8fa0da86d0>, 'id': UUID('6df947b3-9159-5b42-8367-c0d7edb3986c'), 'created': datetime.datetime(2024, 2, 28, 13, 29, 18, 147727, tzinfo=<UTC>), 'last_updated': datetime.datetime(2024, 2, 28, 13, 29, 18, 147734, tzinfo=<UTC>), '_custom_field_data': {}, 'termination_a_type_id': None, 'termination_a_id': None, 'termination_b_type_id': None, 'termination_b_id': None, 'type': 'smf', 'status_id': UUID('e81c76fa-2fb5-54e3-acbd-f0b817639af5'), 'label': '', 'color': 'ffeb3b', 'length': None, 'length_unit': '', '_abs_length': None, '_termination_a_device_id': None, '_termination_b_device_id': None, '_pk': UUID('6df947b3-9159-5b42-8367-c0d7edb3986c'), '_orig_status': None}\"",
+                    "issue_type": "SaveFailed",
+                    "message": "\"null value in column \\\"termination_a_id\\\" of relation \\\"dcim_cable\\\" violates not-null constraint\\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-02-28 13:29:18.147727+00, 2024-02-28 13:29:18.147734+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\\n\""
+                }
+            ]
         },
         "dcim.cablepath": {
             "content_type": "dcim.cablepath",
@@ -9293,7 +9309,7 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 2
+                "source_created": 3
             },
             "issues": []
         },

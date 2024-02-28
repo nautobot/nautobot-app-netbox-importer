@@ -17,6 +17,7 @@ from diffsync.enum import DiffSyncModelFlags
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db.models import Max
+from django.db.transaction import atomic
 from nautobot.core.utils.lookup import get_model_from_name
 
 from nautobot_netbox_importer.base import FieldName
@@ -393,7 +394,7 @@ class NautobotModelWrapper:
                         str(uid),
                         "",
                         error.__class__.__name__,
-                        f"Instance was not found, event it was saved. {error}",
+                        f"Instance was not found, even it was saved. {error}",
                     )
                 )
             return None
@@ -413,7 +414,7 @@ class NautobotModelWrapper:
         self._clean_failures = set()
 
         for issue in self._issues:
-            instance = find_instance(issue.uid) if issue.uid else None
+            instance = find_instance(issue.uid) if issue.uid and not issue.name else None
             if instance:
                 result.append(ImporterIssue(issue.uid, str(instance), issue.issue_type, issue.message))
             else:
@@ -483,7 +484,6 @@ class NautobotModelWrapper:
             if field.can_import:
                 set_value(field.name, field.internal_type)
 
-    # pylint: disable=too-many-statements,too-many-branches
     def save_nautobot_instance(self, instance: NautobotBaseModel, values: RecordData) -> None:
         """Save a Nautobot instance."""
 
@@ -501,44 +501,58 @@ class NautobotModelWrapper:
             else:
                 setattr(instance, field_name, None)
 
-        m2m_fields = set()
-        force_fields = {}
+        @atomic
+        def save():
+            m2m_fields = set()
+            force_fields = {}
 
-        for field_name, value in values.items():
-            field_wrapper = self.fields[field_name]
-            if not field_wrapper.can_import:
-                continue
+            for field_name, value in values.items():
+                field_wrapper = self.fields[field_name]
+                if not field_wrapper.can_import:
+                    continue
 
-            if field_wrapper.internal_type == InternalFieldType.MANY_TO_MANY_FIELD:
-                m2m_fields.add(field_name)
-            elif field_wrapper.internal_type == InternalFieldType.CUSTOM_FIELD_DATA:
-                set_custom_field_data(value)
-            elif value in EMPTY_VALUES:
-                set_empty(field_wrapper.field, field_name)
-            elif field_wrapper.force:
-                force_fields[field_name] = value
-            else:
-                setattr(instance, field_name, value)
+                if field_wrapper.internal_type == InternalFieldType.MANY_TO_MANY_FIELD:
+                    m2m_fields.add(field_name)
+                elif field_wrapper.internal_type == InternalFieldType.CUSTOM_FIELD_DATA:
+                    set_custom_field_data(value)
+                elif value in EMPTY_VALUES:
+                    set_empty(field_wrapper.field, field_name)
+                elif field_wrapper.force:
+                    force_fields[field_name] = value
+                else:
+                    setattr(instance, field_name, value)
+
+            instance.save()
+
+            if force_fields:
+                # These fields has to be set after the initial save to override any default values.
+                for field_name, value in force_fields.items():
+                    setattr(instance, field_name, value)
+                instance.save()
+
+            for field_name in m2m_fields:
+                field = getattr(instance, field_name)
+                value = values[field_name]
+                if value:
+                    field.set(value)
+                else:
+                    field.clear()
 
         try:
-            instance.save()
-        except Exception:
+            save()
+        # pylint: disable=broad-exception-caught
+        except Exception as error:
+            self.stats.save_failed += 1
+            self._issues.add(
+                ImporterIssue(
+                    str(getattr(instance, self.pk_field.name)),
+                    str(instance.__dict__),
+                    "SaveFailed",
+                    str(error),
+                )
+            )
             logger.error("Save failed: %r %s", type(instance), instance.__dict__)
-            raise
-
-        if force_fields:
-            # These fields has to be set after the initial save to override any default values.
-            for field_name, value in force_fields.items():
-                setattr(instance, field_name, value)
-            instance.save()
-
-        for field_name in m2m_fields:
-            field = getattr(instance, field_name)
-            value = values[field_name]
-            if value:
-                field.set(value)
-            else:
-                field.clear()
+            return
 
         try:
             instance.clean()
