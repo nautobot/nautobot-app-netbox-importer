@@ -92,6 +92,10 @@ class TestImport(TestCase):
         """Test import for NetBox 3.6 with customized data."""
         self._import("3.6.custom")
 
+    def test_3_7(self):
+        """Test import for NetBox 3.7."""
+        self._import("3.7")
+
     def _import(self, version: str):
         """Test import."""
         fixtures_path = _FIXTURES_PATH / version

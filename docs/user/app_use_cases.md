@@ -62,9 +62,13 @@ Run the following command from the NetBox root directory to create a JSON file (
 ./manage.py dumpdata \
     --traceback \
     --format=json \
+    --indent=2 \
     --natural-primary \
     --natural-foreign \
-    --exclude extras.ObjectChange \
+    --exclude=extras.ObjectChange \
+    --exclude=extras.Report \
+    --exclude=extras.Script \
+    --exclude=django_rq.Queue \
     --output=/tmp/netbox_data.json
 ```
 
