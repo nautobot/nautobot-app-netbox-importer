@@ -132,5 +132,4 @@ nav:
       - Code Reference:
           - "dev/code_reference/index.md"
           - Package: "dev/code_reference/package.md"
-          - Diffsync: "dev/code_reference/diffsync.md"
   - Nautobot Docs Home ↗︎: "https://docs.nautobot.com"
