@@ -62,13 +62,22 @@ Run the following command from the NetBox root directory to create a JSON file (
 ./manage.py dumpdata \
     --traceback \
     --format=json \
+    --indent=2 \
     --natural-primary \
     --natural-foreign \
-    --exclude extras.ObjectChange \
+    --exclude=extras.ObjectChange \
     --output=/tmp/netbox_data.json
 ```
 
 It's possible to exclude other models from the export, but the command provided above is a good starting point. The `import_netbox` command will skip models that are not present in the Nautobot database.
+
+!!! warning
+    The export command may fail if there are registered content types not present in the database. If you encounter an error message such as:
+    ```
+    django.db.utils.ProgrammingError: relation "extras_report" does not exist
+    LINE 1: SELECT COUNT(*) AS "__count" FROM "extras_report"
+    ```
+    exclude the affected model from the export command using `--exclude=extras.Report`.
 
 !!! tip
     Change log `ObjectChange` records are not included in the export command above because they can contain a massive amount of data. It's possible to import change log records in the next step, as described later in this document.

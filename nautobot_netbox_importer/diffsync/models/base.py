@@ -91,6 +91,12 @@ def setup(adapter: SourceAdapter) -> None:
     )
     adapter.configure_model("extras.role")
     adapter.configure_model(
+        "extras.tag",
+        fields={
+            "object_types": "content_types",
+        },
+    )
+    adapter.configure_model(
         "extras.TaggedItem",
         fields={
             "object_id": _define_tagged_object,

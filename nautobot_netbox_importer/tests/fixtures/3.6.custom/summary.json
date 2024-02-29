@@ -1,6 +1,6 @@
 {
     "diffsync": {
-        "create": 68,
+        "create": 70,
         "update": 0,
         "delete": 0,
         "no-change": 0,
@@ -776,6 +776,90 @@
             "forward_references": null,
             "pre_import": null,
             "fields": {
+                "_abs_length": {
+                    "name": "_abs_length",
+                    "nautobot_name": "_abs_length",
+                    "nautobot_internal_type": "PrivateProperty",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "_abs_length",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "color": {
+                    "name": "color",
+                    "nautobot_name": "color",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "color",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "comments": {
+                    "name": "comments",
+                    "nautobot_name": "comments",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "comments",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "created": {
+                    "name": "created",
+                    "nautobot_name": "created",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": "datetime_importer",
+                    "definition": "created",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "custom_field_data": {
+                    "name": "custom_field_data",
+                    "nautobot_name": "custom_field_data",
+                    "nautobot_internal_type": "CustomFieldData",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "custom_field_data",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "description": {
+                    "name": "description",
+                    "nautobot_name": "description",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -784,11 +868,68 @@
                     "importer": null,
                     "definition": "id",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": "",
                     "required": true
+                },
+                "label": {
+                    "name": "label",
+                    "nautobot_name": "label",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "label",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "last_updated": {
+                    "name": "last_updated",
+                    "nautobot_name": "last_updated",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
+                },
+                "length": {
+                    "name": "length",
+                    "nautobot_name": "length",
+                    "nautobot_internal_type": "PositiveSmallIntegerField",
+                    "nautobot_can_import": true,
+                    "importer": "integer_importer",
+                    "definition": "length",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "length_unit": {
+                    "name": "length_unit",
+                    "nautobot_name": "length_unit",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "choice_importer",
+                    "definition": "length_unit",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -798,16 +939,50 @@
                     "importer": "status_importer",
                     "definition": "status",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
                     "disable_reason": "",
                     "required": true
+                },
+                "tenant": {
+                    "name": "tenant",
+                    "nautobot_name": "tenant",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "tenant",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "type": {
+                    "name": "type",
+                    "nautobot_name": "type",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "choice_importer",
+                    "definition": "type",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 }
             },
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": null,
-            "stats": {}
+            "stats": {
+                "first_pass_used": 1,
+                "second_pass_used": 1,
+                "created": 1,
+                "imported": 1
+            }
         },
         "dcim.cablepath": {
             "content_type": "dcim.cablepath",
@@ -5567,7 +5742,7 @@
                     ],
                     "default_value": null,
                     "disable_reason": "",
-                    "required": false
+                    "required": true
                 },
                 "id": {
                     "name": "id",
@@ -5917,10 +6092,10 @@
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
             "stats": {
-                "pre_cached": 2,
-                "imported": 2,
-                "imported_from_cache": 2,
-                "created": 2
+                "pre_cached": 3,
+                "imported": 3,
+                "imported_from_cache": 3,
+                "created": 3
             }
         },
         "extras.tag": {
@@ -5957,6 +6132,20 @@
                     "definition": "id",
                     "sources": [
                         "AUTO"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "object_types": {
+                    "name": "object_types",
+                    "nautobot_name": "content_types",
+                    "nautobot_internal_type": "ManyToManyField",
+                    "nautobot_can_import": true,
+                    "importer": "content_types_importer",
+                    "definition": "content_types",
+                    "sources": [
+                        "CUSTOM"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -8706,8 +8895,19 @@
             "content_type_id": 45,
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
-            "stats": {},
-            "issues": []
+            "stats": {
+                "source_created": 1,
+                "save_failed": 1,
+                "issues": 1
+            },
+            "issues": [
+                {
+                    "uid": "6df947b3-9159-5b42-8367-c0d7edb3986c",
+                    "name": "\"{'_state': <django.db.models.base.ModelState object at 0x7f8fa0da86d0>, 'id': UUID('6df947b3-9159-5b42-8367-c0d7edb3986c'), 'created': datetime.datetime(2024, 2, 28, 13, 29, 18, 147727, tzinfo=<UTC>), 'last_updated': datetime.datetime(2024, 2, 28, 13, 29, 18, 147734, tzinfo=<UTC>), '_custom_field_data': {}, 'termination_a_type_id': None, 'termination_a_id': None, 'termination_b_type_id': None, 'termination_b_id': None, 'type': 'smf', 'status_id': UUID('e81c76fa-2fb5-54e3-acbd-f0b817639af5'), 'label': '', 'color': 'ffeb3b', 'length': None, 'length_unit': '', '_abs_length': None, '_termination_a_device_id': None, '_termination_b_device_id': None, '_pk': UUID('6df947b3-9159-5b42-8367-c0d7edb3986c'), '_orig_status': None}\"",
+                    "issue_type": "SaveFailed",
+                    "message": "\"null value in column \\\"termination_a_id\\\" of relation \\\"dcim_cable\\\" violates not-null constraint\\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-02-28 13:29:18.147727+00, 2024-02-28 13:29:18.147734+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\\n\""
+                }
+            ]
         },
         "dcim.cablepath": {
             "content_type": "dcim.cablepath",
@@ -9279,7 +9479,7 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 2
+                "source_created": 3
             },
             "issues": []
         },

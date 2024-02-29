@@ -3060,5 +3060,24 @@
       ]
     ]
   }
+},
+{
+  "model": "dcim.cable",
+  "pk": 1,
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2020-12-30T19:32:32.279Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "type": "smf",
+    "status": "connected",
+    "tenant": null,
+    "label": "",
+    "color": "ffeb3b",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null
+  }
 }
 ]

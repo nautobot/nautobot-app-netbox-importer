@@ -501,7 +501,7 @@ class SourceModelWrapper:
     def set_identifiers(self, identifiers: Iterable[FieldName]) -> None:
         """Set identifiers for the model."""
         if self.identifiers:
-            if sorted(list(identifiers)) == self.identifiers:
+            if list(identifiers) == self.identifiers:
                 return
             raise ValueError(
                 f"Different identifiers were already set up | original: `{self.identifiers}` | new: `{identifiers}`"
@@ -510,7 +510,7 @@ class SourceModelWrapper:
         if list(identifiers) == [self.nautobot.pk_field.name]:
             return
 
-        self.identifiers = sorted(list(identifiers))
+        self.identifiers = list(identifiers)
         for identifier in self.identifiers:
             self.add_field(identifier, SourceFieldSource.IDENTIFIER)
 

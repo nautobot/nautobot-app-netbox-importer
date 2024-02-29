@@ -1,0 +1,62 @@
+[
+{
+  "model": "circuits.circuit",
+  "pk": "59523c4f-f12f-5d16-8773-d87ba79caffe",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-02-08T07:54:55.716Z",
+    "_custom_field_data": {},
+    "cid": "DOQHD947",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "30efd662-fc9b-5892-b2be-adeb8091cb29",
+    "circuit_type": "0c9d650f-39cd-5060-809c-8cbc291e9fbb",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": "96175cfc-d219-5383-ba15-b9e44d6888f8",
+    "circuit_termination_z": "fed7cc00-4eae-5b48-a493-096372bb4f6c"
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": "ec546139-9a55-5bb5-b939-aab775339e92",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-02-08T07:54:55.772Z",
+    "_custom_field_data": {},
+    "cid": "PPJQ5091",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "30efd662-fc9b-5892-b2be-adeb8091cb29",
+    "circuit_type": "0c9d650f-39cd-5060-809c-8cbc291e9fbb",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": "9b657ab6-9fba-55a8-9df2-2253c6f198e0",
+    "circuit_termination_z": "127e0d2d-2162-5709-8cd7-07f68916ab05"
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": "f4765d9a-6c74-5893-b98b-77e6cef06996",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-02-08T07:54:55.758Z",
+    "_custom_field_data": {},
+    "cid": "KSIR0381",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "30efd662-fc9b-5892-b2be-adeb8091cb29",
+    "circuit_type": "0c9d650f-39cd-5060-809c-8cbc291e9fbb",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": "b653d70d-a7d8-56ae-8dcd-24f660ad85a8",
+    "circuit_termination_z": "ff725522-e836-5ccb-a5b2-02267d2f6ec2"
+  }
+}
+]
