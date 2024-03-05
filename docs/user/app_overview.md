@@ -15,7 +15,8 @@ NetBox users looking to migrate their dataset into Nautobot.
 
 ## Authors and Maintainers
 
-@glennmatthews Glenn Matthews
+- Version 2.x - @snaselj Jan Snasel
+- Version 1.x - @glennmatthews Glenn Matthews
 
 ## Nautobot Features Used
 
