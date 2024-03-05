@@ -19,7 +19,7 @@ from time import sleep
 from invoke.collection import Collection
 from invoke.tasks import task as invoke_task
 
-_TEST_DUMP_PATH = Path(__file__).parent / "nautobot_netbox_importer" / "tests" / "fixtures" / "dump.sql"
+_TEST_DUMP_PATH = Path(__file__).parent / "nautobot_netbox_importer" / "tests" / "fixtures" / "nautobot-dump.sql"
 
 
 def is_truthy(arg):
