@@ -156,7 +156,7 @@ def run_command(context, command, **kwargs):
                 **kwargs.get("env", {}),
                 **kwargs.pop("command_env"),
             }
-        return context.run(command, **kwargs)
+        context.run(command, **kwargs)
     else:
         # Check if nautobot is running, no need to start another nautobot container to run a command
         docker_compose_status = "ps --services --filter status=running"
@@ -341,15 +341,22 @@ def logs(context, service="", follow=False, tail=0):
 # ------------------------------------------------------------------------------
 # ACTIONS
 # ------------------------------------------------------------------------------
-@task(help={"file": "Python file to execute"})
-def nbshell(context, file=""):
+@task(
+    help={
+        "file": "Python file to execute",
+        "env": "Environment variables to pass to the command",
+        "plain": "Flag to run nbshell in plain mode (default: False)",
+    },
+)
+def nbshell(context, file="", env={}, plain=False):
     """Launch an interactive nbshell session."""
     command = [
         "nautobot-server",
         "nbshell",
+        "--plain" if plain else "",
         f"< '{file}'" if file else "",
     ]
-    run_command(context, " ".join(command), pty=not bool(file))
+    run_command(context, " ".join(command), pty=not bool(file), command_env=env)
 
 
 @task
@@ -684,7 +691,7 @@ def pylint(context):
 def autoformat(context):
     """Run code autoformatting."""
     black(context, autoformat=True)
-    ruff(context, action="both", fix=True)
+    ruff(context, fix=True)
 
 
 @task(
@@ -911,6 +918,8 @@ def tests(context, failfast=False, keepdb=False, lint_only=False):
     pylint(context)
     print("Running mkdocs...")
     build_and_check_docs(context)
+    print("Checking app config schema...")
+    validate_app_config(context)
     if not lint_only:
         print("Running unit tests...")
         unittest(context, failfast=failfast, keepdb=keepdb)
@@ -918,60 +927,24 @@ def tests(context, failfast=False, keepdb=False, lint_only=False):
     print("All tests have passed!")
 
 
-@task(
-    help={
-        "file": "URL or path to the JSON file to import.",
-        "bypass-data-validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
-        "demo-version": "Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).",
-        "dry-run": "Do not write any data to the database. (default: False)",
-        "fix-powerfeed-locations": "Fix panel location to match rack location based on powerfeed. (default: False)",
-        "print-summary": "Show a summary of the import. (default: True)",
-        "save-json-summary-path": "File path to write the JSON mapping to. (default: generated-mappings.json)",
-        "save-text-summary-path": "File path to write the text mapping to. (default: generated-mappings.txt)",
-        "sitegroup-parent-always-region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
-        "update-paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
-        "unrack-zero-uheight-devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
-    }
-)
-def import_netbox(
-    context,
-    file="",
-    demo_version="",
-    save_json_summary_path="",
-    save_text_summary_path="",
-    bypass_data_validation=False,
-    dry_run=True,
-    fix_powerfeed_locations=False,
-    sitegroup_parent_always_region=False,
-    print_summary=True,
-    update_paths=False,
-    unrack_zero_uheight_devices=True,
-):
-    """Import NetBox data into Nautobot."""
-    if demo_version:
-        if file:
-            raise ValueError("Cannot specify both, `file` and `demo` arguments")
+@task
+def generate_app_config_schema(context):
+    """Generate the app config schema from the current app config.
 
-        file = (
-            "https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/json/netbox-demo-v"
-            + demo_version
-            + ".json"
-        )
+    WARNING: Review and edit the generated file before committing.
 
-    command = [
-        "nautobot-server",
-        "import_netbox",
-        f"--save-json-summary-path={save_json_summary_path}" if save_json_summary_path else "",
-        f"--save-text-summary-path={save_text_summary_path}" if save_text_summary_path else "",
-        "--bypass-data-validation" if bypass_data_validation else "",
-        "--dry-run" if dry_run else "",
-        "--fix-powerfeed-locations" if fix_powerfeed_locations else "",
-        "--sitegroup-parent-always-region" if sitegroup_parent_always_region else "",
-        "--print-summary" if print_summary else "",
-        "--update-paths" if update_paths else "",
-        "--no-color",
-        "" if unrack_zero_uheight_devices else "--no-unrack-zero-uheight-devices",
-        file,
-    ]
+    Its content is inferred from:
 
-    run_command(context, " ".join(command))
+    - The current configuration in `PLUGINS_CONFIG`
+    - `NautobotAppConfig.default_settings`
+    - `NautobotAppConfig.required_settings`
+    """
+    start(context, service="nautobot")
+    nbshell(context, file="development/app_config_schema.py", env={"APP_CONFIG_SCHEMA_COMMAND": "generate"})
+
+
+@task
+def validate_app_config(context):
+    """Validate the app config based on the app config schema."""
+    start(context, service="nautobot")
+    nbshell(context, plain=True, file="development/app_config_schema.py", env={"APP_CONFIG_SCHEMA_COMMAND": "validate"})
