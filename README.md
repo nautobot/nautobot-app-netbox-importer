@@ -14,7 +14,7 @@ To avoid extra work and temporary links, make sure that publishing docs (or merg
   <img src="https://raw.githubusercontent.com/nautobot/nautobot-app-netbox-importer/develop/docs/images/icon-nautobot-netbox-importer.png" class="logo" height="200px">
   <br>
   <a href="https://github.com/nautobot/nautobot-app-netbox-importer/actions"><img src="https://github.com/nautobot/nautobot-app-netbox-importer/actions/workflows/ci.yml/badge.svg?branch=main"></a>
-  <a href="https://docs.nautobot.com/projects/netbox-importer/en/latest"><img src="https://readthedocs.org/projects/nautobot-app-netbox-importer/badge/"></a>
+  <a href="https://docs.nautobot.com/projects/netbox-importer/en/latest/"><img src="https://readthedocs.org/projects/nautobot-plugin-netbox-importer/badge/"></a>
   <a href="https://pypi.org/project/nautobot-netbox-importer/"><img src="https://img.shields.io/pypi/v/nautobot-netbox-importer"></a>
   <a href="https://pypi.org/project/nautobot-netbox-importer/"><img src="https://img.shields.io/pypi/dm/nautobot-netbox-importer"></a>
   <br>
