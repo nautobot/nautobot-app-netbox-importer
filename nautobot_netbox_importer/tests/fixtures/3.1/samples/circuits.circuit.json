@@ -1,0 +1,62 @@
+[
+{
+  "model": "circuits.circuit",
+  "pk": "4799effd-c3c5-55d9-be08-e8d9f9d22c03",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:40.192Z",
+    "_custom_field_data": {},
+    "cid": "KLQU4018",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "30efd662-fc9b-5892-b2be-adeb8091cb29",
+    "circuit_type": "0c9d650f-39cd-5060-809c-8cbc291e9fbb",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": "55719b73-6bec-5a60-a5f7-35107c073c89",
+    "circuit_termination_z": "79810c6d-add5-5a9f-bc8b-6c1e2a900d70"
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": "4f4d1f8c-85c2-5d2f-9432-2480bbba3386",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:40.029Z",
+    "_custom_field_data": {},
+    "cid": "1002840457",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "dda5b9ab-0d5c-54b1-901a-773a0cc4fca3",
+    "circuit_type": "77b0ea76-dd49-526f-9e5b-7526b5abaa3d",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": null,
+    "circuit_termination_z": "f321fa5c-5d92-517e-b176-7d0af3a5e5f0"
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": "fd74b33d-6abb-50f1-8daf-13d949bdce61",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:40.072Z",
+    "_custom_field_data": {},
+    "cid": "1002844901",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "dda5b9ab-0d5c-54b1-901a-773a0cc4fca3",
+    "circuit_type": "77b0ea76-dd49-526f-9e5b-7526b5abaa3d",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": null,
+    "circuit_termination_z": "c201bbbc-ef3f-521f-ab50-77005c5547cb"
+  }
+}
+]

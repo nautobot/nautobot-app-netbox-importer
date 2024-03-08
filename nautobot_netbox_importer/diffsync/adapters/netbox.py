@@ -1,154 +1,190 @@
-"""DiffSync adapters for NetBox data dumps."""
+"""NetBox to Nautobot Source Importer Definitions."""
 
-import json
-from uuid import uuid4
+from gzip import GzipFile
+from pathlib import Path
+from typing import Callable
+from typing import Generator
+from typing import NamedTuple
+from typing import Union
+from urllib.parse import ParseResult
+from urllib.parse import urlparse
 
-from diffsync.enum import DiffSyncModelFlags
-import structlog
+import ijson
+import requests
+from django.core.management import call_command
+from django.db.transaction import atomic
 
-from nautobot_netbox_importer.diffsync.models.abstract import NautobotBaseModel
-from nautobot_netbox_importer.diffsync.models.validation import netbox_pk_to_nautobot_pk
-from nautobot_netbox_importer.utils import ProgressBar
-from .abstract import N2NDiffSync
+from nautobot_netbox_importer.base import GENERATOR_SETUP_MODULES
+from nautobot_netbox_importer.base import logger
+from nautobot_netbox_importer.base import register_generator_setup
+from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations
+from nautobot_netbox_importer.diffsync.models.dcim import unrack_zero_uheight_devices
+from nautobot_netbox_importer.generator import SourceAdapter
+from nautobot_netbox_importer.generator import SourceDataGenerator
+from nautobot_netbox_importer.generator import SourceRecord
+from nautobot_netbox_importer.summary import Pathable
+
+for _name in (
+    "base",
+    "circuits",
+    "custom_fields",
+    "dcim",
+    "ipam",
+    "locations",
+    "object_change",
+    "virtualization",
+):
+    register_generator_setup(f"nautobot_netbox_importer.diffsync.models.{_name}")
+
+_FileRef = Union[str, Path, ParseResult]
+_HTTP_TIMEOUT = 60
 
 
-class NetBox210DiffSync(N2NDiffSync):
-    """DiffSync adapter for working with data from NetBox 2.10.x."""
+class _DryRunException(Exception):
+    """Exception raised when a dry-run is requested."""
 
-    logger = structlog.get_logger()
 
-    def __init__(self, *args, source_data=None, **kwargs):
-        """Store the provided source_data for use when load() is called later."""
-        self.source_data = source_data
-        super().__init__(*args, **kwargs)
+class _ImporterIssuesDetected(Exception):
+    """Exception raised when importer issues are detected."""
 
-    def load_record(self, diffsync_model, record):  # pylint: disable=too-many-branches,too-many-statements
-        """Instantiate the given model class from the given record."""
-        data = record["fields"].copy()
-        data["pk"] = record["pk"]
 
-        # Fixup fields that are actually foreign-key (FK) associations by replacing
-        # their FK ids with the DiffSync model unique-id fields.
-        for key, target_name in diffsync_model.fk_associations().items():
-            if key not in data or not data[key]:
-                # Null reference, no processing required.
-                continue
+class NetBoxImporterOptions(NamedTuple):
+    """NetBox importer options."""
 
-            if target_name == "status":
-                # Special case as Status is a hard-coded field in NetBox, not a model reference
-                # Construct an appropriately-formatted mock natural key and use that instead
-                # TODO: we could also do this with a custom validator on the StatusRef model; might be better?
-                data[key] = {"slug": data[key]}
-                continue
+    dry_run: bool = True
+    bypass_data_validation: bool = False
+    print_summary: bool = False
+    update_paths: bool = False
+    fix_powerfeed_locations: bool = False
+    sitegroup_parent_always_region: bool = False
+    unrack_zero_uheight_devices: bool = True
+    save_json_summary_path: str = ""
+    save_text_summary_path: str = ""
 
-            # In the case of generic foreign keys, we have to actually check a different field
-            # on the DiffSync model to determine the model type that this foreign key is referring to.
-            # By convention, we label such fields with a '*', as if this were a C pointer.
-            if target_name.startswith("*"):
-                target_content_type_field = target_name[1:]
-                target_content_type_pk = record["fields"][target_content_type_field]
-                if not isinstance(target_content_type_pk, int):
-                    self.logger.error(f"Invalid content-type PK value {target_content_type_pk}")
-                    data[key] = None
-                    continue
-                target_content_type_record = self.get_by_pk(self.contenttype, target_content_type_pk)
-                target_name = target_content_type_record.model
 
-            # Identify the DiffSyncModel class that this FK is pointing to
-            try:
-                target_class = getattr(self, target_name)
-            except AttributeError:
-                self.logger.warning("Unknown/unrecognized class name!", name=target_name)
-                data[key] = None
-                continue
+AdapterSetupFunction = Callable[[SourceAdapter], None]
 
-            if isinstance(data[key], list):
-                # This field is a one-to-many or many-to-many field, a list of foreign key references.
-                if issubclass(target_class, NautobotBaseModel):
-                    # Replace each NetBox integer FK with the corresponding deterministic Nautobot UUID FK.
-                    data[key] = [netbox_pk_to_nautobot_pk(target_name, pk) for pk in data[key]]
-                else:
-                    # It's a base Django model such as ContentType or Group.
-                    # Since we can't easily control its PK in Nautobot, use its natural key instead.
-                    #
-                    # Special case: there are ContentTypes in NetBox that don't exist in Nautobot,
-                    # skip over references to them.
-                    references = [self.get_by_pk(target_name, pk) for pk in data[key]]
-                    references = filter(lambda entry: not entry.model_flags & DiffSyncModelFlags.IGNORE, references)
-                    data[key] = [entry.get_identifiers() for entry in references]
-            elif isinstance(data[key], int):
-                # Standard NetBox integer foreign-key reference
-                if issubclass(target_class, NautobotBaseModel):
-                    # Replace the NetBox integer FK with the corresponding deterministic Nautobot UUID FK.
-                    data[key] = netbox_pk_to_nautobot_pk(target_name, data[key])
-                else:
-                    # It's a base Django model such as ContentType or Group.
-                    # Since we can't easily control its PK in Nautobot, use its natural key instead
-                    reference = self.get_by_pk(target_name, data[key])
-                    if reference.model_flags & DiffSyncModelFlags.IGNORE:
-                        data[key] = None
-                    else:
-                        data[key] = reference.get_identifiers()
+
+class NetBoxAdapter(SourceAdapter):
+    """NetBox Source Adapter."""
+
+    # pylint: disable=keyword-arg-before-vararg
+    def __init__(self, input_ref: _FileRef, options: NetBoxImporterOptions, job=None, sync=None, *args, **kwargs):
+        """Initialize NetBox Source Adapter."""
+        super().__init__(name="NetBox", get_source_data=_get_reader(input_ref), *args, **kwargs)
+        self.job = job
+        self.sync = sync
+
+        self.options = options
+
+        for name in GENERATOR_SETUP_MODULES:
+            setup = __import__(name, fromlist=["setup"]).setup
+            setup(self)
+
+    def load(self) -> None:
+        """Load data from NetBox."""
+        self.import_data()
+        if self.options.fix_powerfeed_locations:
+            fix_power_feed_locations(self)
+        if self.options.unrack_zero_uheight_devices:
+            unrack_zero_uheight_devices(self)
+        self.post_import()
+
+    def import_to_nautobot(self) -> None:
+        """Import a NetBox export file into Nautobot."""
+        commited = False
+        try:
+            self._atomic_import()
+            commited = True
+        except _DryRunException:
+            logger.warning("Dry-run mode, no data has been imported.")
+        except _ImporterIssuesDetected:
+            logger.warning("Importer issues detected, no data has been imported.")
+
+        if commited and self.options.update_paths:
+            logger.info("Updating paths ...")
+            call_command("trace_paths", no_input=True)
+            logger.info(" ... Updating paths completed.")
+
+        if self.options.print_summary:
+            self.summary.print()
+
+    @atomic
+    def _atomic_import(self) -> None:
+        self.load()
+
+        diff = self.nautobot.sync_from(self)
+        self.summarize(diff.summary())
+
+        if self.options.save_json_summary_path:
+            self.summary.dump(self.options.save_json_summary_path, output_format="json")
+        if self.options.save_text_summary_path:
+            self.summary.dump(self.options.save_text_summary_path, output_format="text")
+
+        has_issues = any(True for item in self.summary.nautobot if item.issues)
+        if has_issues and not self.options.bypass_data_validation:
+            raise _ImporterIssuesDetected("Importer issues detected, aborting the transaction.")
+
+        if self.options.dry_run:
+            raise _DryRunException("Aborting the transaction due to the dry-run mode.")
+
+
+def _read_stream(stream) -> Generator[SourceRecord, None, None]:
+    for item in ijson.items(stream, "item"):
+        content_type = item["model"]
+        netbox_pk = item.get("pk", None)
+        source_data = item["fields"]
+
+        if netbox_pk:
+            source_data["id"] = netbox_pk
+
+        yield SourceRecord(content_type, source_data)
+
+
+def _get_reader_from_path(path: Pathable) -> SourceDataGenerator:
+    result = Path(path)
+    if not result.is_file():
+        raise FileNotFoundError(f"File {path} does not exist.")
+
+    def reader():
+        with open(result, "rb") as file:
+            yield from _read_stream(file)
+
+    return reader
+
+
+def _get_reader_from_url(url: ParseResult) -> SourceDataGenerator:
+    def reader():
+        with requests.get(url.geturl(), stream=True, timeout=_HTTP_TIMEOUT) as response:
+            response.raise_for_status()
+            if response.headers.get("Content-Encoding") == "gzip":
+                stream = GzipFile(fileobj=response.raw)
             else:
-                self.logger.error(f"Invalid PK value {data[key]}")
-                data[key] = None
+                stream = response.raw
 
-        if diffsync_model == self.user:
-            # NetBox has separate User and UserConfig models, but in Nautobot they're combined.
-            # Load the corresponding UserConfig into the User record for completeness.
-            self.logger.debug("Looking for UserConfig corresponding to User", username=data["username"])
-            for other_record in self.source_data:
-                if other_record["model"] == "users.userconfig" and other_record["fields"]["user"] == record["pk"]:
-                    data["config_data"] = other_record["fields"]["data"]
-                    break
-            else:
-                self.logger.warning("No UserConfig found for User", username=data["username"], pk=record["pk"])
-                data["config_data"] = {}
-        elif diffsync_model == self.customfield:
-            # Because marking a custom field as "required" doesn't automatically assign a value to pre-existing records,
-            # we never want to enforce 'required=True' at import time as there may be otherwise valid records that predate
-            # the creation of this field. Store it on a private field instead and we'll fix it up at the end.
-            data["actual_required"] = data["required"]
-            data["required"] = False
+            yield from _read_stream(stream)
 
-            if data["type"] == "select":
-                # NetBox stores the choices for a "select" CustomField (NetBox has no "multiselect" CustomFields)
-                # locally within the CustomField model, whereas Nautobot has a separate CustomFieldChoices model.
-                # So we need to split the choices out into separate DiffSync instances.
-                # Since "choices" is an ArrayField, we have to parse it from the JSON string
-                # see also models.abstract.ArrayField
-                for choice in json.loads(data["choices"]):
-                    self.make_model(
-                        self.customfieldchoice,
-                        {
-                            "pk": uuid4(),
-                            "field": netbox_pk_to_nautobot_pk("customfield", record["pk"]),
-                            "value": choice,
-                        },
-                    )
-                del data["choices"]
+    return reader
 
-        return self.make_model(diffsync_model, data)
 
-    def load(self):
-        """Load records from the provided source_data into DiffSync."""
-        self.logger.info("Loading imported NetBox source data into DiffSync...")
-        for modelname in ("contenttype", "permission", *self.top_level):
-            diffsync_model = getattr(self, modelname)
-            content_type_label = diffsync_model.nautobot_model()._meta.label_lower
-            # Handle a NetBox vs Nautobot discrepancy - the Nautobot target model is 'users.user',
-            # but the NetBox data export will have user records under the label 'auth.user'.
-            if content_type_label == "users.user":
-                content_type_label = "auth.user"
-            records = [record for record in self.source_data if record["model"] == content_type_label]
-            if records:
-                for record in ProgressBar(
-                    records,
-                    desc=f"{modelname:<25}",  # len("consoleserverporttemplate")
-                    verbosity=self.verbosity,
-                ):
-                    self.load_record(diffsync_model, record)
+def _get_reader(input_ref: _FileRef) -> SourceDataGenerator:
+    """Read NetBox source file from file or HTTP resource."""
+    if isinstance(input_ref, str):
+        url = urlparse(input_ref)
 
-        self.logger.info("Data loading from NetBox source data complete.")
-        # Discard the source data to free up memory
-        self.source_data = None
+        if not url.scheme:
+            return _get_reader_from_path(input_ref)
+
+        if url.scheme == "file":
+            return _get_reader_from_path(url.path)
+
+        if url.scheme in ["http", "https"]:
+            return _get_reader_from_url(url)
+
+    if isinstance(input_ref, Path):
+        return _get_reader_from_path(input_ref)
+
+    if isinstance(input_ref, ParseResult):
+        return _get_reader_from_url(input_ref)
+
+    raise ValueError(f"Unsupported file reference: {input_ref}")

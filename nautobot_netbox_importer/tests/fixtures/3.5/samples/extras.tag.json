@@ -1,0 +1,47 @@
+[
+{
+  "model": "extras.tag",
+  "pk": "1c3dc2d0-a74c-57cb-8661-987dd30a8658",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:02.056Z",
+    "_custom_field_data": {},
+    "name": "November",
+    "color": "2f6a31",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "a5277d98-faca-5fdb-a37e-63b6cddb6bf9",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:02.044Z",
+    "_custom_field_data": {},
+    "name": "Echo",
+    "color": "ff66ff",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "eeda3982-d697-50c2-98f9-a2330bc648a7",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:02.070Z",
+    "_custom_field_data": {},
+    "name": "Yankee",
+    "color": "607d8b",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+}
+]

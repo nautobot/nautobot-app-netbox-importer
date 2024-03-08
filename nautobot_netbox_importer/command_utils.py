@@ -7,22 +7,6 @@ import colorama
 
 import structlog
 
-from django.core.management.base import CommandError
-from nautobot_netbox_importer.diffsync.adapters import netbox_adapters
-
-
-def validate_netbox_version(version):
-    """Validates Netbox Version."""
-    if version not in netbox_adapters:
-        supported_versions = sorted(netbox_adapters.keys())
-        min_version = supported_versions[0]
-        max_version = supported_versions[-1]
-        if version < min_version:
-            raise CommandError(f"Minimum NetBox version supported is {min_version}")
-        if version > max_version:
-            raise CommandError(f"Maximum NetBox version supported is {max_version}")
-        raise CommandError(f"Unrecognized NetBox version; supported versions are {', '.join(supported_versions)}")
-
 
 class LogRenderer:  # pylint: disable=too-few-public-methods
     """Class for rendering structured logs to the console in a human-readable format.
@@ -85,7 +69,7 @@ def enable_logging(verbosity=0, color=None):
         colorama.init()
     else:
         # Force colors or non-colors, as specified
-        colorama.init(strip=(not color))
+        colorama.init(strip=not color)
 
     structlog.configure(
         processors=[

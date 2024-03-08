@@ -1,0 +1,74 @@
+[
+{
+  "model": "ipam.prefix",
+  "pk": "0df7f20a-f636-54d1-bcb8-d194b5e3b85e",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:41.067Z",
+    "_custom_field_data": {},
+    "network": "10.112.168.0",
+    "broadcast": "10.112.168.15",
+    "prefix_length": 28,
+    "type": "network",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "ce29b49d-ddac-586f-87ec-8f7cb969344c",
+    "parent": "c34370a3-8581-5692-bb7a-bb3caab89d73",
+    "ip_version": 4,
+    "location": "bdef7b13-8e38-5731-b1f5-f2ad449880d6",
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "vlan": null,
+    "rir": null,
+    "date_allocated": null,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.prefix",
+  "pk": "39d545e3-e7b4-59de-bdcc-f8ca7e4bd3d4",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:40.930Z",
+    "_custom_field_data": {},
+    "network": "10.112.152.0",
+    "broadcast": "10.112.152.15",
+    "prefix_length": 28,
+    "type": "network",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "ce29b49d-ddac-586f-87ec-8f7cb969344c",
+    "parent": "46a6831c-806d-5d78-9d50-5c9d170d6876",
+    "ip_version": 4,
+    "location": "699920eb-7c6b-59e6-b19a-d5eeb670c890",
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "vlan": null,
+    "rir": null,
+    "date_allocated": null,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.prefix",
+  "pk": "d6fb9b56-0969-59ff-ab6d-cb10eecf1104",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:41.248Z",
+    "_custom_field_data": {},
+    "network": "10.112.164.0",
+    "broadcast": "10.112.167.255",
+    "prefix_length": 22,
+    "type": "network",
+    "status": "90ef0b5d-5e04-5ff3-b1a4-695a42311ede",
+    "role": null,
+    "parent": "9e4d6b7f-8de1-542c-b5e2-8e776a626b4a",
+    "ip_version": 4,
+    "location": "1428b9c5-2fbe-5f05-9126-5a36533f0586",
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "vlan": null,
+    "rir": null,
+    "date_allocated": null,
+    "description": ""
+  }
+}
+]

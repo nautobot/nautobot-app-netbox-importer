@@ -1,0 +1,18 @@
+[
+{
+  "model": "users.objectpermission",
+  "pk": "c650165f-9a05-55c0-bbb1-c9527d41160c",
+  "fields": {
+    "name": "Test Permission",
+    "description": "",
+    "enabled": true,
+    "actions": "[\"view\"]",
+    "constraints": null,
+    "object_types": [],
+    "groups": [],
+    "users": [
+      "b6111f2f-ede6-5a47-b0e5-3842b76f14cd"
+    ]
+  }
+}
+]

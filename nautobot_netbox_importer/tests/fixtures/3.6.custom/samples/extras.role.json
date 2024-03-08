@@ -1,0 +1,34 @@
+[
+{
+  "model": "extras.role",
+  "pk": "715773ef-2d6c-5895-972d-40f37486a56e",
+  "fields": {
+    "created": "2024-02-14T12:20:27.082Z",
+    "last_updated": "2024-02-22T08:58:25.088Z",
+    "_custom_field_data": {},
+    "name": "Default Device Role",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      42
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "e38863d3-cb3d-5cc0-aef2-7844b8288b1d",
+  "fields": {
+    "created": "2024-02-22T08:58:25.091Z",
+    "last_updated": "2024-02-22T08:58:25.091Z",
+    "_custom_field_data": {},
+    "name": "Loopback",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      69
+    ]
+  }
+}
+]

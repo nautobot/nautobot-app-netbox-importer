@@ -1,128 +1,29 @@
-"""Virtualization model class definitions for nautobot-netbox-importer.
+"""NetBox to Nautobot Virtualization Models Mapping."""
+from nautobot_netbox_importer.generator import SourceAdapter
+from nautobot_netbox_importer.generator import fields
 
-Note that in most cases the same model classes are used for both NetBox imports and Nautobot exports.
-Because this plugin is meant *only* for NetBox-to-Nautobot migration, the create/update/delete methods on these classes
-are for populating data into Nautobot only, never the reverse.
-"""
-# pylint: disable=too-many-ancestors
-from typing import List, Optional
-
-import nautobot.virtualization.models as virtualization
-
-from .abstract import (
-    BaseInterfaceMixin,
-    ConfigContextModelMixin,
-    CustomFieldModelMixin,
-    NautobotBaseModel,
-    OrganizationalModel,
-    PrimaryModel,
-    StatusModelMixin,
-)
-from .references import (
-    ClusterGroupRef,
-    ClusterRef,
-    ClusterTypeRef,
-    DeviceRoleRef,
-    IPAddressRef,
-    PlatformRef,
-    SiteRef,
-    TenantRef,
-    VLANRef,
-    VirtualMachineRef,
-)
+from .locations import define_location
 
 
-class ClusterType(OrganizationalModel):
-    """A type of Cluster."""
-
-    _modelname = "clustertype"
-    _attributes = (*OrganizationalModel._attributes, "name", "slug", "description")
-    _nautobot_model = virtualization.ClusterType
-
-    name: str
-    slug: str
-    description: str
-
-
-class ClusterGroup(OrganizationalModel):
-    """An organizational group of Clusters."""
-
-    _modelname = "clustergroup"
-    _attributes = (*OrganizationalModel._attributes, "name", "slug", "description")
-    _nautobot_model = virtualization.ClusterGroup
-
-    name: str
-    slug: str
-    description: str
-
-
-class Cluster(PrimaryModel):
-    """A cluster of VirtualMachines, optionally associated with one or more Devices."""
-
-    _modelname = "cluster"
-    _attributes = (*PrimaryModel._attributes, "name", "type", "group", "tenant", "site", "comments")
-    _nautobot_model = virtualization.Cluster
-
-    name: str
-    type: ClusterTypeRef
-    group: Optional[ClusterGroupRef]
-    tenant: Optional[TenantRef]
-    site: Optional[SiteRef]
-    comments: str
-
-
-class VirtualMachine(ConfigContextModelMixin, StatusModelMixin, PrimaryModel):
-    """A virtual machine which runs inside a Cluster."""
-
-    _modelname = "virtualmachine"
-    _attributes = (
-        *ConfigContextModelMixin._attributes,
-        *StatusModelMixin._attributes,
-        *PrimaryModel._attributes,
-        "cluster",
-        "tenant",
-        "name",
-        "platform",
-        "role",
-        "primary_ip4",
-        "primary_ip6",
-        "vcpus",
-        "memory",
-        "disk",
-        "comments",
+def setup(adapter: SourceAdapter) -> None:
+    """Map NetBox virtualization models to Nautobot."""
+    adapter.configure_model(
+        "virtualization.cluster",
+        fields={
+            "type": "cluster_type",
+            "group": "cluster_group",
+            "location": define_location,
+        },
     )
-    _nautobot_model = virtualization.VirtualMachine
-
-    cluster: ClusterRef
-    tenant: Optional[TenantRef]
-    name: str
-    platform: Optional[PlatformRef]
-    role: Optional[DeviceRoleRef]
-    primary_ip4: Optional[IPAddressRef]
-    primary_ip6: Optional[IPAddressRef]
-    vcpus: Optional[int]
-    memory: Optional[int]
-    disk: Optional[int]
-    comments: str
-
-
-class VMInterface(CustomFieldModelMixin, BaseInterfaceMixin, NautobotBaseModel):
-    """An interface on a VirtualMachine."""
-
-    _modelname = "vminterface"
-    _attributes = (
-        *CustomFieldModelMixin._attributes,
-        *BaseInterfaceMixin._attributes,
-        "virtual_machine",
-        "name",
-        "description",
-        "untagged_vlan",
-        "tagged_vlans",
+    adapter.configure_model(
+        "virtualization.virtualmachine",
+        fields={
+            "role": fields.role(adapter, "dcim.devicerole"),
+        },
     )
-    _nautobot_model = virtualization.VMInterface
-
-    virtual_machine: VirtualMachineRef
-    name: str
-    description: str
-    untagged_vlan: Optional[VLANRef]
-    tagged_vlans: List[VLANRef] = []
+    adapter.configure_model(
+        "virtualization.vminterface",
+        fields={
+            "parent": "parent_interface",
+        },
+    )

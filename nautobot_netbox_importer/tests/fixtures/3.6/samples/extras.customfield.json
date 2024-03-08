@@ -1,0 +1,26 @@
+[
+{
+  "model": "extras.customfield",
+  "pk": "e4fa5680-4657-50ea-837c-604617c7fc0d",
+  "fields": {
+    "created": "2021-09-09T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:24.653Z",
+    "grouping": "",
+    "type": "text",
+    "label": "Customer ID",
+    "key": "cust_id",
+    "description": "",
+    "required": false,
+    "filter_logic": "exact",
+    "default": null,
+    "weight": 100,
+    "validation_minimum": null,
+    "validation_maximum": null,
+    "validation_regex": "^[A-Z]{3}\\d{2}$",
+    "advanced_ui": false,
+    "content_types": [
+      109
+    ]
+  }
+}
+]

@@ -1,0 +1,529 @@
+* Import Summary: **********************************************************************************
+= DiffSync Summary: ================================================================================
+create: 70
+update: 0
+delete: 0
+no-change: 0
+skip: 135
+= Source Stats: ====================================================================================
+- auth.group ---------------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- auth.user ----------------------------------------------------------------------------------------
+first_pass_used: 6
+second_pass_used: 6
+created: 6
+imported: 6
+- contenttypes.contenttype -------------------------------------------------------------------------
+first_pass_used: 135
+second_pass_used: 135
+created: 135
+imported: 135
+- dcim.cable ---------------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- dcim.device --------------------------------------------------------------------------------------
+first_pass_used: 2
+second_pass_used: 2
+created: 2
+imported: 2
+- dcim.devicerole ----------------------------------------------------------------------------------
+first_pass_used: 2
+second_pass_used: 2
+created: 1
+imported: 2
+- dcim.devicetype ----------------------------------------------------------------------------------
+pre_cached: 1
+first_pass_used: 2
+second_pass_used: 2
+created: 2
+imported: 2
+- dcim.locationtype --------------------------------------------------------------------------------
+pre_cached: 3
+imported: 2
+imported_from_cache: 2
+created: 2
+- dcim.manufacturer --------------------------------------------------------------------------------
+pre_cached: 1
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- dcim.rack ----------------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- dcim.rackrole ------------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- dcim.site ----------------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- extras.customfield -------------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- extras.customfieldchoice -------------------------------------------------------------------------
+created: 3
+imported: 3
+- extras.customfieldchoiceset ----------------------------------------------------------------------
+first_pass_used: 1
+- extras.journalentry ------------------------------------------------------------------------------
+first_pass_used: 2
+second_pass_used: 2
+created: 2
+imported: 2
+- extras.objectchange ------------------------------------------------------------------------------
+first_pass_used: 22
+second_pass_used: 21
+created: 21
+imported: 21
+second_pass_skipped: 1
+- extras.status ------------------------------------------------------------------------------------
+pre_cached: 3
+imported: 3
+imported_from_cache: 3
+created: 3
+- ipam.fhrpgroup -----------------------------------------------------------------------------------
+first_pass_used: 2
+second_pass_used: 2
+created: 2
+imported: 2
+- ipam.ipaddress -----------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- ipam.prefix --------------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- ipam.role ----------------------------------------------------------------------------------------
+created: 1
+imported: 1
+- tenancy.tenant -----------------------------------------------------------------------------------
+first_pass_used: 11
+second_pass_used: 11
+created: 11
+imported: 11
+- tenancy.tenantgroup ------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- users.objectpermission ---------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+= Nautobot Stats: ==================================================================================
+- auth.group ---------------------------------------------------------------------------------------
+source_created: 1
+- contenttypes.contenttype -------------------------------------------------------------------------
+source_ignored: 135
+- dcim.cable ---------------------------------------------------------------------------------------
+source_created: 1
+save_failed: 1
+issues: 1
+- dcim.device --------------------------------------------------------------------------------------
+source_created: 2
+issues: 2
+- dcim.devicetype ----------------------------------------------------------------------------------
+source_created: 2
+issues: 1
+- dcim.interfaceredundancygroup --------------------------------------------------------------------
+source_created: 2
+issues: 2
+- dcim.location ------------------------------------------------------------------------------------
+source_created: 1
+issues: 1
+- dcim.locationtype --------------------------------------------------------------------------------
+source_created: 2
+- dcim.manufacturer --------------------------------------------------------------------------------
+source_created: 1
+- dcim.rack ----------------------------------------------------------------------------------------
+source_created: 1
+- extras.customfield -------------------------------------------------------------------------------
+source_created: 4
+issues: 1
+- extras.customfieldchoice -------------------------------------------------------------------------
+source_created: 3
+- extras.note --------------------------------------------------------------------------------------
+source_created: 2
+- extras.objectchange ------------------------------------------------------------------------------
+source_created: 21
+- extras.role --------------------------------------------------------------------------------------
+source_created: 3
+- extras.status ------------------------------------------------------------------------------------
+source_created: 3
+- ipam.ipaddress -----------------------------------------------------------------------------------
+source_created: 1
+- ipam.prefix --------------------------------------------------------------------------------------
+source_created: 1
+- tenancy.tenant -----------------------------------------------------------------------------------
+source_created: 11
+- tenancy.tenantgroup ------------------------------------------------------------------------------
+source_created: 1
+- users.objectpermission ---------------------------------------------------------------------------
+source_created: 1
+issues: 1
+- users.user ---------------------------------------------------------------------------------------
+source_created: 6
+= Content Types Mapping Deviations: ================================================================
+  Mapping deviations from source content type to Nautobot content type
+auth.user => users.user
+dcim.devicerole => extras.role
+dcim.rackrole => extras.role
+dcim.site => dcim.location
+extras.journalentry => extras.note
+ipam.fhrpgroup => dcim.interfaceredundancygroup
+= Content Types Back Mapping: ======================================================================
+  Back mapping deviations from Nautobot content type to the source content type
+users.user => auth.user
+extras.role => Ambiguous
+dcim.location => dcim.site
+extras.note => extras.journalentry
+dcim.interfaceredundancygroup => ipam.fhrpgroup
+= Importer issues: =================================================================================
+- dcim.cable ---------------------------------------------------------------------------------------
+6df947b3-9159-5b42-8367-c0d7edb3986c | SaveFailed | "{'_state': <django.db.models.base.ModelState object at 0x7f471a350b50>, 'id': UUID('6df947b3-9159-5b42-8367-c0d7edb3986c'), 'created': datetime.datetime(2024, 2, 28, 13, 39, 52, 903205, tzinfo=<UTC>), 'last_updated': datetime.datetime(2024, 2, 28, 13, 39, 52, 903213, tzinfo=<UTC>), '_custom_field_data': {}, 'termination_a_type_id': None, 'termination_a_id': None, 'termination_b_type_id': None, 'termination_b_id': None, 'type': 'smf', 'status_id': UUID('e81c76fa-2fb5-54e3-acbd-f0b817639af5'), 'label': '', 'color': 'ffeb3b', 'length': None, 'length_unit': '', '_abs_length': None, '_termination_a_device_id': None, '_termination_b_device_id': None, '_pk': UUID('6df947b3-9159-5b42-8367-c0d7edb3986c'), '_orig_status': None}" | "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-02-28 13:39:52.903205+00, 2024-02-28 13:39:52.903213+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n"
+- dcim.device --------------------------------------------------------------------------------------
+4f3495b5-00e6-5917-a148-77e109f96b0f | Unracked | "Half U Device" | "{'position': 'Device unracked due to 0U height'}"
+f510c5ff-e1f8-5adc-9fb5-30bc5791b42e | ValidationError | "Device 1" | "[\"Invalid value for custom field 'device_custom_object': Value must be a string\"]"
+- dcim.devicetype ----------------------------------------------------------------------------------
+03d4a2c5-e08b-5cc1-924d-c401194d393c | SourceFieldImporterIssue | "Half U Device Type" | "{'u_height': 'Invalid source value 0.5, truncated to 0'}"
+- dcim.interfaceredundancygroup --------------------------------------------------------------------
+2586a272-455a-5e92-85d7-f41c0784630a | InvalidChoiceValueIssue | "FHR Group clusterxl" | "{'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}"
+f91623ed-a389-53a4-a4a2-943588c21446 | InvalidChoiceValueIssue | "Test FHR Group" | "{'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}"
+- dcim.location ------------------------------------------------------------------------------------
+c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 | ValidationError | "Site 1" | "{'parent': ['A Location of type Site must have a parent Location.']}"
+- extras.customfield -------------------------------------------------------------------------------
+149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 | InvalidChoiceValueIssue | "Device Custom Object" | "{'type': 'Invalid choice value: `object`, replaced with `text`'}"
+- users.objectpermission ---------------------------------------------------------------------------
+c650165f-9a05-55c0-bbb1-c9527d41160c | InvalidContentType | "Test Permission" | "{'object_types': 'Invalid content type ['extras', 'script'], skipping'}"
+= Field Mappings: ==================================================================================
+- auth.group => auth.group -------------------------------------------------------------------------
+name => value_importer => name (CharField)
+permissions => Disabled with reason: Permissions import is not implemented yet
+- auth.user => users.user --------------------------------------------------------------------------
+date_joined => datetime_importer => date_joined (DateTimeField)
+email => value_importer => email (CharField)
+first_name => value_importer => first_name (CharField)
+groups => identifiers_importer => groups (ManyToManyField)
+is_active => value_importer => is_active (BooleanField)
+is_staff => value_importer => is_staff (BooleanField)
+is_superuser => value_importer => is_superuser (BooleanField)
+last_login => Disabled with reason: Should not be attempted to migrate
+last_name => value_importer => last_name (CharField)
+password => Disabled with reason: Should not be attempted to migrate
+user_permissions => Disabled with reason: Permissions import is not implemented yet
+username => value_importer => username (CharField)
+- contenttypes.contenttype => contenttypes.contenttype ---------------------------------------------
+app_label => content_types_mapper_importer => app_label (CharField)
+model => value_importer => model (CharField)
+- dcim.cable => dcim.cable -------------------------------------------------------------------------
+_abs_length => NO IMPORTER => _abs_length (PrivateProperty)
+color => value_importer => color (CharField)
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+length => integer_importer => length (PositiveSmallIntegerField)
+length_unit => choice_importer => length_unit (CharField)
+status => status_importer => status_id (StatusField)
+tenant => NO IMPORTER => tenant (NotFound)
+type => choice_importer => type (CharField)
+- dcim.device => dcim.device -----------------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+airflow => NO IMPORTER => airflow (NotFound)
+asset_tag => value_importer => asset_tag (CharField)
+cluster => relation_importer => cluster_id (ForeignKey)
+comments => value_importer => comments (TextField)
+config_template => NO IMPORTER => config_template (NotFound)
+console_port_count => NO IMPORTER => console_port_count (NotFound)
+console_server_port_count => NO IMPORTER => console_server_port_count (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+device_bay_count => NO IMPORTER => device_bay_count (NotFound)
+device_type => relation_importer => device_type_id (ForeignKey)
+face => choice_importer => face (CharField)
+front_port_count => NO IMPORTER => front_port_count (NotFound)
+id => uid_from_data => id (UUIDField)
+interface_count => NO IMPORTER => interface_count (NotFound)
+inventory_item_count => NO IMPORTER => inventory_item_count (NotFound)
+last_updated => Disabled with reason: Last updated field is updated with each write
+latitude => NO IMPORTER => latitude (NotFound)
+local_context_data => NO IMPORTER => local_context_data (NotFound)
+location => location_importer => location_id (ForeignKey)
+longitude => NO IMPORTER => longitude (NotFound)
+module_bay_count => NO IMPORTER => module_bay_count (NotFound)
+name => value_importer => name (CharField)
+oob_ip => NO IMPORTER => oob_ip (NotFound)
+platform => relation_importer => platform_id (ForeignKey)
+position => integer_importer => position (PositiveSmallIntegerField)
+power_outlet_count => NO IMPORTER => power_outlet_count (NotFound)
+power_port_count => NO IMPORTER => power_port_count (NotFound)
+primary_ip4 => relation_importer => primary_ip4_id (ForeignKey)
+primary_ip6 => relation_importer => primary_ip6_id (ForeignKey)
+rack => relation_importer => rack_id (ForeignKey)
+rear_port_count => NO IMPORTER => rear_port_count (NotFound)
+role => role_importer => role_id (RoleField)
+serial => value_importer => serial (CharField)
+site => location_importer => location_id (ForeignKey)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+vc_position => integer_importer => vc_position (PositiveSmallIntegerField)
+vc_priority => integer_importer => vc_priority (PositiveSmallIntegerField)
+virtual_chassis => relation_importer => virtual_chassis_id (ForeignKey)
+- dcim.devicerole => extras.role -------------------------------------------------------------------
+color => value_importer => color (CharField)
+config_template => NO IMPORTER => config_template (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+vm_role => NO IMPORTER => vm_role (NotFound)
+- dcim.devicetype => dcim.devicetype ---------------------------------------------------------------
+_abs_weight => NO IMPORTER => _abs_weight (PrivateProperty)
+airflow => NO IMPORTER => airflow (NotFound)
+comments => value_importer => comments (TextField)
+console_port_template_count => NO IMPORTER => console_port_template_count (NotFound)
+console_server_port_template_count => NO IMPORTER => console_server_port_template_count (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+default_platform => NO IMPORTER => default_platform (NotFound)
+description => NO IMPORTER => description (NotFound)
+device_bay_template_count => NO IMPORTER => device_bay_template_count (NotFound)
+front_image => Disabled with reason: Import does not contain images
+front_port_template_count => NO IMPORTER => front_port_template_count (NotFound)
+id => uid_from_data => id (UUIDField)
+interface_template_count => NO IMPORTER => interface_template_count (NotFound)
+inventory_item_template_count => NO IMPORTER => inventory_item_template_count (NotFound)
+is_full_depth => value_importer => is_full_depth (BooleanField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+manufacturer => relation_importer => manufacturer_id (ForeignKey)
+model => value_importer => model (CharField)
+module_bay_template_count => NO IMPORTER => module_bay_template_count (NotFound)
+part_number => value_importer => part_number (CharField)
+power_outlet_template_count => NO IMPORTER => power_outlet_template_count (NotFound)
+power_port_template_count => NO IMPORTER => power_port_template_count (NotFound)
+rear_image => Disabled with reason: Import does not contain images
+rear_port_template_count => NO IMPORTER => rear_port_template_count (NotFound)
+slug => NO IMPORTER => slug (NotFound)
+subdevice_role => choice_importer => subdevice_role (CharField)
+u_height => integer_importer => u_height (PositiveSmallIntegerField)
+weight => NO IMPORTER => weight (NotFound)
+weight_unit => NO IMPORTER => weight_unit (NotFound)
+- dcim.manufacturer => dcim.manufacturer -----------------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+- dcim.rack => dcim.rack ---------------------------------------------------------------------------
+_abs_max_weight => NO IMPORTER => _abs_max_weight (PrivateProperty)
+_abs_weight => NO IMPORTER => _abs_weight (PrivateProperty)
+_name => NO IMPORTER => _name (PrivateProperty)
+asset_tag => value_importer => asset_tag (CharField)
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+desc_units => value_importer => desc_units (BooleanField)
+description => NO IMPORTER => description (NotFound)
+facility_id => value_importer => facility_id (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+location => location_importer => location_id (ForeignKey)
+max_weight => NO IMPORTER => max_weight (NotFound)
+mounting_depth => NO IMPORTER => mounting_depth (NotFound)
+name => value_importer => name (CharField)
+outer_depth => integer_importer => outer_depth (PositiveSmallIntegerField)
+outer_unit => choice_importer => outer_unit (CharField)
+outer_width => integer_importer => outer_width (PositiveSmallIntegerField)
+role => role_importer => role_id (RoleField)
+serial => value_importer => serial (CharField)
+site => location_importer => location_id (ForeignKey)
+starting_unit => NO IMPORTER => starting_unit (NotFound)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+type => choice_importer => type (CharField)
+u_height => integer_importer => u_height (PositiveSmallIntegerField)
+weight => NO IMPORTER => weight (NotFound)
+weight_unit => NO IMPORTER => weight_unit (NotFound)
+width => choice_importer => width (PositiveSmallIntegerField)
+- dcim.rackrole => extras.role ---------------------------------------------------------------------
+color => value_importer => color (CharField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+- dcim.site => dcim.location -----------------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+asns => NO IMPORTER => asns (NotFound)
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+facility => value_importer => facility (CharField)
+group => site_group_importer => location_type_id (ForeignKey)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+latitude => value_importer => latitude (DecimalField)
+longitude => value_importer => longitude (DecimalField)
+name => value_importer => name (CharField)
+physical_address => value_importer => physical_address (TextField)
+region => relation_importer => parent_id (TreeNodeForeignKey)
+shipping_address => value_importer => shipping_address (TextField)
+slug => NO IMPORTER => slug (NotFound)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+time_zone => choice_importer => time_zone (CharField)
+- extras.customfield => extras.customfield ---------------------------------------------------------
+choice_set => choices_importer => CUSTOM TARGET
+content_types => content_types_importer => content_types (ManyToManyField)
+created => datetime_importer => created (DateTimeField)
+default => json_importer => default (JSONField)
+description => value_importer => description (CharField)
+filter_logic => choice_importer => filter_logic (CharField)
+group_name => NO IMPORTER => group_name (NotFound)
+id => uid_from_data => id (UUIDField)
+is_cloneable => NO IMPORTER => is_cloneable (NotFound)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => key (SlugField)
+object_type => NO IMPORTER => object_type (NotFound)
+required => value_importer => required (BooleanField)
+search_weight => NO IMPORTER => search_weight (NotFound)
+type => fallback_importer => type (CharField)
+ui_visibility => NO IMPORTER => ui_visibility (NotFound)
+validation_maximum => integer_importer => validation_maximum (BigIntegerField)
+validation_minimum => integer_importer => validation_minimum (BigIntegerField)
+validation_regex => value_importer => validation_regex (CharField)
+weight => integer_importer => weight (PositiveSmallIntegerField)
+- extras.journalentry => extras.note ---------------------------------------------------------------
+assigned_object_id => relation_and_type_importer => assigned_object_id (UUIDField)
+assigned_object_type => relation_and_type_importer => assigned_object_type_id (ForeignKey)
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+created_by => NO IMPORTER => created_by (NotFound)
+custom_field_data => NO IMPORTER => custom_field_data (NotFound)
+id => uid_from_data => id (UUIDField)
+kind => NO IMPORTER => kind (NotFound)
+last_updated => Disabled with reason: Last updated field is updated with each write
+- extras.objectchange => extras.objectchange -------------------------------------------------------
+action => choice_importer => action (CharField)
+changed_object_id => relation_and_type_importer => changed_object_id (UUIDField)
+changed_object_type => relation_and_type_importer => changed_object_type_id (ForeignKey)
+id => uid_from_data => id (UUIDField)
+object_repr => value_importer => object_repr (CharField)
+postchange_data => json_importer => object_data (JSONField)
+prechange_data => NO IMPORTER => prechange_data (NotFound)
+related_object_id => relation_and_type_importer => related_object_id (UUIDField)
+related_object_type => relation_and_type_importer => related_object_type_id (ForeignKey)
+request_id => uuid_importer => request_id (UUIDField)
+time => datetime_importer => time (DateTimeField)
+user => relation_importer => user_id (ForeignKey)
+user_name => value_importer => user_name (CharField)
+- ipam.fhrpgroup => dcim.interfaceredundancygroup --------------------------------------------------
+auth_key => NO IMPORTER => auth_key (NotFound)
+auth_type => NO IMPORTER => auth_type (NotFound)
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+group_id => NO IMPORTER => group_id (NotFound)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+protocol => fallback_importer => protocol (CharField)
+- ipam.ipaddress => ipam.ipaddress -----------------------------------------------------------------
+address => value_importer => address (Property)
+assigned_object_id => NO IMPORTER => assigned_object_id (NotFound)
+assigned_object_type => NO IMPORTER => assigned_object_type (NotFound)
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+dns_name => value_importer => dns_name (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+nat_inside => relation_importer => nat_inside_id (ForeignKey)
+role => role_importer => role_id (RoleField)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+vrf => NO IMPORTER => vrf (NotFound)
+- ipam.prefix => ipam.prefix -----------------------------------------------------------------------
+_children => NO IMPORTER => _children (PrivateProperty)
+_depth => NO IMPORTER => _depth (PrivateProperty)
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+is_pool => NO IMPORTER => is_pool (NotFound)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mark_utilized => NO IMPORTER => mark_utilized (NotFound)
+prefix => value_importer => prefix (Property)
+role => role_importer => role_id (RoleField)
+site => location_importer => location_id (ForeignKey)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+vlan => relation_importer => vlan_id (ForeignKey)
+vrf => NO IMPORTER => vrf (NotFound)
+- tenancy.tenant => tenancy.tenant -----------------------------------------------------------------
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+group => relation_importer => tenant_group_id (ForeignKey)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+- tenancy.tenantgroup => tenancy.tenantgroup -------------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+level => Disabled with reason: Tree fields doesn't need to be imported
+lft => Disabled with reason: Tree fields doesn't need to be imported
+name => value_importer => name (CharField)
+parent => relation_importer => parent_id (TreeNodeForeignKey)
+rght => Disabled with reason: Tree fields doesn't need to be imported
+slug => NO IMPORTER => slug (NotFound)
+tree_id => Disabled with reason: Tree fields doesn't need to be imported
+- users.objectpermission => users.objectpermission -------------------------------------------------
+actions => json_importer => actions (JSONField)
+constraints => json_importer => constraints (JSONField)
+description => value_importer => description (CharField)
+enabled => value_importer => enabled (BooleanField)
+groups => identifiers_importer => groups (ManyToManyField)
+id => uid_from_data => id (UUIDField)
+name => value_importer => name (CharField)
+object_types => content_types_importer => object_types (ManyToManyField)
+users => identifiers_importer => users (ManyToManyField)
+* End of Import Summary ****************************************************************************

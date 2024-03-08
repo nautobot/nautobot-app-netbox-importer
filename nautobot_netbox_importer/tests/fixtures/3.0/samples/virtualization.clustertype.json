@@ -1,0 +1,35 @@
+[
+{
+  "model": "virtualization.clustertype",
+  "pk": "362f6e2e-82b8-5cc8-ab87-fa937df79d69",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:34.438Z",
+    "_custom_field_data": {},
+    "name": "Amazon Web Services",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustertype",
+  "pk": "49f2845e-b8f4-58e3-8534-2a1131071e25",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:34.439Z",
+    "_custom_field_data": {},
+    "name": "Google Cloud",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustertype",
+  "pk": "ae807dce-fa79-5557-9d7e-a8e8f8e881a7",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:34.443Z",
+    "_custom_field_data": {},
+    "name": "VMware",
+    "description": ""
+  }
+}
+]

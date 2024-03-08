@@ -1,0 +1,50 @@
+[
+{
+  "model": "dcim.interfacetemplate",
+  "pk": "479b605a-89e2-56ca-b2b4-6766ac09ad3c",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:26.716Z",
+    "_custom_field_data": {},
+    "device_type": "1edf9408-8f18-5b48-94db-ef8c8e7c9001",
+    "name": "GigabitEthernet1/0/23",
+    "label": "",
+    "description": "",
+    "_name": "0001000099999999GigabitEthernet000023............",
+    "type": "1000base-t",
+    "mgmt_only": false
+  }
+},
+{
+  "model": "dcim.interfacetemplate",
+  "pk": "ee051ee5-3be8-522c-b4c4-b4e2ff266b33",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:26.731Z",
+    "_custom_field_data": {},
+    "device_type": "1edf9408-8f18-5b48-94db-ef8c8e7c9001",
+    "name": "GigabitEthernet1/0/34",
+    "label": "",
+    "description": "",
+    "_name": "0001000099999999GigabitEthernet000034............",
+    "type": "1000base-t",
+    "mgmt_only": false
+  }
+},
+{
+  "model": "dcim.interfacetemplate",
+  "pk": "f8a732eb-6d27-599d-8e10-e8f40b481329",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:26.702Z",
+    "_custom_field_data": {},
+    "device_type": "1edf9408-8f18-5b48-94db-ef8c8e7c9001",
+    "name": "GigabitEthernet1/0/13",
+    "label": "",
+    "description": "",
+    "_name": "0001000099999999GigabitEthernet000013............",
+    "type": "1000base-t",
+    "mgmt_only": false
+  }
+}
+]

@@ -1,0 +1,38 @@
+[
+{
+  "model": "dcim.devicetype",
+  "pk": "03d4a2c5-e08b-5cc1-924d-c401194d393c",
+  "fields": {
+    "created": "2024-02-15T09:18:48.416Z",
+    "last_updated": "2024-02-15T10:03:30.333Z",
+    "_custom_field_data": {},
+    "manufacturer": "9568e4c1-fa0c-5c43-9606-e25166e67765",
+    "model": "Half U Device Type",
+    "part_number": "",
+    "u_height": 0,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "257dca9a-92d2-5f02-af45-4de316a47b71",
+  "fields": {
+    "created": "2024-02-14T12:21:37.922Z",
+    "last_updated": "2024-02-14T13:29:43.927Z",
+    "_custom_field_data": {},
+    "manufacturer": "9568e4c1-fa0c-5c43-9606-e25166e67765",
+    "model": "Device Model",
+    "part_number": "",
+    "u_height": 1,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": ""
+  }
+}
+]

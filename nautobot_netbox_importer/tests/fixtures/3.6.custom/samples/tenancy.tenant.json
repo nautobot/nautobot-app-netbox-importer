@@ -1,0 +1,47 @@
+[
+{
+  "model": "tenancy.tenant",
+  "pk": "35f6098e-5c2c-58b3-824c-9b5c024a4321",
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2024-01-22T11:06:30.612Z",
+    "_custom_field_data": {
+      "cust_id": ""
+    },
+    "name": "Jimbob's Banking & Trust",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "87d90b20-b1c7-53a3-b78c-cab699c71268",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-22T11:06:30.601Z",
+    "_custom_field_data": {
+      "cust_id": "STR01"
+    },
+    "name": "Strickland Propane",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "9b6fe81e-92b4-5b82-8769-39a7627c566e",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-22T11:06:30.600Z",
+    "_custom_field_data": {
+      "cust_id": "INI04"
+    },
+    "name": "Initech",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+}
+]

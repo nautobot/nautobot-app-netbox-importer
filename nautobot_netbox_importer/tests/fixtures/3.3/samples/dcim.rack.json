@@ -1,0 +1,83 @@
+[
+{
+  "model": "dcim.rack",
+  "pk": "333af99c-ec4b-505f-ac02-1a03f6cb9689",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:22.946Z",
+    "_custom_field_data": {},
+    "name": "IDF128",
+    "_name": "IDF00000128",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "bb9626e1-166c-552f-89c8-c66148ea6c1d",
+    "facility_id": null,
+    "location": "8f46b08d-9bcb-56bd-ba7a-0c783d582906",
+    "rack_group": null,
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "serial": "",
+    "asset_tag": null,
+    "type": "4-post-frame",
+    "width": 19,
+    "u_height": 42,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.rack",
+  "pk": "82b8b341-86cb-5760-a942-01f866935056",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:22.918Z",
+    "_custom_field_data": {},
+    "name": "R305",
+    "_name": "R00000305",
+    "status": "9172bac4-6144-54e5-b44d-f530905f8d05",
+    "role": null,
+    "facility_id": null,
+    "location": "a7f18fd3-b68a-5304-903a-6996f5ac9731",
+    "rack_group": null,
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "serial": "",
+    "asset_tag": null,
+    "type": "4-post-cabinet",
+    "width": 19,
+    "u_height": 48,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.rack",
+  "pk": "907cfa96-7ffe-52ed-8d93-b50a0e105b2d",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:22.967Z",
+    "_custom_field_data": {},
+    "name": "Plant 2",
+    "_name": "Plant 00000002",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "bb9626e1-166c-552f-89c8-c66148ea6c1d",
+    "facility_id": null,
+    "location": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+    "rack_group": null,
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "serial": "",
+    "asset_tag": null,
+    "type": "2-post-frame",
+    "width": 19,
+    "u_height": 42,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+}
+]

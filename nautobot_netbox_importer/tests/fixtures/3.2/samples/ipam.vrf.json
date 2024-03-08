@@ -1,0 +1,68 @@
+[
+{
+  "model": "ipam.vrf",
+  "pk": "7ab8b2d0-30bc-543a-85f7-5039ccc771db",
+  "fields": {
+    "created": "2022-04-08T00:05:31.612Z",
+    "last_updated": "2024-01-02T12:05:44.899Z",
+    "_custom_field_data": {},
+    "name": "Alpha",
+    "rd": "65000:100",
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": null,
+    "description": "",
+    "import_targets": [
+      "2ca62435-a1d9-508f-a90c-fea781fb01fa",
+      "4e3a7cf5-5e49-55c9-8fed-10c6d35f9982"
+    ],
+    "export_targets": [
+      "6cc00d80-6754-504b-b920-e14d13a65832",
+      "44b1201b-16c0-55d0-957d-558cf7de443f"
+    ]
+  }
+},
+{
+  "model": "ipam.vrf",
+  "pk": "846b3654-ba46-59bf-8900-c53475a33880",
+  "fields": {
+    "created": "2022-04-08T00:05:32.358Z",
+    "last_updated": "2024-01-02T12:05:44.914Z",
+    "_custom_field_data": {},
+    "name": "Echo",
+    "rd": "65000:500",
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": null,
+    "description": "",
+    "import_targets": [
+      "4e3a7cf5-5e49-55c9-8fed-10c6d35f9982",
+      "930d2e9c-09ff-5ea4-b7a4-0b4e8af05d8c"
+    ],
+    "export_targets": [
+      "6cc00d80-6754-504b-b920-e14d13a65832",
+      "3d417c6d-b9a1-5a39-b2da-104921c4db0a"
+    ]
+  }
+},
+{
+  "model": "ipam.vrf",
+  "pk": "c8b77e6f-6751-5efc-ad5b-06b60d9bfc0d",
+  "fields": {
+    "created": "2022-04-08T00:05:31.938Z",
+    "last_updated": "2024-01-02T12:05:44.906Z",
+    "_custom_field_data": {},
+    "name": "Charlie",
+    "rd": "65000:300",
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": null,
+    "description": "",
+    "import_targets": [
+      "4e3a7cf5-5e49-55c9-8fed-10c6d35f9982",
+      "27ec5aa5-0252-5028-925c-0b11f9b76491"
+    ],
+    "export_targets": [
+      "6cc00d80-6754-504b-b920-e14d13a65832",
+      "4c21d0c1-5313-50b9-ab7d-2cebafa7348c"
+    ]
+  }
+}
+]

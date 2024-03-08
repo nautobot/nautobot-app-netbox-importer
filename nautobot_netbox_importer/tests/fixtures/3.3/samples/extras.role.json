@@ -1,0 +1,51 @@
+[
+{
+  "model": "extras.role",
+  "pk": "7c20cf28-1ac0-51d3-9222-65c10b1e302b",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-02-22T08:39:01.902Z",
+    "_custom_field_data": {},
+    "name": "Patch Panel",
+    "color": "607d8b",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      42
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "cf28137c-1251-5b94-bde0-914c91ad0c70",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-22T08:39:01.915Z",
+    "_custom_field_data": {},
+    "name": "Storage",
+    "color": "ffc107",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      60
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "dfd5a12a-ffe4-5ae5-9bdd-e71adbe5b49a",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-02-22T08:39:01.920Z",
+    "_custom_field_data": {},
+    "name": "Access - Data",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": 1000,
+    "content_types": [
+      72,
+      68
+    ]
+  }
+}
+]

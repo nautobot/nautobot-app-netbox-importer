@@ -1,0 +1,53 @@
+[
+{
+  "model": "ipam.vlan",
+  "pk": "069e64e5-e1d6-51f1-a868-8a76d0c48fe5",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:57.642Z",
+    "_custom_field_data": {},
+    "location": "3ec0ea77-bd7c-5cac-b6df-9b9e38d34541",
+    "vlan_group": null,
+    "vid": 200,
+    "name": "Voice",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "cfe1ee60-d4a6-5c9f-b35c-0d92aa3fade1",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "description": ""
+  }
+},
+{
+  "model": "ipam.vlan",
+  "pk": "3b88e603-9ce6-5884-b410-6689ded9e62c",
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:57.735Z",
+    "_custom_field_data": {},
+    "location": "10cd37cc-9b76-5717-b0fa-2fcf0d2b9852",
+    "vlan_group": "3ac8f2e8-c354-5f7e-82e1-01a00999857d",
+    "vid": 203,
+    "name": "Wireless",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": null,
+    "tenant": "35f6098e-5c2c-58b3-824c-9b5c024a4321",
+    "description": ""
+  }
+},
+{
+  "model": "ipam.vlan",
+  "pk": "b2d36c48-ee7d-5493-9d3c-5996bd3c4f87",
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:57.743Z",
+    "_custom_field_data": {},
+    "location": "bdc2d9f4-61ea-5eac-98fd-d11492c25be2",
+    "vlan_group": "3060d7a7-bf57-5d57-aeb7-4a8b0463932d",
+    "vid": 202,
+    "name": "Voice",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": null,
+    "tenant": "35f6098e-5c2c-58b3-824c-9b5c024a4321",
+    "description": ""
+  }
+}
+]

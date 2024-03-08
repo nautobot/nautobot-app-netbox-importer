@@ -1,0 +1,77 @@
+[
+{
+  "model": "virtualization.virtualmachine",
+  "pk": "003622c2-a870-591e-8172-b72a2d3caf83",
+  "fields": {
+    "created": "2021-04-05T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:32.345Z",
+    "_custom_field_data": {},
+    "local_config_context_data": null,
+    "local_config_context_schema": null,
+    "local_config_context_data_owner_content_type": null,
+    "local_config_context_data_owner_object_id": null,
+    "cluster": "55b52faa-7cdb-53ad-b5e8-684018dc9394",
+    "tenant": null,
+    "platform": "069874d3-da4d-54f5-a17b-40bbb0d29f98",
+    "name": "vm35",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "67af1cd7-6cd7-5f2f-b58a-cb264dbaa896",
+    "primary_ip4": null,
+    "primary_ip6": null,
+    "vcpus": null,
+    "memory": null,
+    "disk": null,
+    "comments": ""
+  }
+},
+{
+  "model": "virtualization.virtualmachine",
+  "pk": "4e75f760-9cee-5095-be04-d74202328f88",
+  "fields": {
+    "created": "2021-04-05T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:32.415Z",
+    "_custom_field_data": {},
+    "local_config_context_data": null,
+    "local_config_context_schema": null,
+    "local_config_context_data_owner_content_type": null,
+    "local_config_context_data_owner_object_id": null,
+    "cluster": "37abda91-60de-5d63-8463-af7f08cfc586",
+    "tenant": null,
+    "platform": "069874d3-da4d-54f5-a17b-40bbb0d29f98",
+    "name": "vm82",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "67af1cd7-6cd7-5f2f-b58a-cb264dbaa896",
+    "primary_ip4": null,
+    "primary_ip6": null,
+    "vcpus": null,
+    "memory": null,
+    "disk": null,
+    "comments": ""
+  }
+},
+{
+  "model": "virtualization.virtualmachine",
+  "pk": "e76eabf5-c6af-511d-babe-ba447bf33f63",
+  "fields": {
+    "created": "2021-04-05T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:32.360Z",
+    "_custom_field_data": {},
+    "local_config_context_data": null,
+    "local_config_context_schema": null,
+    "local_config_context_data_owner_content_type": null,
+    "local_config_context_data_owner_object_id": null,
+    "cluster": "5849472f-c4fd-5bf5-be9f-961f0a508044",
+    "tenant": null,
+    "platform": "069874d3-da4d-54f5-a17b-40bbb0d29f98",
+    "name": "vm45",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "67af1cd7-6cd7-5f2f-b58a-cb264dbaa896",
+    "primary_ip4": null,
+    "primary_ip6": null,
+    "vcpus": null,
+    "memory": null,
+    "disk": null,
+    "comments": ""
+  }
+}
+]

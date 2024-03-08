@@ -1,0 +1,83 @@
+[
+{
+  "model": "dcim.location",
+  "pk": "f0bf9f0f-9972-5db7-8686-c28fbd36a0a5",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:24.761Z",
+    "_custom_field_data": {},
+    "parent": null,
+    "name": "Africa",
+    "_name": "Africa",
+    "location_type": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "tenant": null,
+    "description": "",
+    "facility": "",
+    "asn": null,
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "contact_name": "",
+    "contact_phone": "",
+    "contact_email": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.location",
+  "pk": "9f46070b-752f-57c8-8bb1-5b985c60b4e1",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:24.764Z",
+    "_custom_field_data": {},
+    "parent": null,
+    "name": "Asia",
+    "_name": "Asia",
+    "location_type": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "tenant": null,
+    "description": "",
+    "facility": "",
+    "asn": null,
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "contact_name": "",
+    "contact_phone": "",
+    "contact_email": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.location",
+  "pk": "9870e54f-2a5b-585b-92bc-3e01df3912c3",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:24.820Z",
+    "_custom_field_data": {},
+    "parent": "9f46070b-752f-57c8-8bb1-5b985c60b4e1",
+    "name": "China",
+    "_name": "China",
+    "location_type": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "tenant": null,
+    "description": "",
+    "facility": "",
+    "asn": null,
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "contact_name": "",
+    "contact_phone": "",
+    "contact_email": "",
+    "comments": ""
+  }
+}
+]

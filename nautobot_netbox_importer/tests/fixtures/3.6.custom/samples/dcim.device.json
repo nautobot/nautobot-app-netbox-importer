@@ -1,0 +1,78 @@
+[
+{
+  "model": "dcim.device",
+  "pk": "4f3495b5-00e6-5917-a148-77e109f96b0f",
+  "fields": {
+    "created": "2024-02-15T09:19:04.514Z",
+    "last_updated": "2024-02-15T10:03:30.354Z",
+    "_custom_field_data": {
+      "device_custom_choices": null
+    },
+    "local_config_context_data": null,
+    "local_config_context_schema": null,
+    "local_config_context_data_owner_content_type": null,
+    "local_config_context_data_owner_object_id": null,
+    "device_type": "03d4a2c5-e08b-5cc1-924d-c401194d393c",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "cdec8e7a-3a27-5c46-b9a3-06c5b38d7b1e",
+    "tenant": null,
+    "platform": null,
+    "name": "Half U Device",
+    "_name": "Half U Device",
+    "serial": "",
+    "asset_tag": null,
+    "location": "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
+    "rack": "87cd3a0d-c203-5af5-8e51-f402bb23bc00",
+    "position": null,
+    "face": "front",
+    "primary_ip4": null,
+    "primary_ip6": null,
+    "cluster": null,
+    "virtual_chassis": null,
+    "device_redundancy_group": null,
+    "device_redundancy_group_priority": null,
+    "vc_position": null,
+    "vc_priority": null,
+    "comments": "",
+    "secrets_group": null
+  }
+},
+{
+  "model": "dcim.device",
+  "pk": "f510c5ff-e1f8-5adc-9fb5-30bc5791b42e",
+  "fields": {
+    "created": "2024-02-14T12:22:40.699Z",
+    "last_updated": "2024-02-14T13:29:43.936Z",
+    "_custom_field_data": {
+      "device_custom_choices": "Choice 1"
+    },
+    "local_config_context_data": null,
+    "local_config_context_schema": null,
+    "local_config_context_data_owner_content_type": null,
+    "local_config_context_data_owner_object_id": null,
+    "device_type": "257dca9a-92d2-5f02-af45-4de316a47b71",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "715773ef-2d6c-5895-972d-40f37486a56e",
+    "tenant": null,
+    "platform": null,
+    "name": "Device 1",
+    "_name": "Device 00000001",
+    "serial": "",
+    "asset_tag": null,
+    "location": "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
+    "rack": "87cd3a0d-c203-5af5-8e51-f402bb23bc00",
+    "position": null,
+    "face": "",
+    "primary_ip4": null,
+    "primary_ip6": null,
+    "cluster": null,
+    "virtual_chassis": null,
+    "device_redundancy_group": null,
+    "device_redundancy_group_priority": null,
+    "vc_position": null,
+    "vc_priority": null,
+    "comments": "",
+    "secrets_group": null
+  }
+}
+]

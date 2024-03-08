@@ -1,0 +1,35 @@
+[
+{
+  "model": "dcim.manufacturer",
+  "pk": "94e7b59b-659f-5c68-9958-a3e82f19aa9f",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:58.332Z",
+    "_custom_field_data": {},
+    "name": "Cisco",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "9e771853-28dc-52de-adb0-9fa94c85d5e0",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:58.341Z",
+    "_custom_field_data": {},
+    "name": "Ubiquiti",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "c5902059-194c-583a-83c3-058cd5ed3f5a",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:58.343Z",
+    "_custom_field_data": {},
+    "name": "Panduit",
+    "description": ""
+  }
+}
+]
