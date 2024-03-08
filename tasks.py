@@ -156,7 +156,7 @@ def run_command(context, command, **kwargs):
                 **kwargs.get("env", {}),
                 **kwargs.pop("command_env"),
             }
-        context.run(command, **kwargs)
+        return context.run(command, **kwargs)
     else:
         # Check if nautobot is running, no need to start another nautobot container to run a command
         docker_compose_status = "ps --services --filter status=running"
