@@ -130,6 +130,7 @@ imported: 1
 = Nautobot Stats: ==================================================================================
 - auth.group ---------------------------------------------------------------------------------------
 source_created: 1
+created: 1
 - contenttypes.contenttype -------------------------------------------------------------------------
 source_ignored: 135
 - dcim.cable ---------------------------------------------------------------------------------------
@@ -138,48 +139,67 @@ save_failed: 1
 issues: 1
 - dcim.device --------------------------------------------------------------------------------------
 source_created: 2
+created: 2
 issues: 2
 - dcim.devicetype ----------------------------------------------------------------------------------
 source_created: 2
+created: 2
 issues: 1
 - dcim.interfaceredundancygroup --------------------------------------------------------------------
 source_created: 2
+created: 2
 issues: 2
 - dcim.location ------------------------------------------------------------------------------------
 source_created: 1
+created: 1
 issues: 1
 - dcim.locationtype --------------------------------------------------------------------------------
 source_created: 2
+created: 2
 - dcim.manufacturer --------------------------------------------------------------------------------
 source_created: 1
+created: 1
 - dcim.rack ----------------------------------------------------------------------------------------
 source_created: 1
+created: 1
 - extras.customfield -------------------------------------------------------------------------------
 source_created: 4
+created: 4
 issues: 1
 - extras.customfieldchoice -------------------------------------------------------------------------
 source_created: 3
+created: 3
 - extras.note --------------------------------------------------------------------------------------
 source_created: 2
+created: 2
 - extras.objectchange ------------------------------------------------------------------------------
 source_created: 21
+created: 21
 - extras.role --------------------------------------------------------------------------------------
 source_created: 3
+created: 3
 - extras.status ------------------------------------------------------------------------------------
 source_created: 3
+created: 3
 - ipam.ipaddress -----------------------------------------------------------------------------------
 source_created: 1
+created: 1
 - ipam.prefix --------------------------------------------------------------------------------------
 source_created: 1
+created: 1
 - tenancy.tenant -----------------------------------------------------------------------------------
 source_created: 11
+created: 11
 - tenancy.tenantgroup ------------------------------------------------------------------------------
 source_created: 1
+created: 1
 - users.objectpermission ---------------------------------------------------------------------------
 source_created: 1
+created: 1
 issues: 1
 - users.user ---------------------------------------------------------------------------------------
 source_created: 6
+created: 6
 = Content Types Mapping Deviations: ================================================================
   Mapping deviations from source content type to Nautobot content type
 auth.user => users.user
@@ -197,7 +217,7 @@ extras.note => extras.journalentry
 dcim.interfaceredundancygroup => ipam.fhrpgroup
 = Importer issues: =================================================================================
 - dcim.cable ---------------------------------------------------------------------------------------
-6df947b3-9159-5b42-8367-c0d7edb3986c | SaveFailed | "{'_state': <django.db.models.base.ModelState object at 0x7f471a350b50>, 'id': UUID('6df947b3-9159-5b42-8367-c0d7edb3986c'), 'created': datetime.datetime(2024, 2, 28, 13, 39, 52, 903205, tzinfo=<UTC>), 'last_updated': datetime.datetime(2024, 2, 28, 13, 39, 52, 903213, tzinfo=<UTC>), '_custom_field_data': {}, 'termination_a_type_id': None, 'termination_a_id': None, 'termination_b_type_id': None, 'termination_b_id': None, 'type': 'smf', 'status_id': UUID('e81c76fa-2fb5-54e3-acbd-f0b817639af5'), 'label': '', 'color': 'ffeb3b', 'length': None, 'length_unit': '', '_abs_length': None, '_termination_a_device_id': None, '_termination_b_device_id': None, '_pk': UUID('6df947b3-9159-5b42-8367-c0d7edb3986c'), '_orig_status': None}" | "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-02-28 13:39:52.903205+00, 2024-02-28 13:39:52.903213+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n"
+6df947b3-9159-5b42-8367-c0d7edb3986c | SaveFailed | "#6df947b3-9159-5b42-8367-c0d7edb3986c" | "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-05-15 11:07:12.132518+00, 2024-05-15 11:07:12.132525+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n"
 - dcim.device --------------------------------------------------------------------------------------
 4f3495b5-00e6-5917-a148-77e109f96b0f | Unracked | "Half U Device" | "{'position': 'Device unracked due to 0U height'}"
 f510c5ff-e1f8-5adc-9fb5-30bc5791b42e | ValidationError | "Device 1" | "[\"Invalid value for custom field 'device_custom_object': Value must be a string\"]"
@@ -211,7 +231,7 @@ c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 | ValidationError | "Site 1" | "{'parent': 
 - extras.customfield -------------------------------------------------------------------------------
 149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 | InvalidChoiceValueIssue | "Device Custom Object" | "{'type': 'Invalid choice value: `object`, replaced with `text`'}"
 - users.objectpermission ---------------------------------------------------------------------------
-c650165f-9a05-55c0-bbb1-c9527d41160c | InvalidContentType | "Test Permission" | "{'object_types': 'Invalid content type ['extras', 'script'], skipping'}"
+c650165f-9a05-55c0-bbb1-c9527d41160c | InvalidContentType | "Test Permission" | "{'object_types': \"Invalid content type ['extras', 'script'], skipping\"}"
 = Field Mappings: ==================================================================================
 - auth.group => auth.group -------------------------------------------------------------------------
 name => value_importer => name (CharField)

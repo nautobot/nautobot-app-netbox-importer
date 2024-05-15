@@ -5742,7 +5742,7 @@
                     ],
                     "default_value": null,
                     "disable_reason": "",
-                    "required": true
+                    "required": false
                 },
                 "id": {
                     "name": "id",
@@ -8780,7 +8780,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 1
+                "source_created": 1,
+                "created": 1
             },
             "issues": []
         },
@@ -8903,9 +8904,16 @@
             "issues": [
                 {
                     "uid": "6df947b3-9159-5b42-8367-c0d7edb3986c",
-                    "name": "\"{'_state': <django.db.models.base.ModelState object at 0x7f8fa0da86d0>, 'id': UUID('6df947b3-9159-5b42-8367-c0d7edb3986c'), 'created': datetime.datetime(2024, 2, 28, 13, 29, 18, 147727, tzinfo=<UTC>), 'last_updated': datetime.datetime(2024, 2, 28, 13, 29, 18, 147734, tzinfo=<UTC>), '_custom_field_data': {}, 'termination_a_type_id': None, 'termination_a_id': None, 'termination_b_type_id': None, 'termination_b_id': None, 'type': 'smf', 'status_id': UUID('e81c76fa-2fb5-54e3-acbd-f0b817639af5'), 'label': '', 'color': 'ffeb3b', 'length': None, 'length_unit': '', '_abs_length': None, '_termination_a_device_id': None, '_termination_b_device_id': None, '_pk': UUID('6df947b3-9159-5b42-8367-c0d7edb3986c'), '_orig_status': None}\"",
+                    "name": "#6df947b3-9159-5b42-8367-c0d7edb3986c",
                     "issue_type": "SaveFailed",
-                    "message": "\"null value in column \\\"termination_a_id\\\" of relation \\\"dcim_cable\\\" violates not-null constraint\\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-02-28 13:29:18.147727+00, 2024-02-28 13:29:18.147734+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\\n\""
+                    "message": "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-05-15 10:06:32.639003+00, 2024-05-15 10:06:32.639012+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n",
+                    "data": {
+                        "status_id": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
+                        "created": "2020-12-30 00:00:00+00:00",
+                        "last_updated": "None",
+                        "type": "smf",
+                        "color": "ffeb3b"
+                    }
                 }
             ]
         },
@@ -8956,6 +8964,7 @@
             "disabled": false,
             "stats": {
                 "source_created": 2,
+                "created": 2,
                 "issues": 2
             },
             "issues": [
@@ -8963,13 +8972,39 @@
                     "uid": "4f3495b5-00e6-5917-a148-77e109f96b0f",
                     "name": "Half U Device",
                     "issue_type": "Unracked",
-                    "message": "{'position': 'Device unracked due to 0U height'}"
+                    "message": "{'position': 'Device unracked due to 0U height'}",
+                    "data": {
+                        "model_flags": "DiffSyncModelFlags.NONE",
+                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "id": "4f3495b5-00e6-5917-a148-77e109f96b0f",
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "location_id": "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
+                        "role_id": "cdec8e7a-3a27-5c46-b9a3-06c5b38d7b1e",
+                        "created": "2024-02-15 09:19:04.514000+00:00",
+                        "last_updated": "None",
+                        "custom_field_data": "{'device_custom_object': None, 'device_custom_choices': None}",
+                        "device_type_id": "03d4a2c5-e08b-5cc1-924d-c401194d393c",
+                        "name": "Half U Device",
+                        "rack_id": "87cd3a0d-c203-5af5-8e51-f402bb23bc00",
+                        "face": "front"
+                    }
                 },
                 {
                     "uid": "f510c5ff-e1f8-5adc-9fb5-30bc5791b42e",
                     "name": "Device 1",
                     "issue_type": "ValidationError",
-                    "message": "[\"Invalid value for custom field 'device_custom_object': Value must be a string\"]"
+                    "message": "[\"Invalid value for custom field 'device_custom_object': Value must be a string\"]",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "location_id": "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
+                        "role_id": "715773ef-2d6c-5895-972d-40f37486a56e",
+                        "created": "2024-02-14 12:22:40.699000+00:00",
+                        "last_updated": "None",
+                        "custom_field_data": "{'device_custom_object': 2, 'device_custom_choices': 'Choice 1'}",
+                        "device_type_id": "257dca9a-92d2-5f02-af45-4de316a47b71",
+                        "name": "Device 1",
+                        "rack_id": "87cd3a0d-c203-5af5-8e51-f402bb23bc00"
+                    }
                 }
             ]
         },
@@ -8996,6 +9031,7 @@
             "disabled": false,
             "stats": {
                 "source_created": 2,
+                "created": 2,
                 "issues": 1
             },
             "issues": [
@@ -9003,7 +9039,19 @@
                     "uid": "03d4a2c5-e08b-5cc1-924d-c401194d393c",
                     "name": "Half U Device Type",
                     "issue_type": "SourceFieldImporterIssue",
-                    "message": "{'u_height': 'Invalid source value 0.5, truncated to 0'}"
+                    "message": "{'u_height': 'Invalid source value 0.5, truncated to 0'}",
+                    "data": {
+                        "model_flags": "DiffSyncModelFlags.NONE",
+                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "id": "03d4a2c5-e08b-5cc1-924d-c401194d393c",
+                        "manufacturer_id": "9568e4c1-fa0c-5c43-9606-e25166e67765",
+                        "model": "None",
+                        "created": "2024-02-15 09:18:48.416000+00:00",
+                        "last_updated": "None",
+                        "part_number": "None",
+                        "u_height": "0",
+                        "is_full_depth": "None"
+                    }
                 }
             ]
         },
@@ -9038,6 +9086,7 @@
             "disabled": false,
             "stats": {
                 "source_created": 2,
+                "created": 2,
                 "issues": 2
             },
             "issues": [
@@ -9045,13 +9094,34 @@
                     "uid": "2586a272-455a-5e92-85d7-f41c0784630a",
                     "name": "FHR Group clusterxl",
                     "issue_type": "InvalidChoiceValueIssue",
-                    "message": "{'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}"
+                    "message": "{'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}",
+                    "data": {
+                        "model_flags": "DiffSyncModelFlags.NONE",
+                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "id": "2586a272-455a-5e92-85d7-f41c0784630a",
+                        "status_id": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+                        "protocol": "None",
+                        "created": "None",
+                        "last_updated": "None",
+                        "name": "FHR Group clusterxl"
+                    }
                 },
                 {
                     "uid": "f91623ed-a389-53a4-a4a2-943588c21446",
                     "name": "Test FHR Group",
                     "issue_type": "InvalidChoiceValueIssue",
-                    "message": "{'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}"
+                    "message": "{'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}",
+                    "data": {
+                        "model_flags": "DiffSyncModelFlags.NONE",
+                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "id": "f91623ed-a389-53a4-a4a2-943588c21446",
+                        "status_id": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+                        "protocol": "vrrp",
+                        "created": "None",
+                        "last_updated": "None",
+                        "description": "FHR Group Description",
+                        "name": "Test FHR Group"
+                    }
                 }
             ]
         },
@@ -9094,6 +9164,7 @@
             "disabled": false,
             "stats": {
                 "source_created": 1,
+                "created": 1,
                 "issues": 1
             },
             "issues": [
@@ -9101,7 +9172,14 @@
                     "uid": "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
                     "name": "Site 1",
                     "issue_type": "ValidationError",
-                    "message": "{'parent': ['A Location of type Site must have a parent Location.']}"
+                    "message": "{'parent': ['A Location of type Site must have a parent Location.']}",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "location_type_id": "8fceb641-4563-5da8-9004-963f9ed1965a",
+                        "created": "2024-02-14 12:22:26.202000+00:00",
+                        "last_updated": "None",
+                        "name": "Site 1"
+                    }
                 }
             ]
         },
@@ -9111,7 +9189,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 2
+                "source_created": 2,
+                "created": 2
             },
             "issues": []
         },
@@ -9121,7 +9200,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 1
+                "source_created": 1,
+                "created": 1
             },
             "issues": []
         },
@@ -9219,7 +9299,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 1
+                "source_created": 1,
+                "created": 1
             },
             "issues": []
         },
@@ -9326,6 +9407,7 @@
             "disabled": false,
             "stats": {
                 "source_created": 4,
+                "created": 4,
                 "issues": 1
             },
             "issues": [
@@ -9333,7 +9415,25 @@
                     "uid": "149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5",
                     "name": "Device Custom Object",
                     "issue_type": "InvalidChoiceValueIssue",
-                    "message": "{'type': 'Invalid choice value: `object`, replaced with `text`'}"
+                    "message": "{'type': 'Invalid choice value: `object`, replaced with `text`'}",
+                    "data": {
+                        "model_flags": "DiffSyncModelFlags.NONE",
+                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "id": "149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5",
+                        "content_types": "None",
+                        "key": "None",
+                        "label": "None",
+                        "type": "text",
+                        "created": "2024-02-15 11:19:42.197000+00:00",
+                        "last_updated": "None",
+                        "description": "None",
+                        "required": "None",
+                        "filter_logic": "loose",
+                        "default": "None",
+                        "weight": "None",
+                        "validation_minimum": "None",
+                        "validation_maximum": "None"
+                    }
                 }
             ]
         },
@@ -9343,7 +9443,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 3
+                "source_created": 3,
+                "created": 3
             },
             "issues": []
         },
@@ -9401,7 +9502,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 2
+                "source_created": 2,
+                "created": 2
             },
             "issues": []
         },
@@ -9411,7 +9513,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 21
+                "source_created": 21,
+                "created": 21
             },
             "issues": []
         },
@@ -9437,7 +9540,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 3
+                "source_created": 3,
+                "created": 3
             },
             "issues": []
         },
@@ -9479,7 +9583,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 3
+                "source_created": 3,
+                "created": 3
             },
             "issues": []
         },
@@ -9537,7 +9642,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 1
+                "source_created": 1,
+                "created": 1
             },
             "issues": []
         },
@@ -9571,7 +9677,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 1
+                "source_created": 1,
+                "created": 1
             },
             "issues": []
         },
@@ -9765,7 +9872,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 11
+                "source_created": 11,
+                "created": 11
             },
             "issues": []
         },
@@ -9775,7 +9883,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 1
+                "source_created": 1,
+                "created": 1
             },
             "issues": []
         },
@@ -9818,6 +9927,7 @@
             "disabled": false,
             "stats": {
                 "source_created": 1,
+                "created": 1,
                 "issues": 1
             },
             "issues": [
@@ -9825,7 +9935,18 @@
                     "uid": "c650165f-9a05-55c0-bbb1-c9527d41160c",
                     "name": "Test Permission",
                     "issue_type": "InvalidContentType",
-                    "message": "{'object_types': 'Invalid content type ['extras', 'script'], skipping'}"
+                    "message": "{'object_types': \"Invalid content type ['extras', 'script'], skipping\"}",
+                    "data": {
+                        "model_flags": "DiffSyncModelFlags.NONE",
+                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "id": "c650165f-9a05-55c0-bbb1-c9527d41160c",
+                        "name": "None",
+                        "enabled": "None",
+                        "actions": "None",
+                        "constraints": "None",
+                        "object_types": "None",
+                        "users": "{UUID('b6111f2f-ede6-5a47-b0e5-3842b76f14cd')}"
+                    }
                 }
             ]
         },
@@ -9843,7 +9964,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 6
+                "source_created": 6,
+                "created": 6
             },
             "issues": []
         },
