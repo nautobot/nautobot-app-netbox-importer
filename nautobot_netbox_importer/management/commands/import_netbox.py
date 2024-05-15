@@ -76,6 +76,12 @@ class Command(BaseCommand):
             dest="save_text_summary_path",
             help="File path to write the text summary to.",
         )
+        parser.add_argument(
+            "--trace-issues",
+            action="store_true",
+            dest="trace_issues",
+            help="Show a detailed trace of issues originated from any `Exception` found during the import.",
+        )
 
     def handle(self, json_file, **kwargs):  # type: ignore
         """Handle execution of the import_netbox management command."""

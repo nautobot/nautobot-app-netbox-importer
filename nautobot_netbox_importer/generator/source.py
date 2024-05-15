@@ -129,8 +129,9 @@ class SourceAdapter(BaseAdapter):
 
     def __init__(
         self,
-        get_source_data: SourceDataGenerator,
         *args,
+        get_source_data: SourceDataGenerator,
+        trace_issues: bool = False,
         nautobot: Optional[NautobotAdapter] = None,
         logger=None,
         **kwargs,
@@ -141,6 +142,7 @@ class SourceAdapter(BaseAdapter):
         self.get_source_data = get_source_data
         self.wrappers: OrderedDict[ContentTypeStr, SourceModelWrapper] = OrderedDict()
         self.nautobot = nautobot or NautobotAdapter()
+        self.nautobot.trace_issues = trace_issues
         self.content_type_ids_mapping: Dict[int, SourceModelWrapper] = {}
         self.logger = logger or default_logger
         self.summary = ImportSummary()

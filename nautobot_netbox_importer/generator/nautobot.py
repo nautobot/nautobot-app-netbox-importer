@@ -124,6 +124,7 @@ class NautobotAdapter(BaseAdapter):
         """Initialize the adapter."""
         super().__init__("Nautobot", *args, **kwargs)
         self.wrappers: Dict[ContentTypeStr, NautobotModelWrapper] = {}
+        self.trace_issues = False
 
     def get_or_create_wrapper(self, content_type: ContentTypeStr) -> "NautobotModelWrapper":
         """Get or create a Nautobot model wrapper."""
@@ -353,7 +354,7 @@ class NautobotModelWrapper:
         self._issues.append(issue)
         return issue
 
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments,too-many-branches
     def _create_issue(
         self,
         issue_type="",
@@ -414,6 +415,8 @@ class NautobotModelWrapper:
         )
 
         logger.warning(str(issue))
+        if error and self.adapter.trace_issues:
+            logger.error("Issue traceback", exc_info=error)
 
         return issue
 
