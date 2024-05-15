@@ -161,7 +161,7 @@ The initial output of the import process will resemble the following:
 
 ```
 Running docker compose command "ps --services --filter status=running"
-Running docker compose command "exec nautobot nautobot-server import_netbox --save-json-summary-path=generated-mappings.json --bypass-data-validation --dry-run --field-mapping  --sitegroup-parent-always-region --summary  --no-color https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/json/netbox-demo-v3.6.json"
+Running docker compose command "exec nautobot nautobot-server import_netbox --save-json-summary-path=generated-mappings.json --bypass-data-validation --dry-run --sitegroup-parent-always-region --print-summary  --no-color https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/json/netbox-demo-v3.6.json"
 11:01:05.550 DEBUG   nautobot.core.celery __init__.py        import_jobs_as_celery_tasks() :
   Importing system Jobs
 11:01:05.552 DEBUG   nautobot.core.celery __init__.py                      register_jobs() :

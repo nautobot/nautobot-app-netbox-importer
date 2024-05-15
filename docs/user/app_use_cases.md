@@ -7,11 +7,10 @@ This document describes common use-cases and scenarios for this App.
 This app provides `import_netbox` management command to import data from NetBox with the following options:
 
 ```bash
-nautobot-server import_netbox --help
-
+nautobot-server help import_netbox
 usage: nautobot-server import_netbox [-h] [--dry-run] [--update-paths] [--bypass-data-validation] [--sitegroup-parent-always-region] [--fix-powerfeed-locations] [--print-summary]
-                                     [--no-unrack-zero-uheight-devices] [--save-json-summary-path SAVE_JSON_SUMMARY_PATH] [--save-text-summary-path SAVE_TEXT_SUMMARY_PATH] [--version] [-v {0,1,2,3}]
-                                     [--settings SETTINGS] [--pythonpath PYTHONPATH] [--traceback] [--no-color] [--force-color] [--skip-checks]
+                                     [--no-unrack-zero-uheight-devices] [--save-json-summary-path SAVE_JSON_SUMMARY_PATH] [--save-text-summary-path SAVE_TEXT_SUMMARY_PATH] [--trace-issues] [--version]
+                                     [-v {0,1,2,3}] [--settings SETTINGS] [--pythonpath PYTHONPATH] [--traceback] [--no-color] [--force-color] [--skip-checks]
                                      json_file
 
 Import a NetBox JSON data dump into Nautobot's database
@@ -38,6 +37,7 @@ options:
                         File path to write the JSON summary to.
   --save-text-summary-path SAVE_TEXT_SUMMARY_PATH
                         File path to write the text summary to.
+  --trace-issues        Show a detailed trace of issues originated from any `Exception` found during the import.
   --version             show program's version number and exit
   -v {0,1,2,3}, --verbosity {0,1,2,3}
                         Verbosity level; 0=minimal output, 1=normal output, 2=verbose output, 3=very verbose output
