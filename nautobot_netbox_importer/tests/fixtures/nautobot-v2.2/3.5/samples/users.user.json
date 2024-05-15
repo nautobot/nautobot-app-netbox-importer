@@ -1,0 +1,63 @@
+[
+{
+  "model": "users.user",
+  "pk": "35a3bbbb-48d5-5891-8ddc-8b4a97e30d10",
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "alice",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-12-30T15:51:08Z",
+    "config_data": {},
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": "af2898b3-c07a-5b03-b367-ef0ea066ac28",
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "edward",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-12-30T15:51:50Z",
+    "config_data": {},
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": "b6111f2f-ede6-5a47-b0e5-3842b76f14cd",
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2020-12-18T02:07:15.359Z",
+    "config_data": {},
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]

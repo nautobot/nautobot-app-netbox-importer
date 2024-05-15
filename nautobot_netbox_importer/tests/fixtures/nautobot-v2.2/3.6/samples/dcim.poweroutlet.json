@@ -1,0 +1,65 @@
+[
+{
+  "model": "dcim.poweroutlet",
+  "pk": "879ee999-a3bc-52bf-a294-664a4ce51104",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:38.256Z",
+    "_custom_field_data": {},
+    "device": "c615175b-8310-5158-88f8-5a0972e7b1f0",
+    "name": "Outlet 8",
+    "_name": "Outlet 00000008",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "type": "nema-5-20r",
+    "power_port": "09003573-7ee5-59ce-8c50-e4bf64015273",
+    "feed_leg": ""
+  }
+},
+{
+  "model": "dcim.poweroutlet",
+  "pk": "a117bdaf-e623-577b-a185-7c5f669dc2de",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:38.357Z",
+    "_custom_field_data": {},
+    "device": "eeea696e-d8d1-5805-8aef-2f619b9d32a8",
+    "name": "Outlet 5",
+    "_name": "Outlet 00000005",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "type": "nema-5-20r",
+    "power_port": "62c9f3eb-caa4-5935-b229-5bb91345996a",
+    "feed_leg": ""
+  }
+},
+{
+  "model": "dcim.poweroutlet",
+  "pk": "d471c3d4-3271-5e3a-a8a0-188cf7a84a02",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:38.220Z",
+    "_custom_field_data": {},
+    "device": "13d0f232-00cb-5280-9a69-649ad3a4fb05",
+    "name": "Outlet 5",
+    "_name": "Outlet 00000005",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "type": "nema-5-20r",
+    "power_port": "ae1a3abc-c4d3-528c-9ffe-c2c555775c2a",
+    "feed_leg": ""
+  }
+}
+]

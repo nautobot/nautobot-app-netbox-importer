@@ -1,0 +1,52 @@
+[
+{
+  "model": "extras.role",
+  "pk": "2a53f46b-41e1-5f02-865a-163c8edd429a",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-02-22T08:33:37.950Z",
+    "_custom_field_data": {},
+    "name": "Access - Wireless",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": 1000,
+    "content_types": [
+      72,
+      68
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "ce29b49d-ddac-586f-87ec-8f7cb969344c",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-02-22T08:33:37.953Z",
+    "_custom_field_data": {},
+    "name": "Management",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": 1000,
+    "content_types": [
+      68
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "dfd5a12a-ffe4-5ae5-9bdd-e71adbe5b49a",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-02-22T08:33:37.944Z",
+    "_custom_field_data": {},
+    "name": "Access - Data",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": 1000,
+    "content_types": [
+      72,
+      68
+    ]
+  }
+}
+]

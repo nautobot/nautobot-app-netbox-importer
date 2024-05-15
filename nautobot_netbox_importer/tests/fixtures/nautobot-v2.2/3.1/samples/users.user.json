@@ -1,0 +1,65 @@
+[
+{
+  "model": "users.user",
+  "pk": "79770d9b-4994-5610-8175-123cecb0bcac",
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "bob",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-12-30T15:51:16Z",
+    "config_data": {},
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": "a8e58405-afdb-54d3-883e-20eace59cf80",
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "danielle",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-12-30T15:51:40Z",
+    "config_data": {},
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": "fe73675b-51ca-56ac-8cab-ef9580f18278",
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "charlie",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-12-30T15:51:22Z",
+    "config_data": {},
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+}
+]

@@ -1,0 +1,50 @@
+[
+{
+  "model": "circuits.provider",
+  "pk": "259e85ef-c01a-5e32-9be4-bc9e51e66949",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:25.669Z",
+    "_custom_field_data": {},
+    "name": "NTT",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "26f37428-e26a-5e09-8b52-664df6624a2c",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:25.665Z",
+    "_custom_field_data": {},
+    "name": "Comcast",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "30efd662-fc9b-5892-b2be-adeb8091cb29",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:25.667Z",
+    "_custom_field_data": {},
+    "name": "Level 3",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+}
+]

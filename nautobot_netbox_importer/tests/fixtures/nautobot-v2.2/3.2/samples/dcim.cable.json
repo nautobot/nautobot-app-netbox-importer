@@ -1,0 +1,68 @@
+[
+{
+  "model": "dcim.cable",
+  "pk": "487b5c6e-b818-595f-80cf-9546a87613cc",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:39.118Z",
+    "_custom_field_data": {},
+    "termination_a_type": 32,
+    "termination_a_id": "1bfcbea7-de1f-566c-a528-b61ed9352df6",
+    "termination_b_type": 32,
+    "termination_b_id": "e6ba88a1-a4da-51de-96d9-4ec3744a97b5",
+    "type": "cat5e",
+    "status": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
+    "label": "",
+    "color": "ff5722",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null,
+    "_termination_a_device": "c47be8fc-ce7f-5230-ad8d-5be2cb66fb6e",
+    "_termination_b_device": "bb8baefe-6550-55f0-94fc-7299da3a7b82"
+  }
+},
+{
+  "model": "dcim.cable",
+  "pk": "719b856f-c087-5fe1-8c38-fa265e28e226",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:38.903Z",
+    "_custom_field_data": {},
+    "termination_a_type": 32,
+    "termination_a_id": "2267d520-73df-562a-be90-0dbbbd6108bd",
+    "termination_b_type": 32,
+    "termination_b_id": "5f22159e-7243-5627-b58e-3aac2d5f7476",
+    "type": "cat5e",
+    "status": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
+    "label": "",
+    "color": "ff5722",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null,
+    "_termination_a_device": "bd275898-8673-5a42-9093-454f605b2f25",
+    "_termination_b_device": "1a5c5a9b-9440-5e60-93a9-457c5d4bccf8"
+  }
+},
+{
+  "model": "dcim.cable",
+  "pk": "e2dab8e6-9de1-567d-9110-3fd34b9cc550",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:40.378Z",
+    "_custom_field_data": {},
+    "termination_a_type": 32,
+    "termination_a_id": "a6432606-0788-5562-81b8-48776011f76c",
+    "termination_b_type": 35,
+    "termination_b_id": "7bdb41a0-e134-52c2-9db5-e69ada811c74",
+    "type": "",
+    "status": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
+    "label": "",
+    "color": "",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null,
+    "_termination_a_device": "d73da41d-bc0f-502a-88a3-36fc6b3af7b7",
+    "_termination_b_device": "d40d253a-5766-5d9d-91c0-d6aac074a999"
+  }
+}
+]

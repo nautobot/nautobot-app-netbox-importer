@@ -1,0 +1,47 @@
+[
+{
+  "model": "tenancy.tenant",
+  "pk": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:39.886Z",
+    "_custom_field_data": {
+      "cust_id": ""
+    },
+    "name": "NC State University",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "4827cc52-b419-5b58-8ed1-65210bfa04c5",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:39.882Z",
+    "_custom_field_data": {
+      "cust_id": "UMB01"
+    },
+    "name": "Umbrella Corporation",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "87d90b20-b1c7-53a3-b78c-cab699c71268",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:39.873Z",
+    "_custom_field_data": {
+      "cust_id": "STR01"
+    },
+    "name": "Strickland Propane",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+}
+]

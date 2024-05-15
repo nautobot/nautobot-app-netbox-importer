@@ -1,0 +1,47 @@
+[
+{
+  "model": "extras.tag",
+  "pk": "15eed64b-038b-5fe8-a7e8-49045f7b19d7",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:31.551Z",
+    "_custom_field_data": {},
+    "name": "Papa",
+    "color": "8bc34a",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "2606404f-74b9-5251-aae1-9d800ac58ec4",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:31.542Z",
+    "_custom_field_data": {},
+    "name": "India",
+    "color": "2196f3",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "fd7df87d-2737-5092-abaf-8017d504d95e",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:31.539Z",
+    "_custom_field_data": {},
+    "name": "Foxtrot",
+    "color": "9c27b0",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+}
+]

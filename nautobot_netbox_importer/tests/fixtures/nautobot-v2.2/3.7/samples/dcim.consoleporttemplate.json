@@ -1,0 +1,47 @@
+[
+{
+  "model": "dcim.consoleporttemplate",
+  "pk": "310aa620-c534-50f1-96f1-46e191b49b43",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-02-08T07:54:55.907Z",
+    "_custom_field_data": {},
+    "device_type": "257dca9a-92d2-5f02-af45-4de316a47b71",
+    "name": "Console-RE1",
+    "_name": "Console-RE00000001",
+    "label": "",
+    "description": "",
+    "type": "rj-45"
+  }
+},
+{
+  "model": "dcim.consoleporttemplate",
+  "pk": "5cbf1d44-c791-5a81-b9f8-b52731b58f62",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-02-08T07:54:55.918Z",
+    "_custom_field_data": {},
+    "device_type": "7d87e054-c030-5f5c-ac14-a84a14a872c9",
+    "name": "Console",
+    "_name": "Console",
+    "label": "",
+    "description": "",
+    "type": "rj-45"
+  }
+},
+{
+  "model": "dcim.consoleporttemplate",
+  "pk": "be8c6b2a-c42c-5901-9471-9b2ebd34b4c3",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-02-08T07:54:55.916Z",
+    "_custom_field_data": {},
+    "device_type": "86c8ea5d-3bac-514f-b0ce-da555e3f0bef",
+    "name": "usb",
+    "_name": "usb",
+    "label": "",
+    "description": "",
+    "type": "usb-mini-b"
+  }
+}
+]

@@ -1,0 +1,47 @@
+[
+{
+  "model": "dcim.devicebay",
+  "pk": "5669e73f-df3c-56ae-b29d-158d19148e90",
+  "fields": {
+    "created": "2022-01-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:56.109Z",
+    "_custom_field_data": {},
+    "device": "5e8512ff-2dc0-5b92-945b-6ffdad391463",
+    "name": "Bay 7",
+    "_name": "Bay 00000007",
+    "label": "",
+    "description": "",
+    "installed_device": null
+  }
+},
+{
+  "model": "dcim.devicebay",
+  "pk": "9eb2802e-2549-5dd6-b8ac-f8c7d4b71dfd",
+  "fields": {
+    "created": "2022-01-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:56.125Z",
+    "_custom_field_data": {},
+    "device": "5e8512ff-2dc0-5b92-945b-6ffdad391463",
+    "name": "Bay 13",
+    "_name": "Bay 00000013",
+    "label": "",
+    "description": "",
+    "installed_device": null
+  }
+},
+{
+  "model": "dcim.devicebay",
+  "pk": "df8d3500-4c38-5358-bee9-65581d5fbbd3",
+  "fields": {
+    "created": "2022-01-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:56.122Z",
+    "_custom_field_data": {},
+    "device": "5e8512ff-2dc0-5b92-945b-6ffdad391463",
+    "name": "Bay 12",
+    "_name": "Bay 00000012",
+    "label": "",
+    "description": "",
+    "installed_device": null
+  }
+}
+]

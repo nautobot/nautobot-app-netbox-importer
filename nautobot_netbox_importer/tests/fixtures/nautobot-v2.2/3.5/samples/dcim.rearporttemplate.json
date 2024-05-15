@@ -1,0 +1,50 @@
+[
+{
+  "model": "dcim.rearporttemplate",
+  "pk": "1e3cac16-97d6-5bff-a8ef-c7af752a5c63",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:54.673Z",
+    "_custom_field_data": {},
+    "device_type": "e95ceab6-30ed-5b5c-86d3-ae2cff3d51b3",
+    "name": "Port 20",
+    "_name": "Port 00000020",
+    "label": "",
+    "description": "",
+    "type": "110-punch",
+    "positions": 1
+  }
+},
+{
+  "model": "dcim.rearporttemplate",
+  "pk": "34f8258a-5deb-5f1e-b939-b33d4d3b07a9",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:54.745Z",
+    "_custom_field_data": {},
+    "device_type": "e3072e65-9267-5e44-bbc4-28875ce2893c",
+    "name": "Rear Splice",
+    "_name": "Rear Splice",
+    "label": "",
+    "description": "",
+    "type": "splice",
+    "positions": 48
+  }
+},
+{
+  "model": "dcim.rearporttemplate",
+  "pk": "3e3ff7cb-d96e-5f11-a0f5-eb7845cf5a61",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:54.695Z",
+    "_custom_field_data": {},
+    "device_type": "516e3837-80ac-587b-b541-1811ea94f597",
+    "name": "Port 12",
+    "_name": "Port 00000012",
+    "label": "",
+    "description": "",
+    "type": "110-punch",
+    "positions": 1
+  }
+}
+]

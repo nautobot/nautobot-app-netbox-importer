@@ -1,0 +1,38 @@
+[
+{
+  "model": "ipam.routetarget",
+  "pk": "19e89fbb-f05f-5ddf-8b88-b30f64645cdc",
+  "fields": {
+    "created": "2022-04-08T00:28:04.191Z",
+    "last_updated": "2024-01-02T12:07:16.674Z",
+    "_custom_field_data": {},
+    "name": "65000:401",
+    "description": "Delta-import",
+    "tenant": null
+  }
+},
+{
+  "model": "ipam.routetarget",
+  "pk": "27ec5aa5-0252-5028-925c-0b11f9b76491",
+  "fields": {
+    "created": "2022-04-08T00:28:04.046Z",
+    "last_updated": "2024-01-02T12:07:16.672Z",
+    "_custom_field_data": {},
+    "name": "65000:301",
+    "description": "Charlie-import",
+    "tenant": null
+  }
+},
+{
+  "model": "ipam.routetarget",
+  "pk": "44b1201b-16c0-55d0-957d-558cf7de443f",
+  "fields": {
+    "created": "2022-04-08T00:28:03.823Z",
+    "last_updated": "2024-01-02T12:07:16.668Z",
+    "_custom_field_data": {},
+    "name": "65000:102",
+    "description": "Alpha-import",
+    "tenant": null
+  }
+}
+]

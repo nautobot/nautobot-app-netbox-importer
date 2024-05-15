@@ -1,0 +1,35 @@
+[
+{
+  "model": "extras.customfieldchoice",
+  "pk": "5aaff02a-a3d8-537e-9134-070b2d7914a4",
+  "fields": {
+    "created": "2024-02-14T13:30:39.750Z",
+    "last_updated": "2024-02-14T13:30:39.750Z",
+    "custom_field": "ce3f1f06-1d2d-5fd2-8096-f86f691bccb7",
+    "value": "Choice 2",
+    "weight": 100
+  }
+},
+{
+  "model": "extras.customfieldchoice",
+  "pk": "7fac7672-9dd4-57df-a2bb-8f2f0f93bee9",
+  "fields": {
+    "created": "2024-02-14T13:30:39.749Z",
+    "last_updated": "2024-02-14T13:30:39.749Z",
+    "custom_field": "ce3f1f06-1d2d-5fd2-8096-f86f691bccb7",
+    "value": "Choice 1",
+    "weight": 100
+  }
+},
+{
+  "model": "extras.customfieldchoice",
+  "pk": "bb4a706e-6ab6-5016-bcd7-9c4d8a91e054",
+  "fields": {
+    "created": "2024-02-14T13:30:39.751Z",
+    "last_updated": "2024-02-14T13:30:39.751Z",
+    "custom_field": "ce3f1f06-1d2d-5fd2-8096-f86f691bccb7",
+    "value": "Choice 3",
+    "weight": 100
+  }
+}
+]

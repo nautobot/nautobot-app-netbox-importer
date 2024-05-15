@@ -1,0 +1,35 @@
+[
+{
+  "model": "dcim.manufacturer",
+  "pk": "6aa5ca05-59ef-5474-809e-7fca74e90e42",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:32.071Z",
+    "_custom_field_data": {},
+    "name": "Brocade",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "94e7b59b-659f-5c68-9958-a3e82f19aa9f",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:32.072Z",
+    "_custom_field_data": {},
+    "name": "Cisco",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "eac77e47-fec1-5dca-8dbb-0b0081c69078",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:32.075Z",
+    "_custom_field_data": {},
+    "name": "F5",
+    "description": ""
+  }
+}
+]

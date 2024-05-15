@@ -1,0 +1,68 @@
+[
+{
+  "model": "circuits.circuittermination",
+  "pk": "79810c6d-add5-5a9f-bc8b-6c1e2a900d70",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:09.332Z",
+    "_custom_field_data": {},
+    "cable": "a992e10e-8eeb-5a3b-bfa3-edc01468594b",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "a52cbe22-a36e-4a18-a04b-64a83e14fb3c",
+    "circuit": "4799effd-c3c5-55d9-be08-e8d9f9d22c03",
+    "term_side": "Z",
+    "location": "044d48c0-0889-5205-a6fa-2c7c21aaa1de",
+    "provider_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittermination",
+  "pk": "7f76c883-d7fd-543a-87e5-06763edd801e",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:09.480Z",
+    "_custom_field_data": {},
+    "cable": "f44c0876-f31c-5e2b-b7ef-838438528bb6",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "714d4fa2-775c-4f70-9a8c-ba5ae655a532",
+    "circuit": "6cbcc60a-6a43-5efa-bd23-33a8fb953b13",
+    "term_side": "A",
+    "location": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+    "provider_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittermination",
+  "pk": "fed7cc00-4eae-5b48-a493-096372bb4f6c",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:09.352Z",
+    "_custom_field_data": {},
+    "cable": "727d4a3e-0c2c-5934-88d1-8c64cff4febb",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "b2702d90-1a84-4df2-a298-628de59fdab1",
+    "circuit": "59523c4f-f12f-5d16-8773-d87ba79caffe",
+    "term_side": "Z",
+    "location": "2b612509-6a87-585d-8ef9-c553604b6638",
+    "provider_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+}
+]

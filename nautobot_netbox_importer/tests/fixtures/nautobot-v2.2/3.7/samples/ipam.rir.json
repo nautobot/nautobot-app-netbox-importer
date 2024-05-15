@@ -1,0 +1,38 @@
+[
+{
+  "model": "ipam.rir",
+  "pk": "270d7ef4-3f6e-5f6f-b1f2-85c97d7f8d8a",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:21.364Z",
+    "_custom_field_data": {},
+    "name": "AFRINIC",
+    "is_private": false,
+    "description": "African Network Information Centre"
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "9a496681-ac3d-5e1a-9453-4a69b6aed1a2",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:21.365Z",
+    "_custom_field_data": {},
+    "name": "RFC 1918",
+    "is_private": true,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "bf8e7943-daf2-5ce7-bde3-d4e1bb30188b",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:21.363Z",
+    "_custom_field_data": {},
+    "name": "LACNIC",
+    "is_private": false,
+    "description": "Latin America and Caribbean Network Information Centre"
+  }
+}
+]

@@ -1,0 +1,57 @@
+[
+{
+  "model": "extras.status",
+  "pk": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+  "fields": {
+    "created": "2024-01-02T12:01:15.294Z",
+    "last_updated": "2024-01-02T12:01:15.294Z",
+    "_custom_field_data": {},
+    "name": "Unknown",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      32,
+      56,
+      68,
+      118
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "90ef0b5d-5e04-5ff3-b1a4-695a42311ede",
+  "fields": {
+    "created": "2024-01-02T12:01:15.301Z",
+    "last_updated": "2024-01-02T12:01:15.301Z",
+    "_custom_field_data": {},
+    "name": "Container",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      68
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+  "fields": {
+    "created": "2024-01-02T12:01:15.291Z",
+    "last_updated": "2024-01-02T12:01:15.291Z",
+    "_custom_field_data": {},
+    "name": "Active",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      26,
+      68,
+      72,
+      42,
+      117,
+      56,
+      58,
+      60
+    ]
+  }
+}
+]

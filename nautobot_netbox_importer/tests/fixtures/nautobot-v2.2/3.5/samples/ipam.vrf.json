@@ -1,0 +1,68 @@
+[
+{
+  "model": "ipam.vrf",
+  "pk": "242112ea-1ff0-5c1a-9773-4ff3f57b7d8c",
+  "fields": {
+    "created": "2022-04-08T00:05:32.118Z",
+    "last_updated": "2024-01-02T12:08:01.992Z",
+    "_custom_field_data": {},
+    "name": "Delta",
+    "rd": "65000:400",
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": null,
+    "description": "",
+    "import_targets": [
+      "4e3a7cf5-5e49-55c9-8fed-10c6d35f9982",
+      "19e89fbb-f05f-5ddf-8b88-b30f64645cdc"
+    ],
+    "export_targets": [
+      "6cc00d80-6754-504b-b920-e14d13a65832",
+      "500736bc-0caf-548e-a35b-e67adb2bcc96"
+    ]
+  }
+},
+{
+  "model": "ipam.vrf",
+  "pk": "4d683b05-ce3f-52c3-8e1a-ee31e5771976",
+  "fields": {
+    "created": "2022-04-08T00:05:31.743Z",
+    "last_updated": "2024-01-02T12:08:01.983Z",
+    "_custom_field_data": {},
+    "name": "Bravo",
+    "rd": "65000:200",
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": null,
+    "description": "",
+    "import_targets": [
+      "4e3a7cf5-5e49-55c9-8fed-10c6d35f9982",
+      "d1e9d468-d4c3-5f49-b2d0-e7af0268de47"
+    ],
+    "export_targets": [
+      "6cc00d80-6754-504b-b920-e14d13a65832",
+      "d1e9d468-d4c3-5f49-b2d0-e7af0268de47"
+    ]
+  }
+},
+{
+  "model": "ipam.vrf",
+  "pk": "846b3654-ba46-59bf-8900-c53475a33880",
+  "fields": {
+    "created": "2022-04-08T00:05:32.358Z",
+    "last_updated": "2024-01-02T12:08:01.996Z",
+    "_custom_field_data": {},
+    "name": "Echo",
+    "rd": "65000:500",
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": null,
+    "description": "",
+    "import_targets": [
+      "4e3a7cf5-5e49-55c9-8fed-10c6d35f9982",
+      "930d2e9c-09ff-5ea4-b7a4-0b4e8af05d8c"
+    ],
+    "export_targets": [
+      "6cc00d80-6754-504b-b920-e14d13a65832",
+      "3d417c6d-b9a1-5a39-b2da-104921c4db0a"
+    ]
+  }
+}
+]

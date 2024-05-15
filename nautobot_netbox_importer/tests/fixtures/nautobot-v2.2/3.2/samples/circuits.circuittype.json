@@ -1,0 +1,35 @@
+[
+{
+  "model": "circuits.circuittype",
+  "pk": "0c9d650f-39cd-5060-809c-8cbc291e9fbb",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.717Z",
+    "_custom_field_data": {},
+    "name": "MPLS",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittype",
+  "pk": "77b0ea76-dd49-526f-9e5b-7526b5abaa3d",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.716Z",
+    "_custom_field_data": {},
+    "name": "Internet Access",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittype",
+  "pk": "8ce04a4e-277b-5699-964b-38ba765b7a1d",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.718Z",
+    "_custom_field_data": {},
+    "name": "Point-to-point",
+    "description": ""
+  }
+}
+]

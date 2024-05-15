@@ -1,0 +1,62 @@
+[
+{
+  "model": "circuits.circuit",
+  "pk": "4374dbcd-3a43-5dad-a198-a1e4408e12e3",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:09.410Z",
+    "_custom_field_data": {},
+    "cid": "1002843016",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "dda5b9ab-0d5c-54b1-901a-773a0cc4fca3",
+    "circuit_type": "77b0ea76-dd49-526f-9e5b-7526b5abaa3d",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": null,
+    "circuit_termination_z": "f7de4dae-a236-5547-b5cd-6193cfb3e93a"
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": "932991d0-bc80-5875-aedc-1f36ed5f92b8",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:09.473Z",
+    "_custom_field_data": {},
+    "cid": "319031",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "655d27a8-dc6b-5d9e-95f6-5518915fbf3f",
+    "circuit_type": "d2b28782-c952-524c-a84a-fa087a53c5db",
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": "b89a52f7-e947-59d7-8beb-d9b794f9955d",
+    "circuit_termination_z": "baac681e-b719-5847-8d45-1f4496dddaea"
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": "eb81eee5-f832-58c2-85e7-3669be534649",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:09.397Z",
+    "_custom_field_data": {},
+    "cid": "1002841093",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "dda5b9ab-0d5c-54b1-901a-773a0cc4fca3",
+    "circuit_type": "77b0ea76-dd49-526f-9e5b-7526b5abaa3d",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": null,
+    "circuit_termination_z": "a3139902-b6f4-582f-af32-6e21c2c9e691"
+  }
+}
+]
