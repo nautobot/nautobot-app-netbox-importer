@@ -1,0 +1,1 @@
+Changed importing locations to allow importing to many-to-many field `locations` if defined.
