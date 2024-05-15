@@ -2,6 +2,7 @@
 
 from nautobot_netbox_importer.base import RecordData
 from nautobot_netbox_importer.generator import DiffSyncBaseModel
+from nautobot_netbox_importer.generator import InternalFieldType
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceField
 from nautobot_netbox_importer.generator import SourceModelWrapper
@@ -16,6 +17,9 @@ def define_location(field: SourceField) -> None:
     location_wrapper = wrapper.adapter.wrappers["dcim.location"]
     site_wrapper = wrapper.adapter.wrappers["dcim.site"]
     region_wrapper = wrapper.adapter.wrappers["dcim.region"]
+
+    # Nautobot v2.2.0 uses a ManyToManyField `locations` field instead of a ForeignKey `location`
+    locations = wrapper.nautobot.add_field("locations").internal_type == InternalFieldType.MANY_TO_MANY_FIELD
 
     def location_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
         location = source.get(field.name, None)
@@ -35,9 +39,9 @@ def define_location(field: SourceField) -> None:
         else:
             return
 
-        field.set_nautobot_value(target, result)
+        field.set_nautobot_value(target, set([result]) if locations else result)
 
-    field.set_importer(location_importer)
+    field.set_importer(location_importer, "locations" if locations else "location")
     field.handle_sibling("site", field.nautobot.name)
     field.handle_sibling("region", field.nautobot.name)
 
