@@ -57,15 +57,11 @@ from .nautobot import NautobotModelWrapper
 
 
 class SourceFieldImporterIssue(NetBoxImporterException):
-    """Raised when an error occurs during field import.
-
-    Raising this exception gathers the issue and continues with the next importer.
-    """
+    """Raised when an error occurs during field import."""
 
     def __init__(self, message: str, field: "SourceField"):
         """Initialize the exception."""
-        super().__init__(message)
-        self.field = field
+        super().__init__(str({field.name: message}))
 
 
 class InvalidChoiceValueIssue(SourceFieldImporterIssue):
@@ -643,12 +639,7 @@ class SourceModelWrapper:
                 importer(data, target)
             # pylint: disable=broad-exception-caught
             except Exception as error:
-                self.nautobot.add_issue(
-                    error.__class__.__name__,
-                    getattr(error, "message", "") or str(error),
-                    target=target,
-                    field=error.field.nautobot if isinstance(error, SourceFieldImporterIssue) else None,
-                )
+                self.nautobot.add_issue(diffsync_instance=target, error=error)
 
         self.stats.imported += 1
         self.adapter.logger.debug("Imported %s %s", uid, target.get_attrs())
@@ -729,9 +720,9 @@ class SourceModelWrapper:
     def post_import(self) -> bool:
         """Post import processing.
 
-        Assigns referenced content_types to the imported models.
+        Assigns referenced content_types to referencing instances.
 
-        Returns False if no post processing is needed, otherwise True.
+        Returns False if no post processing is needed, otherwise True to indicate that post processing is needed.
         """
         if not self.references:
             return False
@@ -841,7 +832,7 @@ class SourceField:
 
     def add_issue(self, issue_type: str, message: str, target: Optional[DiffSyncModel] = None) -> None:
         """Add an importer issue to the Nautobot Model Wrapper."""
-        self.wrapper.nautobot.add_issue(issue_type, message, target=target, field=self.nautobot)
+        self.wrapper.nautobot.add_issue(issue_type, message=str({self.name: message}), diffsync_instance=target)
 
     def set_definition(self, definition: SourceFieldDefinition) -> None:
         """Customize field definition."""
@@ -1126,7 +1117,7 @@ class SourceField:
             elif isinstance(value, (list, set, tuple)):
                 self.set_nautobot_value(target, set(related_wrapper.get_pk_from_uid(item) for item in value))
             else:
-                raise SourceFieldImporterIssue(f"Invalid value {value} for field {self.name}", self)
+                raise SourceFieldImporterIssue(f"Invalid value {value}", self)
 
         self.set_importer(uuids_importer)
 

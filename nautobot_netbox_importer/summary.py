@@ -3,6 +3,7 @@
 import json
 from pathlib import Path
 from typing import Callable
+from typing import Dict
 from typing import Generator
 from typing import Iterable
 from typing import List
@@ -23,6 +24,7 @@ class ImporterIssue(NamedTuple):
     name: str
     issue_type: str
     message: str
+    data: Dict[str, str]
 
 
 DiffSyncSummary = Mapping[str, int]
@@ -70,6 +72,8 @@ class NautobotModelStats:
     issues = 0
     # Number of Nautobot instances that failed `save()` method
     save_failed = 0
+    created = 0
+    updated = 0
 
 
 class SourceModelSummary(NamedTuple):
