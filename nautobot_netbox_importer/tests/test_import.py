@@ -14,6 +14,8 @@ from unittest.mock import patch
 from django.core.management import call_command
 from django.core.serializers import serialize
 from django.test import TestCase
+from django.apps import apps
+from nautobot import __version__ as nautobot_version
 from nautobot.core.settings_funcs import is_truthy
 from nautobot.ipam.models import Namespace
 
@@ -49,6 +51,10 @@ class TestImport(TestCase):
     def setUp(self):
         """Set up test environment."""
         super().setUp()
+
+        # pylint: disable=invalid-name
+        Status = apps.get_model("extras", "Status")
+        Status.objects.all().delete()
 
         Namespace.objects.get_or_create(
             pk="26756c2d-fddd-4128-9f88-dbcbddcbef45",
@@ -96,10 +102,13 @@ class TestImport(TestCase):
         """Test import for NetBox 3.7."""
         self._import("3.7")
 
-    def _import(self, version: str):
+    def _import(self, netbox_version: str):
         """Test import."""
-        fixtures_path = _FIXTURES_PATH / version
-        input_ref = _INPUTS.get(version, fixtures_path / "input.json")
+        split_nautobot_version = nautobot_version.split(".")
+        fixtures_path = (
+            _FIXTURES_PATH / f"nautobot-v{split_nautobot_version[0]}.{split_nautobot_version[1]}" / netbox_version
+        )
+        input_ref = _INPUTS.get(netbox_version, fixtures_path / "input.json")
 
         expected_summary = ImportSummary()
         try:
@@ -175,7 +184,7 @@ class TestImport(TestCase):
 
         for wrapper in source.nautobot.wrappers.values():
             if wrapper.stats.source_created > 0:
-                with self.subTest(f"Verify data {version} {wrapper.content_type}"):
+                with self.subTest(f"Verify data {netbox_version} {wrapper.content_type}"):
                     self._verify_model(samples_path, wrapper)
 
         if expected_summary is source.summary:
@@ -235,7 +244,7 @@ class TestImport(TestCase):
                     )
                 else:
                     self.assertEqual(
-                        value, formatted_fields[key], f"Data mismatch for {wrapper.content_type} {uid} {key}"
+                        value, formatted_fields.get(key, ""), f"Data mismatch for {wrapper.content_type} {uid} {key}"
                     )
 
 

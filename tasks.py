@@ -19,8 +19,6 @@ from time import sleep
 from invoke.collection import Collection
 from invoke.tasks import task as invoke_task
 
-_TEST_DUMP_PATH = Path(__file__).parent / "nautobot_netbox_importer" / "tests" / "fixtures" / "dump.sql"
-
 
 def is_truthy(arg):
     """Convert "truthy" strings into Booleans.
@@ -65,6 +63,21 @@ namespace.configure(
         }
     }
 )
+
+
+def _get_test_dump_path(context):
+    parsed_nautobot_version = context.nautobot_netbox_importer.nautobot_ver.split(".")
+    if len(parsed_nautobot_version) < 2:
+        raise ValueError(f"Can't determine the Nautobot version from: {context.nautobot_netbox_importer.nautobot_ver}")
+
+    return (
+        Path(__file__).parent
+        / "nautobot_netbox_importer"
+        / "tests"
+        / "fixtures"
+        / f"nautobot-v{parsed_nautobot_version[0]}.{parsed_nautobot_version[1]}"
+        / "dump.sql"
+    )
 
 
 def _is_compose_included(context, name):
@@ -757,7 +770,7 @@ def dump_test_environment(context):
     - Nautobot container is running.
     - Migrations are applied.
 
-    Creates a dump.sql file in the tests/fixtures directory with flushed database to keep the content types IDs
+    Creates a dump.sql file in `tests/nautobot-v<major>.<minor>/fixtures` directory with flushed database to keep the content types IDs
     consistent across tests.
     """
     command = [
@@ -777,7 +790,7 @@ def dump_test_environment(context):
         "--dbname=$POSTGRES_DB",
         "--inserts",
         "'",
-        f"> '{_TEST_DUMP_PATH}'",
+        f"> '{_get_test_dump_path(context)}'",
     ]
     docker_compose(context, " ".join(command), pty=True)
 
@@ -828,7 +841,7 @@ def load_test_environment(context, db_name="test_nautobot", keepdb=False):
         "--username=$POSTGRES_USER",
         db_name,
         "'",
-        f"< '{_TEST_DUMP_PATH}'",
+        f"< '{_get_test_dump_path(context)}'",
     ]
     docker_compose(context, " ".join(command), pty=False, hide=True)
 
