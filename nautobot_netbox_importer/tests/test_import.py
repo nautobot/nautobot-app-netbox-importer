@@ -102,6 +102,10 @@ class TestImport(TestCase):
         """Test import for NetBox 3.7."""
         self._import("3.7")
 
+    def test_3_7_custom(self):
+        """Test import for NetBox 3.6 with customized data."""
+        self._import("3.7.custom")
+
     def _import(self, netbox_version: str):
         """Test import."""
         split_nautobot_version = nautobot_version.split(".")

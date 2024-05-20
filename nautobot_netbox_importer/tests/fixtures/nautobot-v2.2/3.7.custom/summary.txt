@@ -4,7 +4,7 @@ create: 70
 update: 0
 delete: 0
 no-change: 0
-skip: 135
+skip: 143
 = Source Stats: ====================================================================================
 - auth.group ---------------------------------------------------------------------------------------
 first_pass_used: 1
@@ -17,10 +17,10 @@ second_pass_used: 6
 created: 6
 imported: 6
 - contenttypes.contenttype -------------------------------------------------------------------------
-first_pass_used: 135
-second_pass_used: 135
-created: 135
-imported: 135
+first_pass_used: 143
+second_pass_used: 143
+created: 143
+imported: 143
 - dcim.cable ---------------------------------------------------------------------------------------
 first_pass_used: 1
 second_pass_used: 1
@@ -34,7 +34,7 @@ imported: 2
 - dcim.devicerole ----------------------------------------------------------------------------------
 first_pass_used: 2
 second_pass_used: 2
-created: 1
+created: 2
 imported: 2
 - dcim.devicetype ----------------------------------------------------------------------------------
 pre_cached: 1
@@ -61,7 +61,6 @@ imported: 1
 - dcim.rackrole ------------------------------------------------------------------------------------
 first_pass_used: 1
 second_pass_used: 1
-created: 1
 imported: 1
 - dcim.site ----------------------------------------------------------------------------------------
 first_pass_used: 1
@@ -132,7 +131,7 @@ imported: 1
 source_created: 1
 created: 1
 - contenttypes.contenttype -------------------------------------------------------------------------
-source_ignored: 135
+source_ignored: 143
 - dcim.cable ---------------------------------------------------------------------------------------
 source_created: 1
 save_failed: 1
@@ -140,7 +139,7 @@ issues: 1
 - dcim.device --------------------------------------------------------------------------------------
 source_created: 2
 created: 2
-issues: 2
+issues: 1
 - dcim.devicetype ----------------------------------------------------------------------------------
 source_created: 2
 created: 2
@@ -217,10 +216,9 @@ extras.note => extras.journalentry
 dcim.interfaceredundancygroup => ipam.fhrpgroup
 = Importer issues: =================================================================================
 - dcim.cable ---------------------------------------------------------------------------------------
-6df947b3-9159-5b42-8367-c0d7edb3986c | SaveFailed | "#6df947b3-9159-5b42-8367-c0d7edb3986c" | "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-05-15 11:38:23.847281+00, 2024-05-15 11:38:23.847288+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n"
+6df947b3-9159-5b42-8367-c0d7edb3986c | SaveFailed | "#6df947b3-9159-5b42-8367-c0d7edb3986c" | "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-05-20 09:41:04.629901+00, 2024-05-20 09:41:04.629909+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n"
 - dcim.device --------------------------------------------------------------------------------------
 4f3495b5-00e6-5917-a148-77e109f96b0f | Unracked | "Half U Device" | "{'position': 'Device unracked due to 0U height'}"
-f510c5ff-e1f8-5adc-9fb5-30bc5791b42e | ValidationError | "Device 1" | "[\"Invalid value for custom field 'device_custom_object': Value must be a string\"]"
 - dcim.devicetype ----------------------------------------------------------------------------------
 03d4a2c5-e08b-5cc1-924d-c401194d393c | SourceFieldImporterIssue | "Half U Device Type" | "{'u_height': 'Invalid source value 0.5, truncated to 0'}"
 - dcim.interfaceredundancygroup --------------------------------------------------------------------
@@ -332,6 +330,7 @@ custom_field_data => value_importer => custom_field_data (CustomFieldData)
 default_platform => NO IMPORTER => default_platform (NotFound)
 description => NO IMPORTER => description (NotFound)
 device_bay_template_count => NO IMPORTER => device_bay_template_count (NotFound)
+exclude_from_utilization => NO IMPORTER => exclude_from_utilization (NotFound)
 front_image => Disabled with reason: Import does not contain images
 front_port_template_count => NO IMPORTER => front_port_template_count (NotFound)
 id => uid_from_data => id (UUIDField)
@@ -438,7 +437,8 @@ object_type => NO IMPORTER => object_type (NotFound)
 required => value_importer => required (BooleanField)
 search_weight => NO IMPORTER => search_weight (NotFound)
 type => fallback_importer => type (CharField)
-ui_visibility => NO IMPORTER => ui_visibility (NotFound)
+ui_editable => NO IMPORTER => ui_editable (NotFound)
+ui_visible => NO IMPORTER => ui_visible (NotFound)
 validation_maximum => integer_importer => validation_maximum (BigIntegerField)
 validation_minimum => integer_importer => validation_minimum (BigIntegerField)
 validation_regex => value_importer => validation_regex (CharField)
