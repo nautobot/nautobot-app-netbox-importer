@@ -1438,6 +1438,46 @@
   }
 },
 {
+  "model": "extras.configcontext",
+  "pk": 1,
+  "fields": {
+    "created": "2024-05-20T10:42:51.638Z",
+    "last_updated": "2024-05-20T10:42:51.638Z",
+    "data_source": null,
+    "data_file": null,
+    "data_path": "",
+    "auto_sync_enabled": false,
+    "data_synced": null,
+    "name": "Testing Config Context",
+    "weight": 1000,
+    "description": "Testing Config Context",
+    "is_active": true,
+    "data": {
+      "field_1": "value_1",
+      "field_2": "value_2"
+    },
+    "regions": [],
+    "site_groups": [],
+    "sites": [
+      1
+    ],
+    "locations": [],
+    "device_types": [
+      1
+    ],
+    "roles": [
+      1
+    ],
+    "platforms": [],
+    "cluster_types": [],
+    "cluster_groups": [],
+    "clusters": [],
+    "tenant_groups": [],
+    "tenants": [],
+    "tags": []
+  }
+},
+{
   "model": "extras.customfield",
   "pk": 1,
   "fields": {
@@ -2851,6 +2891,63 @@
       "power_outlet_count": 0,
       "inventory_item_count": 0,
       "console_server_port_count": 0
+    }
+  }
+},
+{
+  "model": "extras.objectchange",
+  "pk": 23,
+  "fields": {
+    "time": "2024-05-20T10:42:51.676Z",
+    "user": [
+      "admin"
+    ],
+    "user_name": "admin",
+    "request_id": "3544c296-9a0b-4a32-aea6-dcf5a96a8eff",
+    "action": "create",
+    "changed_object_type": [
+      "extras",
+      "configcontext"
+    ],
+    "changed_object_id": 1,
+    "related_object_type": null,
+    "related_object_id": null,
+    "object_repr": "Testing Config Context",
+    "prechange_data": null,
+    "postchange_data": {
+      "data": {
+        "field_1": "value_1",
+        "field_2": "value_2"
+      },
+      "name": "Testing Config Context",
+      "tags": [],
+      "roles": [
+        1
+      ],
+      "sites": [
+        1
+      ],
+      "weight": 1000,
+      "created": "2024-05-20T10:42:51.638Z",
+      "regions": [],
+      "tenants": [],
+      "clusters": [],
+      "data_file": null,
+      "data_path": "",
+      "is_active": true,
+      "locations": [],
+      "platforms": [],
+      "data_source": null,
+      "data_synced": null,
+      "description": "Testing Config Context",
+      "site_groups": [],
+      "device_types": [
+        1
+      ],
+      "cluster_types": [],
+      "tenant_groups": [],
+      "cluster_groups": [],
+      "auto_sync_enabled": false
     }
   }
 },

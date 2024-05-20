@@ -641,7 +641,12 @@ class SourceModelWrapper:
                 importer(data, target)
             # pylint: disable=broad-exception-caught
             except Exception as error:
-                self.nautobot.add_issue(diffsync_instance=target, error=error)
+                field = next(field for field in self.fields.values() if field.importer == importer)
+                self.nautobot.add_issue(
+                    diffsync_instance=target,
+                    error=error,
+                    message=str({"field": field.name if field else None, "importer": importer.__name__}),
+                )
 
         self.stats.imported += 1
         self.adapter.logger.debug("Imported %s %s", uid, target.get_attrs())
@@ -1011,14 +1016,19 @@ class SourceField:
 
         self.set_importer(integer_importer)
 
-    def set_relation_importer(self, related_wrapper: Optional[SourceModelWrapper] = None) -> None:
+    def _get_related_wrapper(self, related_source: Optional[SourceContentType]) -> SourceModelWrapper:
+        """Get a related wrapper."""
+        if related_source:
+            return self.wrapper.adapter.get_or_create_wrapper(related_source)
+
+        if self.name == "parent":
+            return self.wrapper
+
+        return self.wrapper.adapter.get_or_create_wrapper(self.nautobot.related_model)
+
+    def set_relation_importer(self, related_source: Optional[SourceContentType] = None) -> None:
         """Set a relation importer."""
-        wrapper = self.wrapper
-        if not related_wrapper:
-            if self.name == "parent":
-                related_wrapper = wrapper
-            else:
-                related_wrapper = wrapper.adapter.get_or_create_wrapper(self.nautobot.related_model)
+        related_wrapper = self._get_related_wrapper(related_source)
 
         if self.nautobot.is_content_type:
             self.set_content_type_importer()
@@ -1040,7 +1050,7 @@ class SourceField:
                 else:
                     result = related_wrapper.get_pk_from_identifiers(value)
                 self.set_nautobot_value(target, result)
-                wrapper.add_reference(related_wrapper, result)
+                self.wrapper.add_reference(related_wrapper, result)
 
         self.set_importer(relation_importer)
 
@@ -1056,33 +1066,44 @@ class SourceField:
 
         self.set_importer(content_type_importer)
 
-    def set_m2m_importer(self) -> None:
+    def set_m2m_importer(self, related_source: Optional[SourceContentType] = None) -> None:
         """Set a many to many importer."""
         if not isinstance(self.nautobot.field, DjangoField):
             raise NotImplementedError(f"Unsupported m2m importer {self}")
 
-        related_wrapper = self.wrapper.adapter.get_or_create_wrapper(self.nautobot.related_model)
+        related_wrapper = self._get_related_wrapper(related_source)
 
         if related_wrapper.content_type == "contenttypes.contenttype":
             self.set_content_types_importer()
-        elif related_wrapper.identifiers:
-            self.set_identifiers_importer(related_wrapper)
-        else:
-            self.set_uuids_importer(related_wrapper)
+            return
 
-    def set_identifiers_importer(self, related_wrapper: SourceModelWrapper) -> None:
-        """Set a identifiers importer."""
-
-        def identifiers_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+        def m2m_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             values = source.get(self.name, None)
-            if values not in EMPTY_VALUES:
-                if not isinstance(values, (list, set)):
-                    raise ValueError(f"Invalid value {values} for field {self.name}")
-                values = set(related_wrapper.get_pk_from_identifiers(item) for item in values)
+            if values in EMPTY_VALUES:
+                return
 
-            self.set_nautobot_value(target, values)
+            if isinstance(values, (UUID, str, int)):
+                result = related_wrapper.get_pk_from_uid(values)
+                self.wrapper.add_reference(related_wrapper, result)
+                self.set_nautobot_value(target, {result})
+                return
 
-        self.set_importer(identifiers_importer)
+            if not isinstance(values, (list, set)):
+                raise ValueError(f"Invalid value {values} for field {self.name}")
+
+            results = set()
+            for value in values:
+                if isinstance(value, (UUID, str, int)):
+                    result = related_wrapper.get_pk_from_uid(value)
+                else:
+                    result = related_wrapper.get_pk_from_identifiers(value)
+
+                results.add(result)
+                self.wrapper.add_reference(related_wrapper, result)
+
+            self.set_nautobot_value(target, results)
+
+        self.set_importer(m2m_importer)
 
     def set_content_types_importer(self) -> None:
         """Set a content types importer."""
@@ -1106,22 +1127,6 @@ class SourceField:
             self.set_nautobot_value(target, nautobot_values)
 
         self.set_importer(content_types_importer)
-
-    def set_uuids_importer(self, related_wrapper: SourceModelWrapper) -> None:
-        """Set a UUIDs importer."""
-
-        def uuids_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-            value = source.get(self.name, None)
-            if value in EMPTY_VALUES:
-                self.set_nautobot_value(target, value)
-            if isinstance(value, (UUID, str, int)):
-                self.set_nautobot_value(target, {related_wrapper.get_pk_from_uid(value)})
-            elif isinstance(value, (list, set, tuple)):
-                self.set_nautobot_value(target, set(related_wrapper.get_pk_from_uid(item) for item in value))
-            else:
-                raise SourceFieldImporterIssue(f"Invalid value {value}", self)
-
-        self.set_importer(uuids_importer)
 
     def set_datetime_importer(self) -> None:
         """Set a datetime importer."""

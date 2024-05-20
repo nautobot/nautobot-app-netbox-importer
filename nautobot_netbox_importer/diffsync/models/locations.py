@@ -10,6 +10,46 @@ from nautobot_netbox_importer.generator import SourceReferences
 from nautobot_netbox_importer.generator import fields
 
 
+def define_locations(field: SourceField) -> None:
+    """Define locations field for NetBox importer."""
+    wrapper = field.wrapper
+
+    location_wrapper = wrapper.adapter.wrappers["dcim.location"]
+    site_wrapper = wrapper.adapter.wrappers["dcim.site"]
+    region_wrapper = wrapper.adapter.wrappers["dcim.region"]
+
+    def location_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+        locations = source.get(field.name, None)
+        sites = source.get("sites", None)
+        regions = source.get("regions", None)
+
+        result = set()
+
+        if locations:
+            for location in locations:
+                location_uid = location_wrapper.get_pk_from_uid(location)
+                wrapper.add_reference(location_wrapper, location_uid)
+                result.add(location_uid)
+
+        if sites:
+            for site in sites:
+                location_uid = site_wrapper.get_pk_from_uid(site)
+                wrapper.add_reference(location_wrapper, location_uid)
+                result.add(location_uid)
+
+        if regions:
+            for region in regions:
+                location_uid = region_wrapper.get_pk_from_uid(region)
+                wrapper.add_reference(location_wrapper, location_uid)
+                result.add(location_uid)
+
+        field.set_nautobot_value(target, result)
+
+    field.set_importer(location_importer, "locations")
+    field.handle_sibling("sites", field.nautobot.name)
+    field.handle_sibling("regions", field.nautobot.name)
+
+
 def define_location(field: SourceField) -> None:
     """Define location field for NetBox importer."""
     wrapper = field.wrapper
