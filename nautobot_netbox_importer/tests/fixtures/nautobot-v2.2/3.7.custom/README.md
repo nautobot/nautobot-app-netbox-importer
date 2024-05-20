@@ -15,6 +15,7 @@ To dump and use data from a NetBox instance, run the following command:
     auth.Group \
     auth.User \
     contenttypes.ContentType \
+    dcim.Cable \
     dcim.Device \
     dcim.DeviceRole \
     dcim.DeviceType \
@@ -35,6 +36,5 @@ To dump and use data from a NetBox instance, run the following command:
     users.ObjectPermission \
 
 diff -u /tmp/netbox_data.json ./input.json
-mv /tmp/netbox_data.json ./input.json
+v /tmp/netbox_data.json ./input.json
 ```
-

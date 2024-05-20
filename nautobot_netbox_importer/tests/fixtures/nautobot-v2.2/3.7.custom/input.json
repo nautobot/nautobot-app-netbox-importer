@@ -705,14 +705,14 @@
 {
   "model": "contenttypes.contenttype",
   "fields": {
-    "app_label": "ipam",
+    "app_label": "vpn",
     "model": "l2vpn"
   }
 },
 {
   "model": "contenttypes.contenttype",
   "fields": {
-    "app_label": "ipam",
+    "app_label": "vpn",
     "model": "l2vpntermination"
   }
 },
@@ -810,7 +810,7 @@
 {
   "model": "contenttypes.contenttype",
   "fields": {
-    "app_label": "extras",
+    "app_label": "core",
     "model": "configrevision"
   }
 },
@@ -1027,27 +1027,6 @@
 {
   "model": "contenttypes.contenttype",
   "fields": {
-    "app_label": "extras",
-    "model": "jobresult"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "fields": {
-    "app_label": "users",
-    "model": "admingroup"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "fields": {
-    "app_label": "users",
-    "model": "adminuser"
-  }
-},
-{
-  "model": "contenttypes.contenttype",
-  "fields": {
     "app_label": "secrets",
     "model": "secret"
   }
@@ -1074,16 +1053,99 @@
   }
 },
 {
-  "model": "dcim.rackrole",
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "extras",
+    "model": "eventrule"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "virtualization",
+    "model": "virtualdisk"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "vpn",
+    "model": "ikeproposal"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "vpn",
+    "model": "ikepolicy"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "vpn",
+    "model": "ipsecproposal"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "vpn",
+    "model": "ipsecpolicy"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "vpn",
+    "model": "ipsecprofile"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "vpn",
+    "model": "tunnelgroup"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "vpn",
+    "model": "tunnel"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "vpn",
+    "model": "tunneltermination"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "core",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "dcim.cable",
   "pk": 1,
   "fields": {
-    "created": "2020-05-28T00:00:00Z",
-    "last_updated": "2020-05-28T08:28:04.662Z",
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2020-12-30T19:32:32.279Z",
     "custom_field_data": {},
-    "name": "Network",
-    "slug": "network",
-    "description": "Dedicated to network",
-    "color": "00ff00"
+    "description": "",
+    "comments": "",
+    "type": "smf",
+    "status": "connected",
+    "tenant": null,
+    "label": "",
+    "color": "ffeb3b",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null
   }
 },
 {
@@ -1093,8 +1155,9 @@
     "created": "2024-02-14T12:22:40.699Z",
     "last_updated": "2024-02-14T12:23:00.279Z",
     "custom_field_data": {
-      "device_custom_object": 2,
-      "device_custom_choices": "Choice 1"
+      "empty_label": 0,
+      "device_custom_object": null,
+      "device_custom_choices": null
     },
     "description": "",
     "comments": "",
@@ -1143,6 +1206,7 @@
     "created": "2024-02-15T09:19:04.514Z",
     "last_updated": "2024-02-15T09:19:04.514Z",
     "custom_field_data": {
+      "empty_label": 0,
       "device_custom_object": null,
       "device_custom_choices": null
     },
@@ -1234,6 +1298,7 @@
     "default_platform": null,
     "part_number": "",
     "u_height": "1.0",
+    "exclude_from_utilization": false,
     "is_full_depth": true,
     "subdevice_role": "",
     "airflow": "",
@@ -1269,6 +1334,7 @@
     "default_platform": null,
     "part_number": "",
     "u_height": "0.5",
+    "exclude_from_utilization": false,
     "is_full_depth": true,
     "subdevice_role": "",
     "airflow": "",
@@ -1296,6 +1362,19 @@
     "name": "Manufacturer",
     "slug": "manufacturer",
     "description": ""
+  }
+},
+{
+  "model": "dcim.rackrole",
+  "pk": 1,
+  "fields": {
+    "created": "2020-05-28T00:00:00Z",
+    "last_updated": "2020-05-28T08:28:04.662Z",
+    "custom_field_data": {},
+    "name": "Network",
+    "slug": "network",
+    "description": "Dedicated to network",
+    "color": "00ff00"
   }
 },
 {
@@ -1379,7 +1458,8 @@
     "validation_maximum": null,
     "validation_regex": "^[A-Z]{3}\\d{2}$",
     "choice_set": null,
-    "ui_visibility": "read-write",
+    "ui_visible": "always",
+    "ui_editable": "yes",
     "is_cloneable": false,
     "content_types": [
       [
@@ -1410,7 +1490,8 @@
     "validation_maximum": null,
     "validation_regex": "",
     "choice_set": 1,
-    "ui_visibility": "read-write",
+    "ui_visible": "always",
+    "ui_editable": "yes",
     "is_cloneable": false,
     "content_types": [
       [
@@ -1444,7 +1525,8 @@
     "validation_maximum": null,
     "validation_regex": "",
     "choice_set": null,
-    "ui_visibility": "read-write",
+    "ui_visible": "always",
+    "ui_editable": "yes",
     "is_cloneable": false,
     "content_types": [
       [
@@ -1475,7 +1557,8 @@
     "validation_maximum": null,
     "validation_regex": "",
     "choice_set": null,
-    "ui_visibility": "read-write",
+    "ui_visible": "always",
+    "ui_editable": "yes",
     "is_cloneable": false,
     "content_types": [
       [
@@ -3059,25 +3142,6 @@
         "admin"
       ]
     ]
-  }
-},
-{
-  "model": "dcim.cable",
-  "pk": 1,
-  "fields": {
-    "created": "2020-12-30T00:00:00Z",
-    "last_updated": "2020-12-30T19:32:32.279Z",
-    "custom_field_data": {},
-    "description": "",
-    "comments": "",
-    "type": "smf",
-    "status": "connected",
-    "tenant": null,
-    "label": "",
-    "color": "ffeb3b",
-    "length": null,
-    "length_unit": "",
-    "_abs_length": null
   }
 }
 ]
