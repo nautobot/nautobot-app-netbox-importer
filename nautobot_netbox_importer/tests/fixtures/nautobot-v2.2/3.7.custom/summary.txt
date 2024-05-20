@@ -1,6 +1,6 @@
 * Import Summary: **********************************************************************************
 = DiffSync Summary: ================================================================================
-create: 70
+create: 72
 update: 0
 delete: 0
 no-change: 0
@@ -67,6 +67,11 @@ first_pass_used: 1
 second_pass_used: 1
 created: 1
 imported: 1
+- extras.configcontext -----------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
 - extras.customfield -------------------------------------------------------------------------------
 first_pass_used: 4
 second_pass_used: 4
@@ -83,10 +88,10 @@ second_pass_used: 2
 created: 2
 imported: 2
 - extras.objectchange ------------------------------------------------------------------------------
-first_pass_used: 22
-second_pass_used: 21
-created: 21
-imported: 21
+first_pass_used: 23
+second_pass_used: 22
+created: 22
+imported: 22
 second_pass_skipped: 1
 - extras.status ------------------------------------------------------------------------------------
 pre_cached: 3
@@ -161,6 +166,9 @@ created: 1
 - dcim.rack ----------------------------------------------------------------------------------------
 source_created: 1
 created: 1
+- extras.configcontext -----------------------------------------------------------------------------
+source_created: 1
+created: 1
 - extras.customfield -------------------------------------------------------------------------------
 source_created: 4
 created: 4
@@ -172,8 +180,8 @@ created: 3
 source_created: 2
 created: 2
 - extras.objectchange ------------------------------------------------------------------------------
-source_created: 21
-created: 21
+source_created: 22
+created: 22
 - extras.role --------------------------------------------------------------------------------------
 source_created: 3
 created: 3
@@ -220,14 +228,14 @@ dcim.interfaceredundancygroup => ipam.fhrpgroup
 - dcim.device --------------------------------------------------------------------------------------
 4f3495b5-00e6-5917-a148-77e109f96b0f | Unracked | "Half U Device" | "{'position': 'Device unracked due to 0U height'}"
 - dcim.devicetype ----------------------------------------------------------------------------------
-03d4a2c5-e08b-5cc1-924d-c401194d393c | SourceFieldImporterIssue | "Half U Device Type" | "{'u_height': 'Invalid source value 0.5, truncated to 0'}"
+03d4a2c5-e08b-5cc1-924d-c401194d393c | SourceFieldImporterIssue | "Half U Device Type" | "{'field': 'u_height', 'importer': 'integer_importer'} {'u_height': 'Invalid source value 0.5, truncated to 0'}"
 - dcim.interfaceredundancygroup --------------------------------------------------------------------
-2586a272-455a-5e92-85d7-f41c0784630a | InvalidChoiceValueIssue | "FHR Group clusterxl" | "{'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}"
-f91623ed-a389-53a4-a4a2-943588c21446 | InvalidChoiceValueIssue | "Test FHR Group" | "{'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}"
+2586a272-455a-5e92-85d7-f41c0784630a | InvalidChoiceValueIssue | "FHR Group clusterxl" | "{'field': 'protocol', 'importer': 'fallback_importer'} {'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}"
+f91623ed-a389-53a4-a4a2-943588c21446 | InvalidChoiceValueIssue | "Test FHR Group" | "{'field': 'protocol', 'importer': 'fallback_importer'} {'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}"
 - dcim.location ------------------------------------------------------------------------------------
 c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 | ValidationError | "Site 1" | "{'parent': ['A Location of type Site must have a parent Location.']}"
 - extras.customfield -------------------------------------------------------------------------------
-149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 | InvalidChoiceValueIssue | "Device Custom Object" | "{'type': 'Invalid choice value: `object`, replaced with `text`'}"
+149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 | InvalidChoiceValueIssue | "Device Custom Object" | "{'field': 'type', 'importer': 'fallback_importer'} {'type': 'Invalid choice value: `object`, replaced with `text`'}"
 - users.objectpermission ---------------------------------------------------------------------------
 c650165f-9a05-55c0-bbb1-c9527d41160c | InvalidContentType | "Test Permission" | "{'object_types': \"Invalid content type ['extras', 'script'], skipping\"}"
 = Field Mappings: ==================================================================================
@@ -238,7 +246,7 @@ permissions => Disabled with reason: Permissions import is not implemented yet
 date_joined => datetime_importer => date_joined (DateTimeField)
 email => value_importer => email (CharField)
 first_name => value_importer => first_name (CharField)
-groups => identifiers_importer => groups (ManyToManyField)
+groups => m2m_importer => groups (ManyToManyField)
 is_active => value_importer => is_active (BooleanField)
 is_staff => value_importer => is_staff (BooleanField)
 is_superuser => value_importer => is_superuser (BooleanField)
@@ -420,6 +428,33 @@ slug => NO IMPORTER => slug (NotFound)
 status => status_importer => status_id (StatusField)
 tenant => relation_importer => tenant_id (ForeignKey)
 time_zone => choice_importer => time_zone (CharField)
+- extras.configcontext => extras.configcontext -----------------------------------------------------
+auto_sync_enabled => NO IMPORTER => auto_sync_enabled (NotFound)
+cluster_groups => m2m_importer => cluster_groups (ManyToManyField)
+cluster_types => NO IMPORTER => cluster_types (NotFound)
+clusters => m2m_importer => clusters (ManyToManyField)
+created => datetime_importer => created (DateTimeField)
+data => json_importer => data (JSONField)
+data_file => NO IMPORTER => data_file (NotFound)
+data_path => NO IMPORTER => data_path (NotFound)
+data_source => NO IMPORTER => data_source (NotFound)
+data_synced => NO IMPORTER => data_synced (NotFound)
+description => value_importer => description (CharField)
+device_types => m2m_importer => device_types (ManyToManyField)
+id => uid_from_data => id (UUIDField)
+is_active => value_importer => is_active (BooleanField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+locations => location_importer => locations (ManyToManyField)
+name => value_importer => name (CharField)
+platforms => m2m_importer => platforms (ManyToManyField)
+regions => location_importer => locations (ManyToManyField)
+roles => m2m_importer => roles (ManyToManyField)
+site_groups => NO IMPORTER => site_groups (NotFound)
+sites => location_importer => locations (ManyToManyField)
+tags => m2m_importer => tags (ManyToManyField)
+tenant_groups => m2m_importer => tenant_groups (ManyToManyField)
+tenants => m2m_importer => tenants (ManyToManyField)
+weight => integer_importer => weight (PositiveSmallIntegerField)
 - extras.customfield => extras.customfield ---------------------------------------------------------
 choice_set => choices_importer => CUSTOM TARGET
 content_types => content_types_importer => content_types (ManyToManyField)
@@ -541,9 +576,9 @@ actions => json_importer => actions (JSONField)
 constraints => json_importer => constraints (JSONField)
 description => value_importer => description (CharField)
 enabled => value_importer => enabled (BooleanField)
-groups => identifiers_importer => groups (ManyToManyField)
+groups => m2m_importer => groups (ManyToManyField)
 id => uid_from_data => id (UUIDField)
 name => value_importer => name (CharField)
 object_types => content_types_importer => object_types (ManyToManyField)
-users => identifiers_importer => users (ManyToManyField)
+users => m2m_importer => users (ManyToManyField)
 * End of Import Summary ****************************************************************************
