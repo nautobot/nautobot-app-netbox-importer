@@ -355,14 +355,14 @@ class NautobotModelWrapper:
         It can be called in any import stage.
 
         Args:
-            issue_type: The type of the issue, e.g. "SaveFailed". Can be determined from `error.__class__`.
-            message: A message to be included in the issue. Can be determined from `error`.
-            uid: The UID of the instance that caused the issue. Can be determined from instances.
-            data: The data that caused the issue.
-            diffsync_instance: The DiffSync instance that caused the issue.
-            nautobot_instance: The Nautobot instance that caused the issue.
-            error: The error that caused the issue.
-            nautobot_name: The name of the Nautobot instance that caused the issue.
+            issue_type (Optional[str]): The type of the issue, e.g. "SaveFailed". Can be determined from `error.__class__`.
+            message (Optional[str]): A message to be included in the issue. Can be determined from `error`.
+            uid (Optional[Uid]): The UID of the instance that caused the issue. Can be determined from instances.
+            data (Optional[Mapping]): The data that caused the issue.
+            diffsync_instance (Optional[DiffSyncModel]): The DiffSync instance that caused the issue.
+            nautobot_instance (Optional[NautobotBaseModel]): The Nautobot instance that caused the issue.
+            error (Optional[Exception]): The error that caused the issue.
+            nautobot_name (Optional[str]): The name of the Nautobot instance that caused the issue.
                 This is determined after the import, before creating summaries.
 
         Examples can be found by looking at calls to this function in the code.
