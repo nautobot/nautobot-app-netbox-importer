@@ -1,0 +1,2 @@
+Added `--trace-issues` argument to `nautobot-server import_netbox` command to log exception trace-backs.
+Added `created` and `updated` to Nautobot model stats.

@@ -113,12 +113,14 @@ if not _TESTING:
             },
         },
         "loggers": {
-            "django": {"handlers": ["normal_console"], "level": "INFO"},
+            "django": {"handlers": ["normal_console"], "level": "INFO", "propagate": False},
             "nautobot": {
                 "handlers": ["verbose_console" if DEBUG else "normal_console"],
                 "level": LOG_LEVEL,
+                "propagate": False,
             },
         },
+        "root": {"handlers": ["normal_console"], "level": "INFO"},
     }
 
     if DEBUG:

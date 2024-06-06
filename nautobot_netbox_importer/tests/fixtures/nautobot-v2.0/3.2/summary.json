@@ -13541,7 +13541,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 1
+                "source_created": 1,
+                "created": 1
             },
             "issues": []
         },
@@ -13559,7 +13560,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 29
+                "source_created": 29,
+                "created": 29
             },
             "issues": []
         },
@@ -13569,7 +13571,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 45
+                "source_created": 45,
+                "created": 45
             },
             "issues": []
         },
@@ -13579,7 +13582,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 4
+                "source_created": 4,
+                "created": 4
             },
             "issues": []
         },
@@ -13589,7 +13593,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 9
+                "source_created": 9,
+                "created": 9
             },
             "issues": []
         },
@@ -13599,7 +13604,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 1
+                "source_created": 1,
+                "created": 1
             },
             "issues": []
         },
@@ -13619,7 +13625,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 108
+                "source_created": 108,
+                "created": 108
             },
             "issues": []
         },
@@ -13637,7 +13644,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 41
+                "source_created": 41,
+                "created": 41
             },
             "issues": []
         },
@@ -13647,7 +13655,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 11
+                "source_created": 11,
+                "created": 11
             },
             "issues": []
         },
@@ -13673,7 +13682,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 72
+                "source_created": 72,
+                "created": 72
             },
             "issues": []
         },
@@ -13683,7 +13693,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 14
+                "source_created": 14,
+                "created": 14
             },
             "issues": []
         },
@@ -13693,7 +13704,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 14
+                "source_created": 14,
+                "created": 14
             },
             "issues": []
         },
@@ -13703,7 +13715,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 15
+                "source_created": 15,
+                "created": 15
             },
             "issues": []
         },
@@ -13713,7 +13726,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 912
+                "source_created": 912,
+                "created": 912
             },
             "issues": []
         },
@@ -13723,7 +13737,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 120
+                "source_created": 120,
+                "created": 120
             },
             "issues": []
         },
@@ -13733,7 +13748,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 1586
+                "source_created": 1586,
+                "created": 1586
             },
             "issues": []
         },
@@ -13751,7 +13767,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 300
+                "source_created": 300,
+                "created": 300
             },
             "issues": []
         },
@@ -13785,7 +13802,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 95
+                "source_created": 95,
+                "created": 95
             },
             "issues": []
         },
@@ -13795,7 +13813,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 6
+                "source_created": 6,
+                "created": 6
             },
             "issues": []
         },
@@ -13805,7 +13824,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 15
+                "source_created": 15,
+                "created": 15
             },
             "issues": []
         },
@@ -13847,7 +13867,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 3
+                "source_created": 3,
+                "created": 3
             },
             "issues": []
         },
@@ -13858,6 +13879,7 @@
             "disabled": false,
             "stats": {
                 "source_created": 48,
+                "created": 48,
                 "issues": 48
             },
             "issues": [
@@ -13865,289 +13887,1009 @@
                     "uid": "0434ed4d-cc76-5051-a38c-b84ed32de2c1",
                     "name": "P2-6B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R106 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R106 (Row 1) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "e67bdbbe-b394-5403-a07b-e02937abfcc0",
+                        "name": "P2-6B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "05541f06-08c9-5d84-a8b6-13ce3cd45938",
                     "name": "P3-8A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R308 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+                    "message": "['Rack R308 (Row 3) and power panel Panel 3 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "d74c0a43-19ad-5743-b7e7-96532d49ade3",
+                        "rack_id": "d1b8fb44-5ac2-5f32-a1b4-bc669201f368",
+                        "name": "P3-8A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "05f5bb91-e84c-5908-8d9a-8256959bfcab",
                     "name": "P2-11B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R203 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R203 (Row 2) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "9ca552c2-823a-5b5b-9d12-ad3144752573",
+                        "name": "P2-11B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "06ebb1db-aaa0-5b24-a832-8ca1671f8b0a",
                     "name": "P2-4B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R104 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R104 (Row 1) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "932673ee-1e85-5f4f-bdae-889d5cde166d",
+                        "name": "P2-4B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "07316815-d36d-552d-8859-03e7fe09354a",
                     "name": "P2-13B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R205 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R205 (Row 2) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "b63cf024-f02f-5a00-9426-f96385dd767f",
+                        "name": "P2-13B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "0e23ee26-033e-5cfd-8bce-b5ef5909e13c",
                     "name": "P2-10B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R202 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R202 (Row 2) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "52553f3d-a19b-55f7-8569-428982869b9a",
+                        "name": "P2-10B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "10da56b6-09b1-5da6-9505-d9253863e062",
                     "name": "P3-1A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R301 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+                    "message": "['Rack R301 (Row 3) and power panel Panel 3 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "d74c0a43-19ad-5743-b7e7-96532d49ade3",
+                        "rack_id": "000a90c0-0499-5ad5-9f12-936fde3b8735",
+                        "name": "P3-1A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "17a0b412-4187-51a2-a238-901b3a275bcd",
                     "name": "P1-14A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R206 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R206 (Row 2) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "92950785-2136-5d96-a774-b497b348c1c7",
+                        "name": "P1-14A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "194e2d64-c904-59bc-af2c-e040beb3aeac",
                     "name": "P2-14B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R206 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R206 (Row 2) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "92950785-2136-5d96-a774-b497b348c1c7",
+                        "name": "P2-14B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "1f4b42df-43ce-52aa-8a61-4a19ce1af962",
                     "name": "P4-3B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R303 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+                    "message": "['Rack R303 (Row 3) and power panel Panel 4 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "55b416c2-a8f1-5812-a75c-85d37c2a2cfa",
+                        "rack_id": "945d8acb-5025-51af-932d-f6b4ef4d4df1",
+                        "name": "P4-3B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "20b3c4c0-eb30-5f8b-adcf-20e4fa5d0061",
                     "name": "P2-15B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R207 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R207 (Row 2) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "2ad09e04-b923-5eca-9fc0-7b1dcae72bf5",
+                        "name": "P2-15B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "29b6b9f0-f50a-592c-8e3f-e415a0bf4cd4",
                     "name": "P4-1B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R301 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+                    "message": "['Rack R301 (Row 3) and power panel Panel 4 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "55b416c2-a8f1-5812-a75c-85d37c2a2cfa",
+                        "rack_id": "000a90c0-0499-5ad5-9f12-936fde3b8735",
+                        "name": "P4-1B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "314fead6-ffae-51f7-abb0-2edcf7d6da49",
                     "name": "P3-2A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R302 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+                    "message": "['Rack R302 (Row 3) and power panel Panel 3 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "d74c0a43-19ad-5743-b7e7-96532d49ade3",
+                        "rack_id": "d3a083bd-4e9e-5433-be88-bf7f502b92cf",
+                        "name": "P3-2A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "31f1abb3-660f-5a57-9256-42be3d5b75cf",
                     "name": "P2-3B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R103 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R103 (Row 1) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "10f885df-75ca-5aac-b4ff-c2c88d1ff001",
+                        "name": "P2-3B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "3213730d-18bd-5a3a-9828-4ab023ed4652",
                     "name": "P1-6A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R106 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R106 (Row 1) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "e67bdbbe-b394-5403-a07b-e02937abfcc0",
+                        "name": "P1-6A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "3338c701-47fd-513e-945a-78a98b84d7f0",
                     "name": "P4-8B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R308 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+                    "message": "['Rack R308 (Row 3) and power panel Panel 4 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "55b416c2-a8f1-5812-a75c-85d37c2a2cfa",
+                        "rack_id": "d1b8fb44-5ac2-5f32-a1b4-bc669201f368",
+                        "name": "P4-8B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "38f5aa36-561b-5cd8-8362-9d093ff7b89a",
                     "name": "P1-15A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R207 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R207 (Row 2) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "2ad09e04-b923-5eca-9fc0-7b1dcae72bf5",
+                        "name": "P1-15A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "3f702c58-7dea-5b78-a007-17f40b465810",
                     "name": "P1-10A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R202 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R202 (Row 2) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "52553f3d-a19b-55f7-8569-428982869b9a",
+                        "name": "P1-10A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "416a01e5-fbf9-522e-b9e9-4037cf8c984f",
                     "name": "P1-4A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R104 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R104 (Row 1) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "932673ee-1e85-5f4f-bdae-889d5cde166d",
+                        "name": "P1-4A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "451c4aad-d892-5114-8724-be2f8148c322",
                     "name": "P2-2B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R102 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R102 (Row 1) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "f0ba2817-8b5d-52cc-abbe-b29e168a28d6",
+                        "name": "P2-2B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "47f69d3d-8fcd-5b63-8695-21aa51fb4fbf",
                     "name": "P2-9B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R201 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R201 (Row 2) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "9077cdb9-95d3-5dd9-8f02-f1d339686da1",
+                        "name": "P2-9B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "53ed215b-9003-522d-9cb1-d48dbb18fdc2",
                     "name": "P3-7A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R307 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+                    "message": "['Rack R307 (Row 3) and power panel Panel 3 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "d74c0a43-19ad-5743-b7e7-96532d49ade3",
+                        "rack_id": "368dfeb1-eb21-528f-a9f8-827ce66bdeb3",
+                        "name": "P3-7A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "5a2f51ea-7a05-53d2-8a47-cd383629a343",
                     "name": "P1-13A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R205 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R205 (Row 2) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "b63cf024-f02f-5a00-9426-f96385dd767f",
+                        "name": "P1-13A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "5fa35cf7-5d55-5533-99ee-7d1ecaa69856",
                     "name": "P2-1B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R101 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R101 (Row 1) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "9bcf34fc-257c-5923-ba34-e10c6067f9ed",
+                        "name": "P2-1B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "6203a499-6777-5cd0-841b-fa6339c48890",
                     "name": "P1-9A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R201 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R201 (Row 2) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "9077cdb9-95d3-5dd9-8f02-f1d339686da1",
+                        "name": "P1-9A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "6a1a4ac2-e77b-526b-9aa6-8c7903e5f572",
                     "name": "P2-8B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R108 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R108 (Row 1) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "99d7f968-198f-5f24-9f32-895e31d76fd7",
+                        "name": "P2-8B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "7257a622-3ca0-5163-8b6e-5e88c573b17e",
                     "name": "P2-16B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R208 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R208 (Row 2) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "70586a39-5938-5e69-9d17-0fd275579052",
+                        "name": "P2-16B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "7c07894e-9772-5e1c-a418-bdf3fd58e7c3",
                     "name": "P1-7A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R107 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R107 (Row 1) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "75010862-25f1-50ea-8465-6aa192106e91",
+                        "name": "P1-7A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "7eae2a15-d2d0-52ab-bfcf-3cf6823078cf",
                     "name": "P2-7B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R107 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R107 (Row 1) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "75010862-25f1-50ea-8465-6aa192106e91",
+                        "name": "P2-7B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "872d498b-e156-57b9-8f1d-f595c31ef703",
                     "name": "P3-5A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R305 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+                    "message": "['Rack R305 (Row 3) and power panel Panel 3 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "d74c0a43-19ad-5743-b7e7-96532d49ade3",
+                        "rack_id": "82b8b341-86cb-5760-a942-01f866935056",
+                        "name": "P3-5A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "87cf96f1-95fa-546c-9665-977f42764f8b",
                     "name": "P4-4B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R304 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+                    "message": "['Rack R304 (Row 3) and power panel Panel 4 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "55b416c2-a8f1-5812-a75c-85d37c2a2cfa",
+                        "rack_id": "c2c0acf3-4f8b-503f-9a06-f72d370d300e",
+                        "name": "P4-4B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "8cf662de-a918-5648-b152-d71da75a7392",
                     "name": "P3-4A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R304 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+                    "message": "['Rack R304 (Row 3) and power panel Panel 3 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "d74c0a43-19ad-5743-b7e7-96532d49ade3",
+                        "rack_id": "c2c0acf3-4f8b-503f-9a06-f72d370d300e",
+                        "name": "P3-4A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "a5511926-c977-593b-9bf1-57c8175be85d",
                     "name": "P2-5B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R105 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R105 (Row 1) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "c7aef58b-f4fc-56ca-9b9a-616b8fe7b74d",
+                        "name": "P2-5B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "a7c6bcef-dbe4-51cd-a6d0-14ab5facbe5e",
                     "name": "P1-3A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R103 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R103 (Row 1) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "10f885df-75ca-5aac-b4ff-c2c88d1ff001",
+                        "name": "P1-3A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "b3bfb863-c40a-5c49-b82e-1095037d3578",
                     "name": "P3-3A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R303 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+                    "message": "['Rack R303 (Row 3) and power panel Panel 3 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "d74c0a43-19ad-5743-b7e7-96532d49ade3",
+                        "rack_id": "945d8acb-5025-51af-932d-f6b4ef4d4df1",
+                        "name": "P3-3A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "b4031fa2-14a6-5d06-a3a2-3a3376b10d72",
                     "name": "P1-11A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R203 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R203 (Row 2) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "9ca552c2-823a-5b5b-9d12-ad3144752573",
+                        "name": "P1-11A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "b9c591cd-fdc0-5cf2-83c4-400554b811cd",
                     "name": "P1-16A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R208 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R208 (Row 2) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "70586a39-5938-5e69-9d17-0fd275579052",
+                        "name": "P1-16A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "bb4485d0-144b-506f-a8ab-faf523304cf8",
                     "name": "P4-7B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R307 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+                    "message": "['Rack R307 (Row 3) and power panel Panel 4 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "55b416c2-a8f1-5812-a75c-85d37c2a2cfa",
+                        "rack_id": "368dfeb1-eb21-528f-a9f8-827ce66bdeb3",
+                        "name": "P4-7B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "c0e96716-af7f-5b78-8210-d51b55fa53d2",
                     "name": "P1-1A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R101 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R101 (Row 1) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "9bcf34fc-257c-5923-ba34-e10c6067f9ed",
+                        "name": "P1-1A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "c2893189-8044-5d85-8e91-7832c201474d",
                     "name": "P1-8A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R108 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R108 (Row 1) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "99d7f968-198f-5f24-9f32-895e31d76fd7",
+                        "name": "P1-8A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "c6b3c62b-5f0d-51d1-95d9-761914979d47",
                     "name": "P3-6A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R306 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+                    "message": "['Rack R306 (Row 3) and power panel Panel 3 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "d74c0a43-19ad-5743-b7e7-96532d49ade3",
+                        "rack_id": "7c8034cd-4a7a-50e8-bfbf-7afefb242189",
+                        "name": "P3-6A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "cd4f8f27-620f-59fe-aa9a-4c13ff4a7274",
                     "name": "P1-12A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R204 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R204 (Row 2) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "9817e30f-a830-5152-a65a-1e2334e66700",
+                        "name": "P1-12A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "d951d5fc-81be-51ae-98a1-7759c859d904",
                     "name": "P4-5B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R305 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+                    "message": "['Rack R305 (Row 3) and power panel Panel 4 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "55b416c2-a8f1-5812-a75c-85d37c2a2cfa",
+                        "rack_id": "82b8b341-86cb-5760-a942-01f866935056",
+                        "name": "P4-5B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "e04582bd-f2cb-5deb-b374-be9260cd5b27",
                     "name": "P4-6B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R306 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+                    "message": "['Rack R306 (Row 3) and power panel Panel 4 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "55b416c2-a8f1-5812-a75c-85d37c2a2cfa",
+                        "rack_id": "7c8034cd-4a7a-50e8-bfbf-7afefb242189",
+                        "name": "P4-6B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "e1672072-7885-5330-a7dd-52f3769d4863",
                     "name": "P1-5A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R105 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R105 (Row 1) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "c7aef58b-f4fc-56ca-9b9a-616b8fe7b74d",
+                        "name": "P1-5A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "e1b4bb92-803c-59f4-90a7-4f5deb95abc2",
                     "name": "P4-2B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R302 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+                    "message": "['Rack R302 (Row 3) and power panel Panel 4 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "55b416c2-a8f1-5812-a75c-85d37c2a2cfa",
+                        "rack_id": "d3a083bd-4e9e-5433-be88-bf7f502b92cf",
+                        "name": "P4-2B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "f2ee9737-42d8-5093-a349-be97765a39e0",
                     "name": "P1-2A",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R102 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+                    "message": "['Rack R102 (Row 1) and power panel Panel 1 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "0cfa181b-6b4a-569c-a30d-db4d87f03373",
+                        "rack_id": "f0ba2817-8b5d-52cc-abbe-b29e168a28d6",
+                        "name": "P1-2A",
+                        "type": "primary",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 },
                 {
                     "uid": "fcb61481-0da8-5412-b68b-2463016a017d",
                     "name": "P2-12B",
                     "issue_type": "ValidationError",
-                    "message": "['Rack R204 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+                    "message": "['Rack R204 (Row 2) and power panel Panel 2 (MDF) are in different locations']",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "created": "2021-04-05 00:00:00+00:00",
+                        "last_updated": "None",
+                        "power_panel_id": "78d58858-0cc7-530a-8a3b-daa91a436803",
+                        "rack_id": "9817e30f-a830-5152-a65a-1e2334e66700",
+                        "name": "P2-12B",
+                        "type": "redundant",
+                        "supply": "ac",
+                        "phase": "single-phase",
+                        "voltage": "220",
+                        "amperage": "20",
+                        "max_utilization": "80",
+                        "available_power": "3520"
+                    }
                 }
             ]
         },
@@ -14157,7 +14899,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 104
+                "source_created": 104,
+                "created": 104
             },
             "issues": []
         },
@@ -14167,7 +14910,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 8
+                "source_created": 8,
+                "created": 8
             },
             "issues": []
         },
@@ -14177,7 +14921,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 4
+                "source_created": 4,
+                "created": 4
             },
             "issues": []
         },
@@ -14187,7 +14932,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 75
+                "source_created": 75,
+                "created": 75
             },
             "issues": []
         },
@@ -14197,7 +14943,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 26
+                "source_created": 26,
+                "created": 26
             },
             "issues": []
         },
@@ -14207,7 +14954,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 42
+                "source_created": 42,
+                "created": 42
             },
             "issues": []
         },
@@ -14217,7 +14965,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 2
+                "source_created": 2,
+                "created": 2
             },
             "issues": []
         },
@@ -14227,7 +14976,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 630
+                "source_created": 630,
+                "created": 630
             },
             "issues": []
         },
@@ -14237,7 +14987,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 73
+                "source_created": 73,
+                "created": 73
             },
             "issues": []
         },
@@ -14247,7 +14998,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 4
+                "source_created": 4,
+                "created": 4
             },
             "issues": []
         },
@@ -14281,7 +15033,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 1
+                "source_created": 1,
+                "created": 1
             },
             "issues": []
         },
@@ -14363,7 +15116,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 18
+                "source_created": 18,
+                "created": 18
             },
             "issues": []
         },
@@ -14381,7 +15135,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 6
+                "source_created": 6,
+                "created": 6
             },
             "issues": []
         },
@@ -14391,7 +15146,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 26
+                "source_created": 26,
+                "created": 26
             },
             "issues": []
         },
@@ -14401,7 +15157,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 72
+                "source_created": 72,
+                "created": 72
             },
             "issues": []
         },
@@ -14435,7 +15192,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 180
+                "source_created": 180,
+                "created": 180
             },
             "issues": []
         },
@@ -14453,7 +15211,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 94
+                "source_created": 94,
+                "created": 94
             },
             "issues": []
         },
@@ -14463,7 +15222,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 8
+                "source_created": 8,
+                "created": 8
             },
             "issues": []
         },
@@ -14473,7 +15233,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 12
+                "source_created": 12,
+                "created": 12
             },
             "issues": []
         },
@@ -14499,7 +15260,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 63
+                "source_created": 63,
+                "created": 63
             },
             "issues": []
         },
@@ -14509,7 +15271,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 7
+                "source_created": 7,
+                "created": 7
             },
             "issues": []
         },
@@ -14519,7 +15282,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 6
+                "source_created": 6,
+                "created": 6
             },
             "issues": []
         },
@@ -14657,7 +15421,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 11
+                "source_created": 11,
+                "created": 11
             },
             "issues": []
         },
@@ -14667,7 +15432,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 1
+                "source_created": 1,
+                "created": 1
             },
             "issues": []
         },
@@ -14709,7 +15475,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 6
+                "source_created": 6,
+                "created": 6
             },
             "issues": []
         },
@@ -14727,7 +15494,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 32
+                "source_created": 32,
+                "created": 32
             },
             "issues": []
         },
@@ -14737,7 +15505,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 4
+                "source_created": 4,
+                "created": 4
             },
             "issues": []
         },
@@ -14747,7 +15516,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 6
+                "source_created": 6,
+                "created": 6
             },
             "issues": []
         },
@@ -14757,7 +15527,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 180
+                "source_created": 180,
+                "created": 180
             },
             "issues": []
         },
@@ -14767,7 +15538,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 720
+                "source_created": 720,
+                "created": 720
             },
             "issues": []
         },

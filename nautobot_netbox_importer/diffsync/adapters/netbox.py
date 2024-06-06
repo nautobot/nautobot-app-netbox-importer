@@ -60,6 +60,7 @@ class NetBoxImporterOptions(NamedTuple):
     unrack_zero_uheight_devices: bool = True
     save_json_summary_path: str = ""
     save_text_summary_path: str = ""
+    trace_issues: bool = False
 
 
 AdapterSetupFunction = Callable[[SourceAdapter], None]
@@ -71,7 +72,13 @@ class NetBoxAdapter(SourceAdapter):
     # pylint: disable=keyword-arg-before-vararg
     def __init__(self, input_ref: _FileRef, options: NetBoxImporterOptions, job=None, sync=None, *args, **kwargs):
         """Initialize NetBox Source Adapter."""
-        super().__init__(name="NetBox", get_source_data=_get_reader(input_ref), *args, **kwargs)
+        super().__init__(
+            name="NetBox",
+            *args,
+            get_source_data=_get_reader(input_ref),
+            trace_issues=options.trace_issues,
+            **kwargs,
+        )
         self.job = job
         self.sync = sync
 
