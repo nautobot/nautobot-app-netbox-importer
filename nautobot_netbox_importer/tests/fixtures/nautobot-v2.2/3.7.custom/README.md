@@ -23,6 +23,7 @@ To dump and use data from a NetBox instance, run the following command:
     dcim.RackRole \
     dcim.Rack \
     dcim.Site \
+    extras.ConfigContext \
     extras.CustomField \
     extras.CustomFieldChoiceSet \
     extras.JournalEntry \

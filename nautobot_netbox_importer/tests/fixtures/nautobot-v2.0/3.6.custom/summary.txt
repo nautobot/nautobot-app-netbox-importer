@@ -222,14 +222,14 @@ dcim.interfaceredundancygroup => ipam.fhrpgroup
 4f3495b5-00e6-5917-a148-77e109f96b0f | Unracked | "Half U Device" | "{'position': 'Device unracked due to 0U height'}"
 f510c5ff-e1f8-5adc-9fb5-30bc5791b42e | ValidationError | "Device 1" | "[\"Invalid value for custom field 'device_custom_object': Value must be a string\"]"
 - dcim.devicetype ----------------------------------------------------------------------------------
-03d4a2c5-e08b-5cc1-924d-c401194d393c | SourceFieldImporterIssue | "Half U Device Type" | "{'u_height': 'Invalid source value 0.5, truncated to 0'}"
+03d4a2c5-e08b-5cc1-924d-c401194d393c | SourceFieldImporterIssue | "Half U Device Type" | "{'field': 'u_height', 'importer': 'integer_importer'} {'u_height': 'Invalid source value 0.5, truncated to 0'}"
 - dcim.interfaceredundancygroup --------------------------------------------------------------------
-2586a272-455a-5e92-85d7-f41c0784630a | InvalidChoiceValueIssue | "FHR Group clusterxl" | "{'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}"
-f91623ed-a389-53a4-a4a2-943588c21446 | InvalidChoiceValueIssue | "Test FHR Group" | "{'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}"
+2586a272-455a-5e92-85d7-f41c0784630a | InvalidChoiceValueIssue | "FHR Group clusterxl" | "{'field': 'protocol', 'importer': 'fallback_importer'} {'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}"
+f91623ed-a389-53a4-a4a2-943588c21446 | InvalidChoiceValueIssue | "Test FHR Group" | "{'field': 'protocol', 'importer': 'fallback_importer'} {'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}"
 - dcim.location ------------------------------------------------------------------------------------
 c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 | ValidationError | "Site 1" | "{'parent': ['A Location of type Site must have a parent Location.']}"
 - extras.customfield -------------------------------------------------------------------------------
-149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 | InvalidChoiceValueIssue | "Device Custom Object" | "{'type': 'Invalid choice value: `object`, replaced with `text`'}"
+149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 | InvalidChoiceValueIssue | "Device Custom Object" | "{'field': 'type', 'importer': 'fallback_importer'} {'type': 'Invalid choice value: `object`, replaced with `text`'}"
 - users.objectpermission ---------------------------------------------------------------------------
 c650165f-9a05-55c0-bbb1-c9527d41160c | InvalidContentType | "Test Permission" | "{'object_types': \"Invalid content type ['extras', 'script'], skipping\"}"
 = Field Mappings: ==================================================================================
@@ -240,7 +240,7 @@ permissions => Disabled with reason: Permissions import is not implemented yet
 date_joined => datetime_importer => date_joined (DateTimeField)
 email => value_importer => email (CharField)
 first_name => value_importer => first_name (CharField)
-groups => identifiers_importer => groups (ManyToManyField)
+groups => m2m_importer => groups (ManyToManyField)
 is_active => value_importer => is_active (BooleanField)
 is_staff => value_importer => is_staff (BooleanField)
 is_superuser => value_importer => is_superuser (BooleanField)
@@ -541,9 +541,9 @@ actions => json_importer => actions (JSONField)
 constraints => json_importer => constraints (JSONField)
 description => value_importer => description (CharField)
 enabled => value_importer => enabled (BooleanField)
-groups => identifiers_importer => groups (ManyToManyField)
+groups => m2m_importer => groups (ManyToManyField)
 id => uid_from_data => id (UUIDField)
 name => value_importer => name (CharField)
 object_types => content_types_importer => object_types (ManyToManyField)
-users => identifiers_importer => users (ManyToManyField)
+users => m2m_importer => users (ManyToManyField)
 * End of Import Summary ****************************************************************************

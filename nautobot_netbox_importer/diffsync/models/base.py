@@ -8,6 +8,8 @@ from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import SourceField
 from nautobot_netbox_importer.generator import fields
 
+from .locations import define_locations
+
 
 def _define_tagged_object(field: SourceField) -> None:
     wrapper = field.wrapper
@@ -100,6 +102,13 @@ def setup(adapter: SourceAdapter) -> None:
         "extras.TaggedItem",
         fields={
             "object_id": _define_tagged_object,
+        },
+    )
+    adapter.configure_model(
+        "extras.ConfigContext",
+        fields={
+            "locations": define_locations,
+            "roles": fields.relation("dcim.DeviceRole"),
         },
     )
     adapter.configure_model(
