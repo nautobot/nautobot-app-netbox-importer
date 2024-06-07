@@ -16,7 +16,6 @@ To dump and use data from a NetBox instance, run the following command:
     auth.User \
     contenttypes.ContentType \
     dcim.Cable \
-    dcim.CableTermination \
     dcim.Device \
     dcim.DeviceRole \
     dcim.DeviceType \

@@ -191,7 +191,7 @@
                     "nautobot_name": "groups",
                     "nautobot_internal_type": "ManyToManyField",
                     "nautobot_can_import": true,
-                    "importer": "identifiers_importer",
+                    "importer": "m2m_importer",
                     "definition": "groups",
                     "sources": [
                         "DATA"
@@ -3918,7 +3918,7 @@
                     "nautobot_name": "tagged_vlans",
                     "nautobot_internal_type": "ManyToManyField",
                     "nautobot_can_import": true,
-                    "importer": "uuids_importer",
+                    "importer": "m2m_importer",
                     "definition": "tagged_vlans",
                     "sources": [
                         "DATA"
@@ -7984,6 +7984,62 @@
                     "default_value": null,
                     "disable_reason": "",
                     "required": true
+                },
+                "locations": {
+                    "name": "locations",
+                    "nautobot_name": "locations",
+                    "nautobot_internal_type": "ManyToManyField",
+                    "nautobot_can_import": true,
+                    "importer": "location_importer",
+                    "definition": "define_locations",
+                    "sources": [
+                        "CUSTOM"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "regions": {
+                    "name": "regions",
+                    "nautobot_name": "locations",
+                    "nautobot_internal_type": "ManyToManyField",
+                    "nautobot_can_import": true,
+                    "importer": "location_importer",
+                    "definition": "regions",
+                    "sources": [
+                        "SIBLING"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "roles": {
+                    "name": "roles",
+                    "nautobot_name": "roles",
+                    "nautobot_internal_type": "ManyToManyField",
+                    "nautobot_can_import": true,
+                    "importer": "m2m_importer",
+                    "definition": "define_relation",
+                    "sources": [
+                        "CUSTOM"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "sites": {
+                    "name": "sites",
+                    "nautobot_name": "locations",
+                    "nautobot_internal_type": "ManyToManyField",
+                    "nautobot_can_import": true,
+                    "importer": "location_importer",
+                    "definition": "sites",
+                    "sources": [
+                        "SIBLING"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 }
             },
             "flags": "DiffSyncModelFlags.NONE",
@@ -11691,7 +11747,7 @@
                     "nautobot_name": "tagged_vlans",
                     "nautobot_internal_type": "ManyToManyField",
                     "nautobot_can_import": true,
-                    "importer": "uuids_importer",
+                    "importer": "m2m_importer",
                     "definition": "tagged_vlans",
                     "sources": [
                         "DATA"

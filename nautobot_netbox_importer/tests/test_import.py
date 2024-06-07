@@ -1,9 +1,8 @@
-"""Test cases for NetBox adapter.
+"""Test cases for the NetBox adapter.
 
-Tests are using stored fixtures to verify that the import process is working as expected.
+Tests use stored fixtures to verify that the import process works as expected.
 
-It's also possible to generate and overwrite the fixtures by setting the `BUILD_FIXTURES` environment variable
-to `True`, or by using the `invoke unittest --build-fixtures` option when running the tests.
+Check the [fixtures README](./fixtures/README.md) for more details.
 """
 
 import json
@@ -44,7 +43,10 @@ _INPUTS = {
 # Ensure that SECRET_KEY is set to a known value, to generate the same UUIDs
 @patch("django.conf.settings.SECRET_KEY", "testing_secret_key")
 class TestImport(TestCase):
-    """Unittest for NetBox adapter."""
+    """Unittest for NetBox adapter.
+
+    Test cases are dynamically created based on the fixtures available for the current Nautobot version.
+    """
 
     def setUp(self):
         """Set up test environment."""
@@ -64,7 +66,12 @@ class TestImport(TestCase):
         self.maxDiff = None
 
     def _import(self, fixtures_name: str, fixtures_path: Path):
-        """Test import."""
+        """Test import.
+
+        This method is called by each dynamically-created test case.
+
+        Runs import twice, first time to import data and the second time to verify that nothing has changed.
+        """
         input_ref = _INPUTS.get(fixtures_name, fixtures_path / "input.json")
 
         expected_summary = ImportSummary()
@@ -221,7 +228,10 @@ def _generate_fixtures(wrapper: NautobotModelWrapper, output_path: Path):
 
 
 def _create_test_cases():
-    """Dynamically create test cases, based on the current Nautobot version and defined fixtures."""
+    """Dynamically create test cases, based on the current Nautobot version and defined fixtures.
+
+    Example of test created: `TestImport.test_3_7_custom`
+    """
     nautobot_version_str = ".".join(nautobot_version.split(".")[:2])
     fixtures_path = Path(__file__).parent / "fixtures" / f"nautobot-v{nautobot_version_str}"
     if not fixtures_path.is_dir() or not (fixtures_path / "dump.sql").is_file():

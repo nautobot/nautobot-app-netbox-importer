@@ -224,7 +224,7 @@ extras.note => extras.journalentry
 dcim.interfaceredundancygroup => ipam.fhrpgroup
 = Importer issues: =================================================================================
 - dcim.cable ---------------------------------------------------------------------------------------
-6df947b3-9159-5b42-8367-c0d7edb3986c | SaveFailed | "#6df947b3-9159-5b42-8367-c0d7edb3986c" | "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-05-20 09:41:04.629901+00, 2024-05-20 09:41:04.629909+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n"
+6df947b3-9159-5b42-8367-c0d7edb3986c | SaveFailed | "#6df947b3-9159-5b42-8367-c0d7edb3986c" | "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-06-07 07:12:52.14984+00, 2024-06-07 07:12:52.149849+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n"
 - dcim.device --------------------------------------------------------------------------------------
 4f3495b5-00e6-5917-a148-77e109f96b0f | Unracked | "Half U Device" | "{'position': 'Device unracked due to 0U height'}"
 - dcim.devicetype ----------------------------------------------------------------------------------

@@ -347,7 +347,26 @@ class NautobotModelWrapper:
         error: Optional[Exception] = None,
         nautobot_name="",
     ) -> ImporterIssue:
-        """Add a new importer issue."""
+        """Add a new importer issue.
+
+        This function register an issue and returns the issue object. All input arguments are optional, internal logic
+        tries to fill in as much information as possible based on the arguments provided.
+
+        It can be called in any import stage.
+
+        Args:
+            issue_type (Optional[str]): The type of the issue, e.g. "SaveFailed". Can be determined from `error.__class__`.
+            message (Optional[str]): A message to be included in the issue. Can be determined from `error`.
+            uid (Optional[Uid]): The UID of the instance that caused the issue. Can be determined from instances.
+            data (Optional[Mapping]): The data that caused the issue.
+            diffsync_instance (Optional[DiffSyncModel]): The DiffSync instance that caused the issue.
+            nautobot_instance (Optional[NautobotBaseModel]): The Nautobot instance that caused the issue.
+            error (Optional[Exception]): The error that caused the issue.
+            nautobot_name (Optional[str]): The name of the Nautobot instance that caused the issue.
+                This is determined after the import, before creating summaries.
+
+        Examples can be found by looking at calls to this function in the code.
+        """
         issue = self._create_issue(
             issue_type, message, uid, data, diffsync_instance, nautobot_instance, error, nautobot_name
         )
