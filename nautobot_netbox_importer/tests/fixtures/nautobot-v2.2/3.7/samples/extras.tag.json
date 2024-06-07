@@ -1,0 +1,47 @@
+[
+{
+  "model": "extras.tag",
+  "pk": "1c3dc2d0-a74c-57cb-8661-987dd30a8658",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:21.411Z",
+    "_custom_field_data": {},
+    "name": "November",
+    "color": "2f6a31",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "2e689544-46a5-524d-9dde-9ebe6b165264",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:21.439Z",
+    "_custom_field_data": {},
+    "name": "Zulu",
+    "color": "111111",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "4771a7d6-59f1-5d03-ae02-583c70eb53a8",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:21.423Z",
+    "_custom_field_data": {},
+    "name": "Sierra",
+    "color": "ffc107",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+}
+]

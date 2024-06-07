@@ -1,0 +1,50 @@
+[
+{
+  "model": "circuits.provider",
+  "pk": "0be72b58-db27-5eb4-984c-84d0083d2012",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.726Z",
+    "_custom_field_data": {},
+    "name": "GTT",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "655d27a8-dc6b-5d9e-95f6-5518915fbf3f",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.732Z",
+    "_custom_field_data": {},
+    "name": "NCSU Facilities",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": "Local maintainer for NC State communications facilities"
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": "ca4799a6-0f04-5a91-a532-647cd388bcb5",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.731Z",
+    "_custom_field_data": {},
+    "name": "Zayo",
+    "asn": null,
+    "account": "",
+    "portal_url": "",
+    "noc_contact": "",
+    "admin_contact": "",
+    "comments": ""
+  }
+}
+]

@@ -1,0 +1,47 @@
+[
+{
+  "model": "virtualization.cluster",
+  "pk": "99608cc5-4601-5baa-859d-4a7a9303c304",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:14.402Z",
+    "_custom_field_data": {},
+    "name": "gc-asia-east1",
+    "cluster_type": "49f2845e-b8f4-58e3-8534-2a1131071e25",
+    "cluster_group": "7a2352bc-7253-5c1d-bb1f-0a4a1412dc9e",
+    "tenant": null,
+    "location": null,
+    "comments": ""
+  }
+},
+{
+  "model": "virtualization.cluster",
+  "pk": "c115b129-e524-5741-8245-046538e6e73c",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:14.370Z",
+    "_custom_field_data": {},
+    "name": "DO-SFO3",
+    "cluster_type": "786c136a-fff1-5f84-8d0c-c43610039f45",
+    "cluster_group": "f296b7c8-68ed-5c8a-85fc-11ef680cbe7e",
+    "tenant": null,
+    "location": null,
+    "comments": ""
+  }
+},
+{
+  "model": "virtualization.cluster",
+  "pk": "feba01f4-60fc-5514-a54b-36d9d854e32a",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:14.397Z",
+    "_custom_field_data": {},
+    "name": "gc-europe-north1",
+    "cluster_type": "49f2845e-b8f4-58e3-8534-2a1131071e25",
+    "cluster_group": "20182816-bf12-5cd0-8f07-c91fcd271bd7",
+    "tenant": null,
+    "location": null,
+    "comments": ""
+  }
+}
+]

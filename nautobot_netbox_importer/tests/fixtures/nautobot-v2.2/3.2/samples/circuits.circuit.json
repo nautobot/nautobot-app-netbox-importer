@@ -1,0 +1,62 @@
+[
+{
+  "model": "circuits.circuit",
+  "pk": "29941c3a-4079-5588-8a87-9aefa04eec39",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.561Z",
+    "_custom_field_data": {},
+    "cid": "1002844978",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "dda5b9ab-0d5c-54b1-901a-773a0cc4fca3",
+    "circuit_type": "77b0ea76-dd49-526f-9e5b-7526b5abaa3d",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": null,
+    "circuit_termination_z": "c6fa35bb-17a5-595d-96ba-1b62e154e72c"
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": "67e191b1-574b-5b79-af5f-0bb084f6a28b",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.555Z",
+    "_custom_field_data": {},
+    "cid": "1002844927",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "dda5b9ab-0d5c-54b1-901a-773a0cc4fca3",
+    "circuit_type": "77b0ea76-dd49-526f-9e5b-7526b5abaa3d",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": null,
+    "circuit_termination_z": "1d8068f3-d9be-5412-92f1-a8d9938fcfa4"
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": "8037ffad-6a28-5267-9839-2e6459305d3c",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.669Z",
+    "_custom_field_data": {},
+    "cid": "KKDG4923",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "30efd662-fc9b-5892-b2be-adeb8091cb29",
+    "circuit_type": "0c9d650f-39cd-5060-809c-8cbc291e9fbb",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": "f76b03e6-a853-51a6-b8f2-20c86bc424e7",
+    "circuit_termination_z": "a82c9a9a-678f-5c23-a73d-bb16b30eb407"
+  }
+}
+]

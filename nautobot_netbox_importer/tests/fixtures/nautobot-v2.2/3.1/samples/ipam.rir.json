@@ -1,0 +1,38 @@
+[
+{
+  "model": "ipam.rir",
+  "pk": "270d7ef4-3f6e-5f6f-b1f2-85c97d7f8d8a",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:59.955Z",
+    "_custom_field_data": {},
+    "name": "AFRINIC",
+    "is_private": false,
+    "description": "African Network Information Centre"
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "611086a8-5f68-549b-904b-b9df116a526e",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:59.958Z",
+    "_custom_field_data": {},
+    "name": "RFC 6598",
+    "is_private": true,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "9a496681-ac3d-5e1a-9453-4a69b6aed1a2",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:59.957Z",
+    "_custom_field_data": {},
+    "name": "RFC 1918",
+    "is_private": true,
+    "description": ""
+  }
+}
+]

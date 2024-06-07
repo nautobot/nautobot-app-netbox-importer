@@ -1,0 +1,50 @@
+[
+{
+  "model": "extras.role",
+  "pk": "33afe68f-1216-58d2-890a-e18d188e885d",
+  "fields": {
+    "created": "2020-12-20T00:00:00Z",
+    "last_updated": "2024-02-22T08:37:20.870Z",
+    "_custom_field_data": {},
+    "name": "Router",
+    "color": "4caf50",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      42
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "cf28137c-1251-5b94-bde0-914c91ad0c70",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-22T08:37:20.898Z",
+    "_custom_field_data": {},
+    "name": "Storage",
+    "color": "ffc107",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      60
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "e05c6463-d6a2-5a05-a488-809c120a1af0",
+  "fields": {
+    "created": "2020-12-20T00:00:00Z",
+    "last_updated": "2024-02-22T08:37:20.873Z",
+    "_custom_field_data": {},
+    "name": "Core Switch",
+    "color": "3f51b5",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      42
+    ]
+  }
+}
+]

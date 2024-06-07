@@ -1,0 +1,36 @@
+[
+{
+  "model": "dcim.locationtype",
+  "pk": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+  "fields": {
+    "created": "2024-02-14T13:29:43.891Z",
+    "last_updated": "2024-02-14T13:29:43.891Z",
+    "_custom_field_data": {},
+    "parent": null,
+    "name": "Region",
+    "description": "",
+    "nestable": true,
+    "content_types": [
+      55
+    ]
+  }
+},
+{
+  "model": "dcim.locationtype",
+  "pk": "8fceb641-4563-5da8-9004-963f9ed1965a",
+  "fields": {
+    "created": "2024-02-14T13:29:43.887Z",
+    "last_updated": "2024-02-14T13:29:43.887Z",
+    "_custom_field_data": {},
+    "parent": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+    "name": "Site",
+    "description": "",
+    "nestable": false,
+    "content_types": [
+      56,
+      42,
+      60
+    ]
+  }
+}
+]

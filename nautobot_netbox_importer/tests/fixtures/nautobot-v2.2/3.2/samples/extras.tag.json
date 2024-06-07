@@ -1,0 +1,47 @@
+[
+{
+  "model": "extras.tag",
+  "pk": "1d17a7f3-350e-5c18-8fcc-fef2328466e9",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:44.955Z",
+    "_custom_field_data": {},
+    "name": "Delta",
+    "color": "ffe4e1",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "c9557218-d0d1-5861-bcbf-0e4724cab956",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:44.971Z",
+    "_custom_field_data": {},
+    "name": "Romeo",
+    "color": "ffeb3b",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "fd7df87d-2737-5092-abaf-8017d504d95e",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:44.957Z",
+    "_custom_field_data": {},
+    "name": "Foxtrot",
+    "color": "9c27b0",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+}
+]

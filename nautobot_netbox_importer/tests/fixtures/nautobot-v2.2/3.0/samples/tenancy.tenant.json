@@ -1,0 +1,47 @@
+[
+{
+  "model": "tenancy.tenant",
+  "pk": "116c3806-ef6a-5641-bbbd-054c9a31c5f7",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:16.004Z",
+    "_custom_field_data": {
+      "cust_id": "STA03"
+    },
+    "name": "Stark Industries",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "35f6098e-5c2c-58b3-824c-9b5c024a4321",
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:16.013Z",
+    "_custom_field_data": {
+      "cust_id": ""
+    },
+    "name": "Jimbob's Banking & Trust",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "8e994b2a-fa11-500f-901c-1d7f15264bac",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:16.012Z",
+    "_custom_field_data": {
+      "cust_id": "YKY01"
+    },
+    "name": "Nakatomi Corportation",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+}
+]

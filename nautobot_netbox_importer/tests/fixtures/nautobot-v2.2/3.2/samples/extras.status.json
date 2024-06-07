@@ -1,0 +1,50 @@
+[
+{
+  "model": "extras.status",
+  "pk": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+  "fields": {
+    "created": "2024-01-02T12:05:22.690Z",
+    "last_updated": "2024-01-02T12:05:22.690Z",
+    "_custom_field_data": {},
+    "name": "Unknown",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      56,
+      32,
+      68,
+      118
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "90ef0b5d-5e04-5ff3-b1a4-695a42311ede",
+  "fields": {
+    "created": "2024-01-02T12:05:22.696Z",
+    "last_updated": "2024-01-02T12:05:22.696Z",
+    "_custom_field_data": {},
+    "name": "Container",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      68
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "9172bac4-6144-54e5-b44d-f530905f8d05",
+  "fields": {
+    "created": "2024-01-02T12:05:22.694Z",
+    "last_updated": "2024-01-02T12:05:22.694Z",
+    "_custom_field_data": {},
+    "name": "Available",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      60
+    ]
+  }
+}
+]

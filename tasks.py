@@ -770,7 +770,7 @@ def dump_test_environment(context):
     - Nautobot container is running.
     - Migrations are applied.
 
-    Creates a dump.sql file in `tests/nautobot-v<major>.<minor>/fixtures` directory with flushed database to keep the content types IDs
+    Creates a dump.sql file in `nautobot_netbox_importer/tests/fixtures/nautobot-v<major>.<minor>` directory with flushed database to keep the content types IDs
     consistent across tests.
     """
     command = [

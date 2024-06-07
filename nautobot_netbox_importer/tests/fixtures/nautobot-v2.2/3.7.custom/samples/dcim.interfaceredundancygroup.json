@@ -1,0 +1,34 @@
+[
+{
+  "model": "dcim.interfaceredundancygroup",
+  "pk": "2586a272-455a-5e92-85d7-f41c0784630a",
+  "fields": {
+    "last_updated": "2024-02-22T09:52:05.808Z",
+    "_custom_field_data": {},
+    "name": "FHR Group clusterxl",
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "created": "2024-01-23T08:21:41.353Z",
+    "description": "",
+    "protocol": "",
+    "protocol_group_id": "",
+    "secrets_group": null,
+    "virtual_ip": null
+  }
+},
+{
+  "model": "dcim.interfaceredundancygroup",
+  "pk": "f91623ed-a389-53a4-a4a2-943588c21446",
+  "fields": {
+    "last_updated": "2024-01-23T09:33:00.040Z",
+    "_custom_field_data": {},
+    "name": "Test FHR Group",
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "created": "2024-01-23T08:21:41.353Z",
+    "description": "FHR Group Description",
+    "protocol": "vrrp",
+    "protocol_group_id": "",
+    "secrets_group": null,
+    "virtual_ip": null
+  }
+}
+]

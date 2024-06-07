@@ -1,0 +1,15 @@
+[
+{
+  "model": "circuits.providernetwork",
+  "pk": "389a055c-b2b4-5f38-a48c-df1bc2f42fb9",
+  "fields": {
+    "created": "2021-04-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.734Z",
+    "_custom_field_data": {},
+    "name": "Level3 MPLS",
+    "provider": "30efd662-fc9b-5892-b2be-adeb8091cb29",
+    "description": "",
+    "comments": ""
+  }
+}
+]

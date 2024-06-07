@@ -129,6 +129,7 @@ nav:
       - Data Flow: "dev/data_flow.md"
       - Demo Excecution: "dev/demo.md"
       - Frequently Asked Questions: "dev/faq.md"
+      - Test Fixtures: "dev/code_reference/fixtures/README.md"
       - Code Reference:
           - "dev/code_reference/index.md"
           - Package: "dev/code_reference/package.md"

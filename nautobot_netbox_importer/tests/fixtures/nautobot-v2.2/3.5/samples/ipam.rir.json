@@ -1,0 +1,38 @@
+[
+{
+  "model": "ipam.rir",
+  "pk": "51689b38-a8fa-5601-b838-a732fae021cc",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:02.018Z",
+    "_custom_field_data": {},
+    "name": "ARIN",
+    "is_private": false,
+    "description": "American Registry for Internet Numbers"
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "611086a8-5f68-549b-904b-b9df116a526e",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:02.026Z",
+    "_custom_field_data": {},
+    "name": "RFC 6598",
+    "is_private": true,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "9a496681-ac3d-5e1a-9453-4a69b6aed1a2",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:02.025Z",
+    "_custom_field_data": {},
+    "name": "RFC 1918",
+    "is_private": true,
+    "description": ""
+  }
+}
+]

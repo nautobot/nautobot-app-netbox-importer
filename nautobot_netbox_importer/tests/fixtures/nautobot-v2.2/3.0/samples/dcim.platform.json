@@ -1,0 +1,47 @@
+[
+{
+  "model": "dcim.platform",
+  "pk": "069874d3-da4d-54f5-a17b-40bbb0d29f98",
+  "fields": {
+    "created": "2021-04-05T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:34.417Z",
+    "_custom_field_data": {},
+    "name": "Ubuntu Linux 20.04",
+    "manufacturer": "f5136724-0984-5e3b-b073-ea6d83116997",
+    "network_driver": "",
+    "napalm_driver": "",
+    "napalm_args": null,
+    "description": ""
+  }
+},
+{
+  "model": "dcim.platform",
+  "pk": "82e12391-d52a-5f15-8474-0b444a157d2d",
+  "fields": {
+    "created": "2021-04-05T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:34.415Z",
+    "_custom_field_data": {},
+    "name": "Ubuntu Linux 18.04",
+    "manufacturer": "f5136724-0984-5e3b-b073-ea6d83116997",
+    "network_driver": "",
+    "napalm_driver": "",
+    "napalm_args": null,
+    "description": ""
+  }
+},
+{
+  "model": "dcim.platform",
+  "pk": "89096900-db0b-55ac-a094-0e1423e3f277",
+  "fields": {
+    "created": "2020-12-20T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:34.414Z",
+    "_custom_field_data": {},
+    "name": "Cisco IOS",
+    "manufacturer": "94e7b59b-659f-5c68-9958-a3e82f19aa9f",
+    "network_driver": "",
+    "napalm_driver": "",
+    "napalm_args": null,
+    "description": ""
+  }
+}
+]

@@ -2,6 +2,7 @@
 
 from . import fields
 from .base import EMPTY_VALUES
+from .base import InternalFieldType
 from .nautobot import NautobotAdapter
 from .source import DiffSyncBaseModel
 from .source import ImporterPass
@@ -21,6 +22,7 @@ __all__ = (
     "DiffSyncBaseModel",
     "EMPTY_VALUES",
     "ImporterPass",
+    "InternalFieldType",
     "InvalidChoiceValueIssue",
     "NautobotAdapter",
     "PreImportResult",

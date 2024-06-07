@@ -1,9 +1,8 @@
-"""Test cases for NetBox adapter.
+"""Test cases for the NetBox adapter.
 
-Tests are using stored fixtures to verify that the import process is working as expected.
+Tests use stored fixtures to verify that the import process works as expected.
 
-It's also possible to generate and overwrite the fixtures by setting the `BUILD_FIXTURES` environment variable
-to `True`, or by using the `invoke unittest --build-fixtures` option when running the tests.
+Check the [fixtures README](./fixtures/README.md) for more details.
 """
 
 import json
@@ -17,7 +16,6 @@ from django.test import TestCase
 from django.apps import apps
 from nautobot import __version__ as nautobot_version
 from nautobot.core.settings_funcs import is_truthy
-from nautobot.ipam.models import Namespace
 
 from nautobot_netbox_importer.command_utils import enable_logging as mute_diffsync_logging
 from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter
@@ -27,7 +25,6 @@ from nautobot_netbox_importer.summary import ImportSummary
 
 _BUILD_FIXTURES = is_truthy(getenv("BUILD_FIXTURES", "False"))
 _DONT_COMPARE_FIELDS = ["created", "last_updated"]
-_FIXTURES_PATH = Path(__file__).parent / "fixtures"
 _NETBOX_DATA_REPOSITORY = "https://raw.githubusercontent.com/netbox-community/netbox-demo-data"
 _NETBOX_DATA_URL = _NETBOX_DATA_REPOSITORY + "/c6a9c8835836a0629bde0713f33038ec9b8d56ea/json"
 _SAMPLE_COUNT = 3
@@ -46,17 +43,19 @@ _INPUTS = {
 # Ensure that SECRET_KEY is set to a known value, to generate the same UUIDs
 @patch("django.conf.settings.SECRET_KEY", "testing_secret_key")
 class TestImport(TestCase):
-    """Unittest for NetBox adapter."""
+    """Unittest for NetBox adapter.
+
+    Test cases are dynamically created based on the fixtures available for the current Nautobot version.
+    """
 
     def setUp(self):
         """Set up test environment."""
         super().setUp()
 
-        # pylint: disable=invalid-name
-        Status = apps.get_model("extras", "Status")
-        Status.objects.all().delete()
+        apps.get_model("extras", "Role").objects.all().delete()
+        apps.get_model("extras", "Status").objects.all().delete()
 
-        Namespace.objects.get_or_create(
+        apps.get_model("ipam", "Namespace").objects.get_or_create(
             pk="26756c2d-fddd-4128-9f88-dbcbddcbef45",
             name="Global",
             description="Default Global namespace. Created by Nautobot.",
@@ -66,49 +65,14 @@ class TestImport(TestCase):
         # pylint: disable=invalid-name
         self.maxDiff = None
 
-    def test_3_0(self):
-        """Test import for NetBox 3.0."""
-        self._import("3.0")
+    def _import(self, fixtures_name: str, fixtures_path: Path):
+        """Test import.
 
-    def test_3_1(self):
-        """Test import for NetBox 3.1."""
-        self._import("3.1")
+        This method is called by each dynamically-created test case.
 
-    def test_3_2(self):
-        """Test import for NetBox 3.2."""
-        self._import("3.2")
-
-    def test_3_3(self):
-        """Test import for NetBox 3.3."""
-        self._import("3.3")
-
-    def test_3_4(self):
-        """Test import for NetBox 3.4."""
-        self._import("3.4")
-
-    def test_3_5(self):
-        """Test import for NetBox 3.5."""
-        self._import("3.5")
-
-    def test_3_6(self):
-        """Test import for NetBox 3.6."""
-        self._import("3.6")
-
-    def test_3_6_custom(self):
-        """Test import for NetBox 3.6 with customized data."""
-        self._import("3.6.custom")
-
-    def test_3_7(self):
-        """Test import for NetBox 3.7."""
-        self._import("3.7")
-
-    def _import(self, netbox_version: str):
-        """Test import."""
-        split_nautobot_version = nautobot_version.split(".")
-        fixtures_path = (
-            _FIXTURES_PATH / f"nautobot-v{split_nautobot_version[0]}.{split_nautobot_version[1]}" / netbox_version
-        )
-        input_ref = _INPUTS.get(netbox_version, fixtures_path / "input.json")
+        Runs import twice, first time to import data and the second time to verify that nothing has changed.
+        """
+        input_ref = _INPUTS.get(fixtures_name, fixtures_path / "input.json")
 
         expected_summary = ImportSummary()
         try:
@@ -184,7 +148,7 @@ class TestImport(TestCase):
 
         for wrapper in source.nautobot.wrappers.values():
             if wrapper.stats.source_created > 0:
-                with self.subTest(f"Verify data {netbox_version} {wrapper.content_type}"):
+                with self.subTest(f"Verify data {fixtures_name} {wrapper.content_type}"):
                     self._verify_model(samples_path, wrapper)
 
         if expected_summary is source.summary:
@@ -261,3 +225,28 @@ def _generate_fixtures(wrapper: NautobotModelWrapper, output_path: Path):
         pks=",".join(str(instance.pk) for instance in random_instances),
         output=output_path,
     )
+
+
+def _create_test_cases():
+    """Dynamically create test cases, based on the current Nautobot version and defined fixtures.
+
+    Example of test created: `TestImport.test_3_7_custom`
+    """
+    nautobot_version_str = ".".join(nautobot_version.split(".")[:2])
+    fixtures_path = Path(__file__).parent / "fixtures" / f"nautobot-v{nautobot_version_str}"
+    if not fixtures_path.is_dir() or not (fixtures_path / "dump.sql").is_file():
+        raise ValueError(f"Fixtures for Nautobot {nautobot_version_str} are missing")
+
+    def add_case(fixtures_name: str):
+        def test_method(self):
+            # pylint: disable=protected-access
+            self._import(fixtures_name, fixtures_path / fixtures_name)
+
+        setattr(TestImport, f"test_{fixtures_name.replace('.', '_')}", test_method)
+
+    for fixture_dir in fixtures_path.iterdir():
+        if fixture_dir.is_dir():
+            add_case(fixture_dir.name)
+
+
+_create_test_cases()

@@ -1,0 +1,35 @@
+[
+{
+  "model": "virtualization.clustertype",
+  "pk": "40ad4d12-4324-581c-9f4a-a87421336e3b",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:44.983Z",
+    "_custom_field_data": {},
+    "name": "Microsoft Azure",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustertype",
+  "pk": "786c136a-fff1-5f84-8d0c-c43610039f45",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:44.984Z",
+    "_custom_field_data": {},
+    "name": "DigitalOcean",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustertype",
+  "pk": "ae807dce-fa79-5557-9d7e-a8e8f8e881a7",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:44.986Z",
+    "_custom_field_data": {},
+    "name": "VMware",
+    "description": ""
+  }
+}
+]

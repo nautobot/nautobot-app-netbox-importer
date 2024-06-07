@@ -1,0 +1,68 @@
+[
+{
+  "model": "circuits.circuittermination",
+  "pk": "39d9a3c9-f5c6-5911-b553-9a25655ed6a0",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:40.285Z",
+    "_custom_field_data": {},
+    "cable": "1a108288-c9bf-56a4-9401-ea0a1ac16932",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "efce888c-0fd6-411f-8f66-f577d75a7038",
+    "circuit": "677bc8b3-15a6-571c-96c0-1ec66c42794d",
+    "term_side": "Z",
+    "location": "920970b7-44b2-5c1d-862d-d9f568553e53",
+    "provider_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittermination",
+  "pk": "55719b73-6bec-5a60-a5f7-35107c073c89",
+  "fields": {
+    "created": "2021-04-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:40.519Z",
+    "_custom_field_data": {},
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "circuit": "4799effd-c3c5-55d9-be08-e8d9f9d22c03",
+    "term_side": "A",
+    "location": null,
+    "provider_network": "389a055c-b2b4-5f38-a48c-df1bc2f42fb9",
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittermination",
+  "pk": "757cd644-e4d5-547b-9b6e-12d3b8c26a52",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:40.365Z",
+    "_custom_field_data": {},
+    "cable": "c9730dce-6921-5d27-811e-57fd62b7b2a1",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "17f3b704-dc8c-4def-b880-ad7fcadc3350",
+    "circuit": "67f0b73d-dac2-5d1c-a2c3-4905c90a4a58",
+    "term_side": "Z",
+    "location": "920970b7-44b2-5c1d-862d-d9f568553e53",
+    "provider_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+}
+]

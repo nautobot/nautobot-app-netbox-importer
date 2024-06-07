@@ -1,0 +1,65 @@
+[
+{
+  "model": "dcim.powerport",
+  "pk": "2f75619a-9330-58ed-a04d-e01b87b18be4",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:08.203Z",
+    "_custom_field_data": {},
+    "device": "0d7a954e-7fe0-53bd-83d4-2aa4a03a1a07",
+    "name": "PSU0",
+    "_name": "PSU00000000",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "type": "iec-60320-c20",
+    "maximum_draw": null,
+    "allocated_draw": null
+  }
+},
+{
+  "model": "dcim.powerport",
+  "pk": "34d8777b-953e-5b1a-97fd-f45a7f5f7402",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:08.143Z",
+    "_custom_field_data": {},
+    "device": "2e9b2c1d-7a16-5c4e-ab12-a5b1cd679b1c",
+    "name": "PSU0",
+    "_name": "PSU00000000",
+    "label": "",
+    "description": "",
+    "cable": "51acf318-5b66-5ac4-9910-6b6dfb746052",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "78eb834b-f1e4-4621-8337-f6c726673a06",
+    "type": "iec-60320-c14",
+    "maximum_draw": 150,
+    "allocated_draw": null
+  }
+},
+{
+  "model": "dcim.powerport",
+  "pk": "b242835b-7cdd-5512-848d-9668006c1f3f",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:08.198Z",
+    "_custom_field_data": {},
+    "device": "d73da41d-bc0f-502a-88a3-36fc6b3af7b7",
+    "name": "PSU1",
+    "_name": "PSU00000001",
+    "label": "",
+    "description": "",
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "type": "iec-60320-c20",
+    "maximum_draw": null,
+    "allocated_draw": null
+  }
+}
+]
