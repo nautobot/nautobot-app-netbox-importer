@@ -17,7 +17,7 @@ class NautobotNetboxImporterConfig(NautobotAppConfig):
     description = "Data importer from NetBox 3.x to Nautobot 2.x."
     base_url = "netbox-importer"
     required_settings = []
-    min_version = "2.0.6"
+    min_version = "2.1.0"
     max_version = "2.9999"
     default_settings = {}
     caching_config = {}

@@ -33,7 +33,7 @@ Running docker compose command "build"
 #1 transferring dockerfile: 3.94kB done
 #1 DONE 0.0s
 
-#2 [nautobot internal] load metadata for ghcr.io/nautobot/nautobot-dev:2.0.6-py3.11
+#2 [nautobot internal] load metadata for ghcr.io/nautobot/nautobot-dev:2.1.0-py3.11
 #2 DONE 0.5s
 
 ...
@@ -46,7 +46,7 @@ Running docker compose command "build"
 #16 exporting layers 3.2s done
 #16 writing image sha256:5b25fc8b27c938dd299878bd224a9a8d5fceed83e0a0122c7b7fb82ce8ec83b4
 #16 writing image sha256:5b25fc8b27c938dd299878bd224a9a8d5fceed83e0a0122c7b7fb82ce8ec83b4 done
-#16 naming to docker.io/nautobot-netbox-importer/nautobot:2.0.6-py3.11 0.0s done
+#16 naming to docker.io/nautobot-netbox-importer/nautobot:2.1.0-py3.11 0.0s done
 #16 DONE 3.2s
 ```
 

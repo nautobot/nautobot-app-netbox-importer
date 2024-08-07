@@ -106,7 +106,7 @@ jobs:
       fail-fast: true
       matrix:
         python-version: ["3.11"]
-        nautobot-version: ["2.0.6"]
+        nautobot-version: ["2.1.0"]
     env:
       INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER: "${{ matrix.python-version }}"
       INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
@@ -148,11 +148,11 @@ jobs:
       matrix:
         python-version: ["3.8"]
         db-backend: ["postgresql"]
-        nautobot-version: ["2.0.6", "2.1", "2.2"]
+        nautobot-version: ["2.1", "2.2"]
         include:
           - python-version: "3.11"
             db-backend: "postgresql"
-            nautobot-version: "2.0.6"
+            nautobot-version: "2.1.0"
           # - python-version: "3.11"
           #   db-backend: "mysql"
           #   nautobot-version: "stable"

@@ -29,7 +29,7 @@ include = [
 [tool.poetry.dependencies]
 python = ">=3.8,<3.12"
 # Used for local development
-nautobot = "^2.0.6"
+nautobot = "^2.1.0"
 diffsync = "^1.9.0"
 tqdm = "^4.59.0"
 colorama = "^0.4.4"
@@ -127,7 +127,7 @@ ignore-imports = true
 
 [tool.pylint-nautobot]
 supported_nautobot_versions = [
-    "2.0.6"
+    "2.1.0"
 ]
 
 [tool.ruff]
