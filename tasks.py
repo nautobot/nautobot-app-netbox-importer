@@ -66,7 +66,17 @@ namespace.configure(
 
 
 def _get_test_dump_path(context):
-    parsed_nautobot_version = run_command(context, "python -c \"from nautobot import __version__; print(__version__)\"", pty=False, echo=False, hide=True).stdout.strip().split(".")
+    parsed_nautobot_version = (
+        run_command(
+            context,
+            'python -c "from nautobot import __version__; print(__version__)"',
+            pty=False,
+            echo=False,
+            hide=True,
+        )
+        .stdout.strip()
+        .split(".")
+    )
     if len(parsed_nautobot_version) < 2:
         raise ValueError(f"Can't determine the Nautobot version from: {context.nautobot_netbox_importer.nautobot_ver}")
 
@@ -534,9 +544,11 @@ def import_db(context, db_name="", input_file="dump.sql"):
             '--execute="',
             f"DROP DATABASE IF EXISTS {db_name};",
             f"CREATE DATABASE {db_name};",
-            ""
-            if db_name == "$MYSQL_DATABASE"
-            else f"GRANT ALL PRIVILEGES ON {db_name}.* TO $MYSQL_USER; FLUSH PRIVILEGES;",
+            (
+                ""
+                if db_name == "$MYSQL_DATABASE"
+                else f"GRANT ALL PRIVILEGES ON {db_name}.* TO $MYSQL_USER; FLUSH PRIVILEGES;"
+            ),
             '"',
             "&&",
             "mysql",
@@ -714,7 +726,7 @@ def autoformat(context):
         "output_format": "see https://docs.astral.sh/ruff/settings/#output-format",
     },
 )
-def ruff(context, action="lint", fix=False, output_format="text"):
+def ruff(context, action="lint", fix=False, output_format="full"):
     """Run ruff to perform code formatting and/or linting."""
     if action != "lint":
         command = "ruff format"

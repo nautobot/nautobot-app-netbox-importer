@@ -1,4 +1,5 @@
 """NetBox to Nautobot Circuits Models Mapping."""
+
 from nautobot_netbox_importer.generator import SourceAdapter
 
 from .locations import define_location
