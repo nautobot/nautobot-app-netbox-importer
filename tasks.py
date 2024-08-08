@@ -48,7 +48,7 @@ namespace = Collection("nautobot_netbox_importer")
 namespace.configure(
     {
         "nautobot_netbox_importer": {
-            "nautobot_ver": "2.0.6",
+            "nautobot_ver": "2.1.0",
             "project_name": "nautobot-netbox-importer",
             "python_ver": "3.11",
             "local": False,
@@ -66,7 +66,7 @@ namespace.configure(
 
 
 def _get_test_dump_path(context):
-    parsed_nautobot_version = context.nautobot_netbox_importer.nautobot_ver.split(".")
+    parsed_nautobot_version = run_command(context, "python -c \"from nautobot import __version__; print(__version__)\"", pty=False, echo=False, hide=True).stdout.strip().split(".")
     if len(parsed_nautobot_version) < 2:
         raise ValueError(f"Can't determine the Nautobot version from: {context.nautobot_netbox_importer.nautobot_ver}")
 

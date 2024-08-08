@@ -1,0 +1,1 @@
+Fixed `_get_test_dump_path` unable to derive nautobot version during upstream testing.
