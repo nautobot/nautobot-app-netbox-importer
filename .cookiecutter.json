@@ -13,7 +13,7 @@
         "min_nautobot_version": "2.0.6",
         "max_nautobot_version": "2.9999",
         "camel_name": "NautobotNetboxImporter",
-        "project_short_description": "Data importer from NetBox 2.10.x to Nautobot.",
+        "project_short_description": "Data importer from NetBox 3.x to Nautobot 2.x.",
         "model_class_name": "None",
         "open_source_license": "Apache-2.0",
         "docs_base_url": "https://docs.nautobot.com",
@@ -21,7 +21,7 @@
         "_drift_manager": {
             "template": "https://github.com/nautobot/cookiecutter-nautobot-app.git",
             "template_dir": "nautobot-app",
-            "template_ref": "refs/tags/nautobot-app-v2.2.1",
+            "template_ref": "refs/tags/nautobot-app-v2.3.0",
             "cookie_dir": "",
             "branch_prefix": "drift-manager",
             "pull_request_strategy": "create",
