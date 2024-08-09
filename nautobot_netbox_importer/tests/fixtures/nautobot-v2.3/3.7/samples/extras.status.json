@@ -1,0 +1,47 @@
+[
+{
+  "model": "extras.status",
+  "pk": "90ef0b5d-5e04-5ff3-b1a4-695a42311ede",
+  "fields": {
+    "created": "2024-02-08T07:54:54.735Z",
+    "last_updated": "2024-02-08T07:54:54.735Z",
+    "_custom_field_data": {},
+    "name": "Container",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      68
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "9172bac4-6144-54e5-b44d-f530905f8d05",
+  "fields": {
+    "created": "2024-02-08T07:54:54.733Z",
+    "last_updated": "2024-02-08T07:54:54.733Z",
+    "_custom_field_data": {},
+    "name": "Available",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      60
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "e9984337-802f-53ef-93b6-82b347f63527",
+  "fields": {
+    "created": "2024-02-08T07:54:54.737Z",
+    "last_updated": "2024-02-08T07:54:54.737Z",
+    "_custom_field_data": {},
+    "name": "Reserved",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      69
+    ]
+  }
+}
+]

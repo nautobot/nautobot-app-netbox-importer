@@ -1,0 +1,71 @@
+[
+{
+  "model": "virtualization.vminterface",
+  "pk": "0e2bac51-6c92-54cb-babf-d2ec055e745e",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:00.209Z",
+    "_custom_field_data": {},
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "enabled": true,
+    "mac_address": null,
+    "mtu": null,
+    "mode": "",
+    "parent_interface": null,
+    "bridge": null,
+    "virtual_machine": "887ee898-8be9-5bba-85fd-584809d97c85",
+    "name": "eth2",
+    "_name": "9999999999999999eth000002............",
+    "description": "",
+    "untagged_vlan": null,
+    "vrf": null,
+    "tagged_vlans": []
+  }
+},
+{
+  "model": "virtualization.vminterface",
+  "pk": "6dbb36f2-a1b9-510f-b70a-fef236bfddcf",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:00.717Z",
+    "_custom_field_data": {},
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "enabled": true,
+    "mac_address": null,
+    "mtu": null,
+    "mode": "",
+    "parent_interface": null,
+    "bridge": null,
+    "virtual_machine": "acab27a7-3f6b-5042-9262-fbcf8010909d",
+    "name": "eth1",
+    "_name": "9999999999999999eth000001............",
+    "description": "",
+    "untagged_vlan": null,
+    "vrf": null,
+    "tagged_vlans": []
+  }
+},
+{
+  "model": "virtualization.vminterface",
+  "pk": "df1588bd-8bc5-57a0-9e38-b64ca50c08bf",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:00.551Z",
+    "_custom_field_data": {},
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "enabled": true,
+    "mac_address": null,
+    "mtu": null,
+    "mode": "",
+    "parent_interface": null,
+    "bridge": null,
+    "virtual_machine": "55cc215a-2831-5db5-98c5-b6e3d8990563",
+    "name": "eth0",
+    "_name": "9999999999999999eth000000............",
+    "description": "",
+    "untagged_vlan": null,
+    "vrf": null,
+    "tagged_vlans": []
+  }
+}
+]

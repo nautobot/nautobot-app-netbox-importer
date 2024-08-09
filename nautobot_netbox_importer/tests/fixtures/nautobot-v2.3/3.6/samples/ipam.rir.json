@@ -1,0 +1,38 @@
+[
+{
+  "model": "ipam.rir",
+  "pk": "51689b38-a8fa-5601-b838-a732fae021cc",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:47.136Z",
+    "_custom_field_data": {},
+    "name": "ARIN",
+    "is_private": false,
+    "description": "American Registry for Internet Numbers"
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "9a496681-ac3d-5e1a-9453-4a69b6aed1a2",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:47.143Z",
+    "_custom_field_data": {},
+    "name": "RFC 1918",
+    "is_private": true,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "f59e6945-f78c-584f-89ce-bbaa9f539c0b",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:47.139Z",
+    "_custom_field_data": {},
+    "name": "APNIC",
+    "is_private": false,
+    "description": "Asia Pacific Network Information Centre"
+  }
+}
+]

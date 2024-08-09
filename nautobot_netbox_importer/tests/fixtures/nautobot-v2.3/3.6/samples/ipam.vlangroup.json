@@ -1,0 +1,38 @@
+[
+{
+  "model": "ipam.vlangroup",
+  "pk": "3060d7a7-bf57-5d57-aeb7-4a8b0463932d",
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2024-05-15T11:30:41.218Z",
+    "_custom_field_data": {},
+    "name": "JBB109",
+    "location": null,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.vlangroup",
+  "pk": "3ac8f2e8-c354-5f7e-82e1-01a00999857d",
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2024-05-15T11:30:41.216Z",
+    "_custom_field_data": {},
+    "name": "JBB104",
+    "location": null,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.vlangroup",
+  "pk": "ac3df58d-fa3c-5e5e-babf-1785afb46a36",
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2024-05-15T11:30:41.221Z",
+    "_custom_field_data": {},
+    "name": "JBB133",
+    "location": null,
+    "description": ""
+  }
+}
+]

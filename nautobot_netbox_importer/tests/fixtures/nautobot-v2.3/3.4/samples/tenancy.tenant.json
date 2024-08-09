@@ -1,0 +1,47 @@
+[
+{
+  "model": "tenancy.tenant",
+  "pk": "325fbd45-7e2d-5f37-b0ab-f179a4d2f291",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:54.823Z",
+    "_custom_field_data": {
+      "cust_id": "PPI02"
+    },
+    "name": "Pied Piper",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:54.834Z",
+    "_custom_field_data": {
+      "cust_id": ""
+    },
+    "name": "NC State University",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+},
+{
+  "model": "tenancy.tenant",
+  "pk": "50369baf-2664-5398-ae46-90eba767ddae",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:54.829Z",
+    "_custom_field_data": {
+      "cust_id": "CYB01"
+    },
+    "name": "Cyberdyne Systems",
+    "tenant_group": "7a7ff049-1b7a-50ea-a7f3-8cf53a7940a2",
+    "description": "",
+    "comments": ""
+  }
+}
+]

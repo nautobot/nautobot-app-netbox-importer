@@ -1,0 +1,29 @@
+[
+{
+  "model": "dcim.location",
+  "pk": "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
+  "fields": {
+    "created": "2024-02-14T12:22:26.202Z",
+    "last_updated": "2024-02-14T13:29:43.895Z",
+    "_custom_field_data": {},
+    "parent": null,
+    "name": "Site 1",
+    "_name": "Site 00000001",
+    "location_type": "8fceb641-4563-5da8-9004-963f9ed1965a",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "tenant": null,
+    "description": "",
+    "facility": "",
+    "asn": null,
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "contact_name": "",
+    "contact_phone": "",
+    "contact_email": "",
+    "comments": ""
+  }
+}
+]

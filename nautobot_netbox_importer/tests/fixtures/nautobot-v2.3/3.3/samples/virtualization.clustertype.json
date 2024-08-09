@@ -1,0 +1,35 @@
+[
+{
+  "model": "virtualization.clustertype",
+  "pk": "40ad4d12-4324-581c-9f4a-a87421336e3b",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:31.568Z",
+    "_custom_field_data": {},
+    "name": "Microsoft Azure",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustertype",
+  "pk": "786c136a-fff1-5f84-8d0c-c43610039f45",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:31.569Z",
+    "_custom_field_data": {},
+    "name": "DigitalOcean",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustertype",
+  "pk": "834802b2-bb11-5319-9ddb-4269f943171c",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:31.572Z",
+    "_custom_field_data": {},
+    "name": "KVM",
+    "description": ""
+  }
+}
+]

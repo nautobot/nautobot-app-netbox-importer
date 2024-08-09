@@ -1,0 +1,50 @@
+[
+{
+  "model": "extras.role",
+  "pk": "33afe68f-1216-58d2-890a-e18d188e885d",
+  "fields": {
+    "created": "2020-12-20T00:00:00Z",
+    "last_updated": "2024-02-22T08:41:50.798Z",
+    "_custom_field_data": {},
+    "name": "Router",
+    "color": "4caf50",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      42
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "ce29b49d-ddac-586f-87ec-8f7cb969344c",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-02-22T08:41:50.836Z",
+    "_custom_field_data": {},
+    "name": "Management",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": 1000,
+    "content_types": [
+      68
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "d3d15004-11f2-5146-9094-d67775ee3ef8",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-22T08:41:50.821Z",
+    "_custom_field_data": {},
+    "name": "Compute",
+    "color": "2196f3",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      60
+    ]
+  }
+}
+]

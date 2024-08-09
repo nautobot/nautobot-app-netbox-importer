@@ -1,0 +1,56 @@
+[
+{
+  "model": "dcim.devicetype",
+  "pk": "257dca9a-92d2-5f02-af45-4de316a47b71",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.738Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "model": "MX480",
+    "part_number": "",
+    "u_height": 8,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": "[Juniper MX480 Data Sheet](https://www.juniper.net/us/en/products-services/routing/mx-series/mx480/)"
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "3ad1b4ce-7f9c-581e-9af7-4efc2da8fbea",
+  "fields": {
+    "created": "2022-01-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.766Z",
+    "_custom_field_data": {},
+    "manufacturer": "48663573-9dc3-5779-b660-a785aa139be4",
+    "model": "Flex system",
+    "part_number": "8721W3X",
+    "u_height": 10,
+    "is_full_depth": true,
+    "subdevice_role": "parent",
+    "front_image": "",
+    "rear_image": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "7d87e054-c030-5f5c-ac14-a84a14a872c9",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:23.764Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "model": "QFX10002-36Q",
+    "part_number": "",
+    "u_height": 2,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": "[Juniper QFX10002 Data Sheet](https://www.juniper.net/assets/us/en/local/pdf/datasheets/1000531-en.pdf)"
+  }
+}
+]

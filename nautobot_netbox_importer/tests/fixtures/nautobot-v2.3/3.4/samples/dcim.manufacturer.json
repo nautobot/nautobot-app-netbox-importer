@@ -1,0 +1,35 @@
+[
+{
+  "model": "dcim.manufacturer",
+  "pk": "253a7358-75a8-5a54-ac5d-a6dffb849fc6",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:13.272Z",
+    "_custom_field_data": {},
+    "name": "Opengear",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "ed9063cf-cab5-5c3a-8eb0-c1c67bc73990",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:13.268Z",
+    "_custom_field_data": {},
+    "name": "Dell",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "f5136724-0984-5e3b-b073-ea6d83116997",
+  "fields": {
+    "created": "2024-01-02T12:07:13.280Z",
+    "last_updated": "2024-01-02T12:07:13.280Z",
+    "_custom_field_data": {},
+    "name": "Unknown",
+    "description": ""
+  }
+}
+]

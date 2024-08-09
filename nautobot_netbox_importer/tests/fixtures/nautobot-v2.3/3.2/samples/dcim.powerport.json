@@ -1,0 +1,65 @@
+[
+{
+  "model": "dcim.powerport",
+  "pk": "2b36a1f0-889d-5f24-9070-9ac53a53d5fe",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:36.471Z",
+    "_custom_field_data": {},
+    "device": "c86e1302-951f-50fc-9c43-592b18c21bdc",
+    "name": "Power Port",
+    "_name": "Power Port",
+    "label": "",
+    "description": "",
+    "cable": "cfeca159-94c4-5db1-a98a-c9c76a703dea",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "064bd9d7-82c7-42a8-af58-618d58d6440f",
+    "type": "iec-60320-c14",
+    "maximum_draw": null,
+    "allocated_draw": null
+  }
+},
+{
+  "model": "dcim.powerport",
+  "pk": "adb14233-f9ca-5442-a0f2-504e5480c044",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:36.465Z",
+    "_custom_field_data": {},
+    "device": "b4832345-7b12-5ccb-97e4-8ec8793d472c",
+    "name": "Power Port",
+    "_name": "Power Port",
+    "label": "",
+    "description": "",
+    "cable": "ee9816bd-cf1e-566d-9c39-3dd663c3aaba",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "eb89b191-c29d-47ff-9f53-2f890021b4bb",
+    "type": "iec-60320-c14",
+    "maximum_draw": null,
+    "allocated_draw": null
+  }
+},
+{
+  "model": "dcim.powerport",
+  "pk": "b8ba4274-b23a-5413-8bd3-4f84e793a2e7",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:36.479Z",
+    "_custom_field_data": {},
+    "device": "65aaaab4-69f7-5578-8480-5aebb4d7f301",
+    "name": "Power Port",
+    "_name": "Power Port",
+    "label": "",
+    "description": "",
+    "cable": "4525f64e-ee06-528e-bd97-622fd34292f0",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "bd8205e8-691e-475c-a95e-3c91574b0def",
+    "type": "iec-60320-c14",
+    "maximum_draw": null,
+    "allocated_draw": null
+  }
+}
+]
