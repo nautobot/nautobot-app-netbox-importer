@@ -1,0 +1,54 @@
+[
+{
+  "model": "dcim.locationtype",
+  "pk": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+  "fields": {
+    "created": "2024-01-02T12:06:54.221Z",
+    "last_updated": "2024-01-02T12:06:54.221Z",
+    "_custom_field_data": {},
+    "parent": null,
+    "name": "Region",
+    "description": "",
+    "nestable": true,
+    "content_types": [
+      56,
+      55
+    ]
+  }
+},
+{
+  "model": "dcim.locationtype",
+  "pk": "001a5b44-6c65-5a97-bee3-c52494c176d3",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:54.217Z",
+    "_custom_field_data": {},
+    "parent": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+    "name": "Branch Offices",
+    "description": "",
+    "nestable": true,
+    "content_types": [
+      68,
+      56,
+      72,
+      42,
+      27,
+      60
+    ]
+  }
+},
+{
+  "model": "dcim.locationtype",
+  "pk": "6d92eb8b-0617-5e93-88ab-ca3bd253e632",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:54.213Z",
+    "_custom_field_data": {},
+    "parent": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+    "name": "Customer Sites",
+    "description": "",
+    "nestable": true,
+    "content_types": []
+  }
+}
+]

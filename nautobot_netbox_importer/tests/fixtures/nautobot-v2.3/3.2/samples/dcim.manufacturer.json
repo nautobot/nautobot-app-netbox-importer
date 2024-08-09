@@ -1,0 +1,35 @@
+[
+{
+  "model": "dcim.manufacturer",
+  "pk": "48663573-9dc3-5779-b660-a785aa139be4",
+  "fields": {
+    "created": "2022-01-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:41.469Z",
+    "_custom_field_data": {},
+    "name": "Lenovo",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "9e771853-28dc-52de-adb0-9fa94c85d5e0",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:41.464Z",
+    "_custom_field_data": {},
+    "name": "Ubiquiti",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "eac77e47-fec1-5dca-8dbb-0b0081c69078",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:05:41.459Z",
+    "_custom_field_data": {},
+    "name": "F5",
+    "description": ""
+  }
+}
+]

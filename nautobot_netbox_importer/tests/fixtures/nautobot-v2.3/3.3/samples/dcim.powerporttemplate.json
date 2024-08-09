@@ -1,0 +1,53 @@
+[
+{
+  "model": "dcim.powerporttemplate",
+  "pk": "1b47668a-48d2-5711-9d1b-e8f8df8afcdb",
+  "fields": {
+    "created": "2022-01-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:22.686Z",
+    "_custom_field_data": {},
+    "device_type": "3ad1b4ce-7f9c-581e-9af7-4efc2da8fbea",
+    "name": "PSU0",
+    "_name": "PSU00000000",
+    "label": "",
+    "description": "",
+    "type": "iec-60320-c20",
+    "maximum_draw": null,
+    "allocated_draw": null
+  }
+},
+{
+  "model": "dcim.powerporttemplate",
+  "pk": "2cdc06fb-8ce5-5dee-a2c7-d2e003e4df65",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:22.674Z",
+    "_custom_field_data": {},
+    "device_type": "89343eba-98ad-5be4-9c74-49ac12a1f2ef",
+    "name": "PSU1",
+    "_name": "PSU00000001",
+    "label": "",
+    "description": "",
+    "type": "iec-60320-c14",
+    "maximum_draw": 350,
+    "allocated_draw": null
+  }
+},
+{
+  "model": "dcim.powerporttemplate",
+  "pk": "ce492501-dc54-5a10-afe0-2cc8c29f8d4a",
+  "fields": {
+    "created": "2022-01-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:22.692Z",
+    "_custom_field_data": {},
+    "device_type": "3ad1b4ce-7f9c-581e-9af7-4efc2da8fbea",
+    "name": "PSU4",
+    "_name": "PSU00000004",
+    "label": "",
+    "description": "",
+    "type": "iec-60320-c20",
+    "maximum_draw": null,
+    "allocated_draw": null
+  }
+}
+]

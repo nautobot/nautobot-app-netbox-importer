@@ -1,0 +1,35 @@
+[
+{
+  "model": "circuits.circuittype",
+  "pk": "77b0ea76-dd49-526f-9e5b-7526b5abaa3d",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:40.230Z",
+    "_custom_field_data": {},
+    "name": "Internet Access",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittype",
+  "pk": "8ce04a4e-277b-5699-964b-38ba765b7a1d",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:40.232Z",
+    "_custom_field_data": {},
+    "name": "Point-to-point",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittype",
+  "pk": "d2b28782-c952-524c-a84a-fa087a53c5db",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:40.234Z",
+    "_custom_field_data": {},
+    "name": "Dark Fiber",
+    "description": ""
+  }
+}
+]

@@ -1,0 +1,38 @@
+[
+{
+  "model": "ipam.routetarget",
+  "pk": "2ca62435-a1d9-508f-a90c-fea781fb01fa",
+  "fields": {
+    "created": "2022-04-08T00:28:03.747Z",
+    "last_updated": "2024-01-02T12:08:02.002Z",
+    "_custom_field_data": {},
+    "name": "65000:101",
+    "description": "Alpha-import",
+    "tenant": null
+  }
+},
+{
+  "model": "ipam.routetarget",
+  "pk": "44b1201b-16c0-55d0-957d-558cf7de443f",
+  "fields": {
+    "created": "2022-04-08T00:28:03.823Z",
+    "last_updated": "2024-01-02T12:08:02.004Z",
+    "_custom_field_data": {},
+    "name": "65000:102",
+    "description": "Alpha-import",
+    "tenant": null
+  }
+},
+{
+  "model": "ipam.routetarget",
+  "pk": "4e3a7cf5-5e49-55c9-8fed-10c6d35f9982",
+  "fields": {
+    "created": "2022-04-08T00:35:24.949Z",
+    "last_updated": "2024-01-02T12:08:02.017Z",
+    "_custom_field_data": {},
+    "name": "65000:2",
+    "description": "Shared-export",
+    "tenant": null
+  }
+}
+]

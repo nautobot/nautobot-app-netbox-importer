@@ -1,0 +1,35 @@
+[
+{
+  "model": "dcim.manufacturer",
+  "pk": "253a7358-75a8-5a54-ac5d-a6dffb849fc6",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:57.469Z",
+    "_custom_field_data": {},
+    "name": "Opengear",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "48663573-9dc3-5779-b660-a785aa139be4",
+  "fields": {
+    "created": "2022-01-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:57.476Z",
+    "_custom_field_data": {},
+    "name": "Lenovo",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "6aa5ca05-59ef-5474-809e-7fca74e90e42",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:57.462Z",
+    "_custom_field_data": {},
+    "name": "Brocade",
+    "description": ""
+  }
+}
+]

@@ -1,0 +1,50 @@
+[
+{
+  "model": "ipam.vlan",
+  "pk": "80de71d4-cd44-5482-8fb4-645e9506ef24",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-05-15T11:30:38.972Z",
+    "_custom_field_data": {},
+    "vlan_group": null,
+    "vid": 100,
+    "name": "Data",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "dfd5a12a-ffe4-5ae5-9bdd-e71adbe5b49a",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "description": ""
+  }
+},
+{
+  "model": "ipam.vlan",
+  "pk": "a370d4f9-26f5-58e6-bae1-b533483fc638",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-05-15T11:30:38.990Z",
+    "_custom_field_data": {},
+    "vlan_group": null,
+    "vid": 200,
+    "name": "Voice",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "cfe1ee60-d4a6-5c9f-b35c-0d92aa3fade1",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "description": ""
+  }
+},
+{
+  "model": "ipam.vlan",
+  "pk": "b4f69783-2160-5f3c-b0ab-7d8aabc61a2a",
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2024-05-15T11:30:39.159Z",
+    "_custom_field_data": {},
+    "vlan_group": "56764c2a-72b6-5f22-9802-bf585847080d",
+    "vid": 204,
+    "name": "Admin",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": null,
+    "tenant": "35f6098e-5c2c-58b3-824c-9b5c024a4321",
+    "description": ""
+  }
+}
+]

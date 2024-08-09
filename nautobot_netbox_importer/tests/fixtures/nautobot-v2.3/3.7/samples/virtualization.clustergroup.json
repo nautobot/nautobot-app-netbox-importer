@@ -1,0 +1,35 @@
+[
+{
+  "model": "virtualization.clustergroup",
+  "pk": "20182816-bf12-5cd0-8f07-c91fcd271bd7",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:21.451Z",
+    "_custom_field_data": {},
+    "name": "EMEA",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustergroup",
+  "pk": "7a2352bc-7253-5c1d-bb1f-0a4a1412dc9e",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:21.452Z",
+    "_custom_field_data": {},
+    "name": "Asia Pacific",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustergroup",
+  "pk": "f296b7c8-68ed-5c8a-85fc-11ef680cbe7e",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:21.449Z",
+    "_custom_field_data": {},
+    "name": "North America",
+    "description": ""
+  }
+}
+]

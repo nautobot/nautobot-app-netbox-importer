@@ -1,4 +1,5 @@
 """NetBox to Nautobot Virtualization Models Mapping."""
+
 from nautobot_netbox_importer.generator import SourceAdapter
 from nautobot_netbox_importer.generator import fields
 
