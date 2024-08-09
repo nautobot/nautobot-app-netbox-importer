@@ -3,8 +3,7 @@
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
-from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter
-from nautobot_netbox_importer.diffsync.adapters import NetBoxImporterOptions
+from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
 
 
 class Command(BaseCommand):

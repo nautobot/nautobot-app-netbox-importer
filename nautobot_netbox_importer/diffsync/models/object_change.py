@@ -1,10 +1,7 @@
 """NetBox to Nautobot Object Change Model Mapping."""
 
 from nautobot_netbox_importer.base import RecordData
-from nautobot_netbox_importer.generator import ImporterPass
-from nautobot_netbox_importer.generator import PreImportResult
-from nautobot_netbox_importer.generator import SourceAdapter
-from nautobot_netbox_importer.generator import fields
+from nautobot_netbox_importer.generator import ImporterPass, PreImportResult, SourceAdapter, fields
 
 
 def setup(adapter: SourceAdapter) -> None:

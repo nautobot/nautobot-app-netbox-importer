@@ -1,18 +1,18 @@
 """NetBox to Nautobot Custom Fields Models Mapping."""
 
 import json
-from typing import Any
-from typing import Iterable
+from typing import Any, Iterable
 
-from nautobot_netbox_importer.base import RecordData
-from nautobot_netbox_importer.base import Uid
-from nautobot_netbox_importer.generator import EMPTY_VALUES
-from nautobot_netbox_importer.generator import DiffSyncBaseModel
-from nautobot_netbox_importer.generator import ImporterPass
-from nautobot_netbox_importer.generator import PreImportResult
-from nautobot_netbox_importer.generator import SourceAdapter
-from nautobot_netbox_importer.generator import SourceField
-from nautobot_netbox_importer.generator import fields
+from nautobot_netbox_importer.base import RecordData, Uid
+from nautobot_netbox_importer.generator import (
+    EMPTY_VALUES,
+    DiffSyncBaseModel,
+    ImporterPass,
+    PreImportResult,
+    SourceAdapter,
+    SourceField,
+    fields,
+)
 
 
 def _convert_choices(choices: Any) -> list:
@@ -36,17 +36,17 @@ def _convert_choices(choices: Any) -> list:
             try:
                 stringified = json.loads(choice)
                 if isinstance(stringified, (list, str)):
-                    choice = stringified
+                    choice = stringified  # noqa: PLW2901
             except json.JSONDecodeError:
-                choice = [choice, choice]
+                choice = [choice, choice]  # noqa: PLW2901
 
         if isinstance(choice, Iterable):
             if not isinstance(choice, list):
-                choice = list(choice)
+                choice = list(choice)  # noqa: PLW2901
         else:
             raise ValueError(f"Unsupported choices format: {choices}")
 
-        if len(choice) != 2:
+        if len(choice) != 2:  # noqa: PLR2004
             raise ValueError(f"Unsupported choices format: {choices}")
 
         choices[index] = choice[0]

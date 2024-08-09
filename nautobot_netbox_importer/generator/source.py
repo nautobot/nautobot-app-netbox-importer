@@ -3,57 +3,52 @@
 
 import datetime
 import json
-from enum import Enum
-from enum import auto
-from typing import Any
-from typing import Callable
-from typing import Dict
-from typing import Generator
-from typing import Iterable
-from typing import List
-from typing import Mapping
-from typing import NamedTuple
-from typing import Optional
-from typing import OrderedDict
-from typing import Set
-from typing import Tuple
-from typing import Union
+from enum import Enum, auto
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generator,
+    Iterable,
+    List,
+    Mapping,
+    NamedTuple,
+    Optional,
+    OrderedDict,
+    Set,
+    Tuple,
+    Union,
+)
 from uuid import UUID
 
 from diffsync import DiffSyncModel
 from diffsync.enum import DiffSyncModelFlags
 from nautobot.core.models.tree_queries import TreeModel
 
-from nautobot_netbox_importer.base import NOTHING
-from nautobot_netbox_importer.base import ContentTypeStr
-from nautobot_netbox_importer.base import ContentTypeValue
-from nautobot_netbox_importer.base import FieldName
-from nautobot_netbox_importer.base import RecordData
-from nautobot_netbox_importer.base import Uid
+from nautobot_netbox_importer.base import NOTHING, ContentTypeStr, ContentTypeValue, FieldName, RecordData, Uid
 from nautobot_netbox_importer.base import logger as default_logger
-from nautobot_netbox_importer.summary import DiffSyncSummary
-from nautobot_netbox_importer.summary import FieldSummary
-from nautobot_netbox_importer.summary import ImportSummary
-from nautobot_netbox_importer.summary import SourceModelStats
-from nautobot_netbox_importer.summary import SourceModelSummary
-from nautobot_netbox_importer.summary import serialize_to_summary
+from nautobot_netbox_importer.summary import (
+    DiffSyncSummary,
+    FieldSummary,
+    ImportSummary,
+    SourceModelStats,
+    SourceModelSummary,
+    serialize_to_summary,
+)
 
-from .base import AUTO_ADD_FIELDS
-from .base import EMPTY_VALUES
-from .base import BaseAdapter
-from .base import DjangoField
-from .base import InternalFieldType
-from .base import NautobotBaseModel
-from .base import NautobotBaseModelType
-from .base import normalize_datetime
-from .base import source_pk_to_uuid
-from .exceptions import NautobotModelNotFound
-from .exceptions import NetBoxImporterException
-from .nautobot import IMPORT_ORDER
-from .nautobot import DiffSyncBaseModel
-from .nautobot import NautobotAdapter
-from .nautobot import NautobotField
-from .nautobot import NautobotModelWrapper
+from .base import (
+    AUTO_ADD_FIELDS,
+    EMPTY_VALUES,
+    BaseAdapter,
+    DjangoField,
+    InternalFieldType,
+    NautobotBaseModel,
+    NautobotBaseModelType,
+    normalize_datetime,
+    source_pk_to_uuid,
+)
+from .exceptions import NautobotModelNotFound, NetBoxImporterException
+from .nautobot import IMPORT_ORDER, DiffSyncBaseModel, NautobotAdapter, NautobotField, NautobotModelWrapper
 
 
 class SourceFieldImporterIssue(NetBoxImporterException):
@@ -265,7 +260,7 @@ class SourceAdapter(BaseAdapter):
             if value not in self.content_type_ids_mapping:
                 raise ValueError(f"Content type not found {value}")
             return self.content_type_ids_mapping[value]
-        elif isinstance(value, Iterable) and len(value) == 2:
+        elif isinstance(value, Iterable) and len(value) == 2:  # noqa: PLR2004
             value = ".".join(value).lower()
         else:
             raise ValueError(f"Invalid content type {value}")

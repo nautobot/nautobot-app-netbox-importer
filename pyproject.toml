@@ -39,7 +39,6 @@ python-dateutil = "^2.8.2"
 ijson = "^3.2.3"
 
 [tool.poetry.group.dev.dependencies]
-bandit = "*"
 coverage = "*"
 django-debug-toolbar = "*"
 invoke = "*"

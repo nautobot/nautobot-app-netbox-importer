@@ -3,13 +3,8 @@
 import datetime
 import decimal
 from enum import Enum
-from typing import Any
-from typing import Mapping
-from typing import Optional
-from typing import Tuple
-from typing import Type
-from uuid import UUID
-from uuid import uuid5
+from typing import Any, Mapping, Optional, Tuple, Type
+from uuid import UUID, uuid5
 
 from dateutil import parser as datetime_parser
 from diffsync import DiffSync
@@ -22,8 +17,7 @@ from django.db.models.options import Options as _DjangoModelMeta
 from nautobot.core.models import BaseModel
 from pydantic import Field as _PydanticField
 
-from nautobot_netbox_importer.base import ContentTypeStr
-from nautobot_netbox_importer.base import Uid
+from nautobot_netbox_importer.base import ContentTypeStr, Uid
 
 NautobotBaseModel = BaseModel
 NautobotBaseModelType = Type[NautobotBaseModel]
