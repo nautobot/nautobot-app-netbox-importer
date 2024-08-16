@@ -10,16 +10,15 @@ from os import getenv
 from pathlib import Path
 from unittest.mock import patch
 
+from django.apps import apps
 from django.core.management import call_command
 from django.core.serializers import serialize
 from django.test import TestCase
-from django.apps import apps
 from nautobot import __version__ as nautobot_version
 from nautobot.core.settings_funcs import is_truthy
 
 from nautobot_netbox_importer.command_utils import enable_logging as mute_diffsync_logging
-from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter
-from nautobot_netbox_importer.diffsync.adapters import NetBoxImporterOptions
+from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
 from nautobot_netbox_importer.generator.nautobot import NautobotModelWrapper
 from nautobot_netbox_importer.summary import ImportSummary
 

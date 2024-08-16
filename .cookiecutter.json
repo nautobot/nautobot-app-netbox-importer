@@ -14,13 +14,14 @@
         "max_nautobot_version": "2.9999",
         "camel_name": "NautobotNetboxImporter",
         "project_short_description": "Data importer from NetBox 3.x to Nautobot 2.x.",
+        "model_class_name": "None",
         "open_source_license": "Apache-2.0",
         "docs_base_url": "https://docs.nautobot.com",
         "docs_app_url": "https://docs.nautobot.com/projects/netbox-importer/en/latest",
         "_drift_manager": {
             "template": "https://github.com/nautobot/cookiecutter-nautobot-app.git",
             "template_dir": "nautobot-app",
-            "template_ref": "refs/tags/nautobot-app-v2.2.1",
+            "template_ref": "refs/tags/nautobot-app-v2.3.0",
             "cookie_dir": "",
             "branch_prefix": "drift-manager",
             "pull_request_strategy": "create",
@@ -28,7 +29,7 @@
                 "black"
             ],
             "draft": true,
-            "baked_commit_ref": "4ac68ac681124f94787b81fdee4602b828985473"
+            "baked_commit_ref": "d497fdc1a5c4fcb260a0e81ad4847806632f41bf"
         }
     }
 }

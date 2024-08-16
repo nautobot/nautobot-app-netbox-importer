@@ -2,19 +2,9 @@
 
 import json
 from pathlib import Path
-from typing import Callable
-from typing import Dict
-from typing import Generator
-from typing import Iterable
-from typing import List
-from typing import Mapping
-from typing import NamedTuple
-from typing import Optional
-from typing import Union
+from typing import Callable, Dict, Generator, Iterable, List, Mapping, NamedTuple, Optional, Union
 
-from .base import ContentTypeStr
-from .base import FieldName
-from .base import Pathable
+from .base import ContentTypeStr, FieldName, Pathable
 
 
 class ImporterIssue(NamedTuple):

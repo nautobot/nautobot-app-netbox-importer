@@ -1,26 +1,24 @@
 """Generic Field Importers definitions for Nautobot Importer."""
 
-from typing import Any
-from typing import Dict
-from typing import Optional
+from typing import Any, Dict, Optional
 from uuid import UUID
 
-from .base import EMPTY_VALUES
-from .base import ContentTypeStr
-from .base import Uid
+from .base import EMPTY_VALUES, ContentTypeStr, Uid
 from .nautobot import DiffSyncBaseModel
-from .source import FieldName
-from .source import ImporterPass
-from .source import InternalFieldType
-from .source import InvalidChoiceValueIssue
-from .source import PreImportResult
-from .source import RecordData
-from .source import SourceAdapter
-from .source import SourceContentType
-from .source import SourceField
-from .source import SourceFieldDefinition
-from .source import SourceFieldImporterFallback
-from .source import SourceFieldImporterIssue
+from .source import (
+    FieldName,
+    ImporterPass,
+    InternalFieldType,
+    InvalidChoiceValueIssue,
+    PreImportResult,
+    RecordData,
+    SourceAdapter,
+    SourceContentType,
+    SourceField,
+    SourceFieldDefinition,
+    SourceFieldImporterFallback,
+    SourceFieldImporterIssue,
+)
 
 
 def default(default_value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition:

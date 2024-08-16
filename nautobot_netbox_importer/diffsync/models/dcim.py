@@ -4,11 +4,7 @@ import json
 from uuid import UUID
 
 from nautobot_netbox_importer.base import RecordData
-from nautobot_netbox_importer.generator import DiffSyncBaseModel
-from nautobot_netbox_importer.generator import PreImportResult
-from nautobot_netbox_importer.generator import SourceAdapter
-from nautobot_netbox_importer.generator import SourceField
-from nautobot_netbox_importer.generator import fields
+from nautobot_netbox_importer.generator import DiffSyncBaseModel, PreImportResult, SourceAdapter, SourceField, fields
 
 from .locations import define_location
 
