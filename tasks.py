@@ -13,10 +13,12 @@ limitations under the License.
 """
 
 import os
+import re
 from pathlib import Path
 from time import sleep
 
 from invoke.collection import Collection
+from invoke.exceptions import Exit
 from invoke.tasks import task as invoke_task
 
 
@@ -48,7 +50,7 @@ namespace = Collection("nautobot_netbox_importer")
 namespace.configure(
     {
         "nautobot_netbox_importer": {
-            "nautobot_ver": "2.0.6",
+            "nautobot_ver": "2.3.1",
             "project_name": "nautobot-netbox-importer",
             "python_ver": "3.11",
             "local": False,
@@ -81,11 +83,15 @@ def _get_test_dump_path(context):
 
 
 def _is_compose_included(context, name):
-    return f"docker-compose.{name}.yml" in context.nautobot_netbox_importer.compose_files
+    return (
+        f"docker-compose.{name}.yml" in context.nautobot_netbox_importer.compose_files
+    )
 
 
 def _await_healthy_service(context, service):
-    container_id = docker_compose(context, f"ps -q -- {service}", pty=False, echo=False, hide=True).stdout.strip()
+    container_id = docker_compose(
+        context, f"ps -q -- {service}", pty=False, echo=False, hide=True
+    ).stdout.strip()
     _await_healthy_container(context, container_id)
 
 
@@ -145,7 +151,9 @@ def docker_compose(context, command, **kwargs):
     ]
 
     for compose_file in context.nautobot_netbox_importer.compose_files:
-        compose_file_path = os.path.join(context.nautobot_netbox_importer.compose_dir, compose_file)
+        compose_file_path = os.path.join(
+            context.nautobot_netbox_importer.compose_dir, compose_file
+        )
         compose_command_tokens.append(f' -f "{compose_file_path}"')
 
     compose_command_tokens.append(command)
@@ -184,7 +192,9 @@ def run_command(context, command, **kwargs):
         if "nautobot" in results.stdout:
             compose_command = f"exec{command_env_args} nautobot {command}"
         else:
-            compose_command = f"run{command_env_args} --rm --entrypoint='{command}' nautobot"
+            compose_command = (
+                f"run{command_env_args} --rm --entrypoint='{command}' nautobot"
+            )
 
         pty = kwargs.pop("pty", True)
 
@@ -209,7 +219,9 @@ def build(context, force_rm=False, cache=True):
     if force_rm:
         command += " --force-rm"
 
-    print(f"Building Nautobot with Python {context.nautobot_netbox_importer.python_ver}...")
+    print(
+        f"Building Nautobot with Python {context.nautobot_netbox_importer.python_ver}..."
+    )
     docker_compose(context, command)
 
 
@@ -220,17 +232,65 @@ def generate_packages(context):
     run_command(context, command)
 
 
+def _get_docker_nautobot_version(context, nautobot_ver=None, python_ver=None):
+    """Extract Nautobot version from base docker image."""
+    if nautobot_ver is None:
+        nautobot_ver = context.nautobot_netbox_importer.nautobot_ver
+    if python_ver is None:
+        python_ver = context.nautobot_netbox_importer.python_ver
+    dockerfile_path = os.path.join(
+        context.nautobot_netbox_importer.compose_dir, "Dockerfile"
+    )
+    base_image = (
+        context.run(f"grep --max-count=1 '^FROM ' {dockerfile_path}", hide=True)
+        .stdout.strip()
+        .split(" ")[1]
+    )
+    base_image = base_image.replace(r"${NAUTOBOT_VER}", nautobot_ver).replace(
+        r"${PYTHON_VER}", python_ver
+    )
+    pip_nautobot_ver = context.run(
+        f"docker run --rm --entrypoint '' {base_image} pip show nautobot", hide=True
+    )
+    match_version = re.search(
+        r"^Version: (.+)$", pip_nautobot_ver.stdout.strip(), flags=re.MULTILINE
+    )
+    if match_version:
+        return match_version.group(1)
+    else:
+        raise Exit(f"Nautobot version not found in Docker base image {base_image}.")
+
+
 @task(
     help={
         "check": (
             "If enabled, check for outdated dependencies in the poetry.lock file, "
             "instead of generating a new one. (default: disabled)"
-        )
+        ),
+        "constrain_nautobot_ver": (
+            "Run 'poetry add nautobot@[version] --lock' to generate the lockfile, "
+            "where [version] is the version installed in the Dockerfile's base image. "
+            "Generally intended to be used in CI and not for local development. (default: disabled)"
+        ),
+        "constrain_python_ver": (
+            "When using `constrain_nautobot_ver`, further constrain the nautobot version "
+            "to python_ver so that poetry doesn't complain about python version incompatibilities. "
+            "Generally intended to be used in CI and not for local development. (default: disabled)"
+        ),
     }
 )
-def lock(context, check=False):
-    """Generate poetry.lock inside the Nautobot container."""
-    run_command(context, f"poetry {'check' if check else 'lock --no-update'}")
+def lock(
+    context, check=False, constrain_nautobot_ver=False, constrain_python_ver=False
+):
+    """Generate poetry.lock file."""
+    if constrain_nautobot_ver:
+        docker_nautobot_version = _get_docker_nautobot_version(context)
+        command = f"poetry add --lock nautobot@{docker_nautobot_version}"
+        if constrain_python_ver:
+            command += f" --python {context.nautobot_netbox_importer.python_ver}"
+    else:
+        command = f"poetry {'check' if check else 'lock --no-update'}"
+    run_command(context, command)
 
 
 # ------------------------------------------------------------------------------
@@ -261,7 +321,9 @@ def restart(context, service=""):
 def stop(context, service=""):
     """Stop specified or all services, if service is not specified, remove all containers."""
     print("Stopping Nautobot...")
-    docker_compose(context, "stop" if service else "down --remove-orphans", service=service)
+    docker_compose(
+        context, "stop" if service else "down --remove-orphans", service=service
+    )
 
 
 @task(
@@ -280,7 +342,9 @@ def destroy(context, volumes=True, import_db_file=""):
         return
 
     if not volumes:
-        raise ValueError("Cannot specify `--no-volumes` and `--import-db-file` arguments at the same time.")
+        raise ValueError(
+            "Cannot specify `--no-volumes` and `--import-db-file` arguments at the same time."
+        )
 
     print(f"Importing database file: {import_db_file}...")
 
@@ -297,12 +361,16 @@ def destroy(context, volumes=True, import_db_file=""):
         "db",
     ]
 
-    container_id = docker_compose(context, " ".join(command), pty=False, echo=False, hide=True).stdout.strip()
+    container_id = docker_compose(
+        context, " ".join(command), pty=False, echo=False, hide=True
+    ).stdout.strip()
     _await_healthy_container(context, container_id)
     print("Stopping database container...")
     context.run(f"docker stop {container_id}", pty=False, echo=False, hide=True)
 
-    print("Database import complete, you can start Nautobot with the following command:")
+    print(
+        "Database import complete, you can start Nautobot with the following command:"
+    )
     print("invoke start")
 
 
@@ -474,7 +542,9 @@ def dbshell(context, db_name="", input_file="", output_file="", query=""):
     if input_file and query:
         raise ValueError("Cannot specify both, `input_file` and `query` arguments")
     if output_file and not (input_file or query):
-        raise ValueError("`output_file` argument requires `input_file` or `query` argument")
+        raise ValueError(
+            "`output_file` argument requires `input_file` or `query` argument"
+        )
 
     env = {}
     if query:
@@ -612,7 +682,9 @@ def backup_db(context, db_name="", output_file="dump.sql", readable=True):
     docker_compose(context, " ".join(command), pty=False)
 
     print(50 * "=")
-    print("The database backup has been successfully completed and saved to the following file:")
+    print(
+        "The database backup has been successfully completed and saved to the following file:"
+    )
     print(output_file)
     print("You can import this database backup with the following command:")
     print(f"invoke import-db --input-file '{output_file}'")
@@ -950,65 +1022,3 @@ def validate_app_config(context):
         file="development/app_config_schema.py",
         env={"APP_CONFIG_SCHEMA_COMMAND": "validate"},
     )
-
-
-@task(
-    help={
-        "file": "URL or path to the JSON file to import.",
-        "bypass-data-validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
-        "demo-version": "Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).",
-        "dry-run": "Do not write any data to the database. (default: False)",
-        "fix-powerfeed-locations": "Fix panel location to match rack location based on powerfeed. (default: False)",
-        "print-summary": "Show a summary of the import. (default: True)",
-        "save-json-summary-path": "File path to write the JSON mapping to. (default: generated-mappings.json)",
-        "save-text-summary-path": "File path to write the text mapping to. (default: generated-mappings.txt)",
-        "sitegroup-parent-always-region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
-        "update-paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
-        "unrack-zero-uheight-devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
-        "trace-issues": "Show a detailed trace of issues originated from any `Exception` found during the import.",
-    }
-)
-def import_netbox(  # noqa: PLR0913
-    context,
-    file="",
-    demo_version="",
-    save_json_summary_path="",
-    save_text_summary_path="",
-    bypass_data_validation=False,
-    dry_run=True,
-    fix_powerfeed_locations=False,
-    sitegroup_parent_always_region=False,
-    print_summary=True,
-    update_paths=False,
-    unrack_zero_uheight_devices=True,
-    trace_issues=False,
-):
-    """Import NetBox data into Nautobot."""
-    if demo_version:
-        if file:
-            raise ValueError("Cannot specify both, `file` and `demo` arguments")
-
-        file = (
-            "https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/json/netbox-demo-v"
-            + demo_version
-            + ".json"
-        )
-
-    command = [
-        "nautobot-server",
-        "import_netbox",
-        f"--save-json-summary-path={save_json_summary_path}" if save_json_summary_path else "",
-        f"--save-text-summary-path={save_text_summary_path}" if save_text_summary_path else "",
-        "--bypass-data-validation" if bypass_data_validation else "",
-        "--dry-run" if dry_run else "",
-        "--fix-powerfeed-locations" if fix_powerfeed_locations else "",
-        "--sitegroup-parent-always-region" if sitegroup_parent_always_region else "",
-        "--print-summary" if print_summary else "",
-        "--update-paths" if update_paths else "",
-        "--no-color",
-        "" if unrack_zero_uheight_devices else "--no-unrack-zero-uheight-devices",
-        "--trace-issues" if trace_issues else "",
-        file,
-    ]
-
-    run_command(context, " ".join(command))
