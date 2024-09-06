@@ -1,7 +1,7 @@
 """NetBox to Nautobot Custom Fields Models Mapping."""
 
 import json
-from typing import Any, Generator, Iterable, Tuple
+from typing import Any, Iterable
 
 from nautobot_netbox_importer.base import RecordData, Uid
 from nautobot_netbox_importer.generator import (
@@ -13,6 +13,7 @@ from nautobot_netbox_importer.generator import (
     SourceField,
     fields,
 )
+from nautobot_netbox_importer.utils import get_field_choices
 
 
 def _convert_choices(choices: Any) -> list:
@@ -54,16 +55,6 @@ def _convert_choices(choices: Any) -> list:
     return choices
 
 
-# TODO: Borrowed code from SourceField.set_choice_importer. Can this code be re-used without copy/pasting?
-def get_choices(items: Iterable) -> Generator[Tuple[Any, Any], None, None]:
-    """Get choices from a field."""
-    for key, value in items:
-        if isinstance(value, (list, tuple)):
-            yield from get_choices(value)
-        else:
-            yield key, value
-
-
 def _define_custom_field_type(field: SourceField) -> None:
     """Define the custom field `type` field importer.
 
@@ -78,12 +69,11 @@ def _define_custom_field_type(field: SourceField) -> None:
         NetBox type "multiselect" must be converted to "multi-select" in Nautobot. Fall back to "text" for all unknown field types.
         """
         # Process the conversion from NetBox to Nautobot
-        # TODO: Borrowed code from SourceField.set_choice_importer. Can this code be re-used without copy/pasting?
         field_choices = getattr(field.nautobot.field, "choices", None)
         if not field_choices:
             raise ValueError(f"Invalid field_choices for {field}")
 
-        choices = dict(get_choices(field_choices))
+        choices = dict(get_field_choices(field_choices))
         value = field.get_source_value(source)
         if value in choices:
             field.set_nautobot_value(target, value)
