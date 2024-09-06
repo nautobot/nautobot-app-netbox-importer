@@ -1,13 +1,14 @@
 """NetBox to Nautobot Custom Fields Models Mapping."""
 
 import json
-from typing import Any, Generator, Iterable, Tuple
+from typing import Any, Iterable
 
 from nautobot_netbox_importer.base import RecordData, Uid
 from nautobot_netbox_importer.generator import (
     EMPTY_VALUES,
     DiffSyncBaseModel,
     ImporterPass,
+    InvalidChoiceValueIssue,
     PreImportResult,
     SourceAdapter,
     SourceField,
@@ -54,49 +55,21 @@ def _convert_choices(choices: Any) -> list:
     return choices
 
 
-# TODO: Borrowed code from SourceField.set_choice_importer. Can this code be re-used without copy/pasting?
-def get_choices(items: Iterable) -> Generator[Tuple[Any, Any], None, None]:
-    """Get choices from a field."""
-    for key, value in items:
-        if isinstance(value, (list, tuple)):
-            yield from get_choices(value)
-        else:
-            yield key, value
+def _custom_field_type_fallback(field: SourceField, source: RecordData, target: DiffSyncBaseModel, _) -> None:
+    """Fallback for CustomField.type."""
+    value = field.get_source_value(source)
 
+    if value == "multiselect":
+        # Convert the NetBox `multiselect` type to Nautobot `multi-select`.
+        target_value = "multi-select"
+    else:
+        # If nothing matches, the `text` type is the default fallback value.
+        target_value = "text"
 
-def _define_custom_field_type(field: SourceField) -> None:
-    """Define the custom field `type` field importer.
+    field.set_nautobot_value(target, target_value)
 
-    This function is called between the first and second pass of input data, when creating importers.
-    """
-
-    def type_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-        """Import the `type` field from NetBox to Nautobot.
-
-        This function is called for each input source data record of `extras.customfield` model.
-
-        NetBox type "multiselect" must be converted to "multi-select" in Nautobot. Fall back to "text" for all unknown field types.
-        """
-        # Process the conversion from NetBox to Nautobot
-        # TODO: Borrowed code from SourceField.set_choice_importer. Can this code be re-used without copy/pasting?
-        field_choices = getattr(field.nautobot.field, "choices", None)
-        if not field_choices:
-            raise ValueError(f"Invalid field_choices for {field}")
-
-        choices = dict(get_choices(field_choices))
-        value = field.get_source_value(source)
-        if value in choices:
-            field.set_nautobot_value(target, value)
-        elif value in EMPTY_VALUES:
-            field.set_nautobot_value(target, value)
-        elif value == "multiselect":
-            field.set_nautobot_value(target, "multi-select")
-        else:
-            field.set_nautobot_value(target, "text")
-
-    # Register the importer and map the field from NetBox to Nautobot.
-    # The Nautobot field name is the same as the NetBox field name: `type` in this case.
-    field.set_importer(type_importer)
+    # Necessary to raise this to monitor the conversion and prevent failing.
+    raise InvalidChoiceValueIssue(field, value, target_value)
 
 
 def setup(adapter: SourceAdapter) -> None:
@@ -160,7 +133,7 @@ def setup(adapter: SourceAdapter) -> None:
         fields={
             "name": "key",
             "label": fields.default("Empty Label"),
-            "type": _define_custom_field_type,
+            "type": fields.fallback(callback=_custom_field_type_fallback),
             # NetBox<3.6
             "choices": define_choices,
             # NetBox>=3.6
