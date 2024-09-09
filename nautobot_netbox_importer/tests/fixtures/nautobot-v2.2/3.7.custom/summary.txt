@@ -224,7 +224,7 @@ extras.note => extras.journalentry
 dcim.interfaceredundancygroup => ipam.fhrpgroup
 = Importer issues: =================================================================================
 - dcim.cable ---------------------------------------------------------------------------------------
-6df947b3-9159-5b42-8367-c0d7edb3986c | SaveFailed | "#6df947b3-9159-5b42-8367-c0d7edb3986c" | "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-06-07 07:12:52.14984+00, 2024-06-07 07:12:52.149849+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n"
+6df947b3-9159-5b42-8367-c0d7edb3986c | SaveFailed | "#6df947b3-9159-5b42-8367-c0d7edb3986c" | "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-09-09 15:16:15.63937+00, 2024-09-09 15:16:15.639383+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n"
 - dcim.device --------------------------------------------------------------------------------------
 4f3495b5-00e6-5917-a148-77e109f96b0f | Unracked | "Half U Device" | "{'position': 'Device unracked due to 0U height'}"
 - dcim.devicetype ----------------------------------------------------------------------------------
@@ -235,7 +235,7 @@ f91623ed-a389-53a4-a4a2-943588c21446 | InvalidChoiceValueIssue | "Test FHR Group
 - dcim.location ------------------------------------------------------------------------------------
 c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 | ValidationError | "Site 1" | "{'parent': ['A Location of type Site must have a parent Location.']}"
 - extras.customfield -------------------------------------------------------------------------------
-149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 | InvalidChoiceValueIssue | "Device Custom Object" | "{'field': 'type', 'importer': 'fallback_importer'} {'type': 'Invalid choice value: `object`, replaced with `text`'}"
+149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 | InvalidChoiceValueIssue | "Device Custom Object" | "{'field': 'type', 'importer': 'type_importer'} {'type': 'Invalid choice value: `object`, replaced with `text`'}"
 - users.objectpermission ---------------------------------------------------------------------------
 c650165f-9a05-55c0-bbb1-c9527d41160c | InvalidContentType | "Test Permission" | "{'object_types': \"Invalid content type ['extras', 'script'], skipping\"}"
 = Field Mappings: ==================================================================================
@@ -471,7 +471,7 @@ name => value_importer => key (SlugField)
 object_type => NO IMPORTER => object_type (NotFound)
 required => value_importer => required (BooleanField)
 search_weight => NO IMPORTER => search_weight (NotFound)
-type => fallback_importer => type (CharField)
+type => type_importer => type (CharField)
 ui_editable => NO IMPORTER => ui_editable (NotFound)
 ui_visible => NO IMPORTER => ui_visible (NotFound)
 validation_maximum => integer_importer => validation_maximum (BigIntegerField)

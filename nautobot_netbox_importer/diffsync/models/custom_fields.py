@@ -13,6 +13,7 @@ from nautobot_netbox_importer.generator import (
     SourceField,
     fields,
 )
+from nautobot_netbox_importer.generator.source import InvalidChoiceValueIssue
 from nautobot_netbox_importer.utils import get_field_choices
 
 
@@ -83,6 +84,7 @@ def _define_custom_field_type(field: SourceField) -> None:
             field.set_nautobot_value(target, "multi-select")
         else:
             field.set_nautobot_value(target, "text")
+            raise InvalidChoiceValueIssue(field, value, "text")
 
     # Register the importer and map the field from NetBox to Nautobot.
     # The Nautobot field name is the same as the NetBox field name: `type` in this case.

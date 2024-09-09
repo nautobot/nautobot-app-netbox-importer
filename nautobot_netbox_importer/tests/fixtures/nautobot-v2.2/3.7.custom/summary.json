@@ -5628,8 +5628,8 @@
                     "nautobot_name": "type",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "fallback_importer",
-                    "definition": "define_fallback",
+                    "importer": "type_importer",
+                    "definition": "_define_custom_field_type",
                     "sources": [
                         "CUSTOM",
                         "DATA"
@@ -9399,7 +9399,7 @@
                     "uid": "6df947b3-9159-5b42-8367-c0d7edb3986c",
                     "name": "#6df947b3-9159-5b42-8367-c0d7edb3986c",
                     "issue_type": "SaveFailed",
-                    "message": "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-06-07 07:12:09.50268+00, 2024-06-07 07:12:09.502688+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n",
+                    "message": "null value in column \"termination_a_id\" of relation \"dcim_cable\" violates not-null constraint\nDETAIL:  Failing row contains (6df947b3-9159-5b42-8367-c0d7edb3986c, 2024-09-06 23:22:59.139126+00, 2024-09-06 23:22:59.139143+00, {}, null, null, smf, , ffeb3b, null, , null, null, null, e81c76fa-2fb5-54e3-acbd-f0b817639af5, null, null).\n",
                     "data": {
                         "status_id": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
                         "created": "2020-12-30 00:00:00+00:00",
@@ -9520,12 +9520,16 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "diffsync": "NetBoxAdapter \"NetBox\"",
                         "id": "03d4a2c5-e08b-5cc1-924d-c401194d393c",
-                        "manufacturer_id": "9568e4c1-fa0c-5c43-9606-e25166e67765",
-                        "model": "Half U Device Type",
-                        "created": "2024-02-15 09:18:48.416000+00:00",
+                        "manufacturer_id": "None",
+                        "model": "None",
+                        "created": "None",
                         "last_updated": "None",
+                        "custom_field_data": "None",
+                        "comments": "None",
+                        "part_number": "None",
                         "u_height": "0",
-                        "is_full_depth": "True"
+                        "is_full_depth": "True",
+                        "subdevice_role": "None"
                     }
                 }
             ]
@@ -9576,9 +9580,10 @@
                         "id": "2586a272-455a-5e92-85d7-f41c0784630a",
                         "status_id": "None",
                         "protocol": "None",
-                        "created": "2024-01-23 08:21:41.353000+00:00",
+                        "created": "None",
                         "last_updated": "None",
                         "custom_field_data": "None",
+                        "description": "None",
                         "name": "None"
                     }
                 },
@@ -9593,10 +9598,10 @@
                         "id": "f91623ed-a389-53a4-a4a2-943588c21446",
                         "status_id": "None",
                         "protocol": "vrrp",
-                        "created": "2024-01-23 08:21:41.353000+00:00",
+                        "created": "None",
                         "last_updated": "None",
                         "custom_field_data": "None",
-                        "description": "FHR Group Description",
+                        "description": "None",
                         "name": "None"
                     }
                 }
@@ -9887,22 +9892,24 @@
                     "uid": "149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5",
                     "name": "Device Custom Object",
                     "issue_type": "InvalidChoiceValueIssue",
-                    "message": "{'field': 'type', 'importer': 'fallback_importer'} {'type': 'Invalid choice value: `object`, replaced with `text`'}",
+                    "message": "{'field': 'type', 'importer': 'type_importer'} {'type': 'Invalid choice value: `object`, replaced with `text`'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "diffsync": "NetBoxAdapter \"NetBox\"",
                         "id": "149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5",
-                        "content_types": "None",
-                        "key": "device_custom_object",
-                        "label": "Device Custom Object",
+                        "content_types": "{42}",
+                        "key": "None",
+                        "label": "None",
                         "type": "text",
                         "created": "2024-02-15 11:19:42.197000+00:00",
                         "last_updated": "None",
                         "description": "None",
                         "required": "False",
                         "filter_logic": "None",
-                        "weight": "100",
+                        "default": "None",
+                        "weight": "None",
                         "validation_minimum": "None",
+                        "validation_maximum": "None",
                         "validation_regex": "None"
                     }
                 }
@@ -10379,12 +10386,13 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "diffsync": "NetBoxAdapter \"NetBox\"",
                         "id": "c650165f-9a05-55c0-bbb1-c9527d41160c",
-                        "name": "Test Permission",
+                        "name": "None",
+                        "description": "None",
                         "enabled": "True",
                         "actions": "['view']",
                         "object_types": "None",
                         "groups": "None",
-                        "users": "{UUID('b6111f2f-ede6-5a47-b0e5-3842b76f14cd')}"
+                        "users": "None"
                     }
                 }
             ]
