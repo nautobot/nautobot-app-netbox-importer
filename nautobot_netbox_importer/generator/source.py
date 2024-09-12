@@ -16,7 +16,6 @@ from typing import (
     Optional,
     OrderedDict,
     Set,
-    Tuple,
     Union,
 )
 from uuid import UUID
@@ -35,6 +34,7 @@ from nautobot_netbox_importer.summary import (
     SourceModelSummary,
     serialize_to_summary,
 )
+from nautobot_netbox_importer.utils import get_field_choices
 
 from .base import (
     AUTO_ADD_FIELDS,
@@ -971,14 +971,7 @@ class SourceField:
         if not field_choices:
             raise ValueError(f"Invalid field_choices for {self}")
 
-        def get_choices(items: Iterable) -> Generator[Tuple[Any, Any], None, None]:
-            for key, value in items:
-                if isinstance(value, (list, tuple)):
-                    yield from get_choices(value)
-                else:
-                    yield key, value
-
-        choices = dict(get_choices(field_choices))
+        choices = dict(get_field_choices(field_choices))
 
         def choice_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = self.get_source_value(source)

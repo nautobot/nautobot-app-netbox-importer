@@ -13,6 +13,8 @@ from nautobot_netbox_importer.generator import (
     SourceField,
     fields,
 )
+from nautobot_netbox_importer.generator.source import InvalidChoiceValueIssue
+from nautobot_netbox_importer.utils import get_field_choices
 
 
 def _convert_choices(choices: Any) -> list:
@@ -52,6 +54,41 @@ def _convert_choices(choices: Any) -> list:
         choices[index] = choice[0]
 
     return choices
+
+
+def _define_custom_field_type(field: SourceField) -> None:
+    """Define the custom field `type` field importer.
+
+    This function is called between the first and second pass of input data, when creating importers.
+    """
+
+    def type_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+        """Import the `type` field from NetBox to Nautobot.
+
+        This function is called for each input source data record of `extras.customfield` model.
+
+        NetBox type "multiselect" must be converted to "multi-select" in Nautobot. Fall back to "text" for all unknown field types.
+        """
+        # Process the conversion from NetBox to Nautobot
+        field_choices = getattr(field.nautobot.field, "choices", None)
+        if not field_choices:
+            raise ValueError(f"Invalid field_choices for {field}")
+
+        choices = dict(get_field_choices(field_choices))
+        value = field.get_source_value(source)
+        if value in choices:
+            field.set_nautobot_value(target, value)
+        elif value in EMPTY_VALUES:
+            field.set_nautobot_value(target, value)
+        elif value == "multiselect":
+            field.set_nautobot_value(target, "multi-select")
+        else:
+            field.set_nautobot_value(target, "text")
+            raise InvalidChoiceValueIssue(field, value, "text")
+
+    # Register the importer and map the field from NetBox to Nautobot.
+    # The Nautobot field name is the same as the NetBox field name: `type` in this case.
+    field.set_importer(type_importer)
 
 
 def setup(adapter: SourceAdapter) -> None:
@@ -115,7 +152,7 @@ def setup(adapter: SourceAdapter) -> None:
         fields={
             "name": "key",
             "label": fields.default("Empty Label"),
-            "type": fields.fallback(value="text"),
+            "type": _define_custom_field_type,
             # NetBox<3.6
             "choices": define_choices,
             # NetBox>=3.6

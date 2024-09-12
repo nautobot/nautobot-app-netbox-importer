@@ -10146,8 +10146,8 @@
                     "nautobot_name": "type",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "fallback_importer",
-                    "definition": "define_fallback",
+                    "importer": "type_importer",
+                    "definition": "_define_custom_field_type",
                     "sources": [
                         "CUSTOM",
                         "DATA"
