@@ -12,7 +12,7 @@ about: Report a reproducible bug in the current release of nautobot-netbox-impor
 ### Expected Behavior
 
 
-<!-- What happened instead? -->
+<!-- What happened instead? Please include as much log data as possible. -->
 ### Observed Behavior
 
 <!--
@@ -23,3 +23,9 @@ about: Report a reproducible bug in the current release of nautobot-netbox-impor
 1.
 2.
 3.
+
+### Sample Data
+<!--
+    If possible, please include a .json file containing sanitized sample data that can be
+    used to reproduce the issue.
+-->
