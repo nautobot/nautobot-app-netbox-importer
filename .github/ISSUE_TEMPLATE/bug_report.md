@@ -12,7 +12,7 @@ about: Report a reproducible bug in the current release of nautobot-netbox-impor
 ### Expected Behavior
 
 
-<!-- What happened instead? Please include as much log data as possible. -->
+<!-- What happened instead? Please include as much of the output from the `nautobot-server import_netbox` command as possible. -->
 ### Observed Behavior
 
 <!--
