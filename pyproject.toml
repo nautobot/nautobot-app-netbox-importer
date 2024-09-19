@@ -32,7 +32,6 @@ python = ">=3.8,<3.13"
 # Used for local development
 nautobot = "^2.0.6"
 diffsync = "^1.9.0"
-tqdm = "^4.59.0"
 colorama = "^0.4.4"
 Markdown = "!=3.3.5"
 pydantic = "^1.10.2"
