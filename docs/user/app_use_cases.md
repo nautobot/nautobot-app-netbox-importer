@@ -7,10 +7,15 @@ This document describes common use-cases and scenarios for this App.
 This app provides `import_netbox` management command to import data from NetBox with the following options:
 
 ```bash
-nautobot-server help import_netbox
-usage: nautobot-server import_netbox [-h] [--dry-run] [--update-paths] [--bypass-data-validation] [--sitegroup-parent-always-region] [--fix-powerfeed-locations] [--print-summary]
-                                     [--no-unrack-zero-uheight-devices] [--save-json-summary-path SAVE_JSON_SUMMARY_PATH] [--save-text-summary-path SAVE_TEXT_SUMMARY_PATH] [--trace-issues] [--version]
-                                     [-v {0,1,2,3}] [--settings SETTINGS] [--pythonpath PYTHONPATH] [--traceback] [--no-color] [--force-color] [--skip-checks]
+nautobot-server import_netbox --help
+
+usage: nautobot-server import_netbox [-h] [--dry-run] [--update-paths] [--bypass-data-validation]
+                                     [--sitegroup-parent-always-region] [--fix-powerfeed-locations] [--print-summary]
+                                     [--no-unrack-zero-uheight-devices]
+                                     [--save-json-summary-path SAVE_JSON_SUMMARY_PATH]
+                                     [--save-text-summary-path SAVE_TEXT_SUMMARY_PATH] [--version] [-v {0,1,2,3}]
+                                     [--settings SETTINGS] [--pythonpath PYTHONPATH] [--traceback] [--no-color]
+                                     [--force-color] [--skip-checks]
                                      json_file
 
 Import a NetBox JSON data dump into Nautobot's database
@@ -23,16 +28,20 @@ options:
   --dry-run             Do not write any data to the database.
   --update-paths        Call management command `trace_paths` to update paths after the import.
   --bypass-data-validation
-                        Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or
-                        REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data!
+                        Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of
+                        data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST
+                        API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation
+                        errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data!
   --sitegroup-parent-always-region
-                        When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A
-                        Location of type Location may only have a Location of the same type as its parent.'`.
+                        When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group
+                        , to be a `Region` location type. This is a workaround to fix validation errors
+                        `'A Location of type Location may only have a Location of the same type as its parent.'`.
   --fix-powerfeed-locations
                         Fix panel location to match rack location based on powerfeed.
   --print-summary       Show a summary of the import.
   --no-unrack-zero-uheight-devices
-                        Prevents cleaning the `position` field in `dcim.device` instances that fail validation if the device is in a rack.
+                        Prevents cleaning the `position` field in `dcim.device` instances that fail validation if the
+                        device is in a rack.
   --save-json-summary-path SAVE_JSON_SUMMARY_PATH
                         File path to write the JSON summary to.
   --save-text-summary-path SAVE_TEXT_SUMMARY_PATH
@@ -41,7 +50,8 @@ options:
   --version             show program's version number and exit
   -v {0,1,2,3}, --verbosity {0,1,2,3}
                         Verbosity level; 0=minimal output, 1=normal output, 2=verbose output, 3=very verbose output
-  --settings SETTINGS   The Python path to a settings module, e.g. "myproject.settings.main". If this isn't provided, the DJANGO_SETTINGS_MODULE environment variable will be used.
+  --settings SETTINGS   The Python path to a settings module, e.g. "myproject.settings.main". If this isn't provided,
+                        the DJANGO_SETTINGS_MODULE environment variable will be used.
   --pythonpath PYTHONPATH
                         A directory to add to the Python path, e.g. "/home/djangoprojects/myproject".
   --traceback           Raise on CommandError exceptions
