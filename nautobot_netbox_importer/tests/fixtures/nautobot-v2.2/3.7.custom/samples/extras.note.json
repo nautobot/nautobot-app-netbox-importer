@@ -1,0 +1,28 @@
+[
+{
+  "model": "extras.note",
+  "pk": "096ebdc2-2b2a-5714-8556-ab51a169b5d1",
+  "fields": {
+    "created": "2024-01-22T08:22:44.596Z",
+    "last_updated": "2024-01-22T11:06:30.629Z",
+    "assigned_object_type": 109,
+    "assigned_object_id": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "user": null,
+    "user_name": "Undefined",
+    "note": ""
+  }
+},
+{
+  "model": "extras.note",
+  "pk": "38545e26-db8e-5ae0-af63-99c56bea15e2",
+  "fields": {
+    "created": "2024-01-22T08:32:30.376Z",
+    "last_updated": "2024-01-22T11:06:30.630Z",
+    "assigned_object_type": 109,
+    "assigned_object_id": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "user": null,
+    "user_name": "Undefined",
+    "note": ""
+  }
+}
+]

@@ -1,0 +1,56 @@
+[
+{
+  "model": "dcim.devicetype",
+  "pk": "7d87e054-c030-5f5c-ac14-a84a14a872c9",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:16.433Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "model": "QFX10002-36Q",
+    "part_number": "",
+    "u_height": 2,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": "[Juniper QFX10002 Data Sheet](https://www.juniper.net/assets/us/en/local/pdf/datasheets/1000531-en.pdf)"
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "94fdbc87-0af7-590d-9d6b-1b699ff14c53",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:16.411Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "model": "EX9214",
+    "part_number": "",
+    "u_height": 16,
+    "is_full_depth": true,
+    "subdevice_role": "parent",
+    "front_image": "",
+    "rear_image": "",
+    "comments": "[Juniper EX9214 Data Sheet](https://www.juniper.net/us/en/local/pdf/datasheets/1000432-en.pdf)"
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "9cbb3312-7783-519f-be1b-5c849324a2d1",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:16.415Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "model": "QFX5100-48T-6Q",
+    "part_number": "",
+    "u_height": 1,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": "[Juniper QFX5100 Data Sheet](https://www.juniper.net/us/en/products-services/switching/qfx-series/qfx5100/)"
+  }
+}
+]

@@ -1,6 +1,6 @@
 """NetBox to Nautobot Virtualization Models Mapping."""
-from nautobot_netbox_importer.generator import SourceAdapter
-from nautobot_netbox_importer.generator import fields
+
+from nautobot_netbox_importer.generator import SourceAdapter, fields
 
 from .locations import define_location
 

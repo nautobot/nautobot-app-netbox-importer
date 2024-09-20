@@ -1,0 +1,35 @@
+[
+{
+  "model": "virtualization.clustertype",
+  "pk": "49f2845e-b8f4-58e3-8534-2a1131071e25",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:47.191Z",
+    "_custom_field_data": {},
+    "name": "Google Cloud",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustertype",
+  "pk": "834802b2-bb11-5319-9ddb-4269f943171c",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:47.196Z",
+    "_custom_field_data": {},
+    "name": "KVM",
+    "description": ""
+  }
+},
+{
+  "model": "virtualization.clustertype",
+  "pk": "ae807dce-fa79-5557-9d7e-a8e8f8e881a7",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:47.195Z",
+    "_custom_field_data": {},
+    "name": "VMware",
+    "description": ""
+  }
+}
+]

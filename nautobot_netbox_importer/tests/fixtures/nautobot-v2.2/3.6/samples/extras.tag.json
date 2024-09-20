@@ -1,0 +1,47 @@
+[
+{
+  "model": "extras.tag",
+  "pk": "36402387-13f1-567e-b429-5c6234cbd334",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:47.156Z",
+    "_custom_field_data": {},
+    "name": "Alpha",
+    "color": "aa1409",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "9c378a29-3e2d-5929-b733-33cdaaf4b49b",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:47.164Z",
+    "_custom_field_data": {},
+    "name": "Golf",
+    "color": "673ab7",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "b0ca481e-e144-58fc-9fef-a6249bce7ee9",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:08:47.177Z",
+    "_custom_field_data": {},
+    "name": "Quebec",
+    "color": "cddc39",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+}
+]

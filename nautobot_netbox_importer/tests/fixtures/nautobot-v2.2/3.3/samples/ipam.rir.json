@@ -1,0 +1,38 @@
+[
+{
+  "model": "ipam.rir",
+  "pk": "270d7ef4-3f6e-5f6f-b1f2-85c97d7f8d8a",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:31.517Z",
+    "_custom_field_data": {},
+    "name": "AFRINIC",
+    "is_private": false,
+    "description": "African Network Information Centre"
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "60b630af-b0f4-5f1a-9de2-8ef7d1472bcb",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:31.521Z",
+    "_custom_field_data": {},
+    "name": "RFC 6996",
+    "is_private": true,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.rir",
+  "pk": "f59e6945-f78c-584f-89ce-bbaa9f539c0b",
+  "fields": {
+    "created": "2020-12-19T00:00:00Z",
+    "last_updated": "2024-01-02T12:06:31.515Z",
+    "_custom_field_data": {},
+    "name": "APNIC",
+    "is_private": false,
+    "description": "Asia Pacific Network Information Centre"
+  }
+}
+]

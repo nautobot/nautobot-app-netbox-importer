@@ -1,0 +1,45 @@
+[
+{
+  "model": "extras.tag",
+  "pk": "1b2c4ee1-384a-5bf6-a7a8-7470d029eb8e",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:59.998Z",
+    "_custom_field_data": {},
+    "name": "Whiskey",
+    "color": "c0c0c0",
+    "description": "",
+    "content_types": []
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "d4d1038d-aaef-5173-896a-62cf7674f52e",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:59.986Z",
+    "_custom_field_data": {},
+    "name": "Mike",
+    "color": "00ffff",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "fd7df87d-2737-5092-abaf-8017d504d95e",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:59.977Z",
+    "_custom_field_data": {},
+    "name": "Foxtrot",
+    "color": "9c27b0",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+}
+]

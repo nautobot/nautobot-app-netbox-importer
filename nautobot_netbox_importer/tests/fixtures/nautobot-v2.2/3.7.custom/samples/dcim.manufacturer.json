@@ -1,0 +1,13 @@
+[
+{
+  "model": "dcim.manufacturer",
+  "pk": "9568e4c1-fa0c-5c43-9606-e25166e67765",
+  "fields": {
+    "created": "2024-02-14T12:20:59.505Z",
+    "last_updated": "2024-02-14T13:29:43.956Z",
+    "_custom_field_data": {},
+    "name": "Manufacturer",
+    "description": ""
+  }
+}
+]

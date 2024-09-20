@@ -2,11 +2,7 @@
 
 import logging
 from os import PathLike
-from typing import Any
-from typing import List
-from typing import MutableMapping
-from typing import Tuple
-from typing import Union
+from typing import Any, List, MutableMapping, Tuple, Union
 from uuid import UUID
 
 logger = logging.getLogger("nautobot-netbox-importer")

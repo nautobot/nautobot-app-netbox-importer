@@ -1,0 +1,47 @@
+[
+{
+  "model": "dcim.devicebay",
+  "pk": "207cff15-c949-5db6-9cee-7edea457e6d5",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:17.256Z",
+    "_custom_field_data": {},
+    "device": "0d7a954e-7fe0-53bd-83d4-2aa4a03a1a07",
+    "name": "Linecard7",
+    "_name": "Linecard00000007",
+    "label": "",
+    "description": "",
+    "installed_device": null
+  }
+},
+{
+  "model": "dcim.devicebay",
+  "pk": "5fbb8065-6b72-5b03-8870-0ee88ba816d5",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:17.239Z",
+    "_custom_field_data": {},
+    "device": "0d7a954e-7fe0-53bd-83d4-2aa4a03a1a07",
+    "name": "Linecard0",
+    "_name": "Linecard00000000",
+    "label": "",
+    "description": "",
+    "installed_device": null
+  }
+},
+{
+  "model": "dcim.devicebay",
+  "pk": "8e08fcb9-d6b2-5eff-aa6b-c1632f12db13",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2024-01-02T12:01:17.267Z",
+    "_custom_field_data": {},
+    "device": "0d7a954e-7fe0-53bd-83d4-2aa4a03a1a07",
+    "name": "Linecard11",
+    "_name": "Linecard00000011",
+    "label": "",
+    "description": "",
+    "installed_device": null
+  }
+}
+]

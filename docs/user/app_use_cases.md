@@ -46,6 +46,7 @@ options:
                         File path to write the JSON summary to.
   --save-text-summary-path SAVE_TEXT_SUMMARY_PATH
                         File path to write the text summary to.
+  --trace-issues        Show a detailed trace of issues originated from any `Exception` found during the import.
   --version             show program's version number and exit
   -v {0,1,2,3}, --verbosity {0,1,2,3}
                         Verbosity level; 0=minimal output, 1=normal output, 2=verbose output, 3=very verbose output

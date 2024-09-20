@@ -13,13 +13,13 @@ limitations under the License.
 """
 
 import os
+import re
 from pathlib import Path
 from time import sleep
 
 from invoke.collection import Collection
+from invoke.exceptions import Exit
 from invoke.tasks import task as invoke_task
-
-_TEST_DUMP_PATH = Path(__file__).parent / "nautobot_netbox_importer" / "tests" / "fixtures" / "nautobot-dump.sql"
 
 
 def is_truthy(arg):
@@ -50,7 +50,7 @@ namespace = Collection("nautobot_netbox_importer")
 namespace.configure(
     {
         "nautobot_netbox_importer": {
-            "nautobot_ver": "2.0.6",
+            "nautobot_ver": "2.3.1",
             "project_name": "nautobot-netbox-importer",
             "python_ver": "3.11",
             "local": False,
@@ -65,6 +65,21 @@ namespace.configure(
         }
     }
 )
+
+
+def _get_test_dump_path(context):
+    parsed_nautobot_version = context.nautobot_netbox_importer.nautobot_ver.split(".")
+    if len(parsed_nautobot_version) < 2:  # noqa: PLR2004
+        raise ValueError(f"Can't determine the Nautobot version from: {context.nautobot_netbox_importer.nautobot_ver}")
+
+    return (
+        Path(__file__).parent
+        / "nautobot_netbox_importer"
+        / "tests"
+        / "fixtures"
+        / f"nautobot-v{parsed_nautobot_version[0]}.{parsed_nautobot_version[1]}"
+        / "dump.sql"
+    )
 
 
 def _is_compose_included(context, name):
@@ -161,17 +176,17 @@ def run_command(context, command, **kwargs):
         # Check if nautobot is running, no need to start another nautobot container to run a command
         docker_compose_status = "ps --services --filter status=running"
         results = docker_compose(context, docker_compose_status, hide="out")
-        if "nautobot" in results.stdout:
-            compose_command = "exec"
-        else:
-            compose_command = "run --rm --entrypoint=''"
 
+        command_env_args = ""
         if "command_env" in kwargs:
             command_env = kwargs.pop("command_env")
             for key, value in command_env.items():
-                compose_command += f' --env="{key}={value}"'
+                command_env_args += f' --env="{key}={value}"'
 
-        compose_command += f" -- nautobot {command}"
+        if "nautobot" in results.stdout:
+            compose_command = f"exec{command_env_args} nautobot {command}"
+        else:
+            compose_command = f"run{command_env_args} --rm --entrypoint='{command}' nautobot"
 
         pty = kwargs.pop("pty", True)
 
@@ -207,17 +222,51 @@ def generate_packages(context):
     run_command(context, command)
 
 
+def _get_docker_nautobot_version(context, nautobot_ver=None, python_ver=None):
+    """Extract Nautobot version from base docker image."""
+    if nautobot_ver is None:
+        nautobot_ver = context.nautobot_netbox_importer.nautobot_ver
+    if python_ver is None:
+        python_ver = context.nautobot_netbox_importer.python_ver
+    dockerfile_path = os.path.join(context.nautobot_netbox_importer.compose_dir, "Dockerfile")
+    base_image = context.run(f"grep --max-count=1 '^FROM ' {dockerfile_path}", hide=True).stdout.strip().split(" ")[1]
+    base_image = base_image.replace(r"${NAUTOBOT_VER}", nautobot_ver).replace(r"${PYTHON_VER}", python_ver)
+    pip_nautobot_ver = context.run(f"docker run --rm --entrypoint '' {base_image} pip show nautobot", hide=True)
+    match_version = re.search(r"^Version: (.+)$", pip_nautobot_ver.stdout.strip(), flags=re.MULTILINE)
+    if match_version:
+        return match_version.group(1)
+    else:
+        raise Exit(f"Nautobot version not found in Docker base image {base_image}.")
+
+
 @task(
     help={
         "check": (
             "If enabled, check for outdated dependencies in the poetry.lock file, "
             "instead of generating a new one. (default: disabled)"
-        )
+        ),
+        "constrain_nautobot_ver": (
+            "Run 'poetry add nautobot@[version] --lock' to generate the lockfile, "
+            "where [version] is the version installed in the Dockerfile's base image. "
+            "Generally intended to be used in CI and not for local development. (default: disabled)"
+        ),
+        "constrain_python_ver": (
+            "When using `constrain_nautobot_ver`, further constrain the nautobot version "
+            "to python_ver so that poetry doesn't complain about python version incompatibilities. "
+            "Generally intended to be used in CI and not for local development. (default: disabled)"
+        ),
     }
 )
-def lock(context, check=False):
-    """Generate poetry.lock inside the Nautobot container."""
-    run_command(context, f"poetry {'check' if check else 'lock --no-update'}")
+def lock(context, check=False, constrain_nautobot_ver=False, constrain_python_ver=False):
+    """Generate poetry.lock file."""
+    if constrain_nautobot_ver:
+        docker_nautobot_version = _get_docker_nautobot_version(context)
+        command = f"poetry add --lock nautobot@{docker_nautobot_version}"
+        if constrain_python_ver:
+            command += f" --python {context.nautobot_netbox_importer.python_ver}"
+    else:
+        command = f"poetry {'check' if check else 'lock --no-update'}"
+    run_command(context, command)
 
 
 # ------------------------------------------------------------------------------
@@ -496,7 +545,12 @@ def dbshell(context, db_name="", input_file="", output_file="", query=""):
         f"> '{output_file}'" if output_file else "",
     ]
 
-    docker_compose(context, " ".join(command), env=env, pty=not (input_file or output_file or query))
+    docker_compose(
+        context,
+        " ".join(command),
+        env=env,
+        pty=not (input_file or output_file or query),
+    )
 
 
 @task(
@@ -521,9 +575,11 @@ def import_db(context, db_name="", input_file="dump.sql"):
             '--execute="',
             f"DROP DATABASE IF EXISTS {db_name};",
             f"CREATE DATABASE {db_name};",
-            ""
-            if db_name == "$MYSQL_DATABASE"
-            else f"GRANT ALL PRIVILEGES ON {db_name}.* TO $MYSQL_USER; FLUSH PRIVILEGES;",
+            (
+                ""
+                if db_name == "$MYSQL_DATABASE"
+                else f"GRANT ALL PRIVILEGES ON {db_name}.* TO $MYSQL_USER; FLUSH PRIVILEGES;"
+            ),
             '"',
             "&&",
             "mysql",
@@ -649,28 +705,6 @@ def generate_release_notes(context, version=""):
 # ------------------------------------------------------------------------------
 # TESTS
 # ------------------------------------------------------------------------------
-@task(
-    help={
-        "autoformat": "Apply formatting recommendations automatically, rather than failing if formatting is incorrect.",
-    }
-)
-def black(context, autoformat=False):
-    """Check Python code style with Black."""
-    if autoformat:
-        black_command = "black"
-    else:
-        black_command = "black --check --diff"
-
-    command = f"{black_command} ."
-
-    run_command(context, command)
-
-
-@task
-def flake8(context):
-    """Check for PEP8 compliance and other style issues."""
-    command = "flake8 . --config .flake8"
-    run_command(context, command)
 
 
 @task
@@ -690,38 +724,39 @@ def pylint(context):
 @task(aliases=("a",))
 def autoformat(context):
     """Run code autoformatting."""
-    black(context, autoformat=True)
-    ruff(context, fix=True)
+    ruff(context, action=["format"], fix=True)
 
 
 @task(
     help={
-        "action": "One of 'lint', 'format', or 'both'",
-        "fix": "Automatically fix selected action. May not be able to fix all.",
-        "output_format": "see https://docs.astral.sh/ruff/settings/#output-format",
+        "action": "Available values are `['lint', 'format']`. Can be used multiple times. (default: `['lint', 'format']`)",
+        "target": "File or directory to inspect, repeatable (default: all files in the project will be inspected)",
+        "fix": "Automatically fix selected actions. May not be able to fix all issues found. (default: False)",
+        "output_format": "See https://docs.astral.sh/ruff/settings/#output-format for details. (default: `concise`)",
     },
+    iterable=["action", "target"],
 )
-def ruff(context, action="lint", fix=False, output_format="text"):
+def ruff(context, action=None, target=None, fix=False, output_format="concise"):
     """Run ruff to perform code formatting and/or linting."""
-    if action != "lint":
-        command = "ruff format"
+    if not action:
+        action = ["lint", "format"]
+    if not target:
+        target = ["."]
+
+    if "format" in action:
+        command = "ruff format "
         if not fix:
-            command += " --check"
-        command += " ."
-        run_command(context, command)
-    if action != "format":
-        command = "ruff check"
+            command += "--check "
+        command += " ".join(target)
+        run_command(context, command, warn=True)
+
+    if "lint" in action:
+        command = "ruff check "
         if fix:
-            command += " --fix"
-        command += f" --output-format {output_format} ."
-        run_command(context, command)
-
-
-@task
-def bandit(context):
-    """Run bandit to validate basic static code security analysis."""
-    command = "bandit --recursive . --configfile .bandit.yml"
-    run_command(context, command)
+            command += "--fix "
+        command += f"--output-format {output_format} "
+        command += " ".join(target)
+        run_command(context, command, warn=True)
 
 
 @task
@@ -757,7 +792,7 @@ def dump_test_environment(context):
     - Nautobot container is running.
     - Migrations are applied.
 
-    Creates a dump.sql file in the tests/fixtures directory with flushed database to keep the content types IDs
+    Creates a dump.sql file in `nautobot_netbox_importer/tests/fixtures/nautobot-v<major>.<minor>` directory with flushed database to keep the content types IDs
     consistent across tests.
     """
     command = [
@@ -777,7 +812,7 @@ def dump_test_environment(context):
         "--dbname=$POSTGRES_DB",
         "--inserts",
         "'",
-        f"> '{_TEST_DUMP_PATH}'",
+        f"> '{_get_test_dump_path(context)}'",
     ]
     docker_compose(context, " ".join(command), pty=True)
 
@@ -828,7 +863,7 @@ def load_test_environment(context, db_name="test_nautobot", keepdb=False):
         "--username=$POSTGRES_USER",
         db_name,
         "'",
-        f"< '{_TEST_DUMP_PATH}'",
+        f"< '{_get_test_dump_path(context)}'",
     ]
     docker_compose(context, " ".join(command), pty=False, hide=True)
 
@@ -844,7 +879,7 @@ def load_test_environment(context, db_name="test_nautobot", keepdb=False):
         "build-fixtures": "Build fixtures before running tests.",
     }
 )
-def unittest(
+def unittest(  # noqa: PLR0913
     context,
     keepdb=False,
     label="nautobot_netbox_importer",
@@ -900,14 +935,8 @@ def tests(context, failfast=False, keepdb=False, lint_only=False):
         print("Starting Docker Containers...")
         start(context)
     # Sorted loosely from fastest to slowest
-    print("Running black...")
-    black(context)
     print("Running ruff...")
     ruff(context)
-    print("Running flake8...")
-    flake8(context)
-    print("Running bandit...")
-    bandit(context)
     print("Running yamllint...")
     yamllint(context)
     print("Running poetry check...")
@@ -940,11 +969,82 @@ def generate_app_config_schema(context):
     - `NautobotAppConfig.required_settings`
     """
     start(context, service="nautobot")
-    nbshell(context, file="development/app_config_schema.py", env={"APP_CONFIG_SCHEMA_COMMAND": "generate"})
+    nbshell(
+        context,
+        file="development/app_config_schema.py",
+        env={"APP_CONFIG_SCHEMA_COMMAND": "generate"},
+    )
 
 
 @task
 def validate_app_config(context):
     """Validate the app config based on the app config schema."""
     start(context, service="nautobot")
-    nbshell(context, plain=True, file="development/app_config_schema.py", env={"APP_CONFIG_SCHEMA_COMMAND": "validate"})
+    nbshell(
+        context,
+        plain=True,
+        file="development/app_config_schema.py",
+        env={"APP_CONFIG_SCHEMA_COMMAND": "validate"},
+    )
+
+
+@task(
+    help={
+        "file": "URL or path to the JSON file to import.",
+        "bypass-data-validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
+        "demo-version": "Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).",
+        "dry-run": "Do not write any data to the database. (default: False)",
+        "fix-powerfeed-locations": "Fix panel location to match rack location based on powerfeed. (default: False)",
+        "print-summary": "Show a summary of the import. (default: True)",
+        "save-json-summary-path": "File path to write the JSON mapping to. (default: generated-mappings.json)",
+        "save-text-summary-path": "File path to write the text mapping to. (default: generated-mappings.txt)",
+        "sitegroup-parent-always-region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
+        "update-paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
+        "unrack-zero-uheight-devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
+        "trace-issues": "Show a detailed trace of issues originated from any `Exception` found during the import.",
+    }
+)
+def import_netbox(  # noqa: PLR0913
+    context,
+    file="",
+    demo_version="",
+    save_json_summary_path="",
+    save_text_summary_path="",
+    bypass_data_validation=False,
+    dry_run=True,
+    fix_powerfeed_locations=False,
+    sitegroup_parent_always_region=False,
+    print_summary=True,
+    update_paths=False,
+    unrack_zero_uheight_devices=True,
+    trace_issues=False,
+):
+    """Import NetBox data into Nautobot."""
+    if demo_version:
+        if file:
+            raise ValueError("Cannot specify both, `file` and `demo` arguments")
+
+        file = (
+            "https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/json/netbox-demo-v"
+            + demo_version
+            + ".json"
+        )
+
+    command = [
+        "nautobot-server",
+        "import_netbox",
+        f"--save-json-summary-path={save_json_summary_path}" if save_json_summary_path else "",
+        f"--save-text-summary-path={save_text_summary_path}" if save_text_summary_path else "",
+        "--bypass-data-validation" if bypass_data_validation else "",
+        "--dry-run" if dry_run else "",
+        "--fix-powerfeed-locations" if fix_powerfeed_locations else "",
+        "--sitegroup-parent-always-region" if sitegroup_parent_always_region else "",
+        "--print-summary" if print_summary else "",
+        "--update-paths" if update_paths else "",
+        "--no-color",
+        "" if unrack_zero_uheight_devices else "--no-unrack-zero-uheight-devices",
+        "--trace-issues" if trace_issues else "",
+        file,
+    ]
+
+    run_command(context, " ".join(command))

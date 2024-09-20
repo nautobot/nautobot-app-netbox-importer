@@ -1,10 +1,10 @@
 """Utility functions and classes for nautobot_netbox_importer."""
-from io import StringIO
+
 import pprint
 import textwrap
+from io import StringIO
 
 import colorama
-
 import structlog
 
 
@@ -51,9 +51,9 @@ class LogRenderer:  # pylint: disable=too-few-public-methods
                 # We could use json.dumps() here instead of pprint.pformat,
                 # but I find pprint to be a bit more compact while still readable.
                 rendered_dict = pprint.pformat(value)
-                if len(rendered_dict.splitlines()) > 50:
+                if len(rendered_dict.splitlines()) > 50:  # noqa: PLR2004
                     rendered_dict = "\n".join(rendered_dict.splitlines()[:50]) + "\n...}"
-                value = "\n" + textwrap.indent(rendered_dict, "    ")
+                value = "\n" + textwrap.indent(rendered_dict, "    ")  # noqa: PLW2901
             sio.write(
                 f"\n  {colorama.Fore.CYAN}{key}{colorama.Style.RESET_ALL}: "
                 f"{colorama.Fore.MAGENTA}{value}{colorama.Style.RESET_ALL}"

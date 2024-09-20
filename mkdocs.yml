@@ -1,6 +1,6 @@
 ---
 dev_addr: "127.0.0.1:8001"
-edit_uri: "edit/main/nautobot-app-netbox-importer/docs"
+edit_uri: "edit/main/docs"
 site_dir: "nautobot_netbox_importer/static/nautobot_netbox_importer/docs"
 site_name: "Nautobot NetBox Importer Documentation"
 site_url: "https://docs.nautobot.com/projects/netbox-importer/en/latest/"
@@ -72,6 +72,8 @@ extra:
       link: "https://twitter.com/networktocode"
       name: "Network to Code Twitter"
 markdown_extensions:
+  - "markdown_version_annotations":
+      admonition_tag: "???"
   - "admonition"
   - "toc":
       permalink: true
@@ -89,7 +91,6 @@ markdown_extensions:
   - "footnotes"
 plugins:
   - "search"
-  - "mkdocs-version-annotations"
   - "mkdocstrings":
       default_handler: "python"
       handlers:
@@ -115,6 +116,7 @@ nav:
       - Compatibility Matrix: "admin/compatibility_matrix.md"
       - Release Notes:
           - "admin/release_notes/index.md"
+          - v2.1: "admin/release_notes/version_2.1.md"
           - v2.0: "admin/release_notes/version_2.0.md"
           - v1.4: "admin/release_notes/version_1.4.md"
           - v1.3: "admin/release_notes/version_1.3.md"
@@ -130,6 +132,7 @@ nav:
       - Data Flow: "dev/data_flow.md"
       - Demo Excecution: "dev/demo.md"
       - Frequently Asked Questions: "dev/faq.md"
+      - Test Fixtures: "dev/code_reference/fixtures/README.md"
       - Code Reference:
           - "dev/code_reference/index.md"
           - Package: "dev/code_reference/package.md"

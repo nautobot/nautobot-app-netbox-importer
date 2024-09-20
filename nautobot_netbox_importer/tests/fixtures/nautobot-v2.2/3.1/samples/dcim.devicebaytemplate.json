@@ -1,0 +1,44 @@
+[
+{
+  "model": "dcim.devicebaytemplate",
+  "pk": "1d1cc9e9-2de5-526a-8253-20c0308b1ec8",
+  "fields": {
+    "created": "2022-01-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:59.935Z",
+    "_custom_field_data": {},
+    "device_type": "3ad1b4ce-7f9c-581e-9af7-4efc2da8fbea",
+    "name": "Bay 2",
+    "_name": "Bay 00000002",
+    "label": "",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.devicebaytemplate",
+  "pk": "295ff42d-e69c-51ba-9b04-7c133891148d",
+  "fields": {
+    "created": "2022-01-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:59.933Z",
+    "_custom_field_data": {},
+    "device_type": "3ad1b4ce-7f9c-581e-9af7-4efc2da8fbea",
+    "name": "Bay 1",
+    "_name": "Bay 00000001",
+    "label": "",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.devicebaytemplate",
+  "pk": "9fc7a808-2a07-5399-b249-4f81c2a3c205",
+  "fields": {
+    "created": "2022-01-10T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:59.942Z",
+    "_custom_field_data": {},
+    "device_type": "3ad1b4ce-7f9c-581e-9af7-4efc2da8fbea",
+    "name": "Bay 8",
+    "_name": "Bay 00000008",
+    "label": "",
+    "description": ""
+  }
+}
+]

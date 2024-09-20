@@ -1,0 +1,47 @@
+[
+{
+  "model": "virtualization.cluster",
+  "pk": "656c354d-5c62-528a-8629-4049d3edfd9a",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:17.759Z",
+    "_custom_field_data": {},
+    "name": "gc-asia-south1",
+    "cluster_type": "49f2845e-b8f4-58e3-8534-2a1131071e25",
+    "cluster_group": "7a2352bc-7253-5c1d-bb1f-0a4a1412dc9e",
+    "tenant": null,
+    "location": null,
+    "comments": ""
+  }
+},
+{
+  "model": "virtualization.cluster",
+  "pk": "ca5f6ebc-2cba-5925-8e86-3f8554b47e0d",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:17.727Z",
+    "_custom_field_data": {},
+    "name": "DO-NYC3",
+    "cluster_type": "786c136a-fff1-5f84-8d0c-c43610039f45",
+    "cluster_group": "f296b7c8-68ed-5c8a-85fc-11ef680cbe7e",
+    "tenant": null,
+    "location": null,
+    "comments": ""
+  }
+},
+{
+  "model": "virtualization.cluster",
+  "pk": "e2f873ce-e8b2-5a35-a0a8-59ada819cec5",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:17.730Z",
+    "_custom_field_data": {},
+    "name": "DO-TOR1",
+    "cluster_type": "786c136a-fff1-5f84-8d0c-c43610039f45",
+    "cluster_group": "f296b7c8-68ed-5c8a-85fc-11ef680cbe7e",
+    "tenant": null,
+    "location": null,
+    "comments": ""
+  }
+}
+]

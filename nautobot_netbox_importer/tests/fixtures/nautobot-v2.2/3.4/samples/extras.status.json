@@ -1,0 +1,50 @@
+[
+{
+  "model": "extras.status",
+  "pk": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+  "fields": {
+    "created": "2024-01-02T12:06:54.153Z",
+    "last_updated": "2024-01-02T12:06:54.153Z",
+    "_custom_field_data": {},
+    "name": "Unknown",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      32,
+      56,
+      68,
+      118
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "90ef0b5d-5e04-5ff3-b1a4-695a42311ede",
+  "fields": {
+    "created": "2024-01-02T12:06:54.160Z",
+    "last_updated": "2024-01-02T12:06:54.160Z",
+    "_custom_field_data": {},
+    "name": "Container",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      68
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
+  "fields": {
+    "created": "2024-01-02T12:06:54.156Z",
+    "last_updated": "2024-01-02T12:06:54.156Z",
+    "_custom_field_data": {},
+    "name": "Connected",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      45
+    ]
+  }
+}
+]

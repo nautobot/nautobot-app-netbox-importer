@@ -1,0 +1,38 @@
+[
+{
+  "model": "dcim.virtualchassis",
+  "pk": "19f22645-7e83-5f39-bb57-ccda57e372fd",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:59.932Z",
+    "_custom_field_data": {},
+    "master": "30822332-4a69-5783-86e8-07a72dc77c77",
+    "name": "r108-torsw",
+    "domain": ""
+  }
+},
+{
+  "model": "dcim.virtualchassis",
+  "pk": "364e4d51-2c82-5053-90a1-79cf9956175a",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:59.917Z",
+    "_custom_field_data": {},
+    "master": "1348e764-b4fb-5406-a5f2-fc50df2067aa",
+    "name": "r105-torsw",
+    "domain": ""
+  }
+},
+{
+  "model": "dcim.virtualchassis",
+  "pk": "b09ec4dd-301f-51a1-9fef-9d9732c3ebac",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:59.922Z",
+    "_custom_field_data": {},
+    "master": "b8700b34-5236-5cae-a009-361a082d01f4",
+    "name": "r106-torsw",
+    "domain": ""
+  }
+}
+]

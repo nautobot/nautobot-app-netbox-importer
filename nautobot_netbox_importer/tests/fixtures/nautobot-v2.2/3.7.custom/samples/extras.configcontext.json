@@ -1,0 +1,38 @@
+[
+{
+  "model": "extras.configcontext",
+  "pk": "9a5c7336-f812-5ecd-a89d-36970b431712",
+  "fields": {
+    "created": "2024-05-20T10:42:51.638Z",
+    "last_updated": "2024-05-20T12:13:46.236Z",
+    "name": "Testing Config Context",
+    "owner_content_type": null,
+    "owner_object_id": null,
+    "weight": 1000,
+    "description": "Testing Config Context",
+    "is_active": true,
+    "config_context_schema": null,
+    "data": {
+      "field_1": "value_1",
+      "field_2": "value_2"
+    },
+    "locations": [
+      "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09"
+    ],
+    "roles": [
+      "715773ef-2d6c-5895-972d-40f37486a56e"
+    ],
+    "device_types": [
+      "257dca9a-92d2-5f02-af45-4de316a47b71"
+    ],
+    "device_redundancy_groups": [],
+    "platforms": [],
+    "cluster_groups": [],
+    "clusters": [],
+    "tenant_groups": [],
+    "tenants": [],
+    "tags": [],
+    "dynamic_groups": []
+  }
+}
+]

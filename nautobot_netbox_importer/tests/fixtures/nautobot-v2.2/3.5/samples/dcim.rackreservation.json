@@ -1,0 +1,30 @@
+[
+{
+  "model": "dcim.rackreservation",
+  "pk": "6632b13e-787b-596b-8d3f-dd711778f6b2",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:58.328Z",
+    "_custom_field_data": {},
+    "rack": "9bcf34fc-257c-5923-ba34-e10c6067f9ed",
+    "units": "[\"20\", \"21\"]",
+    "tenant": null,
+    "user": "79770d9b-4994-5610-8175-123cecb0bcac",
+    "description": "Damaged - DO NOT USE"
+  }
+},
+{
+  "model": "dcim.rackreservation",
+  "pk": "fc8c21ff-bff8-59a8-b256-612719b46978",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:58.325Z",
+    "_custom_field_data": {},
+    "rack": "333af99c-ec4b-505f-ac02-1a03f6cb9689",
+    "units": "[\"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"10\"]",
+    "tenant": null,
+    "user": "35a3bbbb-48d5-5891-8ddc-8b4a97e30d10",
+    "description": "Reserved for future projects"
+  }
+}
+]

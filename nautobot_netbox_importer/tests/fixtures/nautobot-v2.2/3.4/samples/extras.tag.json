@@ -1,0 +1,47 @@
+[
+{
+  "model": "extras.tag",
+  "pk": "16177027-5e66-5ff6-95b4-1870079bf6cb",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:16.725Z",
+    "_custom_field_data": {},
+    "name": "X-ray",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "2e689544-46a5-524d-9dde-9ebe6b165264",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:16.727Z",
+    "_custom_field_data": {},
+    "name": "Zulu",
+    "color": "111111",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "9c378a29-3e2d-5929-b733-33cdaaf4b49b",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:16.706Z",
+    "_custom_field_data": {},
+    "name": "Golf",
+    "color": "673ab7",
+    "description": "",
+    "content_types": [
+      56
+    ]
+  }
+}
+]

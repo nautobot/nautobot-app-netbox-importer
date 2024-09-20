@@ -1,25 +1,24 @@
 """Generic Field Importers definitions for Nautobot Importer."""
 
-from typing import Any
-from typing import Dict
-from typing import Optional
+from typing import Any, Dict, Optional
 from uuid import UUID
 
-from .base import EMPTY_VALUES
-from .base import ContentTypeStr
-from .base import Uid
+from .base import EMPTY_VALUES, ContentTypeStr, Uid
 from .nautobot import DiffSyncBaseModel
-from .source import FieldName
-from .source import ImporterPass
-from .source import InvalidChoiceValueIssue
-from .source import PreImportResult
-from .source import RecordData
-from .source import SourceAdapter
-from .source import SourceContentType
-from .source import SourceField
-from .source import SourceFieldDefinition
-from .source import SourceFieldImporterFallback
-from .source import SourceFieldImporterIssue
+from .source import (
+    FieldName,
+    ImporterPass,
+    InternalFieldType,
+    InvalidChoiceValueIssue,
+    PreImportResult,
+    RecordData,
+    SourceAdapter,
+    SourceContentType,
+    SourceField,
+    SourceFieldDefinition,
+    SourceFieldImporterFallback,
+    SourceFieldImporterIssue,
+)
 
 
 def default(default_value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition:
@@ -81,7 +80,10 @@ def relation(related_source: SourceContentType, nautobot_name: FieldName = "") -
 
     def define_relation(field: SourceField) -> None:
         field.set_nautobot_field(nautobot_name)
-        field.set_relation_importer(field.wrapper.adapter.get_or_create_wrapper(related_source))
+        if field.nautobot.internal_type == InternalFieldType.MANY_TO_MANY_FIELD:
+            field.set_m2m_importer(related_source)
+        else:
+            field.set_relation_importer(related_source)
 
     return define_relation
 

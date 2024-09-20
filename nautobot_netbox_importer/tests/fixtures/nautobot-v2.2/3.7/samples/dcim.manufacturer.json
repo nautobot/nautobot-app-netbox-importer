@@ -1,0 +1,35 @@
+[
+{
+  "model": "dcim.manufacturer",
+  "pk": "70bcef54-cbf3-5783-b7e1-537b7b90707f",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:20.054Z",
+    "_custom_field_data": {},
+    "name": "Generic",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "d9d589db-ff6e-5151-8af2-d8512bb09cfd",
+  "fields": {
+    "created": "2020-12-22T00:00:00Z",
+    "last_updated": "2024-02-08T07:55:20.052Z",
+    "_custom_field_data": {},
+    "name": "APC",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.manufacturer",
+  "pk": "f5136724-0984-5e3b-b073-ea6d83116997",
+  "fields": {
+    "created": "2024-02-08T07:55:20.057Z",
+    "last_updated": "2024-02-08T07:55:20.057Z",
+    "_custom_field_data": {},
+    "name": "Unknown",
+    "description": ""
+  }
+}
+]

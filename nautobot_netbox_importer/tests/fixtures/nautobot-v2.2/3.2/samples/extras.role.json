@@ -1,0 +1,51 @@
+[
+{
+  "model": "extras.role",
+  "pk": "254b9e37-775b-5584-88ec-36409d1bc9dd",
+  "fields": {
+    "created": "2020-12-22T00:00:00Z",
+    "last_updated": "2024-02-22T08:38:09.465Z",
+    "_custom_field_data": {},
+    "name": "PDU",
+    "color": "607d8b",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      42
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "2a53f46b-41e1-5f02-865a-163c8edd429a",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2024-02-22T08:38:09.491Z",
+    "_custom_field_data": {},
+    "name": "Access - Wireless",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": 1000,
+    "content_types": [
+      72,
+      68
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "bb9626e1-166c-552f-89c8-c66148ea6c1d",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-02-22T08:38:09.484Z",
+    "_custom_field_data": {},
+    "name": "IDF",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      60
+    ]
+  }
+}
+]

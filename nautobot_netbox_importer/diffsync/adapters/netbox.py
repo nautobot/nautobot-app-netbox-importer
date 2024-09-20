@@ -2,26 +2,17 @@
 
 from gzip import GzipFile
 from pathlib import Path
-from typing import Callable
-from typing import Generator
-from typing import NamedTuple
-from typing import Union
-from urllib.parse import ParseResult
-from urllib.parse import urlparse
+from typing import Callable, Generator, NamedTuple, Union
+from urllib.parse import ParseResult, urlparse
 
 import ijson
 import requests
 from django.core.management import call_command
 from django.db.transaction import atomic
 
-from nautobot_netbox_importer.base import GENERATOR_SETUP_MODULES
-from nautobot_netbox_importer.base import logger
-from nautobot_netbox_importer.base import register_generator_setup
-from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations
-from nautobot_netbox_importer.diffsync.models.dcim import unrack_zero_uheight_devices
-from nautobot_netbox_importer.generator import SourceAdapter
-from nautobot_netbox_importer.generator import SourceDataGenerator
-from nautobot_netbox_importer.generator import SourceRecord
+from nautobot_netbox_importer.base import GENERATOR_SETUP_MODULES, logger, register_generator_setup
+from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations, unrack_zero_uheight_devices
+from nautobot_netbox_importer.generator import SourceAdapter, SourceDataGenerator, SourceRecord
 from nautobot_netbox_importer.summary import Pathable
 
 for _name in (
@@ -60,6 +51,7 @@ class NetBoxImporterOptions(NamedTuple):
     unrack_zero_uheight_devices: bool = True
     save_json_summary_path: str = ""
     save_text_summary_path: str = ""
+    trace_issues: bool = False
 
 
 AdapterSetupFunction = Callable[[SourceAdapter], None]
@@ -71,7 +63,13 @@ class NetBoxAdapter(SourceAdapter):
     # pylint: disable=keyword-arg-before-vararg
     def __init__(self, input_ref: _FileRef, options: NetBoxImporterOptions, job=None, sync=None, *args, **kwargs):
         """Initialize NetBox Source Adapter."""
-        super().__init__(name="NetBox", get_source_data=_get_reader(input_ref), *args, **kwargs)
+        super().__init__(
+            name="NetBox",
+            *args,
+            get_source_data=_get_reader(input_ref),
+            trace_issues=options.trace_issues,
+            **kwargs,
+        )
         self.job = job
         self.sync = sync
 

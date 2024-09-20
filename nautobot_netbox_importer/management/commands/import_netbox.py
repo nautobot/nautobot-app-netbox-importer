@@ -3,8 +3,7 @@
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
-from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter
-from nautobot_netbox_importer.diffsync.adapters import NetBoxImporterOptions
+from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
 
 
 class Command(BaseCommand):
@@ -75,6 +74,12 @@ class Command(BaseCommand):
             "--save-text-summary-path",
             dest="save_text_summary_path",
             help="File path to write the text summary to.",
+        )
+        parser.add_argument(
+            "--trace-issues",
+            action="store_true",
+            dest="trace_issues",
+            help="Show a detailed trace of issues originated from any `Exception` found during the import.",
         )
 
     def handle(self, json_file, **kwargs):  # type: ignore

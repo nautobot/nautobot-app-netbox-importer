@@ -1,0 +1,83 @@
+[
+{
+  "model": "dcim.rack",
+  "pk": "18afac20-66af-59a0-8108-a54769f728bf",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:53.510Z",
+    "_custom_field_data": {},
+    "name": "Plant 1",
+    "_name": "Plant 00000001",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "bb9626e1-166c-552f-89c8-c66148ea6c1d",
+    "facility_id": null,
+    "location": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+    "rack_group": null,
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "serial": "",
+    "asset_tag": null,
+    "type": "2-post-frame",
+    "width": 19,
+    "u_height": 42,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.rack",
+  "pk": "87cd3a0d-c203-5af5-8e51-f402bb23bc00",
+  "fields": {
+    "created": "2020-12-20T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:53.251Z",
+    "_custom_field_data": {},
+    "name": "Comms closet",
+    "_name": "Comms closet",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": null,
+    "facility_id": null,
+    "location": "022126fd-0b04-5d40-9aa0-3c1aa0a5dfd5",
+    "rack_group": null,
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "serial": "",
+    "asset_tag": null,
+    "type": "wall-cabinet",
+    "width": 19,
+    "u_height": 12,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.rack",
+  "pk": "99d7f968-198f-5f24-9f32-895e31d76fd7",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:07:53.399Z",
+    "_custom_field_data": {},
+    "name": "R108",
+    "_name": "R00000108",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "d3d15004-11f2-5146-9094-d67775ee3ef8",
+    "facility_id": null,
+    "location": "cf28b6e3-d0e5-59d1-80b0-f2df3642716e",
+    "rack_group": null,
+    "tenant": "3ee5bf99-c3d8-5ab6-8bfd-e06847234e1f",
+    "serial": "",
+    "asset_tag": null,
+    "type": "4-post-cabinet",
+    "width": 19,
+    "u_height": 48,
+    "desc_units": false,
+    "outer_width": null,
+    "outer_depth": null,
+    "outer_unit": "",
+    "comments": ""
+  }
+}
+]

@@ -1,0 +1,47 @@
+[
+{
+  "model": "virtualization.cluster",
+  "pk": "07e60a0f-9fe9-59d7-9a7f-3eafb2f7024b",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:57.819Z",
+    "_custom_field_data": {},
+    "name": "gc-europe-west2",
+    "cluster_type": "49f2845e-b8f4-58e3-8534-2a1131071e25",
+    "cluster_group": "20182816-bf12-5cd0-8f07-c91fcd271bd7",
+    "tenant": null,
+    "location": null,
+    "comments": ""
+  }
+},
+{
+  "model": "virtualization.cluster",
+  "pk": "ea31eb18-5f93-5e0c-a1a8-e2e77d1c9cc7",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:57.818Z",
+    "_custom_field_data": {},
+    "name": "gc-europe-west1",
+    "cluster_type": "49f2845e-b8f4-58e3-8534-2a1131071e25",
+    "cluster_group": "20182816-bf12-5cd0-8f07-c91fcd271bd7",
+    "tenant": null,
+    "location": null,
+    "comments": ""
+  }
+},
+{
+  "model": "virtualization.cluster",
+  "pk": "eed9e8dc-4464-53ee-8d16-80dc6027b13e",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2024-01-02T12:04:57.802Z",
+    "_custom_field_data": {},
+    "name": "DO-LON1",
+    "cluster_type": "786c136a-fff1-5f84-8d0c-c43610039f45",
+    "cluster_group": "20182816-bf12-5cd0-8f07-c91fcd271bd7",
+    "tenant": null,
+    "location": null,
+    "comments": ""
+  }
+}
+]
