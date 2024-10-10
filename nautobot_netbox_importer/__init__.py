@@ -22,6 +22,7 @@ class NautobotNetboxImporterConfig(NautobotAppConfig):
     max_version = "2.9999"
     default_settings = {}
     caching_config = {}
+    docs_view_name = "plugins:nautobot_netbox_importer:docs"
 
 
 config = NautobotNetboxImporterConfig  # pylint:disable=invalid-name
