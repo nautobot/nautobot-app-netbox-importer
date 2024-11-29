@@ -178,7 +178,6 @@ def setup(adapter: SourceAdapter) -> None:
             "parent": fields.constant(region_type_uid, reference=location_type_wrapper)
             if sitegroup_parent_always_region
             else "parent",
-
             "nestable": fields.constant(True),
         },
     )
