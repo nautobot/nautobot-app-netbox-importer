@@ -69,7 +69,7 @@ namespace.configure(
 
 
 def _get_test_dump_path(context):
-    parsed_nautobot_version = context.nautobot_netbox_importer.nautobot_ver.split(".")
+    parsed_nautobot_version = _get_docker_nautobot_version(context).split(".")
     if len(parsed_nautobot_version) < 2:  # noqa: PLR2004
         raise ValueError(f"Can't determine the Nautobot version from: {context.nautobot_netbox_importer.nautobot_ver}")
 
