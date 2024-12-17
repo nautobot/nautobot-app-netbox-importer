@@ -1,0 +1,1 @@
+Update the version parsing function to retrieve version using _get_docker_nautobot_version.
