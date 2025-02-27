@@ -10,6 +10,7 @@ from nautobot.apps.urls import NautobotUIViewSetRouter
 # from nautobot_netbox_importer import views
 
 
+app_name = "nautobot_netbox_importer"
 router = NautobotUIViewSetRouter()
 
 # Here is an example of how to register a viewset, you will want to replace views.NautobotNetboxImporterUIViewSet with your viewset
