@@ -408,7 +408,7 @@ namespace.configure(
     {
         "nautobot_netbox_importer": {
             ...
-            "nautobot_ver": "2.0.6",
+            "nautobot_ver": "3.0.0",
 	    ...
         }
     }
