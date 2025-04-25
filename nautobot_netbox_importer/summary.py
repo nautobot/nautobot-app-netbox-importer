@@ -15,6 +15,7 @@ class ImporterIssue(NamedTuple):
     issue_type: str
     message: str
     data: Dict[str, str]
+    source_reference: str = ""
 
 
 DiffSyncSummary = Mapping[str, int]
@@ -280,7 +281,7 @@ class ImportSummary:
             if summary.issues:
                 yield _fill_up("-", summary.content_type)
                 for issue in summary.issues:
-                    yield f"{issue.uid} | {issue.issue_type} | {json.dumps(issue.name)} | {json.dumps(issue.message)}"
+                    yield f"{issue.uid} | {issue.source_reference} | {issue.issue_type} | {json.dumps(issue.name)} | {json.dumps(issue.message)}"
 
     def get_fields_mapping(self) -> Generator[str, None, None]:
         """Get formatted field mappings."""
