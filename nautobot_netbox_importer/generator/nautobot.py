@@ -574,6 +574,7 @@ class NautobotModelWrapper:
             if field.can_import:
                 set_value(field.name, field.internal_type)
 
+    # pylint: disable=too-many-statements
     def save_nautobot_instance(self, instance: NautobotBaseModel, values: RecordData) -> bool:
         """Save a Nautobot instance.
 
@@ -587,7 +588,7 @@ class NautobotModelWrapper:
 
         It's possible to define force fields that are set after the initial save.
         This is to override any values set by Nautobot `save()` method.
-        To define field as forced, specify `"<field name": fields.force()` in `configure_model(fields=...)`.
+        To define field as forced, specify `"<field name": fields.force()` in `configure_model(fields={ ... })`.
 
         Args:
             instance: The Nautobot model instance to save
@@ -618,11 +619,13 @@ class NautobotModelWrapper:
                 with atomic():  # type: ignore
                     instance.save()
                 return
+            # pylint: disable=broad-exception-caught
             except Exception as exception:
                 error = exception
 
             super(instance.__class__, instance).save()
 
+            # Create `FirstSaveFailed` issue when `super.save()` passes, otherwise `SaveFailed` issue will be created by the caller.
             self.add_issue(
                 "FirstSaveFailed",
                 nautobot_instance=instance,
