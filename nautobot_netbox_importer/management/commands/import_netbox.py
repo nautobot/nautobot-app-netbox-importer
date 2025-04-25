@@ -81,14 +81,23 @@ class Command(BaseCommand):
             dest="trace_issues",
             help="Show a detailed trace of issues originated from any `Exception` found during the import.",
         )
+        parser.add_argument(
+            "--customizations",
+            dest="customizations",
+            help="Paths to a Python module containing customizations to apply during the import. (default: empty)",
+        )
 
     def handle(self, json_file, **kwargs):  # type: ignore
         """Handle execution of the import_netbox management command."""
         call_command("migrate")
 
+        customizations = (kwargs.pop("customizations") or "").split(",")
+
         # pylint: disable=protected-access
         keys = NetBoxImporterOptions._fields
-        options = NetBoxImporterOptions(**{key: value for key, value in kwargs.items() if key in keys})
+        options = NetBoxImporterOptions(
+            **{key: value for key, value in kwargs.items() if key in keys}, customizations=customizations
+        )
 
         adapter = NetBoxAdapter(json_file, options)
         adapter.import_to_nautobot()
