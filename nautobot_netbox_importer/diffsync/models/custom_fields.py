@@ -8,7 +8,7 @@ from nautobot_netbox_importer.generator import (
     EMPTY_VALUES,
     DiffSyncBaseModel,
     ImporterPass,
-    PreImportResult,
+    PreImportRecordResult,
     SourceAdapter,
     SourceField,
     fields,
@@ -95,14 +95,14 @@ def setup(adapter: SourceAdapter) -> None:
     """Map NetBox custom fields to Nautobot."""
     choice_sets = {}
 
-    def create_choice_set(source: RecordData, importer_pass: ImporterPass) -> PreImportResult:
+    def create_choice_set(source: RecordData, importer_pass: ImporterPass) -> PreImportRecordResult:
         if importer_pass == ImporterPass.DEFINE_STRUCTURE:
             choice_sets[source.get("id")] = [
                 *_convert_choices(source.get("base_choices")),
                 *_convert_choices(source.get("extra_choices")),
             ]
 
-        return PreImportResult.USE_RECORD
+        return PreImportRecordResult.USE_RECORD
 
     def define_choice_set(field: SourceField) -> None:
         def choices_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
@@ -144,7 +144,7 @@ def setup(adapter: SourceAdapter) -> None:
     # Defined in NetBox but not in Nautobot
     adapter.configure_model(
         "extras.CustomFieldChoiceSet",
-        pre_import=create_choice_set,
+        pre_import_record=create_choice_set,
     )
 
     adapter.configure_model(

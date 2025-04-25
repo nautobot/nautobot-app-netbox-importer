@@ -4,7 +4,13 @@ import json
 from uuid import UUID
 
 from nautobot_netbox_importer.base import RecordData
-from nautobot_netbox_importer.generator import DiffSyncBaseModel, PreImportResult, SourceAdapter, SourceField, fields
+from nautobot_netbox_importer.generator import (
+    DiffSyncBaseModel,
+    PreImportRecordResult,
+    SourceAdapter,
+    SourceField,
+    fields,
+)
 
 from .locations import define_location
 
@@ -39,13 +45,13 @@ def _define_units(field: SourceField) -> None:
     field.set_importer(units_importer)
 
 
-def _pre_import_cable_termination(source: RecordData, _) -> PreImportResult:
+def _pre_import_cable_termination(source: RecordData, _) -> PreImportRecordResult:
     cable_end = source.pop("cable_end").lower()
     source["id"] = source.pop("cable")
     source[f"termination_{cable_end}_type"] = source.pop("termination_type")
     source[f"termination_{cable_end}_id"] = source.pop("termination_id")
 
-    return PreImportResult.USE_RECORD
+    return PreImportRecordResult.USE_RECORD
 
 
 def setup(adapter: SourceAdapter) -> None:

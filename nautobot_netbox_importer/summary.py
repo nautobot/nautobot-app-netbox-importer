@@ -77,11 +77,12 @@ class SourceModelSummary(NamedTuple):
     identifiers: Optional[List[FieldName]]
     disable_related_reference: bool
     forward_references: Optional[str]
-    pre_import: Optional[str]
     fields: List[FieldSummary]
     flags: str
     default_reference_uid: Union[str, bool, int, float, None]
     stats: SourceModelStats
+    pre_import: str | None = None
+    post_import: str | None = None
 
 
 class NautobotModelSummary(NamedTuple):

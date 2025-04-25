@@ -6,6 +6,7 @@ from nautobot_netbox_importer.base import RecordData
 from nautobot_netbox_importer.generator import (
     DiffSyncBaseModel,
     InvalidChoiceValueIssue,
+    PreImportRecordResult,
     SourceAdapter,
     SourceField,
     fields,

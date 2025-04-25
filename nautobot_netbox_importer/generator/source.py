@@ -84,7 +84,7 @@ class ImporterPass(Enum):
     IMPORT_DATA = 2
 
 
-class PreImportResult(Enum):
+class PreImportRecordResult(Enum):
     """Pre Import Response."""
 
     SKIP_RECORD = False
@@ -102,7 +102,8 @@ class SourceFieldSource(Enum):
     IDENTIFIER = auto()  # Fields used as identifiers
 
 
-PreImport = Callable[[RecordData, ImporterPass], PreImportResult]
+PreImportRecord = Callable[[RecordData, ImporterPass], PreImportRecordResult]
+PostImportRecord = Callable[[RecordData, DiffSyncBaseModel], None]
 SourceDataGenerator = Callable[[], Iterable[SourceRecord]]
 SourceFieldImporter = Callable[[RecordData, DiffSyncBaseModel], None]
 SourceFieldImporterFallback = Callable[["SourceField", RecordData, DiffSyncBaseModel, Exception], None]
@@ -157,7 +158,8 @@ class SourceAdapter(BaseAdapter):
         default_reference: Optional[RecordData] = None,
         flags: Optional[DiffSyncModelFlags] = None,
         nautobot_flags: Optional[DiffSyncModelFlags] = None,
-        pre_import: Optional[PreImport] = None,
+        pre_import_record: Optional[PreImportRecord] = None,
+        post_import_record: Optional[PostImportRecord] = None,
         disable_related_reference: Optional[bool] = None,
         forward_references: Optional[ForwardReferences] = None,
     ) -> "SourceModelWrapper":
@@ -207,8 +209,10 @@ class SourceAdapter(BaseAdapter):
             wrapper.flags = flags
         if nautobot_flags is not None:
             wrapper.nautobot.flags = nautobot_flags
-        if pre_import:
-            wrapper.pre_import = pre_import
+        if pre_import_record:
+            wrapper.pre_import_record = pre_import_record
+        if post_import_record:
+            wrapper.post_import_record = post_import_record
         if disable_related_reference is not None:
             wrapper.disable_related_reference = disable_related_reference
         if forward_references:
@@ -295,7 +299,7 @@ class SourceAdapter(BaseAdapter):
     def load(self) -> None:
         """Load data from the source."""
         self.import_data()
-        self.post_import()
+        self.post_load()
 
     def import_data(self) -> None:
         """Import data from the source."""
@@ -325,9 +329,9 @@ class SourceAdapter(BaseAdapter):
         for content_type, data in get_source_data():
             self.wrappers[content_type].second_pass(data)
 
-    def post_import(self) -> None:
+    def post_load(self) -> None:
         """Post import processing."""
-        while any(wrapper.post_import() for wrapper in self.wrappers.values()):
+        while any(wrapper.post_process_references() for wrapper in self.wrappers.values()):
             pass
 
         for nautobot_wrapper in self.get_imported_nautobot_wrappers():
@@ -402,7 +406,8 @@ class SourceModelWrapper:
 
         # Source fields defintions
         self.fields: OrderedDict[FieldName, SourceField] = OrderedDict()
-        self.pre_import: Optional[PreImport] = None
+        self.pre_import_record: Optional[PreImportRecord] = None
+        self.post_import_record: Optional[PostImportRecord] = None
 
         if self.disable_reason:
             self.adapter.logger.debug("Created disabled %s", self)
@@ -444,8 +449,8 @@ class SourceModelWrapper:
 
     def first_pass(self, data: RecordData) -> None:
         """Firts pass of data import."""
-        if self.pre_import:
-            if self.pre_import(data, ImporterPass.DEFINE_STRUCTURE) != PreImportResult.USE_RECORD:
+        if self.pre_import_record:
+            if self.pre_import_record(data, ImporterPass.DEFINE_STRUCTURE) != PreImportRecordResult.USE_RECORD:
                 self.stats.first_pass_skipped += 1
                 return
 
@@ -462,14 +467,17 @@ class SourceModelWrapper:
         if self.disable_reason:
             return
 
-        if self.pre_import:
-            if self.pre_import(data, ImporterPass.IMPORT_DATA) != PreImportResult.USE_RECORD:
+        if self.pre_import_record:
+            if self.pre_import_record(data, ImporterPass.IMPORT_DATA) != PreImportRecordResult.USE_RECORD:
                 self.stats.second_pass_skipped += 1
                 return
 
         self.stats.second_pass_used += 1
 
-        self.import_record(data)
+        target = self.import_record(data)
+
+        if self.post_import_record:
+            self.post_import_record(data, target)
 
     def get_summary(self, content_type_id) -> SourceModelSummary:
         """Get a summary of the model."""
@@ -484,7 +492,8 @@ class SourceModelWrapper:
             identifiers=self.identifiers,
             disable_related_reference=self.disable_related_reference,
             forward_references=self.forward_references and self.forward_references.__name__ or None,
-            pre_import=self.pre_import and self.pre_import.__name__ or None,
+            pre_import=self.pre_import_record and self.pre_import_record.__name__ or None,
+            post_import=self.post_import_record and self.post_import_record.__name__ or None,
             fields=sorted(fields, key=lambda field: field.name),
             flags=str(self.flags),
             default_reference_uid=serialize_to_summary(self.default_reference_uid),
@@ -719,7 +728,7 @@ class SourceModelWrapper:
         """Set the default reference to this model."""
         self.default_reference_uid = self.cache_record(data)
 
-    def post_import(self) -> bool:
+    def post_process_references(self) -> bool:
         """Post import processing.
 
         Assigns referenced content_types to referencing instances.
