@@ -175,7 +175,11 @@ def setup(adapter: SourceAdapter) -> None:
         "dcim.SiteGroup",
         nautobot_content_type="dcim.LocationType",
         fields={
-            "parent": fields.constant(region_type_uid) if sitegroup_parent_always_region else "parent",
+            "parent": (
+                fields.constant(region_type_uid, reference=location_type_wrapper)
+                if sitegroup_parent_always_region
+                else "parent"
+            ),
             "nestable": fields.constant(True),
         },
     )
@@ -185,7 +189,7 @@ def setup(adapter: SourceAdapter) -> None:
         nautobot_content_type="dcim.Location",
         forward_references=forward_references,
         fields={
-            "location_type": fields.constant(region_type_uid),
+            "location_type": fields.constant(region_type_uid, reference=location_type_wrapper),
         },
     )
 
@@ -203,7 +207,7 @@ def setup(adapter: SourceAdapter) -> None:
         "dcim.Location",
         forward_references=forward_references,
         fields={
-            "location_type": fields.constant(location_type_uid),
+            "location_type": fields.constant(location_type_uid, reference=location_type_wrapper),
             "parent": _define_location_parent,
         },
     )
