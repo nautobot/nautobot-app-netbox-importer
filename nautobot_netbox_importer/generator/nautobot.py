@@ -86,6 +86,8 @@ IMPORT_ORDER: Iterable[ContentTypeStr] = (
     "dcim.devicetype",
     "dcim.consoleport",
     "dcim.consoleporttemplate",
+    "dcim.consoleserverport",
+    "dcim.consoleserverporttemplate",
     "dcim.device",
     "dcim.devicebay",
     "dcim.frontport",
