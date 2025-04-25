@@ -105,6 +105,7 @@ class SourceFieldSource(Enum):
 PreImport = Callable[[RecordData, ImporterPass], PreImportResult]
 SourceDataGenerator = Callable[[], Iterable[SourceRecord]]
 SourceFieldImporter = Callable[[RecordData, DiffSyncBaseModel], None]
+GetPkFromData = Callable[[RecordData], Uid]
 SourceFieldImporterFallback = Callable[["SourceField", RecordData, DiffSyncBaseModel, Exception], None]
 SourceFieldImporterFactory = Callable[["SourceField"], None]
 SourceFieldDefinition = Union[
@@ -160,6 +161,7 @@ class SourceAdapter(BaseAdapter):
         pre_import: Optional[PreImport] = None,
         disable_related_reference: Optional[bool] = None,
         forward_references: Optional[ForwardReferences] = None,
+        get_pk_from_data: Optional[GetPkFromData] = None,
     ) -> "SourceModelWrapper":
         """Create if not exist and configure a wrapper for a given source content type.
 
@@ -213,6 +215,8 @@ class SourceAdapter(BaseAdapter):
             wrapper.disable_related_reference = disable_related_reference
         if forward_references:
             wrapper.forward_references = forward_references
+        if get_pk_from_data:
+            wrapper._get_pk_from_data = get_pk_from_data
 
         return wrapper
 
@@ -396,6 +400,7 @@ class SourceModelWrapper:
         # Caching
         self._uid_to_pk_cache: Dict[Uid, Uid] = {}
         self._cached_data: Dict[Uid, RecordData] = {}
+        self._get_pk_from_data: GetPkFromData | None = None
 
         self.stats = SourceModelStats()
         self.flags = DiffSyncModelFlags.NONE
@@ -553,6 +558,13 @@ class SourceModelWrapper:
 
         self.importers = set(field.importer for field in self.fields.values() if field.importer)
 
+    def find_pk_from_uid(self, uid: Uid) -> Uid | None:
+        """Find a source primary key for a given source uid."""
+        if uid in self._uid_to_pk_cache:
+            return self._uid_to_pk_cache[uid]
+
+        return None
+
     def get_pk_from_uid(self, uid: Uid) -> Uid:
         """Get a source primary key for a given source uid."""
         if uid in self._uid_to_pk_cache:
@@ -605,6 +617,9 @@ class SourceModelWrapper:
 
     def get_pk_from_data(self, data: RecordData) -> Uid:
         """Get a source primary key for a given source data."""
+        if self._get_pk_from_data:
+            return self._get_pk_from_data(data)
+
         if not self.identifiers:
             return self.get_pk_from_uid(data[self.nautobot.pk_field.name])
 
