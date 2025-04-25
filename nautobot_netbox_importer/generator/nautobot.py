@@ -575,7 +575,27 @@ class NautobotModelWrapper:
                 set_value(field.name, field.internal_type)
 
     def save_nautobot_instance(self, instance: NautobotBaseModel, values: RecordData) -> bool:
-        """Save a Nautobot instance."""
+        """Save a Nautobot instance.
+
+        When the first save fails, importer creates `FirstSaveFailed` issue and calls `super.save()`.
+        This is to skip Nautobot checks/updates defined in `save()` method.
+
+        If super.save() fails, it creates SaveFailed issue, and the instance is not saved.
+        This can lead to integrity errors if the missing isntance is referenced by other instances.
+
+        After the save, `clean()` is called on the instance. If it fails, it creates a `CleanFailed` issue.
+
+        It's possible to define force fields that are set after the initial save.
+        This is to override any values set by Nautobot `save()` method.
+        To define field as forced, specify `"<field name": fields.force()` in `configure_model(fields=...)`.
+
+        Args:
+            instance: The Nautobot model instance to save
+            values: Dictionary of field values to apply to the instance
+
+        Returns:
+            bool: True if the instance was saved successfully, False otherwise
+        """
 
         def set_custom_field_data(value: Optional[Mapping]):
             custom_field_data = getattr(instance, "custom_field_data", None)
@@ -590,6 +610,25 @@ class NautobotModelWrapper:
                 setattr(instance, field_name, "")
             else:
                 setattr(instance, field_name, None)
+
+        def save_or_super_save():
+            error = None
+
+            try:
+                with atomic():  # type: ignore
+                    instance.save()
+                return
+            except Exception as exception:
+                error = exception
+
+            super(instance.__class__, instance).save()
+
+            self.add_issue(
+                "FirstSaveFailed",
+                nautobot_instance=instance,
+                data=values,
+                error=error,
+            )
 
         @atomic
         def save():
@@ -612,13 +651,13 @@ class NautobotModelWrapper:
                 else:
                     setattr(instance, field_name, value)
 
-            instance.save()
+            save_or_super_save()
 
             if force_fields:
                 # These fields has to be set after the initial save to override any default values.
                 for field_name, value in force_fields.items():
                     setattr(instance, field_name, value)
-                instance.save()
+                save_or_super_save()
 
             for field_name in m2m_fields:
                 field = getattr(instance, field_name)
@@ -629,7 +668,7 @@ class NautobotModelWrapper:
                     field.clear()
 
         try:
-            save()
+            save()  # type: ignore
         # pylint: disable=broad-exception-caught
         except Exception as error:
             self.stats.save_failed += 1
