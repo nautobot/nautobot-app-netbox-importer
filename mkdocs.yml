@@ -130,9 +130,9 @@ nav:
       - Release Checklist: "dev/release_checklist.md"
       - Architecture Decision Records: "dev/arch_decision.md"
       - Key Concepts:
-        - Generator Description: "dev/generator.md"
-        - Data Flow: "dev/data_flow.md"
-        - Import Order: "dev/import_order.md"
+          - Generator Description: "dev/generator.md"
+          - Data Flow: "dev/data_flow.md"
+          - Import Order: "dev/import_order.md"
       - Demo Execution: "dev/demo.md"
       - Frequently Asked Questions: "dev/faq.md"
       - Test Fixtures: "dev/code_reference/fixtures/README.md"
