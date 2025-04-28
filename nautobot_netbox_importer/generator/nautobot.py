@@ -578,17 +578,18 @@ class NautobotModelWrapper:
     def save_nautobot_instance(self, instance: NautobotBaseModel, values: RecordData) -> bool:
         """Save a Nautobot instance.
 
-        When the first save fails, importer creates `FirstSaveFailed` issue and calls `super.save()`.
+        When the first Nautobot `save()` fails, importer calls `super.save()`.
+        If that passes, `FirstSaveFailed` issue is created.
         This is to skip Nautobot checks/updates defined in `save()` method.
 
-        If super.save() fails, it creates SaveFailed issue, and the instance is not saved.
-        This can lead to integrity errors if the missing isntance is referenced by other instances.
+        If super.save() fails, it creates `SaveFailed` issue, and the instance is not saved.
+        This can lead to integrity errors if the missing instance is referenced by other instances.
 
         After the save, `clean()` is called on the instance. If it fails, it creates a `CleanFailed` issue.
 
         It's possible to define force fields that are set after the initial save.
         This is to override any values set by Nautobot `save()` method.
-        To define field as forced, specify `"<field name": fields.force()` in `configure_model(fields={ ... })`.
+        To define field as forced, specify `"<field name>": fields.force()` in `configure_model(fields={ ... })`.
 
         Args:
             instance: The Nautobot model instance to save
