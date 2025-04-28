@@ -24,19 +24,18 @@ from diffsync import DiffSyncModel
 from diffsync.enum import DiffSyncModelFlags
 from nautobot.core.models.tree_queries import TreeModel
 
-from nautobot_netbox_importer.base import NOTHING, ContentTypeStr, ContentTypeValue, FieldName, RecordData, Uid
-from nautobot_netbox_importer.base import logger as default_logger
-from nautobot_netbox_importer.summary import (
-    DiffSyncSummary,
-    FieldSummary,
-    ImportSummary,
-    SourceModelStats,
-    SourceModelSummary,
-    serialize_to_summary,
+from nautobot_netbox_importer.base import (
+    DUMMY_UID,
+    NOTHING,
+    ContentTypeStr,
+    ContentTypeValue,
+    FieldName,
+    FillDummyData,
+    RecordData,
+    Uid,
 )
-from nautobot_netbox_importer.utils import get_field_choices
-
-from .base import (
+from nautobot_netbox_importer.base import logger as default_logger
+from nautobot_netbox_importer.generator.base import (
     AUTO_ADD_FIELDS,
     EMPTY_VALUES,
     BaseAdapter,
@@ -47,8 +46,23 @@ from .base import (
     normalize_datetime,
     source_pk_to_uuid,
 )
-from .exceptions import NautobotModelNotFound, NetBoxImporterException
-from .nautobot import IMPORT_ORDER, DiffSyncBaseModel, NautobotAdapter, NautobotField, NautobotModelWrapper
+from nautobot_netbox_importer.generator.exceptions import NautobotModelNotFound, NetBoxImporterException
+from nautobot_netbox_importer.generator.nautobot import (
+    IMPORT_ORDER,
+    DiffSyncBaseModel,
+    NautobotAdapter,
+    NautobotField,
+    NautobotModelWrapper,
+)
+from nautobot_netbox_importer.summary import (
+    DiffSyncSummary,
+    FieldSummary,
+    ImportSummary,
+    SourceModelStats,
+    SourceModelSummary,
+    serialize_to_summary,
+)
+from nautobot_netbox_importer.utils import get_field_choices
 
 
 class SourceFieldImporterIssue(NetBoxImporterException):
@@ -161,6 +175,7 @@ class SourceAdapter(BaseAdapter):
         pre_import: Optional[PreImport] = None,
         disable_related_reference: Optional[bool] = None,
         forward_references: Optional[ForwardReferences] = None,
+        fill_dummy_data: Optional[FillDummyData] = None,
         get_pk_from_data: Optional[GetPkFromData] = None,
     ) -> "SourceModelWrapper":
         """Create if not exist and configure a wrapper for a given source content type.
@@ -215,6 +230,8 @@ class SourceAdapter(BaseAdapter):
             wrapper.disable_related_reference = disable_related_reference
         if forward_references:
             wrapper.forward_references = forward_references
+        if fill_dummy_data:
+            wrapper._fill_dummy_data = fill_dummy_data
         if get_pk_from_data:
             wrapper._get_pk_from_data = get_pk_from_data
 
@@ -400,6 +417,7 @@ class SourceModelWrapper:
         # Caching
         self._uid_to_pk_cache: Dict[Uid, Uid] = {}
         self._cached_data: Dict[Uid, RecordData] = {}
+        self._fill_dummy_data: FillDummyData | None = None
         self._get_pk_from_data: GetPkFromData | None = None
 
         self.stats = SourceModelStats()
@@ -426,6 +444,10 @@ class SourceModelWrapper:
     def __str__(self) -> str:
         """Return a string representation of the wrapper."""
         return f"{self.__class__.__name__}<{self.content_type} -> {self.nautobot.content_type}>"
+
+    def is_pk_cached(self, uid: Uid) -> bool:
+        """Check if a source primary key is cached."""
+        return uid in self._uid_to_pk_cache
 
     def cache_record_uids(self, source: RecordData, nautobot_uid: Optional[Uid] = None) -> Uid:
         """Cache record identifier mappings.
@@ -727,6 +749,33 @@ class SourceModelWrapper:
         self.stats.pre_cached += 1
 
         self.adapter.logger.debug("Cached %s %s %s", self, uid, data)
+
+        return uid
+
+    def cache_dummy_object(self, suffix: str, data: RecordData | None = None) -> Uid:
+        """Create a dummy object for the given data."""
+        uid = f"{DUMMY_UID}{suffix}"
+        nautobot_uid = self.get_pk_from_uid(uid)
+
+        if nautobot_uid in self._cached_data:
+            return uid
+
+        if not data:
+            data = {}
+
+        if "id" not in data:
+            data["id"] = uid
+
+        if self._fill_dummy_data:
+            self._fill_dummy_data(data, suffix)
+
+        self.cache_record(data)
+        self.nautobot.add_issue(
+            "DummyObject",
+            message="Dummy object cached",
+            uid=nautobot_uid,
+            data=data,
+        )
 
         return uid
 
