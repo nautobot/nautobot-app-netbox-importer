@@ -8,7 +8,16 @@ from .base import ContentTypeStr, FieldName, Pathable
 
 
 class ImporterIssue(NamedTuple):
-    """Importer issue."""
+    """Represents an issue encountered during the import process.
+
+    Fields:
+        uid: Unique identifier for the issue
+        name: Name of the affected object or field
+        issue_type: Type of issue (e.g., 'validation', 'import_error')
+        message: Descriptive error message
+        data: Additional contextual data for debugging
+        source_reference: Reference to the source data (mostly ID field) that caused the issue
+    """
 
     uid: str
     name: str
@@ -22,7 +31,20 @@ DiffSyncSummary = Mapping[str, int]
 
 
 class FieldSummary(NamedTuple):
-    """Field summary."""
+    """Summarizes a field's mapping between source and target systems.
+
+    Fields:
+        name: Source field name in the source system
+        nautobot_name: Corresponding field name in Nautobot (if any)
+        nautobot_internal_type: Nautobot's internal data type for this field
+        nautobot_can_import: Whether this field can be imported into Nautobot
+        importer: Name of the importer function/method handling this field
+        definition: Original field definition/value from source
+        sources: List of sources where this field appears
+        default_value: Default value used when source value is missing
+        disable_reason: Reason why this field is disabled for import (if applicable)
+        required: Whether this field is required in Nautobot
+    """
 
     name: FieldName
     nautobot_name: Optional[FieldName]
@@ -68,7 +90,23 @@ class NautobotModelStats:
 
 
 class SourceModelSummary(NamedTuple):
-    """Source Model Summary."""
+    """Summarizes a source model's mapping to Nautobot and import statistics.
+
+    Fields:
+        content_type: Source content type string identifier
+        content_type_id: Numeric ID of the source content type
+        extends_content_type: Parent content type that this model extends (if any)
+        nautobot_content_type: Target Nautobot content type
+        disable_reason: Reason why this model is disabled for import (if applicable)
+        identifiers: List of fields used to uniquely identify instances
+        disable_related_reference: Whether related references are disabled
+        forward_references: Configuration for forward references handling
+        pre_import: Pre-import processing function/method name
+        fields: List of field summaries for this model
+        flags: Feature flags applied to this model
+        default_reference_uid: Default UID used for reference when actual reference is missing
+        stats: Statistics about the source model's import process
+    """
 
     content_type: ContentTypeStr
     content_type_id: int
@@ -86,7 +124,16 @@ class SourceModelSummary(NamedTuple):
 
 
 class NautobotModelSummary(NamedTuple):
-    """Nautobot Model Summary."""
+    """Summarizes a Nautobot model's import results and any issues.
+
+    Fields:
+        content_type: Nautobot content type string identifier
+        content_type_id: Numeric ID of the Nautobot content type (if available)
+        flags: Feature flags applied to this model
+        disabled: Whether this model is disabled for import
+        stats: Statistics about the Nautobot model's import process
+        issues: List of issues encountered during import for this model
+    """
 
     content_type: ContentTypeStr
     content_type_id: Optional[int]
@@ -100,13 +147,32 @@ _FILL_UP_LENGTH = 100
 
 
 def _fill_up(*values) -> str:
+    """Format values into a padded string of consistent length.
+
+    Args:
+        *values: Values to join with spaces and pad
+
+    Returns:
+        A string padded with the first character of the first value to reach the defined length
+    """
     fill = values[0][0]
     result = " ".join(str(value) for value in values) + " " + fill
     return result + (fill * (_FILL_UP_LENGTH - len(result)))
 
 
-def serialize_to_summary(value):
-    """Serialize value to summary."""
+def serialize_to_summary(value) -> Union[str, bool, int, float, None]:
+    """Serialize a value to a summary-compatible format.
+
+    Args:
+        value: The value to serialize
+
+    Returns:
+        A serialized representation of the value:
+        - Returns None for None values
+        - Returns primitive types (str, bool, int, float) as-is
+        - Returns function/method name for callables
+        - Returns string representation for other types
+    """
     if value is None:
         return None
     if isinstance(value, (str, bool, int, float)):
@@ -117,24 +183,36 @@ def serialize_to_summary(value):
 
 
 class ImportSummary:
-    """Import summary."""
+    """Container class for import operation summary data.
+
+    Stores, processes and formats information about source models,
+    target Nautobot models, and DiffSync operations during an import process.
+    """
 
     def __init__(self):
-        """Initialize the import summary."""
+        """Initialize the import summary with empty collections."""
         self.source: List[SourceModelSummary] = []
         self.nautobot: List[NautobotModelSummary] = []
         self.diffsync: DiffSyncSummary = {}
 
     @property
     def data_sources(self) -> Generator[SourceModelSummary, None, None]:
-        """Get source originating from data."""
+        """Get source models originating from data.
+
+        Yields:
+            SourceModelSummary objects that have at least one field from DATA source
+        """
         for summary in self.source:
             if any(field for field in summary.fields if "DATA" in field.sources):
                 yield summary
 
     @property
     def data_nautobot_models(self) -> Generator[NautobotModelSummary, None, None]:
-        """Get Nautobot models originating from data."""
+        """Get Nautobot models that correspond to data sources.
+
+        Yields:
+            NautobotModelSummary objects that have corresponding entries in data_sources
+        """
         content_types = set(item.content_type for item in self.data_sources)
 
         for item in self.nautobot:
@@ -142,7 +220,11 @@ class ImportSummary:
                 yield item
 
     def load(self, path: Pathable):
-        """Load the summary from a file."""
+        """Load import summary from a JSON file.
+
+        Args:
+            path: Path-like object pointing to a JSON summary file
+        """
         content = json.loads(Path(path).read_text(encoding="utf-8"))
 
         self.diffsync = content["diffsync"]
@@ -174,7 +256,16 @@ class ImportSummary:
             )
 
     def dump(self, path: Pathable, output_format="json", indent=4):
-        """Dump the summary to a file."""
+        """Save the import summary to a file.
+
+        Args:
+            path: Path-like object where to save the summary
+            output_format: Format to save in ('json' or 'text')
+            indent: Number of spaces for JSON indentation (if output_format is 'json')
+
+        Raises:
+            ValueError: If an unsupported output format is specified
+        """
         if output_format == "json":
             Path(path).write_text(
                 json.dumps(
@@ -209,12 +300,16 @@ class ImportSummary:
             raise ValueError(f"Unsupported format {output_format}")
 
     def print(self):
-        """Print a summary of the import."""
+        """Print a formatted summary of the import to stdout."""
         for line in self.get_summary():
             print(line)
 
     def get_summary(self) -> Generator[str, None, None]:
-        """Get a summary of the import."""
+        """Generate a formatted text representation of the import summary.
+
+        Yields:
+            Lines of formatted text containing the complete import summary
+        """
         yield _fill_up("* Import Summary:")
 
         yield _fill_up("= DiffSync Summary:")
@@ -231,7 +326,15 @@ class ImportSummary:
         yield _fill_up("* End of Import Summary")
 
     def get_stats(self, caption: str, objects: Iterable[object]) -> Generator[str, None, None]:
-        """Get formatted stats."""
+        """Generate formatted statistics for a collection of objects.
+
+        Args:
+            caption: Title for the stats section
+            objects: Collection of objects containing stats attributes
+
+        Yields:
+            Formatted lines of statistics information
+        """
         yield _fill_up("=", caption, "Stats:")
         for summary in objects:
             stats = getattr(summary, "stats", {}).__dict__
@@ -241,7 +344,14 @@ class ImportSummary:
                     yield f"{key}: {value}"
 
     def get_content_types_deviations(self) -> Generator[str, None, None]:
-        """Get formatted content types deviations."""
+        """Generate formatted information about content type mapping deviations.
+
+        Shows how source content types map to Nautobot content types,
+        highlighting extensions and non-standard mappings.
+
+        Yields:
+            Formatted lines describing content type mapping deviations
+        """
         yield _fill_up("= Content Types Mapping Deviations:")
         yield "  Mapping deviations from source content type to Nautobot content type"
 
@@ -254,7 +364,14 @@ class ImportSummary:
                 yield f"{summary.content_type} => {summary.nautobot_content_type}"
 
     def get_back_mapping(self) -> Generator[str, None, None]:
-        """Get formatted back mapping."""
+        """Generate formatted information about reverse content type mapping.
+
+        Shows how Nautobot content types map back to source content types,
+        identifying ambiguous mappings where multiple source types map to the same Nautobot type.
+
+        Yields:
+            Formatted lines describing back mapping from Nautobot to source content types
+        """
         yield _fill_up("= Content Types Back Mapping:")
         yield "  Back mapping deviations from Nautobot content type to the source content type"
 
@@ -275,7 +392,13 @@ class ImportSummary:
                 yield f"{nautobot_content_type} => Ambiguous"
 
     def get_issues(self) -> Generator[str, None, None]:
-        """Get formatted issues."""
+        """Generate formatted information about issues encountered during import.
+
+        Groups issues by Nautobot content type and formats them for readability.
+
+        Yields:
+            Formatted lines describing import issues
+        """
         yield _fill_up("= Importer issues:")
         for summary in self.nautobot:
             if summary.issues:
@@ -284,7 +407,14 @@ class ImportSummary:
                     yield f"{issue.uid} | {issue.source_reference} | {issue.issue_type} | {json.dumps(issue.name)} | {json.dumps(issue.message)}"
 
     def get_fields_mapping(self) -> Generator[str, None, None]:
-        """Get formatted field mappings."""
+        """Generate formatted information about field mappings between source and Nautobot.
+
+        Shows how fields from source models map to fields in Nautobot models,
+        including import methods and data types.
+
+        Yields:
+            Formatted lines describing field mappings
+        """
         yield _fill_up("= Field Mappings:")
 
         def get_field(field: FieldSummary):
