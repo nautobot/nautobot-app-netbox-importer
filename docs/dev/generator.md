@@ -82,7 +82,7 @@ During this stage, the system performs a second iteration over the input data. T
 
 Each `DiffSyncModel` class is dynamically generated as needed. The fields within a `DiffSyncModel` are defined using `nautobot_wrapper.fields`. These fields map directly to the attributes of the source data.
 
-For each source record, the importer attempts to read the corresponding Nautobot objects as well, based on the `identifiers` if they are defined in the source model, or on a generated record's primary key. The primary key is deterministically generated using UUID5, based on the source content type and primary key. If the source primary key is already a UUID, it is passed through without change.
+For each source record, the importer attempts to read the corresponding Nautobot objects as well, based on the `identifiers` if they are defined in the source model, or on a generated record's primary key. See [Primary Key Generation](#primary-key-generation) for more details.
 
 ### Updating Referenced Content Types
 
@@ -187,16 +187,88 @@ erDiagram
 
 ## Other Techniques
 
-- Generating deterministic primary keys for Nautobot objects based on the source identifiers using UUID5.
 - Skipping absent Nautobot models and fields.
 - Normalizing `datetime` values.
 - Stabilizing import order.
-- Caching:
-    - Pre-defined records.
-    - Source identifiers to Nautobot primary keys.
-    - Content type objects.
-    - Referencing content types to objects to autofill `content_types` fields.
 - Using Nautobot default values to fill in missing source data.
 - Auto set-up importers for relation fields.
 - Storing content type back mapping.
 
+### Content Types Mapping
+
+Each NetBox model is represented by a `SourceModelWrapper` class instance.
+
+Complementary to the `SourceModelWrapper`, for each imported Nautobot model, there is a `NautobotModelWrapper` class instance.
+
+`SourceModelWrapper` links to one or none (if disabled) `NautobotModelWrapper` instances. This means that one Nautobot model can be referenced by multiple NetBox models.
+
+TBD: Link the opposite process, to create multiple Nautobot models from one NetBox model.
+
+NetBox importer maps NetBox content types to Nautobot content types in stages described bellow.
+
+#### Defining the Source Structure Deviations
+
+In this stage, each model configured by `adapter.configure_model()` is linked to the provided Nautobot content type.
+
+!!! Note
+    Both, the `SourceModelWrapper` and `NautobotModelWrapper` are created, if not already present.
+
+- During the first iteration when reading source structure (TBD Link), the importer create `SourceModelWrapper` instances for each source content type.
+
+#### Reading Source Structure
+
+In the first data iteration, the system creates or updates `SourceModelWrapper` based on the source data.
+
+#### Importing the Data
+
+In the second data iteration, the importer reads content types first as those are placed on the top of the import data. This allows to map each `SourceModelWrapper` to NetBox content type ID for the later data conversions, when content types are referenced by their IDs.
+
+TBD: Consider moving this to first iteration.
+
+### Primary Key Generation
+
+Each Nautobot instance primary key is deterministically generated using UUID5, based on the source content type and primary key.
+
+!!! Note
+    If the source primary key is already a UUID, it is passed through without change.
+
+To generate the UUID, the `source_pk_to_uuid()` function is used. It takes two arguments: the source content type and the source primary key. Internally, it uses `settings.SECRET_KEY` to define the UUIDv5 namespace. Since the secret key is the same, it's possible to repeat the import process generating the same UUIDs.
+
+It's possible to customize the primary key generation for particular source model. E.g.: to generate Nautobot UUID from the field `name` instead of ID, using the following code:
+
+```python
+from nautobot_netbox_importer.generator.base import source_pk_to_uuid
+
+def my_setup(adapter: SourceAdapter) -> None:
+    """Customize the mapping from source to Nautobot"""
+
+    # Function accepts the source data and returns the Nautobot primary key
+    def get_pk_from_name(source: RecordData) -> Uid:
+        """Generate Nautobot primary key from name."""
+        # Get the name field value from the source data
+        name = name_field.get_source_value(source)
+        if not name:
+            raise ValueError("Missing name for the record")
+
+        # Generate the UUID5 using the source content type and name
+        return source_pk_to_uuid("extras.my_app.my_model", name)
+
+    # Configure the model with the custom primary key generation
+    model_wrapper = configure_model(
+        "my_app.my_model",
+        get_pk_from_data=get_pk_from_name,  # Customize the primary key generation
+        fields={
+            "name": "",  # Specify the `name` field
+        },
+    )
+
+    # Get the name field source reference
+    name_field = model_wrapper.fields["name"]
+```
+
+### Caching
+
+- Pre-defined records.
+- Source identifiers to Nautobot primary keys.
+- Content type objects.
+- Referencing content types to objects to autofill `content_types` fields.
