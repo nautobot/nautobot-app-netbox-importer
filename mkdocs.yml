@@ -130,7 +130,6 @@ nav:
       - Development Environment: "dev/dev_environment.md"
       - Release Checklist: "dev/release_checklist.md"
       - Architecture Decision Records: "dev/arch_decision.md"
-      - Demo Excecution: "dev/demo.md"
       - Key Concepts:
           - "dev/generator.md"
           - "dev/data_flow.md"
