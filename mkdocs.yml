@@ -131,14 +131,18 @@ nav:
       - Release Checklist: "dev/release_checklist.md"
       - Architecture Decision Records: "dev/arch_decision.md"
       - Demo Excecution: "dev/demo.md"
-      - Frequently Asked Questions: "dev/faq.md"
-      - Test Fixtures: "dev/code_reference/fixtures/README.md"
-      - Under the Hoods:
+      - Key Concepts:
+          - "dev/generator.md"
+          - "dev/data_flow.md"
+          - "dev/import_order.md"
           - "dev/data_flow.md"
           - "dev/generator.md"
           - "dev/content_types_mapping.md"
           - "dev/caching.md"
           - "dev/primary_keys.md"
+      - Demo Execution: "dev/demo.md"
+      - Frequently Asked Questions: "dev/faq.md"
+      - Test Fixtures: "dev/code_reference/fixtures/README.md"
       - Diagrams:
           - "diagrams/data_flow.md"
           - "diagrams/generator_erd.md"
