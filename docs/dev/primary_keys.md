@@ -44,3 +44,8 @@ def my_setup(adapter: SourceAdapter) -> None:
 ```
 
 Once the primary key is generated, it's cached, see more in [Caching](./caching.md#source-identifiers-to-nautobot-primary-keys-mapping).
+
+{%
+    include-markdown '../diagrams/generate_primary_key.md'
+    heading-offset=1
+%}

@@ -145,6 +145,7 @@ nav:
       - Diagrams:
           - "diagrams/data_flow.md"
           - "diagrams/generator_erd.md"
+          - "diagrams/generate_primary_key.md"
       - Code Reference:
           - "dev/code_reference/index.md"
           - Package: "dev/code_reference/package.md"
