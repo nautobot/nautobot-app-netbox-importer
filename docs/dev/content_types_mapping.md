@@ -40,3 +40,66 @@ In the first data iteration, the system creates or updates `SourceModelWrapper` 
 In the second data iteration, the importer reads content types first as those are placed on the top of the import data. This allows to map each `SourceModelWrapper` to NetBox content type ID for the later data conversions, when content types are referenced by their IDs.
 
 TBD: Consider moving this to first iteration.
+
+## Content Types References
+
+In Nautobot models, such as `Role` or `Status`, the `content_types` field stores all content types that references this model. To properly populate this field, references to all instances are cached in the `SourceModelWrapper.references` dictionary.
+
+### References Configuration Options
+
+In `adapter.configure_model()`, you can control reference handling with:
+
+- `disable_related_reference`:
+
+    When set to `True`, prevents the model from collecting references:
+
+    ```python
+    adapter.configure_model(
+        content_type="dcim.device",
+        disable_related_reference=True
+    )
+    ```
+
+    Use when a model shouldn't participate in reference tracking.
+
+- `forward_references`:
+
+    Custom function to delegate reference handling to another model:
+
+    ```python
+    def custom_forward_handler(wrapper, references):
+        # Forward references to another wrapper
+        other_wrapper = adapter.get_or_create_wrapper("other.model")
+        other_wrapper.references.update(references)
+
+    adapter.configure_model(
+        content_type="dcim.device",
+        forward_references=custom_forward_handler
+    )
+    ```
+
+    Use when references need to be consolidated from multiple source models to a single Nautobot model, e.g. for locations.
+
+### Reference Collection
+
+During import, when an instances reference another instance, the reference is recorded using:
+
+```python
+wrapper.add_reference(related_wrapper, uid)
+```
+
+This adds the source wrapper to the referenced model's `references` dictionary, keyed by the instance UID. Most field importers handling relationships call this method to track references.
+
+### Reference Processing
+
+After all data is imported, `post_process_references()` is called on each wrapper to handle the collected references:
+
+When `forward_references` is defined, references are not stored for the current model instance, but rather forwarded to another model instance.
+
+When `disable_related_reference` is not set, the references are processed to populate the `content_types` field in Nautobot models.
+
+Reference tracking is also used to store cached instances to Nautobot. Importer skips cached only instances, when not referenced by any other instance.
+
+### Content Types Field Population
+
+During reference processing, the `content_types` field is populated with all content types referencing particular instance, e.g. `Role`, `Status`, etc.
