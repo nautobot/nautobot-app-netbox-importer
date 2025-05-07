@@ -7,7 +7,11 @@ Each Nautobot instance primary key is deterministically generated using UUID5, b
 
 To generate the UUID, the `source_pk_to_uuid()` function is used. It takes two arguments: the source content type and the source primary key. Internally, it uses `settings.SECRET_KEY` to define the UUIDv5 namespace. Since the secret key is the same, it's possible to repeat the import process generating the same UUIDs.
 
-It's possible to customize the primary key generation for particular source model. E.g.: to generate Nautobot UUID from the field `name` instead of ID, using the following code:
+It's possible to customize the primary key generation for particular source model.
+
+This feature is used to deduplicate IP addresses and prefixes, as Nautobot has a strict database constraint for duplicates, but NetBox allows it. As a solution, Nautobot's IP address primary key is derived from the IP address value instead of the ID. Then duplicate source IP addresses are merged into a single Nautobot IP address.
+
+An example how to derive Nautobot UUID from the field `name` instead of ID:
 
 ```python
 from nautobot_netbox_importer.generator.base import source_pk_to_uuid
@@ -24,7 +28,7 @@ def my_setup(adapter: SourceAdapter) -> None:
             raise ValueError("Missing name for the record")
 
         # Generate the UUID5 using the source content type and name
-        return source_pk_to_uuid("extras.my_app.my_model", name)
+        return source_pk_to_uuid(model_wrapper.content_type, name)
 
     # Configure the model with the custom primary key generation
     model_wrapper = configure_model(

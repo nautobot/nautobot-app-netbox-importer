@@ -10,9 +10,15 @@ Complementary to the `SourceModelWrapper`, for each imported Nautobot model, the
 
 To create multiple Nautobot model instances from single NetBox model, you can hook custom `pre_import` function containing multiple `import_record()` calls. This function is executed before the data import, allowing you to modify the source data and create multiple records from one source record.
 
+This feature is used e.g. to create custom field choices instances, as Nautobot has a separate model for custom field choices, while NetBox has these choices as a field in `CustomField` model. For details, check [custom fields setup source code](https://github.com/nautobot/nautobot-app-netbox-importer/blob/develop/nautobot_netbox_importer/diffsync/models/custom_fields.py).
+
 ## Content Types Back Mapping
 
-Back mapping means mapping content types back from Nautobot to NetBox. When multiple NetBox models are mapped to one Nautobot model, it's not possible to determine which NetBox model should be used for the back mapping. In such case `ambiguous` mapping is outputted.
+Back mapping means mapping content types back from Nautobot to NetBox. When multiple NetBox models are mapped to one Nautobot model, it's not possible to determine which NetBox model should be used for the back mapping. In such case `ambiguous` mapping is outputted in summary, see [Import Summary documentation](../user/summary.md).
+
+This back mapping is used when creating `SourceModelWrapper` instances from Nautobot data.
+
+When there isn't clear 1:1 back mapping from Nautobot model to NetBox model, it isn't possible to import existing Nautobot data for `diffsync` comparison. This affects the import, when there are already existing Nautobot records in the Nautobot database.
 
 ## Content Types Mapping in Stages
 
