@@ -231,9 +231,9 @@ class SourceAdapter(BaseAdapter):
         if forward_references:
             wrapper.forward_references = forward_references
         if fill_dummy_data:
-            wrapper._fill_dummy_data = fill_dummy_data
+            wrapper.fill_dummy_data = fill_dummy_data
         if get_pk_from_data:
-            wrapper._get_pk_from_data = get_pk_from_data
+            wrapper.get_pk_from_data_hook = get_pk_from_data
 
         return wrapper
 
@@ -380,7 +380,7 @@ class SourceAdapter(BaseAdapter):
         yield from result.values()
 
 
-# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-instance-attributes, too-many-public-methods
 class SourceModelWrapper:
     """Definition of a source model mapping to Nautobot model."""
 
@@ -417,8 +417,8 @@ class SourceModelWrapper:
         # Caching
         self._uid_to_pk_cache: Dict[Uid, Uid] = {}
         self._cached_data: Dict[Uid, RecordData] = {}
-        self._fill_dummy_data: FillDummyData | None = None
-        self._get_pk_from_data: GetPkFromData | None = None
+        self.fill_dummy_data: FillDummyData | None = None
+        self.get_pk_from_data_hook: GetPkFromData | None = None
 
         self.stats = SourceModelStats()
         self.flags = DiffSyncModelFlags.NONE
@@ -639,8 +639,8 @@ class SourceModelWrapper:
 
     def get_pk_from_data(self, data: RecordData) -> Uid:
         """Get a source primary key for a given source data."""
-        if self._get_pk_from_data:
-            return self._get_pk_from_data(data)
+        if self.get_pk_from_data_hook:
+            return self.get_pk_from_data_hook(data)
 
         if not self.identifiers:
             return self.get_pk_from_uid(data[self.nautobot.pk_field.name])
@@ -766,8 +766,8 @@ class SourceModelWrapper:
         if "id" not in data:
             data["id"] = uid
 
-        if self._fill_dummy_data:
-            self._fill_dummy_data(data, suffix)
+        if self.fill_dummy_data:
+            self.fill_dummy_data(data, suffix)
 
         self.cache_record(data)
         self.nautobot.add_issue(

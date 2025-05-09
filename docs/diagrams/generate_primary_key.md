@@ -5,7 +5,7 @@ Here's a flowchart showing how primary keys are generated in the Nautobot import
 ```mermaid
 flowchart TD
     start("get_pk_from_data(data)")
-    customFunc{"Custom\n_get_pk_from_data\nexists?"}
+    customFunc{"Custom\nget_pk_from_data_hook\nexists?"}
     useCustomFunc["Use custom function\nto generate PK"]
     checkIdentifiers{"Are identifiers\ndefined?"}
     usePkField["Use data[pk_field.name]\nas UID"]
