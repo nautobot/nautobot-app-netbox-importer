@@ -580,7 +580,7 @@ class SourceModelWrapper:
 
         self.importers = set(field.importer for field in self.fields.values() if field.importer)
 
-    def find_pk_from_uid(self, uid: Uid) -> Uid | None:
+    def find_pk_from_uid(self, uid: Uid) -> Union[Uid, None]:
         """Find a source primary key for a given source uid."""
         if uid in self._uid_to_pk_cache:
             return self._uid_to_pk_cache[uid]
@@ -752,7 +752,7 @@ class SourceModelWrapper:
 
         return uid
 
-    def cache_dummy_object(self, suffix: str, data: RecordData | None = None) -> Uid:
+    def cache_dummy_object(self, suffix: str, data: Union[RecordData, None] = None) -> Uid:
         """Create a dummy object for the given data."""
         uid = f"{DUMMY_UID}{suffix}"
         nautobot_uid = self.get_pk_from_uid(uid)
