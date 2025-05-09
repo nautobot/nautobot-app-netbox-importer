@@ -63,7 +63,7 @@ ARG CI
 RUN if [ -z "${CI+x}" ]; then \
     INSTALLED_NAUTOBOT_VER=$(pip show nautobot | grep "^Version" | sed "s/Version: //"); \
     poetry add --lock nautobot@${INSTALLED_NAUTOBOT_VER} --python ${PYTHON_VER} || \
-    poetry add --lock git+https://github.com/nautobot/nautobot.git#v${NAUTOBOT_VER} --python ${PYTHON_VER}; fi
+    poetry add --lock git+https://github.com/nautobot/nautobot.git#${NAUTOBOT_VER} --python ${PYTHON_VER}; fi
 
 # Install the app
 RUN poetry install --extras all --with dev
