@@ -18,6 +18,7 @@ from .source import (
     SourceFieldDefinition,
     SourceFieldImporterFallback,
     SourceFieldImporterIssue,
+    SourceModelWrapper,
 )
 
 
@@ -181,15 +182,29 @@ def source_constant(value: Any, nautobot_name: FieldName = "") -> SourceFieldDef
     return define_source_constant
 
 
-def constant(value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition:
-    """Create a constant field definition.
+def constant(
+    value: Any,
+    nautobot_name: FieldName = "",
+    reference: Optional[SourceModelWrapper] = None,
+) -> SourceFieldDefinition:
+    """Create a constant field definition for target record.
 
-    Use to fill target constant value for the field.
+    Map a constant value to a specific field in the target model.
+
+    Args:
+        value: Constant value to be set in the target field.
+        nautobot_name: Optional name for the Nautobot field.
+        reference: Optional source model wrapper for reference tracking.
+
+    Returns:
+        A function that defines a constant field importer.
     """
 
     def define_constant(field: SourceField) -> None:
         def constant_importer(_: RecordData, target: DiffSyncBaseModel) -> None:
             field.set_nautobot_value(target, value)
+            if reference:
+                field.wrapper.add_reference(reference, value)
 
         field.set_importer(constant_importer, nautobot_name)
 
