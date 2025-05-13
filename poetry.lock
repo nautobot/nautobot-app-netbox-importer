@@ -218,6 +218,17 @@ files = [
 ]
 
 [[package]]
+name = "bracex"
+version = "2.5.post1"
+description = "Bash style brace expander."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "bracex-2.5.post1-py3-none-any.whl", hash = "sha256:13e5732fec27828d6af308628285ad358047cec36801598368cb28bc631dbaf6"},
+    {file = "bracex-2.5.post1.tar.gz", hash = "sha256:12c50952415bfa773d2d9ccb8e79651b8cdb1f31a42f6091b804f6ba2b4a66b6"},
+]
+
+[[package]]
 name = "celery"
 version = "5.3.6"
 description = "Distributed Task Queue."
@@ -2026,6 +2037,24 @@ platformdirs = ">=2.2.0"
 pyyaml = ">=5.1"
 
 [[package]]
+name = "mkdocs-include-markdown-plugin"
+version = "6.0.3"
+description = "Mkdocs Markdown includer plugin."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "mkdocs_include_markdown_plugin-6.0.3-py3-none-any.whl", hash = "sha256:8f9262cf4246ebc33dcdfbdb40c1253b7c9ad79e0f8dc2a9e338b1fb761d8e02"},
+    {file = "mkdocs_include_markdown_plugin-6.0.3.tar.gz", hash = "sha256:9799ea8ac9179e9e91ab58869421be60a2585e3d9c4a53181d37a49d9a1780db"},
+]
+
+[package.dependencies]
+mkdocs = ">=1.4"
+wcmatch = ">=8,<9"
+
+[package.extras]
+cache = ["platformdirs"]
+
+[[package]]
 name = "mkdocs-material"
 version = "9.5.32"
 description = "Documentation that simply works"
@@ -3755,6 +3784,20 @@ files = [
 watchmedo = ["PyYAML (>=3.10)"]
 
 [[package]]
+name = "wcmatch"
+version = "8.5.2"
+description = "Wildcard/glob file name matcher."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "wcmatch-8.5.2-py3-none-any.whl", hash = "sha256:17d3ad3758f9d0b5b4dedc770b65420d4dac62e680229c287bf24c9db856a478"},
+    {file = "wcmatch-8.5.2.tar.gz", hash = "sha256:a70222b86dea82fb382dd87b73278c10756c138bd6f8f714e2183128887b9eb2"},
+]
+
+[package.dependencies]
+bracex = ">=2.1.1"
+
+[[package]]
 name = "wcwidth"
 version = "0.2.13"
 description = "Measures the displayed width of unicode strings in a terminal"
@@ -3896,4 +3939,4 @@ all = []
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<3.13"
-content-hash = "e32daf8d6061520a8f986c1f6a9a25558732ec85005f9ff1f8c89f82317ccb81"
+content-hash = "02398addbc3adce9713cb224a0732960174a2e2f1ddba8487c29a2caa0a64a85"
