@@ -109,6 +109,7 @@ nav:
       - Getting Started: "user/app_getting_started.md"
       - Using the App: "user/app_use_cases.md"
       - Importer Summary: "user/summary.md"
+      - Tagging Issues: "user/tagging_issues.md"
       - Frequently Asked Questions: "user/faq.md"
   - Administrator Guide:
       - Install and Configure: "admin/install.md"
