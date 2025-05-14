@@ -8,9 +8,16 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import Max
 from django.db.transaction import atomic
 from nautobot.core.utils.lookup import get_model_from_name
+from nautobot.extras.models import Tag
 
 from nautobot_netbox_importer.base import FieldName, RecordData, logger
-from nautobot_netbox_importer.summary import ImporterIssue, NautobotModelStats, NautobotModelSummary
+from nautobot_netbox_importer.summary import (
+    ImporterIssue,
+    ImportSummary,
+    NautobotModelStats,
+    NautobotModelSummary,
+    get_issue_tag,
+)
 
 from .base import (
     AUTO_ADD_FIELDS,
@@ -124,6 +131,14 @@ class NautobotAdapter(BaseAdapter):
             return self.wrappers[content_type]
 
         return NautobotModelWrapper(self, content_type)
+
+    @atomic
+    def tag_issues(self, summary: ImportSummary) -> None:
+        """Tag all records with any ImporterIssue."""
+        logger.info("Tagging all instance with issues")
+
+        for item in summary.nautobot:
+            self.get_or_create_wrapper(item.content_type).tag_issues(item.issues)
 
 
 class NautobotField:
@@ -380,7 +395,7 @@ class NautobotModelWrapper:
         """Create an issue."""
         if not issue_type:
             if error:
-                issue_type = error.__class__.__name__
+                issue_type = getattr(error, "issue_type", None) or error.__class__.__name__
             else:
                 issue_type = "Unknown"
 
@@ -657,6 +672,38 @@ class NautobotModelWrapper:
             )
 
         return True
+
+    def tag_issues(self, issues: Iterable[ImporterIssue]) -> None:
+        """Tag all records with any ImporterIssue."""
+        if not issues:
+            return
+
+        model = self.model
+
+        if not hasattr(model, "tags"):
+            return
+
+        for issue in issues:
+            if not issue.uid:
+                continue
+
+            try:
+                nautobot_instance = model.objects.get(id=issue.uid)
+            except model.DoesNotExist:  # type: ignore
+                continue
+
+            tag_name = get_issue_tag(issue)
+            tag, _ = Tag.objects.get_or_create(
+                name=tag_name,
+                defaults={
+                    "description": f"Import issue: {tag_name}",
+                },
+            )
+
+            logger.debug("Tagging %s %s %s", self.content_type, issue.uid, tag_name)
+
+            nautobot_instance.tags.add(tag)
+            nautobot_instance.save()
 
 
 class DiffSyncBaseModel(DiffSyncModel):

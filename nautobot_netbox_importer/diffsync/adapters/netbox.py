@@ -48,6 +48,7 @@ class NetBoxImporterOptions(NamedTuple):
     update_paths: bool = False
     fix_powerfeed_locations: bool = False
     sitegroup_parent_always_region: bool = False
+    tag_issues: bool = False
     unrack_zero_uheight_devices: bool = True
     save_json_summary_path: str = ""
     save_text_summary_path: str = ""
@@ -92,7 +93,7 @@ class NetBoxAdapter(SourceAdapter):
         """Import a NetBox export file into Nautobot."""
         commited = False
         try:
-            self._atomic_import()
+            self._atomic_import()  # type: ignore
             commited = True
         except _DryRunException:
             logger.warning("Dry-run mode, no data has been imported.")
@@ -106,6 +107,9 @@ class NetBoxAdapter(SourceAdapter):
 
         if self.options.print_summary:
             self.summary.print()
+
+        if commited and self.options.tag_issues:
+            self.nautobot.tag_issues(self.summary)  # type: ignore
 
     @atomic
     def _atomic_import(self) -> None:

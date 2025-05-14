@@ -1,10 +1,18 @@
 """Importer summary module."""
 
 import json
+import re
 from pathlib import Path
-from typing import Callable, Dict, Generator, Iterable, List, Mapping, NamedTuple, Optional, Union
+from typing import Callable, Dict, Generator, Iterable, List, Mapping, NamedTuple, Optional, Pattern, Union
 
 from .base import ContentTypeStr, FieldName, Pathable
+
+_TAG_EXPRESSIONS: Mapping[str, Pattern[str]] = {
+    "InvalidCircuit": re.compile("A circuit termination must attach to either a location or a provider network"),
+    "IncompatibleTerminationTypes": re.compile("Incompatible termination types"),
+    "InvalidPlatform": re.compile("assigned platform is limited to"),
+    "MissingParentLocation": re.compile(r"A Location of type .* must have a parent Location"),
+}
 
 
 class ImporterIssue(NamedTuple):
@@ -324,3 +332,13 @@ class ImportSummary:
                 for field in summary.fields:
                     if "DATA" in field.sources:
                         yield " ".join(get_field(field))
+
+
+def get_issue_tag(issue: ImporterIssue) -> str:
+    """Get a tag for an issue."""
+    if issue.issue_type == "ValidationError":
+        for key, expression in _TAG_EXPRESSIONS.items():
+            if re.search(expression, issue.message):
+                return key
+
+    return issue.issue_type

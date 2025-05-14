@@ -1047,6 +1047,7 @@ def validate_app_config(context):
         "sitegroup-parent-always-region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
         "update-paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
         "unrack-zero-uheight-devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
+        "tag-issues": "Whether to tag Nautobot records with any importer issues. (default: False)",
         "trace-issues": "Show a detailed trace of issues originated from any `Exception` found during the import.",
     }
 )
@@ -1063,6 +1064,7 @@ def import_netbox(  # noqa: PLR0913
     print_summary=True,
     update_paths=False,
     unrack_zero_uheight_devices=True,
+    tag_issues=False,
     trace_issues=False,
 ):
     """Import NetBox data into Nautobot."""
@@ -1089,6 +1091,7 @@ def import_netbox(  # noqa: PLR0913
         "--update-paths" if update_paths else "",
         "--no-color",
         "" if unrack_zero_uheight_devices else "--no-unrack-zero-uheight-devices",
+        "--tag-issues" if tag_issues else "",
         "--trace-issues" if trace_issues else "",
         file,
     ]
