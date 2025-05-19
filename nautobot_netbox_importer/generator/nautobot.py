@@ -35,6 +35,7 @@ from .base import (
     Uid,
     get_nautobot_field_and_type,
     normalize_datetime,
+    source_pk_to_uuid,
 )
 from .exceptions import NautobotModelNotFound
 
@@ -694,16 +695,19 @@ class NautobotModelWrapper:
 
             tag_name = get_issue_tag(issue)
             tag, _ = Tag.objects.get_or_create(
-                name=tag_name,
+                id=source_pk_to_uuid("extras.tag", tag_name),
                 defaults={
+                    "name": tag_name,
                     "description": f"Import issue: {tag_name}",
                 },
             )
 
             logger.debug("Tagging %s %s %s", self.content_type, issue.uid, tag_name)
 
+            if not tag.content_types.filter(id=self.content_type_id).exists():
+                tag.content_types.add(self.content_type_instance)
+
             nautobot_instance.tags.add(tag)
-            nautobot_instance.save()
 
 
 class DiffSyncBaseModel(DiffSyncModel):
