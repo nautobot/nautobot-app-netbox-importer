@@ -959,6 +959,7 @@ def load_test_environment(context, db_name="test_nautobot", keepdb=False):
         "buffer": "Discard output from passing tests",
         "pattern": "Run specific test methods, classes, or modules instead of all tests",
         "verbose": "Enable verbose test output.",
+        "build-fixtures": "Build fixtures before running tests.",
         "coverage": "Enable coverage reporting. Defaults to False",
         "skip_docs_build": "Skip building the documentation before running tests.",
     }
@@ -971,12 +972,18 @@ def unittest(  # noqa: PLR0913
     buffer=True,
     pattern="",
     verbose=False,
+    build_fixtures=False,
     coverage=False,
     skip_docs_build=False,
 ):
     """Run Nautobot unit tests."""
     if not skip_docs_build:
         build_and_check_docs(context)
+
+    load_test_environment(context, keepdb=keepdb)
+    if not keepdb:
+        keepdb = True
+
     if coverage:
         command = f"coverage run --module nautobot.core.cli test {label}"
     else:
