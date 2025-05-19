@@ -616,18 +616,34 @@ class NautobotModelWrapper:
             else:
                 setattr(instance, field_name, None)
 
+        def super_save(instance, exception: Optional[Exception] = None):
+            instance = super(instance.__class__, instance)
+
+            if not hasattr(instance, "save"):
+                raise exception or ValueError(f"Missing save method for {instance}")
+
+            try:
+                with atomic():  # type: ignore
+                    instance.save()
+            # pylint: disable=broad-exception-caught
+            except Exception as error:
+                logger.warning("Super save failed: %s", error, exc_info=True)
+                super_save(instance, error)
+
         def save_or_super_save():
             error = None
 
             try:
+                # Process the first save
                 with atomic():  # type: ignore
                     instance.save()
                 return
             # pylint: disable=broad-exception-caught
             except Exception as exception:
                 error = exception
+                logger.warning("First save failed: %s", exception, exc_info=True)
 
-            super(instance.__class__, instance).save()
+            super_save(instance)
 
             # Create `FirstSaveFailed` issue when `super.save()` passes, otherwise `SaveFailed` issue will be created by the caller.
             self.add_issue(
