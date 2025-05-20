@@ -82,7 +82,7 @@ During this stage, the system performs a second iteration over the input data. T
 
 Each `DiffSyncModel` class is dynamically generated as needed. The fields within a `DiffSyncModel` are defined using `nautobot_wrapper.fields`. These fields map directly to the attributes of the source data.
 
-For each source record, the importer attempts to read the corresponding Nautobot objects as well, based on the `identifiers` if they are defined in the source model, or on a generated record's primary key. See [Primary Key Generation](#primary-key-generation) for more details.
+For each source record, the importer attempts to read the corresponding Nautobot objects as well, based on the `identifiers` if they are defined in the source model, or on a generated record's primary key. See [Primary Key Generation](./primary_keys.md) for more details.
 
 ### Updating Referenced Content Types
 
