@@ -10,4 +10,4 @@ The tagging importer feature allows users to tag Nautobot records during the imp
 
 To tag issues during import, users can use the `--tag-issues` option in `nautobot-server import-netbox` command. This option enables the tagging feature. It's also possible to use this flag with `invoke import-netbox` command, that is a wrapper to the previous one.
 
-After the import process, users can view the tagged records in Nautobot. To see all tags, open `Organization` > `Tags` in the Nautobot UI. The tags will be listed there, and users can show related records in the tag detail view.
+After the import process, users can view the tagged records in Nautobot. To see all tags, open `Organization` > `Tags` in the Nautobot UI. The tags will be listed there, and users can see related records in the tag detail view.
