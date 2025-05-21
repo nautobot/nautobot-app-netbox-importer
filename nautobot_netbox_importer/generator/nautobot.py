@@ -617,6 +617,10 @@ class NautobotModelWrapper:
                 setattr(instance, field_name, None)
 
         def super_save(instance, exception: Optional[Exception] = None):
+            """This function is called when the first save fails on the super class.
+
+            If the save fails it recursively traverses the class hierarchy and calls `super.save()` on each class.
+            """
             instance = super(instance.__class__, instance)
 
             if not hasattr(instance, "save"):
