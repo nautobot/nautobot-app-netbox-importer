@@ -2,9 +2,9 @@
 
 import json
 from pathlib import Path
-from typing import Callable, Dict, Generator, Iterable, List, Mapping, NamedTuple, Optional, Union
+from typing import Callable, Dict, Generator, Iterable, List, Mapping, NamedTuple, Optional
 
-from .base import ContentTypeStr, FieldName, Pathable
+from .base import ContentTypeStr, FieldName, NullablePrimitives, Pathable
 
 
 class ImporterIssue(NamedTuple):
@@ -51,9 +51,9 @@ class FieldSummary(NamedTuple):
     nautobot_internal_type: Optional[str]
     nautobot_can_import: Optional[bool]
     importer: Optional[str]
-    definition: Union[str, bool, int, float, None]
+    definition: NullablePrimitives
     sources: List[str]
-    default_value: Union[str, bool, int, float, None]
+    default_value: NullablePrimitives
     disable_reason: str
     required: bool
 
@@ -119,7 +119,7 @@ class SourceModelSummary(NamedTuple):
     pre_import: Optional[str]
     fields: List[FieldSummary]
     flags: str
-    default_reference_uid: Union[str, bool, int, float, None]
+    default_reference_uid: NullablePrimitives
     stats: SourceModelStats
 
 
@@ -160,18 +160,26 @@ def _fill_up(*values) -> str:
     return result + (fill * (_FILL_UP_LENGTH - len(result)))
 
 
-def serialize_to_summary(value) -> Union[str, bool, int, float, None]:
+def serialize_to_summary(value) -> NullablePrimitives:
     """Serialize a value to a summary-compatible format.
 
     Args:
-        value: The value to serialize
+        value (NullablePrimitives): The value to serialize
 
     Returns:
-        A serialized representation of the value:
+        NullablePrimitives: A summary-compatible representation of the value
         - Returns None for None values
         - Returns primitive types (str, bool, int, float) as-is
         - Returns function/method name for callables
         - Returns string representation for other types
+
+    Examples:
+        >>> serialize_to_summary(None)
+        None
+        >>> serialize_to_summary("string")
+        "string"
+        >>> serialize_to_summary(42)
+        42
     """
     if value is None:
         return None
@@ -200,7 +208,7 @@ class ImportSummary:
         """Get source models originating from data.
 
         Yields:
-            SourceModelSummary objects that have at least one field from DATA source
+            SourceModelSummary: Objects that originates from source data.
         """
         for summary in self.source:
             if any(field for field in summary.fields if "DATA" in field.sources):
@@ -211,7 +219,7 @@ class ImportSummary:
         """Get Nautobot models that correspond to data sources.
 
         Yields:
-            NautobotModelSummary objects that have corresponding entries in data_sources
+            NautobotModelSummary: Objects that have corresponding entries in data_sources.
         """
         content_types = set(item.content_type for item in self.data_sources)
 
@@ -222,8 +230,15 @@ class ImportSummary:
     def load(self, path: Pathable):
         """Load import summary from a JSON file.
 
+        Loads the serialized summary information from a JSON file
+        into the current instance.
+
         Args:
-            path: Path-like object pointing to a JSON summary file
+            path (Pathable): Path-like object pointing to a JSON summary file
+
+        Examples:
+            >>> summary = ImportSummary()
+            >>> summary.load("import_results.json")
         """
         content = json.loads(Path(path).read_text(encoding="utf-8"))
 
@@ -255,16 +270,20 @@ class ImportSummary:
                 )
             )
 
-    def dump(self, path: Pathable, output_format="json", indent=4):
+    def dump(self, path: Pathable, output_format: str = "json", indent: int = 4):
         """Save the import summary to a file.
 
         Args:
-            path: Path-like object where to save the summary
-            output_format: Format to save in ('json' or 'text')
-            indent: Number of spaces for JSON indentation (if output_format is 'json')
+            path (Pathable): Path-like object where to save the summary
+            output_format (str): Format to save in ('json' or 'text')
+            indent (int): Number of spaces for JSON indentation (if output_format is 'json')
 
         Raises:
             ValueError: If an unsupported output format is specified
+
+        Examples:
+            >>> summary.dump("/tmp/import_results.json")
+            >>> summary.dump("/tmp/import_results.txt", output_format="text")
         """
         if output_format == "json":
             Path(path).write_text(
@@ -308,7 +327,7 @@ class ImportSummary:
         """Generate a formatted text representation of the import summary.
 
         Yields:
-            Lines of formatted text containing the complete import summary
+            str: Formatted lines with the import summary
         """
         yield _fill_up("* Import Summary:")
 
@@ -329,11 +348,11 @@ class ImportSummary:
         """Generate formatted statistics for a collection of objects.
 
         Args:
-            caption: Title for the stats section
-            objects: Collection of objects containing stats attributes
+            caption (str): Caption for the statistics section
+            objects (Iterable[object]): Collection of objects to summarize
 
         Yields:
-            Formatted lines of statistics information
+            str: Formatted lines of statistics information
         """
         yield _fill_up("=", caption, "Stats:")
         for summary in objects:
@@ -350,7 +369,7 @@ class ImportSummary:
         highlighting extensions and non-standard mappings.
 
         Yields:
-            Formatted lines describing content type mapping deviations
+            str: Formatted lines describing content type mapping deviations
         """
         yield _fill_up("= Content Types Mapping Deviations:")
         yield "  Mapping deviations from source content type to Nautobot content type"
@@ -370,7 +389,7 @@ class ImportSummary:
         identifying ambiguous mappings where multiple source types map to the same Nautobot type.
 
         Yields:
-            Formatted lines describing back mapping from Nautobot to source content types
+            str: Formatted lines describing back mapping from Nautobot to source content types
         """
         yield _fill_up("= Content Types Back Mapping:")
         yield "  Back mapping deviations from Nautobot content type to the source content type"
@@ -397,7 +416,7 @@ class ImportSummary:
         Groups issues by Nautobot content type and formats them for readability.
 
         Yields:
-            Formatted lines describing import issues
+            str: Formatted lines describing import issues
         """
         yield _fill_up("= Importer issues:")
         for summary in self.nautobot:
@@ -413,7 +432,7 @@ class ImportSummary:
         including import methods and data types.
 
         Yields:
-            Formatted lines describing field mappings
+            str: Formatted lines describing field mappings
         """
         yield _fill_up("= Field Mappings:")
 

@@ -417,8 +417,8 @@ class SourceModelWrapper:
         # Caching
         self._uid_to_pk_cache: Dict[Uid, Uid] = {}
         self._cached_data: Dict[Uid, RecordData] = {}
-        self.fill_dummy_data: FillDummyData | None = None
-        self.get_pk_from_data_hook: GetPkFromData | None = None
+        self.fill_dummy_data: Union[FillDummyData, None] = None
+        self.get_pk_from_data_hook: Union[GetPkFromData, None] = None
 
         self.stats = SourceModelStats()
         self.flags = DiffSyncModelFlags.NONE
