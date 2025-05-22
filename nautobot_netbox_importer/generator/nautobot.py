@@ -68,6 +68,7 @@ _DONT_IMPORT_TYPES: Iterable[InternalFieldType] = (
 # Models listed here take precedence over others, which are sorted by the order they're introduced to the importer.
 # Models listed, but not imported, here will be ignored.
 # Obsoleted models can be kept here to ensure backward compatibility.
+# More information about the import order can be found in the app documentation: https://docs.nautobot.com/projects/netbox-importer/en/latest/dev/import_order/
 IMPORT_ORDER: Iterable[ContentTypeStr] = (
     "extras.customfield",
     "extras.customfieldchoice",
@@ -86,6 +87,8 @@ IMPORT_ORDER: Iterable[ContentTypeStr] = (
     "dcim.devicetype",
     "dcim.consoleport",
     "dcim.consoleporttemplate",
+    "dcim.consoleserverport",
+    "dcim.consoleserverporttemplate",
     "dcim.device",
     "dcim.devicebay",
     "dcim.frontport",
