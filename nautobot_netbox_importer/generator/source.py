@@ -449,8 +449,8 @@ class SourceModelWrapper:
         # Caching
         self._uid_to_pk_cache: Dict[Uid, Uid] = {}
         self._cached_data: Dict[Uid, RecordData] = {}
-        self.fill_dummy_data: FillDummyData | None = None
-        self.get_pk_from_data_hook: GetPkFromData | None = None
+        self.fill_dummy_data: Union[FillDummyData, None] = None
+        self.get_pk_from_data_hook: Union[GetPkFromData, None] = None
 
         self.stats = SourceModelStats()
         self.flags = DiffSyncModelFlags.NONE
@@ -628,7 +628,8 @@ class SourceModelWrapper:
             if self.extends_wrapper:
                 result = self.extends_wrapper.get_pk_from_uid(uid)
             else:
-                result = source_pk_to_uuid(self.content_type or self.content_type, uid)
+                result = source_pk_to_uuid(self.content_type, uid)
+                self.nautobot.uid_to_source[str(result)] = f"{self.content_type}:{uid}"
         elif self.nautobot.pk_field.is_auto_increment:
             self.nautobot.last_id += 1
             result = self.nautobot.last_id

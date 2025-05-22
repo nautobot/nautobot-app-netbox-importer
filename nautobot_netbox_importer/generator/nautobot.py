@@ -248,6 +248,7 @@ class NautobotModelWrapper:
 
         self.constructor_kwargs: Dict[FieldName, Any] = {}
         self.stats = NautobotModelStats()
+        self.uid_to_source: Dict[Uid, str] = {}
 
         logger.debug("Created %s", self)
 
@@ -435,6 +436,7 @@ class NautobotModelWrapper:
 
         issue = ImporterIssue(
             uid=str(uid),
+            source_reference=self.uid_to_source.get(str(uid), ""),
             name=nautobot_name,
             issue_type=issue_type,
             message=" ".join(get_message()),
