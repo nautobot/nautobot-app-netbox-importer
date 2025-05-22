@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 from typing import Callable, Dict, Generator, Iterable, List, Mapping, NamedTuple, Optional, Pattern
 
-from .base import ContentTypeStr, FieldName, NullablePrimitives, Pathable
+from nautobot_netbox_importer.base import ContentTypeStr, FieldName, NullablePrimitives, Pathable, Uid
 
 _TAG_EXPRESSIONS: Mapping[str, Pattern[str]] = {
     "InvalidCircuit": re.compile("A circuit termination must attach to either a location or a provider network"),
@@ -127,7 +127,7 @@ class SourceModelSummary(NamedTuple):
     pre_import: Optional[str]
     fields: List[FieldSummary]
     flags: str
-    default_reference_uid: NullablePrimitives
+    default_reference_uid: Optional[Uid]
     stats: SourceModelStats
 
 
@@ -162,6 +162,16 @@ def _fill_up(*values) -> str:
 
     Returns:
         A string padded with the first character of the first value to reach the defined length
+
+    Examples:
+        >>> _fill_up("* Import Summary:")
+        "* Import Summary: **********************************************************************************"
+
+        >>> _fill_up("= DiffSync Summary:")
+        "= DiffSync Summary: ================================================================================"
+
+        >>> _fill_up("-", "dcim.device")
+        "- dcim.device --------------------------------------------------------------------------------------"
     """
     fill = values[0][0]
     result = " ".join(str(value) for value in values) + " " + fill
