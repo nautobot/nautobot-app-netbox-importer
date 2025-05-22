@@ -65,15 +65,47 @@ from nautobot_netbox_importer.summary import (
 from nautobot_netbox_importer.utils import get_field_choices
 
 
-class SourceFieldImporterIssue(NetBoxImporterException):
+class SourceFieldIssue(NetBoxImporterException):
     """Raised when an error occurs during field import."""
 
-    def __init__(self, message: str, field: "SourceField"):
+    def __init__(self, message: str, field: "SourceField", issue_type=""):
         """Initialize the exception."""
         super().__init__(str({field.name: message}))
 
+        if not issue_type:
+            issue_type = f"{self.__class__.__name__}-{field.name}"
 
-class InvalidChoiceValueIssue(SourceFieldImporterIssue):
+        self.issue_type = issue_type
+
+
+class UpdatedValueIssue(SourceFieldIssue):
+    """Raised when a value is updated."""
+
+    def __init__(self, field: "SourceField", source_value: Any, target_value: Any):
+        """Initialize the exception."""
+        message = f"Value `{source_value}` updated to `{target_value}`"
+        super().__init__(message, field)
+
+
+class FallbackValueIssue(SourceFieldIssue):
+    """Raised when a fallback value is used."""
+
+    def __init__(self, field: "SourceField", target_value: Any):
+        """Initialize the exception."""
+        message = f"Falling back to: `{target_value}`"
+        super().__init__(message, field)
+
+
+class TruncatedValueIssue(SourceFieldIssue):
+    """Raised when a value is truncated."""
+
+    def __init__(self, field: "SourceField", source_value: Any, target_value: Any):
+        """Initialize the exception."""
+        message = f"Value `{source_value}` truncated to `{target_value}`"
+        super().__init__(message, field)
+
+
+class InvalidChoiceValueIssue(SourceFieldIssue):
     """Raised when an invalid choice value is encountered."""
 
     def __init__(self, field: "SourceField", value: Any, replacement: Any = NOTHING):
@@ -1065,7 +1097,7 @@ class SourceField:
                 value = int(source_value)
                 self.set_nautobot_value(target, value)
                 if value != source_value:
-                    raise SourceFieldImporterIssue(f"Invalid source value {source_value}, truncated to {value}", self)
+                    raise TruncatedValueIssue(self, source_value, value)
 
         self.set_importer(integer_importer)
 
