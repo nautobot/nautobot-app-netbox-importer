@@ -1,6 +1,6 @@
 # Customizing the NetBox Importer
 
-This document explains how to define own customizations the NetBox Importer to fit your specific needs.
+This document explains how to define your own customizations of the NetBox Importer to fit your specific needs.
 
 For more examples and details, check the following resources:
 
@@ -84,7 +84,7 @@ invoke import-netbox \
     <other importer options>
 ```
 
-There are the following alternatives to the command above:
+The command above has the following alternative:
 
 - Use the `--customizations` option with the `nautobot-server import_netbox` command:
 
