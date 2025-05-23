@@ -16,6 +16,7 @@ from django.db.models.fields import NOT_PROVIDED
 from django.db.models.options import Options as _DjangoModelMeta
 from nautobot.core.models import BaseModel
 from pydantic import Field as _PydanticField
+from timezone_field import TimeZoneField
 
 from nautobot_netbox_importer.base import ContentTypeStr, Uid
 
@@ -57,11 +58,12 @@ class InternalFieldType(Enum):
     TEXT_FIELD = "TextField"
     TREE_NODE_FOREIGN_KEY = "TreeNodeForeignKey"
     UUID_FIELD = "UUIDField"
+    TIMEZONE_FIELD = "TimeZoneField"
 
 
 StrToInternalFieldType = {item.value: item for item in InternalFieldType.__members__.values()}
 
-INTERNAL_TYPE_TO_ANNOTATION: Mapping[InternalFieldType, type] = {
+INTERNAL_TYPE_TO_ANNOTATION: Mapping[InternalFieldType, Any] = {
     InternalFieldType.AUTO_FIELD: int,
     InternalFieldType.BIG_AUTO_FIELD: int,
     InternalFieldType.BIG_INTEGER_FIELD: int,
@@ -81,6 +83,7 @@ INTERNAL_TYPE_TO_ANNOTATION: Mapping[InternalFieldType, type] = {
     InternalFieldType.SMALL_INTEGER_FIELD: int,
     InternalFieldType.TEXT_FIELD: str,
     InternalFieldType.UUID_FIELD: UUID,
+    InternalFieldType.TIMEZONE_FIELD: datetime.tzinfo,
 }
 
 # Fields to auto add to source and target wrappers
@@ -101,6 +104,7 @@ EMPTY_VALUES = (
 )
 
 
+# pylint: disable=too-many-return-statements
 def get_nautobot_field_and_type(
     model: NautobotBaseModelType,
     field_name: str,
@@ -124,6 +128,9 @@ def get_nautobot_field_and_type(
 
     if field_name == "_custom_field_data":
         return field, InternalFieldType.CUSTOM_FIELD_DATA
+
+    if isinstance(field, TimeZoneField):
+        return field, InternalFieldType.TIMEZONE_FIELD
 
     try:
         return field, StrToInternalFieldType[field.get_internal_type()]

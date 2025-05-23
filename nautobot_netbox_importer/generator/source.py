@@ -20,6 +20,7 @@ from typing import (
 )
 from uuid import UUID
 
+import pytz
 from diffsync import DiffSyncModel
 from diffsync.enum import DiffSyncModelFlags
 from nautobot.core.models.tree_queries import TreeModel
@@ -1031,6 +1032,8 @@ class SourceField:
             self.set_m2m_importer()
         elif internal_type == InternalFieldType.STATUS_FIELD:
             self.set_status_importer()
+        elif internal_type == InternalFieldType.TIMEZONE_FIELD:
+            self.set_timezone_importer()
         elif self.nautobot.is_reference:
             self.set_relation_importer()
         elif getattr(self.nautobot.field, "choices", None):
@@ -1295,3 +1298,14 @@ class SourceField:
                 self.wrapper.add_reference(status_wrapper, value)
 
         self.set_importer(status_importer)
+
+    def set_timezone_importer(self) -> None:
+        """Set a timezone importer."""
+
+        def timezone_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+            value = source.get(self.name, None)
+            if value not in EMPTY_VALUES:
+                value = pytz.timezone(value)
+            self.set_nautobot_value(target, value)
+
+        self.set_importer(timezone_importer)
