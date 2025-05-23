@@ -8,9 +8,16 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import Max
 from django.db.transaction import atomic
 from nautobot.core.utils.lookup import get_model_from_name
+from nautobot.extras.models import Tag
 
 from nautobot_netbox_importer.base import FieldName, RecordData, logger
-from nautobot_netbox_importer.summary import ImporterIssue, NautobotModelStats, NautobotModelSummary
+from nautobot_netbox_importer.summary import (
+    ImporterIssue,
+    ImportSummary,
+    NautobotModelStats,
+    NautobotModelSummary,
+    get_issue_tag,
+)
 
 from .base import (
     AUTO_ADD_FIELDS,
@@ -28,6 +35,7 @@ from .base import (
     Uid,
     get_nautobot_field_and_type,
     normalize_datetime,
+    source_pk_to_uuid,
 )
 from .exceptions import NautobotModelNotFound
 
@@ -68,6 +76,7 @@ _DONT_IMPORT_TYPES: Iterable[InternalFieldType] = (
 # Models listed here take precedence over others, which are sorted by the order they're introduced to the importer.
 # Models listed, but not imported, here will be ignored.
 # Obsoleted models can be kept here to ensure backward compatibility.
+# More information about the import order can be found in the app documentation: https://docs.nautobot.com/projects/netbox-importer/en/latest/dev/import_order/
 IMPORT_ORDER: Iterable[ContentTypeStr] = (
     "extras.customfield",
     "extras.customfieldchoice",
@@ -86,6 +95,8 @@ IMPORT_ORDER: Iterable[ContentTypeStr] = (
     "dcim.devicetype",
     "dcim.consoleport",
     "dcim.consoleporttemplate",
+    "dcim.consoleserverport",
+    "dcim.consoleserverporttemplate",
     "dcim.device",
     "dcim.devicebay",
     "dcim.frontport",
@@ -121,6 +132,14 @@ class NautobotAdapter(BaseAdapter):
             return self.wrappers[content_type]
 
         return NautobotModelWrapper(self, content_type)
+
+    @atomic
+    def tag_issues(self, summary: ImportSummary) -> None:
+        """Tag all records with any ImporterIssue."""
+        logger.info("Tagging all instance with issues")
+
+        for item in summary.nautobot:
+            self.get_or_create_wrapper(item.content_type).tag_issues(item.issues)
 
 
 class NautobotField:
@@ -229,6 +248,7 @@ class NautobotModelWrapper:
 
         self.constructor_kwargs: Dict[FieldName, Any] = {}
         self.stats = NautobotModelStats()
+        self.uid_to_source: Dict[Uid, str] = {}
 
         logger.debug("Created %s", self)
 
@@ -377,7 +397,7 @@ class NautobotModelWrapper:
         """Create an issue."""
         if not issue_type:
             if error:
-                issue_type = error.__class__.__name__
+                issue_type = getattr(error, "issue_type", None) or error.__class__.__name__
             else:
                 issue_type = "Unknown"
 
@@ -416,6 +436,7 @@ class NautobotModelWrapper:
 
         issue = ImporterIssue(
             uid=str(uid),
+            source_reference=self.uid_to_source.get(str(uid), ""),
             name=nautobot_name,
             issue_type=issue_type,
             message=" ".join(get_message()),
@@ -574,8 +595,30 @@ class NautobotModelWrapper:
             if field.can_import:
                 set_value(field.name, field.internal_type)
 
+    # pylint: disable=too-many-statements
     def save_nautobot_instance(self, instance: NautobotBaseModel, values: RecordData) -> bool:
-        """Save a Nautobot instance."""
+        """Save a Nautobot instance.
+
+        When the first Nautobot `save()` fails, importer calls `super.save()`.
+        If that passes, `FirstSaveFailed` issue is created.
+        This is to skip Nautobot checks/updates defined in `save()` method.
+
+        If super.save() fails, it creates `SaveFailed` issue, and the instance is not saved.
+        This can lead to integrity errors if the missing instance is referenced by other instances.
+
+        After the save, `clean()` is called on the instance. If it fails, it creates a `CleanFailed` issue.
+
+        It's possible to define force fields that are set after the initial save.
+        This is to override any values set by Nautobot `save()` method.
+        To define field as forced, specify `"<field name>": fields.force()` in `configure_model(fields={ ... })`.
+
+        Args:
+            instance: The Nautobot model instance to save
+            values: Dictionary of field values to apply to the instance
+
+        Returns:
+            bool: True if the instance was saved successfully, False otherwise
+        """
 
         def set_custom_field_data(value: Optional[Mapping]):
             custom_field_data = getattr(instance, "custom_field_data", None)
@@ -590,6 +633,47 @@ class NautobotModelWrapper:
                 setattr(instance, field_name, "")
             else:
                 setattr(instance, field_name, None)
+
+        def super_save(instance, exception: Optional[Exception] = None):
+            """This function is called when the first save fails on the super class.
+
+            If the save fails it recursively traverses the class hierarchy and calls `super.save()` on each class.
+            """
+            instance = super(instance.__class__, instance)
+
+            if not hasattr(instance, "save"):
+                raise exception or ValueError(f"Missing save method for {instance}")
+
+            try:
+                with atomic():  # type: ignore
+                    instance.save()
+            # pylint: disable=broad-exception-caught
+            except Exception as error:
+                logger.warning("Super save failed: %s", error, exc_info=True)
+                super_save(instance, error)
+
+        def save_or_super_save():
+            error = None
+
+            try:
+                # Process the first save
+                with atomic():  # type: ignore
+                    instance.save()
+                return
+            # pylint: disable=broad-exception-caught
+            except Exception as exception:
+                error = exception
+                logger.warning("First save failed: %s", exception, exc_info=True)
+
+            super_save(instance)
+
+            # Create `FirstSaveFailed` issue when `super.save()` passes, otherwise `SaveFailed` issue will be created by the caller.
+            self.add_issue(
+                "FirstSaveFailed",
+                nautobot_instance=instance,
+                data=values,
+                error=error,
+            )
 
         @atomic
         def save():
@@ -612,13 +696,13 @@ class NautobotModelWrapper:
                 else:
                     setattr(instance, field_name, value)
 
-            instance.save()
+            save_or_super_save()
 
             if force_fields:
                 # These fields has to be set after the initial save to override any default values.
                 for field_name, value in force_fields.items():
                     setattr(instance, field_name, value)
-                instance.save()
+                save_or_super_save()
 
             for field_name in m2m_fields:
                 field = getattr(instance, field_name)
@@ -629,7 +713,7 @@ class NautobotModelWrapper:
                     field.clear()
 
         try:
-            save()
+            save()  # type: ignore
         # pylint: disable=broad-exception-caught
         except Exception as error:
             self.stats.save_failed += 1
@@ -654,6 +738,41 @@ class NautobotModelWrapper:
             )
 
         return True
+
+    def tag_issues(self, issues: Iterable[ImporterIssue]) -> None:
+        """Tag all records with any ImporterIssue."""
+        if not issues:
+            return
+
+        model = self.model
+
+        if not hasattr(model, "tags"):
+            return
+
+        for issue in issues:
+            if not issue.uid:
+                continue
+
+            try:
+                nautobot_instance = model.objects.get(id=issue.uid)
+            except model.DoesNotExist:  # type: ignore
+                continue
+
+            tag_name = get_issue_tag(issue)
+            tag, _ = Tag.objects.get_or_create(
+                id=source_pk_to_uuid("extras.tag", tag_name),
+                defaults={
+                    "name": tag_name,
+                    "description": f"Import issue: {tag_name}",
+                },
+            )
+
+            logger.debug("Tagging %s %s %s", self.content_type, issue.uid, tag_name)
+
+            if not tag.content_types.filter(id=self.content_type_id).exists():
+                tag.content_types.add(self.content_type_instance)
+
+            nautobot_instance.tags.add(tag)
 
 
 class DiffSyncBaseModel(DiffSyncModel):
