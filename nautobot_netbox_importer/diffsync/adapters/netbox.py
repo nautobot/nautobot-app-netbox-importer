@@ -48,6 +48,7 @@ class NetBoxImporterOptions(NamedTuple):
     update_paths: bool = False
     fix_powerfeed_locations: bool = False
     sitegroup_parent_always_region: bool = False
+    tag_issues: bool = False
     unrack_zero_uheight_devices: bool = True
     save_json_summary_path: str = ""
     save_text_summary_path: str = ""
@@ -95,22 +96,36 @@ class NetBoxAdapter(SourceAdapter):
 
     def import_to_nautobot(self) -> None:
         """Import a NetBox export file into Nautobot."""
+        exception = None
         commited = False
         try:
-            self._atomic_import()
+            self._atomic_import()  # type: ignore
             commited = True
-        except _DryRunException:
-            logger.warning("Dry-run mode, no data has been imported.")
-        except _ImporterIssuesDetected:
-            logger.warning("Importer issues detected, no data has been imported.")
+        except (_DryRunException, _ImporterIssuesDetected) as error:
+            exception = error
+            logger.info("Data were not saved: %s", error)
 
-        if commited and self.options.update_paths:
-            logger.info("Updating paths ...")
-            call_command("trace_paths", no_input=True)
-            logger.info(" ... Updating paths completed.")
+        if self.options.save_json_summary_path:
+            self.summary.dump(self.options.save_json_summary_path, output_format="json")
+        if self.options.save_text_summary_path:
+            self.summary.dump(self.options.save_text_summary_path, output_format="text")
+
+        if commited:
+            if self.options.update_paths:
+                logger.info("Updating paths ...")
+                call_command("trace_paths", no_input=True)
+                logger.info(" ... Updating paths completed.")
+
+            if self.options.tag_issues:
+                self.nautobot.tag_issues(self.summary)  # type: ignore
 
         if self.options.print_summary:
             self.summary.print()
+
+        if commited:
+            logger.info("Import completed successfully.")
+        else:
+            logger.error("Data were not saved %s", exception)
 
     @atomic
     def _atomic_import(self) -> None:
@@ -126,10 +141,10 @@ class NetBoxAdapter(SourceAdapter):
 
         has_issues = any(True for item in self.summary.nautobot if item.issues)
         if has_issues and not self.options.bypass_data_validation:
-            raise _ImporterIssuesDetected("Importer issues detected, aborting the transaction.")
+            raise _ImporterIssuesDetected("Aborting the transaction: importer issues detected.")
 
         if self.options.dry_run:
-            raise _DryRunException("Aborting the transaction due to the dry-run mode.")
+            raise _DryRunException("Aborting the transaction: dry-run mode.")
 
 
 def _read_stream(stream) -> Generator[SourceRecord, None, None]:
