@@ -47,6 +47,12 @@ class Command(BaseCommand):
             "`'A Location of type Location may only have a Location of the same type as its parent.'`.",
         )
         parser.add_argument(
+            "--tag-issues",
+            action="store_true",
+            dest="tag_issues",
+            help="Whether to tag Nautobot records with any importer issues.",
+        )
+        parser.add_argument(
             "--fix-powerfeed-locations",
             action="store_true",
             dest="fix_powerfeed_locations",

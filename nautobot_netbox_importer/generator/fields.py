@@ -12,6 +12,7 @@ from nautobot_netbox_importer.generator.base import (
 )
 from nautobot_netbox_importer.generator.nautobot import DiffSyncBaseModel
 from nautobot_netbox_importer.generator.source import (
+    FallbackValueIssue,
     FieldName,
     ImporterPass,
     InternalFieldType,
@@ -23,7 +24,6 @@ from nautobot_netbox_importer.generator.source import (
     SourceField,
     SourceFieldDefinition,
     SourceFieldImporterFallback,
-    SourceFieldImporterIssue,
     SourceModelWrapper,
 )
 
@@ -70,10 +70,7 @@ def fallback(
                     field.set_nautobot_value(target, value)
                     if isinstance(error, InvalidChoiceValueIssue):
                         raise InvalidChoiceValueIssue(field, field.get_source_value(source), value) from error
-                    raise SourceFieldImporterIssue(
-                        f"Failed to import field: {error} | Fallback value: {value}",
-                        field,
-                    ) from error
+                    raise FallbackValueIssue(field, value) from error
                 raise
 
         field.set_importer(fallback_importer, override=True)
