@@ -1,5 +1,9 @@
 # Frequently Asked Questions
 
+## What needs to be done to provide customization in the import process?
+
+Check the [developer customizations documentation](./customizations.md) for more details.
+
 ## What has to be done to support a minor NetBox version?
 
 When NetBox adds new fields and models that deviate from Nautobot, the following steps should be taken:

@@ -2,7 +2,7 @@
 
 from gzip import GzipFile
 from pathlib import Path
-from typing import Callable, Generator, NamedTuple, Union
+from typing import Callable, Generator, NamedTuple, Sequence, Union
 from urllib.parse import ParseResult, urlparse
 
 import ijson
@@ -53,6 +53,7 @@ class NetBoxImporterOptions(NamedTuple):
     save_json_summary_path: str = ""
     save_text_summary_path: str = ""
     trace_issues: bool = False
+    customizations: Sequence[str] = []
 
 
 AdapterSetupFunction = Callable[[SourceAdapter], None]
@@ -75,6 +76,10 @@ class NetBoxAdapter(SourceAdapter):
         self.sync = sync
 
         self.options = options
+
+        for name in options.customizations:
+            if name:
+                register_generator_setup(name)
 
         for name in GENERATOR_SETUP_MODULES:
             setup = __import__(name, fromlist=["setup"]).setup

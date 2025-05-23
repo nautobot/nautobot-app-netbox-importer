@@ -143,6 +143,7 @@ nav:
       - Demo Execution: "dev/demo.md"
       - Frequently Asked Questions: "dev/faq.md"
       - Test Fixtures: "dev/code_reference/fixtures/README.md"
+      - Customizations: "dev/customizations.md"
       - Diagrams:
           - "diagrams/data_flow.md"
           - "diagrams/generator_erd.md"
