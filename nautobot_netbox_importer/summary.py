@@ -110,6 +110,7 @@ class SourceModelSummary(NamedTuple):
         disable_related_reference: Whether related references are disabled
         forward_references: Configuration for forward references handling
         pre_import: Pre-import processing function/method name
+        post_import: Post-import processing function/method name
         fields: List of field summaries for this model
         flags: Feature flags applied to this model
         default_reference_uid: Default UID used for reference when actual reference is missing
@@ -128,8 +129,8 @@ class SourceModelSummary(NamedTuple):
     flags: str
     default_reference_uid: Optional[Uid]
     stats: SourceModelStats
-    pre_import: str | None = None
-    post_import: str | None = None
+    pre_import: Optional[str] = None
+    post_import: Optional[str] = None
 
 
 class NautobotModelSummary(NamedTuple):

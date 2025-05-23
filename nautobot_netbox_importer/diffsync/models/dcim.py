@@ -75,7 +75,7 @@ def setup(adapter: SourceAdapter) -> None:
     adapter.configure_model(
         "dcim.cabletermination",
         extend_content_type="dcim.cable",
-        pre_import=_pre_import_cable_termination,
+        pre_import_record=_pre_import_cable_termination,
     )
     adapter.configure_model(
         "dcim.interface",
