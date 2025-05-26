@@ -1,5 +1,6 @@
 """Generic Field Importers definitions for Nautobot Importer."""
 
+from collections import defaultdict
 from typing import Any, Dict, Optional
 from uuid import UUID
 
@@ -27,7 +28,7 @@ from nautobot_netbox_importer.generator.source import (
     SourceModelWrapper,
 )
 
-_AUTO_INCREMENTS = {}
+_AUTO_INCREMENTS = defaultdict(int)
 
 
 def default(default_value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition:
@@ -283,8 +284,7 @@ def auto_increment(prefix="", nautobot_name: FieldName = "") -> SourceFieldDefin
         if field.nautobot.internal_type in INTERNAL_INTEGER_FIELDS:
             if prefix:
                 raise ValueError("Prefix is not supported for integer fields")
-
-        if field.nautobot.internal_type not in INTERNAL_STRING_FIELDS:
+        elif field.nautobot.internal_type not in INTERNAL_STRING_FIELDS:
             raise ValueError(f"Field {field.name} is not a string or integer field")
 
         def auto_increment_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
@@ -293,10 +293,7 @@ def auto_increment(prefix="", nautobot_name: FieldName = "") -> SourceFieldDefin
                 original_importer(source, target)
                 return
 
-            if key not in _AUTO_INCREMENTS:
-                _AUTO_INCREMENTS[key] = 0
             _AUTO_INCREMENTS[key] += 1
-
             value = _AUTO_INCREMENTS[key]
             if field.nautobot.internal_type in INTERNAL_STRING_FIELDS:
                 value = f"{prefix}{value}"
