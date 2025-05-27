@@ -18,7 +18,7 @@ from nautobot_netbox_importer.generator.source import (
     ImporterPass,
     InternalFieldType,
     InvalidChoiceValueIssue,
-    PreImportResult,
+    PreImportRecordResult,
     RecordData,
     SourceAdapter,
     SourceContentType,
@@ -116,7 +116,7 @@ def role(
     e.g., RackRole with `name = "Network"` and DeviceRole with `name = "Network"` to avoid duplicates.
     """
 
-    def cache_roles(source: RecordData, importer_pass: ImporterPass) -> PreImportResult:
+    def cache_roles(source: RecordData, importer_pass: ImporterPass) -> PreImportRecordResult:
         if importer_pass == ImporterPass.DEFINE_STRUCTURE:
             name = source.get("name", "").capitalize()
             if not name:
@@ -126,12 +126,12 @@ def role(
             if not uid:
                 _ROLE_NAME_TO_UID_CACHE[name] = nautobot_uid
 
-        return PreImportResult.USE_RECORD
+        return PreImportRecordResult.USE_RECORD
 
     role_wrapper = adapter.configure_model(
         source_content_type,
         nautobot_content_type="extras.role",
-        pre_import=cache_roles,
+        pre_import_record=cache_roles,
         identifiers=("name",),
         fields={
             # Include color to allow setting the default Nautobot value, import fails without it.

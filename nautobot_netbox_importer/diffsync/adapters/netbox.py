@@ -92,7 +92,8 @@ class NetBoxAdapter(SourceAdapter):
             fix_power_feed_locations(self)
         if self.options.unrack_zero_uheight_devices:
             unrack_zero_uheight_devices(self)
-        self.post_import()
+
+        self.post_load()
 
     def import_to_nautobot(self) -> None:
         """Import a NetBox export file into Nautobot."""
