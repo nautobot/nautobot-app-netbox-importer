@@ -1,11 +1,18 @@
 """Generic Field Importers definitions for Nautobot Importer."""
 
+from collections import defaultdict
 from typing import Any, Dict, Optional
 from uuid import UUID
 
-from .base import EMPTY_VALUES, ContentTypeStr, Uid
-from .nautobot import DiffSyncBaseModel
-from .source import (
+from nautobot_netbox_importer.generator.base import (
+    EMPTY_VALUES,
+    INTERNAL_INTEGER_FIELDS,
+    INTERNAL_STRING_FIELDS,
+    ContentTypeStr,
+    Uid,
+)
+from nautobot_netbox_importer.generator.nautobot import DiffSyncBaseModel
+from nautobot_netbox_importer.generator.source import (
     FallbackValueIssue,
     FieldName,
     ImporterPass,
@@ -20,6 +27,8 @@ from .source import (
     SourceFieldImporterFallback,
     SourceModelWrapper,
 )
+
+_AUTO_INCREMENTS = defaultdict(int)
 
 
 def default(default_value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition:
@@ -248,3 +257,49 @@ def disable(reason: str) -> SourceFieldDefinition:
         field.disable(reason)
 
     return define_disable
+
+
+def auto_increment(prefix="", nautobot_name: FieldName = "") -> SourceFieldDefinition:
+    """Auto increment field value, if the source value is empty.
+
+    Use to set the field value to a unique auto incremented value.
+
+    Supports string and integer fields.
+
+    Args:
+        prefix (str): Optional prefix to be added to the auto incremented value. Valid for string fields only.
+        nautobot_name (str): Optional name for the Nautobot field.
+
+    Returns:
+        A function that defines an auto increment field importer.
+    """
+
+    def define_auto_increment(field: SourceField) -> None:
+        key = f"{field.wrapper.content_type}.{field.name}_prefix"
+
+        original_importer = field.set_importer(nautobot_name=nautobot_name)
+        if not original_importer:
+            return
+
+        if field.nautobot.internal_type in INTERNAL_INTEGER_FIELDS:
+            if prefix:
+                raise ValueError("Prefix is not supported for integer fields")
+        elif field.nautobot.internal_type not in INTERNAL_STRING_FIELDS:
+            raise ValueError(f"Field {field.name} is not a string or integer field")
+
+        def auto_increment_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+            value = field.get_source_value(source)
+            if value not in EMPTY_VALUES:
+                original_importer(source, target)
+                return
+
+            _AUTO_INCREMENTS[key] += 1
+            value = _AUTO_INCREMENTS[key]
+            if field.nautobot.internal_type in INTERNAL_STRING_FIELDS:
+                value = f"{prefix}{value}"
+
+            field.set_nautobot_value(target, value)
+
+        field.set_importer(auto_increment_importer, nautobot_name=nautobot_name, override=True)
+
+    return define_auto_increment

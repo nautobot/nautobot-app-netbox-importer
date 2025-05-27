@@ -22,6 +22,10 @@ from nautobot_netbox_importer.summary import (
 from .base import (
     AUTO_ADD_FIELDS,
     EMPTY_VALUES,
+    INTERNAL_AUTO_INC_TYPES,
+    INTERNAL_DONT_IMPORT_TYPES,
+    INTERNAL_INTEGER_FIELDS,
+    INTERNAL_REFERENCE_TYPES,
     INTERNAL_TYPE_TO_ANNOTATION,
     BaseAdapter,
     ContentTypeStr,
@@ -38,38 +42,6 @@ from .base import (
     source_pk_to_uuid,
 )
 from .exceptions import NautobotModelNotFound
-
-_AUTO_INCREMENT_TYPES: Iterable[InternalFieldType] = (
-    InternalFieldType.AUTO_FIELD,
-    InternalFieldType.BIG_AUTO_FIELD,
-)
-
-_INTEGER_TYPES: Iterable[InternalFieldType] = (
-    InternalFieldType.AUTO_FIELD,
-    InternalFieldType.BIG_AUTO_FIELD,
-    InternalFieldType.BIG_INTEGER_FIELD,
-    InternalFieldType.INTEGER_FIELD,
-    InternalFieldType.POSITIVE_INTEGER_FIELD,
-    InternalFieldType.POSITIVE_SMALL_INTEGER_FIELD,
-    InternalFieldType.SMALL_INTEGER_FIELD,
-)
-
-_REFERENCE_TYPES: Iterable[InternalFieldType] = (
-    InternalFieldType.FOREIGN_KEY,
-    InternalFieldType.FOREIGN_KEY_WITH_AUTO_RELATED_NAME,
-    InternalFieldType.MANY_TO_MANY_FIELD,
-    InternalFieldType.ONE_TO_ONE_FIELD,
-    InternalFieldType.ROLE_FIELD,
-    InternalFieldType.STATUS_FIELD,
-    InternalFieldType.TREE_NODE_FOREIGN_KEY,
-)
-
-_DONT_IMPORT_TYPES: Iterable[InternalFieldType] = (
-    InternalFieldType.NOT_FOUND,
-    InternalFieldType.PRIVATE_PROPERTY,
-    InternalFieldType.READ_ONLY_PROPERTY,
-)
-
 
 # Helper to determine the import order of models.
 # Due to dependencies among Nautobot models, certain models must be imported first to ensure successful `instance.save()` calls without errors.
@@ -175,17 +147,17 @@ class NautobotField:
     @property
     def is_reference(self) -> bool:
         """Check if the field is a reference."""
-        return self.internal_type in _REFERENCE_TYPES
+        return self.internal_type in INTERNAL_REFERENCE_TYPES
 
     @property
     def is_integer(self) -> bool:
         """Check if the field is an integer."""
-        return self.internal_type in _INTEGER_TYPES
+        return self.internal_type in INTERNAL_INTEGER_FIELDS
 
     @property
     def is_auto_increment(self) -> bool:
         """Check if the field is an integer."""
-        return self.internal_type in _AUTO_INCREMENT_TYPES
+        return self.internal_type in INTERNAL_AUTO_INC_TYPES
 
     @property
     def is_content_type(self) -> bool:
@@ -198,7 +170,7 @@ class NautobotField:
     @property
     def can_import(self) -> bool:
         """Determine if this field can be imported."""
-        return self.internal_type not in _DONT_IMPORT_TYPES
+        return self.internal_type not in INTERNAL_DONT_IMPORT_TYPES
 
 
 NautobotFields = MutableMapping[FieldName, NautobotField]
@@ -543,7 +515,7 @@ class NautobotModelWrapper:
         nautobot_field, internal_type = get_nautobot_field_and_type(self.model, field_name)
 
         if (
-            internal_type in _REFERENCE_TYPES
+            internal_type in INTERNAL_REFERENCE_TYPES
             and internal_type != InternalFieldType.MANY_TO_MANY_FIELD
             and not field_name.endswith("_id")
         ):
