@@ -18,6 +18,7 @@ from nautobot_netbox_importer.summary import Pathable
 for _name in (
     "base",
     "circuits",
+    "content_types",
     "custom_fields",
     "dcim",
     "ipam",

@@ -1,11 +1,8 @@
 """NetBox to Nautobot Base Models Mapping."""
 
-from diffsync.enum import DiffSyncModelFlags
-
 from nautobot_netbox_importer.base import RecordData
+from nautobot_netbox_importer.diffsync.models.locations import define_locations
 from nautobot_netbox_importer.generator import DiffSyncBaseModel, SourceAdapter, SourceField, fields
-
-from .locations import define_locations
 
 
 def _define_tagged_object(field: SourceField) -> None:
@@ -36,50 +33,12 @@ def _define_tagged_object(field: SourceField) -> None:
     content_type_field = field.handle_sibling("content_type", "content_type")
 
 
-def _setup_content_types(adapter: SourceAdapter) -> None:
-    """Map NetBox content types to Nautobot.
-
-    Automatically calculate NetBox content type IDs, if not provided, based on the order of the content types.
-    """
-    netbox = {"id": 0}
-
-    def define_app_label(field: SourceField) -> None:
-        def content_types_mapper_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-            app_label = source["app_label"]
-            model = source["model"]
-            netbox["id"] += 1
-            uid = source.get("id", None)
-            if uid:
-                if uid != netbox["id"]:
-                    raise ValueError(f"Content type id mismatch: {uid} != {netbox['id']}")
-            else:
-                uid = netbox["id"]
-
-            wrapper = adapter.get_or_create_wrapper(f"{app_label}.{model}")
-            adapter.content_type_ids_mapping[uid] = wrapper
-            field.set_nautobot_value(target, app_label)
-
-        field.set_importer(content_types_mapper_importer)
-
-    adapter.configure_model(
-        "contenttypes.ContentType",
-        identifiers=["app_label", "model"],
-        flags=DiffSyncModelFlags.IGNORE,
-        nautobot_flags=DiffSyncModelFlags.IGNORE,
-        fields={
-            "app_label": define_app_label,
-        },
-    )
-
-
 def setup(adapter: SourceAdapter) -> None:
     """Map NetBox base models to Nautobot."""
     adapter.disable_model("sessions.session", "Nautobot has own sessions, sessions should never cross apps.")
     adapter.disable_model("admin.logentry", "Not directly used in Nautobot.")
     adapter.disable_model("users.userconfig", "May not have a 1 to 1 translation to Nautobot.")
     adapter.disable_model("auth.permission", "Handled via a Nautobot model and may not be a 1 to 1.")
-
-    _setup_content_types(adapter)
 
     adapter.configure_model(
         "extras.Status",
