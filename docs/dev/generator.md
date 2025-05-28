@@ -86,7 +86,7 @@ For each source record, the importer attempts to read the corresponding Nautobot
 
 ### Updating Referenced Content Types
 
-The updating of `content_types` fields, based on cached references, occurs in this phase. It's possible to define forwarding references using `source_wrapper.set_references_forwarding()`, e.g. references to `dcim.location` are forwarded to `dcim.locationtype`.
+The updating of `content_types` fields, based on cached references, occurs in this phase. It's possible to define forwarding references using `SourceModelWrapper.set_references_forwarding()`, e.g. references to `dcim.location` are forwarded to `dcim.locationtype`.
 
 ### Syncing to Nautobot
 
