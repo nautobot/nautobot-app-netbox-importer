@@ -1,0 +1,15 @@
+[
+{
+  "model": "extras.note",
+  "pk": "38545e26-db8e-5ae0-af63-99c56bea15e2",
+  "fields": {
+    "created": "2024-01-22T08:32:30.376Z",
+    "last_updated": "2025-05-29T08:09:54.540Z",
+    "assigned_object_type": 141,
+    "assigned_object_id": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "user": null,
+    "user_name": "Undefined",
+    "note": ""
+  }
+}
+]
