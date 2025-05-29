@@ -1139,7 +1139,7 @@ def import_netbox(  # noqa: PLR0913
 ):
     """Import NetBox data into Nautobot."""
     if sum(bool(x) for x in [file, demo_version, test_input]) > 1:
-        raise ValueError("Cannot specify more than one of `file`, `demo`, or `test_input` arguments")
+        raise ValueError("Cannot specify more than one of `--file`, `--demo-version`, or `--test-input` arguments")
 
     if demo_version:
         file = (

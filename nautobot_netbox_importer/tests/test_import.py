@@ -244,14 +244,17 @@ def _generate_model_samples(wrapper: NautobotModelWrapper, path: Path):
         samples = json.loads(path.read_text())
         for sample in samples:
             uid = sample["pk"]
-            if model.objects.filter(pk=uid).count() == 1:
+            if model.objects.filter(pk=uid).exists():
                 pks.append(uid)
     # pylint: disable=broad-exception-caught
     except Exception:
         pass
 
     if len(pks) < _SAMPLE_COUNT:
-        random_instances = wrapper.model.objects.order_by("?")[: _SAMPLE_COUNT - len(pks)]
+        random_instances = wrapper.model.objects
+        if pks:
+            random_instances = random_instances.exclude(pk__in=pks)
+        random_instances = random_instances.order_by("?")[: _SAMPLE_COUNT - len(pks)]
         for instance in random_instances:
             pks.append(instance.pk)
     else:
