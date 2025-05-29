@@ -2,8 +2,11 @@
 
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
+from packaging.version import Version
 
 from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
+
+_DEFAULT_NETBOX_VERSION = str(NetBoxImporterOptions._field_defaults["netbox_version"])
 
 
 class Command(BaseCommand):
@@ -92,17 +95,26 @@ class Command(BaseCommand):
             dest="customizations",
             help="Paths to a Python module containing customizations to apply during the import. (default: empty)",
         )
+        parser.add_argument(
+            "--netbox-version",
+            dest="netbox_version",
+            help=f"SemVer NetBox version string to use for the import. (default: '{_DEFAULT_NETBOX_VERSION}')",
+            default=_DEFAULT_NETBOX_VERSION,
+        )
 
     def handle(self, json_file, **kwargs):  # type: ignore
         """Handle execution of the import_netbox management command."""
         call_command("migrate")
 
         customizations = (kwargs.pop("customizations") or "").split(",")
+        netbox_version = Version(kwargs.pop("netbox_version", _DEFAULT_NETBOX_VERSION))
 
         # pylint: disable=protected-access
         keys = NetBoxImporterOptions._fields
         options = NetBoxImporterOptions(
-            **{key: value for key, value in kwargs.items() if key in keys}, customizations=customizations
+            **{key: value for key, value in kwargs.items() if key in keys},
+            customizations=customizations,
+            netbox_version=netbox_version,
         )
 
         adapter = NetBoxAdapter(json_file, options)
