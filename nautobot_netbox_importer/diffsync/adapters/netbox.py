@@ -47,6 +47,7 @@ class NetBoxImporterOptions(NamedTuple):
     bypass_data_validation: bool = False
     print_summary: bool = False
     update_paths: bool = False
+    deduplicate_ipam: bool = False
     fix_powerfeed_locations: bool = False
     sitegroup_parent_always_region: bool = False
     tag_issues: bool = False

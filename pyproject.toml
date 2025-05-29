@@ -38,6 +38,7 @@ pydantic = "^1.10.2"
 python-dateutil = "^2.9.0"
 ijson = "^3.2.3"
 pytz = "^2025.1"
+netaddr = ">=0.10.1"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"

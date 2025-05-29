@@ -39,3 +39,14 @@ invoke unittest \
     --skip-docs-build \
     --pattern=3_7_custom
 ```
+
+To run the import to be able to check data in Nautobot UI:
+
+```shell
+invoke import-netbox \
+    --test-input=2.4/3.7.custom \
+    --bypass-data-validation \
+    --deduplicate-ipam \
+    --sitegroup-parent-always-region \
+    --no-dry-run
+```

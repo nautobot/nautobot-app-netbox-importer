@@ -159,6 +159,7 @@ class TestImport(TestCase):
             NetBoxImporterOptions(
                 dry_run=False,
                 bypass_data_validation=True,
+                deduplicate_ipam=True,
                 sitegroup_parent_always_region=True,
             ),
         )
