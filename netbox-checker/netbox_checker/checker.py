@@ -34,7 +34,7 @@ def _find_missing_cables(side: str):
     Cable = apps.get_model("dcim", "Cable")
     CableTermination = apps.get_model("dcim", "CableTermination")
 
-    cables_missing = Cable.objects.exclude(id__in=CableTermination.objects.filter(cable_end="A").values("cable_id"))
+    cables_missing = Cable.objects.exclude(id__in=CableTermination.objects.filter(cable_end=side).values("cable_id"))
 
     if cables_missing.count():
         _print_issues(f"Missing cable termination on side {side}:", cables_missing)
