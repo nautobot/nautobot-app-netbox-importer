@@ -1,6 +1,6 @@
 {
     "diffsync": {
-        "create": 70,
+        "create": 77,
         "update": 0,
         "delete": 0,
         "no-change": 0,
@@ -2494,6 +2494,160 @@
             "disable_related_reference": false,
             "forward_references": null,
             "fields": {
+                "_name": {
+                    "name": "_name",
+                    "nautobot_name": "_name",
+                    "nautobot_internal_type": "PrivateProperty",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "_name",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "_path": {
+                    "name": "_path",
+                    "nautobot_name": "_path",
+                    "nautobot_internal_type": "PrivateProperty",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "_path",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "bridge": {
+                    "name": "bridge",
+                    "nautobot_name": "bridge_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "bridge",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "cable": {
+                    "name": "cable",
+                    "nautobot_name": "cable_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "cable",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "cable_end": {
+                    "name": "cable_end",
+                    "nautobot_name": "cable_end",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "cable_end",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "created": {
+                    "name": "created",
+                    "nautobot_name": "created",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": "datetime_importer",
+                    "definition": "created",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "custom_field_data": {
+                    "name": "custom_field_data",
+                    "nautobot_name": "custom_field_data",
+                    "nautobot_internal_type": "CustomFieldData",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "custom_field_data",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "description": {
+                    "name": "description",
+                    "nautobot_name": "description",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "device": {
+                    "name": "device",
+                    "nautobot_name": "device_id",
+                    "nautobot_internal_type": "ForeignKeyWithAutoRelatedName",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "device",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "duplex": {
+                    "name": "duplex",
+                    "nautobot_name": "duplex",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "duplex",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "enabled": {
+                    "name": "enabled",
+                    "nautobot_name": "enabled",
+                    "nautobot_internal_type": "BooleanField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "enabled",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": true,
+                    "disable_reason": "",
+                    "required": true
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -2502,7 +2656,148 @@
                     "importer": null,
                     "definition": "id",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "label": {
+                    "name": "label",
+                    "nautobot_name": "label",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "label",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "lag": {
+                    "name": "lag",
+                    "nautobot_name": "lag_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "lag",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "last_updated": {
+                    "name": "last_updated",
+                    "nautobot_name": "last_updated",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
+                },
+                "mac_address": {
+                    "name": "mac_address",
+                    "nautobot_name": "mac_address",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "mac_address",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "mark_connected": {
+                    "name": "mark_connected",
+                    "nautobot_name": "mark_connected",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "mark_connected",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "mgmt_only": {
+                    "name": "mgmt_only",
+                    "nautobot_name": "mgmt_only",
+                    "nautobot_internal_type": "BooleanField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "mgmt_only",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": false,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "mode": {
+                    "name": "mode",
+                    "nautobot_name": "mode",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "choice_importer",
+                    "definition": "mode",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "module": {
+                    "name": "module",
+                    "nautobot_name": "module_id",
+                    "nautobot_internal_type": "ForeignKeyWithAutoRelatedName",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "module",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "mtu": {
+                    "name": "mtu",
+                    "nautobot_name": "mtu",
+                    "nautobot_internal_type": "PositiveIntegerField",
+                    "nautobot_can_import": true,
+                    "importer": "integer_importer",
+                    "definition": "mtu",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "name": {
+                    "name": "name",
+                    "nautobot_name": "name",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "name",
+                    "sources": [
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -2516,7 +2811,106 @@
                     "importer": "relation_importer",
                     "definition": "parent_interface",
                     "sources": [
-                        "CUSTOM"
+                        "CUSTOM",
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "poe_mode": {
+                    "name": "poe_mode",
+                    "nautobot_name": "poe_mode",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "poe_mode",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "poe_type": {
+                    "name": "poe_type",
+                    "nautobot_name": "poe_type",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "poe_type",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "rf_channel": {
+                    "name": "rf_channel",
+                    "nautobot_name": "rf_channel",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "rf_channel",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "rf_channel_frequency": {
+                    "name": "rf_channel_frequency",
+                    "nautobot_name": "rf_channel_frequency",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "rf_channel_frequency",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "rf_channel_width": {
+                    "name": "rf_channel_width",
+                    "nautobot_name": "rf_channel_width",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "rf_channel_width",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "rf_role": {
+                    "name": "rf_role",
+                    "nautobot_name": "rf_role",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "rf_role",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "speed": {
+                    "name": "speed",
+                    "nautobot_name": "speed",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "speed",
+                    "sources": [
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -2535,11 +2929,142 @@
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
                     "disable_reason": "",
                     "required": true
+                },
+                "tagged_vlans": {
+                    "name": "tagged_vlans",
+                    "nautobot_name": "tagged_vlans",
+                    "nautobot_internal_type": "ManyToManyField",
+                    "nautobot_can_import": true,
+                    "importer": "m2m_importer",
+                    "definition": "tagged_vlans",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "tx_power": {
+                    "name": "tx_power",
+                    "nautobot_name": "tx_power",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "tx_power",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "type": {
+                    "name": "type",
+                    "nautobot_name": "type",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "choice_importer",
+                    "definition": "type",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "untagged_vlan": {
+                    "name": "untagged_vlan",
+                    "nautobot_name": "untagged_vlan_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "untagged_vlan",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "vdcs": {
+                    "name": "vdcs",
+                    "nautobot_name": "vdcs",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "vdcs",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "vrf": {
+                    "name": "vrf",
+                    "nautobot_name": "vrf_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "vrf",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "wireless_lans": {
+                    "name": "wireless_lans",
+                    "nautobot_name": "wireless_lans",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "wireless_lans",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "wireless_link": {
+                    "name": "wireless_link",
+                    "nautobot_name": "wireless_link",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "wireless_link",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "wwn": {
+                    "name": "wwn",
+                    "nautobot_name": "wwn",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "wwn",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 }
             },
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": "None",
-            "stats": {},
+            "stats": {
+                "first_pass_used": 1,
+                "second_pass_used": 1,
+                "created": 1,
+                "imported": 1
+            },
             "pre_import": null,
             "post_import": null
         },
@@ -3130,6 +3655,20 @@
                         "AUTO"
                     ],
                     "default_value": null,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "status": {
+                    "name": "status",
+                    "nautobot_name": "status_id",
+                    "nautobot_internal_type": "StatusField",
+                    "nautobot_can_import": true,
+                    "importer": "status_importer",
+                    "definition": "status",
+                    "sources": [
+                        "AUTO"
+                    ],
+                    "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
                     "disable_reason": "",
                     "required": true
                 }
@@ -6477,10 +7016,10 @@
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
             "stats": {
-                "pre_cached": 2,
-                "imported": 2,
-                "imported_from_cache": 2,
-                "created": 2
+                "pre_cached": 3,
+                "imported": 3,
+                "imported_from_cache": 3,
+                "created": 3
             },
             "pre_import": null,
             "post_import": null
@@ -6658,6 +7197,76 @@
             "disable_related_reference": false,
             "forward_references": null,
             "fields": {
+                "comments": {
+                    "name": "comments",
+                    "nautobot_name": "comments",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "comments",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "created": {
+                    "name": "created",
+                    "nautobot_name": "created",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": "datetime_importer",
+                    "definition": "created",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "custom_field_data": {
+                    "name": "custom_field_data",
+                    "nautobot_name": "custom_field_data",
+                    "nautobot_internal_type": "CustomFieldData",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "custom_field_data",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "date_added": {
+                    "name": "date_added",
+                    "nautobot_name": "date_added",
+                    "nautobot_internal_type": "NotFound",
+                    "nautobot_can_import": false,
+                    "importer": null,
+                    "definition": "date_added",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "description": {
+                    "name": "description",
+                    "nautobot_name": "description",
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "description",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
                 "id": {
                     "name": "id",
                     "nautobot_name": "id",
@@ -6666,11 +7275,54 @@
                     "importer": null,
                     "definition": "id",
                     "sources": [
-                        "AUTO"
+                        "AUTO",
+                        "DATA"
                     ],
                     "default_value": null,
                     "disable_reason": "",
                     "required": true
+                },
+                "last_updated": {
+                    "name": "last_updated",
+                    "nautobot_name": "last_updated",
+                    "nautobot_internal_type": "DateTimeField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Last updated field is updated with each write",
+                    "required": false
+                },
+                "prefix": {
+                    "name": "prefix",
+                    "nautobot_name": "prefix",
+                    "nautobot_internal_type": "Property",
+                    "nautobot_can_import": true,
+                    "importer": "value_importer",
+                    "definition": "prefix",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "rir": {
+                    "name": "rir",
+                    "nautobot_name": "rir_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "rir",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 },
                 "status": {
                     "name": "status",
@@ -6685,12 +7337,30 @@
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
                     "disable_reason": "",
                     "required": true
+                },
+                "tenant": {
+                    "name": "tenant",
+                    "nautobot_name": "tenant_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "tenant",
+                    "sources": [
+                        "DATA"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
                 }
             },
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": "None",
-            "stats": {},
-            "pre_import": null,
+            "stats": {
+                "first_pass_used": 1,
+                "second_pass_used": 1,
+                "imported": 1
+            },
+            "pre_import": "pre_import_aggregate",
             "post_import": null
         },
         "ipam.asn": {
@@ -7160,8 +7830,70 @@
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": "None",
             "stats": {
-                "first_pass_used": 1,
-                "second_pass_used": 1,
+                "first_pass_used": 4,
+                "second_pass_used": 4,
+                "created": 1,
+                "imported": 4
+            },
+            "pre_import": "pre_import_ipaddress",
+            "post_import": "post_import_ipaddress"
+        },
+        "ipam.ipaddresstointerface": {
+            "content_type": "ipam.ipaddresstointerface",
+            "content_type_id": null,
+            "extends_content_type": null,
+            "nautobot_content_type": "ipam.ipaddresstointerface",
+            "disable_reason": "",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "nautobot_name": "id",
+                    "nautobot_internal_type": "UUIDField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": "id",
+                    "sources": [
+                        "AUTO"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "interface": {
+                    "name": "interface",
+                    "nautobot_name": "interface_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "interface",
+                    "sources": [
+                        "CUSTOM"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "ip_address": {
+                    "name": "ip_address",
+                    "nautobot_name": "ip_address_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "ip_address",
+                    "sources": [
+                        "CUSTOM"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
+                }
+            },
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": "None",
+            "stats": {
                 "created": 1,
                 "imported": 1
             },
@@ -7468,12 +8200,12 @@
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": "None",
             "stats": {
-                "first_pass_used": 1,
-                "second_pass_used": 1,
-                "created": 1,
-                "imported": 1
+                "first_pass_used": 3,
+                "created": 4,
+                "imported": 5,
+                "second_pass_used": 3
             },
-            "pre_import": null,
+            "pre_import": "pre_import_prefix",
             "post_import": null
         },
         "ipam.rir": {
@@ -7579,8 +8311,8 @@
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": "None",
             "stats": {
-                "created": 1,
-                "imported": 1
+                "created": 2,
+                "imported": 4
             },
             "pre_import": "cache_roles",
             "post_import": null
@@ -7832,6 +8564,20 @@
                     "default_value": null,
                     "disable_reason": "",
                     "required": true
+                },
+                "status": {
+                    "name": "status",
+                    "nautobot_name": "status_id",
+                    "nautobot_internal_type": "StatusField",
+                    "nautobot_can_import": true,
+                    "importer": "status_importer",
+                    "definition": "status",
+                    "sources": [
+                        "AUTO"
+                    ],
+                    "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+                    "disable_reason": "",
+                    "required": false
                 }
             },
             "flags": "DiffSyncModelFlags.NONE",
@@ -9565,12 +10311,15 @@
                         "diffsync": "NetBoxAdapter \"NetBox\"",
                         "id": "03d4a2c5-e08b-5cc1-924d-c401194d393c",
                         "manufacturer_id": "None",
-                        "model": "None",
-                        "created": "2024-02-15 09:18:48.416000+00:00",
+                        "model": "Half U Device Type",
+                        "created": "None",
                         "last_updated": "None",
                         "custom_field_data": "None",
+                        "comments": "None",
+                        "part_number": "None",
                         "u_height": "0",
-                        "is_full_depth": "None"
+                        "is_full_depth": "None",
+                        "subdevice_role": "None"
                     },
                     "source_reference": "dcim.devicetype:2"
                 }
@@ -9597,7 +10346,10 @@
             "content_type_id": 38,
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
-            "stats": {},
+            "stats": {
+                "source_created": 1,
+                "created": 1
+            },
             "issues": []
         },
         "dcim.interfaceredundancygroup": {
@@ -9624,8 +10376,6 @@
                         "protocol": "None",
                         "created": "None",
                         "last_updated": "None",
-                        "custom_field_data": "None",
-                        "description": "None",
                         "name": "None"
                     },
                     "source_reference": "ipam.fhrpgroup:2"
@@ -9643,8 +10393,7 @@
                         "protocol": "vrrp",
                         "created": "None",
                         "last_updated": "None",
-                        "custom_field_data": "None",
-                        "description": "None",
+                        "description": "FHR Group Description",
                         "name": "None"
                     },
                     "source_reference": "ipam.fhrpgroup:1"
@@ -9943,16 +10692,16 @@
                         "diffsync": "NetBoxAdapter \"NetBox\"",
                         "id": "149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5",
                         "content_types": "{51}",
-                        "key": "None",
+                        "key": "device_custom_object",
                         "label": "None",
                         "type": "text",
                         "created": "None",
                         "last_updated": "None",
                         "description": "None",
-                        "required": "False",
+                        "required": "None",
                         "filter_logic": "loose",
-                        "default": "None",
                         "weight": "None",
+                        "validation_minimum": "None",
                         "validation_regex": "None"
                     },
                     "source_reference": "extras.customfield:3"
@@ -10062,8 +10811,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 3,
-                "created": 3
+                "source_created": 4,
+                "created": 4
             },
             "issues": []
         },
@@ -10105,8 +10854,8 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 2,
-                "created": 2
+                "source_created": 3,
+                "created": 3
             },
             "issues": []
         },
@@ -10169,6 +10918,17 @@
             },
             "issues": []
         },
+        "ipam.ipaddresstointerface": {
+            "content_type": "ipam.ipaddresstointerface",
+            "content_type_id": 89,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": false,
+            "stats": {
+                "source_created": 1,
+                "created": 1
+            },
+            "issues": []
+        },
         "ipam.iprange": {
             "content_type": "ipam.iprange",
             "content_type_id": null,
@@ -10183,10 +10943,91 @@
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {
-                "source_created": 1,
-                "created": 1
+                "source_created": 4,
+                "created": 4,
+                "issues": 4
             },
-            "issues": []
+            "issues": [
+                {
+                    "uid": "015c4836-67b9-571d-aeb7-bb26b3438b92",
+                    "name": "10.0.0.0/24",
+                    "issue_type": "CreatedMissingPrefix",
+                    "message": "",
+                    "data": {
+                        "model_flags": "DiffSyncModelFlags.NONE",
+                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "id": "015c4836-67b9-571d-aeb7-bb26b3438b92",
+                        "status_id": "76782d4e-25fa-5add-8129-3a4540d09ad1",
+                        "locations": "None",
+                        "role_id": "None",
+                        "last_updated": "None",
+                        "prefix": "10.0.0.0/24",
+                        "rir_id": "None"
+                    },
+                    "source_reference": "ipam.prefix:10.0.0.0/24"
+                },
+                {
+                    "uid": "56a49e57-e4e5-5c63-9e9c-188044a2aae0",
+                    "name": "10.1.2.0/24",
+                    "issue_type": "DuplicatePrefix",
+                    "message": "Duplicate prefix `10.1.2.0/24` found, merging `ipam.aggregate:1`",
+                    "data": {
+                        "created": "2019-05-01T00:00:00Z",
+                        "last_updated": "2019-05-01T14:35:04.385Z",
+                        "custom_field_data": "{}",
+                        "description": "",
+                        "comments": "",
+                        "prefix": "10.1.2.0/24",
+                        "rir": "None",
+                        "tenant": "None",
+                        "date_added": "2019-05-01",
+                        "id": "1"
+                    },
+                    "source_reference": "ipam.prefix:10.1.2.0/24"
+                },
+                {
+                    "uid": "56a49e57-e4e5-5c63-9e9c-188044a2aae0",
+                    "name": "10.1.2.0/24",
+                    "issue_type": "DuplicatePrefix",
+                    "message": "Duplicate prefix `10.1.2.0/24` found, merging `ipam.prefix:2`",
+                    "data": {
+                        "created": "2024-02-21T12:42:11.589Z",
+                        "last_updated": "2024-02-21T12:42:11.589Z",
+                        "custom_field_data": "{}",
+                        "description": "",
+                        "comments": "",
+                        "prefix": "10.1.2.0/24",
+                        "site": "None",
+                        "vrf": "None",
+                        "tenant": "None",
+                        "vlan": "None",
+                        "status": "active",
+                        "role": "None",
+                        "is_pool": "False",
+                        "mark_utilized": "False",
+                        "id": "2"
+                    },
+                    "source_reference": "ipam.prefix:10.1.2.0/24"
+                },
+                {
+                    "uid": "c87d7e7b-0e83-537c-bb74-b5517b3fa00d",
+                    "name": "10.0.0.0/16",
+                    "issue_type": "CreatedMissingPrefix",
+                    "message": "",
+                    "data": {
+                        "model_flags": "DiffSyncModelFlags.NONE",
+                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "id": "c87d7e7b-0e83-537c-bb74-b5517b3fa00d",
+                        "status_id": "76782d4e-25fa-5add-8129-3a4540d09ad1",
+                        "locations": "None",
+                        "role_id": "None",
+                        "last_updated": "None",
+                        "prefix": "10.0.0.0/16",
+                        "rir_id": "None"
+                    },
+                    "source_reference": "ipam.prefix:10.0.0.0/16"
+                }
+            ]
         },
         "ipam.rir": {
             "content_type": "ipam.rir",
@@ -10430,11 +11271,10 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "diffsync": "NetBoxAdapter \"NetBox\"",
                         "id": "c650165f-9a05-55c0-bbb1-c9527d41160c",
-                        "name": "None",
+                        "name": "Test Permission",
                         "description": "None",
                         "enabled": "None",
                         "actions": "None",
-                        "constraints": "None",
                         "object_types": "None",
                         "groups": "None",
                         "users": "None"

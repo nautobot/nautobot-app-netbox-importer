@@ -56,6 +56,12 @@ class Command(BaseCommand):
             help="Whether to tag Nautobot records with any importer issues.",
         )
         parser.add_argument(
+            "--deduplicate-ipam",
+            action="store_true",
+            dest="deduplicate_ipam",
+            help="Deduplicate `ipam.prefix` and `ipam.aggregate` from NetBox. `prefix` value will be unique. (default: False)",
+        )
+        parser.add_argument(
             "--fix-powerfeed-locations",
             action="store_true",
             dest="fix_powerfeed_locations",

@@ -4,8 +4,10 @@
   "pk": "4f3495b5-00e6-5917-a148-77e109f96b0f",
   "fields": {
     "created": "2024-02-15T09:19:04.514Z",
-    "last_updated": "2024-02-15T10:03:30.354Z",
+    "last_updated": "2025-05-29T14:34:18.810Z",
     "_custom_field_data": {
+      "empty_label": 0,
+      "device_custom_object": null,
       "device_custom_choices": null
     },
     "local_config_context_data": null,
@@ -31,10 +33,13 @@
     "virtual_chassis": null,
     "device_redundancy_group": null,
     "device_redundancy_group_priority": null,
+    "software_version": null,
     "vc_position": null,
     "vc_priority": null,
     "comments": "",
-    "secrets_group": null
+    "secrets_group": null,
+    "controller_managed_device_group": null,
+    "software_image_files": []
   }
 },
 {
@@ -42,9 +47,11 @@
   "pk": "f510c5ff-e1f8-5adc-9fb5-30bc5791b42e",
   "fields": {
     "created": "2024-02-14T12:22:40.699Z",
-    "last_updated": "2024-02-14T13:29:43.936Z",
+    "last_updated": "2025-05-29T14:34:18.799Z",
     "_custom_field_data": {
-      "device_custom_choices": "Choice 1"
+      "empty_label": 0,
+      "device_custom_object": null,
+      "device_custom_choices": null
     },
     "local_config_context_data": null,
     "local_config_context_schema": null,
@@ -63,16 +70,19 @@
     "rack": "87cd3a0d-c203-5af5-8e51-f402bb23bc00",
     "position": null,
     "face": "",
-    "primary_ip4": null,
+    "primary_ip4": "a2da6287-203a-5496-88c6-4fd8283630f7",
     "primary_ip6": null,
     "cluster": null,
     "virtual_chassis": null,
     "device_redundancy_group": null,
     "device_redundancy_group_priority": null,
+    "software_version": null,
     "vc_position": null,
     "vc_priority": null,
     "comments": "",
-    "secrets_group": null
+    "secrets_group": null,
+    "controller_managed_device_group": null,
+    "software_image_files": []
   }
 }
 ]

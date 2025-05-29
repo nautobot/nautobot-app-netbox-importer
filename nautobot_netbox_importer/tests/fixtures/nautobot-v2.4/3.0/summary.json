@@ -9116,7 +9116,7 @@
                 "created": 4,
                 "imported": 4
             },
-            "pre_import": null,
+            "pre_import": "pre_import_aggregate",
             "post_import": null
         },
         "ipam.fhrpgroup": {
@@ -9227,6 +9227,65 @@
                         "AUTO"
                     ],
                     "default_value": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+                    "disable_reason": "",
+                    "required": true
+                }
+            },
+            "flags": "DiffSyncModelFlags.NONE",
+            "default_reference_uid": "None",
+            "stats": {},
+            "pre_import": "pre_import_ipaddress",
+            "post_import": "post_import_ipaddress"
+        },
+        "ipam.ipaddresstointerface": {
+            "content_type": "ipam.ipaddresstointerface",
+            "content_type_id": null,
+            "extends_content_type": null,
+            "nautobot_content_type": "ipam.ipaddresstointerface",
+            "disable_reason": "",
+            "identifiers": null,
+            "disable_related_reference": false,
+            "forward_references": null,
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "nautobot_name": "id",
+                    "nautobot_internal_type": "UUIDField",
+                    "nautobot_can_import": true,
+                    "importer": null,
+                    "definition": "id",
+                    "sources": [
+                        "AUTO"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": true
+                },
+                "interface": {
+                    "name": "interface",
+                    "nautobot_name": "interface_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "interface",
+                    "sources": [
+                        "CUSTOM"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "",
+                    "required": false
+                },
+                "ip_address": {
+                    "name": "ip_address",
+                    "nautobot_name": "ip_address_id",
+                    "nautobot_internal_type": "ForeignKey",
+                    "nautobot_can_import": true,
+                    "importer": "relation_importer",
+                    "definition": "ip_address",
+                    "sources": [
+                        "CUSTOM"
+                    ],
+                    "default_value": null,
                     "disable_reason": "",
                     "required": true
                 }
@@ -9528,7 +9587,7 @@
                 "created": 68,
                 "imported": 68
             },
-            "pre_import": null,
+            "pre_import": "pre_import_prefix",
             "post_import": null
         },
         "ipam.rir": {
@@ -13503,6 +13562,14 @@
         "ipam.ipaddress": {
             "content_type": "ipam.ipaddress",
             "content_type_id": 88,
+            "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
+            "disabled": false,
+            "stats": {},
+            "issues": []
+        },
+        "ipam.ipaddresstointerface": {
+            "content_type": "ipam.ipaddresstointerface",
+            "content_type_id": 89,
             "flags": "DiffSyncModelFlags.SKIP_UNMATCHED_DST",
             "disabled": false,
             "stats": {},
