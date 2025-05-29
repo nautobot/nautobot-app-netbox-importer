@@ -1,5 +1,7 @@
 """NetBox to Nautobot Base Models Mapping."""
 
+from packaging.version import Version
+
 from nautobot_netbox_importer.base import RecordData
 from nautobot_netbox_importer.diffsync.models.locations import define_locations
 from nautobot_netbox_importer.generator import DiffSyncBaseModel, SourceAdapter, SourceField, fields
@@ -36,6 +38,7 @@ def _define_tagged_object(field: SourceField) -> None:
 def setup(adapter: SourceAdapter) -> None:
     """Map NetBox base models to Nautobot."""
     adapter.disable_model("sessions.session", "Nautobot has own sessions, sessions should never cross apps.")
+    netbox_version = adapter.options.netbox_version  # type: ignore[no-member]
     adapter.disable_model("admin.logentry", "Not directly used in Nautobot.")
     adapter.disable_model("users.userconfig", "May not have a 1 to 1 translation to Nautobot.")
     adapter.disable_model("auth.permission", "Handled via a Nautobot model and may not be a 1 to 1.")
@@ -69,13 +72,19 @@ def setup(adapter: SourceAdapter) -> None:
     )
     adapter.configure_model(
         # pylint: disable=hard-coded-auth-user
-        "auth.User",
+        "auth.User" if netbox_version < Version("4") else "users.User",
         nautobot_content_type="users.User",
         identifiers=["username"],
         fields={
             "last_login": fields.disable("Should not be attempted to migrate"),
             "password": fields.disable("Should not be attempted to migrate"),
             "user_permissions": fields.disable("Permissions import is not implemented yet"),
+            "object_permissions": fields.disable("Permissions import is not implemented yet"),
+            "groups": (
+                ""
+                if netbox_version < Version("4")
+                else fields.disable("Groups import is not implemented for NetBox 4+")
+            ),
         },
     )
     adapter.configure_model(

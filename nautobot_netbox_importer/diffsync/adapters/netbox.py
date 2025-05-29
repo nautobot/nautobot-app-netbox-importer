@@ -9,6 +9,7 @@ import ijson
 import requests
 from django.core.management import call_command
 from django.db.transaction import atomic
+from packaging.version import Version
 
 from nautobot_netbox_importer.base import GENERATOR_SETUP_MODULES, logger, register_generator_setup
 from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations, unrack_zero_uheight_devices
@@ -55,6 +56,7 @@ class NetBoxImporterOptions(NamedTuple):
     save_text_summary_path: str = ""
     trace_issues: bool = False
     customizations: Sequence[str] = []
+    netbox_version: Version = Version("3.7")
 
 
 AdapterSetupFunction = Callable[[SourceAdapter], None]
