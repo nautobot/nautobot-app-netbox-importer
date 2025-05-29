@@ -1,0 +1,18 @@
+[
+{
+  "model": "ipam.ipaddresstointerface",
+  "pk": "8c6f920c-121e-5cae-aa39-01b93a4866c2",
+  "fields": {
+    "ip_address": "a2da6287-203a-5496-88c6-4fd8283630f7",
+    "interface": "d06b2a9d-572f-5757-a770-af17f798f4e9",
+    "vm_interface": null,
+    "is_source": false,
+    "is_destination": false,
+    "is_default": false,
+    "is_preferred": false,
+    "is_primary": false,
+    "is_secondary": false,
+    "is_standby": false
+  }
+}
+]

@@ -1,6 +1,6 @@
 * Import Summary: **********************************************************************************
 = DiffSync Summary: ================================================================================
-create: 70
+create: 77
 update: 0
 delete: 0
 no-change: 0
@@ -37,6 +37,11 @@ first_pass_used: 2
 second_pass_used: 2
 created: 2
 imported: 2
+- dcim.interface -----------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
 - dcim.locationtype --------------------------------------------------------------------------------
 pre_cached: 3
 imported: 2
@@ -89,28 +94,35 @@ created: 22
 imported: 22
 second_pass_skipped: 1
 - extras.status ------------------------------------------------------------------------------------
-pre_cached: 2
-imported: 2
-imported_from_cache: 2
-created: 2
+pre_cached: 3
+imported: 3
+imported_from_cache: 3
+created: 3
+- ipam.aggregate -----------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+imported: 1
 - ipam.fhrpgroup -----------------------------------------------------------------------------------
 first_pass_used: 2
 second_pass_used: 2
 created: 2
 imported: 2
 - ipam.ipaddress -----------------------------------------------------------------------------------
-first_pass_used: 1
-second_pass_used: 1
+first_pass_used: 4
+second_pass_used: 4
+created: 1
+imported: 4
+- ipam.ipaddresstointerface ------------------------------------------------------------------------
 created: 1
 imported: 1
 - ipam.prefix --------------------------------------------------------------------------------------
-first_pass_used: 1
-second_pass_used: 1
-created: 1
-imported: 1
+first_pass_used: 3
+created: 4
+imported: 5
+second_pass_used: 3
 - ipam.role ----------------------------------------------------------------------------------------
-created: 1
-imported: 1
+created: 2
+imported: 4
 - tenancy.tenant -----------------------------------------------------------------------------------
 first_pass_used: 11
 second_pass_used: 11
@@ -140,6 +152,9 @@ issues: 1
 source_created: 2
 created: 2
 issues: 1
+- dcim.interface -----------------------------------------------------------------------------------
+source_created: 1
+created: 1
 - dcim.interfaceredundancygroup --------------------------------------------------------------------
 source_created: 2
 created: 2
@@ -174,17 +189,21 @@ created: 2
 source_created: 22
 created: 22
 - extras.role --------------------------------------------------------------------------------------
+source_created: 4
+created: 4
+- extras.status ------------------------------------------------------------------------------------
 source_created: 3
 created: 3
-- extras.status ------------------------------------------------------------------------------------
-source_created: 2
-created: 2
 - ipam.ipaddress -----------------------------------------------------------------------------------
 source_created: 1
 created: 1
-- ipam.prefix --------------------------------------------------------------------------------------
+- ipam.ipaddresstointerface ------------------------------------------------------------------------
 source_created: 1
 created: 1
+- ipam.prefix --------------------------------------------------------------------------------------
+source_created: 4
+created: 4
+issues: 4
 - tenancy.tenant -----------------------------------------------------------------------------------
 source_created: 11
 created: 11
@@ -205,6 +224,7 @@ dcim.devicerole => extras.role
 dcim.rackrole => extras.role
 dcim.site => dcim.location
 extras.journalentry => extras.note
+ipam.aggregate => ipam.prefix
 ipam.fhrpgroup => dcim.interfaceredundancygroup
 = Content Types Back Mapping: ======================================================================
   Back mapping deviations from Nautobot content type to the source content type
@@ -212,6 +232,7 @@ users.user => auth.user
 extras.role => Ambiguous
 dcim.location => dcim.site
 extras.note => extras.journalentry
+ipam.prefix => ipam.aggregate
 dcim.interfaceredundancygroup => ipam.fhrpgroup
 = Importer issues: =================================================================================
 - dcim.device --------------------------------------------------------------------------------------
@@ -225,6 +246,11 @@ f91623ed-a389-53a4-a4a2-943588c21446 | ipam.fhrpgroup:1 | InvalidChoiceValueIssu
 c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 | dcim.site:1 | ValidationError | "Site 1" | "{'parent': ['A Location of type Site must have a parent Location.']}"
 - extras.customfield -------------------------------------------------------------------------------
 149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 | extras.customfield:3 | InvalidChoiceValueIssue-type | "Device Custom Object" | "{'field': 'type', 'importer': 'type_importer'} {'type': 'Invalid choice value: `object`, replaced with `text`'}"
+- ipam.prefix --------------------------------------------------------------------------------------
+015c4836-67b9-571d-aeb7-bb26b3438b92 | ipam.prefix:10.0.0.0/24 | CreatedMissingPrefix | "10.0.0.0/24" | ""
+56a49e57-e4e5-5c63-9e9c-188044a2aae0 | ipam.prefix:10.1.2.0/24 | DuplicatePrefix | "10.1.2.0/24" | "Duplicate prefix `10.1.2.0/24` found, merging `ipam.aggregate:1`"
+56a49e57-e4e5-5c63-9e9c-188044a2aae0 | ipam.prefix:10.1.2.0/24 | DuplicatePrefix | "10.1.2.0/24" | "Duplicate prefix `10.1.2.0/24` found, merging `ipam.prefix:2`"
+c87d7e7b-0e83-537c-bb74-b5517b3fa00d | ipam.prefix:10.0.0.0/16 | CreatedMissingPrefix | "10.0.0.0/16" | ""
 - users.objectpermission ---------------------------------------------------------------------------
 c650165f-9a05-55c0-bbb1-c9527d41160c | users.objectpermission:1 | InvalidContentType | "Test Permission" | "{'object_types': \"Invalid content type ['extras', 'script'], skipping\"}"
 = Field Mappings: ==================================================================================
@@ -333,6 +359,46 @@ subdevice_role => choice_importer => subdevice_role (CharField)
 u_height => integer_importer => u_height (PositiveSmallIntegerField)
 weight => NO IMPORTER => weight (NotFound)
 weight_unit => NO IMPORTER => weight_unit (NotFound)
+- dcim.interface => dcim.interface -----------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+_path => NO IMPORTER => _path (PrivateProperty)
+bridge => relation_importer => bridge_id (ForeignKey)
+cable => relation_importer => cable_id (ForeignKey)
+cable_end => NO IMPORTER => cable_end (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
+duplex => NO IMPORTER => duplex (NotFound)
+enabled => value_importer => enabled (BooleanField)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+lag => relation_importer => lag_id (ForeignKey)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mac_address => value_importer => mac_address (CharField)
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+mgmt_only => value_importer => mgmt_only (BooleanField)
+mode => choice_importer => mode (CharField)
+module => relation_importer => module_id (ForeignKeyWithAutoRelatedName)
+mtu => integer_importer => mtu (PositiveIntegerField)
+name => value_importer => name (CharField)
+parent => relation_importer => parent_interface_id (ForeignKey)
+poe_mode => NO IMPORTER => poe_mode (NotFound)
+poe_type => NO IMPORTER => poe_type (NotFound)
+rf_channel => NO IMPORTER => rf_channel (NotFound)
+rf_channel_frequency => NO IMPORTER => rf_channel_frequency (NotFound)
+rf_channel_width => NO IMPORTER => rf_channel_width (NotFound)
+rf_role => NO IMPORTER => rf_role (NotFound)
+speed => NO IMPORTER => speed (NotFound)
+tagged_vlans => m2m_importer => tagged_vlans (ManyToManyField)
+tx_power => NO IMPORTER => tx_power (NotFound)
+type => choice_importer => type (CharField)
+untagged_vlan => relation_importer => untagged_vlan_id (ForeignKey)
+vdcs => NO IMPORTER => vdcs (NotFound)
+vrf => relation_importer => vrf_id (ForeignKey)
+wireless_lans => NO IMPORTER => wireless_lans (NotFound)
+wireless_link => NO IMPORTER => wireless_link (NotFound)
+wwn => NO IMPORTER => wwn (NotFound)
 - dcim.manufacturer => dcim.manufacturer -----------------------------------------------------------
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
@@ -476,6 +542,17 @@ request_id => uuid_importer => request_id (UUIDField)
 time => datetime_importer => time (DateTimeField)
 user => relation_importer => user_id (ForeignKey)
 user_name => value_importer => user_name (CharField)
+- ipam.aggregate => ipam.prefix --------------------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+date_added => NO IMPORTER => date_added (NotFound)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+prefix => value_importer => prefix (Property)
+rir => relation_importer => rir_id (ForeignKey)
+tenant => relation_importer => tenant_id (ForeignKey)
 - ipam.fhrpgroup => dcim.interfaceredundancygroup --------------------------------------------------
 auth_key => NO IMPORTER => auth_key (NotFound)
 auth_type => NO IMPORTER => auth_type (NotFound)
