@@ -316,7 +316,7 @@ class NautobotModelWrapper:
             disabled=self.disabled,
         )
 
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments,too-many-positional-arguments
     def add_issue(  # noqa: PLR0913
         self,
         issue_type="",
@@ -354,7 +354,7 @@ class NautobotModelWrapper:
         self._issues.append(issue)
         return issue
 
-    # pylint: disable=too-many-arguments,too-many-branches
+    # pylint: disable=too-many-arguments,too-many-branches,too-many-positional-arguments
     def _create_issue(  # noqa: PLR0912, PLR0913
         self,
         issue_type="",

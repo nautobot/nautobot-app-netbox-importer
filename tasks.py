@@ -1103,8 +1103,9 @@ def validate_app_config(context):
 @task(
     help={
         "file": "URL or path to the JSON file to import.",
-        "bypass-data-validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
         "demo-version": "Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).",
+        "test-input": "Version of the test data to import from `nautobot_netbox_importer/tests/fixtures/nautobot-v<value>` instead of using the `--file` option (default: empty).",
+        "bypass-data-validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
         "customizations": "Path to a Python module containing customizations to apply during the import. (default: empty)",
         "dry-run": "Do not write any data to the database. (default: False)",
         "fix-powerfeed-locations": "Fix panel location to match rack location based on powerfeed. (default: False)",
@@ -1112,57 +1113,73 @@ def validate_app_config(context):
         "save-json-summary-path": "File path to write the JSON mapping to. (default: generated-mappings.json)",
         "save-text-summary-path": "File path to write the text mapping to. (default: generated-mappings.txt)",
         "sitegroup-parent-always-region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
-        "update-paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
-        "unrack-zero-uheight-devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
         "tag-issues": "Whether to tag Nautobot records with any importer issues. (default: False)",
         "trace-issues": "Show a detailed trace of issues originated from any `Exception` found during the import.",
+        "unrack-zero-uheight-devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
+        "update-paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
     }
 )
 def import_netbox(  # noqa: PLR0913
     context,
     file="",
     demo_version="",
-    save_json_summary_path="",
-    save_text_summary_path="",
+    test_input="",
     bypass_data_validation=False,
     customizations="",
     dry_run=True,
     fix_powerfeed_locations=False,
-    sitegroup_parent_always_region=False,
     print_summary=True,
-    update_paths=False,
-    unrack_zero_uheight_devices=True,
+    save_json_summary_path="",
+    save_text_summary_path="",
+    sitegroup_parent_always_region=False,
     tag_issues=False,
     trace_issues=False,
+    unrack_zero_uheight_devices=True,
+    update_paths=False,
 ):
     """Import NetBox data into Nautobot."""
-    if demo_version:
-        if file:
-            raise ValueError("Cannot specify both, `file` and `demo` arguments")
+    if sum(bool(x) for x in [file, demo_version, test_input]) > 1:
+        raise ValueError("Cannot specify more than one of `file`, `demo`, or `test_input` arguments")
 
+    if demo_version:
         file = (
             "https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/json/netbox-demo-v"
             + demo_version
             + ".json"
         )
 
+    if test_input:
+        if is_truthy(context.nautobot_netbox_importer.local):
+            path = Path(__file__).parent
+        else:
+            path = Path("/source")
+
+        path = path / f"nautobot_netbox_importer/tests/fixtures/nautobot-v{test_input}"
+
+        file = path / "input.json"
+
+        if not save_json_summary_path:
+            save_json_summary_path = path / "summary.json"
+        if not save_text_summary_path:
+            save_text_summary_path = path / "summary.json"
+
     command = [
         "nautobot-server",
         "import_netbox",
-        f"--save-json-summary-path={save_json_summary_path}" if save_json_summary_path else "",
-        f"--save-text-summary-path={save_text_summary_path}" if save_text_summary_path else "",
         "--bypass-data-validation" if bypass_data_validation else "",
         f"--customizations={customizations}" if customizations else "",
         "--dry-run" if dry_run else "",
         "--fix-powerfeed-locations" if fix_powerfeed_locations else "",
-        "--sitegroup-parent-always-region" if sitegroup_parent_always_region else "",
-        "--print-summary" if print_summary else "",
-        "--update-paths" if update_paths else "",
         "--no-color",
-        "" if unrack_zero_uheight_devices else "--no-unrack-zero-uheight-devices",
+        "--print-summary" if print_summary else "",
+        "--sitegroup-parent-always-region" if sitegroup_parent_always_region else "",
+        f"--save-json-summary-path={save_json_summary_path}" if save_json_summary_path else "",
+        f"--save-text-summary-path={save_text_summary_path}" if save_text_summary_path else "",
         "--tag-issues" if tag_issues else "",
         "--trace-issues" if trace_issues else "",
-        file,
+        "" if unrack_zero_uheight_devices else "--no-unrack-zero-uheight-devices",
+        "--update-paths" if update_paths else "",
+        f"{file}",
     ]
 
     run_command(context, " ".join(command))
