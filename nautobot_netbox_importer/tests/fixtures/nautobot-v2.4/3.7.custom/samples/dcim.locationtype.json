@@ -1,0 +1,21 @@
+[
+{
+  "model": "dcim.locationtype",
+  "pk": "8fceb641-4563-5da8-9004-963f9ed1965a",
+  "fields": {
+    "created": "2025-05-29T08:09:54.332Z",
+    "last_updated": "2025-05-29T08:09:54.332Z",
+    "_custom_field_data": {},
+    "parent": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+    "name": "Site",
+    "description": "",
+    "nestable": false,
+    "content_types": [
+      123,
+      74,
+      51,
+      78
+    ]
+  }
+}
+]

@@ -6,6 +6,8 @@ Check the [fixtures README](./fixtures/README.md) for more details.
 """
 
 import json
+import warnings
+from contextlib import contextmanager
 from os import getenv
 from pathlib import Path
 from unittest.mock import patch
@@ -71,37 +73,24 @@ class TestImport(TestCase):
 
         Runs import twice, first time to import data and the second time to verify that nothing has changed.
         """
-        input_ref = _INPUTS.get(fixtures_name, fixtures_path / "input.json")
-
         expected_summary = ImportSummary()
-        try:
-            expected_summary.load(fixtures_path / "summary.json")
-        # pylint: disable=broad-exception-caught
-        except Exception:
-            if not _BUILD_FIXTURES:
-                raise
-            # Allow to generate summary
-            expected_summary = None
+        expected_summary.load(fixtures_path / "summary.json")
 
         # Import the file to fresh Nautobot instance
+        input_ref = _INPUTS.get(fixtures_name, fixtures_path / "input.json")
         source = self._import_file(input_ref)
 
         # Build summary in text format in all cases to allow comparison
         source.summary.dump(fixtures_path / "summary.txt", output_format="text")
+
         if _BUILD_FIXTURES:
             source.summary.dump(fixtures_path / "summary.json")
-        if not expected_summary:
+
+        with warn_if_building_fixtures():
+            self.assertEqual(len(expected_summary.source), len(source.summary.source), "Source model counts mismatch")
+
+        if _BUILD_FIXTURES:
             expected_summary = source.summary
-
-        expected_diffsync_summary = {
-            "create": 0,
-            "skip": 0,
-            "no-change": 0,
-            "delete": 0,
-            "update": 0,
-        }
-
-        self.assertEqual(len(expected_summary.source), len(source.summary.source), "Source model counts mismatch")
 
         for expected_item in expected_summary.source:
             source_item = next(
@@ -113,8 +102,19 @@ class TestImport(TestCase):
                 f"Source model stats mismatch for {expected_item.content_type}",
             )
 
-        self.assertEqual(len(expected_summary.nautobot), len(source.summary.nautobot), "Nautobot model counts mismatch")
+        self.assertEqual(
+            len(expected_summary.nautobot),
+            len(source.summary.nautobot),
+            "Nautobot model counts mismatch",
+        )
 
+        expected_diffsync_summary = {
+            "create": 0,
+            "skip": 0,
+            "no-change": 0,
+            "delete": 0,
+            "update": 0,
+        }
         save_failed_sum = 0
         for expected_item in expected_summary.nautobot:
             nautobot_item = next(
@@ -151,7 +151,7 @@ class TestImport(TestCase):
                     self._verify_model(samples_path, wrapper)
 
         if expected_summary is source.summary:
-            self.fail("Expected summary was generated, please re-run the test")
+            warnings.warn("Expected summary was generated, please re-run the test")
 
     def _import_file(self, input_ref):
         source = NetBoxAdapter(
@@ -166,21 +166,9 @@ class TestImport(TestCase):
 
         return source
 
-    def _verify_model(self, samples_path: Path, wrapper: NautobotModelWrapper):
-        """Verify data."""
-        self.assertLessEqual(
-            wrapper.stats.source_created - wrapper.stats.save_failed,
-            wrapper.model.objects.count(),
-            f"Nautobot instances count mismatch for {wrapper.content_type}",
-        )
-
-        path = samples_path / f"{wrapper.content_type}.json"
+    def _verify_model_samples(self, wrapper: NautobotModelWrapper, path: Path):
         if not path.is_file():
-            if _BUILD_FIXTURES:
-                _generate_fixtures(wrapper, path)
-                self.fail(f"Fixture file was generated, please re-run the test {path}")
-            else:
-                self.fail(f"Fixture file is missing: {path}")
+            self.fail(f"Fixture file is missing: {path}")
 
         samples = json.loads(path.read_text())
         model = wrapper.model
@@ -207,22 +195,77 @@ class TestImport(TestCase):
                     )
                 else:
                     self.assertEqual(
-                        value, formatted_fields.get(key, ""), f"Data mismatch for {wrapper.content_type} {uid} {key}"
+                        value,
+                        formatted_fields.get(key, ""),
+                        f"Data mismatch for {wrapper.content_type} {uid} {key}",
                     )
 
+    def _verify_model(self, samples_path: Path, wrapper: NautobotModelWrapper):
+        """Verify data."""
+        path = samples_path / f"{wrapper.content_type}.json"
 
-def _generate_fixtures(wrapper: NautobotModelWrapper, output_path: Path):
-    """Generate fixture file containing `_SAMPLE_COUNT` random instaces for the specified content type.
+        self.assertLessEqual(
+            wrapper.stats.source_created - wrapper.stats.save_failed,
+            wrapper.model.objects.count(),
+            f"Nautobot instances count mismatch for {wrapper.content_type}",
+        )
 
-    Should be used only with the lowest supported Nautobot version.
-    """
-    random_instances = wrapper.model.objects.order_by("?")[:_SAMPLE_COUNT]
+        try:
+            self._verify_model_samples(wrapper, path)
+        # pylint: disable=broad-exception-caught
+        except Exception:
+            if _BUILD_FIXTURES:
+                _generate_model_samples(wrapper, path)
+            else:
+                raise
+
+
+@contextmanager
+def warn_if_building_fixtures():
+    """Context manager to catch exceptions when building fixtures and issue a warning instead."""
+    if _BUILD_FIXTURES:
+        try:
+            yield
+        # pylint: disable=broad-exception-caught
+        except Exception as error:
+            warnings.warn(f"{error}")
+    else:
+        yield
+
+
+def _generate_model_samples(wrapper: NautobotModelWrapper, path: Path):
+    """Generate fixture file containing `_SAMPLE_COUNT` random instaces for the specified content type."""
+    warnings.warn(f"Generating fixture for {wrapper.content_type} at {path}")
+
+    # Find existing instances to keep them
+    pks = []
+    try:
+        model = wrapper.model
+        samples = json.loads(path.read_text())
+        for sample in samples:
+            uid = sample["pk"]
+            if model.objects.filter(pk=uid).exists():
+                pks.append(uid)
+    # pylint: disable=broad-exception-caught
+    except Exception:
+        pass
+
+    if len(pks) < _SAMPLE_COUNT:
+        random_instances = wrapper.model.objects
+        if pks:
+            random_instances = random_instances.exclude(pk__in=pks)
+        random_instances = random_instances.order_by("?")[: _SAMPLE_COUNT - len(pks)]
+        for instance in random_instances:
+            pks.append(instance.pk)
+    else:
+        pks = pks[:_SAMPLE_COUNT]
+
     call_command(
         "dumpdata",
         wrapper.content_type,
         indent=2,
-        pks=",".join(str(instance.pk) for instance in random_instances),
-        output=output_path,
+        pks=",".join(f"{item}" for item in pks),
+        output=path,
     )
 
 

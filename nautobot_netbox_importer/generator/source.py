@@ -195,7 +195,7 @@ class SourceAdapter(BaseAdapter):
         # When multiple source content types are mapped to the single nautobot content type, mapping is set to `None`
         self._content_types_back_mapping: Dict[ContentTypeStr, Optional[ContentTypeStr]] = {}
 
-    # pylint: disable=too-many-arguments,too-many-branches,too-many-locals
+    # pylint: disable=too-many-arguments,too-many-branches,too-many-locals,too-many-positional-arguments
     def configure_model(
         self,
         content_type: ContentTypeStr,
@@ -556,7 +556,7 @@ class SourceModelWrapper:
             post_import=self.post_import_record and self.post_import_record.__name__ or None,
             fields=sorted(fields, key=lambda field: field.name),
             flags=str(self.flags),
-            default_reference_uid=serialize_to_summary(self.default_reference_uid),
+            default_reference_uid=f"{serialize_to_summary(self.default_reference_uid)}",
             stats=self.stats,
         )
 
@@ -584,7 +584,7 @@ class SourceModelWrapper:
 
     def format_field_name(self, name: FieldName) -> str:
         """Format a field name for logging."""
-        return f"{self.content_type}->{name}"
+        return f"{self.content_type}.{name}"
 
     def add_field(self, name: FieldName, source: SourceFieldSource) -> "SourceField":
         """Add a field definition for a source field."""
@@ -596,6 +596,7 @@ class SourceModelWrapper:
 
         field = self.fields[name]
         field.sources.add(source)
+
         return field
 
     def create_importers(self) -> None:
@@ -639,7 +640,7 @@ class SourceModelWrapper:
                 result = self.extends_wrapper.get_pk_from_uid(uid)
             else:
                 result = source_pk_to_uuid(self.content_type, uid)
-                self.nautobot.uid_to_source[str(result)] = f"{self.content_type}:{uid}"
+                self.nautobot.uid_to_source[f"{result}"] = f"{self.content_type}:{uid}"
         elif self.nautobot.pk_field.is_auto_increment:
             self.nautobot.last_id += 1
             result = self.nautobot.last_id

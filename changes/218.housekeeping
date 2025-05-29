@@ -1,0 +1,3 @@
+Change particular test failures to warnings.
+Test samples generation uses already sampled IDs.
+Added `--test-input` option to `import-netbox` command to allow using test fixtures, e.g. `invoke import-netbox --test-input=2.4/3.7.custom`.

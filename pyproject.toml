@@ -28,14 +28,14 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.13"
+python = ">=3.9.2,<3.13"
 # Used for local development
-nautobot = "^2.0.6"
+nautobot = "^2.4.9"
 diffsync = "^1.9.0"
-colorama = "^0.4.4"
-Markdown = "!=3.3.5"
+colorama = "^0.4.6"
+Markdown = "^3.6"
 pydantic = "^1.10.2"
-python-dateutil = "^2.8.2"
+python-dateutil = "^2.9.0"
 ijson = "^3.2.3"
 pytz = "^2025.1"
 
@@ -47,7 +47,7 @@ ipython = "*"
 pylint = "*"
 pylint-django = "*"
 pylint-nautobot = "*"
-ruff = "0.5.5"
+ruff = "0.8.6"
 yamllint = "*"
 toml = "*"
 # Python implementation of markdownlint
@@ -59,13 +59,13 @@ Markdown = "*"
 # Render custom markdown for version added/changed/remove notes
 markdown-version-annotations = "1.0.1"
 # Rendering docs to HTML
-mkdocs = "1.6.0"
+mkdocs = "1.6.1"
 # Material for MkDocs theme
-mkdocs-material = "9.5.32"
+mkdocs-material = "9.6.14"
 # Automatic documentation from sources, for MkDocs
-mkdocstrings = "0.25.2"
-mkdocstrings-python = "1.10.8"
-mkdocs-include-markdown-plugin = "6.0.3"
+mkdocstrings = "0.27.0"
+mkdocstrings-python = "1.13.0"
+mkdocs-include-markdown-plugin = "7.1.5"
 mkdocs-autorefs = "1.2.0"
 griffe = "1.1.1"
 towncrier = ">=23.6.0,<=24.8.0"
@@ -106,7 +106,7 @@ ignore-imports = true
 
 [tool.pylint-nautobot]
 supported_nautobot_versions = [
-    "2.0.6"
+    "2.4.9"
 ]
 
 [tool.ruff]
