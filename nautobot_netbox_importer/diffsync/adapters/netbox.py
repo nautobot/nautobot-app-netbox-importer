@@ -25,6 +25,7 @@ for _name in (
     "ipam",
     "locations",
     "object_change",
+    "tags",
     "virtualization",
 ):
     register_generator_setup(f"nautobot_netbox_importer.diffsync.models.{_name}")

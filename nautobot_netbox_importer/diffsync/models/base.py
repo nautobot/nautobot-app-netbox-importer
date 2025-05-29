@@ -2,37 +2,8 @@
 
 from packaging.version import Version
 
-from nautobot_netbox_importer.base import RecordData
 from nautobot_netbox_importer.diffsync.models.locations import define_locations
-from nautobot_netbox_importer.generator import DiffSyncBaseModel, SourceAdapter, SourceField, fields
-
-
-def _define_tagged_object(field: SourceField) -> None:
-    wrapper = field.wrapper
-    adapter = wrapper.adapter
-    tag_wrapper = adapter.get_or_create_wrapper("extras.tag")
-
-    def tagged_object_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
-        object_id = source.get(field.name, None)
-        if not object_id:
-            return
-
-        tag = source.get(tag_field.name, None)
-        content_type = source.get(content_type_field.name, None)
-        if not tag or not content_type:
-            raise ValueError(f"Missing content_type or tag for tagged object {object_id}")
-
-        tag_uuid = tag_wrapper.get_pk_from_uid(tag)
-        related_wrapper = adapter.get_or_create_wrapper(content_type)
-        result = related_wrapper.get_pk_from_uid(object_id)
-        field.set_nautobot_value(target, result)
-        tag_field.set_nautobot_value(target, tag_uuid)
-        content_type_field.set_nautobot_value(target, related_wrapper.nautobot.content_type_instance.pk)
-        related_wrapper.add_reference(tag_wrapper, tag_uuid)
-
-    field.set_importer(tagged_object_importer)
-    tag_field = field.handle_sibling("tag", "tag")
-    content_type_field = field.handle_sibling("content_type", "content_type")
+from nautobot_netbox_importer.generator import SourceAdapter, fields
 
 
 def setup(adapter: SourceAdapter) -> None:
@@ -51,18 +22,6 @@ def setup(adapter: SourceAdapter) -> None:
         },
     )
     adapter.configure_model("extras.role")
-    adapter.configure_model(
-        "extras.tag",
-        fields={
-            "object_types": "content_types",
-        },
-    )
-    adapter.configure_model(
-        "extras.TaggedItem",
-        fields={
-            "object_id": _define_tagged_object,
-        },
-    )
     adapter.configure_model(
         "extras.ConfigContext",
         fields={
