@@ -1130,6 +1130,44 @@
   }
 },
 {
+  "model": "dcim.cable",
+  "pk": 1,
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2020-12-30T19:32:32.969Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "type": "smf",
+    "status": "connected",
+    "tenant": null,
+    "label": "",
+    "color": "ffeb3b",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null
+  }
+},
+{
+  "model": "dcim.cable",
+  "pk": 2,
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2020-12-30T19:32:32.279Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "type": "smf",
+    "status": "connected",
+    "tenant": null,
+    "label": "",
+    "color": "ffeb3b",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null
+  }
+},
+{
   "model": "dcim.device",
   "pk": 1,
   "fields": {
@@ -3384,6 +3422,299 @@
         "admin"
       ]
     ]
+  }
+},
+{
+  "model": "circuits.provider",
+  "pk": 1,
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2020-12-30T18:47:38.415Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "name": "Level 3",
+    "slug": "level-3",
+    "asns": []
+  }
+},
+{
+  "model": "circuits.circuittype",
+  "pk": 1,
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2020-12-30T18:49:05.484Z",
+    "custom_field_data": {},
+    "name": "MPLS",
+    "slug": "mpls",
+    "description": "",
+    "color": ""
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": 1,
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2023-12-29T15:45:04.504Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "cid": "CIRCUIT-0001",
+    "provider": 1,
+    "provider_account": null,
+    "type": 1,
+    "status": "active",
+    "tenant": 5,
+    "install_date": null,
+    "termination_date": null,
+    "commit_rate": null,
+    "termination_a": 1,
+    "termination_z": 2
+  }
+},
+{
+  "model": "circuits.circuittermination",
+  "pk": 1,
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2021-04-14T17:36:14.032Z",
+    "custom_field_data": {},
+    "cable": 1,
+    "cable_end": "A",
+    "mark_connected": false,
+    "circuit": 1,
+    "term_side": "A",
+    "site": 1,
+    "provider_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittermination",
+  "pk": 2,
+  "fields": {
+    "created": "2021-04-19T00:00:00Z",
+    "last_updated": "2021-04-19T16:06:48.802Z",
+    "custom_field_data": {},
+    "cable": 1,
+    "cable_end": "B",
+    "mark_connected": false,
+    "circuit": 1,
+    "term_side": "Z",
+    "site": null,
+    "provider_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.cable",
+  "pk": 3,
+  "fields": {
+    "created": "2022-05-17T00:00:00Z",
+    "last_updated": "2022-05-17T13:46:00.947Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "type": "mmf-om4",
+    "status": "connected",
+    "tenant": null,
+    "label": "",
+    "color": "ff66ff",
+    "length": null,
+    "length_unit": "",
+    "_abs_length": null
+  }
+},
+{
+  "model": "dcim.cabletermination",
+  "pk": 1,
+  "fields": {
+    "created": null,
+    "last_updated": null,
+    "cable": 1,
+    "cable_end": "A",
+    "termination_type": [
+      "circuits",
+      "circuittermination"
+    ],
+    "termination_id": 1,
+    "_device": null,
+    "_rack": null,
+    "_location": null,
+    "_site": 1
+  }
+},
+{
+  "model": "dcim.cabletermination",
+  "pk": 2,
+  "fields": {
+    "created": "2023-11-03T10:51:45.092Z",
+    "last_updated": "2023-11-03T10:51:45.338Z",
+    "cable": 3,
+    "cable_end": "Z",
+    "termination_type": [
+      "dcim",
+      "frontport"
+    ],
+    "termination_id": 1,
+    "_device": 3,
+    "_rack": 2,
+    "_location": 1,
+    "_site": 1
+  }
+},
+{
+  "model": "dcim.frontport",
+  "pk": 1,
+  "fields": {
+    "created": "2022-05-16T00:00:00Z",
+    "last_updated": "2022-05-17T13:46:00.948Z",
+    "custom_field_data": {},
+    "device": 3,
+    "name": "2",
+    "_name": "00000002",
+    "label": "",
+    "description": "",
+    "module": null,
+    "cable": 3,
+    "cable_end": "A",
+    "mark_connected": false,
+    "type": "lc",
+    "color": "",
+    "rear_port": 1,
+    "rear_port_position": 2
+  }
+},
+{
+  "model": "dcim.device",
+  "pk": 3,
+  "fields": {
+    "created": "2022-05-16T00:00:00Z",
+    "last_updated": "2022-05-17T14:05:57.005Z",
+    "custom_field_data": {},
+    "description": "",
+    "comments": "",
+    "local_context_data": null,
+    "config_template": null,
+    "device_type": 1,
+    "role": 1,
+    "tenant": null,
+    "platform": null,
+    "name": "DEVICE 3",
+    "_name": "DEVICE-3-R00000005-U00000042-00000002",
+    "serial": "",
+    "asset_tag": null,
+    "site": 1,
+    "location": 1,
+    "rack": 2,
+    "position": null,
+    "face": "",
+    "status": "active",
+    "airflow": "",
+    "primary_ip4": null,
+    "primary_ip6": null,
+    "oob_ip": null,
+    "cluster": null,
+    "virtual_chassis": null,
+    "vc_position": null,
+    "vc_priority": null,
+    "latitude": null,
+    "longitude": null,
+    "console_port_count": 0,
+    "console_server_port_count": 0,
+    "power_port_count": 0,
+    "power_outlet_count": 0,
+    "interface_count": 0,
+    "front_port_count": 12,
+    "rear_port_count": 1,
+    "device_bay_count": 0,
+    "module_bay_count": 0,
+    "inventory_item_count": 0
+  }
+},
+{
+  "model": "dcim.rack",
+  "pk": 2,
+  "fields": {
+    "created": "2021-12-17T00:00:00Z",
+    "last_updated": "2024-01-09T18:58:42.654Z",
+    "custom_field_data": {},
+    "description": "AR3150 NetShelter SX42U",
+    "comments": "",
+    "weight": null,
+    "weight_unit": "",
+    "_abs_weight": null,
+    "name": "Rack 2",
+    "_name": "Rack 00000002",
+    "facility_id": null,
+    "site": 1,
+    "location": 1,
+    "tenant": null,
+    "status": "active",
+    "role": null,
+    "serial": "",
+    "asset_tag": "635",
+    "type": "4-post-cabinet",
+    "width": 19,
+    "u_height": 42,
+    "starting_unit": 1,
+    "desc_units": false,
+    "outer_width": 750,
+    "outer_depth": 1070,
+    "outer_unit": "mm",
+    "max_weight": null,
+    "_abs_max_weight": null,
+    "mounting_depth": null
+  }
+},
+{
+  "model": "dcim.rearport",
+  "pk": 1,
+  "fields": {
+    "created": "2022-05-16T00:00:00Z",
+    "last_updated": "2022-06-01T10:38:20.527Z",
+    "custom_field_data": {},
+    "device": 3,
+    "name": "RearPort1",
+    "_name": "RearPort00000001",
+    "label": "",
+    "description": "",
+    "module": null,
+    "cable": null,
+    "cable_end": null,
+    "mark_connected": false,
+    "type": "8p8c",
+    "color": "",
+    "positions": 24
+  }
+},
+{
+  "model": "dcim.location",
+  "pk": 1,
+  "fields": {
+    "created": "2019-02-28T00:00:00Z",
+    "last_updated": "2019-03-04T15:09:40.876Z",
+    "custom_field_data": {},
+    "parent": null,
+    "name": "Location 1",
+    "slug": "location-1",
+    "description": "",
+    "site": 1,
+    "status": "active",
+    "tenant": null,
+    "lft": 1,
+    "rght": 2,
+    "tree_id": 21,
+    "level": 0
   }
 }
 ]

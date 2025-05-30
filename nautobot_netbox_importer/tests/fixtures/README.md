@@ -47,6 +47,7 @@ invoke import-netbox \
     --test-input=2.4/3.7.custom \
     --bypass-data-validation \
     --deduplicate-ipam \
+    --create-missing-cable-terminations \
     --sitegroup-parent-always-region \
     --no-dry-run
 ```

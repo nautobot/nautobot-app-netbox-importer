@@ -113,6 +113,15 @@ class NautobotAdapter(BaseAdapter):
         for item in summary.nautobot:
             self.get_or_create_wrapper(item.content_type).tag_issues(item.issues)
 
+    def get_content_type_str(self, content_type_uid: Uid) -> ContentTypeStr:
+        """Find Nautobot content type string for a given UID."""
+        content_type_wrapper = self.get_or_create_wrapper("contenttypes.contenttype")
+        instance = content_type_wrapper.find_or_create({"id": content_type_uid})
+        if not instance:
+            raise ValueError(f"Content type {content_type_uid} not found")
+
+        return f"{getattr(instance, 'app_label')}.{getattr(instance, 'model')}"
+
 
 class NautobotField:
     """Wrapper for a Nautobot field."""

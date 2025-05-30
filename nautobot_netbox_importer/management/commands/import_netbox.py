@@ -68,6 +68,12 @@ class Command(BaseCommand):
             help="Fix panel location to match rack location based on powerfeed.",
         )
         parser.add_argument(
+            "--create-missing-cable-terminations",
+            action="store_true",
+            dest="create_missing_cable_terminations",
+            help="Create missing cable terminations as Nautobot requires both cable terminations to be defined to save cable instances.",
+        )
+        parser.add_argument(
             "--print-summary",
             action="store_true",
             dest="print_summary",

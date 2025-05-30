@@ -1106,6 +1106,7 @@ def validate_app_config(context):
         "demo-version": "Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).",
         "test-input": "Version of the test data to import from `nautobot_netbox_importer/tests/fixtures/nautobot-v<value>` instead of using the `--file` option (default: empty).",
         "bypass-data-validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
+        "create-missing-cable-terminations": "Create missing cable terminations as Nautobot requires both cable terminations to be defined to save cable instances.",
         "customizations": "Path to a Python module containing customizations to apply during the import. (default: empty)",
         "deduplicate-ipam": "Deduplicate `ipam.prefix` and `ipam.aggregate` from NetBox. `prefix` value will be unique. (default: False)",
         "dry-run": "Do not write any data to the database. (default: False)",
@@ -1126,6 +1127,7 @@ def import_netbox(  # noqa: PLR0913
     demo_version="",
     test_input="",
     bypass_data_validation=False,
+    create_missing_cable_terminations=False,
     customizations="",
     deduplicate_ipam=False,
     dry_run=True,
@@ -1163,12 +1165,13 @@ def import_netbox(  # noqa: PLR0913
         if not save_json_summary_path:
             save_json_summary_path = path / "summary.json"
         if not save_text_summary_path:
-            save_text_summary_path = path / "summary.json"
+            save_text_summary_path = path / "summary.txt"
 
     command = [
         "nautobot-server",
         "import_netbox",
         "--bypass-data-validation" if bypass_data_validation else "",
+        "--create-missing-cable-terminations" if create_missing_cable_terminations else "",
         f"--customizations={customizations}" if customizations else "",
         "--deduplicate-ipam" if deduplicate_ipam else "",
         "--dry-run" if dry_run else "",

@@ -139,6 +139,7 @@ nav:
           - "dev/generator.md"
           - "dev/content_types_mapping.md"
           - "dev/caching.md"
+          - "dev/placeholders.md"
           - "dev/primary_keys.md"
       - Demo Execution: "dev/demo.md"
       - Frequently Asked Questions: "dev/faq.md"

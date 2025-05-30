@@ -95,6 +95,7 @@ class NautobotModelStats:
     save_failed = 0
     created = 0
     updated = 0
+    placeholders = 0
 
 
 class SourceModelSummary(NamedTuple):
