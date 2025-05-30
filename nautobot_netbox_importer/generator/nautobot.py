@@ -2,24 +2,17 @@
 
 from typing import Any, Dict, Iterable, List, Mapping, MutableMapping, Optional, Set, Type
 
-from diffsync import DiffSync, DiffSyncModel
+from diffsync import Adapter, DiffSyncModel
 from diffsync.enum import DiffSyncModelFlags
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Max
 from django.db.transaction import atomic
 from nautobot.core.utils.lookup import get_model_from_name
 from nautobot.extras.models import Tag
+from pydantic import Field, create_model
 
 from nautobot_netbox_importer.base import FieldName, RecordData, logger
-from nautobot_netbox_importer.summary import (
-    ImporterIssue,
-    ImportSummary,
-    NautobotModelStats,
-    NautobotModelSummary,
-    get_issue_tag,
-)
-
-from .base import (
+from nautobot_netbox_importer.generator.base import (
     AUTO_ADD_FIELDS,
     EMPTY_VALUES,
     INTERNAL_AUTO_INC_TYPES,
@@ -34,14 +27,20 @@ from .base import (
     InternalFieldType,
     NautobotBaseModel,
     NautobotBaseModelType,
-    PydanticField,
     StrToInternalFieldType,
     Uid,
     get_nautobot_field_and_type,
     normalize_datetime,
     source_pk_to_uuid,
 )
-from .exceptions import NautobotModelNotFound
+from nautobot_netbox_importer.generator.exceptions import NautobotModelNotFound
+from nautobot_netbox_importer.summary import (
+    ImporterIssue,
+    ImportSummary,
+    NautobotModelStats,
+    NautobotModelSummary,
+    get_issue_tag,
+)
 
 # Helper to determine the import order of models.
 # Due to dependencies among Nautobot models, certain models must be imported first to ensure successful `instance.save()` calls without errors.
@@ -265,21 +264,13 @@ class NautobotModelWrapper:
         if self.disabled:
             raise RuntimeError("Cannot create importer for disabled model")
 
-        annotations = {}
         attributes = []
+        field_definitions = {}
         identifiers = []
 
-        class_definition = {
-            "__annotations__": annotations,
-            "_attributes": attributes,
-            "_identifiers": identifiers,
-            "_modelname": self.content_type.replace(".", "_"),
-            "_wrapper": self,
-        }
-
-        annotations[self.pk_field.name] = INTERNAL_TYPE_TO_ANNOTATION[self.pk_field.internal_type]
+        pk_type = INTERNAL_TYPE_TO_ANNOTATION[self.pk_field.internal_type]
+        field_definitions[self.pk_field.name] = (pk_type, Field())
         identifiers.append(self.pk_field.name)
-        class_definition[self.pk_field.name] = PydanticField()
 
         for field in self.fields.values():
             if field.name in identifiers or not field.can_import:
@@ -287,26 +278,36 @@ class NautobotModelWrapper:
 
             if field.is_reference:
                 related_type = StrToInternalFieldType[field.related_meta.pk.get_internal_type()]  # type: ignore
-                annotation = INTERNAL_TYPE_TO_ANNOTATION[related_type]
+                field_type = INTERNAL_TYPE_TO_ANNOTATION[related_type]
                 if field.internal_type == InternalFieldType.MANY_TO_MANY_FIELD:
-                    annotation = Set[annotation]
+                    field_type = Set[field_type]
             else:
-                annotation = INTERNAL_TYPE_TO_ANNOTATION[field.internal_type]
+                field_type = INTERNAL_TYPE_TO_ANNOTATION[field.internal_type]
 
+            field_type = Optional[field_type]
+
+            field_definitions[field.name] = (field_type, Field(default=None))
             attributes.append(field.name)
-            if not field.required:
-                annotation = Optional[annotation]
-            annotations[field.name] = annotation
-            class_definition[field.name] = PydanticField(default=None)
+
+        model_name = self.content_type.replace(".", "_")
 
         try:
-            result = type(class_definition["_modelname"], (DiffSyncBaseModel,), class_definition)
+            result = create_model(model_name, __base__=DiffSyncBaseModel, **field_definitions)
+            # pylint: disable=protected-access
+            result._modelname = model_name
+            # pylint: disable=protected-access
+            result._attributes = tuple(attributes)
+            # pylint: disable=protected-access
+            result._identifiers = tuple(identifiers)
+            # pylint: disable=protected-access
+            result._wrapper = self
+
             self._diffsync_class = result
         except Exception:
-            logger.error("Failed to create DiffSync Model %s", class_definition, exc_info=True)
+            logger.error("Failed to create DiffSync Model %s", field_definitions, exc_info=True)
             raise
 
-        logger.debug("Created DiffSync Model %s", class_definition)
+        logger.debug("Created DiffSync result %s", field_definitions)
 
         return result
 
@@ -762,14 +763,14 @@ class DiffSyncBaseModel(DiffSyncModel):
     _wrapper: NautobotModelWrapper
 
     @classmethod
-    def create(cls, diffsync: DiffSync, ids: dict, attrs: dict) -> Optional["DiffSyncBaseModel"]:
+    def create(cls, adapter: Adapter, ids: dict, attrs: dict) -> Optional["DiffSyncBaseModel"]:
         """Create this model instance, both in Nautobot and in DiffSync."""
         wrapper = cls._wrapper
 
         instance = None
         try:
             instance = wrapper.model(**wrapper.constructor_kwargs, **ids)
-            result = super().create(diffsync, ids, attrs)
+            result = super().create(adapter, ids, attrs)
         # pylint: disable=broad-exception-caught
         except Exception as error:
             wrapper.add_issue(
