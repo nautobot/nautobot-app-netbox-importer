@@ -2,17 +2,20 @@
 
 from packaging.version import Version
 
+from nautobot_netbox_importer.diffsync.adapters.netbox import NetBoxAdapter
 from nautobot_netbox_importer.diffsync.models.locations import define_locations
-from nautobot_netbox_importer.generator import SourceAdapter, fields
+from nautobot_netbox_importer.generator import fields
 
 
-def setup(adapter: SourceAdapter) -> None:
+def setup(adapter: NetBoxAdapter) -> None:
     """Map NetBox base models to Nautobot."""
-    adapter.disable_model("sessions.session", "Nautobot has own sessions, sessions should never cross apps.")
-    netbox_version = adapter.options.netbox_version  # type: ignore[no-member]
+    netbox_version = adapter.options.netbox_version
+
     adapter.disable_model("admin.logentry", "Not directly used in Nautobot.")
-    adapter.disable_model("users.userconfig", "May not have a 1 to 1 translation to Nautobot.")
     adapter.disable_model("auth.permission", "Handled via a Nautobot model and may not be a 1 to 1.")
+    adapter.disable_model("extras.imageattachment", "Images are not imported yet.")
+    adapter.disable_model("sessions.session", "Nautobot has own sessions, sessions should never cross apps.")
+    adapter.disable_model("users.userconfig", "May not have a 1 to 1 translation to Nautobot.")
 
     adapter.configure_model(
         "extras.Status",

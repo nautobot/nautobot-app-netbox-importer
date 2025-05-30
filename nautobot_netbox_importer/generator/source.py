@@ -20,7 +20,7 @@ from typing import (
 )
 from uuid import UUID
 
-import pytz
+import zoneinfo
 from diffsync import DiffSyncModel
 from diffsync.enum import DiffSyncModelFlags
 from nautobot.core.models.tree_queries import TreeModel
@@ -77,15 +77,6 @@ class SourceFieldIssue(NetBoxImporterException):
             issue_type = f"{self.__class__.__name__}-{field.name}"
 
         self.issue_type = issue_type
-
-
-class UpdatedValueIssue(SourceFieldIssue):
-    """Raised when a value is updated."""
-
-    def __init__(self, field: "SourceField", source_value: Any, target_value: Any):
-        """Initialize the exception."""
-        message = f"Value `{source_value}` updated to `{target_value}`"
-        super().__init__(message, field)
 
 
 class FallbackValueIssue(SourceFieldIssue):
@@ -156,6 +147,9 @@ SourceFieldImporter = Callable[[RecordData, DiffSyncBaseModel], None]
 GetPkFromData = Callable[[RecordData], Uid]
 SourceFieldImporterFallback = Callable[["SourceField", RecordData, DiffSyncBaseModel, Exception], None]
 SourceFieldImporterFactory = Callable[["SourceField"], None]
+SourceReferences = Dict[Uid, Set["SourceModelWrapper"]]
+ForwardReferences = Callable[["SourceModelWrapper", SourceReferences], None]
+SourceContentType = Union[ContentTypeValue, "SourceModelWrapper", NautobotModelWrapper, NautobotBaseModelType]
 SourceFieldDefinition = Union[
     None,  # Ignore field
     FieldName,  # Rename field
@@ -163,13 +157,42 @@ SourceFieldDefinition = Union[
 ]
 
 
-SourceReferences = Dict[Uid, Set["SourceModelWrapper"]]
-ForwardReferences = Callable[["SourceModelWrapper", SourceReferences], None]
-SourceContentType = Union[ContentTypeValue, "SourceModelWrapper", NautobotModelWrapper, NautobotBaseModelType]
-
-
 class SourceAdapter(BaseAdapter):
-    """Source DiffSync Adapter."""
+    """Source DiffSync Adapter for importing data into Nautobot.
+
+    This adapter manages the entire import process from external data sources to Nautobot,
+    including content type mapping, data transformation, and reference handling. It serves
+    as the primary engine for the import process, maintaining relationships between source
+    and target (Nautobot) models.
+
+    Attributes:
+        get_source_data (SourceDataGenerator): Function that generates source data records
+            for import, returning an iterable of SourceRecord objects.
+
+        wrappers (OrderedDict): Ordered mapping of content type strings to SourceModelWrapper
+            objects that handle the adaptation of source data to Nautobot models.
+
+        nautobot (NautobotAdapter): Adapter for interacting with Nautobot models and data.
+
+        content_type_ids_mapping (Dict[int, SourceModelWrapper]): Maps numeric content type
+            IDs to their corresponding source model wrappers.
+
+        summary (ImportSummary): Collects statistics and information about the import process.
+
+        logger: Logger instance for reporting progress and issues.
+
+        _content_types_back_mapping (Dict[ContentTypeStr, Optional[ContentTypeStr]]):
+            Maps from Nautobot content types back to source content types. When multiple
+            source types map to a single Nautobot type, the mapping is set to None.
+
+    The adapter works in phases:
+
+    1. Model configuration - defining how source models map to Nautobot
+    2. First pass - scanning source data to enhance defined structures
+    3. Creation of importers - building functions to transform data
+    4. Second pass - importing actual data
+    5. Post-processing - handling references and finalizing imports
+    """
 
     def __init__(
         self,
@@ -190,9 +213,6 @@ class SourceAdapter(BaseAdapter):
         self.content_type_ids_mapping: Dict[int, SourceModelWrapper] = {}
         self.logger = logger or default_logger
         self.summary = ImportSummary()
-
-        # From Nautobot to Source content type mapping
-        # When multiple source content types are mapped to the single nautobot content type, mapping is set to `None`
         self._content_types_back_mapping: Dict[ContentTypeStr, Optional[ContentTypeStr]] = {}
 
     # pylint: disable=too-many-arguments,too-many-branches,too-many-locals,too-many-positional-arguments
@@ -213,9 +233,96 @@ class SourceAdapter(BaseAdapter):
         fill_placeholder: Optional[FillPlaceholder] = None,
         get_pk_from_data: Optional[GetPkFromData] = None,
     ) -> "SourceModelWrapper":
-        """Create if not exist and configure a wrapper for a given source content type.
+        """Create or configure a wrapper for a source content type.
 
-        Create Nautobot content type wrapper as well.
+        This method defines how a source data model maps to a Nautobot model during import,
+        establishing field mappings, identifiers, processing behaviors, and reference handling.
+        It serves as the primary configuration point for data adaptation between source and target.
+
+        Args:
+            content_type (ContentTypeStr): String identifier for the source content type
+                (e.g., "dcim.device"). Will be converted to lowercase. This is the primary
+                identifier for the source model in the import process.
+
+            nautobot_content_type (ContentTypeStr): Target Nautobot content type to map to.
+                If empty, defaults to the source content_type value. Will be converted to
+                lowercase. Use this when the source model name differs from Nautobot's model.
+
+            extend_content_type (ContentTypeStr): Name of an existing source content type to
+                extend. When specified, the current model inherits the Nautobot content type
+                and behaviors from the extended model. Cannot be used with nautobot_content_type.
+                Useful for creating specialized versions of existing model mappings.
+
+            identifiers (Optional[Iterable[FieldName]]): Collection of field names that uniquely
+                identify records in this model. Used to match source records with existing
+                Nautobot records. These fields serve as natural keys for record identification
+                when primary keys don't match between systems.
+
+            fields (Optional[Mapping[FieldName, SourceFieldDefinition]]): Dictionary mapping
+                source field names to their definitions, which can be:
+
+                - None: Ignore the field during import
+                - str: Rename the field to this name in Nautobot
+                - callable: Custom factory function to create field importer
+
+                These mappings control exactly how each field is transformed during import.
+
+            default_reference (Optional[RecordData]): Record data to use when this model is
+                referenced but no specific record is provided. Creates a default instance for
+                references that can be used as fallbacks for required relationships.
+
+            flags (Optional[DiffSyncModelFlags]): DiffSync model flags controlling synchronization
+                behavior for the source model. These flags affect how changes are detected and
+                applied during the synchronization process.
+
+            nautobot_flags (Optional[DiffSyncModelFlags]): DiffSync model flags for the target
+                Nautobot model. Allows different sync behavior between source and target models.
+
+            pre_import_record (Optional[PreImportRecord]): Function called before importing each record.
+
+                Signature: (data: RecordData, pass: ImporterPass) -> PreImportRecordResult
+
+                Can return SKIP_RECORD to exclude records from import. Useful for filtering
+                or preprocessing data before import.
+
+            post_import_record (Optional[PostImportRecord]): Function called after importing each record.
+
+                Signature: (data: RecordData, model: DiffSyncBaseModel) -> None
+
+                Enables custom post-processing of imported records, such as denormalization
+                or triggering additional operations.
+
+            disable_related_reference (Optional[bool]): When True, prevents automatic content_type
+                field references from being created when this model is referenced by other models.
+                Useful for models that should not participate in automatic reference tracking.
+
+            forward_references (ForwardReferences): Custom function to allow forwarding references to another instance.
+
+                Signature: (wrapper: SourceModelWrapper, references: SourceReferences) -> None
+
+
+            fill_placeholder (Optional[FillPlaceholder]): Function to populate data when creating placeholder objects.
+
+                Signature: (data: RecordData, suffix: str) -> None
+
+                Used when creating placeholder objects to satisfy required relationships.
+
+            get_pk_from_data (Optional[GetPkFromData]): Custom function to derive Nautobot's primary key
+                from source record data.
+
+                Signature: (data: RecordData) -> Uid
+
+                Overrides default primary key generation logic when source data has complex
+                or non-standard primary key representations.
+
+        Returns:
+            SourceModelWrapper: The created or updated wrapper for the source content type,
+                ready for use in the import process with all specified configurations applied.
+
+        Raises:
+            ValueError: If both nautobot_content_type and extend_content_type are specified,
+                or if a content type is already mapped to a different Nautobot content type.
+                These configurations are mutually exclusive.
         """
         content_type = content_type.lower()
         nautobot_content_type = nautobot_content_type.lower()
@@ -419,7 +526,73 @@ class SourceAdapter(BaseAdapter):
 
 # pylint: disable=too-many-instance-attributes, too-many-public-methods
 class SourceModelWrapper:
-    """Definition of a source model mapping to Nautobot model."""
+    """Definition of a source model mapping to Nautobot model.
+
+    This class maintains the mapping between a source data model and its corresponding Nautobot model.
+    It handles field definitions, data transformations, importing records, and tracking references
+    between models.
+
+    Attributes:
+        adapter (SourceAdapter): Parent adapter that manages this wrapper and coordinates the overall import process.
+
+        content_type (ContentTypeStr): String identifier for source content type (e.g., "dcim.device").
+
+        nautobot (NautobotModelWrapper): Wrapper for the target Nautobot model, containing field definitions
+            and handling interactions with Nautobot's data model.
+
+        identifiers (List[FieldName]): Field names used to uniquely identify records when primary keys don't
+            match between systems. Acts as natural keys for record identification.
+
+        disable_reason (str): If non-empty, explains why this model is disabled for import. Disabled models
+            are skipped during the import process.
+
+        disable_related_reference (bool): When True, prevents references processing.
+
+            See `references` for more details.
+
+        extends_wrapper (SourceModelWrapper): Another wrapper this one extends. When specified, this wrapper's
+            data will be merged into the extended wrapper's instances.
+
+        references (SourceReferences): Cache all referencing content types for each imported instance of this model.
+
+            Used to fill in Nautobot's `content_types` fields during post processing.
+
+        forward_references (ForwardReferences): Custom function to allow forwarding references to another instance.
+
+            See `references` for more details.
+
+        fields (OrderedDict[FieldName, SourceField]): Field definitions for this model, mapping source
+            field names to their corresponding SourceField objects.
+
+        importers (Set[SourceFieldImporter]): Collection of functions that import fields from source to target.
+            Each function handles the transformation of a specific field or set of related fields.
+
+        flags (DiffSyncModelFlags): Flags controlling DiffSync behavior for this model, affecting
+            how changes are detected and applied during synchronization.
+
+        default_reference_uid (Uid): UID for the default record used when referencing this model
+            but no specific record is provided.
+
+        pre_import_record (PreImportRecord): Function called before importing each record that can
+            filter or preprocess records before import.
+
+        post_import_record (PostImportRecord): Function called after importing each record that can
+            perform additional operations or validations.
+
+        stats (SourceModelStats): Statistics tracking for import operations on this model, including
+            counts of created, imported, and cached records.
+
+        _uid_to_pk_cache (Dict[Uid, Uid]): Cache mapping source UIDs to primary keys for quick lookup
+            during the import process.
+
+        _cached_data (Dict[Uid, RecordData]): Cache of data records by UID, used for storing records
+            that might be referenced later but aren't directly imported.
+
+        _fill_placeholder (FillPlaceholder): Function to populate data when creating placeholder objects.
+
+        _get_pk_from_data (GetPkFromData): Custom function to derive Nautobot primary keys from source
+            record data, allowing for custom key generation strategies.
+    """
 
     def __init__(self, adapter: SourceAdapter, content_type: ContentTypeStr, nautobot_wrapper: NautobotModelWrapper):
         """Initialize the SourceModelWrapper."""
@@ -869,7 +1042,41 @@ class SourceModelWrapper:
 
 # pylint: disable=too-many-public-methods
 class SourceField:
-    """Source Field."""
+    """Represents a field in the source data model and manages its mapping to Nautobot.
+
+    This class handles field definition and reference between source data and Nautobot models.
+    It provides mechanisms for customizing field mappings and setting importers for different
+    field types.
+
+    Attributes:
+        wrapper (SourceModelWrapper): Reference to the parent wrapper that manages
+            this field, providing context about the model it belongs to.
+
+        name (FieldName): The name of this field in the source data model.
+
+        definition (SourceFieldDefinition): How this field should be processed, can be:
+            - None: Field should be ignored
+            - str: Field should be renamed to this name in Nautobot
+            - callable: Factory function to create field importer
+
+        sources (set): Set of SourceFieldSource enum values indicating the origin of
+            this field (AUTO, CACHE, DATA, CUSTOM, SIBLING, IDENTIFIER).
+
+        processed (bool): Flag indicating whether this field has been processed during
+            the import pipeline.
+
+        _nautobot (NautobotField): Reference to the corresponding Nautobot field wrapper
+            that this source field maps to.
+
+        importer (SourceFieldImporter): Function that handles importing data from source
+            to target for this field. The specific function depends on the field type.
+
+        default_value (Any): Default value to use when the field is missing in source data.
+            Often derived from the Nautobot model's field default.
+
+        disable_reason (str): If non-empty, explains why this field is disabled for import.
+            Disabled fields are skipped during the import process.
+    """
 
     def __init__(self, wrapper: SourceModelWrapper, name: FieldName, source: SourceFieldSource):
         """Initialize the SourceField."""
@@ -884,9 +1091,11 @@ class SourceField:
         self.default_value: Any = None
         self.disable_reason: str = ""
 
+        wrapper.adapter.logger.debug("Creating %s", self)
+
     def __str__(self) -> str:
         """Return a string representation of the field."""
-        return self.wrapper.format_field_name(self.name)
+        return f"SourceField<{self.wrapper.format_field_name(self.name)}>"
 
     @property
     def nautobot(self) -> NautobotField:
@@ -924,6 +1133,8 @@ class SourceField:
 
         if isinstance(sibling, FieldName):
             sibling = self.wrapper.add_field(sibling, SourceFieldSource.SIBLING)
+        else:
+            sibling.sources.add(SourceFieldSource.SIBLING)
 
         sibling.set_nautobot_field(nautobot_name or self.nautobot.name)
         sibling.importer = self.importer
@@ -1309,7 +1520,7 @@ class SourceField:
         def timezone_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
             value = source.get(self.name, None)
             if value not in EMPTY_VALUES:
-                value = pytz.timezone(value)
+                value = zoneinfo.ZoneInfo(key=value)
             self.set_nautobot_value(target, value)
 
         self.set_importer(timezone_importer)

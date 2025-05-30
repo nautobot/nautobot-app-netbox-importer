@@ -1492,7 +1492,7 @@
     "group": null,
     "tenant": null,
     "facility": "",
-    "time_zone": null,
+    "time_zone": "US/Pacific",
     "physical_address": "",
     "shipping_address": "",
     "latitude": null,
