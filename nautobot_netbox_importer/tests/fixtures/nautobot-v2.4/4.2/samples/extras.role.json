@@ -1,0 +1,50 @@
+[
+{
+  "model": "extras.role",
+  "pk": "254b9e37-775b-5584-88ec-36409d1bc9dd",
+  "fields": {
+    "created": "2020-12-22T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:42.095Z",
+    "_custom_field_data": {},
+    "name": "PDU",
+    "color": "607d8b",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      51
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "7c20cf28-1ac0-51d3-9222-65c10b1e302b",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:42.096Z",
+    "_custom_field_data": {},
+    "name": "Patch Panel",
+    "color": "607d8b",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      51
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "98be24c5-55b8-5f56-b83d-a1862ff11a50",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:42.102Z",
+    "_custom_field_data": {},
+    "name": "ToR Switch",
+    "color": "ff5722",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      51
+    ]
+  }
+}
+]
