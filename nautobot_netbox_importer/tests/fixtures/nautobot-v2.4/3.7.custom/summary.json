@@ -11643,7 +11643,7 @@
                     "message": "Placeholder object created",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "51c814cb-1cb4-5184-8666-2bcd4d224c06",
                         "status_id": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
                         "provider_id": "7f56dc7e-2b84-5c87-81f9-b36612746f08",
@@ -11660,7 +11660,7 @@
                     "message": "Placeholder object created",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "5c656caa-aa35-532b-bf6b-7eff42b3c9ee",
                         "status_id": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
                         "provider_id": "7f56dc7e-2b84-5c87-81f9-b36612746f08",
@@ -11677,7 +11677,7 @@
                     "message": "Placeholder object created",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "7613c297-0016-567f-8680-ba305c53df5a",
                         "status_id": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
                         "provider_id": "7f56dc7e-2b84-5c87-81f9-b36612746f08",
@@ -11694,7 +11694,7 @@
                     "message": "Placeholder object created",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "894444ae-6b84-5308-bc74-f74402f68219",
                         "status_id": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
                         "provider_id": "7f56dc7e-2b84-5c87-81f9-b36612746f08",
@@ -11711,7 +11711,7 @@
                     "message": "Placeholder object created",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "ba4edff9-345f-5849-a416-c67b0c5bf5d8",
                         "status_id": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
                         "provider_id": "7f56dc7e-2b84-5c87-81f9-b36612746f08",
@@ -11742,7 +11742,7 @@
                     "message": "Placeholder object created",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "23f54cbf-0c94-5c79-9b7f-f8fd96c6a26e",
                         "circuit_id": "ba4edff9-345f-5849-a416-c67b0c5bf5d8",
                         "location_id": "None",
@@ -11758,7 +11758,7 @@
                     "message": "{'field': 'term_side', 'importer': 'choice_importer'} {'term_side': 'Invalid choice value: `None`'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "23f54cbf-0c94-5c79-9b7f-f8fd96c6a26e",
                         "circuit_id": "None",
                         "location_id": "None",
@@ -11768,6 +11768,7 @@
                         "cable_id": "bccaf88e-b5c2-5b9d-9006-791ab29ccfba",
                         "provider_network_id": "None",
                         "port_speed": "None",
+                        "upstream_speed": "None",
                         "xconnect_id": "None",
                         "pp_info": "None",
                         "description": "None"
@@ -11809,7 +11810,7 @@
                     "message": "Placeholder object created",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "3f64e659-b2e7-50c5-b6db-8c4e46dd40af",
                         "circuit_id": "5c656caa-aa35-532b-bf6b-7eff42b3c9ee",
                         "location_id": "None",
@@ -11825,7 +11826,7 @@
                     "message": "{'field': 'term_side', 'importer': 'choice_importer'} {'term_side': 'Invalid choice value: `None`'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "3f64e659-b2e7-50c5-b6db-8c4e46dd40af",
                         "circuit_id": "None",
                         "location_id": "None",
@@ -11835,6 +11836,7 @@
                         "cable_id": "727d4a3e-0c2c-5934-88d1-8c64cff4febb",
                         "provider_network_id": "None",
                         "port_speed": "None",
+                        "upstream_speed": "None",
                         "xconnect_id": "None",
                         "pp_info": "None",
                         "description": "None"
@@ -11861,7 +11863,7 @@
                     "message": "Placeholder object created",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "41bfcdba-035c-516c-8c1e-9cfdcf434d51",
                         "circuit_id": "51c814cb-1cb4-5184-8666-2bcd4d224c06",
                         "location_id": "None",
@@ -11877,7 +11879,7 @@
                     "message": "{'field': 'term_side', 'importer': 'choice_importer'} {'term_side': 'Invalid choice value: `None`'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "41bfcdba-035c-516c-8c1e-9cfdcf434d51",
                         "circuit_id": "None",
                         "location_id": "None",
@@ -11887,6 +11889,7 @@
                         "cable_id": "6df947b3-9159-5b42-8367-c0d7edb3986c",
                         "provider_network_id": "None",
                         "port_speed": "None",
+                        "upstream_speed": "None",
                         "xconnect_id": "None",
                         "pp_info": "None",
                         "description": "None"
@@ -11913,7 +11916,7 @@
                     "message": "Placeholder object created",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "93589e98-9065-5a5f-97f9-5dc491cbcf94",
                         "circuit_id": "7613c297-0016-567f-8680-ba305c53df5a",
                         "location_id": "None",
@@ -11929,7 +11932,7 @@
                     "message": "{'field': 'term_side', 'importer': 'choice_importer'} {'term_side': 'Invalid choice value: `None`'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "93589e98-9065-5a5f-97f9-5dc491cbcf94",
                         "circuit_id": "None",
                         "location_id": "None",
@@ -11939,6 +11942,7 @@
                         "cable_id": "bccaf88e-b5c2-5b9d-9006-791ab29ccfba",
                         "provider_network_id": "None",
                         "port_speed": "None",
+                        "upstream_speed": "None",
                         "xconnect_id": "None",
                         "pp_info": "None",
                         "description": "None"
@@ -11965,7 +11969,7 @@
                     "message": "Placeholder object created",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "ccc75dd5-5d67-5c2c-b6b7-b94319334399",
                         "circuit_id": "894444ae-6b84-5308-bc74-f74402f68219",
                         "location_id": "None",
@@ -11981,7 +11985,7 @@
                     "message": "{'field': 'term_side', 'importer': 'choice_importer'} {'term_side': 'Invalid choice value: `None`'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "ccc75dd5-5d67-5c2c-b6b7-b94319334399",
                         "circuit_id": "None",
                         "location_id": "None",
@@ -11991,6 +11995,7 @@
                         "cable_id": "727d4a3e-0c2c-5934-88d1-8c64cff4febb",
                         "provider_network_id": "None",
                         "port_speed": "None",
+                        "upstream_speed": "None",
                         "xconnect_id": "None",
                         "pp_info": "None",
                         "description": "None"
@@ -12134,7 +12139,7 @@
                     "message": "{'termination_b_id': 'Cable termination B updated from None,  to 41bfcdba-035c-516c-8c1e-9cfdcf434d51, circuits.circuittermination'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "6df947b3-9159-5b42-8367-c0d7edb3986c",
                         "status_id": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
                         "label": "1",
@@ -12155,7 +12160,7 @@
                     "message": "{'termination_a_id': 'Cable termination A updated from None,  to ccc75dd5-5d67-5c2c-b6b7-b94319334399, circuits.circuittermination'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "727d4a3e-0c2c-5934-88d1-8c64cff4febb",
                         "status_id": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
                         "label": "3",
@@ -12177,7 +12182,7 @@
                     "message": "{'termination_b_id': 'Cable termination B updated from None,  to 3f64e659-b2e7-50c5-b6db-8c4e46dd40af, circuits.circuittermination'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "727d4a3e-0c2c-5934-88d1-8c64cff4febb",
                         "status_id": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
                         "label": "3",
@@ -12199,7 +12204,7 @@
                     "message": "{'termination_a_id': 'Cable termination A updated from None,  to 93589e98-9065-5a5f-97f9-5dc491cbcf94, circuits.circuittermination'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "bccaf88e-b5c2-5b9d-9006-791ab29ccfba",
                         "status_id": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
                         "label": "2",
@@ -12221,7 +12226,7 @@
                     "message": "{'termination_b_id': 'Cable termination B updated from None,  to 23f54cbf-0c94-5c79-9b7f-f8fd96c6a26e, circuits.circuittermination'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "bccaf88e-b5c2-5b9d-9006-791ab29ccfba",
                         "status_id": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
                         "label": "2",
@@ -12296,7 +12301,7 @@
                     "message": "{'position': 'Device unracked due to 0U height'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "4f3495b5-00e6-5917-a148-77e109f96b0f",
                         "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
                         "location_id": "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
@@ -12347,18 +12352,15 @@
                     "message": "{'field': 'u_height', 'importer': 'integer_importer'} {'u_height': 'Value `0.5` truncated to `0`'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "03d4a2c5-e08b-5cc1-924d-c401194d393c",
-                        "manufacturer_id": "None",
-                        "model": "None",
-                        "created": "None",
+                        "manufacturer_id": "9568e4c1-fa0c-5c43-9606-e25166e67765",
+                        "model": "Half U Device Type",
+                        "created": "2024-02-15 09:18:48.416000+00:00",
                         "last_updated": "None",
                         "custom_field_data": "None",
-                        "comments": "None",
-                        "part_number": "None",
                         "u_height": "0",
-                        "is_full_depth": "None",
-                        "subdevice_role": "None"
+                        "is_full_depth": "True"
                     },
                     "source_reference": "dcim.devicetype:2"
                 }
@@ -12412,7 +12414,7 @@
                     "message": "{'field': 'protocol', 'importer': 'fallback_importer'} {'protocol': 'Invalid choice value: `clusterxl`, replaced with `None`'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "2586a272-455a-5e92-85d7-f41c0784630a",
                         "status_id": "None",
                         "protocol": "None",
@@ -12431,7 +12433,7 @@
                     "message": "{'field': 'protocol', 'importer': 'fallback_importer'} {'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "f91623ed-a389-53a4-a4a2-943588c21446",
                         "status_id": "None",
                         "protocol": "vrrp",
@@ -12737,16 +12739,18 @@
                     "message": "{'field': 'type', 'importer': 'type_importer'} {'type': 'Invalid choice value: `object`, replaced with `text`'}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5",
                         "content_types": "None",
-                        "key": "None",
+                        "key": "device_custom_object",
                         "label": "None",
                         "type": "text",
                         "created": "None",
                         "last_updated": "None",
-                        "required": "None",
+                        "description": "None",
+                        "required": "False",
                         "filter_logic": "None",
+                        "default": "None",
                         "weight": "100",
                         "validation_minimum": "None",
                         "validation_regex": "None"
@@ -13002,7 +13006,7 @@
                     "message": "",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "015c4836-67b9-571d-aeb7-bb26b3438b92",
                         "status_id": "76782d4e-25fa-5add-8129-3a4540d09ad1",
                         "locations": "None",
@@ -13063,7 +13067,7 @@
                     "message": "",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "c87d7e7b-0e83-537c-bb74-b5517b3fa00d",
                         "status_id": "76782d4e-25fa-5add-8129-3a4540d09ad1",
                         "locations": "None",
@@ -13316,16 +13320,15 @@
                     "message": "{'object_types': \"Invalid content type ['extras', 'script'], skipping\"}",
                     "data": {
                         "model_flags": "DiffSyncModelFlags.NONE",
-                        "diffsync": "NetBoxAdapter \"NetBox\"",
+                        "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "c650165f-9a05-55c0-bbb1-c9527d41160c",
-                        "name": "Test Permission",
-                        "description": "None",
+                        "name": "None",
                         "enabled": "None",
-                        "actions": "['view']",
+                        "actions": "None",
                         "constraints": "None",
                         "object_types": "None",
                         "groups": "None",
-                        "users": "None"
+                        "users": "{UUID('b6111f2f-ede6-5a47-b0e5-3842b76f14cd')}"
                     },
                     "source_reference": "users.objectpermission:1"
                 }
