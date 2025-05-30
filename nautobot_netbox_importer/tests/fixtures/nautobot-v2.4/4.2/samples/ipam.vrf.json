@@ -1,0 +1,69 @@
+[
+{
+  "model": "ipam.vrf",
+  "pk": "73360e91-5f1d-5d9b-8be2-06b867b5953b",
+  "fields": {
+    "created": "2022-04-08T00:32:05.517Z",
+    "last_updated": "2025-05-30T09:13:01.862Z",
+    "_custom_field_data": {},
+    "name": "Shared",
+    "rd": "65000:1",
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": null,
+    "description": "Shared services VRF",
+    "import_targets": [
+      "6cc00d80-6754-504b-b920-e14d13a65832"
+    ],
+    "export_targets": [
+      "4e3a7cf5-5e49-55c9-8fed-10c6d35f9982"
+    ]
+  }
+},
+{
+  "model": "ipam.vrf",
+  "pk": "7ab8b2d0-30bc-543a-85f7-5039ccc771db",
+  "fields": {
+    "created": "2022-04-08T00:05:31.612Z",
+    "last_updated": "2025-05-30T09:13:01.845Z",
+    "_custom_field_data": {},
+    "name": "Alpha",
+    "rd": "65000:100",
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": null,
+    "description": "",
+    "import_targets": [
+      "2ca62435-a1d9-508f-a90c-fea781fb01fa",
+      "4e3a7cf5-5e49-55c9-8fed-10c6d35f9982"
+    ],
+    "export_targets": [
+      "6cc00d80-6754-504b-b920-e14d13a65832",
+      "44b1201b-16c0-55d0-957d-558cf7de443f"
+    ]
+  }
+},
+{
+  "model": "ipam.vrf",
+  "pk": "846b3654-ba46-59bf-8900-c53475a33880",
+  "fields": {
+    "created": "2022-04-08T00:05:32.358Z",
+    "last_updated": "2025-05-30T09:13:01.859Z",
+    "_custom_field_data": {},
+    "name": "Echo",
+    "rd": "65000:500",
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": null,
+    "description": "",
+    "import_targets": [
+      "4e3a7cf5-5e49-55c9-8fed-10c6d35f9982",
+      "930d2e9c-09ff-5ea4-b7a4-0b4e8af05d8c"
+    ],
+    "export_targets": [
+      "6cc00d80-6754-504b-b920-e14d13a65832",
+      "3d417c6d-b9a1-5a39-b2da-104921c4db0a"
+    ]
+  }
+}
+]

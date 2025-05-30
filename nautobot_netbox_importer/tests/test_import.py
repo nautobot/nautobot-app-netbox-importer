@@ -18,6 +18,7 @@ from django.core.serializers import serialize
 from django.test import TestCase
 from nautobot import __version__ as nautobot_version
 from nautobot.core.settings_funcs import is_truthy
+from packaging.version import Version
 
 from nautobot_netbox_importer.command_utils import enable_logging as mute_diffsync_logging
 from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
@@ -79,7 +80,8 @@ class TestImport(TestCase):
 
         # Import the file to fresh Nautobot instance
         input_ref = _INPUTS.get(fixtures_name, fixtures_path / "input.json")
-        source = self._import_file(input_ref)
+        version = _version_from_fixtures_name(fixtures_name)
+        source = self._import_file(input_ref, version)
 
         # Build summary in text format in all cases to allow comparison
         source.summary.dump(fixtures_path / "summary.txt", output_format="text")
@@ -153,7 +155,7 @@ class TestImport(TestCase):
                     self._verify_model(samples_path, wrapper)
 
         # Re-import the same file to verify that nothing has changed
-        second_source = self._import_file(input_ref)
+        second_source = self._import_file(input_ref, version)
 
         # In some cases, e.g. placeholders or cached records, it's not possible to verify "no-change"
         expected_diffsync_summary["no-change"] = second_source.summary.diffsync["no-change"]
@@ -164,11 +166,12 @@ class TestImport(TestCase):
             "Expected DiffSync 2 summary mismatch",
         )
 
-    def _import_file(self, input_ref):
+    def _import_file(self, input_ref, version: Version):
         source = NetBoxAdapter(
             input_ref,
             NetBoxImporterOptions(
                 dry_run=False,
+                netbox_version=version,
                 bypass_data_validation=True,
                 create_missing_cable_terminations=True,
                 deduplicate_ipam=True,
@@ -280,6 +283,13 @@ def _generate_model_samples(wrapper: NautobotModelWrapper, path: Path):
         pks=",".join(f"{item}" for item in pks),
         output=path,
     )
+
+
+def _version_from_fixtures_name(fixtures_name: str) -> Version:
+    """Extract NetBox version from the fixtures name."""
+
+    split = fixtures_name.split(".")
+    return Version(f"{split[0]}.{split[1]}") if len(split) >= 2 else Version("3.0")
 
 
 def _create_test_cases():

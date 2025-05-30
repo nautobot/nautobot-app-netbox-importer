@@ -310,6 +310,14 @@ class NautobotModelWrapper:
 
         return result
 
+    @property
+    def content_type_id(self) -> Optional[int]:
+        """Get the Nautobot content type ID."""
+        if self.disabled:
+            return None
+
+        return self.content_type_instance.pk  # type: ignore
+
     def get_summary(self) -> NautobotModelSummary:
         """Get the summary."""
         issues = sorted(self.get_importer_issues())
@@ -318,7 +326,7 @@ class NautobotModelWrapper:
 
         return NautobotModelSummary(
             content_type=self.content_type,
-            content_type_id=None if self.disabled else self.content_type_instance.pk,
+            content_type_id=self.content_type_id,
             stats=self.stats,
             issues=issues,
             flags=str(self.flags),

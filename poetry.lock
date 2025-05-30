@@ -2859,17 +2859,6 @@ mysql = ["mysql-connector-python"]
 postgresql = ["psycopg2"]
 
 [[package]]
-name = "pytz"
-version = "2025.2"
-description = "World timezone definitions, modern and historical"
-optional = false
-python-versions = "*"
-files = [
-    {file = "pytz-2025.2-py2.py3-none-any.whl", hash = "sha256:5ddf76296dd8c44c26eb8f4b6f35488f3ccbf6fbbd7adee0b7262d43f0ec2f00"},
-    {file = "pytz-2025.2.tar.gz", hash = "sha256:360b9e3dbb49a209c21ad61809c7fb453643e048b38924c765813546746e81c3"},
-]
-
-[[package]]
 name = "pyuwsgi"
 version = "2.0.29"
 description = "The uWSGI server"
@@ -3733,4 +3722,4 @@ all = []
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9.2,<3.13"
-content-hash = "cac2751bc5fe5ecb5ddcd99d05c83eb15f4b8c169ddbf5a77e42c87777a435c7"
+content-hash = "ec6c4225cb80553741ad38ca6799a8f23052508ac6034d12f724f3bc809fcdbd"

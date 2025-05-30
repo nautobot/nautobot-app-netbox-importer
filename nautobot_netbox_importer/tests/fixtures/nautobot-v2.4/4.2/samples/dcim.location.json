@@ -1,0 +1,83 @@
+[
+{
+  "model": "dcim.location",
+  "pk": "9602ef93-9d64-5887-af98-9735b2b0d962",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:42.400Z",
+    "_custom_field_data": {},
+    "parent": "aa4ee7a1-28e1-5f91-bc65-4f7cd2107a63",
+    "name": "Minnesota",
+    "_name": "Minnesota",
+    "location_type": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "tenant": null,
+    "description": "",
+    "facility": "",
+    "asn": null,
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "contact_name": "",
+    "contact_phone": "",
+    "contact_email": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.location",
+  "pk": "b5694fca-f156-5163-8ae8-db7cceb93eaf",
+  "fields": {
+    "created": "2021-04-02T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:42.532Z",
+    "_custom_field_data": {},
+    "parent": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+    "name": "Row 2",
+    "_name": "Row 00000002",
+    "location_type": "22004273-2182-50fd-b410-5e152ed9431a",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "tenant": null,
+    "description": "",
+    "facility": "",
+    "asn": null,
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "contact_name": "",
+    "contact_phone": "",
+    "contact_email": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.location",
+  "pk": "b5ab193a-c8ae-58bf-a18e-38d72627eb1f",
+  "fields": {
+    "created": "2021-03-10T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:42.491Z",
+    "_custom_field_data": {},
+    "parent": "df04c373-46a6-59c1-846e-b8d392fc4795",
+    "name": "JBB Branch 115",
+    "_name": "JBB Branch 00000115",
+    "location_type": "001a5b44-6c65-5a97-bee3-c52494c176d3",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "tenant": "35f6098e-5c2c-58b3-824c-9b5c024a4321",
+    "description": "",
+    "facility": "",
+    "asn": null,
+    "time_zone": null,
+    "physical_address": "44 Blue Spring Dr.\r\nWest Warwick, RI 02893",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "contact_name": "",
+    "contact_phone": "",
+    "contact_email": "",
+    "comments": ""
+  }
+}
+]

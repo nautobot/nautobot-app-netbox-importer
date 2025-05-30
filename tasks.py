@@ -641,12 +641,16 @@ def import_db(context, db_name="", input_file="dump.sql"):
 @task(
     help={
         "db-name": "Database name to backup (default: Nautobot database)",
+        "format": "Database dump format (default: `sql`)",
         "output-file": "Ouput file, overwrite if exists (default: `dump.sql`)",
         "readable": "Flag to dump database data in more readable format (default: `True`)",
     }
 )
-def backup_db(context, db_name="", output_file="dump.sql", readable=True):
+def backup_db(context, db_name="", format="sql", output_file="", readable=True):
     """Dump database into `output_file` file from `db` container."""
+    if not output_file:
+        output_file = f"dump.{format}"
+
     start(context, "db")
     _await_healthy_service(context, "db")
 
@@ -665,6 +669,7 @@ def backup_db(context, db_name="", output_file="dump.sql", readable=True):
             "pg_dump",
             "--username=$POSTGRES_USER",
             f"--dbname={db_name or '$POSTGRES_DB'}",
+            f"--format={format}",
             "--inserts" if readable else "",
         ]
     else:
