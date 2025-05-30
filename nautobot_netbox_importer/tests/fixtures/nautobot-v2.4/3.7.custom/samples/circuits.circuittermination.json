@@ -1,0 +1,71 @@
+[
+{
+  "model": "circuits.circuittermination",
+  "pk": "23f54cbf-0c94-5c79-9b7f-f8fd96c6a26e",
+  "fields": {
+    "created": "2025-05-30T07:32:54.178Z",
+    "last_updated": "2025-05-30T07:32:54.178Z",
+    "_custom_field_data": {},
+    "cable": "bccaf88e-b5c2-5b9d-9006-791ab29ccfba",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "6f402926-f3d9-4d31-9eff-3aa343900643",
+    "circuit": "ba4edff9-345f-5849-a416-c67b0c5bf5d8",
+    "term_side": "",
+    "location": null,
+    "provider_network": null,
+    "cloud_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittermination",
+  "pk": "a82c9a9a-678f-5c23-a73d-bb16b30eb407",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2025-05-30T07:32:54.168Z",
+    "_custom_field_data": {},
+    "cable": "6df947b3-9159-5b42-8367-c0d7edb3986c",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "3ce43619-7093-48b3-af9b-d154797d1b10",
+    "circuit": "8037ffad-6a28-5267-9839-2e6459305d3c",
+    "term_side": "A",
+    "location": "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
+    "provider_network": null,
+    "cloud_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittermination",
+  "pk": "ccc75dd5-5d67-5c2c-b6b7-b94319334399",
+  "fields": {
+    "created": "2025-05-30T07:32:54.180Z",
+    "last_updated": "2025-05-30T07:32:54.180Z",
+    "_custom_field_data": {},
+    "cable": "727d4a3e-0c2c-5934-88d1-8c64cff4febb",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "91559c02-7b91-44c8-86b0-1e671f4ac0f4",
+    "circuit": "894444ae-6b84-5308-bc74-f74402f68219",
+    "term_side": "",
+    "location": null,
+    "provider_network": null,
+    "cloud_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+}
+]

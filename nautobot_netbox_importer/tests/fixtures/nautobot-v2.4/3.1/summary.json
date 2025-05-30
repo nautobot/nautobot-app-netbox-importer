@@ -201,8 +201,9 @@
                     "nautobot_internal_type": "ManyToManyField",
                     "nautobot_can_import": true,
                     "importer": "m2m_importer",
-                    "definition": "groups",
+                    "definition": "",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": null,
@@ -292,6 +293,20 @@
                     ],
                     "default_value": null,
                     "disable_reason": "",
+                    "required": false
+                },
+                "object_permissions": {
+                    "name": "object_permissions",
+                    "nautobot_name": null,
+                    "nautobot_internal_type": null,
+                    "nautobot_can_import": null,
+                    "importer": null,
+                    "definition": null,
+                    "sources": [
+                        "CUSTOM"
+                    ],
+                    "default_value": null,
+                    "disable_reason": "Permissions import is not implemented yet",
                     "required": false
                 },
                 "password": {
@@ -495,8 +510,9 @@
                     "nautobot_internal_type": "ForeignKey",
                     "nautobot_can_import": true,
                     "importer": "relation_importer",
-                    "definition": "provider",
+                    "definition": "",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": null,
@@ -647,8 +663,9 @@
                     "nautobot_internal_type": "ForeignKey",
                     "nautobot_can_import": true,
                     "importer": "relation_importer",
-                    "definition": "circuit",
+                    "definition": "",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": null,
@@ -926,6 +943,7 @@
                     "definition": "id",
                     "sources": [
                         "AUTO",
+                        "CACHE",
                         "DATA"
                     ],
                     "default_value": null,
@@ -978,6 +996,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": "None",
             "stats": {
+                "pre_cached": 1,
                 "first_pass_used": 4,
                 "second_pass_used": 4,
                 "created": 4,
@@ -1089,6 +1108,7 @@
                     "definition": "id",
                     "sources": [
                         "AUTO",
+                        "CACHE",
                         "DATA"
                     ],
                     "default_value": null,
@@ -1169,6 +1189,7 @@
             "flags": "DiffSyncModelFlags.NONE",
             "default_reference_uid": "None",
             "stats": {
+                "pre_cached": 1,
                 "first_pass_used": 9,
                 "second_pass_used": 9,
                 "created": 9,
@@ -1496,9 +1517,10 @@
                     "nautobot_name": "label",
                     "nautobot_internal_type": "CharField",
                     "nautobot_can_import": true,
-                    "importer": "value_importer",
-                    "definition": "label",
+                    "importer": "cable_label_importer",
+                    "definition": "_define_cable_label",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": null,
@@ -1582,8 +1604,9 @@
                     "nautobot_internal_type": "UUIDField",
                     "nautobot_can_import": true,
                     "importer": "relation_and_type_importer",
-                    "definition": "termination_a_id",
+                    "definition": "",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": null,
@@ -1596,8 +1619,9 @@
                     "nautobot_internal_type": "ForeignKey",
                     "nautobot_can_import": true,
                     "importer": "relation_and_type_importer",
-                    "definition": "termination_a_type",
+                    "definition": "",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": null,
@@ -1610,8 +1634,9 @@
                     "nautobot_internal_type": "UUIDField",
                     "nautobot_can_import": true,
                     "importer": "relation_and_type_importer",
-                    "definition": "termination_b_id",
+                    "definition": "",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": null,
@@ -1624,8 +1649,9 @@
                     "nautobot_internal_type": "ForeignKey",
                     "nautobot_can_import": true,
                     "importer": "relation_and_type_importer",
-                    "definition": "termination_b_type",
+                    "definition": "",
                     "sources": [
+                        "CUSTOM",
                         "DATA"
                     ],
                     "default_value": null,
@@ -9617,7 +9643,7 @@
                     "nautobot_internal_type": "UUIDField",
                     "nautobot_can_import": true,
                     "importer": "tagged_object_importer",
-                    "definition": "_define_tagged_object",
+                    "definition": "define_tagged_object",
                     "sources": [
                         "CUSTOM",
                         "DATA"
