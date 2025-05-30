@@ -14,10 +14,10 @@ FieldName = str
 RecordData = MutableMapping[FieldName, Any]
 GenericForeignValue = Tuple[ContentTypeStr, Uid]
 Pathable = Union[str, PathLike]
-FillDummyData = Callable[[RecordData, str], None]
+FillPlaceholder = Callable[[RecordData, str], None]
 NullablePrimitives = Union[str, int, float, bool, None]
 
-DUMMY_UID = "dummy"
+PLACEHOLDER_UID = "placeholder"
 GENERATOR_SETUP_MODULES: List[str] = []
 NOTHING = object()
 

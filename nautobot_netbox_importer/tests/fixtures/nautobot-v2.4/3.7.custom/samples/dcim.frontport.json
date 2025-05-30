@@ -1,0 +1,23 @@
+[
+{
+  "model": "dcim.frontport",
+  "pk": "81edc50b-59c8-5950-a84b-d2a1bbc61afd",
+  "fields": {
+    "created": "2022-05-16T00:00:00Z",
+    "last_updated": "2025-05-30T07:32:54.222Z",
+    "_custom_field_data": {},
+    "name": "2",
+    "_name": "00000002",
+    "label": "",
+    "description": "",
+    "device": "f5cd899a-dec6-56c9-9045-514d562631d5",
+    "module": null,
+    "cable": "727d4a3e-0c2c-5934-88d1-8c64cff4febb",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "type": "lc",
+    "rear_port": "559614d0-9396-59cf-973c-32d1d278bd71",
+    "rear_port_position": 2
+  }
+}
+]

@@ -26,12 +26,12 @@ from diffsync.enum import DiffSyncModelFlags
 from nautobot.core.models.tree_queries import TreeModel
 
 from nautobot_netbox_importer.base import (
-    DUMMY_UID,
     NOTHING,
+    PLACEHOLDER_UID,
     ContentTypeStr,
     ContentTypeValue,
     FieldName,
-    FillDummyData,
+    FillPlaceholder,
     RecordData,
     Uid,
 )
@@ -210,7 +210,7 @@ class SourceAdapter(BaseAdapter):
         post_import_record: Optional[PostImportRecord] = None,
         disable_related_reference: Optional[bool] = None,
         forward_references: Optional[ForwardReferences] = None,
-        fill_dummy_data: Optional[FillDummyData] = None,
+        fill_placeholder: Optional[FillPlaceholder] = None,
         get_pk_from_data: Optional[GetPkFromData] = None,
     ) -> "SourceModelWrapper":
         """Create if not exist and configure a wrapper for a given source content type.
@@ -267,8 +267,8 @@ class SourceAdapter(BaseAdapter):
             wrapper.disable_related_reference = disable_related_reference
         if forward_references:
             wrapper.forward_references = forward_references
-        if fill_dummy_data:
-            wrapper.fill_dummy_data = fill_dummy_data
+        if fill_placeholder:
+            wrapper.fill_placeholder = fill_placeholder
         if get_pk_from_data:
             wrapper.get_pk_from_data_hook = get_pk_from_data
 
@@ -318,7 +318,7 @@ class SourceAdapter(BaseAdapter):
             if value not in self.content_type_ids_mapping:
                 raise ValueError(f"Content type not found {value}")
             return self.content_type_ids_mapping[value]
-        elif isinstance(value, Iterable) and len(value) == 2:  # noqa: PLR2004
+        elif isinstance(value, Iterable) and len(value) == 2:  # type: ignore
             value = ".".join(value).lower()
         else:
             raise ValueError(f"Invalid content type {value}")
@@ -454,7 +454,7 @@ class SourceModelWrapper:
         # Caching
         self._uid_to_pk_cache: Dict[Uid, Uid] = {}
         self._cached_data: Dict[Uid, RecordData] = {}
-        self.fill_dummy_data: Union[FillDummyData, None] = None
+        self.fill_placeholder: Union[FillPlaceholder, None] = None
         self.get_pk_from_data_hook: Union[GetPkFromData, None] = None
 
         self.stats = SourceModelStats()
@@ -702,7 +702,7 @@ class SourceModelWrapper:
 
     def import_record(self, data: RecordData, target: Optional[DiffSyncBaseModel] = None) -> DiffSyncBaseModel:
         """Import a single item from the source."""
-        self.adapter.logger.debug("Importing record %s %s", self, data)
+        self.adapter.logger.debug("Importing %s %s", self, data)
         if self.importers is None:
             raise RuntimeError(f"Importers not created for {self}")
 
@@ -725,7 +725,7 @@ class SourceModelWrapper:
                 )
 
         self.stats.imported += 1
-        self.adapter.logger.debug("Imported %s %s", uid, target.get_attrs())
+        self.adapter.logger.debug("Imported %s %s %s", self, uid, target.get_attrs())
 
         return target
 
@@ -796,32 +796,26 @@ class SourceModelWrapper:
 
         return uid
 
-    def cache_dummy_object(self, suffix: str, data: Union[RecordData, None] = None) -> Uid:
-        """Create a dummy object for the given data."""
-        uid = f"{DUMMY_UID}{suffix}"
-        nautobot_uid = self.get_pk_from_uid(uid)
-
-        if nautobot_uid in self._cached_data:
-            return uid
-
+    def import_placeholder(self, suffix: str, data: Union[RecordData, None] = None) -> DiffSyncBaseModel:
+        """Create a placeholder object for the given data."""
         if not data:
             data = {}
 
         if "id" not in data:
-            data["id"] = uid
+            data["id"] = f"{PLACEHOLDER_UID}{suffix}"
 
-        if self.fill_dummy_data:
-            self.fill_dummy_data(data, suffix)
+        if self.fill_placeholder:
+            self.fill_placeholder(data, suffix)
 
-        self.cache_record(data)
+        result = self.import_record(data)
+        self.nautobot.stats.placeholders += 1
         self.nautobot.add_issue(
-            "DummyObject",
-            message="Dummy object cached",
-            uid=nautobot_uid,
-            data=data,
+            "CreatedPlaceholder",
+            message="Placeholder object created",
+            diffsync_instance=result,
         )
 
-        return uid
+        return result
 
     def set_default_reference(self, data: RecordData) -> None:
         """Set the default reference to this model."""

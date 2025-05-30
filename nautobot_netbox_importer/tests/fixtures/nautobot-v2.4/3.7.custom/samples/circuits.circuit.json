@@ -1,0 +1,62 @@
+[
+{
+  "model": "circuits.circuit",
+  "pk": "51c814cb-1cb4-5184-8666-2bcd4d224c06",
+  "fields": {
+    "created": "2025-05-30T07:32:54.164Z",
+    "last_updated": "2025-05-30T07:32:54.164Z",
+    "_custom_field_data": {},
+    "cid": "1",
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "provider": "7f56dc7e-2b84-5c87-81f9-b36612746f08",
+    "circuit_type": "ae3b8657-5438-5728-a2de-856f45a553a4",
+    "tenant": null,
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": null,
+    "circuit_termination_z": null
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": "7613c297-0016-567f-8680-ba305c53df5a",
+  "fields": {
+    "created": "2025-05-30T07:32:54.164Z",
+    "last_updated": "2025-05-30T07:32:54.164Z",
+    "_custom_field_data": {},
+    "cid": "2",
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "provider": "7f56dc7e-2b84-5c87-81f9-b36612746f08",
+    "circuit_type": "ae3b8657-5438-5728-a2de-856f45a553a4",
+    "tenant": null,
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": null,
+    "circuit_termination_z": null
+  }
+},
+{
+  "model": "circuits.circuit",
+  "pk": "8037ffad-6a28-5267-9839-2e6459305d3c",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2025-05-30T07:32:54.174Z",
+    "_custom_field_data": {},
+    "cid": "CIRCUIT-0001",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "provider": "aaa90236-9b2a-5ae3-901d-59574a1d3da0",
+    "circuit_type": "77b0ea76-dd49-526f-9e5b-7526b5abaa3d",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "install_date": null,
+    "commit_rate": null,
+    "description": "",
+    "comments": "",
+    "circuit_termination_a": "a82c9a9a-678f-5c23-a73d-bb16b30eb407",
+    "circuit_termination_z": "2538071e-55fb-5df3-8cd7-8c3cf230882a"
+  }
+}
+]

@@ -3,15 +3,16 @@
   "model": "extras.status",
   "pk": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
   "fields": {
-    "created": "2025-05-29T14:34:18.744Z",
-    "last_updated": "2025-05-29T14:34:18.744Z",
+    "created": "2025-05-30T07:32:54.116Z",
+    "last_updated": "2025-05-30T07:32:54.116Z",
     "_custom_field_data": {},
     "name": "Unknown",
     "color": "9e9e9e",
     "description": "",
     "content_types": [
-      38,
       86,
+      26,
+      38,
       39
     ]
   }
@@ -20,8 +21,8 @@
   "model": "extras.status",
   "pk": "76782d4e-25fa-5add-8129-3a4540d09ad1",
   "fields": {
-    "created": "2025-05-29T14:34:18.746Z",
-    "last_updated": "2025-05-29T14:34:18.746Z",
+    "created": "2025-05-30T07:32:54.118Z",
+    "last_updated": "2025-05-30T07:32:54.118Z",
     "_custom_field_data": {},
     "name": "Tbd",
     "color": "9e9e9e",
@@ -35,14 +36,15 @@
   "model": "extras.status",
   "pk": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
   "fields": {
-    "created": "2025-05-29T14:34:18.742Z",
-    "last_updated": "2025-05-29T14:34:18.742Z",
+    "created": "2025-05-30T07:32:54.114Z",
+    "last_updated": "2025-05-30T07:32:54.114Z",
     "_custom_field_data": {},
     "name": "Active",
     "color": "9e9e9e",
     "description": "",
     "content_types": [
       51,
+      26,
       86,
       88,
       74,

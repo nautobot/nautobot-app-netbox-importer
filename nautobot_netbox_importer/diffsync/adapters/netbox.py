@@ -12,12 +12,14 @@ from django.db.transaction import atomic
 from packaging.version import Version
 
 from nautobot_netbox_importer.base import GENERATOR_SETUP_MODULES, logger, register_generator_setup
+from nautobot_netbox_importer.diffsync.models.cables import create_missing_cable_terminations
 from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations, unrack_zero_uheight_devices
 from nautobot_netbox_importer.generator import SourceAdapter, SourceDataGenerator, SourceRecord
 from nautobot_netbox_importer.summary import Pathable
 
 for _name in (
     "base",
+    "cables",
     "circuits",
     "content_types",
     "custom_fields",
@@ -52,6 +54,7 @@ class NetBoxImporterOptions(NamedTuple):
     deduplicate_ipam: bool = False
     fix_powerfeed_locations: bool = False
     sitegroup_parent_always_region: bool = False
+    create_missing_cable_terminations: bool = False
     tag_issues: bool = False
     unrack_zero_uheight_devices: bool = True
     save_json_summary_path: str = ""
@@ -93,10 +96,15 @@ class NetBoxAdapter(SourceAdapter):
     def load(self) -> None:
         """Load data from NetBox."""
         self.import_data()
+
         if self.options.fix_powerfeed_locations:
             fix_power_feed_locations(self)
+
         if self.options.unrack_zero_uheight_devices:
             unrack_zero_uheight_devices(self)
+
+        if self.options.create_missing_cable_terminations:
+            create_missing_cable_terminations(self)
 
         self.post_load()
 

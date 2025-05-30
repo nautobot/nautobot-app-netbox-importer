@@ -1,19 +1,55 @@
 [
 {
   "model": "dcim.locationtype",
+  "pk": "22004273-2182-50fd-b410-5e152ed9431a",
+  "fields": {
+    "created": "2025-05-30T07:32:54.132Z",
+    "last_updated": "2025-05-30T07:32:54.132Z",
+    "_custom_field_data": {},
+    "parent": "8fceb641-4563-5da8-9004-963f9ed1965a",
+    "name": "Location",
+    "description": "",
+    "nestable": true,
+    "content_types": [
+      74,
+      51,
+      78
+    ]
+  }
+},
+{
+  "model": "dcim.locationtype",
+  "pk": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+  "fields": {
+    "created": "2025-05-30T07:32:54.134Z",
+    "last_updated": "2025-05-30T07:32:54.134Z",
+    "_custom_field_data": {},
+    "parent": null,
+    "name": "Region",
+    "description": "",
+    "nestable": true,
+    "content_types": [
+      73
+    ]
+  }
+},
+{
+  "model": "dcim.locationtype",
   "pk": "8fceb641-4563-5da8-9004-963f9ed1965a",
   "fields": {
-    "created": "2025-05-29T08:09:54.332Z",
-    "last_updated": "2025-05-29T08:09:54.332Z",
+    "created": "2025-05-30T07:32:54.127Z",
+    "last_updated": "2025-05-30T07:32:54.127Z",
     "_custom_field_data": {},
     "parent": "6003e66c-d3f2-5a36-9c06-5ee450898936",
     "name": "Site",
     "description": "",
     "nestable": false,
     "content_types": [
-      123,
-      74,
       51,
+      27,
+      73,
+      74,
+      123,
       78
     ]
   }

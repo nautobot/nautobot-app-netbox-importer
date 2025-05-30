@@ -26,11 +26,13 @@ second_pass_used: 45
 created: 45
 imported: 45
 - circuits.circuittype -----------------------------------------------------------------------------
+pre_cached: 1
 first_pass_used: 4
 second_pass_used: 4
 created: 4
 imported: 4
 - circuits.provider --------------------------------------------------------------------------------
+pre_cached: 1
 first_pass_used: 9
 second_pass_used: 9
 created: 9
@@ -550,7 +552,7 @@ color => value_importer => color (CharField)
 created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 id => uid_from_data => id (UUIDField)
-label => value_importer => label (CharField)
+label => cable_label_importer => label (CharField)
 last_updated => Disabled with reason: Last updated field is updated with each write
 length => integer_importer => length (PositiveSmallIntegerField)
 length_unit => choice_importer => length_unit (CharField)
