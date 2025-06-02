@@ -63,16 +63,16 @@ The first data iteration constructs the wrapping structure, which includes:
 
 - `SourceAdapter` with all source model `adapter.wrappers`.
     - The `SourceAdapter` manages `SourceModelWrapper` and `NautobotModelWrapper` instances.
-- A `SourceModelWrapper` for each source content type, with `source_wrapper.fields` detailing how to import the source data.
+- A `SourceModelWrapper` for each source content type, with `fields` detailing how to import the source data.
     - Each `SourceModelWrapper` instance corresponds to a single `NautobotModelWrapper` instance.
 - A `NautobotModelWrapper` for each Nautobot content type, detailing `nautobot_wrapper.fields` and types, aiding in constructing the `DiffSyncModel` instances.
     - A single `NautobotModelWrapper` instance can be referenced by multiple `SourceModelWrapper` instances.
 
-During this phase, all non-defined but present source fields are appended to the `source_wrapper.fields`, focusing on field names, not values.
+During this phase, all non-defined but present source fields are appended to the `SourceModelWrapper.fields`, focusing on field names, not values.
 
 ### Creating Source Importers
 
-Convert each `source_wrapper.fields` item into a callable based on previously-established field definitions. The callables convert the source data into the `DiffSyncModel` constructor's expected structure.
+Convert each `SourceModelWrapper.fields` item into a callable based on previously-established field definitions. The callables convert the source data into the `DiffSyncModel` constructor's expected structure.
 
 In this stage, the structure described in the previous section is enhanced.
 

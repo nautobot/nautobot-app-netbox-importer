@@ -40,6 +40,17 @@ invoke unittest \
     --pattern=3_7_custom
 ```
 
+### Debugging Tests
+
+Clean up the environment:
+
+!!! Warning
+    This will remove all data from the Nautobot database, so make sure you have a backup if needed.
+
+```shell
+invoke destroy
+```
+
 To run the import to be able to check data in Nautobot UI:
 
 ```shell
@@ -49,5 +60,37 @@ invoke import-netbox \
     --deduplicate-ipam \
     --create-missing-cable-terminations \
     --sitegroup-parent-always-region \
-    --no-dry-run
+    --no-dry-run \
+    &> var/import-1.log
 ```
+
+Now it's possible to examine Nautobot UI to verify that the import is working as expected.
+
+Strip ANSI codes from the log file:
+
+```shell
+cat var/import-1.log | ansifilter > var/import-1-filtered.txt
+```
+
+Run the second import to verify that the data is consistent:
+
+!!! Note
+    We are not storing data to Nautobot (removed `--no-dry-run` option) in this case to be able to re-run this step multiple times.
+
+```shell
+invoke import-netbox \
+    --test-input=2.4/3.7.custom \
+    --bypass-data-validation \
+    --deduplicate-ipam \
+    --create-missing-cable-terminations \
+    --sitegroup-parent-always-region \
+    &> var/import-2.log
+```
+
+Strip ANSI codes from the log file:
+
+```shell
+cat var/import-2.log | ansifilter > var/import-2-filtered.txt
+```
+
+Now it's possible to examine logs to verify that the import is working as expected.

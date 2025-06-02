@@ -1,0 +1,1747 @@
+* Import Summary: **********************************************************************************
+= DiffSync Summary: ================================================================================
+create: 5916
+update: 0
+delete: 0
+no-change: 0
+skip: 156
+= Source Stats: ====================================================================================
+- auth.permission ----------------------------------------------------------------------------------
+first_pass_used: 621
+- circuits.circuit ---------------------------------------------------------------------------------
+first_pass_used: 29
+second_pass_used: 29
+created: 29
+imported: 29
+- circuits.circuittermination ----------------------------------------------------------------------
+first_pass_used: 45
+second_pass_used: 45
+created: 45
+imported: 45
+- circuits.circuittype -----------------------------------------------------------------------------
+pre_cached: 1
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- circuits.provider --------------------------------------------------------------------------------
+pre_cached: 1
+first_pass_used: 9
+second_pass_used: 9
+created: 9
+imported: 9
+- circuits.providernetwork -------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- contenttypes.contenttype -------------------------------------------------------------------------
+first_pass_used: 156
+second_pass_used: 156
+created: 156
+imported: 156
+- core.job -----------------------------------------------------------------------------------------
+first_pass_used: 2
+- dcim.cable ---------------------------------------------------------------------------------------
+first_pass_used: 108
+second_pass_used: 108
+created: 108
+imported: 108
+- dcim.cablepath -----------------------------------------------------------------------------------
+first_pass_used: 154
+- dcim.cabletermination ----------------------------------------------------------------------------
+first_pass_used: 216
+second_pass_used: 216
+imported: 216
+- dcim.consoleport ---------------------------------------------------------------------------------
+first_pass_used: 41
+second_pass_used: 41
+created: 41
+imported: 41
+- dcim.consoleporttemplate -------------------------------------------------------------------------
+first_pass_used: 11
+second_pass_used: 11
+created: 11
+imported: 11
+- dcim.device --------------------------------------------------------------------------------------
+first_pass_used: 72
+second_pass_used: 72
+created: 72
+imported: 72
+- dcim.devicebay -----------------------------------------------------------------------------------
+first_pass_used: 14
+second_pass_used: 14
+created: 14
+imported: 14
+- dcim.devicebaytemplate ---------------------------------------------------------------------------
+first_pass_used: 14
+second_pass_used: 14
+created: 14
+imported: 14
+- dcim.devicerole ----------------------------------------------------------------------------------
+first_pass_used: 9
+second_pass_used: 9
+created: 9
+imported: 9
+- dcim.devicetype ----------------------------------------------------------------------------------
+pre_cached: 1
+first_pass_used: 14
+second_pass_used: 14
+created: 15
+imported: 15
+imported_from_cache: 1
+- dcim.frontport -----------------------------------------------------------------------------------
+first_pass_used: 912
+second_pass_used: 912
+created: 912
+imported: 912
+- dcim.frontporttemplate ---------------------------------------------------------------------------
+first_pass_used: 120
+second_pass_used: 120
+created: 120
+imported: 120
+- dcim.interface -----------------------------------------------------------------------------------
+first_pass_used: 1586
+second_pass_used: 1586
+created: 1586
+imported: 1586
+- dcim.interfacetemplate ---------------------------------------------------------------------------
+first_pass_used: 300
+second_pass_used: 300
+created: 300
+imported: 300
+- dcim.location ------------------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- dcim.locationtype --------------------------------------------------------------------------------
+pre_cached: 3
+imported: 3
+imported_from_cache: 3
+created: 3
+- dcim.manufacturer --------------------------------------------------------------------------------
+pre_cached: 1
+first_pass_used: 14
+second_pass_used: 14
+created: 15
+imported: 15
+imported_from_cache: 1
+- dcim.module --------------------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- dcim.modulebay -----------------------------------------------------------------------------------
+first_pass_used: 28
+second_pass_used: 28
+created: 28
+imported: 28
+- dcim.modulebaytemplate ---------------------------------------------------------------------------
+first_pass_used: 14
+second_pass_used: 14
+created: 14
+imported: 14
+- dcim.moduletype ----------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- dcim.platform ------------------------------------------------------------------------------------
+first_pass_used: 3
+second_pass_used: 3
+created: 3
+imported: 3
+- dcim.powerfeed -----------------------------------------------------------------------------------
+first_pass_used: 48
+second_pass_used: 48
+created: 48
+imported: 48
+- dcim.poweroutlet ---------------------------------------------------------------------------------
+first_pass_used: 104
+second_pass_used: 104
+created: 104
+imported: 104
+- dcim.poweroutlettemplate -------------------------------------------------------------------------
+first_pass_used: 8
+second_pass_used: 8
+created: 8
+imported: 8
+- dcim.powerpanel ----------------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- dcim.powerport -----------------------------------------------------------------------------------
+first_pass_used: 75
+second_pass_used: 75
+created: 75
+imported: 75
+- dcim.powerporttemplate ---------------------------------------------------------------------------
+first_pass_used: 26
+second_pass_used: 26
+created: 26
+imported: 26
+- dcim.rack ----------------------------------------------------------------------------------------
+first_pass_used: 42
+second_pass_used: 42
+created: 42
+imported: 42
+- dcim.rackreservation -----------------------------------------------------------------------------
+first_pass_used: 2
+second_pass_used: 2
+created: 2
+imported: 2
+- dcim.rackrole ------------------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- dcim.rearport ------------------------------------------------------------------------------------
+first_pass_used: 630
+second_pass_used: 630
+created: 630
+imported: 630
+- dcim.rearporttemplate ----------------------------------------------------------------------------
+first_pass_used: 73
+second_pass_used: 73
+created: 73
+imported: 73
+- dcim.region --------------------------------------------------------------------------------------
+first_pass_used: 67
+second_pass_used: 67
+created: 67
+imported: 67
+- dcim.site ----------------------------------------------------------------------------------------
+first_pass_used: 24
+second_pass_used: 24
+created: 24
+imported: 24
+- dcim.sitegroup -----------------------------------------------------------------------------------
+first_pass_used: 3
+second_pass_used: 3
+created: 3
+imported: 3
+- dcim.virtualchassis ------------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- extras.customfield -------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- extras.dashboard ---------------------------------------------------------------------------------
+first_pass_used: 1
+- extras.status ------------------------------------------------------------------------------------
+pre_cached: 6
+imported: 6
+imported_from_cache: 6
+created: 6
+- extras.tag ---------------------------------------------------------------------------------------
+first_pass_used: 26
+second_pass_used: 26
+created: 26
+imported: 26
+- extras.taggeditem --------------------------------------------------------------------------------
+first_pass_used: 72
+second_pass_used: 72
+created: 72
+imported: 72
+- ipam.aggregate -----------------------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- ipam.asn -----------------------------------------------------------------------------------------
+first_pass_used: 5
+- ipam.ipaddress -----------------------------------------------------------------------------------
+first_pass_used: 180
+second_pass_used: 180
+created: 180
+imported: 180
+- ipam.iprange -------------------------------------------------------------------------------------
+first_pass_used: 4
+- ipam.prefix --------------------------------------------------------------------------------------
+first_pass_used: 90
+second_pass_used: 90
+created: 90
+imported: 90
+- ipam.rir -----------------------------------------------------------------------------------------
+first_pass_used: 8
+second_pass_used: 8
+created: 8
+imported: 8
+- ipam.role ----------------------------------------------------------------------------------------
+first_pass_used: 5
+second_pass_used: 5
+created: 5
+imported: 5
+- ipam.routetarget ---------------------------------------------------------------------------------
+first_pass_used: 12
+second_pass_used: 12
+created: 12
+imported: 12
+- ipam.vlan ----------------------------------------------------------------------------------------
+first_pass_used: 63
+second_pass_used: 63
+created: 63
+imported: 63
+- ipam.vlangroup -----------------------------------------------------------------------------------
+first_pass_used: 7
+second_pass_used: 7
+created: 7
+imported: 7
+- ipam.vrf -----------------------------------------------------------------------------------------
+first_pass_used: 6
+second_pass_used: 6
+created: 6
+imported: 6
+- tenancy.contact ----------------------------------------------------------------------------------
+first_pass_used: 3
+- tenancy.contactassignment ------------------------------------------------------------------------
+first_pass_used: 3
+- tenancy.contactgroup -----------------------------------------------------------------------------
+first_pass_used: 2
+- tenancy.contactrole ------------------------------------------------------------------------------
+first_pass_used: 3
+- tenancy.tenant -----------------------------------------------------------------------------------
+first_pass_used: 11
+second_pass_used: 11
+created: 11
+imported: 11
+- tenancy.tenantgroup ------------------------------------------------------------------------------
+first_pass_used: 1
+second_pass_used: 1
+created: 1
+imported: 1
+- users.group --------------------------------------------------------------------------------------
+first_pass_used: 1
+- users.user ---------------------------------------------------------------------------------------
+first_pass_used: 6
+second_pass_used: 6
+created: 6
+imported: 6
+- users.userconfig ---------------------------------------------------------------------------------
+first_pass_used: 6
+- virtualization.cluster ---------------------------------------------------------------------------
+first_pass_used: 32
+second_pass_used: 32
+created: 32
+imported: 32
+- virtualization.clustergroup ----------------------------------------------------------------------
+first_pass_used: 4
+second_pass_used: 4
+created: 4
+imported: 4
+- virtualization.clustertype -----------------------------------------------------------------------
+first_pass_used: 6
+second_pass_used: 6
+created: 6
+imported: 6
+- virtualization.virtualmachine --------------------------------------------------------------------
+first_pass_used: 180
+second_pass_used: 180
+created: 180
+imported: 180
+- virtualization.vminterface -----------------------------------------------------------------------
+first_pass_used: 720
+second_pass_used: 720
+created: 720
+imported: 720
+= Nautobot Stats: ==================================================================================
+- circuits.circuit ---------------------------------------------------------------------------------
+source_created: 29
+created: 29
+- circuits.circuittermination ----------------------------------------------------------------------
+source_created: 45
+created: 45
+issues: 45
+- circuits.circuittype -----------------------------------------------------------------------------
+source_created: 4
+created: 4
+- circuits.provider --------------------------------------------------------------------------------
+source_created: 9
+created: 9
+- circuits.providernetwork -------------------------------------------------------------------------
+source_created: 1
+created: 1
+- contenttypes.contenttype -------------------------------------------------------------------------
+source_ignored: 156
+- dcim.cable ---------------------------------------------------------------------------------------
+source_created: 108
+created: 108
+- dcim.consoleport ---------------------------------------------------------------------------------
+source_created: 41
+created: 41
+- dcim.consoleporttemplate -------------------------------------------------------------------------
+source_created: 11
+created: 11
+- dcim.device --------------------------------------------------------------------------------------
+source_created: 72
+created: 72
+- dcim.devicebay -----------------------------------------------------------------------------------
+source_created: 14
+created: 14
+- dcim.devicebaytemplate ---------------------------------------------------------------------------
+source_created: 14
+created: 14
+- dcim.devicetype ----------------------------------------------------------------------------------
+source_created: 15
+created: 15
+- dcim.frontport -----------------------------------------------------------------------------------
+source_created: 912
+created: 912
+- dcim.frontporttemplate ---------------------------------------------------------------------------
+source_created: 120
+created: 120
+- dcim.interface -----------------------------------------------------------------------------------
+source_created: 1586
+created: 1586
+issues: 128
+- dcim.interfacetemplate ---------------------------------------------------------------------------
+source_created: 300
+created: 300
+issues: 32
+- dcim.location ------------------------------------------------------------------------------------
+source_created: 95
+created: 95
+- dcim.locationtype --------------------------------------------------------------------------------
+source_created: 6
+created: 6
+- dcim.manufacturer --------------------------------------------------------------------------------
+source_created: 15
+created: 15
+- dcim.module --------------------------------------------------------------------------------------
+source_created: 4
+created: 4
+issues: 4
+- dcim.modulebay -----------------------------------------------------------------------------------
+source_created: 28
+created: 28
+issues: 28
+- dcim.modulebaytemplate ---------------------------------------------------------------------------
+source_created: 14
+created: 14
+- dcim.moduletype ----------------------------------------------------------------------------------
+source_created: 1
+created: 1
+- dcim.platform ------------------------------------------------------------------------------------
+source_created: 3
+created: 3
+- dcim.powerfeed -----------------------------------------------------------------------------------
+source_created: 48
+created: 48
+issues: 48
+- dcim.poweroutlet ---------------------------------------------------------------------------------
+source_created: 104
+created: 104
+- dcim.poweroutlettemplate -------------------------------------------------------------------------
+source_created: 8
+created: 8
+- dcim.powerpanel ----------------------------------------------------------------------------------
+source_created: 4
+created: 4
+- dcim.powerport -----------------------------------------------------------------------------------
+source_created: 75
+created: 75
+- dcim.powerporttemplate ---------------------------------------------------------------------------
+source_created: 26
+created: 26
+- dcim.rack ----------------------------------------------------------------------------------------
+source_created: 42
+created: 42
+- dcim.rackreservation -----------------------------------------------------------------------------
+source_created: 2
+created: 2
+- dcim.rearport ------------------------------------------------------------------------------------
+source_created: 630
+created: 630
+- dcim.rearporttemplate ----------------------------------------------------------------------------
+source_created: 73
+created: 73
+- dcim.virtualchassis ------------------------------------------------------------------------------
+source_created: 4
+created: 4
+- extras.customfield -------------------------------------------------------------------------------
+source_created: 1
+created: 1
+- extras.role --------------------------------------------------------------------------------------
+source_created: 18
+created: 18
+- extras.status ------------------------------------------------------------------------------------
+source_created: 6
+created: 6
+- extras.tag ---------------------------------------------------------------------------------------
+source_created: 26
+created: 26
+- extras.taggeditem --------------------------------------------------------------------------------
+source_created: 72
+created: 72
+- ipam.ipaddress -----------------------------------------------------------------------------------
+source_created: 180
+created: 180
+- ipam.prefix --------------------------------------------------------------------------------------
+source_created: 94
+created: 94
+- ipam.rir -----------------------------------------------------------------------------------------
+source_created: 8
+created: 8
+- ipam.routetarget ---------------------------------------------------------------------------------
+source_created: 12
+created: 12
+- ipam.vlan ----------------------------------------------------------------------------------------
+source_created: 63
+created: 63
+- ipam.vlangroup -----------------------------------------------------------------------------------
+source_created: 7
+created: 7
+- ipam.vrf -----------------------------------------------------------------------------------------
+source_created: 6
+created: 6
+- tenancy.tenant -----------------------------------------------------------------------------------
+source_created: 11
+created: 11
+- tenancy.tenantgroup ------------------------------------------------------------------------------
+source_created: 1
+created: 1
+- users.user ---------------------------------------------------------------------------------------
+source_created: 6
+created: 6
+- virtualization.cluster ---------------------------------------------------------------------------
+source_created: 32
+created: 32
+- virtualization.clustergroup ----------------------------------------------------------------------
+source_created: 4
+created: 4
+- virtualization.clustertype -----------------------------------------------------------------------
+source_created: 6
+created: 6
+- virtualization.virtualmachine --------------------------------------------------------------------
+source_created: 180
+created: 180
+- virtualization.vminterface -----------------------------------------------------------------------
+source_created: 720
+created: 720
+= Content Types Mapping Deviations: ================================================================
+  Mapping deviations from source content type to Nautobot content type
+dcim.cabletermination EXTENDS dcim.cable => dcim.cable
+dcim.devicerole => extras.role
+dcim.rackrole => extras.role
+dcim.region => dcim.location
+dcim.site => dcim.location
+dcim.sitegroup => dcim.locationtype
+ipam.aggregate => ipam.prefix
+ipam.role => extras.role
+= Content Types Back Mapping: ======================================================================
+  Back mapping deviations from Nautobot content type to the source content type
+dcim.cable => dcim.cabletermination
+extras.role => Ambiguous
+dcim.location => Ambiguous
+dcim.locationtype => dcim.sitegroup
+ipam.prefix => ipam.aggregate
+= Importer issues: =================================================================================
+- circuits.circuittermination ----------------------------------------------------------------------
+023d1166-2b82-5567-9413-4a67f19bc01e | circuits.circuittermination:46 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+07084e04-d35d-5490-830f-06fed35446b2 | circuits.circuittermination:54 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+0bd0ca92-4939-5dec-a701-7ff657ab2dba | circuits.circuittermination:40 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+0c5a9fd7-2a35-56fb-84dd-04a8883573cd | circuits.circuittermination:15 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+127e0d2d-2162-5709-8cd7-07f68916ab05 | circuits.circuittermination:3 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+1d8068f3-d9be-5412-92f1-a8d9938fcfa4 | circuits.circuittermination:32 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+231e3dab-ca69-5a35-9f5a-c5aaafde04ab | circuits.circuittermination:39 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+2538071e-55fb-5df3-8cd7-8c3cf230882a | circuits.circuittermination:2 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+293d1531-1ecb-53a6-b059-fe8fcd5e3b7e | circuits.circuittermination:28 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+39d9a3c9-f5c6-5911-b553-9a25655ed6a0 | circuits.circuittermination:4 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+48ba2897-54d6-5466-8ce1-85171c95f24a | circuits.circuittermination:23 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+52d3e1b3-be3a-5fb0-88cb-6b537325402a | circuits.circuittermination:45 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+55719b73-6bec-5a60-a5f7-35107c073c89 | circuits.circuittermination:49 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+5a3bb1b9-9531-5c8c-ad2e-edf129c6289f | circuits.circuittermination:34 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+757cd644-e4d5-547b-9b6e-12d3b8c26a52 | circuits.circuittermination:26 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+76778cb6-5778-5b1c-a532-4be79f243f48 | circuits.circuittermination:8 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+79810c6d-add5-5a9f-bc8b-6c1e2a900d70 | circuits.circuittermination:6 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+7f76c883-d7fd-543a-87e5-06763edd801e | circuits.circuittermination:38 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+8288ec00-d58d-53c3-ad87-fd81ec66e817 | circuits.circuittermination:29 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+86a8df03-c441-5af8-9566-5b44bec1b4b9 | circuits.circuittermination:14 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+8cba5ecd-f6f5-5e4a-9ed0-7c523c41370f | circuits.circuittermination:42 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+8f43033b-d845-54fc-a786-507fa2c7da45 | circuits.circuittermination:47 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+913ad25c-96c3-5e48-9a8a-62ec9ee64dc5 | circuits.circuittermination:35 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+96175cfc-d219-5383-ba15-b9e44d6888f8 | circuits.circuittermination:44 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+9a5afb37-6b4f-5a29-aef7-d1b2faf3810f | circuits.circuittermination:30 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+9b657ab6-9fba-55a8-9df2-2253c6f198e0 | circuits.circuittermination:52 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+a3139902-b6f4-582f-af32-6e21c2c9e691 | circuits.circuittermination:25 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+a82c9a9a-678f-5c23-a73d-bb16b30eb407 | circuits.circuittermination:1 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+b653d70d-a7d8-56ae-8dcd-24f660ad85a8 | circuits.circuittermination:50 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+b89a52f7-e947-59d7-8beb-d9b794f9955d | circuits.circuittermination:36 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+baac681e-b719-5847-8d45-1f4496dddaea | circuits.circuittermination:37 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+c201bbbc-ef3f-521f-ab50-77005c5547cb | circuits.circuittermination:31 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+c3c0ac7b-187a-5363-924d-11428ba026c1 | circuits.circuittermination:13 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+c5e8e593-6283-57df-a3f9-602421ef6ff9 | circuits.circuittermination:51 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+c6fa35bb-17a5-595d-96ba-1b62e154e72c | circuits.circuittermination:33 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+c75c9ab0-42ea-5ec5-91be-1faa2028604e | circuits.circuittermination:53 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+d66265ce-bd84-5b1b-b3ad-99cbe5a378e4 | circuits.circuittermination:41 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+ded67bdf-1285-5798-8037-153132a5920b | circuits.circuittermination:5 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+f2575b41-c704-5d89-b4d4-db535083ad79 | circuits.circuittermination:12 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+f321fa5c-5d92-517e-b176-7d0af3a5e5f0 | circuits.circuittermination:24 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+f58c25f8-c672-5e2c-9c02-ed65f78eff4c | circuits.circuittermination:43 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+f76b03e6-a853-51a6-b8f2-20c86bc424e7 | circuits.circuittermination:48 | ValidationError | "Termination A: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+f7de4dae-a236-5547-b5cd-6193cfb3e93a | circuits.circuittermination:27 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+fed7cc00-4eae-5b48-a493-096372bb4f6c | circuits.circuittermination:11 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+ff725522-e836-5ccb-a5b2-02267d2f6ec2 | circuits.circuittermination:10 | ValidationError | "Termination Z: None" | "['A circuit termination must attach to a location, a provider network or a cloud network.']"
+- dcim.interface -----------------------------------------------------------------------------------
+0331d34f-7c71-5098-b631-87d855811cde | dcim.interface:1572 | ValidationError | "xe-1/2/1" | "['Only one of device or module must be set']"
+05060758-edaf-5da7-89ce-d77c202fe147 | dcim.interface:1036 | ValidationError | "xe-0/2/2" | "['Only one of device or module must be set']"
+07b0b872-f902-5199-bbf9-bcaf1f06c975 | dcim.interface:1041 | ValidationError | "xe-0/2/7" | "['Only one of device or module must be set']"
+0834d550-8294-5609-9cda-374bd562555e | dcim.interface:1578 | ValidationError | "xe-1/2/7" | "['Only one of device or module must be set']"
+0975ee63-9797-5fc1-9eb9-38b17626f703 | dcim.interface:1077 | ValidationError | "xe-0/1/3" | "['Only one of device or module must be set']"
+0d617ece-2b7f-51b9-8441-9500d9543c18 | dcim.interface:1601 | ValidationError | "xe-1/1/6" | "['Only one of device or module must be set']"
+0ed24948-40be-5e1f-b4dc-ec1c69b0efa7 | dcim.interface:1585 | ValidationError | "xe-1/3/6" | "['Only one of device or module must be set']"
+0f9f17dc-7b5b-5a87-a196-722fdb074559 | dcim.interface:1022 | ValidationError | "xe-0/0/4" | "['Only one of device or module must be set']"
+10b73a4e-430f-5934-9f5f-8e21ad955410 | dcim.interface:1579 | ValidationError | "xe-1/3/0" | "['Only one of device or module must be set']"
+11f68f76-47d7-5f7b-8da1-301633911d51 | dcim.interface:1587 | ValidationError | "xe-1/0/0" | "['Only one of device or module must be set']"
+12e9671d-86bd-5884-b9d4-99b14d8947fd | dcim.interface:1584 | ValidationError | "xe-1/3/5" | "['Only one of device or module must be set']"
+13303abf-0873-5a2e-9333-c6d6798510b6 | dcim.interface:1603 | ValidationError | "xe-1/2/0" | "['Only one of device or module must be set']"
+1700e14e-4506-522a-bdc7-317400958f34 | dcim.interface:1027 | ValidationError | "xe-0/1/1" | "['Only one of device or module must be set']"
+18f3b4d4-05ef-5336-83ee-ce0de0c1d1d1 | dcim.interface:1590 | ValidationError | "xe-1/0/3" | "['Only one of device or module must be set']"
+19a3492e-d31b-5135-97f9-7b6ab77a9232 | dcim.interface:1073 | ValidationError | "xe-0/0/7" | "['Only one of device or module must be set']"
+19b59892-9e58-5371-8096-7def292a4035 | dcim.interface:1580 | ValidationError | "xe-1/3/1" | "['Only one of device or module must be set']"
+1c23b890-4818-50da-8f7a-f91b546bfb0b | dcim.interface:1586 | ValidationError | "xe-1/3/7" | "['Only one of device or module must be set']"
+1d8f0369-e4f9-50be-b909-e719ffa5f1ee | dcim.interface:1583 | ValidationError | "xe-1/3/4" | "['Only one of device or module must be set']"
+222b7d8a-898c-56eb-9711-622154f8d24a | dcim.interface:1046 | ValidationError | "xe-0/3/4" | "['Only one of device or module must be set']"
+25bcdb63-8982-55c1-b7a0-25cf0921ee13 | dcim.interface:1598 | ValidationError | "xe-1/1/3" | "['Only one of device or module must be set']"
+2803bd5a-e005-58f3-b4ab-5df3f10718dc | dcim.interface:1608 | ValidationError | "xe-1/2/5" | "['Only one of device or module must be set']"
+28bfb39d-883b-5aeb-b229-65ce9918748d | dcim.interface:1086 | ValidationError | "xe-0/2/4" | "['Only one of device or module must be set']"
+2a670f61-0326-5dde-9ecd-960dd3ea05f3 | dcim.interface:1557 | ValidationError | "xe-1/0/2" | "['Only one of device or module must be set']"
+2b8830d3-dfaa-5bf4-aa27-2764de4f3cdf | dcim.interface:1567 | ValidationError | "xe-1/1/4" | "['Only one of device or module must be set']"
+2bdb3288-874b-50a1-96b0-8f2c25d548a7 | dcim.interface:1078 | ValidationError | "xe-0/1/4" | "['Only one of device or module must be set']"
+2f0f2f2f-d785-5645-9c24-131c59587777 | dcim.interface:1560 | ValidationError | "xe-1/0/5" | "['Only one of device or module must be set']"
+2f263577-43db-58f1-a768-68025758da00 | dcim.interface:1574 | ValidationError | "xe-1/2/3" | "['Only one of device or module must be set']"
+313f65b7-52e9-5aa6-89be-477420e9548f | dcim.interface:1067 | ValidationError | "xe-0/0/1" | "['Only one of device or module must be set']"
+31adeb33-5761-5bf1-998a-f0afddf8b4ed | dcim.interface:1038 | ValidationError | "xe-0/2/4" | "['Only one of device or module must be set']"
+346db04c-9456-5c86-bda7-aa379d332078 | dcim.interface:1075 | ValidationError | "xe-0/1/1" | "['Only one of device or module must be set']"
+34e2d7c0-519f-5fbe-b507-42db5d453b23 | dcim.interface:1048 | ValidationError | "xe-0/3/6" | "['Only one of device or module must be set']"
+3937d3c0-0656-57c4-881d-f2a56b611140 | dcim.interface:1575 | ValidationError | "xe-1/2/4" | "['Only one of device or module must be set']"
+3e166691-80af-5918-b431-37b722a5aea4 | dcim.interface:1047 | ValidationError | "xe-0/3/5" | "['Only one of device or module must be set']"
+4399e929-52b7-5f0a-ad1d-bec396893cc5 | dcim.interface:1080 | ValidationError | "xe-0/1/6" | "['Only one of device or module must be set']"
+44cff28d-5806-560f-bdbc-5b19e1e3b4f1 | dcim.interface:1089 | ValidationError | "xe-0/2/7" | "['Only one of device or module must be set']"
+4816e38f-3e46-5ffc-a63c-7ce614c0bbde | dcim.interface:1614 | ValidationError | "xe-1/3/3" | "['Only one of device or module must be set']"
+4941772c-a2ce-5d2e-a974-1b075c725c3b | dcim.interface:1573 | ValidationError | "xe-1/2/2" | "['Only one of device or module must be set']"
+49e77d84-7cf0-5664-b80c-0689588accba | dcim.interface:1019 | ValidationError | "xe-0/0/1" | "['Only one of device or module must be set']"
+4ad67029-62e1-5010-b7d8-df4b979b7971 | dcim.interface:1592 | ValidationError | "xe-1/0/5" | "['Only one of device or module must be set']"
+4aefe12c-a7a1-5ec3-a144-5968838cf368 | dcim.interface:1095 | ValidationError | "xe-0/3/5" | "['Only one of device or module must be set']"
+4ca4fe4e-6633-5fcb-b294-4212527901ae | dcim.interface:1597 | ValidationError | "xe-1/1/2" | "['Only one of device or module must be set']"
+4fcd26fb-25c5-5fe8-b02a-4d9f15131db5 | dcim.interface:1562 | ValidationError | "xe-1/0/7" | "['Only one of device or module must be set']"
+50a11a18-446a-59dd-ad6e-823c5f2309bf | dcim.interface:1615 | ValidationError | "xe-1/3/4" | "['Only one of device or module must be set']"
+536d1e0d-bed7-57df-ad54-034215ab3f95 | dcim.interface:1097 | ValidationError | "xe-0/3/7" | "['Only one of device or module must be set']"
+53ee616e-4d3f-5119-b8fb-1b5be7d9dc80 | dcim.interface:1096 | ValidationError | "xe-0/3/6" | "['Only one of device or module must be set']"
+54a600b1-6db0-5c3c-8cdd-c03f7046dee7 | dcim.interface:1564 | ValidationError | "xe-1/1/1" | "['Only one of device or module must be set']"
+54afe6bf-bc94-5937-81f9-5c9adeeac96b | dcim.interface:1581 | ValidationError | "xe-1/3/2" | "['Only one of device or module must be set']"
+57b61a3c-0d03-5198-99b0-35ff8a1d9570 | dcim.interface:1591 | ValidationError | "xe-1/0/4" | "['Only one of device or module must be set']"
+5c739c3f-d3c4-58f4-a451-72396ad0f2e4 | dcim.interface:1594 | ValidationError | "xe-1/0/7" | "['Only one of device or module must be set']"
+5d61ceef-a2f4-5759-9a2e-c7412dc60549 | dcim.interface:1024 | ValidationError | "xe-0/0/6" | "['Only one of device or module must be set']"
+5f491aff-9416-59b2-98e0-98063c7cbc94 | dcim.interface:1020 | ValidationError | "xe-0/0/2" | "['Only one of device or module must be set']"
+611cfaaa-bf57-5ca0-a6f1-e1d6855e5223 | dcim.interface:1595 | ValidationError | "xe-1/1/0" | "['Only one of device or module must be set']"
+65544adf-1d11-57fe-8e61-7a35c9105ab0 | dcim.interface:1611 | ValidationError | "xe-1/3/0" | "['Only one of device or module must be set']"
+6668389c-d940-5ea8-a007-df87c25e46f4 | dcim.interface:1030 | ValidationError | "xe-0/1/4" | "['Only one of device or module must be set']"
+6c9068e6-6dd2-565f-bcd2-a586474be1b2 | dcim.interface:1082 | ValidationError | "xe-0/2/0" | "['Only one of device or module must be set']"
+6eaba960-f8c1-5ee5-aad1-9d9194ed4cc1 | dcim.interface:1558 | ValidationError | "xe-1/0/3" | "['Only one of device or module must be set']"
+70c96b0c-a17c-58c8-af2f-b1978cda3764 | dcim.interface:1571 | ValidationError | "xe-1/2/0" | "['Only one of device or module must be set']"
+73fd14a8-c162-51d0-b030-e00c342a43b3 | dcim.interface:1613 | ValidationError | "xe-1/3/2" | "['Only one of device or module must be set']"
+7429bffe-523d-52b8-9257-a986148d40d5 | dcim.interface:1555 | ValidationError | "xe-1/0/0" | "['Only one of device or module must be set']"
+75d4f6fd-fd27-5794-9388-743c26dc2df3 | dcim.interface:1033 | ValidationError | "xe-0/1/7" | "['Only one of device or module must be set']"
+76315e6e-7203-5f89-97a5-7c46f0482cfa | dcim.interface:1618 | ValidationError | "xe-1/3/7" | "['Only one of device or module must be set']"
+7869432c-5b1c-5b55-8530-9fa8614b2e9e | dcim.interface:1070 | ValidationError | "xe-0/0/4" | "['Only one of device or module must be set']"
+7a69c36f-7762-5988-9e2f-bd788ab8879d | dcim.interface:1029 | ValidationError | "xe-0/1/3" | "['Only one of device or module must be set']"
+820e3799-a6d2-5bc8-9c65-c5b33b4b2d9b | dcim.interface:1071 | ValidationError | "xe-0/0/5" | "['Only one of device or module must be set']"
+847475f9-6a27-51ef-a180-daaa72ef4cd4 | dcim.interface:1556 | ValidationError | "xe-1/0/1" | "['Only one of device or module must be set']"
+865666ed-a3bf-5294-970f-4a1ef051e83e | dcim.interface:1609 | ValidationError | "xe-1/2/6" | "['Only one of device or module must be set']"
+8668f5d4-3862-552f-8311-e66352de719d | dcim.interface:1079 | ValidationError | "xe-0/1/5" | "['Only one of device or module must be set']"
+868773d8-b9d0-54b7-919b-04d809bc1585 | dcim.interface:1607 | ValidationError | "xe-1/2/4" | "['Only one of device or module must be set']"
+8979c5b1-2117-5da9-ae13-c8fb98f2b5f2 | dcim.interface:1091 | ValidationError | "xe-0/3/1" | "['Only one of device or module must be set']"
+89dca6a6-feea-5d35-a9a8-ffdf6a8f1fde | dcim.interface:1600 | ValidationError | "xe-1/1/5" | "['Only one of device or module must be set']"
+8a1fe3fa-1751-5d07-aeee-e5217fcc22fc | dcim.interface:1090 | ValidationError | "xe-0/3/0" | "['Only one of device or module must be set']"
+8f13a8b3-a440-585b-bb3f-c0f6daac6c82 | dcim.interface:1605 | ValidationError | "xe-1/2/2" | "['Only one of device or module must be set']"
+8fbd3eb0-496c-575d-a226-8099687e9c0e | dcim.interface:1034 | ValidationError | "xe-0/2/0" | "['Only one of device or module must be set']"
+91d82f85-6196-59f5-a789-84a6964170fb | dcim.interface:1066 | ValidationError | "xe-0/0/0" | "['Only one of device or module must be set']"
+97a8414e-ecbb-513e-8f10-33cc388492d8 | dcim.interface:1042 | ValidationError | "xe-0/3/0" | "['Only one of device or module must be set']"
+9fcff219-d2ec-5ebf-bfdd-88bd5e2d7e13 | dcim.interface:1566 | ValidationError | "xe-1/1/3" | "['Only one of device or module must be set']"
+a3fa97cc-a95b-5b73-a107-7587dfeaa1ad | dcim.interface:1085 | ValidationError | "xe-0/2/3" | "['Only one of device or module must be set']"
+a4c70066-1b2d-5461-868e-aeab5d1e0595 | dcim.interface:1068 | ValidationError | "xe-0/0/2" | "['Only one of device or module must be set']"
+a6432606-0788-5562-81b8-48776011f76c | dcim.interface:1023 | ValidationError | "xe-0/0/5" | "['Only one of device or module must be set']"
+a64f7876-cb1d-52de-af98-f459b747f7a4 | dcim.interface:1569 | ValidationError | "xe-1/1/6" | "['Only one of device or module must be set']"
+aba178a8-4ff7-5b24-b846-129c376efd81 | dcim.interface:1025 | ValidationError | "xe-0/0/7" | "['Only one of device or module must be set']"
+ac40e7c2-dc86-55e2-bc03-6e8e7f88fa7f | dcim.interface:1092 | ValidationError | "xe-0/3/2" | "['Only one of device or module must be set']"
+ac87a928-496c-5881-b646-a4c83550ce4f | dcim.interface:1593 | ValidationError | "xe-1/0/6" | "['Only one of device or module must be set']"
+ad08c0f0-2735-59ca-a333-503778a5ffdf | dcim.interface:1561 | ValidationError | "xe-1/0/6" | "['Only one of device or module must be set']"
+ad3cb655-9b37-5e47-897c-41e0ceeb466f | dcim.interface:1021 | ValidationError | "xe-0/0/3" | "['Only one of device or module must be set']"
+ad7030ec-efb3-522b-bb15-f6f012e881f2 | dcim.interface:1606 | ValidationError | "xe-1/2/3" | "['Only one of device or module must be set']"
+b11753fc-5c15-54bd-8c45-6591395f22b2 | dcim.interface:1602 | ValidationError | "xe-1/1/7" | "['Only one of device or module must be set']"
+b133a9cc-17e1-5dbc-95e5-232eb594f074 | dcim.interface:1094 | ValidationError | "xe-0/3/4" | "['Only one of device or module must be set']"
+b134588c-9fe8-57ee-8bfe-724771f06f98 | dcim.interface:1565 | ValidationError | "xe-1/1/2" | "['Only one of device or module must be set']"
+b30dd517-d2be-5262-a5fd-f39eb3a88c9a | dcim.interface:1582 | ValidationError | "xe-1/3/3" | "['Only one of device or module must be set']"
+b40e200c-b2a0-5109-bd07-52433b56d8ae | dcim.interface:1081 | ValidationError | "xe-0/1/7" | "['Only one of device or module must be set']"
+b45946ae-6537-54ba-a93e-4337c97f2897 | dcim.interface:1617 | ValidationError | "xe-1/3/6" | "['Only one of device or module must be set']"
+b4ce748a-6879-51f2-9516-01bb64cc5498 | dcim.interface:1576 | ValidationError | "xe-1/2/5" | "['Only one of device or module must be set']"
+b56d8352-09c1-5625-be4f-091619ebcfe3 | dcim.interface:1049 | ValidationError | "xe-0/3/7" | "['Only one of device or module must be set']"
+bd578f4c-02be-5596-a2e0-fe570c93447c | dcim.interface:1083 | ValidationError | "xe-0/2/1" | "['Only one of device or module must be set']"
+c2fc7d0b-b7fb-51e7-a736-d32504f16051 | dcim.interface:1026 | ValidationError | "xe-0/1/0" | "['Only one of device or module must be set']"
+c383ca02-f9c0-5213-a2dd-7e28f42733e4 | dcim.interface:1018 | ValidationError | "xe-0/0/0" | "['Only one of device or module must be set']"
+c5a92157-634a-57a0-a091-61623c3c82db | dcim.interface:1588 | ValidationError | "xe-1/0/1" | "['Only one of device or module must be set']"
+c974c04f-56de-5711-a470-8201d23aa376 | dcim.interface:1076 | ValidationError | "xe-0/1/2" | "['Only one of device or module must be set']"
+cad3cfbe-9dd5-59b0-95a6-cce286edd78c | dcim.interface:1045 | ValidationError | "xe-0/3/3" | "['Only one of device or module must be set']"
+cb5b1536-b7b9-5307-a1c5-2f5acf0b237c | dcim.interface:1087 | ValidationError | "xe-0/2/5" | "['Only one of device or module must be set']"
+cc330d9f-aa81-5b54-8000-2d8c66e0dc84 | dcim.interface:1035 | ValidationError | "xe-0/2/1" | "['Only one of device or module must be set']"
+d0bc4803-5815-5969-8aef-2ca162fa3272 | dcim.interface:1084 | ValidationError | "xe-0/2/2" | "['Only one of device or module must be set']"
+d21bd30a-3551-558a-aa6f-b9bd3d94009d | dcim.interface:1072 | ValidationError | "xe-0/0/6" | "['Only one of device or module must be set']"
+d2db3b62-d438-57bd-86e8-ff0e239498b8 | dcim.interface:1031 | ValidationError | "xe-0/1/5" | "['Only one of device or module must be set']"
+d3cb09f2-5696-5c2c-87dc-a66ca417e4fa | dcim.interface:1570 | ValidationError | "xe-1/1/7" | "['Only one of device or module must be set']"
+d4a8caad-1ca7-54da-83f9-ee37e7d1f6d1 | dcim.interface:1037 | ValidationError | "xe-0/2/3" | "['Only one of device or module must be set']"
+dabe974a-5c1c-55a2-9332-0643ab5d7807 | dcim.interface:1596 | ValidationError | "xe-1/1/1" | "['Only one of device or module must be set']"
+dbb02aad-3fd9-5bb6-8fe5-0ae8ba38f78a | dcim.interface:1612 | ValidationError | "xe-1/3/1" | "['Only one of device or module must be set']"
+dc4a589d-521e-5777-bba5-7f04d4062254 | dcim.interface:1604 | ValidationError | "xe-1/2/1" | "['Only one of device or module must be set']"
+dc77bbf0-bc64-564b-8311-f6f856f12e71 | dcim.interface:1616 | ValidationError | "xe-1/3/5" | "['Only one of device or module must be set']"
+dccd9ed6-7611-5bc9-8a02-eda593f32e25 | dcim.interface:1069 | ValidationError | "xe-0/0/3" | "['Only one of device or module must be set']"
+e2220083-f73d-5e1d-9d29-151c3a5d018e | dcim.interface:1568 | ValidationError | "xe-1/1/5" | "['Only one of device or module must be set']"
+e3b18022-869d-5210-872e-4924ee70e233 | dcim.interface:1559 | ValidationError | "xe-1/0/4" | "['Only one of device or module must be set']"
+e7d71a48-9501-5fc8-9d67-7370d588deea | dcim.interface:1589 | ValidationError | "xe-1/0/2" | "['Only one of device or module must be set']"
+e80dc8e2-de3b-57b7-81e6-cd5fdb957d50 | dcim.interface:1043 | ValidationError | "xe-0/3/1" | "['Only one of device or module must be set']"
+e8134302-4c11-5258-a557-d8688f627695 | dcim.interface:1044 | ValidationError | "xe-0/3/2" | "['Only one of device or module must be set']"
+e929577f-601c-5b0e-85e7-f60fb1c14ae7 | dcim.interface:1610 | ValidationError | "xe-1/2/7" | "['Only one of device or module must be set']"
+ed3db5df-0b6a-5345-be5f-e21c3547a391 | dcim.interface:1599 | ValidationError | "xe-1/1/4" | "['Only one of device or module must be set']"
+ede0a62f-8692-5753-bf37-e83362c681ce | dcim.interface:1074 | ValidationError | "xe-0/1/0" | "['Only one of device or module must be set']"
+ef00f05c-05bc-5e07-ae12-170e65cec16b | dcim.interface:1088 | ValidationError | "xe-0/2/6" | "['Only one of device or module must be set']"
+f175603e-705d-586d-a731-b9c8b4bb65c2 | dcim.interface:1028 | ValidationError | "xe-0/1/2" | "['Only one of device or module must be set']"
+f45c333f-b6c2-57e4-8373-c82ee2e53d12 | dcim.interface:1040 | ValidationError | "xe-0/2/6" | "['Only one of device or module must be set']"
+f550d4e4-242b-5250-acce-22b416c24041 | dcim.interface:1577 | ValidationError | "xe-1/2/6" | "['Only one of device or module must be set']"
+f6a9c705-7864-56ff-823c-5f4e9fc53707 | dcim.interface:1032 | ValidationError | "xe-0/1/6" | "['Only one of device or module must be set']"
+f82e5dd3-1c00-54d1-b8dd-207134de0283 | dcim.interface:1563 | ValidationError | "xe-1/1/0" | "['Only one of device or module must be set']"
+fcdd1019-99a9-5e79-bdbe-f1f3f1dc6456 | dcim.interface:1093 | ValidationError | "xe-0/3/3" | "['Only one of device or module must be set']"
+fd538ec7-b00d-5f39-bc0f-f01b5f25b424 | dcim.interface:1039 | ValidationError | "xe-0/2/5" | "['Only one of device or module must be set']"
+- dcim.interfacetemplate ---------------------------------------------------------------------------
+0a5fcc68-c425-5b4a-95d7-116d572c70d6 | dcim.interfacetemplate:299 | ValidationError | "xe-{module}/3/6" | "['Only one of device_type or module_type must be set']"
+0be38b5a-c850-52ee-ae42-ea7b59484760 | dcim.interfacetemplate:294 | ValidationError | "xe-{module}/3/1" | "['Only one of device_type or module_type must be set']"
+1e23477c-ccf1-5d74-9b9c-01ecbbaffe91 | dcim.interfacetemplate:286 | ValidationError | "xe-{module}/2/1" | "['Only one of device_type or module_type must be set']"
+1ed74982-0ed6-5cd2-8e21-fa669b02519a | dcim.interfacetemplate:295 | ValidationError | "xe-{module}/3/2" | "['Only one of device_type or module_type must be set']"
+22a4c045-20ff-55ea-b306-e82e60e76867 | dcim.interfacetemplate:300 | ValidationError | "xe-{module}/3/7" | "['Only one of device_type or module_type must be set']"
+24861856-aefe-5c97-822a-ff36da44877d | dcim.interfacetemplate:275 | ValidationError | "xe-{module}/0/6" | "['Only one of device_type or module_type must be set']"
+2ca25956-3005-5e78-b32d-078963cbac99 | dcim.interfacetemplate:288 | ValidationError | "xe-{module}/2/3" | "['Only one of device_type or module_type must be set']"
+4497ca9b-0acd-5fe4-8603-02c88763f588 | dcim.interfacetemplate:285 | ValidationError | "xe-{module}/2/0" | "['Only one of device_type or module_type must be set']"
+4c59f390-2ce0-571e-9610-9380f6acf11b | dcim.interfacetemplate:298 | ValidationError | "xe-{module}/3/5" | "['Only one of device_type or module_type must be set']"
+4e3abfa0-5d2f-5e3c-9863-b06653fd229b | dcim.interfacetemplate:297 | ValidationError | "xe-{module}/3/4" | "['Only one of device_type or module_type must be set']"
+4e9a61a1-aef0-5a8b-ae45-78b1f84f1612 | dcim.interfacetemplate:278 | ValidationError | "xe-{module}/1/1" | "['Only one of device_type or module_type must be set']"
+5d9694c5-f305-507c-a3bd-9edd9f263a7a | dcim.interfacetemplate:277 | ValidationError | "xe-{module}/1/0" | "['Only one of device_type or module_type must be set']"
+659f6e5a-0ff5-5e9b-9bf0-f6f9f0e403e7 | dcim.interfacetemplate:289 | ValidationError | "xe-{module}/2/4" | "['Only one of device_type or module_type must be set']"
+824e9bc6-8fed-5b71-a291-62d72b8aaf60 | dcim.interfacetemplate:269 | ValidationError | "xe-{module}/0/0" | "['Only one of device_type or module_type must be set']"
+83791d59-c7f0-55e9-af8c-599ac71da074 | dcim.interfacetemplate:272 | ValidationError | "xe-{module}/0/3" | "['Only one of device_type or module_type must be set']"
+85178b90-ce83-5977-b1d1-cca6f10f6691 | dcim.interfacetemplate:276 | ValidationError | "xe-{module}/0/7" | "['Only one of device_type or module_type must be set']"
+8b96e61b-c371-5d91-94d6-87ada4f193ce | dcim.interfacetemplate:271 | ValidationError | "xe-{module}/0/2" | "['Only one of device_type or module_type must be set']"
+8f5b803b-5cf2-505e-811f-bf12e6dedbd0 | dcim.interfacetemplate:273 | ValidationError | "xe-{module}/0/4" | "['Only one of device_type or module_type must be set']"
+96944556-d0de-5454-80ca-3bdd4db91ae9 | dcim.interfacetemplate:290 | ValidationError | "xe-{module}/2/5" | "['Only one of device_type or module_type must be set']"
+9d63c7e8-ab9d-5883-afcd-e24ddd0dbffb | dcim.interfacetemplate:287 | ValidationError | "xe-{module}/2/2" | "['Only one of device_type or module_type must be set']"
+a8dfc022-2276-5467-bdd8-b8e8db8d172c | dcim.interfacetemplate:293 | ValidationError | "xe-{module}/3/0" | "['Only one of device_type or module_type must be set']"
+b385c920-1c68-5f52-af7e-2954e8e2bd63 | dcim.interfacetemplate:283 | ValidationError | "xe-{module}/1/6" | "['Only one of device_type or module_type must be set']"
+b48b4836-e523-56e0-a243-adc334ecc27e | dcim.interfacetemplate:296 | ValidationError | "xe-{module}/3/3" | "['Only one of device_type or module_type must be set']"
+ba4c4bec-b5ac-53c8-9f0e-06da32771f90 | dcim.interfacetemplate:292 | ValidationError | "xe-{module}/2/7" | "['Only one of device_type or module_type must be set']"
+c23cf70e-b4c9-595f-841e-83b6a2b559c0 | dcim.interfacetemplate:274 | ValidationError | "xe-{module}/0/5" | "['Only one of device_type or module_type must be set']"
+c8955687-e544-5388-80e7-ad3716576107 | dcim.interfacetemplate:282 | ValidationError | "xe-{module}/1/5" | "['Only one of device_type or module_type must be set']"
+cea15b82-812e-5e1d-b511-e3ec3b9f9f34 | dcim.interfacetemplate:291 | ValidationError | "xe-{module}/2/6" | "['Only one of device_type or module_type must be set']"
+d4fcecd1-ca49-5e22-a6b3-cf22b8a9066b | dcim.interfacetemplate:281 | ValidationError | "xe-{module}/1/4" | "['Only one of device_type or module_type must be set']"
+eb86b4fb-0cee-5b5a-8dc9-4f59fbb9f2f3 | dcim.interfacetemplate:270 | ValidationError | "xe-{module}/0/1" | "['Only one of device_type or module_type must be set']"
+ede88ae0-87fe-596c-9e5b-a4caca438d1a | dcim.interfacetemplate:284 | ValidationError | "xe-{module}/1/7" | "['Only one of device_type or module_type must be set']"
+f5e14867-85f5-532e-9bf3-865c50512320 | dcim.interfacetemplate:280 | ValidationError | "xe-{module}/1/3" | "['Only one of device_type or module_type must be set']"
+fb342867-7349-5790-9e47-20be815686dc | dcim.interfacetemplate:279 | ValidationError | "xe-{module}/1/2" | "['Only one of device_type or module_type must be set']"
+- dcim.module --------------------------------------------------------------------------------------
+4f54f260-f3de-5489-ad7d-47425eb955ac | dcim.module:3 | ValidationError | "EX9200-32XS" | "['One of location or parent_module_bay must be set']"
+b2bb8a68-6e7f-5e2b-90ed-ff8afec68822 | dcim.module:2 | ValidationError | "EX9200-32XS" | "['One of location or parent_module_bay must be set']"
+da01de35-35b0-5a32-a6d2-423960579d91 | dcim.module:1 | ValidationError | "EX9200-32XS" | "['One of location or parent_module_bay must be set']"
+e7f509d8-2c10-54c2-8141-4ceba0183ecc | dcim.module:4 | ValidationError | "EX9200-32XS" | "['One of location or parent_module_bay must be set']"
+- dcim.modulebay -----------------------------------------------------------------------------------
+0ef84e69-2865-5ac2-954c-a27b95199c20 | dcim.modulebay:1 | ValidationError | "None (Slot 0)" | "['Either parent_device or parent_module must be set']"
+1cc246a3-2a62-5506-92bd-cd8d4f422870 | dcim.modulebay:26 | ValidationError | "None (Slot 11)" | "['Either parent_device or parent_module must be set']"
+27ee855f-280d-5200-b159-5248f804da86 | dcim.modulebay:9 | ValidationError | "None (Slot 8)" | "['Either parent_device or parent_module must be set']"
+31f613bd-00bb-5add-9b0a-bec8af7bfa2b | dcim.modulebay:11 | ValidationError | "None (Slot 10)" | "['Either parent_device or parent_module must be set']"
+4aa5d9d5-bf5e-5aaf-a69f-de41af52af58 | dcim.modulebay:27 | ValidationError | "None (Slot 12)" | "['Either parent_device or parent_module must be set']"
+4f65697f-2043-506c-b131-c1b706a6b170 | dcim.modulebay:21 | ValidationError | "None (Slot 6)" | "['Either parent_device or parent_module must be set']"
+798932b1-dfe7-5db9-a0ec-160cc62b7265 | dcim.modulebay:20 | ValidationError | "None (Slot 5)" | "['Either parent_device or parent_module must be set']"
+7ae38991-dc8e-5b81-a75b-56b3f45579cf | dcim.modulebay:14 | ValidationError | "None (Slot 13)" | "['Either parent_device or parent_module must be set']"
+8362187d-78f7-5055-bdd4-f9f22d059acc | dcim.modulebay:4 | ValidationError | "None (Slot 3)" | "['Either parent_device or parent_module must be set']"
+87388457-3059-5e80-a908-9d23dd874684 | dcim.modulebay:25 | ValidationError | "None (Slot 10)" | "['Either parent_device or parent_module must be set']"
+90f84151-2667-59d8-a1dd-7edb24025938 | dcim.modulebay:23 | ValidationError | "None (Slot 8)" | "['Either parent_device or parent_module must be set']"
+91fc87e9-63f1-5cee-9034-60a19b51ae39 | dcim.modulebay:7 | ValidationError | "None (Slot 6)" | "['Either parent_device or parent_module must be set']"
+94982f72-c5b1-5b8a-afe3-bba0bc6a42a2 | dcim.modulebay:24 | ValidationError | "None (Slot 9)" | "['Either parent_device or parent_module must be set']"
+949c2b62-6051-5e5e-8740-14d6461f77ee | dcim.modulebay:10 | ValidationError | "None (Slot 9)" | "['Either parent_device or parent_module must be set']"
+9b365fed-164a-5e17-b1b2-e000e2eb7c87 | dcim.modulebay:6 | ValidationError | "None (Slot 5)" | "['Either parent_device or parent_module must be set']"
+9cbdd7ad-cd6c-59e6-8159-91ab4d2a13f2 | dcim.modulebay:13 | ValidationError | "None (Slot 12)" | "['Either parent_device or parent_module must be set']"
+9cbf517d-a0a3-5881-97ef-2cb18e800753 | dcim.modulebay:18 | ValidationError | "None (Slot 3)" | "['Either parent_device or parent_module must be set']"
+a4cda83f-340a-5059-b329-55ae38f8a0f8 | dcim.modulebay:15 | ValidationError | "None (Slot 0)" | "['Either parent_device or parent_module must be set']"
+a7459076-0bd5-5af2-b9fd-e02ccc46076a | dcim.modulebay:19 | ValidationError | "None (Slot 4)" | "['Either parent_device or parent_module must be set']"
+b11037f6-8050-50d3-9fa7-3b2adce380a7 | dcim.modulebay:5 | ValidationError | "None (Slot 4)" | "['Either parent_device or parent_module must be set']"
+cb1823e8-fac7-59d5-bc41-13e9711fab49 | dcim.modulebay:3 | ValidationError | "None (Slot 2)" | "['Either parent_device or parent_module must be set']"
+d293e859-3fce-5ed7-8cc9-ecdd9405a85e | dcim.modulebay:17 | ValidationError | "None (Slot 2)" | "['Either parent_device or parent_module must be set']"
+d6adc4b2-aa81-5522-a37f-8a57c1b415ac | dcim.modulebay:28 | ValidationError | "None (Slot 13)" | "['Either parent_device or parent_module must be set']"
+dbd1cbc5-5d94-5e75-82f2-743d6ded7d18 | dcim.modulebay:12 | ValidationError | "None (Slot 11)" | "['Either parent_device or parent_module must be set']"
+e0bc5889-5f2c-5373-b03f-30c498ca5afa | dcim.modulebay:2 | ValidationError | "None (Slot 1)" | "['Either parent_device or parent_module must be set']"
+e8f7ed21-f19b-5b43-aab5-2d9946fe0382 | dcim.modulebay:22 | ValidationError | "None (Slot 7)" | "['Either parent_device or parent_module must be set']"
+f43ca5ca-f78d-557e-b226-2d3402195768 | dcim.modulebay:8 | ValidationError | "None (Slot 7)" | "['Either parent_device or parent_module must be set']"
+f847eca6-5d32-5b0c-8841-cde92c34e1df | dcim.modulebay:16 | ValidationError | "None (Slot 1)" | "['Either parent_device or parent_module must be set']"
+- dcim.powerfeed -----------------------------------------------------------------------------------
+0434ed4d-cc76-5051-a38c-b84ed32de2c1 | dcim.powerfeed:12 | ValidationError | "P2-6B" | "['Rack R106 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+05541f06-08c9-5d84-a8b6-13ce3cd45938 | dcim.powerfeed:47 | ValidationError | "P3-8A" | "['Rack R308 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+05f5bb91-e84c-5908-8d9a-8256959bfcab | dcim.powerfeed:22 | ValidationError | "P2-11B" | "['Rack R203 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+06ebb1db-aaa0-5b24-a832-8ca1671f8b0a | dcim.powerfeed:8 | ValidationError | "P2-4B" | "['Rack R104 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+07316815-d36d-552d-8859-03e7fe09354a | dcim.powerfeed:26 | ValidationError | "P2-13B" | "['Rack R205 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+0e23ee26-033e-5cfd-8bce-b5ef5909e13c | dcim.powerfeed:20 | ValidationError | "P2-10B" | "['Rack R202 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+10da56b6-09b1-5da6-9505-d9253863e062 | dcim.powerfeed:33 | ValidationError | "P3-1A" | "['Rack R301 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+17a0b412-4187-51a2-a238-901b3a275bcd | dcim.powerfeed:27 | ValidationError | "P1-14A" | "['Rack R206 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+194e2d64-c904-59bc-af2c-e040beb3aeac | dcim.powerfeed:28 | ValidationError | "P2-14B" | "['Rack R206 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+1f4b42df-43ce-52aa-8a61-4a19ce1af962 | dcim.powerfeed:38 | ValidationError | "P4-3B" | "['Rack R303 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+20b3c4c0-eb30-5f8b-adcf-20e4fa5d0061 | dcim.powerfeed:30 | ValidationError | "P2-15B" | "['Rack R207 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+29b6b9f0-f50a-592c-8e3f-e415a0bf4cd4 | dcim.powerfeed:34 | ValidationError | "P4-1B" | "['Rack R301 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+314fead6-ffae-51f7-abb0-2edcf7d6da49 | dcim.powerfeed:35 | ValidationError | "P3-2A" | "['Rack R302 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+31f1abb3-660f-5a57-9256-42be3d5b75cf | dcim.powerfeed:6 | ValidationError | "P2-3B" | "['Rack R103 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+3213730d-18bd-5a3a-9828-4ab023ed4652 | dcim.powerfeed:11 | ValidationError | "P1-6A" | "['Rack R106 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+3338c701-47fd-513e-945a-78a98b84d7f0 | dcim.powerfeed:48 | ValidationError | "P4-8B" | "['Rack R308 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+38f5aa36-561b-5cd8-8362-9d093ff7b89a | dcim.powerfeed:29 | ValidationError | "P1-15A" | "['Rack R207 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+3f702c58-7dea-5b78-a007-17f40b465810 | dcim.powerfeed:19 | ValidationError | "P1-10A" | "['Rack R202 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+416a01e5-fbf9-522e-b9e9-4037cf8c984f | dcim.powerfeed:7 | ValidationError | "P1-4A" | "['Rack R104 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+451c4aad-d892-5114-8724-be2f8148c322 | dcim.powerfeed:4 | ValidationError | "P2-2B" | "['Rack R102 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+47f69d3d-8fcd-5b63-8695-21aa51fb4fbf | dcim.powerfeed:18 | ValidationError | "P2-9B" | "['Rack R201 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+53ed215b-9003-522d-9cb1-d48dbb18fdc2 | dcim.powerfeed:45 | ValidationError | "P3-7A" | "['Rack R307 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+5a2f51ea-7a05-53d2-8a47-cd383629a343 | dcim.powerfeed:25 | ValidationError | "P1-13A" | "['Rack R205 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+5fa35cf7-5d55-5533-99ee-7d1ecaa69856 | dcim.powerfeed:2 | ValidationError | "P2-1B" | "['Rack R101 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+6203a499-6777-5cd0-841b-fa6339c48890 | dcim.powerfeed:17 | ValidationError | "P1-9A" | "['Rack R201 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+6a1a4ac2-e77b-526b-9aa6-8c7903e5f572 | dcim.powerfeed:16 | ValidationError | "P2-8B" | "['Rack R108 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+7257a622-3ca0-5163-8b6e-5e88c573b17e | dcim.powerfeed:32 | ValidationError | "P2-16B" | "['Rack R208 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+7c07894e-9772-5e1c-a418-bdf3fd58e7c3 | dcim.powerfeed:13 | ValidationError | "P1-7A" | "['Rack R107 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+7eae2a15-d2d0-52ab-bfcf-3cf6823078cf | dcim.powerfeed:14 | ValidationError | "P2-7B" | "['Rack R107 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+872d498b-e156-57b9-8f1d-f595c31ef703 | dcim.powerfeed:41 | ValidationError | "P3-5A" | "['Rack R305 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+87cf96f1-95fa-546c-9665-977f42764f8b | dcim.powerfeed:40 | ValidationError | "P4-4B" | "['Rack R304 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+8cf662de-a918-5648-b152-d71da75a7392 | dcim.powerfeed:39 | ValidationError | "P3-4A" | "['Rack R304 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+a5511926-c977-593b-9bf1-57c8175be85d | dcim.powerfeed:10 | ValidationError | "P2-5B" | "['Rack R105 (Row 1) and power panel Panel 2 (MDF) are in different locations']"
+a7c6bcef-dbe4-51cd-a6d0-14ab5facbe5e | dcim.powerfeed:5 | ValidationError | "P1-3A" | "['Rack R103 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+b3bfb863-c40a-5c49-b82e-1095037d3578 | dcim.powerfeed:37 | ValidationError | "P3-3A" | "['Rack R303 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+b4031fa2-14a6-5d06-a3a2-3a3376b10d72 | dcim.powerfeed:21 | ValidationError | "P1-11A" | "['Rack R203 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+b9c591cd-fdc0-5cf2-83c4-400554b811cd | dcim.powerfeed:31 | ValidationError | "P1-16A" | "['Rack R208 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+bb4485d0-144b-506f-a8ab-faf523304cf8 | dcim.powerfeed:46 | ValidationError | "P4-7B" | "['Rack R307 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+c0e96716-af7f-5b78-8210-d51b55fa53d2 | dcim.powerfeed:1 | ValidationError | "P1-1A" | "['Rack R101 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+c2893189-8044-5d85-8e91-7832c201474d | dcim.powerfeed:15 | ValidationError | "P1-8A" | "['Rack R108 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+c6b3c62b-5f0d-51d1-95d9-761914979d47 | dcim.powerfeed:43 | ValidationError | "P3-6A" | "['Rack R306 (Row 3) and power panel Panel 3 (MDF) are in different locations']"
+cd4f8f27-620f-59fe-aa9a-4c13ff4a7274 | dcim.powerfeed:23 | ValidationError | "P1-12A" | "['Rack R204 (Row 2) and power panel Panel 1 (MDF) are in different locations']"
+d951d5fc-81be-51ae-98a1-7759c859d904 | dcim.powerfeed:42 | ValidationError | "P4-5B" | "['Rack R305 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+e04582bd-f2cb-5deb-b374-be9260cd5b27 | dcim.powerfeed:44 | ValidationError | "P4-6B" | "['Rack R306 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+e1672072-7885-5330-a7dd-52f3769d4863 | dcim.powerfeed:9 | ValidationError | "P1-5A" | "['Rack R105 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+e1b4bb92-803c-59f4-90a7-4f5deb95abc2 | dcim.powerfeed:36 | ValidationError | "P4-2B" | "['Rack R302 (Row 3) and power panel Panel 4 (MDF) are in different locations']"
+f2ee9737-42d8-5093-a349-be97765a39e0 | dcim.powerfeed:3 | ValidationError | "P1-2A" | "['Rack R102 (Row 1) and power panel Panel 1 (MDF) are in different locations']"
+fcb61481-0da8-5412-b68b-2463016a017d | dcim.powerfeed:24 | ValidationError | "P2-12B" | "['Rack R204 (Row 2) and power panel Panel 2 (MDF) are in different locations']"
+= Field Mappings: ==================================================================================
+- circuits.circuit => circuits.circuit -------------------------------------------------------------
+_abs_distance => NO IMPORTER => _abs_distance (PrivateProperty)
+cid => auto_increment_importer => cid (CharField)
+comments => value_importer => comments (TextField)
+commit_rate => integer_importer => commit_rate (PositiveIntegerField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+distance => NO IMPORTER => distance (NotFound)
+distance_unit => NO IMPORTER => distance_unit (NotFound)
+id => uid_from_data => id (UUIDField)
+install_date => date_importer => install_date (DateField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+provider => relation_importer => provider_id (ForeignKey)
+provider_account => NO IMPORTER => provider_account (NotFound)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+termination_a => relation_importer => circuit_termination_a_id (ForeignKey)
+termination_date => NO IMPORTER => termination_date (NotFound)
+termination_z => relation_importer => circuit_termination_z_id (ForeignKey)
+type => relation_importer => circuit_type_id (ForeignKey)
+- circuits.circuittermination => circuits.circuittermination ---------------------------------------
+_location => NO IMPORTER => _location (PrivateProperty)
+_provider_network => NO IMPORTER => _provider_network (PrivateProperty)
+_region => NO IMPORTER => _region (PrivateProperty)
+_site => NO IMPORTER => _site (PrivateProperty)
+_site_group => NO IMPORTER => _site_group (PrivateProperty)
+cable => relation_importer => cable_id (ForeignKey)
+cable_end => NO IMPORTER => cable_end (NotFound)
+circuit => relation_importer => circuit_id (ForeignKey)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+port_speed => integer_importer => port_speed (PositiveIntegerField)
+pp_info => value_importer => pp_info (CharField)
+term_side => choice_importer => term_side (CharField)
+termination_id => NO IMPORTER => termination_id (NotFound)
+termination_type => NO IMPORTER => termination_type (NotFound)
+upstream_speed => integer_importer => upstream_speed (PositiveIntegerField)
+xconnect_id => value_importer => xconnect_id (CharField)
+- circuits.circuittype => circuits.circuittype -----------------------------------------------------
+color => NO IMPORTER => color (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+- circuits.provider => circuits.provider -----------------------------------------------------------
+asns => NO IMPORTER => asns (NotFound)
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+- circuits.providernetwork => circuits.providernetwork ---------------------------------------------
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+provider => relation_importer => provider_id (ForeignKey)
+service_id => NO IMPORTER => service_id (NotFound)
+- contenttypes.contenttype => contenttypes.contenttype ---------------------------------------------
+app_label => content_types_mapper_importer => app_label (CharField)
+model => value_importer => model (CharField)
+- dcim.cable => dcim.cable -------------------------------------------------------------------------
+_abs_length => NO IMPORTER => _abs_length (PrivateProperty)
+color => value_importer => color (CharField)
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+id => uid_from_data => id (UUIDField)
+label => cable_label_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+length => integer_importer => length (PositiveSmallIntegerField)
+length_unit => choice_importer => length_unit (CharField)
+status => status_importer => status_id (StatusField)
+tenant => NO IMPORTER => tenant (NotFound)
+type => choice_importer => type (CharField)
+- dcim.cabletermination => dcim.cable --------------------------------------------------------------
+_device => NO IMPORTER => _device (PrivateProperty)
+_location => NO IMPORTER => _location (PrivateProperty)
+_rack => NO IMPORTER => _rack (PrivateProperty)
+_site => NO IMPORTER => _site (PrivateProperty)
+created => datetime_importer => created (DateTimeField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+termination_a_id => relation_and_type_importer => termination_a_id (UUIDField)
+termination_a_type => relation_and_type_importer => termination_a_type_id (ForeignKey)
+termination_b_id => relation_and_type_importer => termination_b_id (UUIDField)
+termination_b_type => relation_and_type_importer => termination_b_type_id (ForeignKey)
+- dcim.consoleport => dcim.consoleport -------------------------------------------------------------
+_path => NO IMPORTER => _path (PrivateProperty)
+cable => relation_importer => cable_id (ForeignKey)
+cable_end => NO IMPORTER => cable_end (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+module => relation_importer => module_id (ForeignKeyWithAutoRelatedName)
+name => value_importer => name (CharField)
+speed => NO IMPORTER => speed (NotFound)
+type => choice_importer => type (CharField)
+- dcim.consoleporttemplate => dcim.consoleporttemplate ---------------------------------------------
+created => datetime_importer => created (DateTimeField)
+description => value_importer => description (CharField)
+device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+module_type => relation_importer => module_type_id (ForeignKeyWithAutoRelatedName)
+name => value_importer => name (CharField)
+type => choice_importer => type (CharField)
+- dcim.device => dcim.device -----------------------------------------------------------------------
+airflow => NO IMPORTER => airflow (NotFound)
+asset_tag => value_importer => asset_tag (CharField)
+cluster => relation_importer => cluster_id (ForeignKey)
+comments => value_importer => comments (TextField)
+config_template => NO IMPORTER => config_template (NotFound)
+console_port_count => NO IMPORTER => console_port_count (NotFound)
+console_server_port_count => NO IMPORTER => console_server_port_count (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+device_bay_count => NO IMPORTER => device_bay_count (NotFound)
+device_type => relation_importer => device_type_id (ForeignKey)
+face => choice_importer => face (CharField)
+front_port_count => NO IMPORTER => front_port_count (NotFound)
+id => uid_from_data => id (UUIDField)
+interface_count => NO IMPORTER => interface_count (NotFound)
+inventory_item_count => NO IMPORTER => inventory_item_count (NotFound)
+last_updated => Disabled with reason: Last updated field is updated with each write
+latitude => NO IMPORTER => latitude (NotFound)
+local_context_data => NO IMPORTER => local_context_data (NotFound)
+location => location_importer => location_id (ForeignKey)
+longitude => NO IMPORTER => longitude (NotFound)
+module_bay_count => NO IMPORTER => module_bay_count (NotFound)
+name => value_importer => name (CharField)
+oob_ip => NO IMPORTER => oob_ip (NotFound)
+platform => relation_importer => platform_id (ForeignKey)
+position => integer_importer => position (PositiveSmallIntegerField)
+power_outlet_count => NO IMPORTER => power_outlet_count (NotFound)
+power_port_count => NO IMPORTER => power_port_count (NotFound)
+primary_ip4 => relation_importer => primary_ip4_id (ForeignKey)
+primary_ip6 => relation_importer => primary_ip6_id (ForeignKey)
+rack => relation_importer => rack_id (ForeignKey)
+rear_port_count => NO IMPORTER => rear_port_count (NotFound)
+role => role_importer => role_id (RoleField)
+serial => value_importer => serial (CharField)
+site => location_importer => location_id (ForeignKey)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+vc_position => integer_importer => vc_position (PositiveSmallIntegerField)
+vc_priority => integer_importer => vc_priority (PositiveSmallIntegerField)
+virtual_chassis => relation_importer => virtual_chassis_id (ForeignKey)
+- dcim.devicebay => dcim.devicebay -----------------------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
+id => uid_from_data => id (UUIDField)
+installed_device => relation_importer => installed_device_id (OneToOneField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+- dcim.devicebaytemplate => dcim.devicebaytemplate -------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+description => value_importer => description (CharField)
+device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+- dcim.devicerole => extras.role -------------------------------------------------------------------
+color => value_importer => color (CharField)
+config_template => NO IMPORTER => config_template (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+vm_role => NO IMPORTER => vm_role (NotFound)
+- dcim.devicetype => dcim.devicetype ---------------------------------------------------------------
+_abs_weight => NO IMPORTER => _abs_weight (PrivateProperty)
+airflow => NO IMPORTER => airflow (NotFound)
+comments => value_importer => comments (TextField)
+console_port_template_count => NO IMPORTER => console_port_template_count (NotFound)
+console_server_port_template_count => NO IMPORTER => console_server_port_template_count (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+default_platform => NO IMPORTER => default_platform (NotFound)
+description => NO IMPORTER => description (NotFound)
+device_bay_template_count => NO IMPORTER => device_bay_template_count (NotFound)
+exclude_from_utilization => NO IMPORTER => exclude_from_utilization (NotFound)
+front_image => Disabled with reason: Import does not contain images
+front_port_template_count => NO IMPORTER => front_port_template_count (NotFound)
+id => uid_from_data => id (UUIDField)
+interface_template_count => NO IMPORTER => interface_template_count (NotFound)
+inventory_item_template_count => NO IMPORTER => inventory_item_template_count (NotFound)
+is_full_depth => value_importer => is_full_depth (BooleanField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+manufacturer => relation_importer => manufacturer_id (ForeignKey)
+model => value_importer => model (CharField)
+module_bay_template_count => NO IMPORTER => module_bay_template_count (NotFound)
+part_number => value_importer => part_number (CharField)
+power_outlet_template_count => NO IMPORTER => power_outlet_template_count (NotFound)
+power_port_template_count => NO IMPORTER => power_port_template_count (NotFound)
+rear_image => Disabled with reason: Import does not contain images
+rear_port_template_count => NO IMPORTER => rear_port_template_count (NotFound)
+slug => NO IMPORTER => slug (NotFound)
+subdevice_role => choice_importer => subdevice_role (CharField)
+u_height => integer_importer => u_height (PositiveSmallIntegerField)
+weight => NO IMPORTER => weight (NotFound)
+weight_unit => NO IMPORTER => weight_unit (NotFound)
+- dcim.frontport => dcim.frontport -----------------------------------------------------------------
+cable => relation_importer => cable_id (ForeignKey)
+cable_end => NO IMPORTER => cable_end (NotFound)
+color => NO IMPORTER => color (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+module => relation_importer => module_id (ForeignKeyWithAutoRelatedName)
+name => value_importer => name (CharField)
+rear_port => relation_importer => rear_port_id (ForeignKey)
+rear_port_position => integer_importer => rear_port_position (PositiveSmallIntegerField)
+type => choice_importer => type (CharField)
+- dcim.frontporttemplate => dcim.frontporttemplate -------------------------------------------------
+color => NO IMPORTER => color (NotFound)
+created => datetime_importer => created (DateTimeField)
+description => value_importer => description (CharField)
+device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+module_type => relation_importer => module_type_id (ForeignKeyWithAutoRelatedName)
+name => value_importer => name (CharField)
+rear_port => relation_importer => rear_port_template_id (ForeignKey)
+rear_port_position => integer_importer => rear_port_position (PositiveSmallIntegerField)
+type => choice_importer => type (CharField)
+- dcim.interface => dcim.interface -----------------------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+_path => NO IMPORTER => _path (PrivateProperty)
+bridge => relation_importer => bridge_id (ForeignKey)
+cable => relation_importer => cable_id (ForeignKey)
+cable_end => NO IMPORTER => cable_end (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
+duplex => NO IMPORTER => duplex (NotFound)
+enabled => value_importer => enabled (BooleanField)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+lag => relation_importer => lag_id (ForeignKey)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+mgmt_only => value_importer => mgmt_only (BooleanField)
+mode => choice_importer => mode (CharField)
+module => relation_importer => module_id (ForeignKeyWithAutoRelatedName)
+mtu => integer_importer => mtu (PositiveIntegerField)
+name => value_importer => name (CharField)
+parent => relation_importer => parent_interface_id (ForeignKey)
+poe_mode => NO IMPORTER => poe_mode (NotFound)
+poe_type => NO IMPORTER => poe_type (NotFound)
+primary_mac_address => NO IMPORTER => primary_mac_address (NotFound)
+qinq_svlan => NO IMPORTER => qinq_svlan (NotFound)
+rf_channel => NO IMPORTER => rf_channel (NotFound)
+rf_channel_frequency => NO IMPORTER => rf_channel_frequency (NotFound)
+rf_channel_width => NO IMPORTER => rf_channel_width (NotFound)
+rf_role => NO IMPORTER => rf_role (NotFound)
+speed => NO IMPORTER => speed (NotFound)
+tagged_vlans => m2m_importer => tagged_vlans (ManyToManyField)
+tx_power => NO IMPORTER => tx_power (NotFound)
+type => choice_importer => type (CharField)
+untagged_vlan => relation_importer => untagged_vlan_id (ForeignKey)
+vdcs => NO IMPORTER => vdcs (NotFound)
+vlan_translation_policy => NO IMPORTER => vlan_translation_policy (NotFound)
+vrf => relation_importer => vrf_id (ForeignKey)
+wireless_lans => NO IMPORTER => wireless_lans (NotFound)
+wireless_link => NO IMPORTER => wireless_link (NotFound)
+wwn => NO IMPORTER => wwn (NotFound)
+- dcim.interfacetemplate => dcim.interfacetemplate -------------------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+bridge => NO IMPORTER => bridge (NotFound)
+created => datetime_importer => created (DateTimeField)
+description => value_importer => description (CharField)
+device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
+enabled => NO IMPORTER => enabled (NotFound)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mgmt_only => value_importer => mgmt_only (BooleanField)
+module_type => relation_importer => module_type_id (ForeignKeyWithAutoRelatedName)
+name => value_importer => name (CharField)
+poe_mode => NO IMPORTER => poe_mode (NotFound)
+poe_type => NO IMPORTER => poe_type (NotFound)
+rf_role => NO IMPORTER => rf_role (NotFound)
+type => choice_importer => type (CharField)
+- dcim.location => dcim.location -------------------------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+facility => value_importer => facility (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+level => Disabled with reason: Tree fields doesn't need to be imported
+lft => Disabled with reason: Tree fields doesn't need to be imported
+name => value_importer => name (CharField)
+parent => location_parent_importer => parent_id (TreeNodeForeignKey)
+rght => Disabled with reason: Tree fields doesn't need to be imported
+site => location_parent_importer => parent_id (TreeNodeForeignKey)
+slug => NO IMPORTER => slug (NotFound)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+tree_id => Disabled with reason: Tree fields doesn't need to be imported
+- dcim.manufacturer => dcim.manufacturer -----------------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+- dcim.module => dcim.module -----------------------------------------------------------------------
+asset_tag => value_importer => asset_tag (CharField)
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+device => NO IMPORTER => device (ReadOnlyProperty)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+local_context_data => NO IMPORTER => local_context_data (NotFound)
+module_bay => NO IMPORTER => module_bay (NotFound)
+module_type => relation_importer => module_type_id (ForeignKey)
+serial => value_importer => serial (CharField)
+status => status_importer => status_id (StatusField)
+- dcim.modulebay => dcim.modulebay -----------------------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+device => NO IMPORTER => device (NotFound)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+level => NO IMPORTER => level (NotFound)
+lft => NO IMPORTER => lft (NotFound)
+module => NO IMPORTER => module (NotFound)
+name => value_importer => name (CharField)
+parent => NO IMPORTER => parent (ReadOnlyProperty)
+position => value_importer => position (CharField)
+rght => NO IMPORTER => rght (NotFound)
+tree_id => NO IMPORTER => tree_id (NotFound)
+- dcim.modulebaytemplate => dcim.modulebaytemplate -------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+description => value_importer => description (CharField)
+device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+module_type => relation_importer => module_type_id (ForeignKeyWithAutoRelatedName)
+name => value_importer => name (CharField)
+position => value_importer => position (CharField)
+- dcim.moduletype => dcim.moduletype ---------------------------------------------------------------
+_abs_weight => NO IMPORTER => _abs_weight (PrivateProperty)
+airflow => NO IMPORTER => airflow (NotFound)
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+manufacturer => relation_importer => manufacturer_id (ForeignKey)
+model => value_importer => model (CharField)
+part_number => value_importer => part_number (CharField)
+weight => NO IMPORTER => weight (NotFound)
+weight_unit => NO IMPORTER => weight_unit (NotFound)
+- dcim.platform => dcim.platform -------------------------------------------------------------------
+config_template => NO IMPORTER => config_template (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+manufacturer => relation_importer => manufacturer_id (ForeignKey)
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+- dcim.powerfeed => dcim.powerfeed -----------------------------------------------------------------
+_path => NO IMPORTER => _path (PrivateProperty)
+amperage => integer_importer => amperage (PositiveSmallIntegerField)
+available_power => integer_importer => available_power (PositiveIntegerField)
+cable => relation_importer => cable_id (ForeignKey)
+cable_end => NO IMPORTER => cable_end (NotFound)
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+max_utilization => integer_importer => max_utilization (PositiveSmallIntegerField)
+name => value_importer => name (CharField)
+phase => choice_importer => phase (CharField)
+power_panel => relation_importer => power_panel_id (ForeignKey)
+rack => relation_importer => rack_id (ForeignKey)
+status => status_importer => status_id (StatusField)
+supply => choice_importer => supply (CharField)
+tenant => NO IMPORTER => tenant (NotFound)
+type => choice_importer => type (CharField)
+voltage => integer_importer => voltage (SmallIntegerField)
+- dcim.poweroutlet => dcim.poweroutlet -------------------------------------------------------------
+_path => NO IMPORTER => _path (PrivateProperty)
+cable => relation_importer => cable_id (ForeignKey)
+cable_end => NO IMPORTER => cable_end (NotFound)
+color => NO IMPORTER => color (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
+feed_leg => choice_importer => feed_leg (CharField)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+module => relation_importer => module_id (ForeignKeyWithAutoRelatedName)
+name => value_importer => name (CharField)
+power_port => relation_importer => power_port_id (ForeignKey)
+type => choice_importer => type (CharField)
+- dcim.poweroutlettemplate => dcim.poweroutlettemplate ---------------------------------------------
+created => datetime_importer => created (DateTimeField)
+description => value_importer => description (CharField)
+device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
+feed_leg => choice_importer => feed_leg (CharField)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+module_type => relation_importer => module_type_id (ForeignKeyWithAutoRelatedName)
+name => value_importer => name (CharField)
+power_port => relation_importer => power_port_template_id (ForeignKey)
+type => choice_importer => type (CharField)
+- dcim.powerpanel => dcim.powerpanel ---------------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+location => location_importer => location_id (ForeignKey)
+name => value_importer => name (CharField)
+site => location_importer => location_id (ForeignKey)
+- dcim.powerport => dcim.powerport -----------------------------------------------------------------
+_path => NO IMPORTER => _path (PrivateProperty)
+allocated_draw => integer_importer => allocated_draw (PositiveSmallIntegerField)
+cable => relation_importer => cable_id (ForeignKey)
+cable_end => NO IMPORTER => cable_end (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+maximum_draw => integer_importer => maximum_draw (PositiveSmallIntegerField)
+module => relation_importer => module_id (ForeignKeyWithAutoRelatedName)
+name => value_importer => name (CharField)
+type => choice_importer => type (CharField)
+- dcim.powerporttemplate => dcim.powerporttemplate -------------------------------------------------
+allocated_draw => integer_importer => allocated_draw (PositiveSmallIntegerField)
+created => datetime_importer => created (DateTimeField)
+description => value_importer => description (CharField)
+device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+maximum_draw => integer_importer => maximum_draw (PositiveSmallIntegerField)
+module_type => relation_importer => module_type_id (ForeignKeyWithAutoRelatedName)
+name => value_importer => name (CharField)
+type => choice_importer => type (CharField)
+- dcim.rack => dcim.rack ---------------------------------------------------------------------------
+_abs_max_weight => NO IMPORTER => _abs_max_weight (PrivateProperty)
+_abs_weight => NO IMPORTER => _abs_weight (PrivateProperty)
+airflow => NO IMPORTER => airflow (NotFound)
+asset_tag => value_importer => asset_tag (CharField)
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+desc_units => value_importer => desc_units (BooleanField)
+description => NO IMPORTER => description (NotFound)
+facility_id => value_importer => facility_id (CharField)
+form_factor => NO IMPORTER => form_factor (NotFound)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+location => location_importer => location_id (ForeignKey)
+max_weight => NO IMPORTER => max_weight (NotFound)
+mounting_depth => NO IMPORTER => mounting_depth (NotFound)
+name => value_importer => name (CharField)
+outer_depth => integer_importer => outer_depth (PositiveSmallIntegerField)
+outer_unit => choice_importer => outer_unit (CharField)
+outer_width => integer_importer => outer_width (PositiveSmallIntegerField)
+rack_type => NO IMPORTER => rack_type (NotFound)
+role => role_importer => role_id (RoleField)
+serial => value_importer => serial (CharField)
+site => location_importer => location_id (ForeignKey)
+starting_unit => NO IMPORTER => starting_unit (NotFound)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+u_height => integer_importer => u_height (PositiveSmallIntegerField)
+weight => NO IMPORTER => weight (NotFound)
+weight_unit => NO IMPORTER => weight_unit (NotFound)
+width => choice_importer => width (PositiveSmallIntegerField)
+- dcim.rackreservation => dcim.rackreservation -----------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+rack => relation_importer => rack_id (ForeignKey)
+tenant => relation_importer => tenant_id (ForeignKey)
+units => units_importer => units (JSONField)
+user => relation_importer => user_id (ForeignKey)
+- dcim.rackrole => extras.role ---------------------------------------------------------------------
+color => value_importer => color (CharField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+- dcim.rearport => dcim.rearport -------------------------------------------------------------------
+cable => relation_importer => cable_id (ForeignKey)
+cable_end => NO IMPORTER => cable_end (NotFound)
+color => NO IMPORTER => color (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mark_connected => NO IMPORTER => mark_connected (NotFound)
+module => relation_importer => module_id (ForeignKeyWithAutoRelatedName)
+name => value_importer => name (CharField)
+positions => integer_importer => positions (PositiveSmallIntegerField)
+type => choice_importer => type (CharField)
+- dcim.rearporttemplate => dcim.rearporttemplate ---------------------------------------------------
+color => NO IMPORTER => color (NotFound)
+created => datetime_importer => created (DateTimeField)
+description => value_importer => description (CharField)
+device_type => relation_importer => device_type_id (ForeignKeyWithAutoRelatedName)
+id => uid_from_data => id (UUIDField)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+module_type => relation_importer => module_type_id (ForeignKeyWithAutoRelatedName)
+name => value_importer => name (CharField)
+positions => integer_importer => positions (PositiveSmallIntegerField)
+type => choice_importer => type (CharField)
+- dcim.region => dcim.location ---------------------------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+level => Disabled with reason: Tree fields doesn't need to be imported
+lft => Disabled with reason: Tree fields doesn't need to be imported
+name => value_importer => name (CharField)
+parent => relation_importer => parent_id (TreeNodeForeignKey)
+rght => Disabled with reason: Tree fields doesn't need to be imported
+slug => NO IMPORTER => slug (NotFound)
+tree_id => Disabled with reason: Tree fields doesn't need to be imported
+- dcim.site => dcim.location -----------------------------------------------------------------------
+asns => NO IMPORTER => asns (NotFound)
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+facility => value_importer => facility (CharField)
+group => site_group_importer => location_type_id (ForeignKey)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+latitude => value_importer => latitude (DecimalField)
+longitude => value_importer => longitude (DecimalField)
+name => value_importer => name (CharField)
+physical_address => value_importer => physical_address (TextField)
+region => relation_importer => parent_id (TreeNodeForeignKey)
+shipping_address => value_importer => shipping_address (TextField)
+slug => NO IMPORTER => slug (NotFound)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+time_zone => timezone_importer => time_zone (TimeZoneField)
+- dcim.sitegroup => dcim.locationtype --------------------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+level => Disabled with reason: Tree fields doesn't need to be imported
+lft => Disabled with reason: Tree fields doesn't need to be imported
+name => value_importer => name (CharField)
+parent => constant_importer => parent_id (TreeNodeForeignKey)
+rght => Disabled with reason: Tree fields doesn't need to be imported
+slug => NO IMPORTER => slug (NotFound)
+tree_id => Disabled with reason: Tree fields doesn't need to be imported
+- dcim.virtualchassis => dcim.virtualchassis -------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+domain => value_importer => domain (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+master => relation_importer => master_id (OneToOneField)
+member_count => NO IMPORTER => member_count (NotFound)
+name => value_importer => name (CharField)
+- extras.customfield => extras.customfield ---------------------------------------------------------
+choice_set => choices_importer => CUSTOM TARGET
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+default => json_importer => default (JSONField)
+description => value_importer => description (CharField)
+filter_logic => choice_importer => filter_logic (CharField)
+group_name => NO IMPORTER => group_name (NotFound)
+id => uid_from_data => id (UUIDField)
+is_cloneable => NO IMPORTER => is_cloneable (NotFound)
+label => value_importer => label (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => key (SlugField)
+object_types => NO IMPORTER => object_types (NotFound)
+related_object_filter => NO IMPORTER => related_object_filter (NotFound)
+related_object_type => NO IMPORTER => related_object_type (NotFound)
+required => value_importer => required (BooleanField)
+search_weight => NO IMPORTER => search_weight (NotFound)
+type => type_importer => type (CharField)
+ui_editable => NO IMPORTER => ui_editable (NotFound)
+ui_visible => NO IMPORTER => ui_visible (NotFound)
+unique => NO IMPORTER => unique (NotFound)
+validation_maximum => integer_importer => validation_maximum (BigIntegerField)
+validation_minimum => integer_importer => validation_minimum (BigIntegerField)
+validation_regex => value_importer => validation_regex (CharField)
+weight => integer_importer => weight (PositiveSmallIntegerField)
+- extras.tag => extras.tag -------------------------------------------------------------------------
+color => value_importer => color (CharField)
+created => datetime_importer => created (DateTimeField)
+description => value_importer => description (CharField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+object_types => content_types_importer => content_types (ManyToManyField)
+slug => NO IMPORTER => slug (NotFound)
+- extras.taggeditem => extras.taggeditem -----------------------------------------------------------
+content_type => tagged_object_importer => content_type_id (ForeignKey)
+object_id => tagged_object_importer => object_id (UUIDField)
+tag => tagged_object_importer => tag_id (ForeignKey)
+- ipam.aggregate => ipam.prefix --------------------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+date_added => NO IMPORTER => date_added (NotFound)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+prefix => value_importer => prefix (Property)
+rir => relation_importer => rir_id (ForeignKey)
+tenant => relation_importer => tenant_id (ForeignKey)
+- ipam.ipaddress => ipam.ipaddress -----------------------------------------------------------------
+address => value_importer => address (Property)
+assigned_object_id => NO IMPORTER => assigned_object_id (NotFound)
+assigned_object_type => NO IMPORTER => assigned_object_type (NotFound)
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+dns_name => value_importer => dns_name (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+nat_inside => relation_importer => nat_inside_id (ForeignKey)
+role => role_importer => role_id (RoleField)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+vrf => NO IMPORTER => vrf (NotFound)
+- ipam.prefix => ipam.prefix -----------------------------------------------------------------------
+_children => NO IMPORTER => _children (PrivateProperty)
+_depth => NO IMPORTER => _depth (PrivateProperty)
+_location => NO IMPORTER => _location (PrivateProperty)
+_region => NO IMPORTER => _region (PrivateProperty)
+_site => NO IMPORTER => _site (PrivateProperty)
+_site_group => NO IMPORTER => _site_group (PrivateProperty)
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+is_pool => NO IMPORTER => is_pool (NotFound)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mark_utilized => NO IMPORTER => mark_utilized (NotFound)
+prefix => value_importer => prefix (Property)
+role => role_importer => role_id (RoleField)
+scope_id => NO IMPORTER => scope_id (NotFound)
+scope_type => NO IMPORTER => scope_type (NotFound)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+vlan => relation_importer => vlan_id (ForeignKey)
+vrf => NO IMPORTER => vrf (NotFound)
+- ipam.rir => ipam.rir -----------------------------------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+is_private => value_importer => is_private (BooleanField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+- ipam.role => extras.role -------------------------------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+weight => integer_importer => weight (PositiveSmallIntegerField)
+- ipam.routetarget => ipam.routetarget -------------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+tenant => relation_importer => tenant_id (ForeignKey)
+- ipam.vlan => ipam.vlan ---------------------------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+group => relation_importer => vlan_group_id (ForeignKey)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+qinq_role => NO IMPORTER => qinq_role (NotFound)
+qinq_svlan => NO IMPORTER => qinq_svlan (NotFound)
+role => role_importer => role_id (RoleField)
+site => location_importer => locations (ManyToManyField)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+vid => integer_importer => vid (PositiveSmallIntegerField)
+- ipam.vlangroup => ipam.vlangroup -----------------------------------------------------------------
+_total_vlan_ids => NO IMPORTER => _total_vlan_ids (PrivateProperty)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+scope_id => NO IMPORTER => scope_id (NotFound)
+scope_type => NO IMPORTER => scope_type (NotFound)
+slug => NO IMPORTER => slug (NotFound)
+vid_ranges => NO IMPORTER => vid_ranges (NotFound)
+- ipam.vrf => ipam.vrf -----------------------------------------------------------------------------
+comments => NO IMPORTER => comments (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+enforce_unique => NO IMPORTER => enforce_unique (NotFound)
+export_targets => m2m_importer => export_targets (ManyToManyField)
+id => uid_from_data => id (UUIDField)
+import_targets => m2m_importer => import_targets (ManyToManyField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+rd => value_importer => rd (CharField)
+tenant => relation_importer => tenant_id (ForeignKey)
+- tenancy.tenant => tenancy.tenant -----------------------------------------------------------------
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+group => relation_importer => tenant_group_id (ForeignKey)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+- tenancy.tenantgroup => tenancy.tenantgroup -------------------------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+level => Disabled with reason: Tree fields doesn't need to be imported
+lft => Disabled with reason: Tree fields doesn't need to be imported
+name => value_importer => name (CharField)
+parent => relation_importer => parent_id (TreeNodeForeignKey)
+rght => Disabled with reason: Tree fields doesn't need to be imported
+slug => NO IMPORTER => slug (NotFound)
+tree_id => Disabled with reason: Tree fields doesn't need to be imported
+- users.user => users.user -------------------------------------------------------------------------
+date_joined => datetime_importer => date_joined (DateTimeField)
+email => value_importer => email (CharField)
+first_name => value_importer => first_name (CharField)
+groups => Disabled with reason: Groups import is not implemented for NetBox 4+
+is_active => value_importer => is_active (BooleanField)
+is_staff => value_importer => is_staff (BooleanField)
+is_superuser => value_importer => is_superuser (BooleanField)
+last_login => Disabled with reason: Should not be attempted to migrate
+last_name => value_importer => last_name (CharField)
+object_permissions => Disabled with reason: Permissions import is not implemented yet
+password => Disabled with reason: Should not be attempted to migrate
+user_permissions => Disabled with reason: Permissions import is not implemented yet
+username => value_importer => username (CharField)
+- virtualization.cluster => virtualization.cluster -------------------------------------------------
+_location => NO IMPORTER => _location (PrivateProperty)
+_region => NO IMPORTER => _region (PrivateProperty)
+_site => NO IMPORTER => _site (PrivateProperty)
+_site_group => NO IMPORTER => _site_group (PrivateProperty)
+comments => value_importer => comments (TextField)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+group => relation_importer => cluster_group_id (ForeignKey)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+scope_id => NO IMPORTER => scope_id (NotFound)
+scope_type => NO IMPORTER => scope_type (NotFound)
+status => NO IMPORTER => status (NotFound)
+tenant => relation_importer => tenant_id (ForeignKey)
+type => relation_importer => cluster_type_id (ForeignKey)
+- virtualization.clustergroup => virtualization.clustergroup ---------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+- virtualization.clustertype => virtualization.clustertype -----------------------------------------
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+name => value_importer => name (CharField)
+slug => NO IMPORTER => slug (NotFound)
+- virtualization.virtualmachine => virtualization.virtualmachine -----------------------------------
+cluster => relation_importer => cluster_id (ForeignKey)
+comments => value_importer => comments (TextField)
+config_template => NO IMPORTER => config_template (NotFound)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => NO IMPORTER => description (NotFound)
+device => NO IMPORTER => device (NotFound)
+disk => integer_importer => disk (PositiveIntegerField)
+id => uid_from_data => id (UUIDField)
+interface_count => NO IMPORTER => interface_count (NotFound)
+last_updated => Disabled with reason: Last updated field is updated with each write
+local_context_data => NO IMPORTER => local_context_data (NotFound)
+memory => integer_importer => memory (PositiveIntegerField)
+name => value_importer => name (CharField)
+platform => relation_importer => platform_id (ForeignKey)
+primary_ip4 => relation_importer => primary_ip4_id (ForeignKey)
+primary_ip6 => relation_importer => primary_ip6_id (ForeignKey)
+role => role_importer => role_id (RoleField)
+serial => NO IMPORTER => serial (NotFound)
+site => NO IMPORTER => site (NotFound)
+status => status_importer => status_id (StatusField)
+tenant => relation_importer => tenant_id (ForeignKey)
+vcpus => integer_importer => vcpus (PositiveSmallIntegerField)
+virtual_disk_count => NO IMPORTER => virtual_disk_count (NotFound)
+- virtualization.vminterface => virtualization.vminterface -----------------------------------------
+_name => NO IMPORTER => _name (PrivateProperty)
+bridge => relation_importer => bridge_id (ForeignKey)
+created => datetime_importer => created (DateTimeField)
+custom_field_data => value_importer => custom_field_data (CustomFieldData)
+description => value_importer => description (CharField)
+enabled => value_importer => enabled (BooleanField)
+id => uid_from_data => id (UUIDField)
+last_updated => Disabled with reason: Last updated field is updated with each write
+mode => choice_importer => mode (CharField)
+mtu => integer_importer => mtu (PositiveIntegerField)
+name => value_importer => name (CharField)
+parent => relation_importer => parent_interface_id (ForeignKey)
+primary_mac_address => NO IMPORTER => primary_mac_address (NotFound)
+qinq_svlan => NO IMPORTER => qinq_svlan (NotFound)
+tagged_vlans => m2m_importer => tagged_vlans (ManyToManyField)
+untagged_vlan => relation_importer => untagged_vlan_id (ForeignKey)
+virtual_machine => relation_importer => virtual_machine_id (ForeignKey)
+vlan_translation_policy => NO IMPORTER => vlan_translation_policy (NotFound)
+vrf => relation_importer => vrf_id (ForeignKey)
+* End of Import Summary ****************************************************************************

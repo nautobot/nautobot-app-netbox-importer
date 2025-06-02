@@ -1658,7 +1658,8 @@
                     "importer": "relation_and_type_importer",
                     "definition": "",
                     "sources": [
-                        "CUSTOM"
+                        "CUSTOM",
+                        "SIBLING"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -1686,7 +1687,8 @@
                     "importer": "relation_and_type_importer",
                     "definition": "",
                     "sources": [
-                        "CUSTOM"
+                        "CUSTOM",
+                        "SIBLING"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -1880,7 +1882,8 @@
                     "importer": "relation_and_type_importer",
                     "definition": "termination_a_type",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "SIBLING"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -7980,7 +7983,7 @@
             "content_type_id": 94,
             "extends_content_type": null,
             "nautobot_content_type": "extras.imageattachment",
-            "disable_reason": "",
+            "disable_reason": "Images are not imported yet.",
             "identifiers": null,
             "disable_related_reference": false,
             "forward_references": null,
@@ -8038,7 +8041,8 @@
                     "importer": "relation_and_type_importer",
                     "definition": "assigned_object_type",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "SIBLING"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -8201,7 +8205,8 @@
                     "importer": "relation_and_type_importer",
                     "definition": "changed_object_type",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "SIBLING"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -8287,7 +8292,8 @@
                     "importer": "relation_and_type_importer",
                     "definition": "related_object_type",
                     "sources": [
-                        "DATA"
+                        "DATA",
+                        "SIBLING"
                     ],
                     "default_value": null,
                     "disable_reason": "",
@@ -11760,7 +11766,7 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "23f54cbf-0c94-5c79-9b7f-f8fd96c6a26e",
-                        "circuit_id": "None",
+                        "circuit_id": "ba4edff9-345f-5849-a416-c67b0c5bf5d8",
                         "location_id": "None",
                         "created": "None",
                         "last_updated": "None",
@@ -11828,7 +11834,7 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "3f64e659-b2e7-50c5-b6db-8c4e46dd40af",
-                        "circuit_id": "None",
+                        "circuit_id": "5c656caa-aa35-532b-bf6b-7eff42b3c9ee",
                         "location_id": "None",
                         "created": "None",
                         "last_updated": "None",
@@ -11881,7 +11887,7 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "41bfcdba-035c-516c-8c1e-9cfdcf434d51",
-                        "circuit_id": "None",
+                        "circuit_id": "51c814cb-1cb4-5184-8666-2bcd4d224c06",
                         "location_id": "None",
                         "created": "None",
                         "last_updated": "None",
@@ -11934,7 +11940,7 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "93589e98-9065-5a5f-97f9-5dc491cbcf94",
-                        "circuit_id": "None",
+                        "circuit_id": "7613c297-0016-567f-8680-ba305c53df5a",
                         "location_id": "None",
                         "created": "None",
                         "last_updated": "None",
@@ -11987,7 +11993,7 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "ccc75dd5-5d67-5c2c-b6b7-b94319334399",
-                        "circuit_id": "None",
+                        "circuit_id": "894444ae-6b84-5308-bc74-f74402f68219",
                         "location_id": "None",
                         "created": "None",
                         "last_updated": "None",
@@ -12354,11 +12360,12 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "03d4a2c5-e08b-5cc1-924d-c401194d393c",
-                        "manufacturer_id": "9568e4c1-fa0c-5c43-9606-e25166e67765",
+                        "manufacturer_id": "None",
                         "model": "Half U Device Type",
                         "created": "2024-02-15 09:18:48.416000+00:00",
                         "last_updated": "None",
                         "custom_field_data": "None",
+                        "comments": "None",
                         "u_height": "0",
                         "is_full_depth": "True"
                     },
@@ -12420,8 +12427,6 @@
                         "protocol": "None",
                         "created": "None",
                         "last_updated": "None",
-                        "custom_field_data": "None",
-                        "description": "None",
                         "name": "None"
                     },
                     "source_reference": "ipam.fhrpgroup:2"
@@ -12439,8 +12444,7 @@
                         "protocol": "vrrp",
                         "created": "None",
                         "last_updated": "None",
-                        "custom_field_data": "None",
-                        "description": "None",
+                        "description": "FHR Group Description",
                         "name": "None"
                     },
                     "source_reference": "ipam.fhrpgroup:1"
@@ -12500,7 +12504,8 @@
                         "location_type_id": "8fceb641-4563-5da8-9004-963f9ed1965a",
                         "created": "2024-02-14 12:22:26.202000+00:00",
                         "last_updated": "None",
-                        "name": "Site 1"
+                        "name": "Site 1",
+                        "time_zone": "US/Pacific"
                     },
                     "source_reference": "dcim.site:1"
                 }
@@ -12741,18 +12746,18 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5",
-                        "content_types": "None",
-                        "key": "device_custom_object",
-                        "label": "None",
+                        "content_types": "{51}",
+                        "key": "None",
+                        "label": "Device Custom Object",
                         "type": "text",
-                        "created": "None",
+                        "created": "2024-02-15 11:19:42.197000+00:00",
                         "last_updated": "None",
                         "description": "None",
-                        "required": "False",
-                        "filter_logic": "None",
+                        "required": "None",
+                        "filter_logic": "loose",
                         "default": "None",
-                        "weight": "100",
-                        "validation_minimum": "None",
+                        "weight": "None",
+                        "validation_maximum": "None",
                         "validation_regex": "None"
                     },
                     "source_reference": "extras.customfield:3"
@@ -13322,10 +13327,9 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "c650165f-9a05-55c0-bbb1-c9527d41160c",
-                        "name": "None",
-                        "enabled": "None",
-                        "actions": "None",
-                        "constraints": "None",
+                        "name": "Test Permission",
+                        "enabled": "True",
+                        "actions": "['view']",
                         "object_types": "None",
                         "groups": "None",
                         "users": "{UUID('b6111f2f-ede6-5a47-b0e5-3842b76f14cd')}"

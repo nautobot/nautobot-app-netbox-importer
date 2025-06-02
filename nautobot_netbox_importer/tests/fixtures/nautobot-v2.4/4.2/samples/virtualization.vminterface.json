@@ -1,0 +1,74 @@
+[
+{
+  "model": "virtualization.vminterface",
+  "pk": "7e4f5eec-2787-5119-bea2-bb4cc782caab",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2025-05-30T09:13:00.795Z",
+    "_custom_field_data": {},
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "enabled": true,
+    "mac_address": null,
+    "mtu": null,
+    "role": null,
+    "mode": "",
+    "parent_interface": null,
+    "bridge": null,
+    "virtual_machine": "acab27a7-3f6b-5042-9262-fbcf8010909d",
+    "name": "eth3",
+    "_name": "9999999999999999eth000003............",
+    "description": "",
+    "untagged_vlan": null,
+    "vrf": null,
+    "tagged_vlans": []
+  }
+},
+{
+  "model": "virtualization.vminterface",
+  "pk": "d2ca30ae-ef6e-513a-936c-ede75d77ec3d",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2025-05-30T09:13:01.172Z",
+    "_custom_field_data": {},
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "enabled": true,
+    "mac_address": null,
+    "mtu": null,
+    "role": null,
+    "mode": "",
+    "parent_interface": null,
+    "bridge": null,
+    "virtual_machine": "b96e8870-e5ed-507d-b434-54ac73b4fae2",
+    "name": "eth3",
+    "_name": "9999999999999999eth000003............",
+    "description": "",
+    "untagged_vlan": null,
+    "vrf": null,
+    "tagged_vlans": []
+  }
+},
+{
+  "model": "virtualization.vminterface",
+  "pk": "d396c9a3-4b45-573a-8a99-d81df03bdfaa",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2025-05-30T09:13:01.443Z",
+    "_custom_field_data": {},
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "enabled": true,
+    "mac_address": null,
+    "mtu": null,
+    "role": null,
+    "mode": "",
+    "parent_interface": null,
+    "bridge": null,
+    "virtual_machine": "7e7c9e53-7c6f-5472-8080-c364ea44ef3a",
+    "name": "eth2",
+    "_name": "9999999999999999eth000002............",
+    "description": "",
+    "untagged_vlan": null,
+    "vrf": null,
+    "tagged_vlans": []
+  }
+}
+]

@@ -1,0 +1,45 @@
+[
+{
+  "model": "extras.tag",
+  "pk": "36744037-4320-5066-80af-cc1752a0cd0b",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2025-05-30T09:13:00.016Z",
+    "_custom_field_data": {},
+    "name": "November",
+    "color": "2f6a31",
+    "description": "",
+    "content_types": [
+      74
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "4b456e5e-16e1-5b10-9ccd-c262ca2eabec",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2025-05-30T09:13:00.002Z",
+    "_custom_field_data": {},
+    "name": "Foxtrot",
+    "color": "9c27b0",
+    "description": "",
+    "content_types": [
+      74
+    ]
+  }
+},
+{
+  "model": "extras.tag",
+  "pk": "c42eb9c5-9fef-5a54-888f-ad09f749068d",
+  "fields": {
+    "created": "2021-12-30T00:00:00Z",
+    "last_updated": "2025-05-30T09:13:00.032Z",
+    "_custom_field_data": {},
+    "name": "Whiskey",
+    "color": "c0c0c0",
+    "description": "",
+    "content_types": []
+  }
+}
+]

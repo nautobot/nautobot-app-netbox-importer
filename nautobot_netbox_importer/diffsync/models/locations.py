@@ -175,9 +175,11 @@ def setup(adapter: SourceAdapter) -> None:
         "dcim.SiteGroup",
         nautobot_content_type="dcim.LocationType",
         fields={
-            "parent": fields.constant(region_type_uid, reference=location_type_wrapper)
-            if sitegroup_parent_always_region
-            else "parent",
+            "parent": (
+                fields.constant(region_type_uid, reference=location_type_wrapper)
+                if sitegroup_parent_always_region
+                else "parent"
+            ),
             "nestable": fields.constant(True),
         },
     )
