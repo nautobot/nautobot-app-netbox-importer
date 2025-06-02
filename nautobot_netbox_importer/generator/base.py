@@ -7,7 +7,7 @@ from typing import Any, Iterable, List, Mapping, Optional, Tuple, Type
 from uuid import UUID, uuid5
 
 from dateutil import parser as datetime_parser
-from diffsync import DiffSync
+from diffsync import Adapter
 from diffsync.store.local import LocalStore
 from django.conf import settings
 from django.core.exceptions import FieldDoesNotExist as DjangoFieldDoesNotExist
@@ -223,7 +223,7 @@ def normalize_datetime(value: Any) -> Optional[datetime.datetime]:
     return value.astimezone(datetime.timezone.utc)
 
 
-class BaseAdapter(DiffSync):
+class BaseAdapter(Adapter):
     """Base class for Generator Adapters."""
 
     def __init__(self, *args, **kwargs):
