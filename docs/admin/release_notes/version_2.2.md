@@ -39,7 +39,14 @@ This document describes all new features and changes in the release. The format 
 
 ### Dependencies
 
+- [#218](https://github.com/nautobot/nautobot-app-netbox-importer/issues/218) - Added new dependency netaddr `v0.10.1`.
+- [#218](https://github.com/nautobot/nautobot-app-netbox-importer/issues/218) - Added new dependency packaging `v24.1`.
 - [#218](https://github.com/nautobot/nautobot-app-netbox-importer/issues/218) - Bumped Nautobot to `v2.4.9`.
+- [#218](https://github.com/nautobot/nautobot-app-netbox-importer/issues/218) - Bumped colorama to `v0.4.6`.
+- [#218](https://github.com/nautobot/nautobot-app-netbox-importer/issues/218) - Bumped Markdown to `v3.6`.
+- [#218](https://github.com/nautobot/nautobot-app-netbox-importer/issues/218) - Bumped python-dateutil to `v2.9.0`.
+- [#218](https://github.com/nautobot/nautobot-app-netbox-importer/issues/218) - Removed Support for Nautobot `v2.0`, ``v2.1`, and `v2.2`.
+- [#218](https://github.com/nautobot/nautobot-app-netbox-importer/issues/218) - Removed Support for Python `v3.8.X`, ``v3.9.1`, and `v3.9.2`.
 - [#219](https://github.com/nautobot/nautobot-app-netbox-importer/issues/219) - Bumped diffsync to `v2.1`.
 - [#219](https://github.com/nautobot/nautobot-app-netbox-importer/issues/219) - Bumped pydantic to `v2.11.5`.
 
