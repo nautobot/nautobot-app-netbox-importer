@@ -1,0 +1,71 @@
+[
+{
+  "model": "ipam.prefix",
+  "pk": "8204013e-d665-5f64-9bfd-2a7b2ec398bb",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2025-05-29T14:36:22.245Z",
+    "_custom_field_data": {},
+    "network": "10.112.139.0",
+    "broadcast": "10.112.139.255",
+    "prefix_length": 24,
+    "type": "network",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "2a53f46b-41e1-5f02-865a-163c8edd429a",
+    "parent": "6a5c4ad8-5fdb-5a2c-8755-3e4a39a91963",
+    "ip_version": 4,
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "vlan": "63fe2f01-b034-5607-a3ec-28da627c249d",
+    "rir": null,
+    "date_allocated": null,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.prefix",
+  "pk": "b11ebfa1-f954-5004-8375-a84f243b8f17",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2025-05-29T14:36:22.555Z",
+    "_custom_field_data": {},
+    "network": "10.112.156.0",
+    "broadcast": "10.112.159.255",
+    "prefix_length": 22,
+    "type": "network",
+    "status": "90ef0b5d-5e04-5ff3-b1a4-695a42311ede",
+    "role": null,
+    "parent": "28980d7d-3a2a-5fc1-bf28-6e49b7ee5ba3",
+    "ip_version": 4,
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "vlan": null,
+    "rir": null,
+    "date_allocated": null,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.prefix",
+  "pk": "d9140d0a-67aa-55f6-8cb4-e9339dc5d917",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2025-05-29T14:36:22.251Z",
+    "_custom_field_data": {},
+    "network": "10.112.140.0",
+    "broadcast": "10.112.140.15",
+    "prefix_length": 28,
+    "type": "network",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "ce29b49d-ddac-586f-87ec-8f7cb969344c",
+    "parent": "b6d56c7b-eaf1-5537-b71f-8a01d6615c65",
+    "ip_version": 4,
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "vlan": null,
+    "rir": null,
+    "date_allocated": null,
+    "description": ""
+  }
+}
+]

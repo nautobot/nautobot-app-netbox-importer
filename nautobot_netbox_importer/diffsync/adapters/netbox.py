@@ -2,27 +2,32 @@
 
 from gzip import GzipFile
 from pathlib import Path
-from typing import Callable, Generator, NamedTuple, Union
+from typing import Callable, Generator, NamedTuple, Sequence, Union
 from urllib.parse import ParseResult, urlparse
 
 import ijson
 import requests
 from django.core.management import call_command
 from django.db.transaction import atomic
+from packaging.version import Version
 
 from nautobot_netbox_importer.base import GENERATOR_SETUP_MODULES, logger, register_generator_setup
+from nautobot_netbox_importer.diffsync.models.cables import create_missing_cable_terminations
 from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations, unrack_zero_uheight_devices
 from nautobot_netbox_importer.generator import SourceAdapter, SourceDataGenerator, SourceRecord
 from nautobot_netbox_importer.summary import Pathable
 
 for _name in (
     "base",
+    "cables",
     "circuits",
+    "content_types",
     "custom_fields",
     "dcim",
     "ipam",
     "locations",
     "object_change",
+    "tags",
     "virtualization",
 ):
     register_generator_setup(f"nautobot_netbox_importer.diffsync.models.{_name}")
@@ -46,12 +51,17 @@ class NetBoxImporterOptions(NamedTuple):
     bypass_data_validation: bool = False
     print_summary: bool = False
     update_paths: bool = False
+    deduplicate_ipam: bool = False
     fix_powerfeed_locations: bool = False
     sitegroup_parent_always_region: bool = False
+    create_missing_cable_terminations: bool = False
+    tag_issues: bool = False
     unrack_zero_uheight_devices: bool = True
     save_json_summary_path: str = ""
     save_text_summary_path: str = ""
     trace_issues: bool = False
+    customizations: Sequence[str] = []
+    netbox_version: Version = Version("3.7")
 
 
 AdapterSetupFunction = Callable[[SourceAdapter], None]
@@ -75,6 +85,10 @@ class NetBoxAdapter(SourceAdapter):
 
         self.options = options
 
+        for name in options.customizations:
+            if name:
+                register_generator_setup(name)
+
         for name in GENERATOR_SETUP_MODULES:
             setup = __import__(name, fromlist=["setup"]).setup
             setup(self)
@@ -82,30 +96,50 @@ class NetBoxAdapter(SourceAdapter):
     def load(self) -> None:
         """Load data from NetBox."""
         self.import_data()
+
         if self.options.fix_powerfeed_locations:
             fix_power_feed_locations(self)
+
         if self.options.unrack_zero_uheight_devices:
             unrack_zero_uheight_devices(self)
-        self.post_import()
+
+        if self.options.create_missing_cable_terminations:
+            create_missing_cable_terminations(self)
+
+        self.post_load()
 
     def import_to_nautobot(self) -> None:
         """Import a NetBox export file into Nautobot."""
+        exception = None
         commited = False
         try:
-            self._atomic_import()
+            self._atomic_import()  # type: ignore
             commited = True
-        except _DryRunException:
-            logger.warning("Dry-run mode, no data has been imported.")
-        except _ImporterIssuesDetected:
-            logger.warning("Importer issues detected, no data has been imported.")
+        except (_DryRunException, _ImporterIssuesDetected) as error:
+            exception = error
+            logger.info("Data were not saved: %s", error)
 
-        if commited and self.options.update_paths:
-            logger.info("Updating paths ...")
-            call_command("trace_paths", no_input=True)
-            logger.info(" ... Updating paths completed.")
+        if self.options.save_json_summary_path:
+            self.summary.dump(self.options.save_json_summary_path, output_format="json")
+        if self.options.save_text_summary_path:
+            self.summary.dump(self.options.save_text_summary_path, output_format="text")
+
+        if commited:
+            if self.options.update_paths:
+                logger.info("Updating paths ...")
+                call_command("trace_paths", no_input=True)
+                logger.info(" ... Updating paths completed.")
+
+            if self.options.tag_issues:
+                self.nautobot.tag_issues(self.summary)  # type: ignore
 
         if self.options.print_summary:
             self.summary.print()
+
+        if commited:
+            logger.info("Import completed successfully.")
+        else:
+            logger.error("Data were not saved %s", exception)
 
     @atomic
     def _atomic_import(self) -> None:
@@ -121,10 +155,10 @@ class NetBoxAdapter(SourceAdapter):
 
         has_issues = any(True for item in self.summary.nautobot if item.issues)
         if has_issues and not self.options.bypass_data_validation:
-            raise _ImporterIssuesDetected("Importer issues detected, aborting the transaction.")
+            raise _ImporterIssuesDetected("Aborting the transaction: importer issues detected.")
 
         if self.options.dry_run:
-            raise _DryRunException("Aborting the transaction due to the dry-run mode.")
+            raise _DryRunException("Aborting the transaction: dry-run mode.")
 
 
 def _read_stream(stream) -> Generator[SourceRecord, None, None]:

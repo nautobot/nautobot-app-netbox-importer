@@ -46,12 +46,6 @@ theme:
 extra_css:
   - "assets/extra.css"
 
-# needed for RTD version flyout menu
-# jquery is not (yet) injected by RTD automatically and it might be dropped
-# as a dependency in the future
-extra_javascript:
-  - "https://code.jquery.com/jquery-3.6.0.min.js"
-
 extra:
   generator: false
   ntc_sponsor: true
@@ -91,6 +85,7 @@ markdown_extensions:
   - "footnotes"
 plugins:
   - "search"
+  - "include-markdown"
   - "mkdocstrings":
       default_handler: "python"
       handlers:
@@ -101,6 +96,12 @@ plugins:
 watch:
   - "README.md"
 
+validation:
+  omitted_files: "warn"
+  absolute_links: "warn"
+  unrecognized_links: "warn"
+  anchors: "warn"
+
 nav:
   - Overview: "index.md"
   - User Guide:
@@ -108,6 +109,7 @@ nav:
       - Getting Started: "user/app_getting_started.md"
       - Using the App: "user/app_use_cases.md"
       - Importer Summary: "user/summary.md"
+      - Tagging Issues: "user/tagging_issues.md"
       - Frequently Asked Questions: "user/faq.md"
   - Administrator Guide:
       - Install and Configure: "admin/install.md"
@@ -116,6 +118,7 @@ nav:
       - Compatibility Matrix: "admin/compatibility_matrix.md"
       - Release Notes:
           - "admin/release_notes/index.md"
+          - v2.2: "admin/release_notes/version_2.2.md"
           - v2.1: "admin/release_notes/version_2.1.md"
           - v2.0: "admin/release_notes/version_2.0.md"
           - v1.4: "admin/release_notes/version_1.4.md"
@@ -127,12 +130,26 @@ nav:
       - Extending the App: "dev/extending.md"
       - Contributing to the App: "dev/contributing.md"
       - Development Environment: "dev/dev_environment.md"
+      - Release Checklist: "dev/release_checklist.md"
       - Architecture Decision Records: "dev/arch_decision.md"
-      - Generator Description: "dev/generator.md"
-      - Data Flow: "dev/data_flow.md"
-      - Demo Excecution: "dev/demo.md"
+      - Key Concepts:
+          - "dev/generator.md"
+          - "dev/data_flow.md"
+          - "dev/import_order.md"
+          - "dev/data_flow.md"
+          - "dev/generator.md"
+          - "dev/content_types_mapping.md"
+          - "dev/caching.md"
+          - "dev/placeholders.md"
+          - "dev/primary_keys.md"
+      - Demo Execution: "dev/demo.md"
       - Frequently Asked Questions: "dev/faq.md"
       - Test Fixtures: "dev/code_reference/fixtures/README.md"
+      - Customizations: "dev/customizations.md"
+      - Diagrams:
+          - "diagrams/data_flow.md"
+          - "diagrams/generator_erd.md"
+          - "diagrams/generate_primary_key.md"
       - Code Reference:
           - "dev/code_reference/index.md"
           - Package: "dev/code_reference/package.md"

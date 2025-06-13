@@ -14,11 +14,13 @@ limitations under the License.
 
 import os
 import re
+import shutil
+import sys
 from pathlib import Path
 from time import sleep
 
 from invoke.collection import Collection
-from invoke.exceptions import Exit
+from invoke.exceptions import Exit, UnexpectedExit
 from invoke.tasks import task as invoke_task
 
 
@@ -68,9 +70,10 @@ namespace.configure(
 
 
 def _get_test_dump_path(context):
-    parsed_nautobot_version = context.nautobot_netbox_importer.nautobot_ver.split(".")
+    version = _get_docker_nautobot_version(context)
+    parsed_nautobot_version = version.split(".")
     if len(parsed_nautobot_version) < 2:  # noqa: PLR2004
-        raise ValueError(f"Can't determine the Nautobot version from: {context.nautobot_netbox_importer.nautobot_ver}")
+        raise ValueError(f"Can't determine the Nautobot version from: {version}")
 
     return (
         Path(__file__).parent
@@ -132,6 +135,7 @@ def docker_compose(context, command, **kwargs):
         command (str): Command string to append to the "docker compose ..." command, such as "build", "up", etc.
         **kwargs: Passed through to the context.run() call.
     """
+    _ensure_creds_env_file(context)
     build_env = {
         # Note: 'docker compose logs' will stop following after 60 seconds by default,
         # so we are overriding that by setting this environment variable.
@@ -163,7 +167,7 @@ def docker_compose(context, command, **kwargs):
     return context.run(compose_command, env=build_env, **kwargs)
 
 
-def run_command(context, command, **kwargs):
+def run_command(context, command, service="nautobot", **kwargs):
     """Wrapper to run a command locally or inside the nautobot container."""
     if is_truthy(context.nautobot_netbox_importer.local):
         if "command_env" in kwargs:
@@ -173,7 +177,7 @@ def run_command(context, command, **kwargs):
             }
         return context.run(command, **kwargs)
     else:
-        # Check if nautobot is running, no need to start another nautobot container to run a command
+        # Check if service is running, no need to start another container to run a command
         docker_compose_status = "ps --services --filter status=running"
         results = docker_compose(context, docker_compose_status, hide="out")
 
@@ -183,10 +187,10 @@ def run_command(context, command, **kwargs):
             for key, value in command_env.items():
                 command_env_args += f' --env="{key}={value}"'
 
-        if "nautobot" in results.stdout:
-            compose_command = f"exec{command_env_args} nautobot {command}"
+        if service in results.stdout:
+            compose_command = f"exec{command_env_args} {service} {command}"
         else:
-            compose_command = f"run{command_env_args} --rm --entrypoint='{command}' nautobot"
+            compose_command = f"run{command_env_args} --rm --entrypoint='{command}' {service}"
 
         pty = kwargs.pop("pty", True)
 
@@ -213,6 +217,18 @@ def build(context, force_rm=False, cache=True):
 
     print(f"Building Nautobot with Python {context.nautobot_netbox_importer.python_ver}...")
     docker_compose(context, command)
+
+
+def _ensure_creds_env_file(context):
+    """Ensure that the development/creds.env file exists."""
+    if not os.path.exists(os.path.join(context.nautobot_netbox_importer.compose_dir, "creds.env")):
+        # Warn the user that the creds.env file does not exist and that we are copying the example file to it
+        print("⚠️⚠️ The creds.env file does not exist, using the example file to create it. ⚠️⚠️")
+        # Copy the creds.example.env file to creds.env
+        shutil.copy(
+            os.path.join(context.nautobot_netbox_importer.compose_dir, "creds.example.env"),
+            os.path.join(context.nautobot_netbox_importer.compose_dir, "creds.env"),
+        )
 
 
 @task
@@ -264,9 +280,19 @@ def lock(context, check=False, constrain_nautobot_ver=False, constrain_python_ve
         command = f"poetry add --lock nautobot@{docker_nautobot_version}"
         if constrain_python_ver:
             command += f" --python {context.nautobot_netbox_importer.python_ver}"
+        try:
+            output = run_command(context, command, hide=True)
+            print(output.stdout, end="")
+            print(output.stderr, file=sys.stderr, end="")
+        except UnexpectedExit:
+            print("Unable to add Nautobot dependency with version constraint, falling back to git branch.")
+            command = f"poetry add --lock git+https://github.com/nautobot/nautobot.git#{context.nautobot_netbox_importer.nautobot_ver}"
+            if constrain_python_ver:
+                command += f" --python {context.nautobot_netbox_importer.python_ver}"
+            run_command(context, command)
     else:
         command = f"poetry {'check' if check else 'lock --no-update'}"
-    run_command(context, command)
+        run_command(context, command)
 
 
 # ------------------------------------------------------------------------------
@@ -415,10 +441,14 @@ def shell_plus(context):
     run_command(context, command)
 
 
-@task
-def cli(context):
-    """Launch a bash shell inside the Nautobot container."""
-    run_command(context, "bash")
+@task(
+    help={
+        "service": "Docker compose service name to launch cli in (default: nautobot).",
+    }
+)
+def cli(context, service="nautobot"):
+    """Launch a bash shell inside the container."""
+    run_command(context, "bash", service=service)
 
 
 @task(
@@ -611,12 +641,16 @@ def import_db(context, db_name="", input_file="dump.sql"):
 @task(
     help={
         "db-name": "Database name to backup (default: Nautobot database)",
+        "format": "Database dump format (default: `sql`)",
         "output-file": "Ouput file, overwrite if exists (default: `dump.sql`)",
         "readable": "Flag to dump database data in more readable format (default: `True`)",
     }
 )
-def backup_db(context, db_name="", output_file="dump.sql", readable=True):
+def backup_db(context, db_name="", format="sql", output_file="", readable=True):
     """Dump database into `output_file` file from `db` container."""
+    if not output_file:
+        output_file = f"dump.{format}"
+
     start(context, "db")
     _await_healthy_service(context, "db")
 
@@ -635,6 +669,7 @@ def backup_db(context, db_name="", output_file="dump.sql", readable=True):
             "pg_dump",
             "--username=$POSTGRES_USER",
             f"--dbname={db_name or '$POSTGRES_DB'}",
+            f"--format={format}",
             "--inserts" if readable else "",
         ]
     else:
@@ -676,6 +711,17 @@ def build_and_check_docs(context):
     command = "mkdocs build --no-directory-urls --strict"
     run_command(context, command)
 
+    # Check for the existence of a release notes file for the current version if it's not a prerelease.
+    version = context.run("poetry version --short", hide=True)
+    match = re.match(r"^(\d+)\.(\d+)\.\d+$", version.stdout.strip())
+    if match:
+        major = match.group(1)
+        minor = match.group(2)
+        release_notes_file = Path(__file__).parent / "docs" / "admin" / "release_notes" / f"version_{major}.{minor}.md"
+        if not release_notes_file.exists():
+            print(f"Release notes file `version_{major}.{minor}.md` does not exist.")
+            raise Exit(code=1)
+
 
 @task(name="help")
 def help_task(context):
@@ -696,10 +742,13 @@ def help_task(context):
 )
 def generate_release_notes(context, version=""):
     """Generate Release Notes using Towncrier."""
-    command = "env DJANGO_SETTINGS_MODULE=nautobot.core.settings towncrier build"
+    command = "poetry run towncrier build"
     if version:
         command += f" --version {version}"
-    run_command(context, command)
+    else:
+        command += " --version `poetry version -s`"
+    # Due to issues with git repo ownership in the containers, this must always run locally.
+    context.run(command)
 
 
 # ------------------------------------------------------------------------------
@@ -717,8 +766,28 @@ def hadolint(context):
 @task
 def pylint(context):
     """Run pylint code analysis."""
-    command = 'pylint --init-hook "import nautobot; nautobot.setup()" --rcfile pyproject.toml nautobot_netbox_importer'
-    run_command(context, command)
+    exit_code = 0
+
+    base_pylint_command = 'pylint --verbose --init-hook "import nautobot; nautobot.setup()" --rcfile pyproject.toml'
+    command = f"{base_pylint_command} nautobot_netbox_importer"
+    if not run_command(context, command, warn=True):
+        exit_code = 1
+
+    # run the pylint_django migrations checkers on the migrations directory, if one exists
+    migrations_dir = Path(__file__).absolute().parent / Path("nautobot_netbox_importer") / Path("migrations")
+    if migrations_dir.is_dir():
+        migrations_pylint_command = (
+            f"{base_pylint_command} --load-plugins=pylint_django.checkers.migrations"
+            " --disable=all --enable=fatal,new-db-field-with-default,missing-backwards-migration-callable"
+            " nautobot_netbox_importer.migrations"
+        )
+        if not run_command(context, migrations_pylint_command, warn=True):
+            exit_code = 1
+    else:
+        print("No migrations directory found, skipping migrations checks.")
+
+    if exit_code != 0:
+        raise Exit(code=exit_code)
 
 
 @task(aliases=("a",))
@@ -743,12 +812,15 @@ def ruff(context, action=None, target=None, fix=False, output_format="concise"):
     if not target:
         target = ["."]
 
+    exit_code = 0
+
     if "format" in action:
         command = "ruff format "
         if not fix:
             command += "--check "
         command += " ".join(target)
-        run_command(context, command, warn=True)
+        if not run_command(context, command, warn=True):
+            exit_code = 1
 
     if "lint" in action:
         command = "ruff check "
@@ -756,7 +828,11 @@ def ruff(context, action=None, target=None, fix=False, output_format="concise"):
             command += "--fix "
         command += f"--output-format {output_format} "
         command += " ".join(target)
-        run_command(context, command, warn=True)
+        if not run_command(context, command, warn=True):
+            exit_code = 1
+
+    if exit_code != 0:
+        raise Exit(code=exit_code)
 
 
 @task
@@ -767,6 +843,18 @@ def yamllint(context):
         context (obj): Used to run specific commands
     """
     command = "yamllint . --format standard"
+    run_command(context, command)
+
+
+@task
+def markdownlint(context, fix=False):
+    """Lint Markdown files."""
+    # note: at the time of this writing, the `--fix` option is in pending state for pymarkdown on both rules.
+    if fix:
+        command = "pymarkdown fix --recurse docs *.md"
+        run_command(context, command)
+    # fix mode doesn't scan/report issues it can't fix, so always run scan even after fixing
+    command = "pymarkdown scan --recurse docs *.md"
     run_command(context, command)
 
 
@@ -877,6 +965,8 @@ def load_test_environment(context, db_name="test_nautobot", keepdb=False):
         "pattern": "Run specific test methods, classes, or modules instead of all tests",
         "verbose": "Enable verbose test output.",
         "build-fixtures": "Build fixtures before running tests.",
+        "coverage": "Enable coverage reporting. Defaults to False",
+        "skip_docs_build": "Skip building the documentation before running tests.",
     }
 )
 def unittest(  # noqa: PLR0913
@@ -888,13 +978,21 @@ def unittest(  # noqa: PLR0913
     pattern="",
     verbose=False,
     build_fixtures=False,
+    coverage=False,
+    skip_docs_build=False,
 ):
     """Run Nautobot unit tests."""
+    if not skip_docs_build:
+        build_and_check_docs(context)
+
     load_test_environment(context, keepdb=keepdb)
     if not keepdb:
         keepdb = True
 
-    command = f"coverage run --module nautobot.core.cli test {label}"
+    if coverage:
+        command = f"coverage run --module nautobot.core.cli test {label}"
+    else:
+        command = f"nautobot-server test {label}"
 
     if keepdb:
         command += " --keepdb"
@@ -915,8 +1013,24 @@ def unittest(  # noqa: PLR0913
 
 @task
 def unittest_coverage(context):
-    """Report on code test coverage as measured by 'invoke unittest'."""
-    command = "coverage report --skip-covered --include 'nautobot_netbox_importer/*' --omit *migrations*"
+    """Report on code test coverage as measured by 'invoke unittest --coverage'."""
+    command = "coverage report --skip-covered"
+
+    run_command(context, command)
+
+
+@task
+def coverage_lcov(context):
+    """Generate an LCOV coverage report."""
+    command = "coverage lcov -o lcov.info"
+
+    run_command(context, command)
+
+
+@task
+def coverage_xml(context):
+    """Generate an XML coverage report."""
+    command = "coverage xml -o coverage.xml"
 
     run_command(context, command)
 
@@ -939,6 +1053,8 @@ def tests(context, failfast=False, keepdb=False, lint_only=False):
     ruff(context)
     print("Running yamllint...")
     yamllint(context)
+    print("Running markdownlint...")
+    markdownlint(context)
     print("Running poetry check...")
     lock(context, check=True)
     print("Running migrations check...")
@@ -951,8 +1067,9 @@ def tests(context, failfast=False, keepdb=False, lint_only=False):
     validate_app_config(context)
     if not lint_only:
         print("Running unit tests...")
-        unittest(context, failfast=failfast, keepdb=keepdb)
+        unittest(context, failfast=failfast, keepdb=keepdb, coverage=True, skip_docs_build=True)
         unittest_coverage(context)
+        coverage_lcov(context)
     print("All tests have passed!")
 
 
@@ -991,60 +1108,89 @@ def validate_app_config(context):
 @task(
     help={
         "file": "URL or path to the JSON file to import.",
-        "bypass-data-validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
         "demo-version": "Version of the demo data to import from `https://github.com/netbox-community/netbox-demo-data/json` instead of using the `--file` option (default: empty).",
+        "test-input": "Version of the test data to import from `nautobot_netbox_importer/tests/fixtures/nautobot-v<value>` instead of using the `--file` option (default: empty).",
+        "bypass-data-validation": "Bypass as much of Nautobot's internal data validation logic as possible, allowing the import of data from NetBox that would be rejected as invalid if entered as-is through the GUI or REST API. USE WITH CAUTION: it is generally more desirable to *take note* of any data validation errors, *correct* the invalid data in NetBox, and *re-import* with the corrected data! (default: False)",
+        "create-missing-cable-terminations": "Create missing cable terminations as Nautobot requires both cable terminations to be defined to save cable instances.",
+        "customizations": "Path to a Python module containing customizations to apply during the import. (default: empty)",
+        "deduplicate-ipam": "Deduplicate `ipam.prefix` and `ipam.aggregate` from NetBox. `prefix` value will be unique. (default: False)",
         "dry-run": "Do not write any data to the database. (default: False)",
         "fix-powerfeed-locations": "Fix panel location to match rack location based on powerfeed. (default: False)",
         "print-summary": "Show a summary of the import. (default: True)",
         "save-json-summary-path": "File path to write the JSON mapping to. (default: generated-mappings.json)",
         "save-text-summary-path": "File path to write the text mapping to. (default: generated-mappings.txt)",
         "sitegroup-parent-always-region": "When importing `dcim.sitegroup` to `dcim.locationtype`, always set the parent of a site group, to be a `Region` location type. This is a workaround to fix validation errors `'A Location of type Location may only have a Location of the same type as its parent.'`. (default: False)",
-        "update-paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
-        "unrack-zero-uheight-devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
+        "tag-issues": "Whether to tag Nautobot records with any importer issues. (default: False)",
         "trace-issues": "Show a detailed trace of issues originated from any `Exception` found during the import.",
+        "unrack-zero-uheight-devices": "Cleans the `position` field in `dcim.device` instances with `u_height == 0`. (default: True)",
+        "update-paths": "Call management command `trace_paths` to update paths after the import. (default: False)",
     }
 )
 def import_netbox(  # noqa: PLR0913
     context,
     file="",
     demo_version="",
-    save_json_summary_path="",
-    save_text_summary_path="",
+    test_input="",
     bypass_data_validation=False,
+    create_missing_cable_terminations=False,
+    customizations="",
+    deduplicate_ipam=False,
     dry_run=True,
     fix_powerfeed_locations=False,
-    sitegroup_parent_always_region=False,
     print_summary=True,
-    update_paths=False,
-    unrack_zero_uheight_devices=True,
+    save_json_summary_path="",
+    save_text_summary_path="",
+    sitegroup_parent_always_region=False,
+    tag_issues=False,
     trace_issues=False,
+    unrack_zero_uheight_devices=True,
+    update_paths=False,
 ):
     """Import NetBox data into Nautobot."""
-    if demo_version:
-        if file:
-            raise ValueError("Cannot specify both, `file` and `demo` arguments")
+    if sum(bool(x) for x in [file, demo_version, test_input]) > 1:
+        raise ValueError("Cannot specify more than one of `--file`, `--demo-version`, or `--test-input` arguments")
 
+    if demo_version:
         file = (
             "https://raw.githubusercontent.com/netbox-community/netbox-demo-data/master/json/netbox-demo-v"
             + demo_version
             + ".json"
         )
 
+    if test_input:
+        if is_truthy(context.nautobot_netbox_importer.local):
+            path = Path(__file__).parent
+        else:
+            path = Path("/source")
+
+        path = path / f"nautobot_netbox_importer/tests/fixtures/nautobot-v{test_input}"
+
+        file = path / "input.json"
+
+        if not save_json_summary_path:
+            save_json_summary_path = path / "summary.json"
+        if not save_text_summary_path:
+            save_text_summary_path = path / "summary.txt"
+
     command = [
         "nautobot-server",
         "import_netbox",
-        f"--save-json-summary-path={save_json_summary_path}" if save_json_summary_path else "",
-        f"--save-text-summary-path={save_text_summary_path}" if save_text_summary_path else "",
         "--bypass-data-validation" if bypass_data_validation else "",
+        "--create-missing-cable-terminations" if create_missing_cable_terminations else "",
+        f"--customizations={customizations}" if customizations else "",
+        "--deduplicate-ipam" if deduplicate_ipam else "",
         "--dry-run" if dry_run else "",
         "--fix-powerfeed-locations" if fix_powerfeed_locations else "",
-        "--sitegroup-parent-always-region" if sitegroup_parent_always_region else "",
-        "--print-summary" if print_summary else "",
-        "--update-paths" if update_paths else "",
         "--no-color",
-        "" if unrack_zero_uheight_devices else "--no-unrack-zero-uheight-devices",
+        "--print-summary" if print_summary else "",
+        "--sitegroup-parent-always-region" if sitegroup_parent_always_region else "",
+        f"--save-json-summary-path={save_json_summary_path}" if save_json_summary_path else "",
+        f"--save-text-summary-path={save_text_summary_path}" if save_text_summary_path else "",
+        "--tag-issues" if tag_issues else "",
         "--trace-issues" if trace_issues else "",
-        file,
+        "" if unrack_zero_uheight_devices else "--no-unrack-zero-uheight-devices",
+        "--update-paths" if update_paths else "",
+        f"{file}",
     ]
 
     run_command(context, " ".join(command))

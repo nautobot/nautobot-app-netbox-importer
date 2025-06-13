@@ -1,0 +1,22 @@
+[
+{
+  "model": "ipam.ipaddress",
+  "pk": "a2da6287-203a-5496-88c6-4fd8283630f7",
+  "fields": {
+    "created": "2024-02-21T12:20:21.970Z",
+    "last_updated": "2025-05-29T14:34:18.956Z",
+    "_custom_field_data": {},
+    "host": "10.0.0.1",
+    "mask_length": 16,
+    "type": "host",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": "42895040-37c3-5bcb-8326-c22198fe6dfd",
+    "parent": "015c4836-67b9-571d-aeb7-bb26b3438b92",
+    "ip_version": 4,
+    "tenant": null,
+    "nat_inside": null,
+    "dns_name": "",
+    "description": ""
+  }
+}
+]

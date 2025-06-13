@@ -2,19 +2,23 @@
 
 from typing import Any, Dict, Iterable, List, Mapping, MutableMapping, Optional, Set, Type
 
-from diffsync import DiffSync, DiffSyncModel
+from diffsync import Adapter, DiffSyncModel
 from diffsync.enum import DiffSyncModelFlags
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Max
 from django.db.transaction import atomic
 from nautobot.core.utils.lookup import get_model_from_name
+from nautobot.extras.models import Tag
+from pydantic import Field, create_model
 
 from nautobot_netbox_importer.base import FieldName, RecordData, logger
-from nautobot_netbox_importer.summary import ImporterIssue, NautobotModelStats, NautobotModelSummary
-
-from .base import (
+from nautobot_netbox_importer.generator.base import (
     AUTO_ADD_FIELDS,
     EMPTY_VALUES,
+    INTERNAL_AUTO_INC_TYPES,
+    INTERNAL_DONT_IMPORT_TYPES,
+    INTERNAL_INTEGER_FIELDS,
+    INTERNAL_REFERENCE_TYPES,
     INTERNAL_TYPE_TO_ANNOTATION,
     BaseAdapter,
     ContentTypeStr,
@@ -23,51 +27,27 @@ from .base import (
     InternalFieldType,
     NautobotBaseModel,
     NautobotBaseModelType,
-    PydanticField,
     StrToInternalFieldType,
     Uid,
     get_nautobot_field_and_type,
     normalize_datetime,
+    source_pk_to_uuid,
 )
-from .exceptions import NautobotModelNotFound
-
-_AUTO_INCREMENT_TYPES: Iterable[InternalFieldType] = (
-    InternalFieldType.AUTO_FIELD,
-    InternalFieldType.BIG_AUTO_FIELD,
+from nautobot_netbox_importer.generator.exceptions import NautobotModelNotFound
+from nautobot_netbox_importer.summary import (
+    ImporterIssue,
+    ImportSummary,
+    NautobotModelStats,
+    NautobotModelSummary,
+    get_issue_tag,
 )
-
-_INTEGER_TYPES: Iterable[InternalFieldType] = (
-    InternalFieldType.AUTO_FIELD,
-    InternalFieldType.BIG_AUTO_FIELD,
-    InternalFieldType.BIG_INTEGER_FIELD,
-    InternalFieldType.INTEGER_FIELD,
-    InternalFieldType.POSITIVE_INTEGER_FIELD,
-    InternalFieldType.POSITIVE_SMALL_INTEGER_FIELD,
-    InternalFieldType.SMALL_INTEGER_FIELD,
-)
-
-_REFERENCE_TYPES: Iterable[InternalFieldType] = (
-    InternalFieldType.FOREIGN_KEY,
-    InternalFieldType.FOREIGN_KEY_WITH_AUTO_RELATED_NAME,
-    InternalFieldType.MANY_TO_MANY_FIELD,
-    InternalFieldType.ONE_TO_ONE_FIELD,
-    InternalFieldType.ROLE_FIELD,
-    InternalFieldType.STATUS_FIELD,
-    InternalFieldType.TREE_NODE_FOREIGN_KEY,
-)
-
-_DONT_IMPORT_TYPES: Iterable[InternalFieldType] = (
-    InternalFieldType.NOT_FOUND,
-    InternalFieldType.PRIVATE_PROPERTY,
-    InternalFieldType.READ_ONLY_PROPERTY,
-)
-
 
 # Helper to determine the import order of models.
 # Due to dependencies among Nautobot models, certain models must be imported first to ensure successful `instance.save()` calls without errors.
 # Models listed here take precedence over others, which are sorted by the order they're introduced to the importer.
 # Models listed, but not imported, here will be ignored.
 # Obsoleted models can be kept here to ensure backward compatibility.
+# More information about the import order can be found in the app documentation: https://docs.nautobot.com/projects/netbox-importer/en/latest/dev/import_order/
 IMPORT_ORDER: Iterable[ContentTypeStr] = (
     "extras.customfield",
     "extras.customfieldchoice",
@@ -86,6 +66,8 @@ IMPORT_ORDER: Iterable[ContentTypeStr] = (
     "dcim.devicetype",
     "dcim.consoleport",
     "dcim.consoleporttemplate",
+    "dcim.consoleserverport",
+    "dcim.consoleserverporttemplate",
     "dcim.device",
     "dcim.devicebay",
     "dcim.frontport",
@@ -122,6 +104,23 @@ class NautobotAdapter(BaseAdapter):
 
         return NautobotModelWrapper(self, content_type)
 
+    @atomic
+    def tag_issues(self, summary: ImportSummary) -> None:
+        """Tag all records with any ImporterIssue."""
+        logger.info("Tagging all instance with issues")
+
+        for item in summary.nautobot:
+            self.get_or_create_wrapper(item.content_type).tag_issues(item.issues)
+
+    def get_content_type_str(self, content_type_uid: Uid) -> ContentTypeStr:
+        """Find Nautobot content type string for a given UID."""
+        content_type_wrapper = self.get_or_create_wrapper("contenttypes.contenttype")
+        instance = content_type_wrapper.find_or_create({"id": content_type_uid})
+        if not instance:
+            raise ValueError(f"Content type {content_type_uid} not found")
+
+        return f"{getattr(instance, 'app_label')}.{getattr(instance, 'model')}"
+
 
 class NautobotField:
     """Wrapper for a Nautobot field."""
@@ -156,17 +155,17 @@ class NautobotField:
     @property
     def is_reference(self) -> bool:
         """Check if the field is a reference."""
-        return self.internal_type in _REFERENCE_TYPES
+        return self.internal_type in INTERNAL_REFERENCE_TYPES
 
     @property
     def is_integer(self) -> bool:
         """Check if the field is an integer."""
-        return self.internal_type in _INTEGER_TYPES
+        return self.internal_type in INTERNAL_INTEGER_FIELDS
 
     @property
     def is_auto_increment(self) -> bool:
         """Check if the field is an integer."""
-        return self.internal_type in _AUTO_INCREMENT_TYPES
+        return self.internal_type in INTERNAL_AUTO_INC_TYPES
 
     @property
     def is_content_type(self) -> bool:
@@ -179,7 +178,7 @@ class NautobotField:
     @property
     def can_import(self) -> bool:
         """Determine if this field can be imported."""
-        return self.internal_type not in _DONT_IMPORT_TYPES
+        return self.internal_type not in INTERNAL_DONT_IMPORT_TYPES
 
 
 NautobotFields = MutableMapping[FieldName, NautobotField]
@@ -229,6 +228,7 @@ class NautobotModelWrapper:
 
         self.constructor_kwargs: Dict[FieldName, Any] = {}
         self.stats = NautobotModelStats()
+        self.uid_to_source: Dict[Uid, str] = {}
 
         logger.debug("Created %s", self)
 
@@ -264,21 +264,13 @@ class NautobotModelWrapper:
         if self.disabled:
             raise RuntimeError("Cannot create importer for disabled model")
 
-        annotations = {}
         attributes = []
+        field_definitions = {}
         identifiers = []
 
-        class_definition = {
-            "__annotations__": annotations,
-            "_attributes": attributes,
-            "_identifiers": identifiers,
-            "_modelname": self.content_type.replace(".", "_"),
-            "_wrapper": self,
-        }
-
-        annotations[self.pk_field.name] = INTERNAL_TYPE_TO_ANNOTATION[self.pk_field.internal_type]
+        pk_type = INTERNAL_TYPE_TO_ANNOTATION[self.pk_field.internal_type]
+        field_definitions[self.pk_field.name] = (pk_type, Field())
         identifiers.append(self.pk_field.name)
-        class_definition[self.pk_field.name] = PydanticField()
 
         for field in self.fields.values():
             if field.name in identifiers or not field.can_import:
@@ -286,28 +278,46 @@ class NautobotModelWrapper:
 
             if field.is_reference:
                 related_type = StrToInternalFieldType[field.related_meta.pk.get_internal_type()]  # type: ignore
-                annotation = INTERNAL_TYPE_TO_ANNOTATION[related_type]
+                field_type = INTERNAL_TYPE_TO_ANNOTATION[related_type]
                 if field.internal_type == InternalFieldType.MANY_TO_MANY_FIELD:
-                    annotation = Set[annotation]
+                    field_type = Set[field_type]
             else:
-                annotation = INTERNAL_TYPE_TO_ANNOTATION[field.internal_type]
+                field_type = INTERNAL_TYPE_TO_ANNOTATION[field.internal_type]
 
+            field_type = Optional[field_type]
+
+            field_definitions[field.name] = (field_type, Field(default=None))
             attributes.append(field.name)
-            if not field.required:
-                annotation = Optional[annotation]
-            annotations[field.name] = annotation
-            class_definition[field.name] = PydanticField(default=None)
+
+        model_name = self.content_type.replace(".", "_")
 
         try:
-            result = type(class_definition["_modelname"], (DiffSyncBaseModel,), class_definition)
+            result = create_model(model_name, __base__=DiffSyncBaseModel, **field_definitions)
+            # pylint: disable=protected-access
+            result._modelname = model_name
+            # pylint: disable=protected-access
+            result._attributes = tuple(attributes)
+            # pylint: disable=protected-access
+            result._identifiers = tuple(identifiers)
+            # pylint: disable=protected-access
+            result._wrapper = self
+
             self._diffsync_class = result
         except Exception:
-            logger.error("Failed to create DiffSync Model %s", class_definition, exc_info=True)
+            logger.error("Failed to create DiffSync Model %s", field_definitions, exc_info=True)
             raise
 
-        logger.debug("Created DiffSync Model %s", class_definition)
+        logger.debug("Created DiffSync result %s", field_definitions)
 
         return result
+
+    @property
+    def content_type_id(self) -> Optional[int]:
+        """Get the Nautobot content type ID."""
+        if self.disabled:
+            return None
+
+        return self.content_type_instance.pk  # type: ignore
 
     def get_summary(self) -> NautobotModelSummary:
         """Get the summary."""
@@ -317,14 +327,14 @@ class NautobotModelWrapper:
 
         return NautobotModelSummary(
             content_type=self.content_type,
-            content_type_id=None if self.disabled else self.content_type_instance.pk,
+            content_type_id=self.content_type_id,
             stats=self.stats,
             issues=issues,
             flags=str(self.flags),
             disabled=self.disabled,
         )
 
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments,too-many-positional-arguments
     def add_issue(  # noqa: PLR0913
         self,
         issue_type="",
@@ -362,7 +372,7 @@ class NautobotModelWrapper:
         self._issues.append(issue)
         return issue
 
-    # pylint: disable=too-many-arguments,too-many-branches
+    # pylint: disable=too-many-arguments,too-many-branches,too-many-positional-arguments
     def _create_issue(  # noqa: PLR0912, PLR0913
         self,
         issue_type="",
@@ -377,7 +387,7 @@ class NautobotModelWrapper:
         """Create an issue."""
         if not issue_type:
             if error:
-                issue_type = error.__class__.__name__
+                issue_type = getattr(error, "issue_type", None) or error.__class__.__name__
             else:
                 issue_type = "Unknown"
 
@@ -416,6 +426,7 @@ class NautobotModelWrapper:
 
         issue = ImporterIssue(
             uid=str(uid),
+            source_reference=self.uid_to_source.get(str(uid), ""),
             name=nautobot_name,
             issue_type=issue_type,
             message=" ".join(get_message()),
@@ -522,7 +533,7 @@ class NautobotModelWrapper:
         nautobot_field, internal_type = get_nautobot_field_and_type(self.model, field_name)
 
         if (
-            internal_type in _REFERENCE_TYPES
+            internal_type in INTERNAL_REFERENCE_TYPES
             and internal_type != InternalFieldType.MANY_TO_MANY_FIELD
             and not field_name.endswith("_id")
         ):
@@ -574,8 +585,30 @@ class NautobotModelWrapper:
             if field.can_import:
                 set_value(field.name, field.internal_type)
 
+    # pylint: disable=too-many-statements
     def save_nautobot_instance(self, instance: NautobotBaseModel, values: RecordData) -> bool:
-        """Save a Nautobot instance."""
+        """Save a Nautobot instance.
+
+        When the first Nautobot `save()` fails, importer calls `super.save()`.
+        If that passes, `FirstSaveFailed` issue is created.
+        This is to skip Nautobot checks/updates defined in `save()` method.
+
+        If super.save() fails, it creates `SaveFailed` issue, and the instance is not saved.
+        This can lead to integrity errors if the missing instance is referenced by other instances.
+
+        After the save, `clean()` is called on the instance. If it fails, it creates a `CleanFailed` issue.
+
+        It's possible to define force fields that are set after the initial save.
+        This is to override any values set by Nautobot `save()` method.
+        To define field as forced, specify `"<field name>": fields.force()` in `configure_model(fields={ ... })`.
+
+        Args:
+            instance: The Nautobot model instance to save
+            values: Dictionary of field values to apply to the instance
+
+        Returns:
+            bool: True if the instance was saved successfully, False otherwise
+        """
 
         def set_custom_field_data(value: Optional[Mapping]):
             custom_field_data = getattr(instance, "custom_field_data", None)
@@ -590,6 +623,47 @@ class NautobotModelWrapper:
                 setattr(instance, field_name, "")
             else:
                 setattr(instance, field_name, None)
+
+        def super_save(instance, exception: Optional[Exception] = None):
+            """This function is called when the first save fails on the super class.
+
+            If the save fails it recursively traverses the class hierarchy and calls `super.save()` on each class.
+            """
+            instance = super(instance.__class__, instance)
+
+            if not hasattr(instance, "save"):
+                raise exception or ValueError(f"Missing save method for {instance}")
+
+            try:
+                with atomic():  # type: ignore
+                    instance.save()
+            # pylint: disable=broad-exception-caught
+            except Exception as error:
+                logger.warning("Super save failed: %s", error, exc_info=True)
+                super_save(instance, error)
+
+        def save_or_super_save():
+            error = None
+
+            try:
+                # Process the first save
+                with atomic():  # type: ignore
+                    instance.save()
+                return
+            # pylint: disable=broad-exception-caught
+            except Exception as exception:
+                error = exception
+                logger.warning("First save failed: %s", exception, exc_info=True)
+
+            super_save(instance)
+
+            # Create `FirstSaveFailed` issue when `super.save()` passes, otherwise `SaveFailed` issue will be created by the caller.
+            self.add_issue(
+                "FirstSaveFailed",
+                nautobot_instance=instance,
+                data=values,
+                error=error,
+            )
 
         @atomic
         def save():
@@ -612,13 +686,13 @@ class NautobotModelWrapper:
                 else:
                     setattr(instance, field_name, value)
 
-            instance.save()
+            save_or_super_save()
 
             if force_fields:
                 # These fields has to be set after the initial save to override any default values.
                 for field_name, value in force_fields.items():
                     setattr(instance, field_name, value)
-                instance.save()
+                save_or_super_save()
 
             for field_name in m2m_fields:
                 field = getattr(instance, field_name)
@@ -629,7 +703,7 @@ class NautobotModelWrapper:
                     field.clear()
 
         try:
-            save()
+            save()  # type: ignore
         # pylint: disable=broad-exception-caught
         except Exception as error:
             self.stats.save_failed += 1
@@ -655,6 +729,41 @@ class NautobotModelWrapper:
 
         return True
 
+    def tag_issues(self, issues: Iterable[ImporterIssue]) -> None:
+        """Tag all records with any ImporterIssue."""
+        if not issues:
+            return
+
+        model = self.model
+
+        if not hasattr(model, "tags"):
+            return
+
+        for issue in issues:
+            if not issue.uid:
+                continue
+
+            try:
+                nautobot_instance = model.objects.get(id=issue.uid)
+            except model.DoesNotExist:  # type: ignore
+                continue
+
+            tag_name = get_issue_tag(issue)
+            tag, _ = Tag.objects.get_or_create(
+                id=source_pk_to_uuid("extras.tag", tag_name),
+                defaults={
+                    "name": tag_name,
+                    "description": f"Import issue: {tag_name}",
+                },
+            )
+
+            logger.debug("Tagging %s %s %s", self.content_type, issue.uid, tag_name)
+
+            if not tag.content_types.filter(id=self.content_type_id).exists():
+                tag.content_types.add(self.content_type_instance)
+
+            nautobot_instance.tags.add(tag)
+
 
 class DiffSyncBaseModel(DiffSyncModel):
     """Base class for all DiffSync models."""
@@ -662,14 +771,14 @@ class DiffSyncBaseModel(DiffSyncModel):
     _wrapper: NautobotModelWrapper
 
     @classmethod
-    def create(cls, diffsync: DiffSync, ids: dict, attrs: dict) -> Optional["DiffSyncBaseModel"]:
+    def create(cls, adapter: Adapter, ids: dict, attrs: dict) -> Optional["DiffSyncBaseModel"]:
         """Create this model instance, both in Nautobot and in DiffSync."""
         wrapper = cls._wrapper
 
         instance = None
         try:
             instance = wrapper.model(**wrapper.constructor_kwargs, **ids)
-            result = super().create(diffsync, ids, attrs)
+            result = super().create(adapter, ids, attrs)
         # pylint: disable=broad-exception-caught
         except Exception as error:
             wrapper.add_issue(

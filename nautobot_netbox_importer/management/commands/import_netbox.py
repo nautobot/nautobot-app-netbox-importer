@@ -2,8 +2,11 @@
 
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
+from packaging.version import Version
 
 from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
+
+_DEFAULT_NETBOX_VERSION = str(NetBoxImporterOptions._field_defaults["netbox_version"])
 
 
 class Command(BaseCommand):
@@ -47,10 +50,28 @@ class Command(BaseCommand):
             "`'A Location of type Location may only have a Location of the same type as its parent.'`.",
         )
         parser.add_argument(
+            "--tag-issues",
+            action="store_true",
+            dest="tag_issues",
+            help="Whether to tag Nautobot records with any importer issues.",
+        )
+        parser.add_argument(
+            "--deduplicate-ipam",
+            action="store_true",
+            dest="deduplicate_ipam",
+            help="Deduplicate `ipam.prefix` and `ipam.aggregate` from NetBox. `prefix` value will be unique. (default: False)",
+        )
+        parser.add_argument(
             "--fix-powerfeed-locations",
             action="store_true",
             dest="fix_powerfeed_locations",
             help="Fix panel location to match rack location based on powerfeed.",
+        )
+        parser.add_argument(
+            "--create-missing-cable-terminations",
+            action="store_true",
+            dest="create_missing_cable_terminations",
+            help="Create missing cable terminations as Nautobot requires both cable terminations to be defined to save cable instances.",
         )
         parser.add_argument(
             "--print-summary",
@@ -81,14 +102,32 @@ class Command(BaseCommand):
             dest="trace_issues",
             help="Show a detailed trace of issues originated from any `Exception` found during the import.",
         )
+        parser.add_argument(
+            "--customizations",
+            dest="customizations",
+            help="Paths to a Python module containing customizations to apply during the import. (default: empty)",
+        )
+        parser.add_argument(
+            "--netbox-version",
+            dest="netbox_version",
+            help=f"SemVer NetBox version string to use for the import. (default: '{_DEFAULT_NETBOX_VERSION}')",
+            default=_DEFAULT_NETBOX_VERSION,
+        )
 
     def handle(self, json_file, **kwargs):  # type: ignore
         """Handle execution of the import_netbox management command."""
         call_command("migrate")
 
+        customizations = (kwargs.pop("customizations") or "").split(",")
+        netbox_version = Version(kwargs.pop("netbox_version", _DEFAULT_NETBOX_VERSION))
+
         # pylint: disable=protected-access
         keys = NetBoxImporterOptions._fields
-        options = NetBoxImporterOptions(**{key: value for key, value in kwargs.items() if key in keys})
+        options = NetBoxImporterOptions(
+            **{key: value for key, value in kwargs.items() if key in keys},
+            customizations=customizations,
+            netbox_version=netbox_version,
+        )
 
         adapter = NetBoxAdapter(json_file, options)
         adapter.import_to_nautobot()
