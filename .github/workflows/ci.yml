@@ -151,7 +151,11 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
+<<<<<<< HEAD
         python-version: ["3.9"]  # 3.12 2.4 is tested in unittest_report stage.
+=======
+        python-version: ["3.9"]  # 3.12 stable is tested in unittest_report stage.
+>>>>>>> 4377113 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
         db-backend: ["postgresql"]
         nautobot-version: ["2.4.9"]
     runs-on: "ubuntu-22.04"

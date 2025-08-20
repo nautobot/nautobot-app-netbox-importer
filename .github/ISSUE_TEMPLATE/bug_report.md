@@ -1,6 +1,8 @@
 ---
 name: 🐛 Bug Report
 about: Report a reproducible bug in the current release of nautobot-netbox-importer
+labels:
+  - "type: bug"
 ---
 
 ### Environment
