@@ -1,4 +1,4 @@
-from nautobot.apps.jobs import Job, FileVar, BooleanVar, CharVar, register_jobs
+from nautobot.apps.jobs import Job, BooleanVar, FileVar, register_jobs, StringVar
 from packaging.version import Version
 
 from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
@@ -95,7 +95,7 @@ class NetBoxImporter(Job):
         required=False,
     )
 
-    netbox_version = CharVar(
+    netbox_version = StringVar(
         description="The version of NetBox that the JSON export file was generated from. This is used to handle any differences in the data model between versions.",
         label="NetBox Version",
         required=False,
