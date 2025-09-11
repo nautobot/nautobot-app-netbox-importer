@@ -1,7 +1,7 @@
 from nautobot.apps.jobs import Job, BooleanVar, FileVar, register_jobs, StringVar
 from packaging.version import Version
 
-from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
+from jobs.nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
 
 _DEFAULT_NETBOX_VERSION = str(NetBoxImporterOptions._field_defaults["netbox_version"])
 
