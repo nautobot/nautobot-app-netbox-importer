@@ -1,9 +1,10 @@
 from nautobot.apps.jobs import Job, BooleanVar, FileVar, register_jobs, StringVar
 from packaging.version import Version
 
-from .nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
+# from .nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
 
-_DEFAULT_NETBOX_VERSION = str(NetBoxImporterOptions._field_defaults["netbox_version"])
+# _DEFAULT_NETBOX_VERSION = str(NetBoxImporterOptions._field_defaults["netbox_version"])
+_DEFAULT_NETBOX_VERSION = "4.0.0"
 
 
 class NetBoxImporter(Job):
@@ -105,14 +106,15 @@ class NetBoxImporter(Job):
     def run(self, json_file, *args, **kwargs):
         # customizations = (args.pop("customizations") or "").split(",")
         netbox_version = Version(args.pop("netbox_version", _DEFAULT_NETBOX_VERSION))
-        keys = NetBoxImporterOptions._fields
-        options = NetBoxImporterOptions(
-            **{key: value for key, value in kwargs.items() if key in keys},
-            netbox_version=netbox_version,
-        )
+        # keys = NetBoxImporterOptions._fields
+        # options = NetBoxImporterOptions(
+        #     **{key: value for key, value in kwargs.items() if key in keys},
+        #     netbox_version=netbox_version,
+        # )
 
-        adapter = NetBoxAdapter(json_file, options)
-        adapter.import_to_nautobot()
+        # adapter = NetBoxAdapter(json_file, options)
+        # adapter.import_to_nautobot()
+        self.logger.info("Job loaded.")
 
 
 register_jobs(NetBoxImporter)
