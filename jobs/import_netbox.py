@@ -1,10 +1,10 @@
 from nautobot.apps.jobs import Job, BooleanVar, FileVar, register_jobs, StringVar
-from packaging.version import Version
+# from packaging.version import Version
 
 # from .nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
 
 # _DEFAULT_NETBOX_VERSION = str(NetBoxImporterOptions._field_defaults["netbox_version"])
-_DEFAULT_NETBOX_VERSION = "4.0.0"
+# _DEFAULT_NETBOX_VERSION = "4.0.0"
 
 
 class NetBoxImporter(Job):
@@ -96,16 +96,16 @@ class NetBoxImporter(Job):
         required=False,
     )
 
-    netbox_version = StringVar(
-        description="The version of NetBox that the JSON export file was generated from. This is used to handle any differences in the data model between versions.",
-        label="NetBox Version",
-        required=False,
-        default=_DEFAULT_NETBOX_VERSION
-    )
+    # netbox_version = StringVar(
+    #     description="The version of NetBox that the JSON export file was generated from. This is used to handle any differences in the data model between versions.",
+    #     label="NetBox Version",
+    #     required=False,
+    #     default=_DEFAULT_NETBOX_VERSION
+    # )
 
     def run(self, json_file, *args, **kwargs):
         # customizations = (args.pop("customizations") or "").split(",")
-        netbox_version = Version(args.pop("netbox_version", _DEFAULT_NETBOX_VERSION))
+        # netbox_version = Version(args.pop("netbox_version", _DEFAULT_NETBOX_VERSION))
         # keys = NetBoxImporterOptions._fields
         # options = NetBoxImporterOptions(
         #     **{key: value for key, value in kwargs.items() if key in keys},
