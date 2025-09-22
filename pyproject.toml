@@ -41,7 +41,8 @@ packaging = "^24.1"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
-django-debug-toolbar = "*"
+# Currently pinned to <6.0.0 due to https://github.com/django-commons/django-debug-toolbar/issues/2168
+django-debug-toolbar = "<6.0.0"
 invoke = "*"
 ipython = "*"
 pylint = "*"
