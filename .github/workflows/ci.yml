@@ -154,6 +154,9 @@ jobs:
       fail-fast: true
       matrix:
         python-version: ["3.9"]  # 3.12 2.4 is tested in unittest_report stage.
+        db-backend: ["postgresql"]
+        nautobot-version: ["2.4.9"]
+    runs-on: "ubuntu-latest"
     env:
       INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER: "${{ matrix.python-version }}"
       INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
