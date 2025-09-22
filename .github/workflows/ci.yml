@@ -106,13 +106,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-<<<<<<< HEAD
         python-version: ["3.12"]
         nautobot-version: ["2.4.9"]
-=======
-        python-version: ["3.11"]
-        nautobot-version: ["2.4.2"]
->>>>>>> e0f0b39 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
     env:
       INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER: "${{ matrix.python-version }}"
       INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
@@ -158,28 +153,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-<<<<<<< HEAD
-<<<<<<< HEAD
         python-version: ["3.9"]  # 3.12 2.4 is tested in unittest_report stage.
-=======
-        python-version: ["3.9"]  # 3.12 stable is tested in unittest_report stage.
->>>>>>> 4377113 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
-        db-backend: ["postgresql"]
-        nautobot-version: ["2.4.9"]
-    runs-on: "ubuntu-22.04"
-=======
-        python-version: ["3.9"]  # 3.12 stable is tested in unittest_report stage.
-        db-backend: ["postgresql"]
-        nautobot-version: ["stable"]
-        include:
-          - python-version: "3.11"
-            db-backend: "postgresql"
-            nautobot-version: "2.4.2"
-          - python-version: "3.12"
-            db-backend: "mysql"
-            nautobot-version: "stable"
-    runs-on: "ubuntu-latest"
->>>>>>> e0f0b39 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
     env:
       INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER: "${{ matrix.python-version }}"
       INVOKE_NAUTOBOT_NETBOX_IMPORTER_NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
@@ -227,13 +201,8 @@ jobs:
       matrix:
         python-version: ["3.12"]
         db-backend: ["postgresql"]
-<<<<<<< HEAD
         nautobot-version: ["2.4"]
-    runs-on: "ubuntu-22.04"
-=======
-        nautobot-version: ["stable"]
     runs-on: "ubuntu-latest"
->>>>>>> e0f0b39 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
     permissions:
       pull-requests: "write"
       contents: "write"

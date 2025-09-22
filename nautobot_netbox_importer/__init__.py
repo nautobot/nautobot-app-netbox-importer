@@ -18,11 +18,6 @@ class NautobotNetboxImporterConfig(NautobotAppConfig):
     description = "Data importer from NetBox 3.x to Nautobot 2.x."
     base_url = "netbox-importer"
     required_settings = []
-<<<<<<< HEAD
-    min_version = "2.4.9"
-    max_version = "2.9999"
-=======
->>>>>>> e0f0b39 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
     default_settings = {}
     caching_config = {}
     docs_view_name = "plugins:nautobot_netbox_importer:docs"
