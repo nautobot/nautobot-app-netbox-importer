@@ -1,6 +1,6 @@
 {
     "cookiecutter": {
-        "codeowner_github_usernames": "@glennmatthews @jathanism @lampwins @chadell",
+        "codeowner_github_usernames": "@nautobot/maintain-nautobot-apps",
         "full_name": "Network to Code, LLC",
         "email": "opensource@networktocode.com",
         "github_org": "nautobot",
