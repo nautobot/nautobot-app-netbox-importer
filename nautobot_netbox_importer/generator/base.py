@@ -20,6 +20,15 @@ from timezone_field import TimeZoneField
 
 from nautobot_netbox_importer.base import ContentTypeStr, Uid
 
+import logging
+csv_logger = logging.getLogger("nautobot-netbox-importer-pk-mapping")
+csv_logger.setLevel(logging.INFO)
+csv_file_handler = logging.FileHandler("/tmp/pk_mapping.csv", mode='a')
+csv_file_handler.setLevel(logging.INFO)
+csv_formatter = logging.Formatter("%(message)s")
+csv_file_handler.setFormatter(csv_formatter)
+csv_logger.addHandler(csv_file_handler)
+
 NautobotBaseModel = BaseModel
 NautobotBaseModelType = Type[NautobotBaseModel]
 DjangoModelMeta = _DjangoModelMeta
@@ -198,6 +207,7 @@ def source_pk_to_uuid(
     would defeat the purpose.
     """
     if isinstance(pk, UUID):
+        csv_logger.info(f"{content_type},{pk},{pk}")
         return pk
 
     if isinstance(pk, int):
@@ -206,7 +216,10 @@ def source_pk_to_uuid(
     if not pk or not isinstance(pk, str):
         raise ValueError(f"Invalid primary key {pk}")
 
-    return uuid5(namespace, f"{content_type}:{pk}")
+    new_pk = uuid5(namespace, f"{content_type}:{pk}")
+    csv_logger.info(f"{content_type},{pk},{new_pk}")
+
+    return new_pk
 
 
 def normalize_datetime(value: Any) -> Optional[datetime.datetime]:

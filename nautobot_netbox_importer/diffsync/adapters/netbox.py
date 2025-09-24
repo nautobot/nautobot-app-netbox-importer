@@ -11,7 +11,7 @@ from django.core.management import call_command
 from django.db.transaction import atomic
 from packaging.version import Version
 
-from nautobot_netbox_importer.base import GENERATOR_SETUP_MODULES, logger, register_generator_setup
+from nautobot_netbox_importer.base import GENERATOR_SETUP_MODULES, register_generator_setup
 from nautobot_netbox_importer.diffsync.models.cables import create_missing_cable_terminations
 from nautobot_netbox_importer.diffsync.models.dcim import fix_power_feed_locations, unrack_zero_uheight_devices
 from nautobot_netbox_importer.generator import SourceAdapter, SourceDataGenerator, SourceRecord
@@ -28,6 +28,7 @@ for _name in (
     "locations",
     "object_change",
     "tags",
+    # "tenancy",
     "virtualization",
 ):
     register_generator_setup(f"nautobot_netbox_importer.diffsync.models.{_name}")
@@ -78,10 +79,12 @@ class NetBoxAdapter(SourceAdapter):
             *args,
             get_source_data=_get_reader(input_ref),
             trace_issues=options.trace_issues,
+            job=job,
             **kwargs,
         )
         self.job = job
         self.sync = sync
+        self.logger = self.job.logger if self.job else None
 
         self.options = options
 
@@ -117,7 +120,7 @@ class NetBoxAdapter(SourceAdapter):
             commited = True
         except (_DryRunException, _ImporterIssuesDetected) as error:
             exception = error
-            logger.info("Data were not saved: %s", error)
+            self.logger.info("Data were not saved: %s", error)
 
         if self.options.save_json_summary_path:
             self.summary.dump(self.options.save_json_summary_path, output_format="json")
@@ -126,9 +129,9 @@ class NetBoxAdapter(SourceAdapter):
 
         if commited:
             if self.options.update_paths:
-                logger.info("Updating paths ...")
+                self.logger.info("Updating paths ...")
                 call_command("trace_paths", no_input=True)
-                logger.info(" ... Updating paths completed.")
+                self.logger.info(" ... Updating paths completed.")
 
             if self.options.tag_issues:
                 self.nautobot.tag_issues(self.summary)  # type: ignore
@@ -137,9 +140,9 @@ class NetBoxAdapter(SourceAdapter):
             self.summary.print()
 
         if commited:
-            logger.info("Import completed successfully.")
+            self.logger.info("Import completed successfully.")
         else:
-            logger.error("Data were not saved %s", exception)
+            self.logger.error("Data were not saved %s", exception)
 
     @atomic
     def _atomic_import(self) -> None:
@@ -219,4 +222,9 @@ def _get_reader(input_ref: _FileRef) -> SourceDataGenerator:
     if isinstance(input_ref, ParseResult):
         return _get_reader_from_url(input_ref)
 
-    raise ValueError(f"Unsupported file reference: {input_ref}")
+    def reader():
+        yield from _read_stream(input_ref)
+        input_ref.seek(0)
+    return reader
+
+    # raise ValueError(f"Unsupported file reference: {input_ref}")

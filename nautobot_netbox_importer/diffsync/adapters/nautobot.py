@@ -18,3 +18,4 @@ class NautobotAdapter(_NautobotAdapter):
         super().__init__(*args, **kwargs)
         self.job = job
         self.sync = sync
+        self.logger = self.job.logger if self.job else None

@@ -11,7 +11,7 @@ from nautobot.core.utils.lookup import get_model_from_name
 from nautobot.extras.models import Tag
 from pydantic import Field, create_model
 
-from nautobot_netbox_importer.base import FieldName, RecordData, logger
+from nautobot_netbox_importer.base import FieldName, RecordData
 from nautobot_netbox_importer.generator.base import (
     AUTO_ADD_FIELDS,
     EMPTY_VALUES,
@@ -91,11 +91,14 @@ IMPORT_ORDER: Iterable[ContentTypeStr] = (
 class NautobotAdapter(BaseAdapter):
     """Nautobot DiffSync Adapter."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, job=None, **kwargs):
         """Initialize the adapter."""
+        print(kwargs)
         super().__init__("Nautobot", *args, **kwargs)
         self.wrappers: Dict[ContentTypeStr, NautobotModelWrapper] = {}
         self.trace_issues = False
+        self.job = job
+        self.logger = self.job.logger if self.job else None
 
     def get_or_create_wrapper(self, content_type: ContentTypeStr) -> "NautobotModelWrapper":
         """Get or create a Nautobot model wrapper."""
@@ -107,7 +110,7 @@ class NautobotAdapter(BaseAdapter):
     @atomic
     def tag_issues(self, summary: ImportSummary) -> None:
         """Tag all records with any ImporterIssue."""
-        logger.info("Tagging all instance with issues")
+        self.logger.info("Tagging all instance with issues")
 
         for item in summary.nautobot:
             self.get_or_create_wrapper(item.content_type).tag_issues(item.issues)
@@ -196,6 +199,7 @@ class NautobotModelWrapper:
         self.flags = DiffSyncModelFlags.SKIP_UNMATCHED_DST
 
         self.adapter = adapter
+        self.logger = self.adapter.logger
         adapter.wrappers[content_type] = self
         self.content_type = content_type
         try:
@@ -210,7 +214,7 @@ class NautobotModelWrapper:
         self.last_id = 0
 
         if self.disabled:
-            logger.info("Skipping unknown model %s", content_type)
+            self.logger.info("Skipping unknown model %s", content_type)
             self._pk_field = None
         else:
             self._pk_field = self.add_field(self.model_meta.pk.name)  # type: ignore
@@ -230,7 +234,7 @@ class NautobotModelWrapper:
         self.stats = NautobotModelStats()
         self.uid_to_source: Dict[Uid, str] = {}
 
-        logger.debug("Created %s", self)
+        self.logger.debug("Created %s", self)
 
     def __str__(self) -> str:
         """Return a string representation of the wrapper."""
@@ -304,10 +308,10 @@ class NautobotModelWrapper:
 
             self._diffsync_class = result
         except Exception:
-            logger.error("Failed to create DiffSync Model %s", field_definitions, exc_info=True)
+            self.logger.error("Failed to create DiffSync Model %s", field_definitions, exc_info=True)
             raise
 
-        logger.debug("Created DiffSync result %s", field_definitions)
+        self.logger.debug("Created DiffSync result %s", field_definitions)
 
         return result
 
@@ -433,9 +437,9 @@ class NautobotModelWrapper:
             data=data_dict,
         )
 
-        logger.warning(str(issue))
+        self.logger.warning(str(issue))
         if error and self.adapter.trace_issues:
-            logger.error("Issue traceback", exc_info=error)
+            self.logger.error("Issue traceback", exc_info=error)
 
         return issue
 
@@ -545,7 +549,7 @@ class NautobotModelWrapper:
             if field.internal_type != internal_type:
                 raise ValueError(f"Field {field_name} already exists with different type {self.fields[field_name]}")
         else:
-            logger.debug("Adding nautobot field %s %s %s", self.content_type, field_name, internal_type)
+            self.logger.debug("Adding nautobot field %s %s %s", self.content_type, field_name, internal_type)
             field = NautobotField(field_name, internal_type, nautobot_field)
             self.fields[field_name] = field
 
@@ -639,7 +643,7 @@ class NautobotModelWrapper:
                     instance.save()
             # pylint: disable=broad-exception-caught
             except Exception as error:
-                logger.warning("Super save failed: %s", error, exc_info=True)
+                self.logger.warning("Super save failed: %s", error, exc_info=True)
                 super_save(instance, error)
 
         def save_or_super_save():
@@ -653,7 +657,7 @@ class NautobotModelWrapper:
             # pylint: disable=broad-exception-caught
             except Exception as exception:
                 error = exception
-                logger.warning("First save failed: %s", exception, exc_info=True)
+                self.logger.warning("First save failed: %s", exception, exc_info=True)
 
             super_save(instance)
 
@@ -757,7 +761,7 @@ class NautobotModelWrapper:
                 },
             )
 
-            logger.debug("Tagging %s %s %s", self.content_type, issue.uid, tag_name)
+            self.logger.debug("Tagging %s %s %s", self.content_type, issue.uid, tag_name)
 
             if not tag.content_types.filter(id=self.content_type_id).exists():
                 tag.content_types.add(self.content_type_instance)
