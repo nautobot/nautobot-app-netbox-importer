@@ -4,7 +4,7 @@ import json
 from uuid import UUID
 
 from nautobot_netbox_importer.base import RecordData
-from nautobot_netbox_importer.generator import DiffSyncBaseModel, PreImportResult, SourceAdapter, SourceField, fields
+from nautobot_netbox_importer.generator import DiffSyncBaseModel, SourceAdapter, SourceField, fields
 
 from .locations import define_location
 
@@ -39,18 +39,8 @@ def _define_units(field: SourceField) -> None:
     field.set_importer(units_importer)
 
 
-def _pre_import_cable_termination(source: RecordData, _) -> PreImportResult:
-    cable_end = source.pop("cable_end").lower()
-    source["id"] = source.pop("cable")
-    source[f"termination_{cable_end}_type"] = source.pop("termination_type")
-    source[f"termination_{cable_end}_id"] = source.pop("termination_id")
-
-    return PreImportResult.USE_RECORD
-
-
 def setup(adapter: SourceAdapter) -> None:
     """Map NetBox DCIM models to Nautobot."""
-    adapter.disable_model("dcim.cablepath", "Recreated in Nautobot on signal when circuit termination is created")
     adapter.configure_model(
         "dcim.rackreservation",
         fields={
@@ -64,12 +54,6 @@ def setup(adapter: SourceAdapter) -> None:
             "location": define_location,
             "role": fields.role(adapter, "dcim.rackrole"),
         },
-    )
-    adapter.configure_model("dcim.cable")
-    adapter.configure_model(
-        "dcim.cabletermination",
-        extend_content_type="dcim.cable",
-        pre_import=_pre_import_cable_termination,
     )
     adapter.configure_model(
         "dcim.interface",
@@ -145,7 +129,7 @@ def unrack_zero_uheight_devices(adapter: SourceAdapter) -> None:
         if getattr(item, "position", None) and getattr(item, "device_type_id") in device_type_ids:
             position.set_nautobot_value(item, None)
             adapter.update(item)
-            position.add_issue("Unracked", "Device unracked due to 0U height", item)
+            position.add_issue("UnrackedIssue", "Device unracked due to 0U height", item)
 
 
 # pylint: disable=too-many-locals
@@ -185,7 +169,7 @@ def fix_power_feed_locations(adapter: SourceAdapter) -> None:
         if not isinstance(location_uid, UUID):
             raise TypeError(f"Location UID must be UUID, got {type(location_uid)}")
 
-        target.location_id = location_uid
+        target.location_id = location_uid  # type: ignore
         adapter.update(target)
 
         # Need to update references, to properly update `content_types` fields

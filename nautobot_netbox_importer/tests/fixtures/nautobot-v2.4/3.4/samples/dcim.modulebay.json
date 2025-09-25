@@ -1,0 +1,50 @@
+[
+{
+  "model": "dcim.modulebay",
+  "pk": "4f65697f-2043-506c-b131-c1b706a6b170",
+  "fields": {
+    "created": "2022-04-08T00:58:28.792Z",
+    "last_updated": "2025-05-29T07:31:41.991Z",
+    "_custom_field_data": {},
+    "parent_device": null,
+    "parent_module": null,
+    "name": "Slot 6",
+    "_name": "Slot 00000006",
+    "position": "6",
+    "label": "",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.modulebay",
+  "pk": "d6adc4b2-aa81-5522-a37f-8a57c1b415ac",
+  "fields": {
+    "created": "2022-04-08T00:58:29.335Z",
+    "last_updated": "2025-05-29T07:31:41.997Z",
+    "_custom_field_data": {},
+    "parent_device": null,
+    "parent_module": null,
+    "name": "Slot 13",
+    "_name": "Slot 00000013",
+    "position": "13",
+    "label": "",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.modulebay",
+  "pk": "f847eca6-5d32-5b0c-8841-cde92c34e1df",
+  "fields": {
+    "created": "2022-04-08T00:58:28.433Z",
+    "last_updated": "2025-05-29T07:31:41.987Z",
+    "_custom_field_data": {},
+    "parent_device": null,
+    "parent_module": null,
+    "name": "Slot 1",
+    "_name": "Slot 00000001",
+    "position": "1",
+    "label": "",
+    "description": ""
+  }
+}
+]

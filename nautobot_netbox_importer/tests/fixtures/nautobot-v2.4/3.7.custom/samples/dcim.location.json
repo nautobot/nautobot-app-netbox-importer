@@ -1,0 +1,56 @@
+[
+{
+  "model": "dcim.location",
+  "pk": "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
+  "fields": {
+    "created": "2024-02-14T12:22:26.202Z",
+    "last_updated": "2025-05-30T08:32:22.718Z",
+    "_custom_field_data": {},
+    "parent": null,
+    "name": "Site 1",
+    "_name": "Site 00000001",
+    "location_type": "8fceb641-4563-5da8-9004-963f9ed1965a",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "tenant": null,
+    "description": "",
+    "facility": "",
+    "asn": null,
+    "time_zone": "US/Pacific",
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "contact_name": "",
+    "contact_phone": "",
+    "contact_email": "",
+    "comments": ""
+  }
+},
+{
+  "model": "dcim.location",
+  "pk": "cf28b6e3-d0e5-59d1-80b0-f2df3642716e",
+  "fields": {
+    "created": "2019-02-28T00:00:00Z",
+    "last_updated": "2025-05-30T08:32:22.722Z",
+    "_custom_field_data": {},
+    "parent": "c75ebf9a-0f74-5c7f-982b-a1a42faf5b09",
+    "name": "Location 1",
+    "_name": "Location 00000001",
+    "location_type": "22004273-2182-50fd-b410-5e152ed9431a",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "tenant": null,
+    "description": "",
+    "facility": "",
+    "asn": null,
+    "time_zone": null,
+    "physical_address": "",
+    "shipping_address": "",
+    "latitude": null,
+    "longitude": null,
+    "contact_name": "",
+    "contact_phone": "",
+    "contact_email": "",
+    "comments": ""
+  }
+}
+]

@@ -1,0 +1,71 @@
+[
+{
+  "model": "circuits.circuittermination",
+  "pk": "76778cb6-5778-5b1c-a532-4be79f243f48",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:42.608Z",
+    "_custom_field_data": {},
+    "cable": "9b52f657-8255-5e47-932a-93d550046348",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "dd6e0af4-c602-4298-b2ec-a8970865d469",
+    "circuit": "8698bc50-a0f2-5e15-b909-de4f0cd241f8",
+    "term_side": "Z",
+    "location": null,
+    "provider_network": null,
+    "cloud_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittermination",
+  "pk": "c201bbbc-ef3f-521f-ab50-77005c5547cb",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:42.653Z",
+    "_custom_field_data": {},
+    "cable": "74326f5c-e8e3-5274-a04b-c54f9b3c9442",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "952f2703-b26d-429d-8b18-8bc2a1f29f22",
+    "circuit": "fd74b33d-6abb-50f1-8daf-13d949bdce61",
+    "term_side": "Z",
+    "location": null,
+    "provider_network": null,
+    "cloud_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+},
+{
+  "model": "circuits.circuittermination",
+  "pk": "c6fa35bb-17a5-595d-96ba-1b62e154e72c",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:42.659Z",
+    "_custom_field_data": {},
+    "cable": "589827c2-a1fa-57d9-8251-7cc8db6dd8c2",
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": "fa162099-f0a7-4873-8648-136b767782e8",
+    "circuit": "29941c3a-4079-5588-8a87-9aefa04eec39",
+    "term_side": "Z",
+    "location": null,
+    "provider_network": null,
+    "cloud_network": null,
+    "port_speed": null,
+    "upstream_speed": null,
+    "xconnect_id": "",
+    "pp_info": "",
+    "description": ""
+  }
+}
+]

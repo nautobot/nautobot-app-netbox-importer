@@ -2,7 +2,7 @@
 
 import logging
 from os import PathLike
-from typing import Any, List, MutableMapping, Tuple, Union
+from typing import Any, Callable, List, MutableMapping, Tuple, Union
 from uuid import UUID
 
 logger = logging.getLogger("nautobot-netbox-importer")
@@ -14,9 +14,12 @@ FieldName = str
 RecordData = MutableMapping[FieldName, Any]
 GenericForeignValue = Tuple[ContentTypeStr, Uid]
 Pathable = Union[str, PathLike]
+FillPlaceholder = Callable[[RecordData, str], None]
+NullablePrimitives = Union[str, int, float, bool, None]
 
-NOTHING = object()
+PLACEHOLDER_UID = "placeholder"
 GENERATOR_SETUP_MODULES: List[str] = []
+NOTHING = object()
 
 
 def register_generator_setup(module: str) -> None:
