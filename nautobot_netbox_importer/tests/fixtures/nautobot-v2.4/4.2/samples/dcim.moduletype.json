@@ -1,0 +1,15 @@
+[
+{
+  "model": "dcim.moduletype",
+  "pk": "ac1d2951-f7bd-51d2-bcb2-b67a36bd0a26",
+  "fields": {
+    "created": "2022-04-08T00:57:24.552Z",
+    "last_updated": "2025-05-30T09:13:01.608Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "model": "EX9200-32XS",
+    "part_number": "",
+    "comments": "32x10GE interfaces"
+  }
+}
+]

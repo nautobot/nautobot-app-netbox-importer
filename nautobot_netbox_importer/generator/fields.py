@@ -1,24 +1,34 @@
 """Generic Field Importers definitions for Nautobot Importer."""
 
+from collections import defaultdict
 from typing import Any, Dict, Optional
 from uuid import UUID
 
-from .base import EMPTY_VALUES, ContentTypeStr, Uid
-from .nautobot import DiffSyncBaseModel
-from .source import (
+from nautobot_netbox_importer.generator.base import (
+    EMPTY_VALUES,
+    INTERNAL_INTEGER_FIELDS,
+    INTERNAL_STRING_FIELDS,
+    ContentTypeStr,
+    Uid,
+)
+from nautobot_netbox_importer.generator.nautobot import DiffSyncBaseModel
+from nautobot_netbox_importer.generator.source import (
+    FallbackValueIssue,
     FieldName,
     ImporterPass,
     InternalFieldType,
     InvalidChoiceValueIssue,
-    PreImportResult,
+    PreImportRecordResult,
     RecordData,
     SourceAdapter,
     SourceContentType,
     SourceField,
     SourceFieldDefinition,
     SourceFieldImporterFallback,
-    SourceFieldImporterIssue,
+    SourceModelWrapper,
 )
+
+_AUTO_INCREMENTS = defaultdict(int)
 
 
 def default(default_value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition:
@@ -61,10 +71,7 @@ def fallback(
                     field.set_nautobot_value(target, value)
                     if isinstance(error, InvalidChoiceValueIssue):
                         raise InvalidChoiceValueIssue(field, field.get_source_value(source), value) from error
-                    raise SourceFieldImporterIssue(
-                        f"Failed to import field: {error} | Fallback value: {value}",
-                        field,
-                    ) from error
+                    raise FallbackValueIssue(field, value) from error
                 raise
 
         field.set_importer(fallback_importer, override=True)
@@ -109,7 +116,7 @@ def role(
     e.g., RackRole with `name = "Network"` and DeviceRole with `name = "Network"` to avoid duplicates.
     """
 
-    def cache_roles(source: RecordData, importer_pass: ImporterPass) -> PreImportResult:
+    def cache_roles(source: RecordData, importer_pass: ImporterPass) -> PreImportRecordResult:
         if importer_pass == ImporterPass.DEFINE_STRUCTURE:
             name = source.get("name", "").capitalize()
             if not name:
@@ -119,12 +126,12 @@ def role(
             if not uid:
                 _ROLE_NAME_TO_UID_CACHE[name] = nautobot_uid
 
-        return PreImportResult.USE_RECORD
+        return PreImportRecordResult.USE_RECORD
 
     role_wrapper = adapter.configure_model(
         source_content_type,
         nautobot_content_type="extras.role",
-        pre_import=cache_roles,
+        pre_import_record=cache_roles,
         identifiers=("name",),
         fields={
             # Include color to allow setting the default Nautobot value, import fails without it.
@@ -181,15 +188,29 @@ def source_constant(value: Any, nautobot_name: FieldName = "") -> SourceFieldDef
     return define_source_constant
 
 
-def constant(value: Any, nautobot_name: FieldName = "") -> SourceFieldDefinition:
-    """Create a constant field definition.
+def constant(
+    value: Any,
+    nautobot_name: FieldName = "",
+    reference: Optional[SourceModelWrapper] = None,
+) -> SourceFieldDefinition:
+    """Create a constant field definition for target record.
 
-    Use to fill target constant value for the field.
+    Map a constant value to a specific field in the target model.
+
+    Args:
+        value: Constant value to be set in the target field.
+        nautobot_name: Optional name for the Nautobot field.
+        reference: Optional source model wrapper for reference tracking.
+
+    Returns:
+        A function that defines a constant field importer.
     """
 
     def define_constant(field: SourceField) -> None:
         def constant_importer(_: RecordData, target: DiffSyncBaseModel) -> None:
             field.set_nautobot_value(target, value)
+            if reference:
+                field.wrapper.add_reference(reference, value)
 
         field.set_importer(constant_importer, nautobot_name)
 
@@ -236,3 +257,49 @@ def disable(reason: str) -> SourceFieldDefinition:
         field.disable(reason)
 
     return define_disable
+
+
+def auto_increment(prefix="", nautobot_name: FieldName = "") -> SourceFieldDefinition:
+    """Auto increment field value, if the source value is empty.
+
+    Use to set the field value to a unique auto incremented value.
+
+    Supports string and integer fields.
+
+    Args:
+        prefix (str): Optional prefix to be added to the auto incremented value. Valid for string fields only.
+        nautobot_name (str): Optional name for the Nautobot field.
+
+    Returns:
+        A function that defines an auto increment field importer.
+    """
+
+    def define_auto_increment(field: SourceField) -> None:
+        key = f"{field.wrapper.content_type}.{field.name}_prefix"
+
+        original_importer = field.set_importer(nautobot_name=nautobot_name)
+        if not original_importer:
+            return
+
+        if field.nautobot.internal_type in INTERNAL_INTEGER_FIELDS:
+            if prefix:
+                raise ValueError("Prefix is not supported for integer fields")
+        elif field.nautobot.internal_type not in INTERNAL_STRING_FIELDS:
+            raise ValueError(f"Field {field.name} is not a string or integer field")
+
+        def auto_increment_importer(source: RecordData, target: DiffSyncBaseModel) -> None:
+            value = field.get_source_value(source)
+            if value not in EMPTY_VALUES:
+                original_importer(source, target)
+                return
+
+            _AUTO_INCREMENTS[key] += 1
+            value = _AUTO_INCREMENTS[key]
+            if field.nautobot.internal_type in INTERNAL_STRING_FIELDS:
+                value = f"{prefix}{value}"
+
+            field.set_nautobot_value(target, value)
+
+        field.set_importer(auto_increment_importer, nautobot_name=nautobot_name, override=True)
+
+    return define_auto_increment

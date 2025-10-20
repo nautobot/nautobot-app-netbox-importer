@@ -63,16 +63,16 @@ The first data iteration constructs the wrapping structure, which includes:
 
 - `SourceAdapter` with all source model `adapter.wrappers`.
     - The `SourceAdapter` manages `SourceModelWrapper` and `NautobotModelWrapper` instances.
-- A `SourceModelWrapper` for each source content type, with `source_wrapper.fields` detailing how to import the source data.
+- A `SourceModelWrapper` for each source content type, with `fields` detailing how to import the source data.
     - Each `SourceModelWrapper` instance corresponds to a single `NautobotModelWrapper` instance.
 - A `NautobotModelWrapper` for each Nautobot content type, detailing `nautobot_wrapper.fields` and types, aiding in constructing the `DiffSyncModel` instances.
     - A single `NautobotModelWrapper` instance can be referenced by multiple `SourceModelWrapper` instances.
 
-During this phase, all non-defined but present source fields are appended to the `source_wrapper.fields`, focusing on field names, not values.
+During this phase, all non-defined but present source fields are appended to the `SourceModelWrapper.fields`, focusing on field names, not values.
 
 ### Creating Source Importers
 
-Convert each `source_wrapper.fields` item into a callable based on previously-established field definitions. The callables convert the source data into the `DiffSyncModel` constructor's expected structure.
+Convert each `SourceModelWrapper.fields` item into a callable based on previously-established field definitions. The callables convert the source data into the `DiffSyncModel` constructor's expected structure.
 
 In this stage, the structure described in the previous section is enhanced.
 
@@ -82,11 +82,11 @@ During this stage, the system performs a second iteration over the input data. T
 
 Each `DiffSyncModel` class is dynamically generated as needed. The fields within a `DiffSyncModel` are defined using `nautobot_wrapper.fields`. These fields map directly to the attributes of the source data.
 
-For each source record, the importer attempts to read the corresponding Nautobot objects as well, based on the `identifiers` if they are defined in the source model, or on a generated record's primary key. The primary key is deterministically generated using UUID5, based on the source content type and primary key. If the source primary key is already a UUID, it is passed through without change.
+For each source record, the importer attempts to read the corresponding Nautobot objects as well, based on the `identifiers` if they are defined in the source model, or on a generated record's primary key. See [Primary Key Generation](./primary_keys.md) for more details.
 
 ### Updating Referenced Content Types
 
-The updating of `content_types` fields, based on cached references, occurs in this phase. It's possible to define forwarding references using `source_wrapper.set_references_forwarding()`, e.g. references to `dcim.location` are forwarded to `dcim.locationtype`.
+The updating of `content_types` fields, based on cached references, occurs in this phase. It's possible to define forwarding references using `SourceModelWrapper.set_references_forwarding()`, e.g. references to `dcim.location` are forwarded to `dcim.locationtype`.
 
 ### Syncing to Nautobot
 
@@ -102,101 +102,15 @@ The entire process described above must be encapsulated within a single transact
 
 If any failure occurs during the process, a rollback is triggered, undoing all changes made during the import process.
 
-## ER Diagram
-
-Illustrated below is the ER diagram for the generator structure, created to import data from source to Nautobot.
-
-```mermaid
-erDiagram
-    DiffSync ||--|| BaseAdapter : "is ancestor"
-    BaseAdapter ||--|| SourceAdapter : "is ancestor"
-    BaseAdapter ||--|| NautobotAdapter : "is ancestor"
-    SourceAdapter ||--o{ SourceModelWrapper : "creates"
-    SourceModelWrapper ||--o{ SourceField : "creates"
-    SourceAdapter ||--|| NautobotAdapter : "links to"
-    NautobotAdapter ||--o{ NautobotModelWrapper : "creates"
-    SourceModelWrapper }o--|| NautobotModelWrapper : "links to"
-    NautobotModelWrapper ||--o{ NautobotField : "creates"
-    NautobotModelWrapper ||--|| NautobotModel : "links to"
-    SourceField }o--|| NautobotField : "links to"
-    NautobotModelWrapper ||--|| DiffSyncBaseModel : "creates"
-    DiffSyncModel ||--o{ DiffSyncBaseModel : "is ancestor"
-    SourceAdapter {
-        Mapping wrappers
-        NautobotAdapter nautobot
-        ImportSummary summary
-        DiffSyncBaseModel diffsync_model_1
-        DiffSyncBaseModel diffsync_model_2
-        DiffSyncBaseModel diffsync_model_x
-    }
-    SourceModelWrapper {
-        SourceAdapter adapter
-        ContentTypeStr content_type
-        NautobotModelWrapper nautobot
-        String disable_reason
-        Iterable identifiers
-        Mapping fields
-        Set[Callable] importers
-        SourceModelWrapper extends_wrapper
-        SourceModelStats stats
-        Uid default_reference_uid
-        Mapping _uid_to_pk_cache
-        Mapping _cached_data
-    }
-    SourceField {
-        SourceModelWrapper wrapper
-        FieldName name
-        SourceFieldDefinition definition
-        NautobotField nautobot
-        Callable importer
-        String disable_reason
-    }
-    NautobotAdapter {
-        Mapping wrappers
-        DiffSyncBaseModel diffsync_model_1
-        DiffSyncBaseModel diffsync_model_2
-        DiffSyncBaseModel diffsync_model_x
-    }
-    NautobotModelWrapper {
-        ContentTypeStr content_type
-        bool disabled
-        NautobotBaseModelType model
-        NautobotModelStats stats
-        Mapping fields
-        Type[DiffSyncBaseModel] diffsync_class
-        InternalFieldType pk_type
-        FieldName pk_name
-        Mapping constructor_kwargs
-        Int last_id
-        Set importer_issues
-    }
-    NautobotField {
-        FieldName name
-        InternalFieldType internal_type
-        DjangoField field
-        Bool disabled
-        Bool required
-    }
-    DiffSyncBaseModel {
-        NautobotModelWrapper _wrapper
-        Type field_1
-        Type field_2
-        Type field_x
-    }
-```
+{% include-markdown
+   '../diagrams/generator_erd.md'
+   heading-offset=1
+%}
 
 ## Other Techniques
 
-- Generating deterministic primary keys for Nautobot objects based on the source identifiers using UUID5.
 - Skipping absent Nautobot models and fields.
 - Normalizing `datetime` values.
 - Stabilizing import order.
-- Caching:
-    - Pre-defined records.
-    - Source identifiers to Nautobot primary keys.
-    - Content type objects.
-    - Referencing content types to objects to autofill `content_types` fields.
 - Using Nautobot default values to fill in missing source data.
 - Auto set-up importers for relation fields.
-- Storing content type back mapping.
-

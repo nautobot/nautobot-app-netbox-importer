@@ -1,0 +1,35 @@
+[
+{
+  "model": "dcim.interface",
+  "pk": "d06b2a9d-572f-5757-a770-af17f798f4e9",
+  "fields": {
+    "created": "2021-04-14T00:00:00Z",
+    "last_updated": "2025-05-29T14:34:18.906Z",
+    "_custom_field_data": {},
+    "name": "GigabitEthernet0/0/0",
+    "label": "",
+    "description": "",
+    "device": "f510c5ff-e1f8-5adc-9fb5-30bc5791b42e",
+    "module": null,
+    "cable": null,
+    "_cable_peer_type": null,
+    "_cable_peer_id": null,
+    "_path": null,
+    "status": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+    "enabled": true,
+    "mac_address": null,
+    "mtu": null,
+    "role": null,
+    "mode": "",
+    "parent_interface": null,
+    "bridge": null,
+    "_name": "0000000099999999GigabitEthernet000000............",
+    "lag": null,
+    "type": "1000base-x-sfp",
+    "mgmt_only": false,
+    "untagged_vlan": null,
+    "vrf": null,
+    "tagged_vlans": []
+  }
+}
+]

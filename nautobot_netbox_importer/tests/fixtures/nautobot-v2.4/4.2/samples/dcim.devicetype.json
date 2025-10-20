@@ -1,0 +1,59 @@
+[
+{
+  "model": "dcim.devicetype",
+  "pk": "257dca9a-92d2-5f02-af45-4de316a47b71",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:42.760Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "device_family": null,
+    "model": "MX480",
+    "part_number": "",
+    "u_height": 8,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": "[Juniper MX480 Data Sheet](https://www.juniper.net/us/en/products-services/routing/mx-series/mx480/)"
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "89343eba-98ad-5be4-9c74-49ac12a1f2ef",
+  "fields": {
+    "created": "2020-12-18T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:42.767Z",
+    "_custom_field_data": {},
+    "manufacturer": "e0ee785f-2349-574b-942c-aaf46a748cf3",
+    "device_family": null,
+    "model": "EX4200-48T",
+    "part_number": "",
+    "u_height": 1,
+    "is_full_depth": true,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": "[Juniper EX4200 Data Sheet](https://www.juniper.net/assets/us/en/local/pdf/datasheets/1000215-en.pdf)"
+  }
+},
+{
+  "model": "dcim.devicetype",
+  "pk": "e95ceab6-30ed-5b5c-86d3-ae2cff3d51b3",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:42.774Z",
+    "_custom_field_data": {},
+    "manufacturer": "c5902059-194c-583a-83c3-058cd5ed3f5a",
+    "device_family": null,
+    "model": "24-Port Patch Panel",
+    "part_number": "",
+    "u_height": 1,
+    "is_full_depth": false,
+    "subdevice_role": "",
+    "front_image": "",
+    "rear_image": "",
+    "comments": ""
+  }
+}
+]

@@ -1,0 +1,50 @@
+[
+{
+  "model": "dcim.modulebaytemplate",
+  "pk": "03a2e07a-d108-5b41-8875-ef4fec7bbf21",
+  "fields": {
+    "created": "2022-04-08T00:56:44.988Z",
+    "last_updated": "2025-05-29T07:30:37.922Z",
+    "_custom_field_data": {},
+    "name": "Slot 5",
+    "_name": "Slot 00000005",
+    "device_type": "94fdbc87-0af7-590d-9d6b-1b699ff14c53",
+    "module_type": null,
+    "position": "5",
+    "label": "",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.modulebaytemplate",
+  "pk": "2691f8e0-8ba3-596d-b1e9-91244ca7b151",
+  "fields": {
+    "created": "2022-04-08T00:56:44.966Z",
+    "last_updated": "2025-05-29T07:30:37.921Z",
+    "_custom_field_data": {},
+    "name": "Slot 4",
+    "_name": "Slot 00000004",
+    "device_type": "94fdbc87-0af7-590d-9d6b-1b699ff14c53",
+    "module_type": null,
+    "position": "4",
+    "label": "",
+    "description": ""
+  }
+},
+{
+  "model": "dcim.modulebaytemplate",
+  "pk": "4679bf70-0439-54dc-9f11-5ddcefaee404",
+  "fields": {
+    "created": "2022-04-08T00:56:45.096Z",
+    "last_updated": "2025-05-29T07:30:37.929Z",
+    "_custom_field_data": {},
+    "name": "Slot 10",
+    "_name": "Slot 00000010",
+    "device_type": "94fdbc87-0af7-590d-9d6b-1b699ff14c53",
+    "module_type": null,
+    "position": "10",
+    "label": "",
+    "description": ""
+  }
+}
+]

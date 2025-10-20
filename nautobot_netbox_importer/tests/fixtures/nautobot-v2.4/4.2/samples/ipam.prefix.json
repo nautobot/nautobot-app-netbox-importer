@@ -1,0 +1,71 @@
+[
+{
+  "model": "ipam.prefix",
+  "pk": "848bc717-e23a-5101-8ae6-9cd0b6ff1b6a",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:58.865Z",
+    "_custom_field_data": {},
+    "network": "10.112.168.0",
+    "broadcast": "10.112.171.255",
+    "prefix_length": 22,
+    "type": "network",
+    "status": "90ef0b5d-5e04-5ff3-b1a4-695a42311ede",
+    "role": null,
+    "parent": "28980d7d-3a2a-5fc1-bf28-6e49b7ee5ba3",
+    "ip_version": 4,
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "vlan": null,
+    "rir": null,
+    "date_allocated": null,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.prefix",
+  "pk": "e40f2f8a-ff29-5937-8294-741390204d07",
+  "fields": {
+    "created": "2020-12-30T00:00:00Z",
+    "last_updated": "2025-05-30T09:12:58.822Z",
+    "_custom_field_data": {},
+    "network": "10.112.132.0",
+    "broadcast": "10.112.135.255",
+    "prefix_length": 22,
+    "type": "network",
+    "status": "90ef0b5d-5e04-5ff3-b1a4-695a42311ede",
+    "role": null,
+    "parent": "28980d7d-3a2a-5fc1-bf28-6e49b7ee5ba3",
+    "ip_version": 4,
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": "80f6b934-9627-5da1-9928-fc0e5e03f2f0",
+    "vlan": null,
+    "rir": null,
+    "date_allocated": null,
+    "description": ""
+  }
+},
+{
+  "model": "ipam.prefix",
+  "pk": "f5cc8a46-9d81-5415-bd3a-df67ef631cce",
+  "fields": {
+    "created": "2022-04-08T00:17:08.002Z",
+    "last_updated": "2025-05-30T09:12:58.930Z",
+    "_custom_field_data": {},
+    "network": "172.17.2.0",
+    "broadcast": "172.17.2.255",
+    "prefix_length": 24,
+    "type": "network",
+    "status": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+    "role": null,
+    "parent": "4084c550-d3e8-5096-861a-becdf2adab5a",
+    "ip_version": 4,
+    "namespace": "26756c2d-fddd-4128-9f88-dbcbddcbef45",
+    "tenant": null,
+    "vlan": null,
+    "rir": null,
+    "date_allocated": null,
+    "description": ""
+  }
+}
+]
