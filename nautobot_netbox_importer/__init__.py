@@ -19,7 +19,6 @@ class NautobotNetboxImporterConfig(NautobotAppConfig):
     base_url = "netbox-importer"
     required_settings = []
     default_settings = {}
-    caching_config = {}
     docs_view_name = "plugins:nautobot_netbox_importer:docs"
     searchable_models = []
 

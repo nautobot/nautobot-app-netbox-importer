@@ -1,6 +1,10 @@
 ---
 nautobot_netbox_importer:
+<<<<<<< HEAD
   nautobot_ver: "2.4.9"
+=======
+  nautobot_ver: "2.4.20"
+>>>>>>> 0fa4673 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
   python_ver: "3.12"
   # local: false
   # compose_dir: "/full/path/to/nautobot-app-netbox-importer/development"
