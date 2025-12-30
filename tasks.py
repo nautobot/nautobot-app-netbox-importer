@@ -52,7 +52,7 @@ namespace = Collection("nautobot_netbox_importer")
 namespace.configure(
     {
         "nautobot_netbox_importer": {
-            "nautobot_ver": "2.4.20",
+            "nautobot_ver": "3.0.0",
             "project_name": "nautobot-netbox-importer",
             "python_ver": "3.12",
             "local": False,
