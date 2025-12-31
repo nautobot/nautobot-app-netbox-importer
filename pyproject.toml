@@ -29,8 +29,6 @@ include = [
 [tool.poetry.dependencies]
 python = ">=3.10,<3.14"
 # Used for local development
-<<<<<<< HEAD
-nautobot = ">=2.4.20,<3.0.0"
 diffsync = "^2.1.0"
 colorama = "^0.4.6"
 Markdown = "^3.6"
@@ -39,9 +37,7 @@ python-dateutil = "^2.9.0"
 ijson = "^3.2.3"
 netaddr = ">=0.10.1"
 packaging = "^24.1"
-=======
 nautobot = ">=3.0.0,<4.0.0"
->>>>>>> 805c4b2 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
