@@ -167,7 +167,7 @@ class TestImport(TestCase):
         )
 
     def _import_file(self, input_ref, version: Version):
-        source = NetBoxAdapter(
+        source = NetBoxAdapter(  # pylint: disable=too-many-function-args
             input_ref,
             NetBoxImporterOptions(
                 dry_run=False,
