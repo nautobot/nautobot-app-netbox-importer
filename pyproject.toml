@@ -16,6 +16,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 packages = [
     { include = "nautobot_netbox_importer" },
@@ -26,9 +27,8 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.13"
+python = ">=3.10,<3.14"
 # Used for local development
-nautobot = ">=2.4.20,<3.0.0"
 diffsync = "^2.1.0"
 colorama = "^0.4.6"
 Markdown = "^3.6"
@@ -37,6 +37,7 @@ python-dateutil = "^2.9.0"
 ijson = "^3.2.3"
 netaddr = ">=0.10.1"
 packaging = "^24.1"
+nautobot = ">=3.0.0,<4.0.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
