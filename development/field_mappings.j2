@@ -1,0 +1,49 @@
+{% set sd = summary['source'] %}
+# Field Mappings from NetBox {{ netbox_version }} to Nautobot {{ nautobot_version }}
+
+## Model Summary
+
+This section lists all the models present in the NetBox source data that can be imported for this version pair, including a reason if a model is not imported. Additionally, some of the model fields might not have a Nautobot equivalent or are explicitly disabled, summarized below.
+
+| Status | NetBox -> Nautobot Model | Imported Fields | Missing Fields | Disabled Fields | Comments |
+| - | - | - | - | - | - |
+{% for netbox_ct, ct_data in sd.items() %}
+{% set f_disabled = ct_data['fields'].values() | selectattr('disable_reason') | list | length %}
+{% set f_missing = ct_data['fields'].values() | selectattr('nautobot_internal_type','eq','NotFound') | list | length %}
+{% set f_imported = ct_data['fields'] | length - f_missing - f_disabled %}
+| {% if ct_data['disable_reason'] %}:x:{% else %}{{ ':white_check_mark:' if f_missing == 0 else ':warning:' }}{% endif %} | **{{ netbox_ct }}** -> **{{ ct_data['nautobot_content_type'] }}** | `{{ f_imported }}` | `{{ f_missing }}` | `{{ f_disabled }}` | {{ ct_data['disable_reason'] }} |
+{% endfor %}
+
+## Model Fields Mapping
+
+This table lists all the model fields and how they have been mapped into their respective Nautobot models.
+
+<table>
+    <thead>
+        <tr>
+            <th>NetBox -> Nautobot Model</th>
+            <th>Field Names</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for netbox_ct, ct_data in sd.items() if not ct_data['disable_reason'] %}
+        <tr>
+            <td><strong>{{ netbox_ct }} -> {{ ct_data['nautobot_content_type'] }}</strong></td>
+            <td>
+                <strong>Imported Fields:</strong>
+                <ul>
+                    {% for field in ct_data['fields'].values() if not field['disable_reason'] %}
+                    <li>{{ field['name'] }} -> {{ field['nautobot_name'] }} ({{ field['nautobot_internal_type'] }})</li>
+                    {% endfor %}
+                </ul>
+                <strong>Disabled Fields:</strong>
+                <ul>
+                    {% for field in ct_data['fields'].values() if field['disable_reason'] %}
+                    <li>{{ field['name'] }}: {{ field['disable_reason'] }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

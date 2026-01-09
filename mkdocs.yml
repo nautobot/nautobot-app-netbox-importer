@@ -83,6 +83,9 @@ markdown_extensions:
         - name: "mermaid"
           class: "mermaid"
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - "pymdownx.emoji":
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - "footnotes"
 plugins:
   - "search"
@@ -117,6 +120,8 @@ nav:
       - Upgrade: "admin/upgrade.md"
       - Uninstall: "admin/uninstall.md"
       - Compatibility Matrix: "admin/compatibility_matrix.md"
+      - Field Mappings:
+          - NetBox 3.7 to Nautobot 2.4: "admin/field_mappings/3.7-to-2.4.md"
       - Release Notes:
           - "admin/release_notes/index.md"
           - v2.2: "admin/release_notes/version_2.2.md"
@@ -137,20 +142,18 @@ nav:
           - "dev/generator.md"
           - "dev/data_flow.md"
           - "dev/import_order.md"
-          - "dev/data_flow.md"
-          - "dev/generator.md"
           - "dev/content_types_mapping.md"
           - "dev/caching.md"
           - "dev/placeholders.md"
           - "dev/primary_keys.md"
       - Demo Execution: "dev/demo.md"
-      - Frequently Asked Questions: "dev/faq.md"
       - Test Fixtures: "dev/code_reference/fixtures/README.md"
       - Customizations: "dev/customizations.md"
       - Diagrams:
-          - "diagrams/data_flow.md"
-          - "diagrams/generator_erd.md"
-          - "diagrams/generate_primary_key.md"
+          - "dev/diagrams/data_flow.md"
+          - "dev/diagrams/generator_erd.md"
+          - "dev/diagrams/generate_primary_key.md"
+      - Frequently Asked Questions: "dev/faq.md"
       - Code Reference:
           - "dev/code_reference/index.md"
           - Package: "dev/code_reference/package.md"

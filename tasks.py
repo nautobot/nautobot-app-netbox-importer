@@ -1242,3 +1242,39 @@ def import_netbox(  # noqa: PLR0913
     ]
 
     run_command(context, " ".join(command))
+
+
+@task(
+    help={
+        "netbox-version": "Minor version of the NetBox test data to import from (default: 3.7).",
+        "nautobot-version": "Minor version of Nautobot (default: 2.4).",
+        "output_path": "Where to output markdown content (default docs/admin/field_mappings/3.7-to-2.4.md)",
+    }
+)
+def generate_field_mappings(context, netbox_version="3.7", nautobot_version="2.4", output_path=""):
+    """Generates a markdown page containing field mappings from NetBox to Nautobot."""
+    from jinja2 import Environment, FileSystemLoader, select_autoescape
+    import json
+
+    path = Path(__file__).parent
+
+    summary_file = (
+        path / f"nautobot_netbox_importer/tests/fixtures/nautobot-v{nautobot_version}/{netbox_version}/summary.json"
+    )
+    output_file = path / f"docs/admin/field_mappings/{netbox_version}-to-{nautobot_version}.md"
+
+    print(f"Generating field mappings from NetBox {netbox_version} to Nautobot {nautobot_version} into {output_file}.")
+
+    jinja_env = Environment(
+        loader=FileSystemLoader(path / "development"),
+        autoescape=True,
+        trim_blocks=True,
+        lstrip_blocks=True,
+    )
+    jinja_template = jinja_env.get_template("field_mappings.j2")
+    with open(output_file, "w") as file, open(summary_file, "r") as summary:
+        file.write(
+            jinja_template.render(
+                nautobot_version=nautobot_version, netbox_version=netbox_version, summary=json.loads(summary.read())
+            )
+        )
