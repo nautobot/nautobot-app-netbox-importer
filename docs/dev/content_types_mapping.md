@@ -14,7 +14,7 @@ This feature is used e.g. to create custom field choices instances, as Nautobot 
 
 ## Content Types Back Mapping
 
-Back mapping means mapping content types back from Nautobot to NetBox. When multiple NetBox models are mapped to one Nautobot model, it's not possible to determine which NetBox model should be used for the back mapping. In such case `ambiguous` mapping is outputted in summary, see [Import Summary documentation](../user/summary.md).
+Back mapping means mapping content types back from Nautobot to NetBox. When multiple NetBox models are mapped to one Nautobot model, it's not possible to determine which NetBox model should be used for the back mapping. In such case `ambiguous` mapping is outputted in summary, see [Import Summary documentation](../user/summary/index.md).
 
 This back mapping is used when creating `SourceModelWrapper` instances from Nautobot data.
 

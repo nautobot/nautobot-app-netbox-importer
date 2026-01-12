@@ -112,7 +112,10 @@ nav:
       - App Overview: "user/app_overview.md"
       - Getting Started: "user/app_getting_started.md"
       - Using the App: "user/app_use_cases.md"
-      - Importer Summary: "user/summary.md"
+      - Importer Summary:
+          - "user/summary/index.md"
+          - NetBox 3.6 to Nautobot 2.4: "user/summary/3.6-to-2.4.md"
+          - NetBox 3.7 to Nautobot 2.4: "user/summary/3.7-to-2.4.md"
       - Tagging Issues: "user/tagging_issues.md"
       - Frequently Asked Questions: "user/faq.md"
   - Administrator Guide:
@@ -120,8 +123,6 @@ nav:
       - Upgrade: "admin/upgrade.md"
       - Uninstall: "admin/uninstall.md"
       - Compatibility Matrix: "admin/compatibility_matrix.md"
-      - Field Mappings:
-          - NetBox 3.7 to Nautobot 2.4: "admin/field_mappings/3.7-to-2.4.md"
       - Release Notes:
           - "admin/release_notes/index.md"
           - v2.2: "admin/release_notes/version_2.2.md"
@@ -154,6 +155,9 @@ nav:
           - "dev/diagrams/generator_erd.md"
           - "dev/diagrams/generate_primary_key.md"
       - Frequently Asked Questions: "dev/faq.md"
+      - Field Mappings:
+          - NetBox 3.6 to Nautobot 2.4: "dev/field_mappings/3.6-to-2.4.md"
+          - NetBox 3.7 to Nautobot 2.4: "dev/field_mappings/3.7-to-2.4.md"
       - Code Reference:
           - "dev/code_reference/index.md"
           - Package: "dev/code_reference/package.md"

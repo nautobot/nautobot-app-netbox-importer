@@ -12,6 +12,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+import json
 import os
 import re
 import shutil
@@ -22,6 +23,7 @@ from time import sleep
 from invoke.collection import Collection
 from invoke.exceptions import Exit, UnexpectedExit
 from invoke.tasks import task as invoke_task
+from jinja2 import Environment, FileSystemLoader
 
 
 def is_truthy(arg):
@@ -1253,17 +1255,15 @@ def import_netbox(  # noqa: PLR0913
 )
 def generate_field_mappings(context, netbox_version="3.7", nautobot_version="2.4", output_path=""):
     """Generates a markdown page containing field mappings from NetBox to Nautobot."""
-    from jinja2 import Environment, FileSystemLoader, select_autoescape
-    import json
-
     path = Path(__file__).parent
 
     summary_file = (
         path / f"nautobot_netbox_importer/tests/fixtures/nautobot-v{nautobot_version}/{netbox_version}/summary.json"
     )
-    output_file = path / f"docs/admin/field_mappings/{netbox_version}-to-{nautobot_version}.md"
+    with open(summary_file, "r") as summary:
+        summary_data = json.loads(summary.read())
 
-    print(f"Generating field mappings from NetBox {netbox_version} to Nautobot {nautobot_version} into {output_file}.")
+    print(f"Generating field mappings from NetBox {netbox_version} to Nautobot {nautobot_version}.")
 
     jinja_env = Environment(
         loader=FileSystemLoader(path / "development"),
@@ -1271,10 +1271,17 @@ def generate_field_mappings(context, netbox_version="3.7", nautobot_version="2.4
         trim_blocks=True,
         lstrip_blocks=True,
     )
-    jinja_template = jinja_env.get_template("field_mappings.j2")
-    with open(output_file, "w") as file, open(summary_file, "r") as summary:
+
+    output_ms_file = path / f"docs/user/summary/{netbox_version}-to-{nautobot_version}.md"
+    ms_template = jinja_env.get_template("model_summary.j2")
+    with open(output_ms_file, "w") as file:
         file.write(
-            jinja_template.render(
-                nautobot_version=nautobot_version, netbox_version=netbox_version, summary=json.loads(summary.read())
-            )
+            ms_template.render(nautobot_version=nautobot_version, netbox_version=netbox_version, summary=summary_data)
+        )
+
+    output_fm_file = path / f"docs/dev/field_mappings/{netbox_version}-to-{nautobot_version}.md"
+    fm_template = jinja_env.get_template("field_mappings.j2")
+    with open(output_fm_file, "w") as file:
+        file.write(
+            fm_template.render(nautobot_version=nautobot_version, netbox_version=netbox_version, summary=summary_data)
         )
