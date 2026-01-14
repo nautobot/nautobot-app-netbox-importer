@@ -1,0 +1,49 @@
+{% set sd = summary['source'] %}
+# Field Mappings from NetBox {{ netbox_version }} to Nautobot {{ nautobot_version }}
+
+For an import summary, please visit the [Model
+Summary](../../dev/field_mappings/{{netbox_version}}-to-{{nautobot_version}}.md) page.
+
+This table lists all the model fields and how they have been mapped into their respective Nautobot models.
+
+<table>
+    <thead>
+        <tr>
+            <th>NetBox -> Nautobot Model</th>
+            <th>Field Names</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for netbox_ct, ct_data in sd.items() if not ct_data['disable_reason'] %}
+        <tr>
+            <td><strong>{{ netbox_ct }} -> {{ ct_data['nautobot_content_type'] }}</strong></td>
+            <td>
+                <strong>Imported Fields:</strong>
+                <ul>
+                    {% for field in ct_data['fields'].values() if not field['disable_reason'] %}
+                    <li>{{ field['name'] }} -> {{ field['nautobot_name'] }} ({{ field['nautobot_internal_type'] }})</li>
+                    {% else %}
+                    <li>NONE</li>
+                    {% endfor %}
+                </ul>
+                <strong>Missing Fields:</strong>
+                <ul>
+                    {% for field in ct_data['fields'].values() if field['nautobot_can_import'] == False %}
+                    <li>{{ field['name'] }}</li>
+                    {% else %}
+                    <li>NONE</li>
+                    {% endfor %}
+                </ul>
+                <strong>Disabled Fields:</strong>
+                <ul>
+                    {% for field in ct_data['fields'].values() if field['disable_reason'] %}
+                    <li>{{ field['name'] }}: {{ field['disable_reason'] }}</li>
+                    {% else %}
+                    <li>NONE</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

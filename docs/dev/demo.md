@@ -335,7 +335,7 @@ The next step is to perform a [DiffSync](https://diffsync.readthedocs.io/en/stab
 
 ### Summary
 
-The last part of the import process is to display a summary of the import [described in the user documentation](../user/summary.md). This summary is also saved to the file specified in the `--save-text-summary-path` option. This file can be used to compare mapping changes between different NetBox versions or during the development of the importer.
+The last part of the import process is to display a summary of the import [described in the user documentation](../user/summary/index.md). This summary is also saved to the file specified in the `--save-text-summary-path` option. This file can be used to compare mapping changes between different NetBox versions or during the development of the importer.
 
 ## JSON Mappings
 

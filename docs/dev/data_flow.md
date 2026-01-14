@@ -3,14 +3,14 @@
 This document illustrates the data flow from NetBox to Nautobot.
 
 {%
-    include-markdown '../diagrams/data_flow.md'
+    include-markdown './diagrams/data_flow.md'
     heading-offset=1
 %}
 
 ## Data Export
 
 The user exports data from NetBox into a JSON file, [described here](../user/app_use_cases.md#getting-a-data-export-from-netbox).
-   
+
 ## Import Execution
 
 The user executes the `nautobot-server import_netbox` command to initiate the import process by passing the JSON file reference as an argument, [described here](../user/app_use_cases.md#importing-data-into-nautobot).

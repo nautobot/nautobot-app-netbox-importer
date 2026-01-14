@@ -104,7 +104,7 @@ nautobot-server import_netbox \
     /tmp/netbox_data.json
 ```
 
-The following document describes [summary with mapping from NetBox 3.6 to Nautobot 2.1.5](./summary.md). Other versions mappings can vary.
+The following document describes [summary with mapping from NetBox 3.6 to Nautobot 2.1.5](./summary/index.md). Other versions mappings can vary.
 
 #### Importing Data into Nautobot
 

@@ -151,7 +151,7 @@ ipam.prefix => ipam.aggregate
 
 This section shows importer issues that were found during the import process grouped by the Nautobot content type.
 
-These issues are not necessarily errors, but may be warnings or other issues that should be reviewed. See the [Data Validation and Error Handling chapter](./app_use_cases.md#data-validation-and-error-handling) for details.
+These issues are not necessarily errors, but may be warnings or other issues that should be reviewed. See the [Data Validation and Error Handling chapter](../app_use_cases.md#data-validation-and-error-handling) for details.
 
 ```
 = Importer issues: =================================================================================

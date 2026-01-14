@@ -103,7 +103,7 @@ The entire process described above must be encapsulated within a single transact
 If any failure occurs during the process, a rollback is triggered, undoing all changes made during the import process.
 
 {% include-markdown
-   '../diagrams/generator_erd.md'
+   './diagrams/generator_erd.md'
    heading-offset=1
 %}
 

@@ -1,6 +1,6 @@
 # Data Flow Diagram
 
-A detailed description of the individual steps can be found in the developer [Generator Documentation](../dev//generator.md#stages) or the user [Using the App](../user/app_use_cases.md) documentation.
+A detailed description of the individual steps can be found in the developer [Generator Documentation](../generator.md#stages) or the user [Using the App](../../user/app_use_cases.md) documentation.
 
 ```mermaid
 flowchart LR
