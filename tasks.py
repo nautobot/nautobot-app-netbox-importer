@@ -23,7 +23,13 @@ from time import sleep
 from invoke.collection import Collection
 from invoke.exceptions import Exit, UnexpectedExit
 from invoke.tasks import task as invoke_task
-from jinja2 import Environment, FileSystemLoader
+
+try:
+    from jinja2 import Environment, FileSystemLoader
+
+    HAS_JINJA2 = True
+except ImportError:
+    HAS_JINJA2 = False
 
 
 def is_truthy(arg):
@@ -1255,6 +1261,9 @@ def import_netbox(  # noqa: PLR0913
 )
 def generate_field_mappings(context, netbox_version="3.7", nautobot_version="2.4", output_path=""):
     """Generates a markdown page containing field mappings from NetBox to Nautobot."""
+    if not HAS_JINJA2:
+        raise RuntimeError(f"Jinja2 is required for this task. Did you mean to run poetry run {' '.join(sys.argv)}")
+
     path = Path(__file__).parent
 
     summary_file = (
