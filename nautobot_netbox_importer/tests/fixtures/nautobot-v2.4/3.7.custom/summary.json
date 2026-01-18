@@ -11768,16 +11768,10 @@
                         "id": "23f54cbf-0c94-5c79-9b7f-f8fd96c6a26e",
                         "circuit_id": "ba4edff9-345f-5849-a416-c67b0c5bf5d8",
                         "location_id": "None",
-                        "created": "None",
                         "last_updated": "None",
                         "custom_field_data": "None",
                         "cable_id": "bccaf88e-b5c2-5b9d-9006-791ab29ccfba",
-                        "provider_network_id": "None",
-                        "port_speed": "None",
-                        "upstream_speed": "None",
-                        "xconnect_id": "None",
-                        "pp_info": "None",
-                        "description": "None"
+                        "pp_info": "None"
                     },
                     "source_reference": "circuits.circuittermination:placeholder_dcim.cable_bccaf88e-b5c2-5b9d-9006-791ab29ccfba_side_b"
                 },
@@ -11836,16 +11830,10 @@
                         "id": "3f64e659-b2e7-50c5-b6db-8c4e46dd40af",
                         "circuit_id": "5c656caa-aa35-532b-bf6b-7eff42b3c9ee",
                         "location_id": "None",
-                        "created": "None",
                         "last_updated": "None",
                         "custom_field_data": "None",
                         "cable_id": "727d4a3e-0c2c-5934-88d1-8c64cff4febb",
-                        "provider_network_id": "None",
-                        "port_speed": "None",
-                        "upstream_speed": "None",
-                        "xconnect_id": "None",
-                        "pp_info": "None",
-                        "description": "None"
+                        "pp_info": "None"
                     },
                     "source_reference": "circuits.circuittermination:placeholder_dcim.cable_727d4a3e-0c2c-5934-88d1-8c64cff4febb_side_b"
                 },
@@ -11889,16 +11877,10 @@
                         "id": "41bfcdba-035c-516c-8c1e-9cfdcf434d51",
                         "circuit_id": "51c814cb-1cb4-5184-8666-2bcd4d224c06",
                         "location_id": "None",
-                        "created": "None",
                         "last_updated": "None",
                         "custom_field_data": "None",
                         "cable_id": "6df947b3-9159-5b42-8367-c0d7edb3986c",
-                        "provider_network_id": "None",
-                        "port_speed": "None",
-                        "upstream_speed": "None",
-                        "xconnect_id": "None",
-                        "pp_info": "None",
-                        "description": "None"
+                        "pp_info": "None"
                     },
                     "source_reference": "circuits.circuittermination:placeholder_dcim.cable_6df947b3-9159-5b42-8367-c0d7edb3986c_side_b"
                 },
@@ -11942,16 +11924,10 @@
                         "id": "93589e98-9065-5a5f-97f9-5dc491cbcf94",
                         "circuit_id": "7613c297-0016-567f-8680-ba305c53df5a",
                         "location_id": "None",
-                        "created": "None",
                         "last_updated": "None",
                         "custom_field_data": "None",
                         "cable_id": "bccaf88e-b5c2-5b9d-9006-791ab29ccfba",
-                        "provider_network_id": "None",
-                        "port_speed": "None",
-                        "upstream_speed": "None",
-                        "xconnect_id": "None",
-                        "pp_info": "None",
-                        "description": "None"
+                        "pp_info": "None"
                     },
                     "source_reference": "circuits.circuittermination:placeholder_dcim.cable_bccaf88e-b5c2-5b9d-9006-791ab29ccfba_side_a"
                 },
@@ -11995,16 +11971,10 @@
                         "id": "ccc75dd5-5d67-5c2c-b6b7-b94319334399",
                         "circuit_id": "894444ae-6b84-5308-bc74-f74402f68219",
                         "location_id": "None",
-                        "created": "None",
                         "last_updated": "None",
                         "custom_field_data": "None",
                         "cable_id": "727d4a3e-0c2c-5934-88d1-8c64cff4febb",
-                        "provider_network_id": "None",
-                        "port_speed": "None",
-                        "upstream_speed": "None",
-                        "xconnect_id": "None",
-                        "pp_info": "None",
-                        "description": "None"
+                        "pp_info": "None"
                     },
                     "source_reference": "circuits.circuittermination:placeholder_dcim.cable_727d4a3e-0c2c-5934-88d1-8c64cff4febb_side_a"
                 },
@@ -12360,14 +12330,15 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "03d4a2c5-e08b-5cc1-924d-c401194d393c",
-                        "manufacturer_id": "None",
-                        "model": "Half U Device Type",
-                        "created": "2024-02-15 09:18:48.416000+00:00",
+                        "manufacturer_id": "9568e4c1-fa0c-5c43-9606-e25166e67765",
+                        "model": "None",
+                        "created": "None",
                         "last_updated": "None",
                         "custom_field_data": "None",
                         "comments": "None",
+                        "part_number": "None",
                         "u_height": "0",
-                        "is_full_depth": "True"
+                        "is_full_depth": "None"
                     },
                     "source_reference": "dcim.devicetype:2"
                 }
@@ -12423,11 +12394,11 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "2586a272-455a-5e92-85d7-f41c0784630a",
-                        "status_id": "None",
+                        "status_id": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
                         "protocol": "None",
-                        "created": "None",
+                        "created": "2024-01-23 08:21:41.353000+00:00",
                         "last_updated": "None",
-                        "name": "None"
+                        "name": "FHR Group clusterxl"
                     },
                     "source_reference": "ipam.fhrpgroup:2"
                 },
@@ -12440,12 +12411,12 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "f91623ed-a389-53a4-a4a2-943588c21446",
-                        "status_id": "None",
+                        "status_id": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
                         "protocol": "vrrp",
-                        "created": "None",
+                        "created": "2024-01-23 08:21:41.353000+00:00",
                         "last_updated": "None",
                         "description": "FHR Group Description",
-                        "name": "None"
+                        "name": "Test FHR Group"
                     },
                     "source_reference": "ipam.fhrpgroup:1"
                 }
@@ -12746,17 +12717,18 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5",
-                        "content_types": "{51}",
-                        "key": "None",
-                        "label": "Device Custom Object",
+                        "content_types": "None",
+                        "key": "device_custom_object",
+                        "label": "None",
                         "type": "text",
-                        "created": "2024-02-15 11:19:42.197000+00:00",
+                        "created": "None",
                         "last_updated": "None",
                         "description": "None",
                         "required": "None",
-                        "filter_logic": "loose",
+                        "filter_logic": "None",
                         "default": "None",
                         "weight": "None",
+                        "validation_minimum": "None",
                         "validation_maximum": "None",
                         "validation_regex": "None"
                     },
