@@ -168,8 +168,8 @@ class TestImport(TestCase):
 
     def _import_file(self, input_ref, version: Version):
         source = NetBoxAdapter(
-            input_ref,
-            NetBoxImporterOptions(
+            input_ref=input_ref,
+            options=NetBoxImporterOptions(
                 dry_run=False,
                 netbox_version=version,
                 bypass_data_validation=True,
