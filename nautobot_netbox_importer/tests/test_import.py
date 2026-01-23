@@ -51,6 +51,7 @@ class TestImport(TestCase):
             description="Default Global namespace. Created by Nautobot.",
         )
 
+        # TODO: Document how to enable verbose logging in testing (comment out this line?)
         mute_diffsync_logging()
         # pylint: disable=invalid-name
         self.maxDiff = None

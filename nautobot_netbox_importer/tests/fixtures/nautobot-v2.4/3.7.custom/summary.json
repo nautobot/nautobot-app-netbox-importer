@@ -3846,9 +3846,9 @@
                 "duplex": {
                     "name": "duplex",
                     "nautobot_name": "duplex",
-                    "nautobot_internal_type": "NotFound",
-                    "nautobot_can_import": false,
-                    "importer": null,
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "choice_importer",
                     "definition": "duplex",
                     "sources": [
                         "DATA"
@@ -4128,9 +4128,9 @@
                 "speed": {
                     "name": "speed",
                     "nautobot_name": "speed",
-                    "nautobot_internal_type": "NotFound",
-                    "nautobot_can_import": false,
-                    "importer": null,
+                    "nautobot_internal_type": "PositiveIntegerField",
+                    "nautobot_can_import": true,
+                    "importer": "integer_importer",
                     "definition": "speed",
                     "sources": [
                         "DATA"
@@ -11766,12 +11766,11 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "23f54cbf-0c94-5c79-9b7f-f8fd96c6a26e",
-                        "circuit_id": "ba4edff9-345f-5849-a416-c67b0c5bf5d8",
+                        "circuit_id": "None",
                         "location_id": "None",
                         "last_updated": "None",
-                        "custom_field_data": "None",
                         "cable_id": "bccaf88e-b5c2-5b9d-9006-791ab29ccfba",
-                        "pp_info": "None"
+                        "upstream_speed": "None"
                     },
                     "source_reference": "circuits.circuittermination:placeholder_dcim.cable_bccaf88e-b5c2-5b9d-9006-791ab29ccfba_side_b"
                 },
@@ -11828,12 +11827,11 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "3f64e659-b2e7-50c5-b6db-8c4e46dd40af",
-                        "circuit_id": "5c656caa-aa35-532b-bf6b-7eff42b3c9ee",
+                        "circuit_id": "None",
                         "location_id": "None",
                         "last_updated": "None",
-                        "custom_field_data": "None",
                         "cable_id": "727d4a3e-0c2c-5934-88d1-8c64cff4febb",
-                        "pp_info": "None"
+                        "upstream_speed": "None"
                     },
                     "source_reference": "circuits.circuittermination:placeholder_dcim.cable_727d4a3e-0c2c-5934-88d1-8c64cff4febb_side_b"
                 },
@@ -11875,12 +11873,11 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "41bfcdba-035c-516c-8c1e-9cfdcf434d51",
-                        "circuit_id": "51c814cb-1cb4-5184-8666-2bcd4d224c06",
+                        "circuit_id": "None",
                         "location_id": "None",
                         "last_updated": "None",
-                        "custom_field_data": "None",
                         "cable_id": "6df947b3-9159-5b42-8367-c0d7edb3986c",
-                        "pp_info": "None"
+                        "upstream_speed": "None"
                     },
                     "source_reference": "circuits.circuittermination:placeholder_dcim.cable_6df947b3-9159-5b42-8367-c0d7edb3986c_side_b"
                 },
@@ -11922,12 +11919,11 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "93589e98-9065-5a5f-97f9-5dc491cbcf94",
-                        "circuit_id": "7613c297-0016-567f-8680-ba305c53df5a",
+                        "circuit_id": "None",
                         "location_id": "None",
                         "last_updated": "None",
-                        "custom_field_data": "None",
                         "cable_id": "bccaf88e-b5c2-5b9d-9006-791ab29ccfba",
-                        "pp_info": "None"
+                        "upstream_speed": "None"
                     },
                     "source_reference": "circuits.circuittermination:placeholder_dcim.cable_bccaf88e-b5c2-5b9d-9006-791ab29ccfba_side_a"
                 },
@@ -11969,12 +11965,11 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "ccc75dd5-5d67-5c2c-b6b7-b94319334399",
-                        "circuit_id": "894444ae-6b84-5308-bc74-f74402f68219",
+                        "circuit_id": "None",
                         "location_id": "None",
                         "last_updated": "None",
-                        "custom_field_data": "None",
                         "cable_id": "727d4a3e-0c2c-5934-88d1-8c64cff4febb",
-                        "pp_info": "None"
+                        "upstream_speed": "None"
                     },
                     "source_reference": "circuits.circuittermination:placeholder_dcim.cable_727d4a3e-0c2c-5934-88d1-8c64cff4febb_side_a"
                 },
@@ -12330,11 +12325,10 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "03d4a2c5-e08b-5cc1-924d-c401194d393c",
-                        "manufacturer_id": "9568e4c1-fa0c-5c43-9606-e25166e67765",
+                        "manufacturer_id": "None",
                         "model": "None",
                         "created": "None",
                         "last_updated": "None",
-                        "custom_field_data": "None",
                         "comments": "None",
                         "part_number": "None",
                         "u_height": "0",
@@ -12489,9 +12483,37 @@
             "disabled": false,
             "stats": {
                 "source_created": 3,
-                "created": 3
+                "created": 3,
+                "issues": 2
             },
-            "issues": []
+            "issues": [
+                {
+                    "uid": "22004273-2182-50fd-b410-5e152ed9431a",
+                    "name": "Location",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "{74, 51, 78}",
+                        "name": "Location",
+                        "nestable": "True",
+                        "parent_id": "8fceb641-4563-5da8-9004-963f9ed1965a"
+                    },
+                    "source_reference": "dcim.locationtype:Location"
+                },
+                {
+                    "uid": "8fceb641-4563-5da8-9004-963f9ed1965a",
+                    "name": "Site",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "{27, 73, 74, 78, 51, 123}",
+                        "name": "Site",
+                        "nestable": "False",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936"
+                    },
+                    "source_reference": "dcim.locationtype:Site"
+                }
+            ]
         },
         "dcim.manufacturer": {
             "content_type": "dcim.manufacturer",
@@ -12717,20 +12739,17 @@
                         "model_flags": "DiffSyncModelFlags.NONE",
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5",
-                        "content_types": "None",
+                        "content_types": "{51}",
                         "key": "device_custom_object",
                         "label": "None",
                         "type": "text",
-                        "created": "None",
+                        "created": "2024-02-15 11:19:42.197000+00:00",
                         "last_updated": "None",
                         "description": "None",
-                        "required": "None",
-                        "filter_logic": "None",
+                        "required": "False",
+                        "filter_logic": "loose",
                         "default": "None",
-                        "weight": "None",
-                        "validation_minimum": "None",
-                        "validation_maximum": "None",
-                        "validation_regex": "None"
+                        "weight": "None"
                     },
                     "source_reference": "extras.customfield:3"
                 }
@@ -13300,6 +13319,7 @@
                         "adapter": "NetBoxAdapter \"NetBox\"",
                         "id": "c650165f-9a05-55c0-bbb1-c9527d41160c",
                         "name": "Test Permission",
+                        "description": "None",
                         "enabled": "True",
                         "actions": "['view']",
                         "object_types": "None",

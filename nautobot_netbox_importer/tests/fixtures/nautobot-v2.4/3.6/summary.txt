@@ -412,9 +412,11 @@ issues: 32
 - dcim.location ------------------------------------------------------------------------------------
 source_created: 95
 created: 95
+issues: 8
 - dcim.locationtype --------------------------------------------------------------------------------
 source_created: 6
 created: 6
+issues: 7
 - dcim.manufacturer --------------------------------------------------------------------------------
 source_created: 15
 created: 15
@@ -710,6 +712,23 @@ eb86b4fb-0cee-5b5a-8dc9-4f59fbb9f2f3 | dcim.interfacetemplate:270 | ValidationEr
 ede88ae0-87fe-596c-9e5b-a4caca438d1a | dcim.interfacetemplate:284 | ValidationError | "xe-{module}/1/7" | "['Only one of device_type or module_type must be set']"
 f5e14867-85f5-532e-9bf3-865c50512320 | dcim.interfacetemplate:280 | ValidationError | "xe-{module}/1/3" | "['Only one of device_type or module_type must be set']"
 fb342867-7349-5790-9e47-20be815686dc | dcim.interfacetemplate:279 | ValidationError | "xe-{module}/1/2" | "['Only one of device_type or module_type must be set']"
+- dcim.location ------------------------------------------------------------------------------------
+39fdc888-5bf6-5f45-a604-746529d44e7e | dcim.location:4 | FirstSaveFailed | "Row 4" | "Location matching query does not exist."
+39fdc888-5bf6-5f45-a604-746529d44e7e | dcim.location:4 | FirstSaveFailed | "Row 4" | "Location matching query does not exist."
+a7f18fd3-b68a-5304-903a-6996f5ac9731 | dcim.location:3 | FirstSaveFailed | "Row 3" | "Location matching query does not exist."
+a7f18fd3-b68a-5304-903a-6996f5ac9731 | dcim.location:3 | FirstSaveFailed | "Row 3" | "Location matching query does not exist."
+b5694fca-f156-5163-8ae8-db7cceb93eaf | dcim.location:2 | FirstSaveFailed | "Row 2" | "Location matching query does not exist."
+b5694fca-f156-5163-8ae8-db7cceb93eaf | dcim.location:2 | FirstSaveFailed | "Row 2" | "Location matching query does not exist."
+cf28b6e3-d0e5-59d1-80b0-f2df3642716e | dcim.location:1 | FirstSaveFailed | "Row 1" | "Location matching query does not exist."
+cf28b6e3-d0e5-59d1-80b0-f2df3642716e | dcim.location:1 | FirstSaveFailed | "Row 1" | "Location matching query does not exist."
+- dcim.locationtype --------------------------------------------------------------------------------
+001a5b44-6c65-5a97-bee3-c52494c176d3 | dcim.sitegroup:2 | FirstSaveFailed | "Branch Offices" | "LocationType matching query does not exist."
+001a5b44-6c65-5a97-bee3-c52494c176d3 | dcim.sitegroup:2 | FirstSaveFailed | "Branch Offices" | "LocationType matching query does not exist."
+22004273-2182-50fd-b410-5e152ed9431a | dcim.locationtype:Location | FirstSaveFailed | "Location" | "LocationType matching query does not exist."
+6d92eb8b-0617-5e93-88ab-ca3bd253e632 | dcim.sitegroup:1 | FirstSaveFailed | "Customer Sites" | "LocationType matching query does not exist."
+6d92eb8b-0617-5e93-88ab-ca3bd253e632 | dcim.sitegroup:1 | FirstSaveFailed | "Customer Sites" | "LocationType matching query does not exist."
+7d9e1a57-e1ca-526e-a327-d1041b12e6e7 | dcim.sitegroup:3 | FirstSaveFailed | "Headquarters" | "LocationType matching query does not exist."
+7d9e1a57-e1ca-526e-a327-d1041b12e6e7 | dcim.sitegroup:3 | FirstSaveFailed | "Headquarters" | "LocationType matching query does not exist."
 - dcim.module --------------------------------------------------------------------------------------
 4f54f260-f3de-5489-ad7d-47425eb955ac | dcim.module:3 | ValidationError | "EX9200-32XS" | "['One of location or parent_module_bay must be set']"
 b2bb8a68-6e7f-5e2b-90ed-ff8afec68822 | dcim.module:2 | ValidationError | "EX9200-32XS" | "['One of location or parent_module_bay must be set']"
@@ -1001,7 +1020,7 @@ created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
 device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
-duplex => NO IMPORTER => duplex (NotFound)
+duplex => choice_importer => duplex (CharField)
 enabled => value_importer => enabled (BooleanField)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
@@ -1021,7 +1040,7 @@ rf_channel => NO IMPORTER => rf_channel (NotFound)
 rf_channel_frequency => NO IMPORTER => rf_channel_frequency (NotFound)
 rf_channel_width => NO IMPORTER => rf_channel_width (NotFound)
 rf_role => NO IMPORTER => rf_role (NotFound)
-speed => NO IMPORTER => speed (NotFound)
+speed => integer_importer => speed (PositiveIntegerField)
 tagged_vlans => m2m_importer => tagged_vlans (ManyToManyField)
 tx_power => NO IMPORTER => tx_power (NotFound)
 type => choice_importer => type (CharField)

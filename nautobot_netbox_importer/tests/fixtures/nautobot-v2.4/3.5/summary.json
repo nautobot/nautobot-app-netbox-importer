@@ -4151,9 +4151,9 @@
                 "duplex": {
                     "name": "duplex",
                     "nautobot_name": "duplex",
-                    "nautobot_internal_type": "NotFound",
-                    "nautobot_can_import": false,
-                    "importer": null,
+                    "nautobot_internal_type": "CharField",
+                    "nautobot_can_import": true,
+                    "importer": "choice_importer",
                     "definition": "duplex",
                     "sources": [
                         "DATA"
@@ -4433,9 +4433,9 @@
                 "speed": {
                     "name": "speed",
                     "nautobot_name": "speed",
-                    "nautobot_internal_type": "NotFound",
-                    "nautobot_can_import": false,
-                    "importer": null,
+                    "nautobot_internal_type": "PositiveIntegerField",
+                    "nautobot_can_import": true,
+                    "importer": "integer_importer",
                     "definition": "speed",
                     "sources": [
                         "DATA"
@@ -18338,9 +18338,187 @@
             "disabled": false,
             "stats": {
                 "source_created": 95,
-                "created": 95
+                "created": 95,
+                "issues": 8
             },
-            "issues": []
+            "issues": [
+                {
+                    "uid": "39fdc888-5bf6-5f45-a604-746529d44e7e",
+                    "name": "Row 4",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "Location matching query does not exist.",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "location_type_id": "22004273-2182-50fd-b410-5e152ed9431a",
+                        "created": "2021-04-02 00:00:00+00:00",
+                        "last_updated": "None",
+                        "parent_id": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+                        "name": "Row 4",
+                        "comments": "None",
+                        "facility": "None",
+                        "time_zone": "None",
+                        "physical_address": "None",
+                        "shipping_address": "None",
+                        "latitude": "None",
+                        "longitude": "None"
+                    },
+                    "source_reference": "dcim.location:4"
+                },
+                {
+                    "uid": "39fdc888-5bf6-5f45-a604-746529d44e7e",
+                    "name": "Row 4",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "Location matching query does not exist.",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "location_type_id": "22004273-2182-50fd-b410-5e152ed9431a",
+                        "created": "2021-04-02 00:00:00+00:00",
+                        "last_updated": "None",
+                        "parent_id": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+                        "name": "Row 4",
+                        "comments": "None",
+                        "facility": "None",
+                        "time_zone": "None",
+                        "physical_address": "None",
+                        "shipping_address": "None",
+                        "latitude": "None",
+                        "longitude": "None"
+                    },
+                    "source_reference": "dcim.location:4"
+                },
+                {
+                    "uid": "a7f18fd3-b68a-5304-903a-6996f5ac9731",
+                    "name": "Row 3",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "Location matching query does not exist.",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "location_type_id": "22004273-2182-50fd-b410-5e152ed9431a",
+                        "created": "2021-04-02 00:00:00+00:00",
+                        "last_updated": "None",
+                        "parent_id": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+                        "name": "Row 3",
+                        "comments": "None",
+                        "facility": "None",
+                        "time_zone": "None",
+                        "physical_address": "None",
+                        "shipping_address": "None",
+                        "latitude": "None",
+                        "longitude": "None"
+                    },
+                    "source_reference": "dcim.location:3"
+                },
+                {
+                    "uid": "a7f18fd3-b68a-5304-903a-6996f5ac9731",
+                    "name": "Row 3",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "Location matching query does not exist.",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "location_type_id": "22004273-2182-50fd-b410-5e152ed9431a",
+                        "created": "2021-04-02 00:00:00+00:00",
+                        "last_updated": "None",
+                        "parent_id": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+                        "name": "Row 3",
+                        "comments": "None",
+                        "facility": "None",
+                        "time_zone": "None",
+                        "physical_address": "None",
+                        "shipping_address": "None",
+                        "latitude": "None",
+                        "longitude": "None"
+                    },
+                    "source_reference": "dcim.location:3"
+                },
+                {
+                    "uid": "b5694fca-f156-5163-8ae8-db7cceb93eaf",
+                    "name": "Row 2",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "Location matching query does not exist.",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "location_type_id": "22004273-2182-50fd-b410-5e152ed9431a",
+                        "created": "2021-04-02 00:00:00+00:00",
+                        "last_updated": "None",
+                        "parent_id": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+                        "name": "Row 2",
+                        "comments": "None",
+                        "facility": "None",
+                        "time_zone": "None",
+                        "physical_address": "None",
+                        "shipping_address": "None",
+                        "latitude": "None",
+                        "longitude": "None"
+                    },
+                    "source_reference": "dcim.location:2"
+                },
+                {
+                    "uid": "b5694fca-f156-5163-8ae8-db7cceb93eaf",
+                    "name": "Row 2",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "Location matching query does not exist.",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "location_type_id": "22004273-2182-50fd-b410-5e152ed9431a",
+                        "created": "2021-04-02 00:00:00+00:00",
+                        "last_updated": "None",
+                        "parent_id": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+                        "name": "Row 2",
+                        "comments": "None",
+                        "facility": "None",
+                        "time_zone": "None",
+                        "physical_address": "None",
+                        "shipping_address": "None",
+                        "latitude": "None",
+                        "longitude": "None"
+                    },
+                    "source_reference": "dcim.location:2"
+                },
+                {
+                    "uid": "cf28b6e3-d0e5-59d1-80b0-f2df3642716e",
+                    "name": "Row 1",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "Location matching query does not exist.",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "location_type_id": "22004273-2182-50fd-b410-5e152ed9431a",
+                        "created": "2021-04-02 00:00:00+00:00",
+                        "last_updated": "None",
+                        "parent_id": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+                        "name": "Row 1",
+                        "comments": "None",
+                        "facility": "None",
+                        "time_zone": "None",
+                        "physical_address": "None",
+                        "shipping_address": "None",
+                        "latitude": "None",
+                        "longitude": "None"
+                    },
+                    "source_reference": "dcim.location:1"
+                },
+                {
+                    "uid": "cf28b6e3-d0e5-59d1-80b0-f2df3642716e",
+                    "name": "Row 1",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "Location matching query does not exist.",
+                    "data": {
+                        "status_id": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+                        "location_type_id": "22004273-2182-50fd-b410-5e152ed9431a",
+                        "created": "2021-04-02 00:00:00+00:00",
+                        "last_updated": "None",
+                        "parent_id": "91ad2053-8442-5dcb-b277-a32f4dea6f31",
+                        "name": "Row 1",
+                        "comments": "None",
+                        "facility": "None",
+                        "time_zone": "None",
+                        "physical_address": "None",
+                        "shipping_address": "None",
+                        "latitude": "None",
+                        "longitude": "None"
+                    },
+                    "source_reference": "dcim.location:1"
+                }
+            ]
         },
         "dcim.locationtype": {
             "content_type": "dcim.locationtype",
@@ -18349,9 +18527,118 @@
             "disabled": false,
             "stats": {
                 "source_created": 6,
-                "created": 6
+                "created": 6,
+                "issues": 7
             },
-            "issues": []
+            "issues": [
+                {
+                    "uid": "001a5b44-6c65-5a97-bee3-c52494c176d3",
+                    "name": "Branch Offices",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "{91, 74, 78, 51, 86, 27}",
+                        "name": "Branch Offices",
+                        "nestable": "True",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+                        "created": "2021-12-30 00:00:00+00:00",
+                        "last_updated": "None"
+                    },
+                    "source_reference": "dcim.sitegroup:2"
+                },
+                {
+                    "uid": "001a5b44-6c65-5a97-bee3-c52494c176d3",
+                    "name": "Branch Offices",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "{91, 74, 78, 51, 86, 27}",
+                        "name": "Branch Offices",
+                        "nestable": "True",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+                        "created": "2021-12-30 00:00:00+00:00",
+                        "last_updated": "None"
+                    },
+                    "source_reference": "dcim.sitegroup:2"
+                },
+                {
+                    "uid": "22004273-2182-50fd-b410-5e152ed9431a",
+                    "name": "Location",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "{74, 51, 78}",
+                        "name": "Location",
+                        "nestable": "True",
+                        "parent_id": "8fceb641-4563-5da8-9004-963f9ed1965a",
+                        "created": "None",
+                        "last_updated": "None",
+                        "custom_field_data": "None",
+                        "description": "None"
+                    },
+                    "source_reference": "dcim.locationtype:Location"
+                },
+                {
+                    "uid": "6d92eb8b-0617-5e93-88ab-ca3bd253e632",
+                    "name": "Customer Sites",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "None",
+                        "name": "Customer Sites",
+                        "nestable": "True",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+                        "created": "2021-12-30 00:00:00+00:00",
+                        "last_updated": "None"
+                    },
+                    "source_reference": "dcim.sitegroup:1"
+                },
+                {
+                    "uid": "6d92eb8b-0617-5e93-88ab-ca3bd253e632",
+                    "name": "Customer Sites",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "None",
+                        "name": "Customer Sites",
+                        "nestable": "True",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+                        "created": "2021-12-30 00:00:00+00:00",
+                        "last_updated": "None"
+                    },
+                    "source_reference": "dcim.sitegroup:1"
+                },
+                {
+                    "uid": "7d9e1a57-e1ca-526e-a327-d1041b12e6e7",
+                    "name": "Headquarters",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "{74}",
+                        "name": "Headquarters",
+                        "nestable": "True",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+                        "created": "2021-12-30 00:00:00+00:00",
+                        "last_updated": "None"
+                    },
+                    "source_reference": "dcim.sitegroup:3"
+                },
+                {
+                    "uid": "7d9e1a57-e1ca-526e-a327-d1041b12e6e7",
+                    "name": "Headquarters",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "{74}",
+                        "name": "Headquarters",
+                        "nestable": "True",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+                        "created": "2021-12-30 00:00:00+00:00",
+                        "last_updated": "None"
+                    },
+                    "source_reference": "dcim.sitegroup:3"
+                }
+            ]
         },
         "dcim.manufacturer": {
             "content_type": "dcim.manufacturer",

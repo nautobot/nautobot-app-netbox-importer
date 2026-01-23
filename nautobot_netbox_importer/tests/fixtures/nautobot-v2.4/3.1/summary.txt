@@ -378,6 +378,7 @@ created: 95
 - dcim.locationtype --------------------------------------------------------------------------------
 source_created: 6
 created: 6
+issues: 6
 - dcim.manufacturer --------------------------------------------------------------------------------
 source_created: 15
 created: 15
@@ -489,6 +490,13 @@ dcim.location => Ambiguous
 dcim.locationtype => dcim.sitegroup
 ipam.prefix => ipam.aggregate
 = Importer issues: =================================================================================
+- dcim.locationtype --------------------------------------------------------------------------------
+001a5b44-6c65-5a97-bee3-c52494c176d3 | dcim.sitegroup:2 | FirstSaveFailed | "Branch Offices" | "LocationType matching query does not exist."
+001a5b44-6c65-5a97-bee3-c52494c176d3 | dcim.sitegroup:2 | FirstSaveFailed | "Branch Offices" | "LocationType matching query does not exist."
+6d92eb8b-0617-5e93-88ab-ca3bd253e632 | dcim.sitegroup:1 | FirstSaveFailed | "Customer Sites" | "LocationType matching query does not exist."
+6d92eb8b-0617-5e93-88ab-ca3bd253e632 | dcim.sitegroup:1 | FirstSaveFailed | "Customer Sites" | "LocationType matching query does not exist."
+7d9e1a57-e1ca-526e-a327-d1041b12e6e7 | dcim.sitegroup:3 | FirstSaveFailed | "Headquarters" | "LocationType matching query does not exist."
+7d9e1a57-e1ca-526e-a327-d1041b12e6e7 | dcim.sitegroup:3 | FirstSaveFailed | "Headquarters" | "LocationType matching query does not exist."
 = Field Mappings: ==================================================================================
 - auth.group => auth.group -------------------------------------------------------------------------
 name => value_importer => name (CharField)

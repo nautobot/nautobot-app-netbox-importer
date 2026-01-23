@@ -13464,9 +13464,101 @@
             "disabled": false,
             "stats": {
                 "source_created": 6,
-                "created": 6
+                "created": 6,
+                "issues": 6
             },
-            "issues": []
+            "issues": [
+                {
+                    "uid": "001a5b44-6c65-5a97-bee3-c52494c176d3",
+                    "name": "Branch Offices",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "{91, 74, 78, 51, 86, 27}",
+                        "name": "Branch Offices",
+                        "nestable": "True",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+                        "created": "2021-12-30 00:00:00+00:00",
+                        "last_updated": "None"
+                    },
+                    "source_reference": "dcim.sitegroup:2"
+                },
+                {
+                    "uid": "001a5b44-6c65-5a97-bee3-c52494c176d3",
+                    "name": "Branch Offices",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "{91, 74, 78, 51, 86, 27}",
+                        "name": "Branch Offices",
+                        "nestable": "True",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+                        "created": "2021-12-30 00:00:00+00:00",
+                        "last_updated": "None"
+                    },
+                    "source_reference": "dcim.sitegroup:2"
+                },
+                {
+                    "uid": "6d92eb8b-0617-5e93-88ab-ca3bd253e632",
+                    "name": "Customer Sites",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "None",
+                        "name": "Customer Sites",
+                        "nestable": "True",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+                        "created": "2021-12-30 00:00:00+00:00",
+                        "last_updated": "None"
+                    },
+                    "source_reference": "dcim.sitegroup:1"
+                },
+                {
+                    "uid": "6d92eb8b-0617-5e93-88ab-ca3bd253e632",
+                    "name": "Customer Sites",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "None",
+                        "name": "Customer Sites",
+                        "nestable": "True",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+                        "created": "2021-12-30 00:00:00+00:00",
+                        "last_updated": "None"
+                    },
+                    "source_reference": "dcim.sitegroup:1"
+                },
+                {
+                    "uid": "7d9e1a57-e1ca-526e-a327-d1041b12e6e7",
+                    "name": "Headquarters",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "{74}",
+                        "name": "Headquarters",
+                        "nestable": "True",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+                        "created": "2021-12-30 00:00:00+00:00",
+                        "last_updated": "None"
+                    },
+                    "source_reference": "dcim.sitegroup:3"
+                },
+                {
+                    "uid": "7d9e1a57-e1ca-526e-a327-d1041b12e6e7",
+                    "name": "Headquarters",
+                    "issue_type": "FirstSaveFailed",
+                    "message": "LocationType matching query does not exist.",
+                    "data": {
+                        "content_types": "{74}",
+                        "name": "Headquarters",
+                        "nestable": "True",
+                        "parent_id": "6003e66c-d3f2-5a36-9c06-5ee450898936",
+                        "created": "2021-12-30 00:00:00+00:00",
+                        "last_updated": "None"
+                    },
+                    "source_reference": "dcim.sitegroup:3"
+                }
+            ]
         },
         "dcim.manufacturer": {
             "content_type": "dcim.manufacturer",
