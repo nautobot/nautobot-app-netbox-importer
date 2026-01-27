@@ -1,1 +1,2 @@
 Fixed tests failing after dcim.powerfeed clean behavior change in Nautobot v2.4.15.
+Fixed tests failing after TreeModel save behavior change in Nautobot v2.4.24.
