@@ -248,7 +248,7 @@ jobs:
       matrix:
         python-version: ["3.13"]
         db-backend: ["postgresql"]
-        nautobot-version: ["2.4"]
+        nautobot-version: ["3.0"]
     runs-on: "ubuntu-latest"
     permissions:
       pull-requests: "write"
