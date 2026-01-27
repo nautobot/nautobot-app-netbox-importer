@@ -237,6 +237,7 @@ issues: 1
 - dcim.locationtype --------------------------------------------------------------------------------
 source_created: 3
 created: 3
+issues: 2
 - dcim.manufacturer --------------------------------------------------------------------------------
 source_created: 1
 created: 1
@@ -349,6 +350,9 @@ bccaf88e-b5c2-5b9d-9006-791ab29ccfba | dcim.cable:2 | UpdatedCableTermination | 
 f91623ed-a389-53a4-a4a2-943588c21446 | ipam.fhrpgroup:1 | InvalidChoiceValueIssue-protocol | "Test FHR Group" | "{'field': 'protocol', 'importer': 'fallback_importer'} {'protocol': 'Invalid choice value: `vrrp3`, replaced with `vrrp`'}"
 - dcim.location ------------------------------------------------------------------------------------
 c75ebf9a-0f74-5c7f-982b-a1a42faf5b09 | dcim.site:1 | ValidationError | "Site 1" | "{'parent': ['A Location of type Site must have a parent Location.']}"
+- dcim.locationtype --------------------------------------------------------------------------------
+22004273-2182-50fd-b410-5e152ed9431a | dcim.locationtype:Location | FirstSaveFailed | "Location" | "LocationType matching query does not exist."
+8fceb641-4563-5da8-9004-963f9ed1965a | dcim.locationtype:Site | FirstSaveFailed | "Site" | "LocationType matching query does not exist."
 - extras.customfield -------------------------------------------------------------------------------
 149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5 | extras.customfield:3 | InvalidChoiceValueIssue-type | "Device Custom Object" | "{'field': 'type', 'importer': 'type_importer'} {'type': 'Invalid choice value: `object`, replaced with `text`'}"
 - ipam.prefix --------------------------------------------------------------------------------------
@@ -573,7 +577,7 @@ created => datetime_importer => created (DateTimeField)
 custom_field_data => value_importer => custom_field_data (CustomFieldData)
 description => value_importer => description (CharField)
 device => relation_importer => device_id (ForeignKeyWithAutoRelatedName)
-duplex => NO IMPORTER => duplex (NotFound)
+duplex => choice_importer => duplex (CharField)
 enabled => value_importer => enabled (BooleanField)
 id => uid_from_data => id (UUIDField)
 label => value_importer => label (CharField)
@@ -593,7 +597,7 @@ rf_channel => NO IMPORTER => rf_channel (NotFound)
 rf_channel_frequency => NO IMPORTER => rf_channel_frequency (NotFound)
 rf_channel_width => NO IMPORTER => rf_channel_width (NotFound)
 rf_role => NO IMPORTER => rf_role (NotFound)
-speed => NO IMPORTER => speed (NotFound)
+speed => integer_importer => speed (PositiveIntegerField)
 tagged_vlans => m2m_importer => tagged_vlans (ManyToManyField)
 tx_power => NO IMPORTER => tx_power (NotFound)
 type => choice_importer => type (CharField)

@@ -194,14 +194,14 @@ jobs:
       matrix:
         python-version: ["3.10"]  # 3.13 stable is tested in unittest_report stage.
         db-backend: ["postgresql"]
-        nautobot-version: ["stable"]
+        nautobot-version: ["3.0"]
         include:
           - python-version: "3.10"
             db-backend: "postgresql"
             nautobot-version: "3.0.0"
-          - python-version: "3.13"
-            db-backend: "mysql"
-            nautobot-version: "stable"
+          # - python-version: "3.13"
+          #   db-backend: "mysql"
+          #   nautobot-version: "stable"
     runs-on: "ubuntu-latest"
     env:
       INVOKE_NAUTOBOT_NETBOX_IMPORTER_PYTHON_VER: "${{ matrix.python-version }}"

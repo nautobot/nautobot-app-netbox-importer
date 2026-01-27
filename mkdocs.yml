@@ -137,7 +137,6 @@ nav:
           - "dev/generator.md"
           - "dev/data_flow.md"
           - "dev/import_order.md"
-          - "dev/data_flow.md"
           - "dev/generator.md"
           - "dev/content_types_mapping.md"
           - "dev/caching.md"
