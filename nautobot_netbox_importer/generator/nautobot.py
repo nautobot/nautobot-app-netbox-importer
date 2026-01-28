@@ -624,23 +624,32 @@ class NautobotModelWrapper:
             else:
                 setattr(instance, field_name, None)
 
-        def super_save(instance, exception: Optional[Exception] = None):
+        def super_save(instance):
             """This function is called when the first save fails on the super class.
 
             If the save fails it recursively traverses the class hierarchy and calls `super.save()` on each class.
             """
-            instance = super(instance.__class__, instance)
+            exception = None
 
-            if not hasattr(instance, "save"):
-                raise exception or ValueError(f"Missing save method for {instance}")
+            # Loop through parent classes trying to call their save methods until one works
+            cls = type(instance)
+            mro = cls.mro()
+            for base in mro[1:]:
+                if "save" in base.__dict__:
+                    save = base.__dict__["save"]
+                    try:
+                        with atomic():
+                            save(instance)
+                            return
+                    # pylint: disable=broad-exception-caught
+                    except Exception as error:
+                        exception = error
+                        logger.error("Super save failed for instance %s: %s", instance, error, exc_info=True)
+                        continue
 
-            try:
-                with atomic():  # type: ignore
-                    instance.save()
-            # pylint: disable=broad-exception-caught
-            except Exception as error:
-                logger.warning("Super save failed: %s", error, exc_info=True)
-                super_save(instance, error)
+            if exception:
+                raise RuntimeError(f"Unknown failure when trying to save {instance} using super class") from exception
+            raise RuntimeError(f"Unknown failure when trying to save {instance} using super class")
 
         def save_or_super_save():
             error = None

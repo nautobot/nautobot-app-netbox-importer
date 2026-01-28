@@ -27,19 +27,7 @@ from nautobot_netbox_importer.summary import ImportSummary
 
 _BUILD_FIXTURES = is_truthy(getenv("BUILD_FIXTURES", "False"))
 _DONT_COMPARE_FIELDS = ["created", "last_updated"]
-_NETBOX_DATA_REPOSITORY = "https://raw.githubusercontent.com/netbox-community/netbox-demo-data"
-_NETBOX_DATA_URL = _NETBOX_DATA_REPOSITORY + "/c6a9c8835836a0629bde0713f33038ec9b8d56ea/json"
 _SAMPLE_COUNT = 3
-
-_INPUTS = {
-    "3.0": f"{_NETBOX_DATA_URL}/netbox-demo-v3.0.json",
-    "3.1": f"{_NETBOX_DATA_URL}/netbox-demo-v3.1.json",
-    "3.2": f"{_NETBOX_DATA_URL}/netbox-demo-v3.2.json",
-    "3.3": f"{_NETBOX_DATA_URL}/netbox-demo-v3.3.json",
-    "3.4": f"{_NETBOX_DATA_URL}/netbox-demo-v3.4.json",
-    "3.5": f"{_NETBOX_DATA_URL}/netbox-demo-v3.5.json",
-    "3.6": f"{_NETBOX_DATA_URL}/netbox-demo-v3.6.json",
-}
 
 
 # Ensure that SECRET_KEY is set to a known value, to generate the same UUIDs
@@ -63,6 +51,7 @@ class TestImport(TestCase):
             description="Default Global namespace. Created by Nautobot.",
         )
 
+        # TODO: Document how to enable verbose logging in testing (comment out this line?)
         mute_diffsync_logging()
         # pylint: disable=invalid-name
         self.maxDiff = None
@@ -79,7 +68,7 @@ class TestImport(TestCase):
             expected_summary.load(fixtures_path / "summary.json")
 
         # Import the file to fresh Nautobot instance
-        input_ref = _INPUTS.get(fixtures_name, fixtures_path / "input.json")
+        input_ref = fixtures_path / "input.json"
         version = _version_from_fixtures_name(fixtures_name)
         source = self._import_file(input_ref, version)
 
@@ -168,8 +157,8 @@ class TestImport(TestCase):
 
     def _import_file(self, input_ref, version: Version):
         source = NetBoxAdapter(
-            input_ref,
-            NetBoxImporterOptions(
+            input_ref=input_ref,
+            options=NetBoxImporterOptions(
                 dry_run=False,
                 netbox_version=version,
                 bypass_data_validation=True,
