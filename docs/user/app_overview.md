@@ -7,7 +7,12 @@ This document provides an overview of the App including critical information and
 
 ## Description
 
+<<<<<<< HEAD
 This application's sole purpose is to facilitate data migration from NetBox to Nautobot, doing the proper data conversion through the process.
+=======
+![Main Page](../media/ss_main_page_light.png#only-light)
+![Main Page](../media/ss_main_page_dark.png#only-dark)
+>>>>>>> ad04c53 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 
 ## Audience (User Personas) - Who should use this App?
 
