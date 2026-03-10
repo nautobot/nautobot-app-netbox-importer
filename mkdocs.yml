@@ -84,9 +84,14 @@ markdown_extensions:
           class: "mermaid"
           format: !!python/name:pymdownx.superfences.fence_code_format
   - "footnotes"
+  - "meta"
 plugins:
   - "search"
+<<<<<<< HEAD
   - "include-markdown"
+=======
+  - "glightbox"
+>>>>>>> 15079ac (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
   - "mkdocstrings":
       default_handler: "python"
       handlers:
