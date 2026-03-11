@@ -675,14 +675,10 @@ def import_db(context, db_name="", input_file="dump.sql"):
 )
 def backup_db(context, db_name="", format="sql", output_file="", readable=True):
     """Dump database into `output_file` file from `db` container."""
-<<<<<<< HEAD
     if not output_file:
         output_file = f"dump.{format}"
 
-    start(context, "db")
-=======
     start(context, ["db"])
->>>>>>> ad04c53 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
     _await_healthy_service(context, "db")
 
     command = ["exec -- db sh -c '"]
@@ -1166,24 +1162,14 @@ def generate_app_config_schema(context):
     - `NautobotAppConfig.default_settings`
     - `NautobotAppConfig.required_settings`
     """
-<<<<<<< HEAD
-    start(context, service="nautobot")
-    nbshell(
-        context,
-        file="development/app_config_schema.py",
-        env={"APP_CONFIG_SCHEMA_COMMAND": "generate"},
-    )
-=======
     start(context, service=["nautobot"])
     nbshell(context, file="development/app_config_schema.py", env={"APP_CONFIG_SCHEMA_COMMAND": "generate"})
->>>>>>> ad04c53 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 
 
 @task
 def validate_app_config(context):
     """Validate the app config based on the app config schema."""
-<<<<<<< HEAD
-    start(context, service="nautobot")
+    start(context, service=["nautobot"])
     nbshell(
         context,
         plain=True,
@@ -1281,7 +1267,3 @@ def import_netbox(  # noqa: PLR0913
     ]
 
     run_command(context, " ".join(command))
-=======
-    start(context, service=["nautobot"])
-    nbshell(context, plain=True, file="development/app_config_schema.py", env={"APP_CONFIG_SCHEMA_COMMAND": "validate"})
->>>>>>> ad04c53 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)

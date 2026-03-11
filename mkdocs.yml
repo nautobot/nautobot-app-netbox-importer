@@ -87,11 +87,8 @@ markdown_extensions:
   - "meta"
 plugins:
   - "search"
-<<<<<<< HEAD
   - "include-markdown"
-=======
   - "glightbox"
->>>>>>> ad04c53 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
   - "mkdocstrings":
       default_handler: "python"
       handlers:

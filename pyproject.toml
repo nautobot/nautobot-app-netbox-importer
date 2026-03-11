@@ -1,10 +1,6 @@
 [tool.poetry]
 name = "nautobot-netbox-importer"
-<<<<<<< HEAD
 version = "2.2.1a0"
-=======
-version = "0.1.0a0"
->>>>>>> ad04c53 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 description = "Data importer from NetBox 3.x to Nautobot 2.x."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 license = "Apache-2.0"
