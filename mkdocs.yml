@@ -84,9 +84,11 @@ markdown_extensions:
           class: "mermaid"
           format: !!python/name:pymdownx.superfences.fence_code_format
   - "footnotes"
+  - "meta"
 plugins:
   - "search"
   - "include-markdown"
+  - "glightbox"
   - "mkdocstrings":
       default_handler: "python"
       handlers:
