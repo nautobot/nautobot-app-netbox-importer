@@ -988,7 +988,7 @@ def load_test_environment(context, db_name="test_nautobot", keepdb=False):
 
     invoke dump-test-environment
     """
-    start(context, "db")
+    start(context, ["db"])
     _await_healthy_service(context, "db")
 
     if not keepdb:
