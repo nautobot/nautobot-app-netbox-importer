@@ -30,7 +30,6 @@ include = [
 [tool.poetry.dependencies]
 python = ">=3.10,<3.15"
 # Used for local development
-<<<<<<< HEAD
 diffsync = "^2.1.0"
 colorama = "^0.4.6"
 Markdown = "^3.6"
@@ -39,10 +38,7 @@ python-dateutil = "^2.9.0"
 ijson = "^3.2.3"
 netaddr = ">=0.10.1"
 packaging = "^24.1"
-nautobot = ">=3.0.0,<4.0.0"
-=======
 nautobot = ">=3.1.0,<4.0.0"
->>>>>>> 6a9521d (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
@@ -85,13 +81,9 @@ mkdocs-glightbox = "~0.5.2"
 all = [
 ]
 
-<<<<<<< HEAD
-[tool.pylint.master]
+[tool.pylint.main]
 # Allow pylint to load binary code from Pydantic as part of its validation
 extension-pkg-whitelist=["pydantic"]
-=======
-[tool.pylint.main]
->>>>>>> 6a9521d (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 # Include the pylint_django plugin to avoid spurious warnings about Django patterns
 load-plugins = "pylint_django, pylint_nautobot"
 ignore = ".venv"

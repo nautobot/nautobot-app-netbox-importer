@@ -1035,7 +1035,6 @@ def check_migrations(context):
 
 
 @task
-<<<<<<< HEAD
 def dump_test_environment(context):
     """Dump the test environment to a file.
 
@@ -1123,7 +1122,9 @@ def load_test_environment(context, db_name="test_nautobot", keepdb=False):
         f"< '{_get_test_dump_path(context)}'",
     ]
     docker_compose(context, " ".join(command), pty=False, hide=True)
-=======
+
+
+@task
 def generate_test_data(context, flush=False, database=None):
     """Generate test data in Nautobot for Nautobot NetBox Importer."""
     command = "nautobot-server generate_nautobot_netbox_importer_test_data"
@@ -1132,7 +1133,6 @@ def generate_test_data(context, flush=False, database=None):
     if flush:
         command += " --flush"
     run_command(context, command)
->>>>>>> 6a9521d (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 
 
 @task(
