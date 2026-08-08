@@ -3,6 +3,7 @@
 
 import datetime
 import json
+import zoneinfo
 from enum import Enum, auto
 from typing import (
     Any,
@@ -20,7 +21,6 @@ from typing import (
 )
 from uuid import UUID
 
-import zoneinfo
 from diffsync import DiffSyncModel
 from diffsync.enum import DiffSyncModelFlags
 from nautobot.core.models.tree_queries import TreeModel
