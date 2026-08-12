@@ -6,7 +6,7 @@ from packaging.version import Version
 
 from nautobot_netbox_importer.diffsync.adapters import NetBoxAdapter, NetBoxImporterOptions
 
-_DEFAULT_NETBOX_VERSION = str(NetBoxImporterOptions._field_defaults["netbox_version"])
+_DEFAULT_NETBOX_VERSION = str(NetBoxImporterOptions._field_defaults["netbox_version"])  # pylint: disable=protected-access,no-member
 
 
 class Command(BaseCommand):
@@ -112,16 +112,16 @@ class Command(BaseCommand):
             dest="netbox_version",
             help=f"SemVer NetBox version string to use for the import. (default: '{_DEFAULT_NETBOX_VERSION}')",
             default=_DEFAULT_NETBOX_VERSION,
-        )
+        )  # pylint: disable=arguments-differ
 
-    def handle(self, json_file, **kwargs):  # type: ignore
+    def handle(self, json_file, **kwargs):  # type: ignore pylint: disable=arguments-differ,arguments-differ
         """Handle execution of the import_netbox management command."""
         call_command("migrate")
 
         customizations = (kwargs.pop("customizations") or "").split(",")
         netbox_version = Version(kwargs.pop("netbox_version", _DEFAULT_NETBOX_VERSION))
 
-        # pylint: disable=protected-access
+        # pylint: disable=protected-access,too-many-function-args
         keys = NetBoxImporterOptions._fields
         options = NetBoxImporterOptions(
             **{key: value for key, value in kwargs.items() if key in keys},
