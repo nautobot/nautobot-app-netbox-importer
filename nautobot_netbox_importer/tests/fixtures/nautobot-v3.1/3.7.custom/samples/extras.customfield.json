@@ -1,0 +1,78 @@
+[
+{
+  "model": "extras.customfield",
+  "pk": "149a24e1-ea6c-5dc7-97f9-aedfcb9b9aa5",
+  "fields": {
+    "created": "2024-02-15T11:19:42.197Z",
+    "last_updated": "2026-08-12T15:27:05.275Z",
+    "grouping": "",
+    "type": "text",
+    "label": "Device Custom Object",
+    "key": "device_custom_object",
+    "description": "",
+    "required": false,
+    "filter_logic": "loose",
+    "default": null,
+    "weight": 100,
+    "validation_minimum": null,
+    "validation_maximum": null,
+    "validation_regex": "",
+    "advanced_ui": false,
+    "scope_filter": {},
+    "content_types": [
+      57
+    ]
+  }
+},
+{
+  "model": "extras.customfield",
+  "pk": "ce3f1f06-1d2d-5fd2-8096-f86f691bccb7",
+  "fields": {
+    "created": "2024-02-13T11:37:46.980Z",
+    "last_updated": "2026-08-12T15:27:05.259Z",
+    "grouping": "",
+    "type": "select",
+    "label": "Device Custom Choices",
+    "key": "device_custom_choices",
+    "description": "",
+    "required": false,
+    "filter_logic": "loose",
+    "default": null,
+    "weight": 100,
+    "validation_minimum": null,
+    "validation_maximum": null,
+    "validation_regex": "",
+    "advanced_ui": false,
+    "scope_filter": {},
+    "content_types": [
+      57,
+      91
+    ]
+  }
+},
+{
+  "model": "extras.customfield",
+  "pk": "e4fa5680-4657-50ea-837c-604617c7fc0d",
+  "fields": {
+    "created": "2021-09-09T00:00:00Z",
+    "last_updated": "2026-08-12T15:27:05.244Z",
+    "grouping": "",
+    "type": "text",
+    "label": "Customer ID",
+    "key": "cust_id",
+    "description": "",
+    "required": false,
+    "filter_logic": "exact",
+    "default": null,
+    "weight": 100,
+    "validation_minimum": null,
+    "validation_maximum": null,
+    "validation_regex": "^[A-Z]{3}\\d{2}$",
+    "advanced_ui": false,
+    "scope_filter": {},
+    "content_types": [
+      161
+    ]
+  }
+}
+]

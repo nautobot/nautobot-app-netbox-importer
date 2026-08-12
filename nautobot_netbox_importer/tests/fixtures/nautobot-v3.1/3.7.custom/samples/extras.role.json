@@ -1,0 +1,52 @@
+[
+{
+  "model": "extras.role",
+  "pk": "42895040-37c3-5bcb-8326-c22198fe6dfd",
+  "fields": {
+    "created": "2026-08-12T15:27:05.320Z",
+    "last_updated": "2026-08-12T15:27:05.320Z",
+    "_custom_field_data": {},
+    "name": "Primary",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      147
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "715773ef-2d6c-5895-972d-40f37486a56e",
+  "fields": {
+    "created": "2024-02-14T12:20:27.082Z",
+    "last_updated": "2026-08-12T15:27:05.314Z",
+    "_custom_field_data": {},
+    "name": "Default Device Role",
+    "color": "9e9e9e",
+    "description": "",
+    "weight": null,
+    "content_types": [
+      57,
+      122
+    ]
+  }
+},
+{
+  "model": "extras.role",
+  "pk": "8fe32a3e-1fd0-5e31-8435-20be4a80668c",
+  "fields": {
+    "created": "2020-05-28T00:00:00Z",
+    "last_updated": "2026-08-12T15:27:05.316Z",
+    "_custom_field_data": {},
+    "name": "Network",
+    "color": "00ff00",
+    "description": "Dedicated to network",
+    "weight": null,
+    "content_types": [
+      57,
+      86
+    ]
+  }
+}
+]
