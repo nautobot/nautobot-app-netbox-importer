@@ -71,7 +71,7 @@ mkdocs-material = "9.6.14"
 # Automatic documentation from sources, for MkDocs
 mkdocstrings = "0.27.0"
 mkdocstrings-python = "1.13.0"
-mkdocs-include-markdown-plugin = "7.1.5"
+mkdocs-include-markdown-plugin = "7.1.8"
 mkdocs-autorefs = "1.2.0"
 griffe = "1.1.1"
 # Image lightboxing in mkdocs

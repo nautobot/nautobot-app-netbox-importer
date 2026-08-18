@@ -1107,31 +1107,9 @@ description = "Library to easily sync/diff/update 2 different data sources"
 optional = false
 python-versions = "<4.0,>=3.9"
 groups = ["main"]
-markers = "python_version == \"3.14\""
 files = [
     {file = "diffsync-2.1.0-py3-none-any.whl", hash = "sha256:ffffdab7db9c3a1fc201da34b8803ad2a4d3088f30f424f60b0490850bd55437"},
     {file = "diffsync-2.1.0.tar.gz", hash = "sha256:fb513c4a66f5c62b781796de23f361f8b1710901844667f8ccbe650ae58b27f0"},
-]
-
-[package.dependencies]
-packaging = ">=21.3"
-pydantic = ">=2.0.0,<3.0.0"
-structlog = ">=20.1.0"
-
-[package.extras]
-redis = ["redis (>=4.3,<5.0)"]
-
-[[package]]
-name = "diffsync"
-version = "2.2.3"
-description = "Library to easily sync/diff/update 2 different data sources"
-optional = false
-python-versions = "<3.14,>=3.10"
-groups = ["main"]
-markers = "python_version < \"3.14\""
-files = [
-    {file = "diffsync-2.2.3-py3-none-any.whl", hash = "sha256:dfc0018822c024cccf9cc0c0f688d84a65c52ea0a96b67b60261748dd11c1e8c"},
-    {file = "diffsync-2.2.3.tar.gz", hash = "sha256:4fe22ccfff783409eee2801513d51adabd2afcc5162e0f55f26d7ea9f8395115"},
 ]
 
 [package.dependencies]
@@ -2923,14 +2901,14 @@ selectolax = ">=0.3.29"
 
 [[package]]
 name = "mkdocs-include-markdown-plugin"
-version = "7.1.5"
+version = "7.1.8"
 description = "Mkdocs Markdown includer plugin."
 optional = false
 python-versions = ">=3.9"
 groups = ["docs"]
 files = [
-    {file = "mkdocs_include_markdown_plugin-7.1.5-py3-none-any.whl", hash = "sha256:d0b96edee45e7fda5eb189e63331cfaf1bf1fbdbebbd08371f1daa77045d3ae9"},
-    {file = "mkdocs_include_markdown_plugin-7.1.5.tar.gz", hash = "sha256:a986967594da6789226798e3c41c70bc17130fadb92b4313f42bd3defdac0adc"},
+    {file = "mkdocs_include_markdown_plugin-7.1.8-py3-none-any.whl", hash = "sha256:eed91cdb22c9035c8d8421523c97bee3796e2df626afefae11e97dd0c6854573"},
+    {file = "mkdocs_include_markdown_plugin-7.1.8.tar.gz", hash = "sha256:9cc79f60c452e4db885c32b4cd63feea1f96012b6720be49a2ce6a1fbad77458"},
 ]
 
 [package.dependencies]
@@ -4104,7 +4082,7 @@ description = "Cross-platform lib for process and system monitoring."
 optional = false
 python-versions = ">=3.6"
 groups = ["dev"]
-markers = "python_version >= \"3.11\" and sys_platform != \"emscripten\" and sys_platform != \"cygwin\""
+markers = "sys_platform != \"emscripten\" and sys_platform != \"cygwin\" and python_version >= \"3.11\""
 files = [
     {file = "psutil-7.2.2-cp313-cp313t-macosx_10_13_x86_64.whl", hash = "sha256:2edccc433cbfa046b980b0df0171cd25bcaeb3a68fe9022db0979e7aa74a826b"},
     {file = "psutil-7.2.2-cp313-cp313t-macosx_11_0_arm64.whl", hash = "sha256:e78c8603dcd9a04c7364f1a3e670cea95d51ee865e4efb3556a3a63adef958ea"},
@@ -4267,7 +4245,7 @@ description = "C parser in Python"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
-markers = "implementation_name != \"PyPy\" and platform_python_implementation != \"PyPy\""
+markers = "platform_python_implementation != \"PyPy\" and implementation_name != \"PyPy\""
 files = [
     {file = "pycparser-3.0-py3-none-any.whl", hash = "sha256:b727414169a36b7d524c1c3e31839a521725078d7b2ff038656844266160a992"},
     {file = "pycparser-3.0.tar.gz", hash = "sha256:600f49d217304a5902ac3c37e1281c9fe94e4d0489de643a9504c5cdfdfc6b29"},
@@ -6482,4 +6460,4 @@ all = []
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.15"
-content-hash = "5beb032403c7cab4a2fa09e2fa6bcd0aefb0e0d7738c11657ee41bda6d88d106"
+content-hash = "978a826eea7a3bfb921ba30a59f38d7df8fd8810836b863533cfa0a8b145d0b6"
