@@ -86,6 +86,8 @@ def setup(adapter: SourceAdapter) -> None:
             "location": define_location,
             "device_role": fields.role(adapter, "dcim.devicerole"),
             "role": fields.role(adapter, "dcim.devicerole"),
+            # Nautobot 3.1 replaced the `cluster` foreign key with the `clusters` many-to-many relation.
+            "cluster": "clusters",
         },
     )
     adapter.configure_model(

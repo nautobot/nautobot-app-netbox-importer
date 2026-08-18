@@ -1,0 +1,55 @@
+[
+{
+  "model": "extras.status",
+  "pk": "623acb70-22ce-5f69-bd7e-76bc921aa6c4",
+  "fields": {
+    "created": "2026-08-12T15:27:05.310Z",
+    "last_updated": "2026-08-12T15:27:05.310Z",
+    "_custom_field_data": {},
+    "name": "Unknown",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      145,
+      27,
+      44,
+      45
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "76782d4e-25fa-5add-8129-3a4540d09ad1",
+  "fields": {
+    "created": "2026-08-12T15:27:05.312Z",
+    "last_updated": "2026-08-12T15:27:05.312Z",
+    "_custom_field_data": {},
+    "name": "Tbd",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      145
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "fb37b4d1-40ae-5d11-b8cd-46d3f9c25c14",
+  "fields": {
+    "created": "2026-08-12T15:27:05.308Z",
+    "last_updated": "2026-08-12T15:27:05.308Z",
+    "_custom_field_data": {},
+    "name": "Active",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      145,
+      82,
+      147,
+      86,
+      57,
+      27
+    ]
+  }
+}
+]

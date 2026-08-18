@@ -1,0 +1,47 @@
+[
+{
+  "model": "extras.status",
+  "pk": "9172bac4-6144-54e5-b44d-f530905f8d05",
+  "fields": {
+    "created": "2026-08-12T15:24:40.527Z",
+    "last_updated": "2026-08-12T15:24:40.527Z",
+    "_custom_field_data": {},
+    "name": "Available",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      86
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "e81c76fa-2fb5-54e3-acbd-f0b817639af5",
+  "fields": {
+    "created": "2026-08-12T15:24:40.525Z",
+    "last_updated": "2026-08-12T15:24:40.525Z",
+    "_custom_field_data": {},
+    "name": "Connected",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      70
+    ]
+  }
+},
+{
+  "model": "extras.status",
+  "pk": "e9984337-802f-53ef-93b6-82b347f63527",
+  "fields": {
+    "created": "2026-08-12T15:24:40.531Z",
+    "last_updated": "2026-08-12T15:24:40.531Z",
+    "_custom_field_data": {},
+    "name": "Reserved",
+    "color": "9e9e9e",
+    "description": "",
+    "content_types": [
+      147
+    ]
+  }
+}
+]
